@@ -284,7 +284,10 @@ function loadSavedState() {
   try {
     const savedMastered = localStorage.getItem("tda_mastered_exercises");
     if (savedMastered) {
-      masteredExercises = new Set(JSON.parse(savedMastered));
+      const parsed = JSON.parse(savedMastered);
+      if (Array.isArray(parsed)) {
+        masteredExercises = new Set(parsed.map(n => parseInt(n, 10)).filter(n => !isNaN(n)));
+      }
     }
     const savedChecklist = localStorage.getItem("tda_exam_checklist");
     if (savedChecklist) {
@@ -312,8 +315,8 @@ function loadSavedState() {
 
   // Restore checkboxes in exercise cards
   document.querySelectorAll(".mastered-checkbox").forEach(cb => {
-    const num = parseInt(cb.getAttribute("data-ej-num"), 10);
-    if (masteredExercises.has(num)) {
+    const num = parseInt(cb.getAttribute("data-ej-num") || cb.getAttribute("data-num"), 10);
+    if (!isNaN(num) && masteredExercises.has(num)) {
       cb.checked = true;
       const card = document.getElementById("ej-" + num);
       if (card) card.classList.add("is-mastered");
@@ -341,6 +344,8 @@ function saveState() {
 
 // Mastered exercise toggle
 function toggleMastered(num, isMastered) {
+  num = parseInt(num, 10);
+  if (isNaN(num)) return;
   if (isMastered) {
     masteredExercises.add(num);
   } else {
@@ -673,11 +678,18 @@ function updateProgressHUD(totalVisible, totalMastered) {
   const progPercent = document.getElementById("progPercent");
   const progressFill = document.getElementById("progressFill");
 
-  if (progMastered && progTotal && progPercent && progressFill) {
+  if (progMastered) {
     progMastered.textContent = totalMastered;
+  }
+  if (progTotal) {
     progTotal.textContent = totalVisible;
-    const pct = totalVisible > 0 ? Math.round((totalMastered / totalVisible) * 100) : 0;
+  }
+
+  const pct = totalVisible > 0 ? Math.round((totalMastered / totalVisible) * 100) : 0;
+  if (progPercent) {
     progPercent.textContent = pct + "%";
+  }
+  if (progressFill) {
     progressFill.style.width = pct + "%";
   }
 }

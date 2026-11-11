@@ -135,5 +135,34 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         # 5. Volver a elegir Todos nuevamente
         self.assertEqual(len(simulate_filter("all")), 79)
 
+    def test_update_progress_hud_does_not_gate_on_prog_percent(self):
+        """Verifica que updateProgressHUD en app.js no dependa obligatoriamente de progPercent para actualizar contadores."""
+        app_js_path = os.path.join(BASE_DIR, "assets", "js", "app.js")
+        with open(app_js_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        # Asegurar que no exista una condición que requiera progPercent para actualizar progMastered / progTotal
+        self.assertNotIn("if (progMastered && progTotal && progPercent", content,
+                         "updateProgressHUD no debe condicionar la actualización de progMastered y progTotal a progPercent.")
+
+        # Verificar que actualice progMastered y progTotal
+        self.assertIn("if (progMastered)", content)
+        self.assertIn("if (progTotal)", content)
+
+    def test_all_html_files_with_cards_have_hud_elements(self):
+        """Verifica que todos los archivos HTML con tarjetas de ejercicios contengan progMastered, progTotal y progressFill."""
+        html_files_with_cards = [
+            "parciales.html", "dyc.html", "greedy.html", "backtracking.html",
+            "dp.html", "pl.html", "flujo.html", "reducciones.html", "integradores.html"
+        ]
+        for fname in html_files_with_cards:
+            fpath = os.path.join(BASE_DIR, fname)
+            self.assertTrue(os.path.exists(fpath), f"El archivo {fname} debe existir.")
+            with open(fpath, "r", encoding="utf-8") as f:
+                html = f.read()
+            self.assertIn('id="progMastered"', html, f"{fname} debe contener el id 'progMastered'")
+            self.assertIn('id="progTotal"', html, f"{fname} debe contener el id 'progTotal'")
+            self.assertIn('id="progressFill"', html, f"{fname} debe contener el id 'progressFill'")
+
 if __name__ == "__main__":
     unittest.main()
