@@ -34,13 +34,13 @@
       <span>TDA FIUBA</span>
     </a>
     
-    <nav>
+    <nav class="site-nav" aria-label="Navegación principal">
       <ul class="site-nav-links">
         <li><a href="index.html" class="site-nav-link active">🏠 Inicio</a></li>
         <li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li>
-        <li class="site-dropdown">
-          <a href="#" class="site-nav-link" onclick="event.preventDefault()">📂 Paradigmas ▾</a>
-          <div class="site-dropdown-menu">
+        <li class="site-dropdown" id="navParadigmsDropdown">
+          <a href="#" class="site-nav-link" role="button" aria-haspopup="true" aria-expanded="false" onclick="toggleParadigmDropdown(event)">📂 Paradigmas <span class="dropdown-caret">▾</span></a>
+          <div class="site-dropdown-menu" role="menu" aria-label="Seleccionar paradigma">
             <a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a>
             <a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a>
             <a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a>
@@ -138,7 +138,7 @@
     <p class="portal-hub-subtitle">
       Plataforma interactiva de estudio estructurada en <strong>vistas dedicadas independientes</strong>. Incluye el análisis riguroso de exámenes parciales reales, la guía oficial de 79 ejercicios clasificados por paradigma y el nuevo laboratorio didáctico de <strong>Aproximación y Algoritmos Randomizados</strong> con simuladores ejecutables.
     </p>
-    <div class="d-flex gap-3 flex-wrap">
+    <div class="d-flex gap-3 flex-wrap portal-hero-actions">
       <a href="parciales.html" class="btn btn-warning px-4 py-2 fw-bold shadow-sm" style="border-radius: 8px;">
         📝 Practicar con Parciales Reales (29) ➔
       </a>

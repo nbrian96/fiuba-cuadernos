@@ -51,5 +51,13 @@ class TestResponsiveLandscape(unittest.TestCase):
         self.assertIn("passive: true", self.js,
                       "El listener de scroll debe ser pasivo para máxima fluidez táctil.")
 
+    def test_landscape_dropdown_grid_and_context_bar_auto_hide(self):
+        """Verifica la grilla de 2 columnas para el dropdown en landscape y el auto-hide de siteNavbar y exerciseContextBar."""
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", self.css)
+        self.assertIn(".site-navbar.hud-hidden", self.css)
+        self.assertIn(".exercise-context-bar.hud-hidden", self.css)
+        self.assertIn("siteNavbar", self.js)
+        self.assertIn("exerciseContextBar", self.js)
+
 if __name__ == "__main__":
     unittest.main()

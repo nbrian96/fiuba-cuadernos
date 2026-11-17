@@ -104,5 +104,26 @@ class TestDarkModeAndResponsive(unittest.TestCase):
         self.assertNotEqual(dark_sync_idx, -1)
         self.assertLess(dark_sync_idx, mermaid_idx, "El tema dark-mode debe aplicarse antes de llamar a mermaid.initialize.")
 
+    def test_mobile_paradigm_dropdown_and_viewport_fix(self):
+        """Verifica que el selector de paradigmas sea táctil/interactivo en mobile y que <nav> no desborde el viewport."""
+        self.assertIn("function toggleParadigmDropdown", self.js)
+        self.assertIn("function closeParadigmDropdown", self.js)
+        self.assertIn(".site-dropdown.is-open .site-dropdown-menu", self.css)
+        self.assertIn(".site-nav-links.dropdown-open", self.css)
+        self.assertIn("overflow: visible !important;", self.css)
+        self.assertIn("overflow-x: clip;", self.css)
+
+        html_files = sorted(glob.glob(os.path.join(BASE_DIR, "*.html")))
+        for fpath in html_files:
+            fname = os.path.basename(fpath)
+            with open(fpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("toggleParadigmDropdown(event)", content,
+                          f"El archivo {fname} debe incluir toggleParadigmDropdown(event) en el menú de Paradigmas.")
+            self.assertIn("class=\"site-nav\"", content,
+                          f"El archivo {fname} debe incluir class=\"site-nav\" en el elemento <nav>.")
+            self.assertIn("todos.html", content,
+                          f"El archivo {fname} debe enlazar a todos.html en el menú de Paradigmas.")
+
 if __name__ == "__main__":
     unittest.main()
