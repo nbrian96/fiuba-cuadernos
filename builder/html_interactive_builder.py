@@ -228,7 +228,8 @@ def inject_interactive_widgets(html_body):
     return html_body + empty_state_html
 
 def get_hud_and_drawer_html(active_paradigm="all"):
-    is_home = (active_paradigm == "all")
+    effective_paradigm = "todos" if active_paradigm == "all" else active_paradigm
+    is_home = (active_paradigm == "home")
     
     # Menú de paradigmas para dropdown
     paradigms_menu = [
@@ -244,7 +245,7 @@ def get_hud_and_drawer_html(active_paradigm="all"):
     ]
     
     dropdown_items_html = "".join(
-        f'<a href="{href}" class="site-dropdown-item{" active" if key == active_paradigm else ""}">{label}</a>'
+        f'<a href="{href}" class="site-dropdown-item{" active" if key == effective_paradigm else ""}">{label}</a>'
         for key, href, label in paradigms_menu
     )
 
@@ -255,17 +256,17 @@ def get_hud_and_drawer_html(active_paradigm="all"):
       <span>TDA FIUBA</span>
     </a>
     
-    <nav>
+    <nav class="site-nav">
       <ul class="site-nav-links">
         <li><a href="index.html" class="site-nav-link{" active" if is_home else ""}">🏠 Inicio</a></li>
-        <li><a href="parciales.html" class="site-nav-link{" active" if active_paradigm == 'parciales' else ""}">📝 Parciales (35)</a></li>
-        <li class="site-dropdown">
-          <a href="#" class="site-nav-link{" active" if active_paradigm in [k for k, _, _ in paradigms_menu] else ""}" onclick="event.preventDefault()">📂 Paradigmas ▾</a>
-          <div class="site-dropdown-menu">
+        <li><a href="parciales.html" class="site-nav-link{" active" if effective_paradigm == 'parciales' else ""}">📝 Parciales (35)</a></li>
+        <li class="site-dropdown" id="navParadigmsDropdown">
+          <a href="#" class="site-nav-link{" active" if effective_paradigm in [k for k, _, _ in paradigms_menu] else ""}" role="button" aria-haspopup="true" aria-expanded="false" onclick="toggleParadigmDropdown(event)">📂 Paradigmas <span class="dropdown-caret">▾</span></a>
+          <div class="site-dropdown-menu" role="menu" aria-label="Seleccionar paradigma">
             {dropdown_items_html}
           </div>
         </li>
-        <li><a href="teoria-avanzados.html" class="site-nav-link{" active" if active_paradigm == 'avanzados' else ""}">🎲 Paradigmas Avanzados</a></li>
+        <li><a href="teoria-avanzados.html" class="site-nav-link site-nav-link-adv{" active" if effective_paradigm == 'avanzados' else ""}">🎲 Paradigmas Avanzados</a></li>
       </ul>
     </nav>
 

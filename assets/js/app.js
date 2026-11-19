@@ -158,6 +158,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateModeUI();
   updateDifficultyUI();
   updateDarkModeButtonIcon();
+  initMobileNavigation();
+  syncStickyOffsets();
 
   if (document.getElementById("entrenador-30s")) {
     initTrainer();
@@ -171,7 +173,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     drawer.open = true;
   });
 
-  if (typeof initMermaidDiagrams === "function") {
+  const alreadyProcessedMermaid = document.querySelector(".mermaid[data-processed]");
+  if (typeof initMermaidDiagrams === "function" && !alreadyProcessedMermaid) {
     await initMermaidDiagrams();
   }
   initMathRendering();
@@ -205,11 +208,13 @@ function handleInitialHashNavigation() {
 }
 
 function initMathRendering() {
-  if (typeof renderMathInElement === "function") {
+  if (typeof renderMathInElement === "function" && !document.querySelector(".katex")) {
     renderMathInElement(document.body, {
       delimiters: [
         { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false }
+        { left: "\\[", right: "\\]", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false }
       ],
       ignoredClasses: ["mermaid", "mermaid-wrapper", "code-container", "copy-code-btn"],
       ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "svg"],
@@ -729,12 +734,11 @@ function scrollToExercise(num) {
   const drawer = document.getElementById("solution-drawer-" + num);
   if (drawer) drawer.open = true;
 
-  // Desplazamiento suave con compensación por el HUD fijo
-  const hud = document.getElementById("hudTopBar");
-  if (hud) hud.classList.remove("hud-hidden");
+  // Desplazamiento suave con compensación por las barras sticky superiores
+  unhideStickyBars();
   const rect = card.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const hudHeight = hud ? hud.offsetHeight : 140;
+  const hudHeight = getStickyHeaderOffset();
   const targetY = rect.top + scrollTop - hudHeight - 16;
 
   window.scrollTo({ top: targetY, behavior: 'smooth' });
@@ -944,14 +948,165 @@ function resetTrainer() {
   initTrainer();
 }
 
+function getStickyHeaderOffset() {
+  const hud = document.getElementById("hudTopBar");
+  if (hud) return hud.offsetHeight;
+  let total = 0;
+  const navbar = document.getElementById("siteNavbar");
+  const contextBar = document.getElementById("exerciseContextBar");
+  const tabsSticky = document.querySelector(".nav-tabs-sticky");
+  if (navbar) total += navbar.offsetHeight;
+  if (contextBar) total += contextBar.offsetHeight;
+  if (tabsSticky) total += tabsSticky.offsetHeight;
+  return total > 0 ? total : 110;
+}
+
+function unhideStickyBars() {
+  const hud = document.getElementById("hudTopBar");
+  const navbar = document.getElementById("siteNavbar");
+  const contextBar = document.getElementById("exerciseContextBar");
+  const tabsSticky = document.querySelector(".nav-tabs-sticky");
+  if (hud) hud.classList.remove("hud-hidden");
+  if (navbar) navbar.classList.remove("hud-hidden");
+  if (contextBar) contextBar.classList.remove("hud-hidden");
+  if (tabsSticky) tabsSticky.classList.remove("hud-hidden");
+}
+
+function syncStickyOffsets() {
+  const navbar = document.getElementById("siteNavbar");
+  if (!navbar) return;
+  const navHeight = navbar.offsetHeight;
+  if (navHeight > 0) {
+    document.documentElement.style.setProperty("--navbar-height", navHeight + "px");
+  }
+}
+
+// Menú desplegable de Paradigmas compatible con pantallas táctiles (Mobile Portrait & Landscape) y Desktop
+function toggleParadigmDropdown(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const dropdown = (event && event.currentTarget && event.currentTarget.closest(".site-dropdown"))
+    || document.getElementById("navParadigmsDropdown")
+    || document.querySelector(".site-dropdown");
+  if (!dropdown) return;
+
+  const willOpen = !dropdown.classList.contains("is-open");
+  closeParadigmDropdown();
+  closeTopicJumpMenu();
+
+  if (willOpen) {
+    unhideStickyBars();
+    dropdown.classList.add("is-open");
+    const trigger = dropdown.querySelector(".site-nav-link");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+    const navLinks = dropdown.closest(".site-nav-links");
+    if (navLinks) navLinks.classList.add("dropdown-open");
+    const navbar = dropdown.closest(".site-navbar");
+    if (navbar) navbar.classList.add("dropdown-open");
+  }
+}
+
+function closeParadigmDropdown() {
+  document.querySelectorAll(".site-dropdown.is-open").forEach(dropdown => {
+    dropdown.classList.remove("is-open");
+    const trigger = dropdown.querySelector(".site-nav-link");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+  });
+  document.querySelectorAll(".site-nav-links.dropdown-open").forEach(el => el.classList.remove("dropdown-open"));
+  document.querySelectorAll(".site-navbar.dropdown-open").forEach(el => el.classList.remove("dropdown-open"));
+}
+
+// Menú rápido "Saltar a Tema Específico..." en Teoría Avanzada (funciona con o sin Bootstrap JS)
+function toggleTopicJumpMenu(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const container = (event && event.currentTarget && event.currentTarget.closest(".dropdown"))
+    || document.getElementById("topicJumpDropdown");
+  if (!container) return;
+  const menu = container.querySelector(".dropdown-menu");
+  const btn = container.querySelector(".dropdown-toggle");
+  if (!menu) return;
+
+  const isOpen = menu.classList.contains("show");
+  closeParadigmDropdown();
+  if (isOpen) {
+    menu.classList.remove("show");
+    container.classList.remove("show");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  } else {
+    unhideStickyBars();
+    menu.classList.add("show");
+    container.classList.add("show");
+    if (btn) btn.setAttribute("aria-expanded", "true");
+  }
+}
+
+function closeTopicJumpMenu() {
+  document.querySelectorAll(".nav-tabs-sticky .dropdown-menu.show").forEach(menu => {
+    menu.classList.remove("show");
+    const parent = menu.closest(".dropdown");
+    if (parent) {
+      parent.classList.remove("show");
+      const btn = parent.querySelector(".dropdown-toggle");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+function initMobileNavigation() {
+  // Asegurar que cualquier .site-dropdown sin atributo onclick inline también responda al tap
+  document.querySelectorAll(".site-dropdown > .site-nav-link").forEach(trigger => {
+    if (!trigger.getAttribute("onclick") || !trigger.getAttribute("onclick").includes("toggleParadigmDropdown")) {
+      trigger.addEventListener("click", toggleParadigmDropdown);
+    }
+  });
+
+  // Cerrar el menú de paradigmas al seleccionar un ítem
+  document.querySelectorAll(".site-dropdown-item").forEach(item => {
+    item.addEventListener("click", () => {
+      closeParadigmDropdown();
+    });
+  });
+
+  // Cerrar el menú de temas específicos al seleccionar un tema
+  document.querySelectorAll(".nav-tabs-sticky .dropdown-item").forEach(item => {
+    item.addEventListener("click", () => {
+      closeTopicJumpMenu();
+    });
+  });
+
+  // Cerrar menús desplegables al tocar o hacer click fuera
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".site-dropdown")) {
+      closeParadigmDropdown();
+    }
+    if (!e.target.closest(".nav-tabs-sticky .dropdown")) {
+      closeTopicJumpMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    syncStickyOffsets();
+  }, { passive: true });
+
+  window.addEventListener("orientationchange", () => {
+    closeParadigmDropdown();
+    closeTopicJumpMenu();
+    setTimeout(syncStickyOffsets, 120);
+  }, { passive: true });
+}
+
 function scrollToTrainer() {
   const trainer = document.getElementById("entrenador-30s");
   if (trainer) {
-    const hud = document.getElementById("hudTopBar");
-    if (hud) hud.classList.remove("hud-hidden");
+    unhideStickyBars();
     const rect = trainer.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const hudHeight = hud ? hud.offsetHeight : 140;
+    const hudHeight = getStickyHeaderOffset();
     window.scrollTo({ top: rect.top + scrollTop - hudHeight - 16, behavior: "smooth" });
   } else {
     window.location.href = "index.html#entrenador-30s";
@@ -959,12 +1114,11 @@ function scrollToTrainer() {
 }
 
 function scrollToTop() {
-  const hud = document.getElementById("hudTopBar");
-  if (hud) hud.classList.remove("hud-hidden");
+  unhideStickyBars();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Auto-ocultar el HUD al hacer scroll hacia abajo en pantallas de altura reducida o móviles
+// Auto-ocultar el HUD y las barras sticky al hacer scroll hacia abajo en pantallas de altura reducida o móviles
 (function initHudScrollAutoHide() {
   let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
   let ticking = false;
@@ -973,24 +1127,45 @@ function scrollToTop() {
     if (!ticking) {
       window.requestAnimationFrame(() => {
         const hud = document.getElementById('hudTopBar');
-        if (!hud) {
+        const navbar = document.getElementById('siteNavbar');
+        const contextBar = document.getElementById('exerciseContextBar');
+        const tabsSticky = document.querySelector('.nav-tabs-sticky');
+
+        if (!hud && !navbar && !contextBar && !tabsSticky) {
           ticking = false;
           return;
         }
 
         const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const deltaY = currentScrollY - lastScrollY;
         const isMobileOrLandscape = window.matchMedia('(max-height: 550px), (max-width: 768px)').matches;
+        const hasOpenMenu = Boolean(
+          document.querySelector('.site-dropdown.is-open') ||
+          document.querySelector('.nav-tabs-sticky .dropdown-menu.show') ||
+          (document.activeElement && document.activeElement.id === 'exerciseSearch')
+        );
 
-        if (isMobileOrLandscape) {
+        const setHidden = (hidden) => {
+          [hud, navbar, contextBar, tabsSticky].forEach(el => {
+            if (!el) return;
+            if (hidden) {
+              el.classList.add('hud-hidden');
+            } else {
+              el.classList.remove('hud-hidden');
+            }
+          });
+        };
+
+        if (isMobileOrLandscape && !hasOpenMenu) {
           if (currentScrollY <= 25) {
-            hud.classList.remove('hud-hidden');
-          } else if (currentScrollY > lastScrollY && currentScrollY > 50) {
-            hud.classList.add('hud-hidden');
-          } else if (currentScrollY < lastScrollY) {
-            hud.classList.remove('hud-hidden');
+            setHidden(false);
+          } else if (deltaY > 6 && currentScrollY > 60) {
+            setHidden(true);
+          } else if (deltaY < -6) {
+            setHidden(false);
           }
         } else {
-          hud.classList.remove('hud-hidden');
+          setHidden(false);
         }
 
         lastScrollY = Math.max(0, currentScrollY);
@@ -1001,16 +1176,20 @@ function scrollToTop() {
   }, { passive: true });
 })();
 
-// Keyboard shortcuts: Escape closes drawer, '/' or Ctrl+K focuses search
+// Keyboard shortcuts: Escape closes drawer & dropdowns, '/' or Ctrl+K focuses search
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeCheatsheet();
+    closeParadigmDropdown();
+    closeTopicJumpMenu();
   } else if ((e.key === "/" || (e.ctrlKey && e.key.toLowerCase() === "k")) && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
     const searchInput = document.getElementById("exerciseSearch");
     if (searchInput) {
       e.preventDefault();
+      unhideStickyBars();
       searchInput.focus();
       searchInput.select();
     }
   }
 });
+

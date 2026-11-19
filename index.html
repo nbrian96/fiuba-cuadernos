@@ -34,9 +34,10 @@
       <span>TDA FIUBA</span>
     </a>
     
-    <nav>
+    <nav class="site-nav" aria-label="Navegación principal">
       <ul class="site-nav-links">
         <li><a href="index.html" class="site-nav-link active">🏠 Inicio</a></li>
+<<<<<<< HEAD
         <li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li>
         <li class="site-dropdown">
           <a href="#" class="site-nav-link" onclick="event.preventDefault()">📂 Paradigmas ▾</a>
@@ -47,6 +48,18 @@
             <a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking &amp; B&amp;B (15)</a>
             <a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a>
             <a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a>
+=======
+        <li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li>
+        <li class="site-dropdown" id="navParadigmsDropdown">
+          <a href="#" class="site-nav-link" role="button" aria-haspopup="true" aria-expanded="false" onclick="toggleParadigmDropdown(event)">📂 Paradigmas <span class="dropdown-caret">▾</span></a>
+          <div class="site-dropdown-menu" role="menu" aria-label="Seleccionar paradigma">
+            <a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a>
+            <a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a>
+            <a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a>
+            <a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking &amp; B&amp;B (14)</a>
+            <a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a>
+            <a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a>
+>>>>>>> origin/master
             <a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a>
             <a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a>
             <a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a>
@@ -138,7 +151,7 @@
     <p class="portal-hub-subtitle">
       Plataforma interactiva de estudio estructurada en <strong>vistas dedicadas independientes</strong>. Incluye el análisis riguroso de exámenes parciales reales, la guía oficial de 85 ejercicios clasificados por paradigma y el nuevo laboratorio didáctico de <strong>Aproximación y Algoritmos Randomizados</strong> con simuladores ejecutables.
     </p>
-    <div class="d-flex gap-3 flex-wrap">
+    <div class="d-flex gap-3 flex-wrap portal-hero-actions">
       <a href="parciales.html" class="btn btn-warning px-4 py-2 fw-bold shadow-sm" style="border-radius: 8px;">
         📝 Practicar con Parciales Reales (35) ➔
       </a>

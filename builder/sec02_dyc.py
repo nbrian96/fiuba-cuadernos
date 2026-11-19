@@ -506,36 +506,63 @@ Se cuenta con un arreglo de enteros ordenado de manera ascendente, que contiene 
 
 #### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
 
-* *(Nota de cátedra: En la versión clásica de FIUBA los elementos son consecutivos, o bien comparamos la diferencia de valores contra la diferencia de índices).*
-* **Idea clave de los índices:** Como el arreglo está ordenado de forma estrictamente creciente salvo por el único par duplicado, entre dos posiciones `ini` y `medio` sin duplicados los valores están obligados a crecer **al menos tanto como la cantidad de pasos dados**: `A[medio] - A[ini] >= medio - ini` (o si son enteros consecutivos a partir de `A[0]`, antes del duplicado se cumple `A[i] == A[0] + i` y después del duplicado se atrasa en 1: `A[i] == A[0] + i - 1`).
-* Miramos el elemento del medio `m`:
-  - Si `A[m]` es igual a `A[m - 1]` o a `A[m + 1]`, ¡ya encontramos el duplicado!
-  - Si en la mitad izquierda la diferencia de valores `A[m] - A[ini]` es **menor** que la cantidad de pasos `m - ini` (en elementos consecutivos), significa que hubo una repetición que "achicó" el crecimiento en la izquierda: buscamos en `[ini, m]`.
-  - Si no, el duplicado está garantizadamente en la mitad derecha: buscamos en `[m + 1, fin]`.
+* **Análisis de la precondición y caso general:**
+  - Si el arreglo contiene **enteros con saltos arbitrarios** (por ejemplo, $[1, 3, 5, 5, 9]$ o $[1, 1, 3, 5, 9]$ sin ser estrictamente consecutivos), ningún algoritmo de comparación puede determinar en tiempo $O(1)$ qué mitad contiene el duplicado en el peor caso (cota inferior $\Omega(n)$ por argumento del adversario). Por ende, el algoritmo de División y Conquista general debe poder explorar ambas ramas cuando no hay certeza absoluta.
+* **Mecanismo de División y Conquista (Caso General):**
+  - **Caso Base:** Si el rango tiene menos de 2 elementos (`fin <= ini`), no puede haber duplicado en ese intervalo. Si tiene 2 elementos (`fin - ini == 1`), comparamos directamente `A[ini] == A[fin]`.
+  - **Inspección Central ($O(1)$):** Calculamos `medio = (ini + fin) / 2`. Si `A[medio]` coincide con su adyacente anterior (`A[medio - 1]`) o posterior (`A[medio + 1]`), ¡encontramos el duplicado de inmediato!
+  - **Poda por Principio del Palomar (Heurística de Poda):**
+    - Si la diferencia de valores en la izquierda es estrictamente menor a la cantidad de pasos (`A[medio] - A[ini] < medio - ini`), por Palomar el duplicado está **garantizado** en la mitad izquierda, descartando la derecha.
+    - Análogamente, si `A[fin] - A[medio] < fin - medio`, el duplicado está **garantizado** en la mitad derecha, descartando la izquierda.
+  - **Búsqueda en ambas ramas (sin precondición):** Si ninguna de las dos podas se activa (los saltos $> 1$ enmascaran el duplicado, como en $[1, 1, 3, 5, 9]$), buscamos recursivamente en la mitad izquierda. Si allí no se encuentra (retorna nulo), buscamos en la mitad derecha.
+* **Variante clásica con precondición (enteros consecutivos):**
+  - Si la cátedra garantiza que los enteros son consecutivos salvo el duplicado, la poda del Palomar siempre acierta en una única mitad, descartando la otra ($a = 1$, logrando $O(\log n)$).
 
 #### 2. Semi-Pseudocódigo Simplificado
 
 ```text
 Algoritmo EncontrarDuplicado(A, ini, fin):
+    si fin - ini < 1:
+        devolver NULO
+    si fin - ini == 1:
+        si A[ini] == A[fin]:
+            devolver A[ini]
+        sino:
+            devolver NULO
+
     medio = (ini + fin) / 2
 
-    // 1. Verificar si el duplicado está justo en el medio
+    // 1. Verificar si el duplicado se encuentra contiguo a la posición media
     si (medio > ini y A[medio] == A[medio - 1]) o (medio < fin y A[medio] == A[medio + 1]):
         devolver A[medio]
 
-    // 2. Si los valores a la izquierda crecieron menos que la distancia de índices,
-    //    el número repetido está en la mitad izquierda
+    // 2. Poda por Principio del Palomar (si creció menos que los índices, está seguro en esa mitad)
     si (A[medio] - A[ini]) < (medio - ini):
         devolver EncontrarDuplicado(A, ini, medio - 1)
-    sino:
+    si (A[fin] - A[medio]) < (fin - medio):
         devolver EncontrarDuplicado(A, medio + 1, fin)
+
+    // 3. Caso general para saltos arbitrarios (sin precondición de enteros consecutivos):
+    //    Se explora la mitad izquierda; si no se encuentra allí, se explora la derecha
+    res_izq = EncontrarDuplicado(A, ini, medio - 1)
+    si res_izq != NULO:
+        devolver res_izq
+    devolver EncontrarDuplicado(A, medio + 1, fin)
 ```
 
 #### 3. Justificación de Complejidad (Para entregar en el parcial)
 
-* En cada paso descartamos una mitad completa y hacemos **$a = 1$ llamada recursiva** de tamaño $n/2$ (**$b = 2$**) con comparaciones en tiempo constante **$O(1)$** (**$c = 0$**).
-* Ecuación de recurrencia: $T(n) = 1 \cdot T(n/2) + O(1)$.
-* Aplicando el **Teorema Maestro**: $\log_2 1 = 0 = c$ (**Caso 2**), por lo que la complejidad es **$O(\log n)$**.
+* **Caso General (Sin precondición de enteros consecutivos):**
+  - En el peor caso (saltos arbitrarios que impiden la poda), el algoritmo divide el problema de tamaño $n$ en **$b = 2$** subproblemas de tamaño $n/2$ y puede requerir explorar hasta **$a = 2$ llamadas recursivas**.
+  - La división y comparaciones locales toman tiempo constante $O(1)$ (**$c = 0$**).
+  - Recurrencia: $T(n) = 2 \cdot T(n/2) + O(1)$.
+  - Aplicando el **Teorema Maestro**: $\log_b a = \log_2 2 = 1$. Como $c = 0 < 1$, aplica el **Caso 1** (dominado por las hojas), resultando en:
+    $$T(n) = \Theta(n^{\log_2 2}) = \Theta(n)$$
+  - *Nota Teórica:* Este orden $\Theta(n)$ es óptimo para la versión general, ya que por el Argumento del Adversario se requieren $\Omega(n)$ comparaciones en el peor caso.
+* **Caso Especial (Con precondición de enteros consecutivos):**
+  - La poda del Palomar siempre descarta una mitad completa, realizando **$a = 1$ llamada recursiva** ($b = 2$, $c = 0$).
+  - Recurrencia: $T(n) = 1 \cdot T(n/2) + O(1)$.
+  - Por el **Teorema Maestro**: $\log_2 1 = 0 = c$ (**Caso 2**), obteniendo **$O(\log n)$**.
 
 ---
 
