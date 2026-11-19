@@ -371,6 +371,81 @@ FUNCION TransformarISaVertexCover(G = (V, E), k):
 
 ---
 
+### Ejercicio 85 — Demostración de NP-Completitud de Independent Set (desde Vertex Cover)
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★★★☆ (4/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 6
+
+**Enunciado**  
+Se considera el problema de Independent Set: Dado un grafo no dirigido $G=(V,E)$ y un entero $k$, determinar si existe un subconjunto de al menos $k$ vértices tal que ningún par de vértices del subconjunto esté conectado por una arista. También se considera el problema de Vertex Cover: Dado un grafo no dirigido $G'=(V',E')$ y un entero $k'$, determinar si existe un subconjunto de como máximo $k'$ vértices que cubra todas las aristas del grafo. Es decir, cada arista debe tener al menos uno de sus extremos perteneciente al subconjunto seleccionado. Sabiendo que VC es NP-Completo, demostrar que Independent Set también lo es.
+
+#### 1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos Canónicos de FIUBA)
+
+* **Paso 1: Demostrar que Independent Set $\in$ NP (Verificador Polinomial):**
+  - **Certificado:** Un subconjunto de vértices $I \subseteq V$ propuesto como solución.
+  - **Algoritmo Verificador:**
+    1. Verifica que el tamaño del conjunto sea al menos $k$: $|I| \ge k$ (toma tiempo $\mathcal{O}(|V|)$).
+    2. Recorre cada par de vértices distintos $u, v \in I$ y comprueba en la estructura del grafo que $(u, v) \notin E$ (ningún par conectado por una arista). Esto toma a lo sumo $\binom{|I|}{2} = \mathcal{O}(|V|^2)$ comparaciones.
+  - Como el verificador es determinístico y finaliza en tiempo $\mathcal{O}(|V|^2 + |E|)$ (estrictamente polinomial respecto al tamaño de la entrada), queda demostrado que **$\text{Independent Set} \in \text{NP}$**.
+* **Paso 2: Elección del Problema Conocido y Dirección Sagrada:**
+  - El enunciado establece que **Vertex Cover (VC) es NP-Completo**.
+  - **Dirección Sagrada:** Reducimos **desde** el problema conocido **hacia** el problema nuevo a demostrar:
+    $$\text{Vertex Cover} \le_P \text{Independent Set}$$
+* **Paso 3: Transformación Polinomial de la Instancia:**
+  - Dada una instancia arbitraria de Vertex Cover: un grafo no dirigido $G' = (V', E')$ y un entero $k'$.
+  - Construimos una instancia $\langle G = (V, E), k \rangle$ de Independent Set definiendo:
+    $$G = G' \quad (\text{mismo conjunto de vértices } V = V' \text{ y mismas aristas } E = E')$$
+    $$k = |V'| - k'$$
+  - **Costo de la transformación:** Construir $G = G'$ y fijar $k = |V'| - k'$ toma tiempo $\mathcal{O}(|V'| + |E'|)$, que es estrictamente **polinomial** (lineal).
+* **Paso 4: Demostración de Equivalencia Lógica (Ida y Vuelta $\iff$):**
+  - Se fundamenta en el Teorema del Complemento de Gallai: en cualquier grafo $G = (V, E)$, un conjunto $S \subseteq V$ es un *Vertex Cover* si y solo si su complemento $V \setminus S$ es un *Independent Set*.
+  - **($\implies$) Ida (Si $G'$ tiene un Vertex Cover de tamaño $\le k' \implies G$ tiene un Independent Set de tamaño $\ge k$):**
+    - Supongamos que existe un subconjunto $S \subseteq V'$ que es Vertex Cover de $G'$ con $|S| \le k'$.
+    - Definimos $I = V' \setminus S$. El tamaño de $I$ es:
+      $$|I| = |V'| - |S| \ge |V'| - k' = k$$
+    - Demostraremos por el absurdo que $I$ es un conjunto independiente. Si no lo fuera, existirían dos vértices $u, v \in I$ tales que $(u, v) \in E'$.
+    - Por definición de complemento, si $u \in I$ y $v \in I$, entonces $u \notin S$ y $v \notin S$.
+    - Pero si $u \notin S$ y $v \notin S$, la arista $(u, v)$ no tiene ninguno de sus dos extremos en $S$, contradiciendo que $S$ es un Vertex Cover de $G'$.
+    - Por lo tanto, no hay aristas entre vértices de $I$, demostrando que $I$ es un **Independent Set válido en $G$ con $|I| \ge k$**.
+  - **($\impliedby$) Vuelta (Si $G$ tiene un Independent Set de tamaño $\ge k \implies G'$ tiene un Vertex Cover de tamaño $\le k'$):**
+    - Supongamos que existe un subconjunto $I \subseteq V$ que es Independent Set en $G$ con $|I| \ge k$.
+    - Definimos $S = V \setminus I$. El tamaño de $S$ es:
+      $$|S| = |V| - |I| \le |V| - k = |V'| - (|V'| - k') = k'$$
+    - Demostraremos que $S$ cubre todas las aristas de $E'$. Sea cualquier arista $(u, v) \in E'$.
+    - Como $I$ es un conjunto independiente, es imposible que ambos extremos $u$ y $v$ pertenezcan a $I$.
+    - Por lo tanto, al menos uno de los dos extremos debe estar afuera de $I$, es decir, pertenece a $V \setminus I = S$.
+    - En consecuencia, toda arista de $E'$ tiene al menos un extremo en $S$, demostrando que $S$ es un **Vertex Cover válido en $G'$ con $|S| \le k'$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION VerificadorIndependentSet(G = (V, E), k, certificado_I):
+    SI tamaño(certificado_I) < k:
+        RETORNAR FALSO
+    PARA CADA u EN certificado_I:
+        PARA CADA v EN certificado_I:
+            SI u != v Y existeArista(G, u, v):
+                RETORNAR FALSO
+    RETORNAR VERDADERO // Tiempo O(|V|^2)
+
+FUNCION TransformarVertexCoverAIndependentSet(G_prima = (V_prima, E_prima), k_prima):
+    G <- G_prima
+    k <- tamaño(V_prima) - k_prima
+    RETORNAR (G, k) // Transformación en tiempo O(|V| + |E|)
+```
+
+#### 3. Conclusión Formal
+
+Habiendo demostrado que:
+1. $\text{Independent Set} \in \text{NP}$.
+2. $\text{Vertex Cover} \le_P \text{Independent Set}$ mediante una reducción en tiempo polinomial $\mathcal{O}(|V'| + |E'|)$.
+3. $\text{Vertex Cover}$ es NP-Completo.
+
+Queda formalmente demostrado que **Independent Set es NP-Completo**.
+
+---
+
 ### Errores Fatales en Exámenes sobre Reducciones NP
 
 1. **Reducir en la dirección equivocada ($B \le_P A$ en lugar de $A \le_P B$):** Es el error más grave de toda la materia. Si se pide probar que $B \in \text{NPC}$, la reducción DEBE partir del problema conocido $A$ y llegar al nuevo problema $B$. Reducir al revés tiene calificación automática de 0 puntos en la pregunta.

@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item active">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item active">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -95,7 +95,7 @@ $$\sum_{w: (v, w) \in E} x_{vw} - \sum_{u: (u, v) \in E} x_{uv} = \begin{cases} 
 <p><em>Garantía de Optimalidad:</em> Es <strong>óptimo</strong>. Por la propiedad de <strong>Unimodularidad Total</strong> de la matriz de incidencia de redes, resolver la relajación lineal continua produce automáticamente variables enteras $x_{uv} \in \{0, 1\}$ sin requerir Branch &amp; Bound exponencial.</p>
 </li></ol>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Óptimo en DAG)
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Óptimo en DAG)
 Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
     OPT = mapa con valor INFINITO para todo nodo; padre = mapa con NULO
     OPT[ezeiza] = 0
@@ -116,7 +116,7 @@ Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
 
 // 2. Greedy (No óptimo): En cada etapa actual, siguiente = argmin_{v} { C[actual][v] }
 // 3. Modelo PL: Min sum C_uv * x_uv  sujeto a sum x_vw - sum x_uv = balance(v)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Comparativa de Complejidades Temporales y Espaciales:</strong><ul><li><strong>Greedy:</strong> En cada una de las $K$ etapas solo inspecciona las aristas salientes del nodo elegido. Tiempo $\mathcal{O}(|V| + |E|)$ (o $\mathcal{O}(K \cdot \Delta)$), Espacio $\mathcal{O}(|V|)$. Es el más veloz pero <strong>carece de garantía de optimalidad</strong>.</li><li><strong>Programación Dinámica:</strong> Al estar estructurado en etapas (DAG), recorre los vértices y cada arista entrante $(u, v)$ una única vez en orden topológico. Tiempo: <strong>$\Theta(|V| + |E|)$</strong>, Espacio: <strong>$\Theta(|V|)$</strong> para las tablas <code>OPT</code> y <code>padre</code>. <strong>Garantiza la solución óptima</strong> en tiempo lineal respecto al tamaño del grafo.</li><li><strong>Programación Lineal:</strong> Formulación con $|E|$ variables y $|V|$ restricciones de conservación. Resuelto como flujo de costo mínimo con Simplex de redes en tiempo polinomial $\mathcal{O}(|V| \cdot |E|)$. <strong>Garantiza la solución óptima</strong>.</li></ul>
 </li><li><strong>Elección en Examen:</strong> Si se busca la ruta óptima en un grafo por etapas (DAG), <strong>Programación Dinámica</strong> es la solución óptima y más eficiente de implementar.</li></ul>
@@ -146,7 +146,7 @@ $$\sum_{j=1}^M R_j \cdot x_{ji} \le C_i \qquad \forall i \in \{1, \dots, N\}$$</
 </li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Caso Unitario (R_j = 1): Redes de Flujo con Edmonds-Karp
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Caso Unitario (R_j = 1): Redes de Flujo con Edmonds-Karp
 Algoritmo AsignarTareasUnitarias(Tareas, Servidores, Cap, Compatibles):
     G = crearRedFlujo(fuente=s, sumidero=t)
     para cada j en Tareas:
@@ -165,7 +165,7 @@ Algoritmo AsignarTareasUnitarias(Tareas, Servidores, Cap, Compatibles):
 // Maximizar: sum_{j, i} x[j][i]
 // Sujeto a:  sum_i x[j][i] &lt;= 1   (para todo j en 1..M)
 //            sum_j R[j] * x[j][i] &lt;= C[i]  (para todo i en 1..N)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad en Caso Unitario (Redes de Flujo):</strong><ul><li>Tamaño de la red: $|V| = M + N + 2$ vértices, y $|E| \le M + M \cdot N + N$ aristas.</li><li>Con el algoritmo de Edmonds-Karp (caminos aumentantes por BFS), la complejidad temporal es <strong>$\mathcal{O}(|V| \cdot |E|^2) = \mathcal{O}((M + N) \cdot (M \cdot N)^2)$</strong>.</li><li>Complejidad espacial: $\mathcal{O}(|V| + |E|)$ para la red residual y listas de adyacencia. Es estrictamente <strong>polinomial</strong>.</li></ul>
 </li><li><strong>Complejidad en Caso Heterogéneo (PLI):</strong><ul><li>Al generalizar el problema de la mochila (<em>Multiple Knapsack</em>), es <strong>NP-Hard</strong>.</li><li>Complejidad temporal en peor caso: exponencial <strong>$\mathcal{O}(2^{M \cdot N})$</strong> mediante algoritmos exactos de <em>Branch &amp; Cut</em>.</li><li>Complejidad espacial del modelo: $\mathcal{O}(M \cdot N)$ variables y $\mathcal{O}(M + N)$ restricciones (polinomial en representación matricial).</li></ul>
@@ -202,7 +202,7 @@ Para el problema de Vertex Cover Mínimo en un grafo $G = (V, E)$, comparar tres
     classDef approx fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado de los 3 Enfoques (Para la Hoja)</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// ENFOQUE 1: Backtracking con Branch &amp; Bound (Exacto)
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// ENFOQUE 1: Backtracking con Branch &amp; Bound (Exacto)
 FUNCION VertexCoverBT(G, C_actual, MEJOR_C):
     // Poda por optimalidad (Branch &amp; Bound)
     SI tamaño(C_actual) &gt;= tamaño(MEJOR_C):
@@ -230,7 +230,7 @@ FUNCION VertexCoverAproximado2(G = (V, E)):
             agregar u a C
             agregar v a C   // Obligatorio agregar AMBOS extremos
     RETORNAR C
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Elegir solo 1 extremo en lugar de ambos en el 2-Aproximado:</strong> Si al tomar una arista $(u, v)$ agregas solo $u$ (o el de mayor grado), el algoritmo pierde la garantía de factor 2 (el greedy por mayor grado tiene factor $O(\log |V|)$, no 2). Es obligatorio agregar <strong>ambos extremos</strong> $u$ y $v$.</li></ul>
@@ -264,7 +264,7 @@ $$OPT(i, w) = \begin{cases} OPT(i-1, w) &amp; \text{si } w_i &gt; w \text{ (el �
 <p><strong>Paradigma Programación Lineal Entera (PLI 0-1):</strong></p>
 </li><li><strong>Variables de Decisión:</strong> $x_i \in \{0, 1\}$ para $i \in \{1, \dots, n\}$ ($1$ si se empaca el ítem $i$, $0$ si no).</li><li><strong>Función Objetivo:</strong> Maximizar el valor total: $\max Z = \sum_{i=1}^n v_i \cdot x_i$.</li><li><strong>Restricción de Capacidad (1 restricción):</strong> $\sum_{i=1}^n w_i \cdot x_i \le W$.</li><li><strong>Relación con Relajación:</strong> Relajar $x_i \in [0, 1]$ equivale a la Mochila Fraccionaria, cuya solución óptima es la cota superior utilizada por el solver en cada nodo del árbol de Branch &amp; Cut.</li></ol>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Mochila 0/1 con arreglo O(W))
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Mochila 0/1 con arreglo O(W))
 Algoritmo Mochila01DP(pesos, valores, n, W):
     DP = arreglo de tamaño (W + 1) inicializado en 0
     para i desde 0 hasta n - 1:
@@ -289,7 +289,7 @@ función MochilaBT(i, peso_act, val_act, ref mejor_val, pesos, valores, n, W):
 
     // Rama 2: Excluir ítem i
     MochilaBT(i + 1, peso_act, val_act, mejor_val, pesos, valores, n, W)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Análisis Comparativo de Complejidad:</strong><ul><li><strong>Greedy Fraccionario:</strong> Ordenamiento inicial en $\Theta(n \log n)$ y barrido voraz en $\Theta(n)$. Tiempo total: <strong>$\Theta(n \log n)$</strong>, Espacio auxiliar: $\mathcal{O}(1)$. Es óptimo para la versión continua; en 0-1 no garantiza solución óptima.</li><li><strong>Programación Dinámica 0-1:</strong> Tiempo: <strong>$\Theta(n \cdot W)$</strong>. Espacio: $\Theta(W)$ (con vector optimizado) u $\Theta(n \cdot W)$ (con matriz para reconstrucción de ítems). Es una complejidad <strong>pseudo-polinomial</strong>: es polinomial respecto a la magnitud numérica de $W$, pero exponencial respecto a la cantidad de bits de la entrada $B = \log_2 W$ (dado que $W = 2^B$). Si $W$ es del orden de $10^{12}$, DP colapsa por memoria y tiempo.</li><li><strong>Backtracking con Branch &amp; Bound:</strong> Peor caso asintótico: <strong>$O(2^n)$</strong> tiempo, $\mathcal{O}(n)$ espacio en pila. Sin embargo, gracias a la cota fraccionaria estricta, las podas cortan grandes regiones del árbol. Es la estrategia superior cuando $W \gg 10^9$ pero $n$ es moderado ($n \le 40$).</li><li><strong>Programación Lineal Entera (PLI):</strong> Problema NP-Hard en peor caso ($O(2^n)$), pero con solo $n$ variables binarias y 1 restricción lineal, resuelto eficazmente por solvers modernos con Branch &amp; Cut.</li></ul>
 </li></ul>
@@ -333,7 +333,7 @@ $$u_i - u_j + n \cdot x_{ij} \le n - 1 \qquad \forall i \ne j \in \{2, \dots, n\
 <p><strong>Heurística Greedy y Búsqueda Local (2-Opt / 2-Aprox):</strong></p>
 </li><li><strong>Greedy (Vecino más Cercano):</strong> Viajar iterativamente a la ciudad más cercana no visitada. No garantiza cota constante en grafos generales (una última arista de retorno forzada puede tener costo arbitrariamente alto).</li><li><strong>Búsqueda Local 2-Opt:</strong> Partiendo de un tour factible, examina pares de aristas no consecutivas $(u, v)$ y $(w, z)$. Si eliminarlas y reconectar $(u, w)$ y $(v, z)$ revirtiendo el subcamino intermedio reduce el costo ($c_{uw} + c_{vz} &lt; c_{uv} + c_{wz}$), se adopta el cambio. Se itera hasta alcanzar un óptimo local donde ninguna reconexión 2-opt mejore el recorrido.</li><li><em>(Caso Métrico 2-Aproximado):</em> Si se cumple la desigualdad triangular, construir el MST, duplicar aristas y recorrer en preorden DFS con atajos garantiza $\text{Costo}(\text{Tour}) \le 2 \cdot OPT$ en $O(n^2)$.</li></ol>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Held-Karp) en O(n^2 * 2^n)
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Held-Karp) en O(n^2 * 2^n)
 Algoritmo TSP_HeldKarp(C, n):
     DP = tabla indexada por (mascara_S, ciudad_j) en INFINITO
     para j desde 1 hasta n - 1:
@@ -353,7 +353,7 @@ Algoritmo TSP_HeldKarp(C, n):
 // 2. Modelo PLI con Restricciones MTZ:
 // Min sum c_ij * x_ij  sujeto a sum_j x_ij = 1, sum_i x_ij = 1
 // y restricción de orden MTZ: u_i - u_j + n * x_ij &lt;= n - 1 (para i != j &gt;= 1)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Comparativa de Complejidades Temporales y Espaciales:</strong><ul><li><strong>Fuerza Bruta / Backtracking con B&amp;B:</strong> Peor caso asintótico: <strong>$O(n!)$</strong> tiempo, $\mathcal{O}(n)$ espacio. Con cotas inferiores fuertes de MST resuelve instancias de hasta $n \approx 20-25$.</li><li><strong>Programación Dinámica (Held-Karp):</strong> Hay $\binom{n-1}{k}$ subconjuntos de tamaño $k$, y para cada par $(S, j)$ se evalúan $k$ transiciones. Complejidad temporal: <strong>$\Theta(n^2 2^n)$</strong>, Espacio: $\Theta(n \cdot 2^n)$. Para $n = 20$, reduce de $20! \approx 2.43 \times 10^{18}$ operaciones a $20^2 \cdot 2^{20} \approx 4.19 \times 10^8$ operaciones (de milenios a menos de 1 segundo).</li><li><strong>Programación Lineal Entera (PLI con MTZ):</strong> Peor caso exponencial $O(2^{n^2})$. El modelo utiliza $n^2 - 1$ variables y $n^2 - n + 2 = O(n^2)$ restricciones (polinomial en especificación).</li><li><strong>Greedy / 2-Opt:</strong> Vecino más cercano corre en $\mathcal{O}(n^2)$. Cada pasada de 2-opt evalúa $\mathcal{O}(n^2)$ parejas de aristas en tiempo polinomial hacia un óptimo local.</li></ul>
 </li></ul>

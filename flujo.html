@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item active">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item active">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -116,7 +116,7 @@ Para evitar que un mismo médico atienda a dos pacientes en el mismo horario, <s
     T3 -->|1| T_SNK
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AsignarTurnosMedicos(Medicos, Pacientes, HorariosPorMedico, Compatibilidades):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AsignarTurnosMedicos(Medicos, Pacientes, HorariosPorMedico, Compatibilidades):
     Crear red de flujo dirigida G con super-fuente s y super-sumidero t
 
     // 1. Fuente s -&gt; cada paciente p (capacidad 1: a lo sumo 1 turno por paciente)
@@ -143,7 +143,7 @@ Para evitar que un mismo médico atienda a dos pacientes en el mismo horario, <s
             agregar (p, m, h) a citas_confirmadas
 
     RETORNAR citas_confirmadas
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Tamaño de la red:</strong><ul><li>Nodos: $|V| = 2 + |P| + |T|$, donde $|T| = \sum_{m \in M} |H_m|$ es el total de turnos ofrecidos.</li><li>Aristas: $|E| = |P| + |C| + |T| = \mathcal{O}(|P| + |C| + |T|)$, donde $|C|$ es el total de compatibilidades declaradas.</li></ul>
 </li><li><strong>Costo de armar la red:</strong> Recorrer pacientes, turnos y compatibilidades toma tiempo y espacio lineal <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li><li><strong>Costo de correr Ford-Fulkerson / Edmonds-Karp:</strong> Como todas las aristas de $s$ a los pacientes tienen capacidad $1$, el flujo máximo está acotado por $|f^*| \le \min(|P|, |T|) \le |P|$. Cada búsqueda de camino de aumento por BFS/DFS cuesta $\mathcal{O}(|E|)$ y aumenta el flujo en al menos $1$ unidad, por lo que ocurren a lo sumo $|P|$ iteraciones. La complejidad temporal total es <strong>$\mathcal{O}(|P| \cdot |E|)$</strong> (estrictamente polinomial), y la complejidad espacial es <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li></ul>
@@ -176,7 +176,7 @@ Como tenemos múltiples regiones que generan energía y múltiples regiones que 
     R3 -->|D3| T
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AbastecerRedEnergetica(Regiones, Generacion, Demanda, Lineas):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AbastecerRedEnergetica(Regiones, Generacion, Demanda, Lineas):
     Crear red de flujo G con Super-Fuente S y Super-Sumidero T
     D_total &lt;- 0
 
@@ -205,7 +205,7 @@ Como tenemos múltiples regiones que generan energía y múltiples regiones que 
             SI u PERTENECE A A Y v NO PERTENECE A A:
                 agregar (u, v) a cuellos_de_botella
         RETORNAR (&quot;INFACTIBLE - Cuellos de botella:&quot;, cuellos_de_botella)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Tamaño de la red:</strong> Para $R$ regiones ($R = 9$ en el enunciado), la red tiene $|V| = R + 2$ nodos y $|E| \le 2R + |\text{Líneas}|$ aristas (a lo sumo $9 + 9 + 72 = 90$ aristas).</li><li><strong>Costo de armar la red y hallar el corte:</strong> Construir la red y hacer el BFS final sobre $G_f$ cuesta <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li><li><strong>Costo de correr Edmonds-Karp:</strong> La complejidad temporal es estrictamente polinomial <strong>$\mathcal{O}(|V| \cdot |E|^2)$</strong> (con $R = 9$ es $\mathcal{O}(1)$ en la práctica, apenas $\sim 11 \times 90^2 \approx 89.100$ operaciones). Si se usa Ford-Fulkerson con DFS, es pseudo-polinomial $\mathcal{O}(|E| \cdot D_{\text{total}})$. Complejidad espacial: <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -250,7 +250,7 @@ Por lo tanto, un corte que era mínimo pero tenía <strong>muchas aristas chicas
     v -->|c=11 → c'=12| T_SNK["Sumidero t"]
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Construcción y verificación formal del contraejemplo en papel:
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Construcción y verificación formal del contraejemplo en papel:
 PROCEDIMIENTO ContraejemploCorteMinimoMasUno():
     // Grafo con fuente s, nodos intermedios u1..u5, v y sumidero t
     // Corte 1: A1 = {s}, B1 = {u1..u5, v, t} -&gt; corta las 5 aristas (s, u_i) de cap 2
@@ -265,7 +265,7 @@ PROCEDIMIENTO ContraejemploCorteMinimoMasUno():
 
     // Como C_nuevo_Corte2 (12) &lt; C_nuevo_Corte1 (15), A1 dejó de ser corte mínimo
     RETORNAR FALSO
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Verificación del contraejemplo:</strong> El grafo construido tiene $|V| = 8$ nodos y $|E| = 11$ aristas; calcular la capacidad de ambos cortes antes y después de la perturbación toma tiempo constante <strong>$\mathcal{O}(1)$</strong> (y en un grafo general de $|E|$ aristas, evaluar la capacidad de un corte dado $(A, B)$ cuesta <strong>$\mathcal{O}(|E|)$</strong> recorriendo las aristas que van de $A$ hacia $B$).</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -300,7 +300,7 @@ Corremos <strong>un único BFS (o DFS)</strong> desde la fuente $s$ hasta el sum
     classDef same fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION ActualizarFlujoMasUno(G_f, f, valor_flujo, s, t, u, v):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION ActualizarFlujoMasUno(G_f, f, valor_flujo, s, t, u, v):
     // 1. Actualizar en O(1) la capacidad residual de la única arista modificada
     c_f(u, v) &lt;- c_f(u, v) + 1
 
@@ -321,7 +321,7 @@ Corremos <strong>un único BFS (o DFS)</strong> desde la fuente $s$ hasta el sum
 
     // Si no hay camino a t, el flujo máximo no cambió
     RETORNAR (valor_flujo, f)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Actualización de la arista $(u, v)$:</strong> Incrementar $c_f(u, v)$ en $1$ cuesta <strong>$\mathcal{O}(1)$</strong>.</li><li><strong>Búsqueda y aumento en la red residual:</strong> Ejecutamos <strong>una sola vez</strong> el recorrido BFS desde $s$ hasta $t$ sobre $G&#x27;_f$, lo cual visita cada nodo y arista a lo sumo una vez en tiempo <strong>$\mathcal{O}(|V| + |E|)$</strong>. Si halla el camino simple $P$ (de longitud a lo sumo $|V|$ aristas), actualizar el flujo a lo largo de $P$ cuesta $\mathcal{O}(|V|)$.</li><li><strong>Complejidad Total:</strong> Tiempo <strong>$\mathcal{O}(|V| + |E|)$</strong> y espacio adicional <strong>$\mathcal{O}(|V|)$</strong> para la cola y el arreglo de visitados/padres del BFS.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -357,7 +357,7 @@ Luego de las elecciones del domingo, en cierto país limítrofe, se deben llevar
     class CNE snk
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MaximizarTransporteUrnasFF(Centros, NodosIntermedios, Caminos, CNE):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MaximizarTransporteUrnasFF(Centros, NodosIntermedios, Caminos, CNE):
     // 1. Construir la red de flujo G = (V, E) y la red residual G_f
     Crear grafo dirigido G y grafo residual G_f
     Crear nodo ficticio SuperFuente s
@@ -398,7 +398,7 @@ Luego de las elecciones del domingo, en cierto país limítrofe, se deben llevar
 
     // 3. Devolver el máximo de urnas/minuto y el detalle por cada camino original
     RETORNAR (flujo_total_urnas, f)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Con Ford-Fulkerson clásico (búsqueda de camino arbitrario con DFS):</strong> En cada iteración se busca un camino de aumento en la red residual en tiempo $\mathcal{O}(|E|)$ (dado que $|V| \le |E| + 1$) y, al ser las capacidades enteras (urnas por minuto), el flujo aumenta al menos en $1$ unidad por iteración. Por lo tanto, la complejidad temporal es <strong>$\mathcal{O}(|E| \cdot |f^*|)$</strong> (pseudo-polinomial), donde $|f^*|$ es el flujo máximo total de urnas por minuto que llegan al $CNE$.</li><li><strong>Con Edmonds-Karp (implementación de Ford-Fulkerson usando BFS para elegir el camino más corto en cantidad de aristas):</strong> Se garantiza que ocurren a lo sumo $\mathcal{O}(|V| \cdot |E|)$ aumentos de flujo, y cada BFS toma $\mathcal{O}(|E|)$. Por lo tanto, la complejidad temporal es estrictamente polinomial <strong>$\mathcal{O}(|V| \cdot |E|^2)$</strong>, donde $|V| = N + |\text{NodosIntermedios}| + 2$ y $|E| = N + |\text{Caminos}|$.</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(|V| + |E|)$</strong> para almacenar la red de flujo, la red residual $G_f$ y la cola del BFS.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>

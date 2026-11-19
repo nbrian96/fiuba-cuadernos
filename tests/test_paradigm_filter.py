@@ -53,8 +53,8 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         self.assertTrue(pos_p42 < pos_ej54,
                         "El Ejercicio 54 debe ubicarse inmediatamente debajo del Patrón 4.2.")
 
-    def test_all_79_cards_have_valid_paradigm_attribute(self):
-        """Verifica que las 79 tarjetas posean un data-paradigm válido correspondiente a uno de los 8 temas."""
+    def test_all_85_cards_have_valid_paradigm_attribute(self):
+        """Verifica que las 85 tarjetas posean un data-paradigm válido correspondiente a uno de los 8 temas."""
         bundle_path = os.path.join(BASE_DIR, "assets", "js", "catalog-bundle.js")
         with open(bundle_path, "r", encoding="utf-8") as f:
             raw = f.read()
@@ -65,7 +65,7 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         content = json.loads(raw[start + len(prefix):end].strip())
 
         cards = re.findall(r'<article class="exercise-card"[^>]*id="(ej-\d+)"[^>]*data-paradigm="([^"]+)"', content)
-        self.assertEqual(len(cards), 79, "Deben existir exactamente 79 tarjetas en el catálogo.")
+        self.assertEqual(len(cards), 85, "Deben existir exactamente 85 tarjetas en el catálogo.")
 
         valid_paradigms = {"dyc", "greedy", "backtracking", "dp", "pl", "flujo", "reducciones", "integradores"}
         counts = {}
@@ -73,13 +73,13 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
             self.assertIn(p, valid_paradigms, f"{ej} tiene un data-paradigm inválido: {p}")
             counts[p] = counts.get(p, 0) + 1
 
-        self.assertEqual(counts["dyc"], 12)
-        self.assertEqual(counts["greedy"], 26)
-        self.assertEqual(counts["backtracking"], 14)
-        self.assertEqual(counts["dp"], 7)
-        self.assertEqual(counts["pl"], 6)
+        self.assertEqual(counts["dyc"], 13)
+        self.assertEqual(counts["greedy"], 27)
+        self.assertEqual(counts["backtracking"], 15)
+        self.assertEqual(counts["dp"], 8)
+        self.assertEqual(counts["pl"], 7)
         self.assertEqual(counts["flujo"], 5)
-        self.assertEqual(counts["reducciones"], 4)
+        self.assertEqual(counts["reducciones"], 5)
         self.assertEqual(counts["integradores"], 5)
 
     def test_filter_simulation_all_and_paradigm_cycles(self):
@@ -94,7 +94,7 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         content = json.loads(raw[start + len(prefix):end].strip())
 
         card_matches = list(re.finditer(r'<article class="exercise-card"[^>]*id="(ej-\d+)"[^>]*data-paradigm="([^"]+)"[^>]*data-parcial="([^"]+)"', content))
-        self.assertEqual(len(card_matches), 79)
+        self.assertEqual(len(card_matches), 85)
 
         def simulate_filter(paradigm):
             visible = []
@@ -113,27 +113,29 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
             return visible
 
         # 1. Todos activo
-        self.assertEqual(len(simulate_filter("all")), 79)
+        self.assertEqual(len(simulate_filter("all")), 85)
 
         # 2. Filtrar por DP
         dp_cards = simulate_filter("dp")
-        self.assertEqual(len(dp_cards), 7)
+        self.assertEqual(len(dp_cards), 8)
         self.assertIn("ej-53", dp_cards)
         self.assertIn("ej-59", dp_cards)
+        self.assertIn("ej-82", dp_cards)
 
         # 3. Volver a elegir Todos
         all_cards = simulate_filter("all")
-        self.assertEqual(len(all_cards), 79)
+        self.assertEqual(len(all_cards), 85)
         self.assertIn("ej-1", all_cards)
         self.assertIn("ej-53", all_cards)
         self.assertIn("ej-79", all_cards)
+        self.assertIn("ej-85", all_cards)
 
         # 4. Filtrar por Parciales
         parcial_cards = simulate_filter("parciales")
-        self.assertEqual(len(parcial_cards), 29)
+        self.assertEqual(len(parcial_cards), 35)
 
         # 5. Volver a elegir Todos nuevamente
-        self.assertEqual(len(simulate_filter("all")), 79)
+        self.assertEqual(len(simulate_filter("all")), 85)
 
     def test_update_progress_hud_does_not_gate_on_prog_percent(self):
         """Verifica que updateProgressHUD en app.js no dependa obligatoriamente de progPercent para actualizar contadores."""

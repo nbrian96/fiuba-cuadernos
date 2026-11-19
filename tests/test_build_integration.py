@@ -158,8 +158,8 @@ class TestBuildIntegration(unittest.TestCase):
                 f"[{label}] Comparación de costo óptimo contraejemplo ausente o mal delimitada."
             )
 
-    def test_all_79_exercises_present_across_system(self):
-        """Verifica que los 79 ejercicios oficiales estén presentes en el sistema con su estructura de card completa."""
+    def test_all_85_exercises_present_across_system(self):
+        """Verifica que los 85 ejercicios oficiales estén presentes en el sistema con su estructura de card completa."""
         index_file = os.path.join(BASE_DIR, "index.html")
         with open(index_file, "r", encoding="utf-8") as f:
             index_content = f.read()
@@ -169,7 +169,7 @@ class TestBuildIntegration(unittest.TestCase):
 
         combined_content = index_content + "\n" + bundle_content
 
-        for ej_num in range(1, 80):
+        for ej_num in range(1, 86):
             card_pattern = r'id=\\?["\']ej-' + str(ej_num) + r'\\?["\']'
             self.assertRegex(
                 combined_content, card_pattern,
@@ -187,7 +187,7 @@ class TestBuildIntegration(unittest.TestCase):
             all_discovered.extend(nums)
 
         self.assertEqual(len(all_discovered), len(set(all_discovered)), "Existen números de ejercicio duplicados en los módulos.")
-        self.assertEqual(len(all_discovered), 79, f"Se esperaban 79 ejercicios en los módulos, encontrados {len(all_discovered)}.")
+        self.assertEqual(len(all_discovered), 85, f"Se esperaban 85 ejercicios en los módulos, encontrados {len(all_discovered)}.")
 
 
 if __name__ == "__main__":

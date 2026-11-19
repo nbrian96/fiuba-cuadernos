@@ -29,31 +29,31 @@ LEGACY_FILES = [
 PARADIGM_TARGETS = [
     {
         "filename": "dyc.html",
-        "title": "División y Conquista (12 Ejercicios)",
+        "title": "División y Conquista (13 Ejercicios)",
         "paradigm_key": "dyc",
         "modules": [sec02_dyc]
     },
     {
         "filename": "greedy.html",
-        "title": "Algoritmos Greedy / Voraces (26 Ejercicios)",
+        "title": "Algoritmos Greedy / Voraces (27 Ejercicios)",
         "paradigm_key": "greedy",
         "modules": [sec03_greedy, sec03b_greedy_guia]
     },
     {
         "filename": "backtracking.html",
-        "title": "Backtracking y Branch & Bound (14 Ejercicios)",
+        "title": "Backtracking y Branch & Bound (15 Ejercicios)",
         "paradigm_key": "backtracking",
         "modules": [sec04_backtracking]
     },
     {
         "filename": "dp.html",
-        "title": "Programación Dinámica (7 Ejercicios)",
+        "title": "Programación Dinámica (8 Ejercicios)",
         "paradigm_key": "dp",
         "modules": [sec05_dp]
     },
     {
         "filename": "pl.html",
-        "title": "Programación Lineal y PLI (6 Ejercicios)",
+        "title": "Programación Lineal y PLI (7 Ejercicios)",
         "paradigm_key": "pl",
         "modules": [sec06_pl]
     },
@@ -65,7 +65,7 @@ PARADIGM_TARGETS = [
     },
     {
         "filename": "reducciones.html",
-        "title": "Reducciones y NP-Completitud (4 Ejercicios)",
+        "title": "Reducciones y NP-Completitud (5 Ejercicios)",
         "paradigm_key": "reducciones",
         "modules": [sec08_reducciones]
     },
@@ -77,7 +77,7 @@ PARADIGM_TARGETS = [
     },
     {
         "filename": "parciales.html",
-        "title": "Exámenes Parciales Oficiales (29 Ejercicios)",
+        "title": "Exámenes Parciales Oficiales (35 Ejercicios)",
         "paradigm_key": "parciales",
         "modules": [
             sec02_dyc, sec03_greedy, sec03b_greedy_guia,
@@ -142,7 +142,7 @@ def convert_to_html(md_text):
         md_text,
         INDEX_FILE,
         active_paradigm="all",
-        page_title="Guía Interactiva Completa (79 Ejercicios)"
+        page_title="Guía Interactiva Completa (85 Ejercicios)"
     )
     print(f"      Página maestra generada: {os.path.basename(INDEX_FILE)}")
 
@@ -165,7 +165,7 @@ def verify_html_line_counts():
 
 def main():
     print("=" * 70)
-    print("INICIANDO CONSTRUCCIÓN DE LA GUÍA INTERACTIVA DE TDA (79 EJERCICIOS)")
+    print("INICIANDO CONSTRUCCIÓN DE LA GUÍA INTERACTIVA DE TDA (85 EJERCICIOS)")
     print("=" * 70)
     remove_legacy_files()
     md_text = assemble_markdown()

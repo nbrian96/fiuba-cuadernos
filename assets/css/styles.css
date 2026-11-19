@@ -3819,7 +3819,11 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover {
 /* 10.1 Móviles en Orientación Vertical (<= 768px) */
 @media (max-width: 768px) {
   .site-navbar {
+    position: relative;
     min-height: auto;
+  }
+  .hud-top-bar {
+    top: 0 !important;
   }
   .site-navbar-container {
     padding: 6px 12px;
@@ -3975,7 +3979,11 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover {
 /* 10.2 Móviles en Orientación Horizontal / Landscape (Altura reducida <= 550px) */
 @media (max-height: 550px) and (orientation: landscape), (max-height: 480px) {
   .site-navbar {
+    position: relative;
     min-height: 42px;
+  }
+  .hud-top-bar {
+    top: 0 !important;
   }
   .site-navbar-container {
     padding: 3px 12px;

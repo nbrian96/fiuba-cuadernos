@@ -834,6 +834,79 @@ función BuscarMayoritario(A, ini, fin):
 
 ---
 
+### Ejercicio 80 — Mayor Diferencia en Subarreglo con Índices Crecientes (L[j] - L[i])
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★★☆☆ (3/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 1
+
+**Enunciado**  
+Dada una lista de números enteros (positivos y negativos), se desea obtener la mayor diferencia entre dos elementos $L[i]$ y $L[j]$ tales que $L[i] < L[j]$ siendo $i < j$. Realizar un algoritmo de DyC que resuelva el problema. Justificar la complejidad temporal del algoritmo realizado.
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Se desea maximizar $L[j] - L[i]$ con $i < j$ y $L[i] < L[j]$. Si ningún par satisface la condición (por ejemplo si la lista es monótona no creciente), se retorna $-\infty$ indicando que no hay par válido.
+* **Estrategia de División y Conquista:**
+  1. **División:** Partimos el arreglo $L$ por la mitad en dos subarreglos de tamaño aproximado $n/2$: la mitad izquierda $L[ini \dots medio]$ y la mitad derecha $L[medio+1 \dots fin]$.
+  2. **Conquista:** Resolvemos recursivamente el problema para ambas mitades. La mayor diferencia óptima global puede estar en:
+     - **Caso 1 (Interna izquierda):** Ambos índices en la mitad izquierda ($ini \le i < j \le medio$). Diferencia: $diff_{izq}$.
+     - **Caso 2 (Interna derecha):** Ambos índices en la mitad derecha ($medio+1 \le i < j \le fin$). Diferencia: $diff_{der}$.
+     - **Caso 3 (Cruce de mitades):** El índice $i$ está en la izquierda y el índice $j$ en la derecha ($i \le medio < j$). Para maximizar $L[j] - L[i]$, debemos restar el menor valor posible de la izquierda y sumar el mayor valor posible de la derecha:
+       $$cruce = \max(L[medio+1 \dots fin]) - \min(L[ini \dots medio])$$
+       (siempre que $\max(der) > \min(izq)$).
+  3. **Combinación en $O(1)$ para lograr $O(n)$:** Para evitar recorrer las mitades en cada llamada calculando mínimos y máximos en $O(n)$ (lo cual llevaría a $O(n \log n)$), cada llamada recursiva devuelve directamente una tripla con: `(min_val, max_val, mejor_diff)`. Así, combinar los resultados requiere únicamente comparaciones entre escalares en tiempo constante $O(1)$:
+     - $min\_actual = \min(min_{izq}, min_{der})$
+     - $max\_actual = \max(max_{izq}, max_{der})$
+     - $cruce = \text{si } max_{der} > min_{izq} \text{ entonces } (max_{der} - min_{izq}) \text{ sino } -\infty$
+     - $mejor\_diff = \max(diff_{izq}, diff_{der}, cruce)$
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MayorDiferenciaDyC(L):
+    si longitud(L) < 2:
+        retornar "No existe par válido"
+    (min_val, max_val, mejor_diff) = MayorDiferenciaRec(L, 0, longitud(L) - 1)
+    retornar mejor_diff
+
+Algoritmo MayorDiferenciaRec(L, ini, fin):
+    // Caso base: subarreglo de un solo elemento
+    si ini == fin:
+        retornar (L[ini], L[ini], -infinito)
+
+    medio = (ini + fin) // 2
+
+    (min_izq, max_izq, diff_izq) = MayorDiferenciaRec(L, ini, medio)
+    (min_der, max_der, diff_der) = MayorDiferenciaRec(L, medio + 1, fin)
+
+    // Combinación en tiempo constante O(1)
+    min_actual = min(min_izq, min_der)
+    max_actual = max(max_izq, max_der)
+
+    si max_der > min_izq:
+        cruce = max_der - min_izq
+    sino:
+        cruce = -infinito
+
+    mejor_diff = max(diff_izq, diff_der, cruce)
+
+    retornar (min_actual, max_actual, mejor_diff)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* **Ecuación de Recurrencia:**
+  - Se dividen los datos en **$a = 2$ llamadas recursivas** sobre instancias de tamaño $n/2$ (**$b = 2$**).
+  - La combinación ejecuta únicamente comparaciones y restas sobre las triplas devueltas, con costo temporal **$f(n) = O(1)$** (**$c = 0$**).
+  $$T(n) = 2 \cdot T(n/2) + O(1)$$
+* **Aplicación del Teorema Maestro:**
+  - Calculamos $\log_b a = \log_2 2 = 1$.
+  - Como $c = 0 < \log_b a = 1$ (**Caso 1 del Teorema Maestro**):
+    $$T(n) \in \Theta(n^{\log_b a}) = \Theta(n^1) = \Theta(n)$$
+* **Complejidad Espacial:** $\mathcal{O}(\log n)$ debido a la profundidad de la pila de recursión sobre un árbol binario balanceado de altura $\lceil \log_2 n \rceil$.
+
+---
+
 ### Errores Frecuentes en Exámenes sobre División y Conquista
 
 1. **Olvidar el Caso Base:** Omitir la condición de parada cuando $n = 1$ o $ini \ge fin$, provocando recursión infinita en la traza.

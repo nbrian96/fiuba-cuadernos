@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teoría de Algoritmos — Reducciones y NP-Completitud (4 Ejercicios) (FIUBA)</title>
+<title>Teoría de Algoritmos — Reducciones y NP-Completitud (5 Ejercicios) (FIUBA)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item active">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item active">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -120,7 +120,7 @@ Si el conjunto dominante $D$ de $G&#x27;$ eligió algún vértice auxiliar $w_{u
     end
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorDominatingSet(G = (V, E), k, certificado_D):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorDominatingSet(G = (V, E), k, certificado_D):
     SI tamaño(certificado_D) &gt; k:
         RETORNAR FALSO
 
@@ -142,7 +142,7 @@ FUNCION TransformarVCaDominatingSet(G = (V, E), k):
         agregar_arista(G', v, w_uv)
 
     RETORNAR (G', k' = k) // Transformación en O(|V| + |E|)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Reducir al revés ($DominatingSet \le_P VertexCover$):</strong> Reducir el problema nuevo al problema conocido demuestra que el nuevo es fácil, pero <strong>no prueba que sea NP-Hard</strong>. La reducción debe partir obligatoriamente desde el problema conocido.</li><li><strong>Olvidar reemplazar los vértices auxiliares en la vuelta:</strong> Si un conjunto dominante contiene $w_{uv}$, no es un subconjunto de los vértices originales. Es obligatorio explicar por qué $w_{uv}$ puede sustituirse por $u$ sin aumentar el tamaño ni perder dominancia.</li></ul>
@@ -184,7 +184,7 @@ Cualquier tour cerrado que visite las $n$ ciudades usa exactamente $n$ aristas, 
     end
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorTSP(G', k, certificado_tour):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorTSP(G', k, certificado_tour):
     SI tamaño(certificado_tour) != tamaño(V(G')) O tiene vértices repetidos:
         RETORNAR FALSO
     costo_total &lt;- 0
@@ -206,7 +206,7 @@ FUNCION TransformarCicloHamiltonianoATSP(G = (V, E)):
 
     k &lt;- n
     RETORNAR OraculoTSP(G', k) // Transformación en O(n^2)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Asignar peso 0 a las aristas existentes y 1 a las inexistentes:</strong> Si se pone peso 0 a las aristas existentes y cota $k = 0$, matemáticamente es válido, pero muchos docentes exigen pesos estrictamente positivos ($w(e) &gt; 0$). Con pesos $\{1, 2\}$ y cota $k = n$, se respeta la formulación clásica de TSP métrico.</li><li><strong>No explicar por qué no puede haber aristas de peso 2 en la vuelta:</strong> Hay que mencionar explícitamente que si usara una sola arista de peso 2, el tour de $n$ aristas costaría al menos $n + 1 &gt; n$.</li></ul>
@@ -230,7 +230,7 @@ Demostrar formalmente que el problema del <strong>Cambio de Monedas</strong> (en
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorCambioMonedas(D, V, k, certificado_monedas):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorCambioMonedas(D, V, k, certificado_monedas):
     SI tamaño(certificado_monedas) &gt; k:
         RETORNAR FALSO
     suma &lt;- 0
@@ -255,7 +255,7 @@ FUNCION TransformarCambioMonedasASubsetSum(D, V, k):
 
     W_objetivo &lt;- V * M + k
     RETORNAR OraculoSubsetSum(L, W_objetivo)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Confundir tiempo pseudo-polinomial con polinomial:</strong> Afirmar que como ambos se resuelven con programación dinámica en $O(n V)$ están en P. No están en P bajo codificación binaria porque el tamaño de la entrada es $O(\log V)$, haciendo que $O(V)$ sea exponencial respecto a la longitud en bits.</li><li><strong>Decir que no se puede reducir en sentido inverso:</strong> Creer erróneamente que porque uno parece más general no puede reducirse al otro. Dos problemas NP-Completos cualesquiera siempre admiten reducción mutua bidireccional.</li></ul>
@@ -279,7 +279,7 @@ Tomamos $I = V \setminus S$. Su tamaño es $|I| = |V| - |S| \ge |V| - (|V| - k) 
     IS["Independent Set I: tamaño |I| ≥ k"] ---|Complemento Exacto S = V \ I| VC["Vertex Cover S: tamaño |S| ≤ |V| - k"]
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorVertexCover(G = (V, E), k_prima, certificado_S):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorVertexCover(G = (V, E), k_prima, certificado_S):
     SI tamaño(certificado_S) &gt; k_prima:
         RETORNAR FALSO
     PARA CADA arista (u, v) EN E:
@@ -291,11 +291,58 @@ FUNCION TransformarISaVertexCover(G = (V, E), k):
     G_prima &lt;- G
     k_prima &lt;- tamaño(V) - k
     RETORNAR (G_prima, k_prima) // Transformación en O(1)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Invertir el sentido de las desigualdades:</strong> Olvidar que Independent Set es un problema de <strong>maximización</strong> ($|I| \ge k$) mientras que Vertex Cover es de <strong>minimización</strong> ($|S| \le k&#x27;$). Al restar del total $|V|$, la desigualdad se invierte automáticamente ($|I| \ge k \iff |V| - |I| \le |V| - k$).</li></ul>
-</div></div></details></div></article>
+</div>
+<hr /></div></details></div></article>
+<article class="exercise-card" id="ej-85" data-num="85" data-priority="imprescindible" data-paradigm="reducciones" data-difficulty="4" data-parcial="true" data-title="demostración de np-completitud de independent set (desde vertex cover)" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 6"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 85</span><h3 class="exercise-title">Demostración de NP-Completitud de Independent Set (desde Vertex Cover)</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-4" title="Dificultad 4 de 5">★★★★ (4/5)</span><span class="badge badge-paradigm badge-reducciones">Reducciones NP</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 6">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 6</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="85" onchange="toggleMastered(85, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Se considera el problema de Independent Set: Dado un grafo no dirigido $G=(V,E)$ y un entero $k$, determinar si existe un subconjunto de al menos $k$ vértices tal que ningún par de vértices del subconjunto esté conectado por una arista. También se considera el problema de Vertex Cover: Dado un grafo no dirigido $G&#x27;=(V&#x27;,E&#x27;)$ y un entero $k&#x27;$, determinar si existe un subconjunto de como máximo $k&#x27;$ vértices que cubra todas las aristas del grafo. Es decir, cada arista debe tener al menos uno de sus extremos perteneciente al subconjunto seleccionado. Sabiendo que VC es NP-Completo, demostrar que Independent Set también lo es.</p></div><details class="exercise-solution-drawer" id="solution-drawer-85"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos Canónicos de FIUBA)</h4>
+<ul><li><strong>Paso 1: Demostrar que Independent Set $\in$ NP (Verificador Polinomial):</strong><ul><li><strong>Certificado:</strong> Un subconjunto de vértices $I \subseteq V$ propuesto como solución.</li><li><strong>Algoritmo Verificador:</strong></li><li>Verifica que el tamaño del conjunto sea al menos $k$: $|I| \ge k$ (toma tiempo $\mathcal{O}(|V|)$).</li><li>Recorre cada par de vértices distintos $u, v \in I$ y comprueba en la estructura del grafo que $(u, v) \notin E$ (ningún par conectado por una arista). Esto toma a lo sumo $\binom{|I|}{2} = \mathcal{O}(|V|^2)$ comparaciones.</li><li>Como el verificador es determinístico y finaliza en tiempo $\mathcal{O}(|V|^2 + |E|)$ (estrictamente polinomial respecto al tamaño de la entrada), queda demostrado que <strong>$\text{Independent Set} \in \text{NP}$</strong>.</li></ul>
+</li><li>
+<p><strong>Paso 2: Elección del Problema Conocido y Dirección Sagrada:</strong></p>
+<ul><li>El enunciado establece que <strong>Vertex Cover (VC) es NP-Completo</strong>.</li><li><strong>Dirección Sagrada:</strong> Reducimos <strong>desde</strong> el problema conocido <strong>hacia</strong> el problema nuevo a demostrar:
+$$\text{Vertex Cover} \le_P \text{Independent Set}$$</li></ul>
+</li><li>
+<p><strong>Paso 3: Transformación Polinomial de la Instancia:</strong></p>
+<ul><li>Dada una instancia arbitraria de Vertex Cover: un grafo no dirigido $G&#x27; = (V&#x27;, E&#x27;)$ y un entero $k&#x27;$.</li><li>
+<p>Construimos una instancia $\langle G = (V, E), k \rangle$ de Independent Set definiendo:
+$$G = G&#x27; \quad (\text{mismo conjunto de vértices } V = V&#x27; \text{ y mismas aristas } E = E&#x27;)$$
+$$k = |V&#x27;| - k&#x27;$$</p>
+</li><li>
+<p><strong>Costo de la transformación:</strong> Construir $G = G&#x27;$ y fijar $k = |V&#x27;| - k&#x27;$ toma tiempo $\mathcal{O}(|V&#x27;| + |E&#x27;|)$, que es estrictamente <strong>polinomial</strong> (lineal).</p>
+</li><li><strong>Paso 4: Demostración de Equivalencia Lógica (Ida y Vuelta $\iff$):</strong></li><li>Se fundamenta en el Teorema del Complemento de Gallai: en cualquier grafo $G = (V, E)$, un conjunto $S \subseteq V$ es un <em>Vertex Cover</em> si y solo si su complemento $V \setminus S$ es un <em>Independent Set</em>.</li><li><strong>($\implies$) Ida (Si $G&#x27;$ tiene un Vertex Cover de tamaño $\le k&#x27; \implies G$ tiene un Independent Set de tamaño $\ge k$):</strong></li><li>Supongamos que existe un subconjunto $S \subseteq V&#x27;$ que es Vertex Cover de $G&#x27;$ con $|S| \le k&#x27;$.</li><li>
+<p>Definimos $I = V&#x27; \setminus S$. El tamaño de $I$ es:
+$$|I| = |V&#x27;| - |S| \ge |V&#x27;| - k&#x27; = k$$</p>
+</li><li>
+<p>Demostraremos por el absurdo que $I$ es un conjunto independiente. Si no lo fuera, existirían dos vértices $u, v \in I$ tales que $(u, v) \in E&#x27;$.</p>
+</li><li>Por definición de complemento, si $u \in I$ y $v \in I$, entonces $u \notin S$ y $v \notin S$.</li><li>Pero si $u \notin S$ y $v \notin S$, la arista $(u, v)$ no tiene ninguno de sus dos extremos en $S$, contradiciendo que $S$ es un Vertex Cover de $G&#x27;$.</li><li>Por lo tanto, no hay aristas entre vértices de $I$, demostrando que $I$ es un <strong>Independent Set válido en $G$ con $|I| \ge k$</strong>.</li><li><strong>($\impliedby$) Vuelta (Si $G$ tiene un Independent Set de tamaño $\ge k \implies G&#x27;$ tiene un Vertex Cover de tamaño $\le k&#x27;$):</strong></li><li>Supongamos que existe un subconjunto $I \subseteq V$ que es Independent Set en $G$ con $|I| \ge k$.</li><li>
+<p>Definimos $S = V \setminus I$. El tamaño de $S$ es:
+$$|S| = |V| - |I| \le |V| - k = |V&#x27;| - (|V&#x27;| - k&#x27;) = k&#x27;$$</p>
+</li><li>
+<p>Demostraremos que $S$ cubre todas las aristas de $E&#x27;$. Sea cualquier arista $(u, v) \in E&#x27;$.</p>
+</li><li>Como $I$ es un conjunto independiente, es imposible que ambos extremos $u$ y $v$ pertenezcan a $I$.</li><li>Por lo tanto, al menos uno de los dos extremos debe estar afuera de $I$, es decir, pertenece a $V \setminus I = S$.</li><li>En consecuencia, toda arista de $E&#x27;$ tiene al menos un extremo en $S$, demostrando que $S$ es un <strong>Vertex Cover válido en $G&#x27;$ con $|S| \le k&#x27;$</strong>.</li></ul>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorIndependentSet(G = (V, E), k, certificado_I):
+    SI tamaño(certificado_I) &lt; k:
+        RETORNAR FALSO
+    PARA CADA u EN certificado_I:
+        PARA CADA v EN certificado_I:
+            SI u != v Y existeArista(G, u, v):
+                RETORNAR FALSO
+    RETORNAR VERDADERO // Tiempo O(|V|^2)
+
+FUNCION TransformarVertexCoverAIndependentSet(G_prima = (V_prima, E_prima), k_prima):
+    G &lt;- G_prima
+    k &lt;- tamaño(V_prima) - k_prima
+    RETORNAR (G, k) // Transformación en tiempo O(|V| + |E|)
+</code></pre></div>
+<h4>3. Conclusión Formal</h4>
+<p>Habiendo demostrado que:</p>
+<ol><li>$\text{Independent Set} \in \text{NP}$.</li><li>$\text{Vertex Cover} \le_P \text{Independent Set}$ mediante una reducción en tiempo polinomial $\mathcal{O}(|V&#x27;| + |E&#x27;|)$.</li><li>$\text{Vertex Cover}$ es NP-Completo.</li></ol>
+<p>Queda formalmente demostrado que <strong>Independent Set es NP-Completo</strong>.</p></div></details></div></article>
 <hr />
 <h3>Errores Fatales en Exámenes sobre Reducciones NP</h3>
 <ol><li><strong>Reducir en la dirección equivocada ($B \le_P A$ en lugar de $A \le_P B$):</strong> Es el error más grave de toda la materia. Si se pide probar que $B \in \text{NPC}$, la reducción DEBE partir del problema conocido $A$ y llegar al nuevo problema $B$. Reducir al revés tiene calificación automática de 0 puntos en la pregunta.</li><li><strong>Omitir el Paso 1 ($B \in \text{NP}$):</strong> No definir el certificado o no justificar la verificación polinomial impide calificar el problema como NP-Completo (solo quedaría como NP-Hard).</li><li><strong>Probar únicamente la implicación de ida ($\implies$):</strong> Demostrar que si $I_A \in \text{YES} \implies I_B \in \text{YES}$ no es suficiente. Debe demostrarse rigurosamente la vuelta ($\impliedby$) para asegurar que instancias $\text{NO}$ de $A$ no produzcan falsos positivos en $B$.</li><li><strong>Usar algoritmos exponenciales en la transformación:</strong> La función de mapeo $f(I_A)$ debe ejecutarse en tiempo estrictamente polinomial $O(n^c)$. Si la reducción requiere calcular algo NP-Hard antes de armar la instancia, la reducción queda invalidada.</li></ol><div class="search-empty-state" id="searchEmptyState" style="display: none;"><div class="empty-state-icon">🔍</div><h3 class="empty-state-title">No se encontraron ejercicios con los filtros actuales</h3><p class="empty-state-desc">Probá con otro término de búsqueda, cambiá la dificultad o seleccioná el modo <strong>Todos</strong>.</p><button class="btn btn-primary" type="button" onclick="resetAllFilters()">Restablecer filtros y mostrar todos</button></div>

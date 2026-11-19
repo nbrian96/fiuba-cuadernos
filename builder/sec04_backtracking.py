@@ -893,6 +893,107 @@ función CriptoBT(col, acarreo, asignacion, usado):
 
 ---
 
+### Ejercicio 81 — Asignación de Tareas a Trabajadores con Incompatibilidades y Tiempo Máximo
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★★☆☆ (3/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 2
+
+**Enunciado**  
+Una empresa debe asignar $n$ tareas a $m$ trabajadores. Cada tarea tiene una duración conocida $d[i]$. Algunas tareas son incompatibles entre sí y no pueden asignarse al mismo trabajador. Hay una matriz booleana de incompatibilidades. Ningún trabajador puede superar el tiempo máximo de trabajo $T$. Diseñar un algoritmo de backtracking que encuentre una solución válida al problema. Indicar la complejidad del algoritmo. Indicar los criterios de poda aplicados.
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Árbol de Decisiones:**
+  - Modelamos la asignación procesando secuencialmente cada tarea $i \in \{0, \dots, n-1\}$.
+  - En el nivel $i$, decidimos a cuál de los $m$ trabajadores asignar la tarea $i$ (opciones $j \in \{0, \dots, m-1\}$).
+  - Una hoja en el nivel $n$ representa una asignación válida completa de todas las tareas.
+* **Estructuras de Estado:**
+  - `asignacion[i]`: identificador del trabajador asignado a la tarea $i$.
+  - `carga[j]`: suma acumulada de las duraciones de las tareas asignadas al trabajador $j$.
+  - `tareas_trabajador[j]`: lista de tareas asignadas al trabajador $j$.
+* **Criterios de Poda Aplicados (Explicación obligatoria para el parcial):**
+  1. **Poda por Tiempo Máximo de Trabajo $T$ (Capacidad):** Antes de asignar la tarea $i$ al trabajador $j$, verificamos si `carga[j] + d[i] > T`. Si supera $T$, podar inmediatamente la rama (violación de restricción de tiempo).
+  2. **Poda por Incompatibilidad:** Antes de asignar la tarea $i$ al trabajador $j$, verificamos contra la matriz booleana $M$ si existe alguna tarea $k \in \text{tareas\_trabajador}[j]$ tal que $M[i][k] == \text{Verdadero}$. Si hay incompatibilidad, no se asigna y se poda la rama.
+  3. **Poda por Capacidad Restante Total (Cota Inferior):** Si la suma de las duraciones de todas las tareas pendientes de asignar supera el tiempo ocioso total disponible en todos los trabajadores ($\sum_{k=i}^{n-1} d[k] > \sum_{j=0}^{m-1} (T - carga[j])$), es imposible completar una solución válida; se podan todas las ramas restantes desde el nodo actual.
+  4. **Poda por Simetría de Trabajadores:** Si varios trabajadores tienen actualmente `carga[j] == 0` (no se les ha asignado ninguna tarea), son equivalentes e indistinguibles. Asignar la tarea $i$ a cualquiera de ellos produce ramas simétricas idénticas. Por lo tanto, solo se prueba asignar al primero de los trabajadores vacíos y se evitan los demás, reduciendo el espacio de búsqueda hasta en un factor $m!$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AsignarTareas(n, m, d, M, T):
+    asignacion = arreglo de tamaño n inicializado en -1
+    carga = arreglo de tamaño m inicializado en 0
+    tareas_trabajador = lista de m listas vacias
+
+    si AsignarTareasBT(0, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+        retornar asignacion
+    sino:
+        retornar "No existe asignación válida"
+
+Algoritmo AsignarTareasBT(i, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+    // Caso base: todas las tareas fueron asignadas con exito
+    si i == n:
+        retornar Verdadero
+
+    // Poda por capacidad restante total
+    tiempo_pendiente = 0
+    para k desde i hasta n - 1:
+        tiempo_pendiente = tiempo_pendiente + d[k]
+
+    tiempo_disponible = 0
+    para j desde 0 hasta m - 1:
+        tiempo_disponible = tiempo_disponible + (T - carga[j])
+
+    si tiempo_pendiente > tiempo_disponible:
+        retornar Falso
+
+    probado_trabajador_vacio = Falso
+
+    para j desde 0 hasta m - 1:
+        // Poda por simetria
+        si carga[j] == 0:
+            si probado_trabajador_vacio:
+                continuar
+            probado_trabajador_vacio = Verdadero
+
+        // 1. Poda por tiempo maximo T
+        si carga[j] + d[i] > T:
+            continuar
+
+        // 2. Poda por incompatibilidad
+        incompatible = Falso
+        para cada k en tareas_trabajador[j]:
+            si M[i][k] == Verdadero:
+                incompatible = Verdadero
+                romper
+        si incompatible:
+            continuar
+
+        // Realizar asignacion (Do)
+        asignacion[i] = j
+        carga[j] = carga[j] + d[i]
+        agregar i a tareas_trabajador[j]
+
+        // Llamada recursiva
+        si AsignarTareasBT(i + 1, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+            retornar Verdadero
+
+        // Deshacer asignacion (Backtrack)
+        remover ultimo elemento de tareas_trabajador[j]
+        carga[j] = carga[j] - d[i]
+        asignacion[i] = -1
+
+    retornar Falso
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** En el peor caso (cuando no hay podas efectivas o no existe solución válida), el árbol de recursión tiene $n$ niveles con factor de ramificación $m$. En cada nodo se realizan a lo sumo $\mathcal{O}(n)$ comprobaciones de incompatibilidad. Por lo tanto, la complejidad temporal en el peor caso es **$\mathcal{O}(m^n \cdot n)$**. Las podas de incompatibilidad, capacidad máxima y simetría reducen el árbol drásticamente en el caso promedio.
+* **Complejidad Espacial:** **$\mathcal{O}(n + m)$**, correspondiente a la profundidad de la pila de llamadas recursivas ($n$) y a las estructuras de asignación, cargas y tareas por trabajador.
+
+---
+
 ### Errores Frecuentes en Exámenes sobre Backtracking
 
 1. **Olvidar desmarcar el estado en el retorno (Backtrack):** Dejar variables modificadas al salir de una llamada arruina la exploración de las ramas hermanas.

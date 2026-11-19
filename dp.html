@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teoría de Algoritmos — Programación Dinámica (7 Ejercicios) (FIUBA)</title>
+<title>Teoría de Algoritmos — Programación Dinámica (8 Ejercicios) (FIUBA)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item active">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item active">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -108,7 +108,7 @@ $$OPT(i) = \begin{cases} OPT(i - 1) + 1 &amp; \text{si } i \text{ es impar} \\ \
     N5 -->|x2| N10["10"]:::opt
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MinimasOperaciones(K):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MinimasOperaciones(K):
     DP &lt;- arreglo de tamaño (K + 1) inicializado en 0
     DP[0] &lt;- 0
 
@@ -131,7 +131,7 @@ $$OPT(i) = \begin{cases} OPT(i - 1) + 1 &amp; \text{si } i \text{ es impar} \\ \
             actual &lt;- actual - 1
 
     RETORNAR (DP[K], operaciones)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(K)$. La tabla <code>DP</code> tiene $K + 1$ posiciones y cada celda se calcula en tiempo constante $\mathcal{O}(1)$ comparando a lo sumo $2$ valores previos. La reconstrucción retrocede desde $K$ hasta $0$ dando a lo sumo $K$ pasos. <em>(Nota: respecto al tamaño en bits de la entrada $b = \log_2 K$, esta complejidad es <strong>pseudo-polinomial</strong>).</em></li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(K)$ para almacenar el arreglo <code>DP[0..K]</code> y la lista de operaciones reconstruida.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -170,7 +170,7 @@ $$OPT_{\text{total}} = \max\Big( b_1 + OPT(m, C - w_1, L - v_1), \;\; b_2 + OPT(
     classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MochilaPaolo(guia1, guia2, libres, C, L):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MochilaPaolo(guia1, guia2, libres, C, L):
     m &lt;- longitud(libres)   // libres contiene los ítems 3..n (m = n - 2)
     DP &lt;- matriz 3D de (m + 1) x (C + 1) x (L + 1) inicializada en 0
 
@@ -201,7 +201,7 @@ $$OPT_{\text{total}} = \max\Big( b_1 + OPT(m, C - w_1, L - v_1), \;\; b_2 + OPT(
             v_rem &lt;- v_rem - libres[i].v
 
     RETORNAR (max(total_A, total_B), elegidos)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n \cdot C \cdot L)$. La matriz tridimensional <code>DP</code> tiene dimensiones $(n - 1) \times (C + 1) \times (L + 1)$ y cada celda se calcula en $\mathcal{O}(1)$ comparando dos opciones. Evaluar ambas guías toma $\mathcal{O}(1)$ y reconstruir la solución toma $\mathcal{O}(n)$ pasos. Es una complejidad <strong>pseudo-polinomial</strong> porque depende de las magnitudes numéricas $C$ y $L$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n \cdot C \cdot L)$ para almacenar la tabla 3D necesaria para reconstruir los elementos elegidos.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -232,7 +232,7 @@ $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{
     classDef curr fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION WordWrap(C, n, L):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION WordWrap(C, n, L):
     DP &lt;- arreglo de tamaño (n + 1) inicializado en +INFINITO
     inicio_linea &lt;- arreglo de tamaño (n + 1) inicializado en 0
     DP[0] &lt;- 0
@@ -264,7 +264,7 @@ $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{
         actual &lt;- j - 1
 
     RETORNAR (DP[n], lineas)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n^2)$ (o más ajustadamente $\mathcal{O}(n \cdot L)$). La tabla <code>DP</code> tiene $n + 1$ celdas. Para calcular cada celda $i$, el bucle interno retrocede con el índice $j$ a lo sumo $i$ posiciones (y a lo sumo $L$ pasos antes de que <code>largo_actual</code> supere $L$), haciendo cuentas en $\mathcal{O}(1)$ en cada paso gracias a que acumulamos <code>largo_actual</code>.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n)$ para guardar los arreglos <code>DP[0..n]</code> e <code>inicio_linea[1..n]</code>.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -291,7 +291,7 @@ $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) &amp; \text{si } W_i &gt; 
     classDef yes fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION DeliveryMochila3D(paquetes, n, C, T, M):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION DeliveryMochila3D(paquetes, n, C, T, M):
     DP &lt;- matriz 4D de (n + 1) x (C + 1) x (T + 1) x (M + 1) inicializada en 0
 
     // 1. Llenado Bottom-Up de los 4 índices
@@ -317,7 +317,7 @@ $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) &amp; \text{si } W_i &gt; 
             m &lt;- m - paquetes[i].C
 
     RETORNAR (DP[n][C][T][M], elegidos)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n \cdot C \cdot T \cdot M)$. Tenemos una tabla 4D con $(n + 1)(C + 1)(T + 1)(M + 1)$ celdas, y cada celda se resuelve en tiempo constante $\mathcal{O}(1)$ comparando dos opciones. La reconstrucción recorre $n$ pasos en $\mathcal{O}(n)$. Es una complejidad <strong>pseudo-polinomial</strong> porque depende de las magnitudes numéricas de las capacidades $C, T, M$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n \cdot C \cdot T \cdot M)$ para almacenar la tabla 4D.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -344,7 +344,7 @@ $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(i - 2) + G[i]\Big)$$</li></ol>
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION JuanElVago(G, n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION JuanElVago(G, n):
     DP &lt;- arreglo de tamaño (n + 1) inicializado en 0
     DP[0] &lt;- 0
     DP[1] &lt;- G[1]
@@ -364,7 +364,7 @@ $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(i - 2) + G[i]\Big)$$</li></ol>
             i &lt;- i - 1   // Descansó el día i, pasamos a revisar i - 1
 
     RETORNAR (DP[n], dias_trabajados)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n)$. El arreglo <code>DP</code> tiene $n + 1$ posiciones y cada celda se calcula en $\mathcal{O}(1)$ haciendo una única comparación entre dos sumas. La reconstrucción recorre el arreglo hacia atrás en a lo sumo $n$ pasos ($\mathcal{O}(n)$).</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n)$ para almacenar el arreglo <code>DP[0..n]</code> y la lista de días trabajados.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -396,7 +396,7 @@ $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(p(i)) + v_i\Big)$$</li></ol>
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION IntervalSchedulingPonderado(intervalos, n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION IntervalSchedulingPonderado(intervalos, n):
     ORDENAR intervalos[1..n] POR tiempo de fin f_i ASCENDENTE
 
     // 1. Precalcular p[i] con Búsqueda Binaria sobre los tiempos de fin
@@ -421,7 +421,7 @@ $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(p(i)) + v_i\Big)$$</li></ol>
             i &lt;- i - 1   // No se usó el intervalo i
 
     RETORNAR (DP[n], elegidos)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li>
 <p><strong>Complejidad Temporal:</strong> $\mathcal{O}(n \log n)$.</p>
@@ -463,7 +463,7 @@ $$OPT(i) = T[i] + \min\Big(OPT(i - 1), \; OPT(i - 2), \; OPT(i - 3)\Big)$$</p>
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION RutaMenorCostoParadas(T, N):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION RutaMenorCostoParadas(T, N):
     // Posición 0 = Origen, 1..N = Estaciones, N+1 = Destino Final (con T[N+1] = 0)
     T[N + 1] &lt;- 0
     DP &lt;- arreglo de tamaño (N + 2) inicializado en 0
@@ -488,13 +488,82 @@ $$OPT(i) = T[i] + \min\Big(OPT(i - 1), \; OPT(i - 2), \; OPT(i - 3)\Big)$$</p>
         actual &lt;- padre[actual]
 
     RETORNAR (DP[N + 1], paradas)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(N)$. La tabla <code>DP</code> tiene $N + 2$ celdas (desde $0$ hasta $N + 1$). Cada celda $i$ se calcula en tiempo constante $\mathcal{O}(1)$ comparando únicamente $3$ valores anteriores (<code>i-1</code>, <code>i-2</code>, <code>i-3</code>). La reconstrucción recorre hacia atrás a lo sumo $N$ estaciones en $\mathcal{O}(N)$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(N)$ para almacenar los arreglos <code>DP</code> y <code>padre</code> de tamaño $N + 2$.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Devolver $DP[N]$ en lugar de $DP[N+1]$:</strong> El transporte no está obligado a parar en la estación $N$; si paró en $N-1$ o en $N-2$, puede saltear la estación $N$ y llegar directo a la meta $N+1$.</li><li><strong>Confundir "saltear 2 estaciones" con restar $2$ al índice:</strong> Si estás en $i$ y salteás las 2 estaciones anteriores ($i-1$ e $i-2$), venís de la estación $i-3$.</li></ul>
-</div></div></details></div></article>
+</div>
+<hr /></div></details></div></article>
+<article class="exercise-card" id="ej-82" data-num="82" data-priority="imprescindible" data-paradigm="dp" data-difficulty="4" data-parcial="true" data-title="selección óptima de proyectos con concurrencia máxima 2" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 3"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 82</span><h3 class="exercise-title">Selección Óptima de Proyectos con Concurrencia Máxima 2</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-4" title="Dificultad 4 de 5">★★★★ (4/5)</span><span class="badge badge-paradigm badge-dp">Prog. Dinámica</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 3">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 3</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="82" onchange="toggleMastered(82, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Una empresa tiene una serie de $n$ proyectos disponibles para realizar el próximo año. Cada proyecto tiene: Una fecha de inicio $i[i]$, una fecha de fin $f[i]$ y un beneficio $B[i]$. Sabiendo que no puede realizar más de dos proyectos simultáneamente, realizar un algoritmo de programación dinámica que permita saber qué proyectos realizar para alcanzar el beneficio máximo. Indicar la complejidad del algoritmo desarrollado.</p></div><details class="exercise-solution-drawer" id="solution-drawer-82"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li><strong>Clasificación del Problema:</strong> Es una generalización de <em>Weighted Interval Scheduling</em> (selección de intervalos ponderados) a $k = 2$ recursos o canales concurrentes.</li><li><strong>Preprocesamiento:</strong><ol><li>Ordenamos los $n$ proyectos por fecha de fin no decreciente: $f_1 \le f_2 \le \dots \le f_n$. Agregamos un proyecto ficticio $0$ con fin $0$ y beneficio $0$.</li><li>Para cada proyecto $i$, precalculamos mediante búsqueda binaria el proyecto compatible más reciente $p(i)$: el mayor índice $j &lt; i$ tal que $f_j \le inicio_i$.</li></ol>
+</li><li><strong>Definición del Subproblema y Estado:</strong><ul><li>Como a lo sumo 2 proyectos pueden ejecutarse en simultáneo, en cualquier punto de decisión el estado de los canales queda caracterizado por los <strong>dos últimos proyectos activos</strong> asignados a cada canal.</li><li>Definimos $DP(i, j)$ con $0 \le j &lt; i$: el máximo beneficio considerando un subconjunto de proyectos entre $\{1, \dots, i\}$, tal que el último proyecto terminado en uno de los canales es $i$, y el último proyecto terminado en el otro canal es $j$ ($f_j \le f_i$).</li></ul>
+</li><li>
+<p><strong>Ecuación de Recurrencia:</strong>
+Para el proyecto $i$:</p>
+<ul><li>Si el proyecto $i$ no se realiza, se mantiene el valor óptimo previo.</li><li>Si el proyecto $i$ se realiza, se asigna al canal que se libera primero. Como $f_j \le f_k$, el canal que se libera antes es el que tiene fin en $f_j$. Por ende, el proyecto $i$ puede comenzar si $f_j \le inicio_i$. Al tomarlo, el nuevo par de últimos proyectos finalizados es $(k, i)$.</li><li>Formalmente, para cada $0 \le j &lt; i$:
+$$DP(i, j) = \begin{cases}
+DP(i - 1, j) &amp; \text{si no tomamos el proyecto } i \\
+\max_{0 \le k \le p(i)} \{ DP(i - 1, k) \} + B_i &amp; \text{si tomamos } i \text{ (cuando } j = i - 1 \text{)}
+\end{cases}$$</li></ul>
+</li><li>
+<p><strong>Reconstrucción:</strong>
+Se almacena una tabla de decisiones para recuperar el conjunto de proyectos que integran la solución óptima.</p>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo ProyectosConcurrenciaDosDP(proyectos):
+    // proyectos es lista de n tuplas (inicio, fin, beneficio)
+    ordenar proyectos por fin no decreciente
+    n = longitud(proyectos)
+
+    DP = matriz de ceros de (n + 1) x (n + 1)
+    padre = matriz de ceros de (n + 1) x (n + 1)
+
+    // Precalcular p[i]: ultimo proyecto compatible antes de inicio[i]
+    p = arreglo de tamaño n + 1
+    para i desde 1 hasta n:
+        p[i] = BusquedaBinariaCompatible(proyectos, i)
+
+    para i desde 1 hasta n:
+        para j desde 0 hasta i - 1:
+            // Caso 1: no tomar proyecto i
+            DP[i][j] = DP[i - 1][j]
+            padre[i][j] = (i - 1, j, Falso)
+
+            // Caso 2: tomar proyecto i en canal libre
+            si j == i - 1:
+                para k desde 0 hasta p[i]:
+                    valor = DP[i - 1][k] + proyectos[i].beneficio
+                    si valor &gt; DP[i][j]:
+                        DP[i][j] = valor
+                        padre[i][j] = (i - 1, k, Verdadero)
+
+    // Buscar el maximo beneficio en la fila n
+    mejor_valor = 0
+    mejor_j = 0
+    para j desde 0 hasta n - 1:
+        si DP[n][j] &gt; mejor_valor:
+            mejor_valor = DP[n][j]
+            mejor_j = j
+
+    // Reconstruccion hacia atras
+    seleccionados = []
+    curr_i = n
+    curr_j = mejor_j
+    mientras curr_i &gt; 0:
+        (prev_i, prev_j, tomo_i) = padre[curr_i][curr_j]
+        si tomo_i:
+            agregar curr_i a seleccionados
+        curr_i = prev_i
+        curr_j = prev_j
+
+    retornar (mejor_valor, seleccionados)
+</code></pre></div>
+<h4>3. Justificación de Complejidad</h4>
+<ul><li><strong>Complejidad Temporal:</strong><ul><li>El ordenamiento inicial toma $\mathcal{O}(n \log n)$.</li><li>Precalcular $p[i]$ para todos los proyectos mediante búsqueda binaria toma $n \cdot \mathcal{O}(\log n) = \mathcal{O}(n \log n)$.</li><li>La matriz <code>DP</code> contiene $\mathcal{O}(n^2)$ estados $(i, j)$.</li><li>La transición toma $\mathcal{O}(1)$ para la mayoría de las celdas, y a lo sumo $\mathcal{O}(n)$ para $j = i - 1$. Por lo tanto, el llenado de la matriz toma <strong>$\mathcal{O}(n^2)$</strong>.</li><li>La reconstrucción recorre a lo sumo $\mathcal{O}(n)$ pasos.</li><li>Complejidad temporal total: <strong>$\mathcal{O}(n^2)$</strong>.</li></ul>
+</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(n^2)$</strong> para almacenar la matriz <code>DP</code> y la matriz de punteros de reconstrucción <code>padre</code>.</li></ul></div></details></div></article>
 <hr />
 <h3>Errores Frecuentes en Exámenes sobre Programación Dinámica</h3>
 <ol><li><strong>No definir en palabras qué significa $OPT(\dots)$:</strong> Escribir directamente una fórmula o código sin explicar qué representa el estado anula la justificación.</li><li><strong>Olvidar los casos base:</strong> No definir $OPT(0)$ o inicializar mal los bordes de la tabla.</li><li><strong>No justificar el orden de llenado:</strong> Aclarar siempre que la tabla se llena de menor a mayor subproblema (<em>Bottom-Up</em>) para que los estados previos ya estén calculados.</li><li><strong>Omitir la reconstrucción:</strong> Quedarse solo con el valor numérico $DP[n]$ cuando la consigna pide indicar cuáles son los elementos u operaciones elegidas.</li></ol><div class="search-empty-state" id="searchEmptyState" style="display: none;"><div class="empty-state-icon">🔍</div><h3 class="empty-state-title">No se encontraron ejercicios con los filtros actuales</h3><p class="empty-state-desc">Probá con otro término de búsqueda, cambiá la dificultad o seleccioná el modo <strong>Todos</strong>.</p><button class="btn btn-primary" type="button" onclick="resetAllFilters()">Restablecer filtros y mostrar todos</button></div>

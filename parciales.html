@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teoría de Algoritmos — Exámenes Parciales Oficiales (29 Ejercicios) (FIUBA)</title>
+<title>Teoría de Algoritmos — Exámenes Parciales Oficiales (35 Ejercicios) (FIUBA)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link active">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link active">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -65,7 +65,7 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 </aside>
 <div class="floating-quick-btn" id="floatingQuickBtn"><button class="fab-btn" onclick="openCheatsheet()" title="Fórmulas Rápidas">📐 Recetas</button><button class="fab-btn fab-secondary" onclick="scrollToTop()" title="Volver Arriba">⬆️</button></div>
 <main class="main-content-wrapper container-xl">
-<section class="parciales-intro-header py-4 mb-4"><div class="card shadow-sm border-primary" style="background: var(--bg-card); border-left: 5px solid #2b6cb0;"><div class="card-body p-4"><div class="d-flex align-items-center gap-3"><span style="font-size: 2.5rem;">📝</span><div><h2 class="h4 mb-1 text-primary fw-bold">Exámenes Parciales Oficiales (Todos los Paradigmas)</h2><p class="mb-0 text-muted">Recopilación de los <strong>29 ejercicios reales</strong> tomados en los exámenes parciales de Teoría de Algoritmos (2024–2026), ordenados en <strong>progresión ascendente por dificultad (1★ a 5★)</strong> con la redacción exacta requerida para la hoja del examen.</p></div></div></div></div></section>
+<section class="parciales-intro-header py-4 mb-4"><div class="card shadow-sm border-primary" style="background: var(--bg-card); border-left: 5px solid #2b6cb0;"><div class="card-body p-4"><div class="d-flex align-items-center gap-3"><span style="font-size: 2.5rem;">📝</span><div><h2 class="h4 mb-1 text-primary fw-bold">Exámenes Parciales Oficiales (Todos los Paradigmas)</h2><p class="mb-0 text-muted">Recopilación de los <strong>35 ejercicios reales</strong> tomados en los exámenes parciales de Teoría de Algoritmos (2024–2026), ordenados en <strong>progresión ascendente por dificultad (1★ a 5★)</strong> con la redacción exacta requerida para la hoja del examen.</p></div></div></div></div></section>
 <article class="exercise-card" id="ej-2" data-num="2" data-priority="imprescindible" data-paradigm="dyc" data-difficulty="2" data-parcial="true" data-title="elemento pico en un arreglo unimodal" data-origin="guía v1.0 (curso echevarría), ejercicio 1.6 / guía 01, ejercicio 4 / parcial fiuba"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 2</span><h3 class="exercise-title">Elemento Pico en un Arreglo Unimodal</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-2" title="Dificultad 2 de 5">★★ (2/5)</span><span class="badge badge-paradigm badge-dyc">División y Conquista</span><span class="badge badge-origin" title="Guía v1.0 (Curso Echevarría), Ejercicio 1.6 / Guía 01, Ejercicio 4 / Parcial FIUBA">🏛️ Guía v1.0 (Curso Echevarría), Ejercicio 1.6</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="2" onchange="toggleMastered(2, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
 Se tiene un arreglo de $n \ge 3$ elementos en forma de pico, esto es: estrictamente creciente hasta una determinada posición $p$, y estrictamente decreciente a partir de ella (con $0 &lt; p &lt; n - 1$). Por ejemplo, en el arreglo <code>[1, 2, 3, 1, 0, -2]</code> la posición del pico es $p = 2$. Se pide:
 a. Implementar un algoritmo de división y conquista de orden $O(\log n)$ <em>(nota: en la Guía v1.0 figura por errata tipográfica $O(\log \log n)$)</em> que encuentre la posición $p$ del pico: <code>PosicionPico(v, ini, fin)</code>.
@@ -73,7 +73,7 @@ b. Justificar el orden del algoritmo mediante el Teorema Maestro.</p></div><deta
 <ul><li><strong>Idea de la pendiente:</strong> En vez de recorrer todo el arreglo, miramos la posición central <code>m = (ini + fin) / 2</code> y la comparamos con su vecino inmediato <code>v[m + 1]</code>:<ol><li><strong>Caso Base (<code>ini == fin</code>):</strong> Cuando el subarreglo tiene un solo elemento, ese único candidato es garantizadamente el pico y devolvemos su índice <code>ini</code> en $O(1)$.</li><li><strong>Si <code>v[m] &lt; v[m + 1]</code> (sube hacia la derecha):</strong> Como el arreglo sube estrictamente hasta el pico y recién después baja, si en <code>m</code> todavía estamos subiendo, el pico <strong>está sí o sí a la derecha de <code>m</code></strong>. Descartamos toda la mitad izquierda y buscamos recursivamente en <code>[m + 1, fin]</code>.</li><li><strong>Si <code>v[m] &gt; v[m + 1]</code> (baja hacia la derecha):</strong> Significa que ya pasamos el pico o bien <code>m</code> mismo es el pico. Descartamos la derecha y buscamos recursivamente en <code>[ini, m]</code> (incluyendo a <code>m</code> porque puede ser el pico).</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo PosicionPico(v, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo PosicionPico(v, ini, fin):
     // Caso Base: queda un único elemento y es el pico
     si ini == fin:
         devolver ini
@@ -86,7 +86,7 @@ b. Justificar el orden del algoritmo mediante el Teorema Maestro.</p></div><deta
     sino:
         // Si la pendiente baja, el pico está en [ini .. m] (m puede ser el pico)
         devolver PosicionPico(v, ini, m)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada paso descartamos la mitad del arreglo y realizamos <strong>$a = 1$ llamada recursiva</strong> sobre un subproblema de tamaño $n/2$ (<strong>$b = 2$</strong>), haciendo solo una comparación en tiempo constante <strong>$f(n) = \Theta(1)$</strong> (<strong>$c = 0$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -113,7 +113,7 @@ Trabajamos para el mafioso Arnook, quien organiza los pedidos de pequeñas mafia
 <ul><li><strong>Regla Voraz:</strong> Ordenamos todos los pedidos de las mafias de menor a mayor según su <strong>kilómetro de finalización ($f_i$)</strong>. Luego los recorremos en ese orden y le otorgamos el permiso a una mafia siempre que su kilómetro de inicio no se pise con el último permiso entregado (<code>inicio &gt;= ultimo_fin</code>).</li><li><strong>¿Por qué es un algoritmo Greedy?</strong> Porque una vez ordenados los pedidos, en cada paso aplica una regla local fija (elegir el que termina antes para liberar la ruta lo más rápido posible) y toma una decisión irrevocable sin volver atrás.</li><li><strong>¿Da siempre la solución óptima? SÍ. Demostración ("El Voraz se Mantiene Adelante"):</strong><ul><li>Comparemos paso a paso los permisos que elige nuestro algoritmo Greedy ($g_1, g_2, \dots, g_k$) contra los de cualquier solución óptima ($o_1, o_2, \dots, o_m$), ambos ordenados de izquierda a derecha en la ruta.</li><li><strong>En el 1er permiso ($r = 1$):</strong> Como Greedy elige el pedido que termina en el kilómetro más chico de todos, seguro termina antes o igual que el primero de la solución óptima (<code>fin(g_1) &lt;= fin(o_1)</code>).</li><li><strong>En cualquier permiso siguiente ($r$):</strong> Como el permiso anterior de Greedy terminó antes o igual que el del óptimo (<code>fin(g_{r-1}) &lt;= fin(o_{r-1})</code>), a Greedy le queda libre la ruta desde antes. Por lo tanto, el pedido $o_r$ que eligió el óptimo también está disponible sin solaparse para Greedy; y como Greedy siempre agarra el que termina primero, se cumple que <code>fin(g_r) &lt;= fin(o_r)</code>.</li><li><strong>Por qué tienen la misma cantidad de permisos ($k = m$):</strong> Si la solución óptima tuviera un permiso más ($o_{k+1}$), como empieza después de <code>fin(o_k)</code> y sabemos que <code>fin(g_k) &lt;= fin(o_k)</code>, ese pedido tampoco se chocaría con $g_k$ y Greedy lo habría agregado antes de frenar. Por lo tanto, <strong>Greedy siempre es óptimo</strong>.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo ConcederPermisosMafias(pedidos):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo ConcederPermisosMafias(pedidos):
     si pedidos está vacío:
         devolver []
 
@@ -130,7 +130,7 @@ Trabajamos para el mafioso Arnook, quien organiza los pedidos de pequeñas mafia
             ultimo_fin = p.fin
 
     devolver seleccionados
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li><strong>Complejidad Temporal:</strong> Ordenar los $n$ pedidos por su kilómetro de fin cuesta <strong>$O(n \log n)$</strong>, y luego recorrer la lista una sola vez haciendo una comparación en $O(1)$ por pedido cuesta <strong>$O(n)$</strong>. Total temporal: <strong>$O(n \log n)$</strong>.</li><li><strong>Complejidad Espacial:</strong> <strong>$O(n)$</strong> para guardar la lista de permisos otorgados.</li></ul>
 <div class="mermaid-wrapper"><pre class="mermaid">flowchart LR
@@ -159,7 +159,7 @@ Para el traslado de una carga peligrosa del INVAP de Ezeiza a Bariloche a travé
     V2 -->|Costo: 5| B
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TrasladoINVAPGreedy(G, origen, destino):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TrasladoINVAPGreedy(G, origen, destino):
     actual = origen
     camino = [ actual ]
     costo_total = 0
@@ -172,7 +172,7 @@ Para el traslado de una carga peligrosa del INVAP de Ezeiza a Bariloche a travé
         actual = mejor_vecino
 
     devolver (costo_total, camino)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada etapa el algoritmo solo inspecciona las aristas salientes de la ciudad actual (sin retroceder ni visitar las demás ciudades de esa misma etapa). Por lo tanto, recorre a lo sumo una fracción de las aristas en tiempo <strong>$O(V + E)$</strong> y espacio <strong>$O(V)$</strong>.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -186,7 +186,7 @@ Un transporte debe recorrer una ruta hasta su objetivo final pasando por $N$ est
 </li><li><strong>Instancia donde NO obtiene la solución óptima (Contraejemplo):</strong><ul><li>Tarifas de 4 estaciones: $T = [5, 6, 100, 100]$.</li><li>Desde el inicio ($0$) las alcanzables son $1$ ($\$5$), $2$ ($\$6$) y $3$ ($\$100$). Greedy elige la más barata: <strong>estación 1</strong> ($\$5$).</li><li>Pero desde la estación $1$ solo alcanza hasta la $4$ (estaciones $2$, $3$ y $4$, con costos $\$6$, $\$100$ y $\$100$), viéndose obligado a parar de nuevo en la <strong>estación 2</strong> ($\$6$) para recién de ahí llegar al destino ($5$). <strong>Costo Greedy = $\$5 + \$6 = \$11$</strong>.</li><li><strong>Solución Óptima:</strong> Saltar directo del inicio a la <strong>estación 2</strong> ($\$6$) y de la estación $2$ directo al destino ($5$) salteando la $3$ y la $4$. <strong>Costo Óptimo = $\$6 &lt; \$11$</strong>.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TransporteGreedy(T, N):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TransporteGreedy(T, N):
     actual = 0   // 0 es el origen, N+1 es el destino final
     paradas = []
     costo_total = 0
@@ -204,7 +204,7 @@ Un transporte debe recorrer una ruta hasta su objetivo final pasando por $N$ est
         actual = mejor_est
 
     devolver (costo_total, paradas)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada iteración avanzamos al menos 1 estación y miramos solo 3 opciones hacia adelante en $O(1)$. Por lo tanto, la complejidad temporal es <strong>$O(N)$</strong> y espacial <strong>$O(N)$</strong>.</li></ul>
 <hr /></div></details></div></article>
@@ -239,7 +239,7 @@ $$OPT(i) = \begin{cases} OPT(i - 1) + 1 &amp; \text{si } i \text{ es impar} \\ \
     N5 -->|x2| N10["10"]:::opt
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MinimasOperaciones(K):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MinimasOperaciones(K):
     DP &lt;- arreglo de tamaño (K + 1) inicializado en 0
     DP[0] &lt;- 0
 
@@ -262,7 +262,7 @@ $$OPT(i) = \begin{cases} OPT(i - 1) + 1 &amp; \text{si } i \text{ es impar} \\ \
             actual &lt;- actual - 1
 
     RETORNAR (DP[K], operaciones)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(K)$. La tabla <code>DP</code> tiene $K + 1$ posiciones y cada celda se calcula en tiempo constante $\mathcal{O}(1)$ comparando a lo sumo $2$ valores previos. La reconstrucción retrocede desde $K$ hasta $0$ dando a lo sumo $K$ pasos. <em>(Nota: respecto al tamaño en bits de la entrada $b = \log_2 K$, esta complejidad es <strong>pseudo-polinomial</strong>).</em></li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(K)$ para almacenar el arreglo <code>DP[0..K]</code> y la lista de operaciones reconstruida.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -299,7 +299,30 @@ $$x_i + x_{i+1} + x_{i+2} \ge 1 \quad \forall i \in \{1, 2, \dots, N - 2\}$$</li
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Responder que hay $N$ restricciones en lugar de $N - 2$:</strong> La última terna de $3$ estaciones es $(N-2, \; N-1, \; N)$, que corresponde a $i = N - 2$. Si pusieras $i$ hasta $N$, aparecerían estaciones inexistentes $x_{N+1}$ y $x_{N+2}$.</li><li><strong>Olvidar aclarar el tipo de las variables:</strong> La consigna pide explícitamente <em>cantidad y tipo</em>; es obligatorio especificar que son <strong>binarias</strong> ($x_i \in \{0, 1\}$).</li></ul>
-</div></div></details></div></article>
+</div>
+<hr /></div></details></div></article>
+<article class="exercise-card" id="ej-84" data-num="84" data-priority="imprescindible" data-paradigm="pl" data-difficulty="2" data-parcial="true" data-title="modelo de programación lineal para proyectos con concurrencia máxima 2" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 5"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 84</span><h3 class="exercise-title">Modelo de Programación Lineal para Proyectos con Concurrencia Máxima 2</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-2" title="Dificultad 2 de 5">★★ (2/5)</span><span class="badge badge-paradigm badge-pl">Prog. Lineal</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 5">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 5</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="84" onchange="toggleMastered(84, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Realizar un modelo de programación lineal que resuelva el problema del punto 3 (selección de proyectos con fecha de inicio $i[i]$, fin $f[i]$ y beneficio $B[i]$, no pudiendo realizar más de dos proyectos simultáneamente). Indicar la cantidad y tipo de variables del problema, y la cantidad de restricciones del mismo.</p></div><details class="exercise-solution-drawer" id="solution-drawer-84"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Modelo Matemático</h4>
+<ol><li><strong>Variables de decisión y dominios:</strong></li><li>
+<p>$x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, n\}$:
+$$x_i = \begin{cases} 1 &amp; \text{si se decide realizar el proyecto } i \\ 0 &amp; \text{si no se realiza} \end{cases}$$</p>
+</li><li>
+<p><strong>Función Objetivo:</strong>
+Maximizar el beneficio económico total de los proyectos realizados:
+$$\max Z = \sum_{i=1}^{n} B_i \cdot x_i$$</p>
+</li><li>
+<p><strong>Restricciones Lineales de Concurrencia Simultánea $\le 2$:</strong></p>
+</li><li>En ningún instante de tiempo pueden ejecutarse más de 2 proyectos a la vez.</li><li>La cantidad de proyectos activos únicamente puede aumentar en las fechas de inicio de algún proyecto. Por ende, basta asegurar la restricción en cada instante de inicio $t = inicio_k$ para cada proyecto $k \in \{1, \dots, n\}$.</li><li>
+<p>Para cada proyecto $k \in \{1, \dots, n\}$, definimos el conjunto de proyectos concurrentes con su inicio:
+$$A_k = \{ j \in \{1, \dots, n\} \mid inicio_j \le inicio_k &lt; fin_j \}$$</p>
+</li><li>
+<p>Restricción lineal para cada proyecto $k \in \{1, \dots, n\}$:
+$$\sum_{j \in A_k} x_j \le 2 \quad \forall k \in \{1, \dots, n\}$$</p>
+</li></ol>
+<h4>2. Cantidad y Tipo de Variables y Restricciones (Requisito Explícito del Parcial)</h4>
+<ul><li><strong>Cantidad y tipo de variables:</strong><ul><li>Exactamente <strong>$n$ variables binarias</strong>: $x_i \in \{0, 1\}$ para cada proyecto $i \in \{1, \dots, n\}$.</li></ul>
+</li><li><strong>Cantidad de restricciones:</strong><ul><li><strong>Restricciones funcionales de concurrencia:</strong> Exactamente <strong>$n$ restricciones lineales</strong> (una por cada instante de inicio $inicio_k$, evaluando $\sum_{j \in A_k} x_j \le 2$).</li><li><strong>Restricciones de dominio:</strong> $n$ declaraciones de variable binaria ($x_i \in \{0, 1\}$), o $2n$ restricciones de cota ($0 \le x_i \le 1$) si se formaliza en Programación Lineal Entera.</li></ul>
+</li></ul></div></details></div></article>
 <article class="exercise-card" id="ej-1" data-num="1" data-priority="imprescindible" data-paradigm="dyc" data-difficulty="3" data-parcial="true" data-title="multiplicación de matrices cuadradas por bloques" data-origin="parcial 2025-1-2 (17 de junio de 2025), ejercicio 1"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 1</span><h3 class="exercise-title">Multiplicación de Matrices Cuadradas por Bloques</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-dyc">División y Conquista</span><span class="badge badge-origin" title="Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 1">🏛️ Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 1</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="1" onchange="toggleMastered(1, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
 Realizar un algoritmo que resuelva la multiplicación de dos matrices cuadradas de orden $n$ ($A$ y $B$) mediante división y conquista. Recordemos la definición: $C = A \times B$ donde $C_{ij} = \sum_{k=1}^n A_{ik} \cdot B_{kj}$ para todo $i, j \in \{1, \dots, n\}$. Para simplificar el algoritmo se puede suponer que $n$ es una potencia de 2. Indicar y justificar el orden de complejidad temporal y espacial del algoritmo.</p></div><details class="exercise-solution-drawer" id="solution-drawer-1"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
 <ul><li><strong>Caso Base ($n = 1$):</strong> Cuando las matrices son de $1 \times 1$, tienen un solo número cada una y devolvemos directamente el producto $A[0][0] \cdot B[0][0]$ en tiempo $O(1)$.</li><li>
@@ -310,7 +333,7 @@ $$A = \begin{pmatrix} A_{11} &amp; A_{12} \\ A_{21} &amp; A_{22} \end{pmatrix}, 
 <ul><li>Cuadrante superior izquierdo: $C_{11} = A_{11} B_{11} + A_{12} B_{21}$</li><li>Cuadrante superior derecho: $C_{12} = A_{11} B_{12} + A_{12} B_{22}$</li><li>Cuadrante inferior izquierdo: $C_{21} = A_{21} B_{11} + A_{22} B_{21}$</li><li>Cuadrante inferior derecho: $C_{22} = A_{21} B_{12} + A_{22} B_{22}$</li></ul>
 </li><li><strong>Combinación:</strong> Realizamos las 4 sumas de matrices de tamaño $(n/2) \times (n/2)$ y ensamblamos los 4 cuadrantes para devolver la matriz producto $C$ de $n \times n$.</li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesDyC(A, B, n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesDyC(A, B, n):
     // Caso Base: matriz de 1x1
     si n == 1:
         devolver [[ A[0][0] * B[0][0] ]]
@@ -328,7 +351,7 @@ $$A = \begin{pmatrix} A_{11} &amp; A_{12} \\ A_{21} &amp; A_{22} \end{pmatrix}, 
 
     // 3. Combinar los 4 cuadrantes en la matriz C de n x n
     devolver EnsamblarMatriz(C11, C12, C21, C22)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>
 <p><strong>Complejidad Temporal:</strong></p>
@@ -362,7 +385,7 @@ Dada una lista de números enteros (positivos y negativos), se desea obtener el 
 <ul><li><strong>¿Cómo pensamos la división?</strong> Partimos el arreglo a la mitad en dos partes iguales: <code>izquierda</code> y <code>derecha</code>. El subarreglo contiguo de suma máxima tiene <strong>solo tres lugares posibles</strong> donde estar:<ol><li><strong>Completamente en la mitad izquierda:</strong> lo encontramos llamando recursivamente sobre la parte izquierda.</li><li><strong>Completamente en la mitad derecha:</strong> lo encontramos llamando recursivamente sobre la parte derecha.</li><li><strong>Cruzando el medio (empieza en la izquierda y termina en la derecha):</strong> como tiene que ser contiguo, sí o sí pasa por el centro. Para que sume lo máximo posible, caminamos desde el centro hacia la izquierda acumulando la mejor suma parcial, y desde el centro hacia la derecha acumulando la mejor suma parcial. Uniendo esos dos tramos tenemos el mejor subarreglo cruzado en tiempo lineal $O(n)$.</li></ol>
 </li><li>Finalmente, comparamos las sumas de los tres candidatos (<code>izquierda</code>, <code>derecha</code> y <code>cruzado</code>) y devolvemos el que tenga mayor suma.</li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo SubarregloMaximaSuma(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo SubarregloMaximaSuma(A, ini, fin):
     // Caso base: un solo elemento
     si ini == fin:
         devolver (A[ini], ini, fin)   // (suma, inicio, fin)
@@ -397,7 +420,7 @@ función MejorCruzado(A, ini, medio, fin):
             idx_der = j
 
     devolver (mejor_izq + mejor_der, idx_izq, idx_der)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>Hacemos <strong>$a = 2$ llamadas recursivas</strong>, cada una con la mitad de elementos (<strong>$b = 2$</strong>).</li><li>La función <code>MejorCruzado</code> recorre desde el centro hacia ambos extremos pasando una sola vez por cada elemento del intervalo actual, por lo que cuesta tiempo lineal <strong>$f(n) = O(n)$</strong> (es decir, <strong>$c = 1$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -418,7 +441,7 @@ En cada paso instalamos la antena que tenga el <strong>menor ratio</strong> (la 
 Este problema es un caso de <em>Weighted Set Cover</em> (Cobertura de Conjuntos con Costos), que es <strong>NP-Completo</strong>. Por lo tanto, el algoritmo Greedy <strong>no garantiza la solución óptima</strong>, sino que actúa como una heurística de aproximación que garantiza un costo total de a lo sumo $(\ln V + 1) \cdot OPT$ (aproximación logarítmica, donde $V$ es la cantidad de vecindarios).</p>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo AntenasSetCoverGreedy(vecindarios, antenas):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo AntenasSetCoverGreedy(vecindarios, antenas):
     no_cubiertos = copiar(vecindarios)
     elegidas = []
 
@@ -439,7 +462,7 @@ Este problema es un caso de <em>Weighted Set Cover</em> (Cobertura de Conjuntos 
         no_cubiertos = no_cubiertos - mejor_antena.cobertura_3x3
 
     devolver elegidas
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>Llamando $V$ a la cantidad de vecindarios y $M$ a la cantidad de celdas candidatas para antenas: en cada vuelta del ciclo <code>mientras</code> revisamos las $M$ antenas y miramos sus 9 casillas del bloque $3 \times 3$ en tiempo constante $O(1)$, tardando $O(M)$ por iteración.</li><li>Como en cada paso cubrimos al menos 1 vecindario nuevo, el ciclo se ejecuta a lo sumo $V$ veces. Complejidad temporal total: <strong>$O(V \cdot M)$</strong> y espacial <strong>$O(V + M)$</strong>.</li></ul>
 <div class="mermaid-wrapper"><pre class="mermaid">graph TD
@@ -466,7 +489,7 @@ Para validar en tiempo constante si una casilla $(fila, col)$ está amenazada si
 Al probar una columna factible, marcamos los 3 booleanos en <code>Verdadero</code> y asignamos <code>solucion[fila] = col</code>. Si la llamada recursiva no encuentra solución, es <strong>estrictamente obligatorio</strong> desmarcar los 3 booleanos en <code>Falso</code> y restaurar <code>solucion[fila] = -1</code> antes de probar la columna siguiente.</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo NReinas(n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo NReinas(n):
     solucion = arreglo[-1] * n
     col_ocupada = arreglo[Falso] * n
     diag_prin = arreglo[Falso] * (2*n - 1)  // clave: fila - col + (n - 1)
@@ -492,7 +515,7 @@ función NReinasBT(fila, solucion, col_ocupada, diag_prin, diag_sec, n):
             col_ocupada[col] = diag_prin[dp] = diag_sec[ds] = Falso  // Backtrack
 
     devolver Falso
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Árbol de Recursión y Estado:</strong><ul><li>El estado en cada llamada está determinado por la <code>fila</code> actual ($0 \le fila \le n$), con profundidad máxima $n$.</li><li>En la fila $0$ hay $n$ opciones; en la fila $1$, a lo sumo $n-1$ opciones libres; en la fila $k$, a lo sumo $n-k$ opciones.</li></ul>
 </li><li><strong>Complejidad Temporal en Peor Caso:</strong><ul><li>En el peor caso teórico (cuando no se poda o se buscan todas las soluciones), el árbol tiene a lo sumo $n!$ hojas. En cada nodo, las verificaciones y transiciones toman $O(1)$ gracias a los vectores booleanos. La cota superior asintótica en el peor caso es <strong>$O(n!)$</strong>.</li></ul>
@@ -516,7 +539,7 @@ Diseño de un árbol de backtracking acotado a profundidad 4, imposición de ord
 </li><li><strong>Poda Analítica del 4° Término en $O(1)$:</strong><ul><li>Al llegar a $paso = 3$, no se itera. Se calcula en $O(1)$ si el remanente $R$ es un cuadrado perfecto: $z = \lfloor\sqrt{R}\rfloor$. Si $z^2 == R$ y $z \le max\_limite$, se asigna $solucion[3] = z$ y se retorna con éxito directamente.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo CuatroCuadradosLagrange(n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo CuatroCuadradosLagrange(n):
     solucion = arreglo [0, 0, 0, 0]
     si LagrangeBT(0, n, entero(raiz(n)), solucion):
         devolver solucion
@@ -542,7 +565,7 @@ función LagrangeBT(paso, remanente, max_limite, solucion):
             devolver Verdadero
 
     devolver Falso
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Árbol de Recursión y Estado:</strong><ul><li>El árbol posee una profundidad constante de a lo sumo 4 niveles ($paso \in \{0, 1, 2, 3\}$).</li><li>En cada nivel $k$, la variable $v$ toma valores entre $0$ y $\lfloor\sqrt{n}\rfloor$.</li></ul>
 </li><li><strong>Complejidad Temporal en Peor Caso:</strong><ul><li>Sin optimizaciones, 4 bucles anidados hasta $\sqrt{n}$ requerirían $O((\sqrt{n})^4) = O(n^2)$.</li><li>Al resolver el último término analíticamente en $O(1)$ mediante raíz entera, el árbol se reduce a 3 niveles libres, acotando el peor caso teórico a <strong>$O(n^{3/2})$</strong>.</li></ul>
@@ -563,7 +586,7 @@ Estrategia de ramificación sobre aristas no cubiertas (al menos uno de los dos 
 </li><li><strong>Caso Base:</strong><ul><li>Si no quedan aristas sin cubrir y $|C_{\text{actual}}| &lt; |mejor\_solucion|$, se halló una cobertura válida estrictamente menor: se actualiza <code>mejor_solucion</code> con una copia profunda de $C_{\text{actual}}$.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MinimoVertexCover(V, E):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MinimoVertexCover(V, E):
     mejor_sol = copiar(V)  // Cota superior inicial
     actual = conjunto_vacio()
     VertexCoverBT(actual, mejor_sol, E)
@@ -590,7 +613,7 @@ función VertexCoverBT(actual, ref mejor_sol, E):
     agregar v a actual
     VertexCoverBT(actual, mejor_sol, E)
     quitar v de actual  // Backtrack
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Árbol de Recursión y Estado:</strong><ul><li>El estado está definido por el conjunto <code>actual</code> de vértices seleccionados.</li><li>El árbol es binario (factor de ramificación 2). Cada bifurcación cubre al menos una arista nueva, por lo que la profundidad máxima del árbol está acotada por el tamaño del Vertex Cover óptimo $k = |C^*| \le |V|$.</li></ul>
 </li><li><strong>Complejidad Temporal en Peor Caso:</strong><ul><li>La cantidad de nodos del árbol es a lo sumo $2^{k+1} - 1$. En cada nodo se inspecciona el conjunto de aristas para hallar una no cubierta en $O(|E|)$.</li><li>Por lo tanto, la complejidad en el peor caso es <strong>$O(2^k \cdot |E|)$</strong> (algoritmo FPT - <em>Fixed Parameter Tractable</em>), exponencialmente superior al enfoque ingenuo de subconjuntos $O(2^{|V|} \cdot |E|)$ cuando $k \ll |V|$.</li></ul>
@@ -609,7 +632,7 @@ Un explorador se encuentra en un laberinto representado por una matriz de $N \ti
 </li><li><strong>3. ¿Cómo cambiaríamos el algoritmo si se pide EL CAMINO MÁS CORTO?</strong><ul><li><strong>Con Backtracking (Branch &amp; Bound):</strong></li><li>En vez de frenar y devolver <code>Verdadero</code> al encontrar el primer camino a <code>'T'</code>, <strong>guardamos ese camino como <code>mejor_camino</code></strong> (si es más corto que el <code>mejor_camino</code> registrado hasta ahora) y <strong>seguimos explorando</strong> el resto de las ramas.</li><li><strong>Agregamos Poda por Optimalidad (Branch &amp; Bound):</strong> Si en cualquier momento el largo de nuestro <code>camino_actual</code> (más la distancia Manhattan hasta <code>T</code>) ya es <strong>mayor o igual</strong> al largo del <code>mejor_camino</code> que ya tenemos guardado (<code>longitud(camino_actual) &gt;= longitud(mejor_camino)</code>), <strong>podamos la rama inmediatamente</strong> sin seguir avanzando.</li><li><em>(Nota adicional para sumar puntos en el parcial: Como todas las aristas pesan 1 paso, el camino más corto en una grilla sin pesos también se puede resolver de forma óptima en tiempo polinomial $O(N \cdot M)$ cambiando la búsqueda a <strong>BFS — Búsqueda a lo Ancho</strong> con una cola).</em></li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo BuscarCaminoLaberinto(M, N_filas, M_cols):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo BuscarCaminoLaberinto(M, N_filas, M_cols):
     (f_ini, c_ini) = encontrarPosicion(M, 'E')
     visitado = matriz de N_filas x M_cols en Falso
     visitado[f_ini][c_ini] = Verdadero
@@ -644,7 +667,7 @@ función ExplorarBT(M, f, c, visitado, camino):
             visitado[nf][nc] = Falso
 
     devolver Falso
-</code></pre></div></div>
+</code></pre></div>
 <hr /></div></details></div></article>
 <article class="exercise-card" id="ej-59" data-num="59" data-priority="imprescindible" data-paradigm="dp" data-difficulty="3" data-parcial="true" data-title="ruta de transporte con estaciones y salto de hasta 2 paradas" data-origin="parcial 2026-2-1 (enunciados), ejercicio 3"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 59</span><h3 class="exercise-title">Ruta de Transporte con Estaciones y Salto de Hasta 2 Paradas</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-dp">Prog. Dinámica</span><span class="badge badge-origin" title="Parcial 2026-2-1 (Enunciados), Ejercicio 3">🏛️ Parcial 2026-2-1 (Enunciados), Ejercicio 3</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="59" onchange="toggleMastered(59, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
 Un transporte debe recorrer una ruta hasta su objetivo final. Para hacerlo tiene $N$ estaciones intermedias donde puede detenerse a descansar y cargar combustible. Cada estación le cobrará una tarifa fija $T[i]$ por detenerse, conocida y posiblemente diferente para cada estación. Desde cada estación puede ir a la siguiente, o saltear una o dos estaciones para evitar pagar la tarifa correspondiente. Por su autonomía, no se pueden saltear más de dos estaciones consecutivas. Diseñar un algoritmo de PD que permita hallar el viaje con menor costo de paradas. Indicar la complejidad de dicho algoritmo.</p></div><details class="exercise-solution-drawer" id="solution-drawer-59"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
@@ -671,7 +694,7 @@ $$OPT(i) = T[i] + \min\Big(OPT(i - 1), \; OPT(i - 2), \; OPT(i - 3)\Big)$$</p>
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION RutaMenorCostoParadas(T, N):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION RutaMenorCostoParadas(T, N):
     // Posición 0 = Origen, 1..N = Estaciones, N+1 = Destino Final (con T[N+1] = 0)
     T[N + 1] &lt;- 0
     DP &lt;- arreglo de tamaño (N + 2) inicializado en 0
@@ -696,13 +719,14 @@ $$OPT(i) = T[i] + \min\Big(OPT(i - 1), \; OPT(i - 2), \; OPT(i - 3)\Big)$$</p>
         actual &lt;- padre[actual]
 
     RETORNAR (DP[N + 1], paradas)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(N)$. La tabla <code>DP</code> tiene $N + 2$ celdas (desde $0$ hasta $N + 1$). Cada celda $i$ se calcula en tiempo constante $\mathcal{O}(1)$ comparando únicamente $3$ valores anteriores (<code>i-1</code>, <code>i-2</code>, <code>i-3</code>). La reconstrucción recorre hacia atrás a lo sumo $N$ estaciones en $\mathcal{O}(N)$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(N)$ para almacenar los arreglos <code>DP</code> y <code>padre</code> de tamaño $N + 2$.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Devolver $DP[N]$ en lugar de $DP[N+1]$:</strong> El transporte no está obligado a parar en la estación $N$; si paró en $N-1$ o en $N-2$, puede saltear la estación $N$ y llegar directo a la meta $N+1$.</li><li><strong>Confundir "saltear 2 estaciones" con restar $2$ al índice:</strong> Si estás en $i$ y salteás las 2 estaciones anteriores ($i-1$ e $i-2$), venís de la estación $i-3$.</li></ul>
-</div></div></details></div></article>
+</div>
+<hr /></div></details></div></article>
 <article class="exercise-card" id="ej-60" data-num="60" data-priority="imprescindible" data-paradigm="pl" data-difficulty="3" data-parcial="true" data-title="observación de aves de paolo casanova (máxima cobertura con presupuesto de tiempo)" data-origin="parcial 2024-2-1 (5 de noviembre de 2024), ejercicio 4"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 60</span><h3 class="exercise-title">Observación de Aves de Paolo Casanova (Máxima Cobertura con Presupuesto de Tiempo)</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-pl">Prog. Lineal</span><span class="badge badge-origin" title="Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 4">🏛️ Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 4</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="60" onchange="toggleMastered(60, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
 Paolo Casanova dispone de 2 días para realizar salidas a diferentes lugares cercanos y observar la mayor cantidad posible de especies de aves. Hay 10 especies en particular que desea encontrar ($E = \{1, \dots, 10\}$) y 6 lugares posibles a visitar ($L = \{1, \dots, 6\}$). Algunos lugares insumen medio día ($0.5$ días) y otros un día completo ($1.0$ días). Para cada lugar se conoce exactamente qué especies habitan allí según una matriz binaria de presencia $A_{ij}$ ($A_{ij} = 1$ si la especie $i$ habita en el lugar $j$, $0$ si no). Plantear un modelo de Programación Lineal Entera que determine qué lugares visitar para maximizar la cantidad de especies distintas encontradas en el tiempo disponible. Indicar la cantidad exacta de variables y restricciones del modelo.</p></div><details class="exercise-solution-drawer" id="solution-drawer-60"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
 <ul><li><strong>Dos familias de decisiones binarias:</strong><ol><li>Por cada lugar $j \in \{1, \dots, 6\}$ definimos una variable binaria $y_j \in \{0, 1\}$ que vale $1$ si decidimos visitar ese lugar y $0$ si no.</li><li>Por cada especie de ave $i \in \{1, \dots, 10\}$ definimos otra variable binaria $x_i \in \{0, 1\}$ que vale $1$ si logramos avistar al menos una vez a la especie $i$, y $0$ si no.</li></ol>
@@ -886,7 +910,7 @@ Para evitar que un mismo médico atienda a dos pacientes en el mismo horario, <s
     T3 -->|1| T_SNK
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AsignarTurnosMedicos(Medicos, Pacientes, HorariosPorMedico, Compatibilidades):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AsignarTurnosMedicos(Medicos, Pacientes, HorariosPorMedico, Compatibilidades):
     Crear red de flujo dirigida G con super-fuente s y super-sumidero t
 
     // 1. Fuente s -&gt; cada paciente p (capacidad 1: a lo sumo 1 turno por paciente)
@@ -913,7 +937,7 @@ Para evitar que un mismo médico atienda a dos pacientes en el mismo horario, <s
             agregar (p, m, h) a citas_confirmadas
 
     RETORNAR citas_confirmadas
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Tamaño de la red:</strong><ul><li>Nodos: $|V| = 2 + |P| + |T|$, donde $|T| = \sum_{m \in M} |H_m|$ es el total de turnos ofrecidos.</li><li>Aristas: $|E| = |P| + |C| + |T| = \mathcal{O}(|P| + |C| + |T|)$, donde $|C|$ es el total de compatibilidades declaradas.</li></ul>
 </li><li><strong>Costo de armar la red:</strong> Recorrer pacientes, turnos y compatibilidades toma tiempo y espacio lineal <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li><li><strong>Costo de correr Ford-Fulkerson / Edmonds-Karp:</strong> Como todas las aristas de $s$ a los pacientes tienen capacidad $1$, el flujo máximo está acotado por $|f^*| \le \min(|P|, |T|) \le |P|$. Cada búsqueda de camino de aumento por BFS/DFS cuesta $\mathcal{O}(|E|)$ y aumenta el flujo en al menos $1$ unidad, por lo que ocurren a lo sumo $|P|$ iteraciones. La complejidad temporal total es <strong>$\mathcal{O}(|P| \cdot |E|)$</strong> (estrictamente polinomial), y la complejidad espacial es <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li></ul>
@@ -942,7 +966,7 @@ Como tenemos múltiples regiones que generan energía y múltiples regiones que 
     R3 -->|D3| T
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AbastecerRedEnergetica(Regiones, Generacion, Demanda, Lineas):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION AbastecerRedEnergetica(Regiones, Generacion, Demanda, Lineas):
     Crear red de flujo G con Super-Fuente S y Super-Sumidero T
     D_total &lt;- 0
 
@@ -971,7 +995,7 @@ Como tenemos múltiples regiones que generan energía y múltiples regiones que 
             SI u PERTENECE A A Y v NO PERTENECE A A:
                 agregar (u, v) a cuellos_de_botella
         RETORNAR (&quot;INFACTIBLE - Cuellos de botella:&quot;, cuellos_de_botella)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Tamaño de la red:</strong> Para $R$ regiones ($R = 9$ en el enunciado), la red tiene $|V| = R + 2$ nodos y $|E| \le 2R + |\text{Líneas}|$ aristas (a lo sumo $9 + 9 + 72 = 90$ aristas).</li><li><strong>Costo de armar la red y hallar el corte:</strong> Construir la red y hacer el BFS final sobre $G_f$ cuesta <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li><li><strong>Costo de correr Edmonds-Karp:</strong> La complejidad temporal es estrictamente polinomial <strong>$\mathcal{O}(|V| \cdot |E|^2)$</strong> (con $R = 9$ es $\mathcal{O}(1)$ en la práctica, apenas $\sim 11 \times 90^2 \approx 89.100$ operaciones). Si se usa Ford-Fulkerson con DFS, es pseudo-polinomial $\mathcal{O}(|E| \cdot D_{\text{total}})$. Complejidad espacial: <strong>$\mathcal{O}(|V| + |E|)$</strong>.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -1012,7 +1036,7 @@ Por lo tanto, un corte que era mínimo pero tenía <strong>muchas aristas chicas
     v -->|c=11 → c'=12| T_SNK["Sumidero t"]
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Construcción y verificación formal del contraejemplo en papel:
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// Construcción y verificación formal del contraejemplo en papel:
 PROCEDIMIENTO ContraejemploCorteMinimoMasUno():
     // Grafo con fuente s, nodos intermedios u1..u5, v y sumidero t
     // Corte 1: A1 = {s}, B1 = {u1..u5, v, t} -&gt; corta las 5 aristas (s, u_i) de cap 2
@@ -1027,7 +1051,7 @@ PROCEDIMIENTO ContraejemploCorteMinimoMasUno():
 
     // Como C_nuevo_Corte2 (12) &lt; C_nuevo_Corte1 (15), A1 dejó de ser corte mínimo
     RETORNAR FALSO
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Verificación del contraejemplo:</strong> El grafo construido tiene $|V| = 8$ nodos y $|E| = 11$ aristas; calcular la capacidad de ambos cortes antes y después de la perturbación toma tiempo constante <strong>$\mathcal{O}(1)$</strong> (y en un grafo general de $|E|$ aristas, evaluar la capacidad de un corte dado $(A, B)$ cuesta <strong>$\mathcal{O}(|E|)$</strong> recorriendo las aristas que van de $A$ hacia $B$).</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -1059,7 +1083,7 @@ Luego de las elecciones del domingo, en cierto país limítrofe, se deben llevar
     class CNE snk
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MaximizarTransporteUrnasFF(Centros, NodosIntermedios, Caminos, CNE):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MaximizarTransporteUrnasFF(Centros, NodosIntermedios, Caminos, CNE):
     // 1. Construir la red de flujo G = (V, E) y la red residual G_f
     Crear grafo dirigido G y grafo residual G_f
     Crear nodo ficticio SuperFuente s
@@ -1100,13 +1124,170 @@ Luego de las elecciones del domingo, en cierto país limítrofe, se deben llevar
 
     // 3. Devolver el máximo de urnas/minuto y el detalle por cada camino original
     RETORNAR (flujo_total_urnas, f)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Con Ford-Fulkerson clásico (búsqueda de camino arbitrario con DFS):</strong> En cada iteración se busca un camino de aumento en la red residual en tiempo $\mathcal{O}(|E|)$ (dado que $|V| \le |E| + 1$) y, al ser las capacidades enteras (urnas por minuto), el flujo aumenta al menos en $1$ unidad por iteración. Por lo tanto, la complejidad temporal es <strong>$\mathcal{O}(|E| \cdot |f^*|)$</strong> (pseudo-polinomial), donde $|f^*|$ es el flujo máximo total de urnas por minuto que llegan al $CNE$.</li><li><strong>Con Edmonds-Karp (implementación de Ford-Fulkerson usando BFS para elegir el camino más corto en cantidad de aristas):</strong> Se garantiza que ocurren a lo sumo $\mathcal{O}(|V| \cdot |E|)$ aumentos de flujo, y cada BFS toma $\mathcal{O}(|E|)$. Por lo tanto, la complejidad temporal es estrictamente polinomial <strong>$\mathcal{O}(|V| \cdot |E|^2)$</strong>, donde $|V| = N + |\text{NodosIntermedios}| + 2$ y $|E| = N + |\text{Caminos}|$.</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(|V| + |E|)$</strong> para almacenar la red de flujo, la red residual $G_f$ y la cola del BFS.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Ejecutar $N$ veces Ford-Fulkerson por separado desde cada centro $C_i$:</strong> Correr flujo máximo desde $C_1$ a $CNE$, luego desde $C_2$, etc., es incorrecto o subóptimo si no se mantiene una única red residual compartida. La forma limpia y estándar es unificar todos los orígenes con una única <strong>Super-Fuente $s$</strong> antes de iniciar el algoritmo.</li><li><strong>Omitir las aristas reversas (backward) $c_f(v, u)$ en la red residual:</strong> En el grafo del parcial existen enlaces cruzados entre nodos intermedios ($A \to B$). Sin aristas reversas, Ford-Fulkerson no puede reencaminar flujo y puede devolver un valor menor al óptimo.</li></ul>
 </div></div></details></div></article>
+<article class="exercise-card" id="ej-80" data-num="80" data-priority="imprescindible" data-paradigm="dyc" data-difficulty="3" data-parcial="true" data-title="mayor diferencia en subarreglo con índices crecientes (l[j] - l[i])" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 1"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 80</span><h3 class="exercise-title">Mayor Diferencia en Subarreglo con Índices Crecientes (L[j] - L[i])</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-dyc">División y Conquista</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 1">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 1</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="80" onchange="toggleMastered(80, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Dada una lista de números enteros (positivos y negativos), se desea obtener la mayor diferencia entre dos elementos $L[i]$ y $L[j]$ tales que $L[i] &lt; L[j]$ siendo $i &lt; j$. Realizar un algoritmo de DyC que resuelva el problema. Justificar la complejidad temporal del algoritmo realizado.</p></div><details class="exercise-solution-drawer" id="solution-drawer-80"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li>Se desea maximizar $L[j] - L[i]$ con $i &lt; j$ y $L[i] &lt; L[j]$. Si ningún par satisface la condición (por ejemplo si la lista es monótona no creciente), se retorna $-\infty$ indicando que no hay par válido.</li><li>
+<p><strong>Estrategia de División y Conquista:</strong></p>
+<ol><li><strong>División:</strong> Partimos el arreglo $L$ por la mitad en dos subarreglos de tamaño aproximado $n/2$: la mitad izquierda $L[ini \dots medio]$ y la mitad derecha $L[medio+1 \dots fin]$.</li><li><strong>Conquista:</strong> Resolvemos recursivamente el problema para ambas mitades. La mayor diferencia óptima global puede estar en:</li><li><strong>Caso 1 (Interna izquierda):</strong> Ambos índices en la mitad izquierda ($ini \le i &lt; j \le medio$). Diferencia: $diff_{izq}$.</li><li><strong>Caso 2 (Interna derecha):</strong> Ambos índices en la mitad derecha ($medio+1 \le i &lt; j \le fin$). Diferencia: $diff_{der}$.</li><li>
+<p><strong>Caso 3 (Cruce de mitades):</strong> El índice $i$ está en la izquierda y el índice $j$ en la derecha ($i \le medio &lt; j$). Para maximizar $L[j] - L[i]$, debemos restar el menor valor posible de la izquierda y sumar el mayor valor posible de la derecha:
+$$cruce = \max(L[medio+1 \dots fin]) - \min(L[ini \dots medio])$$
+(siempre que $\max(der) &gt; \min(izq)$).</p>
+</li><li>
+<p><strong>Combinación en $O(1)$ para lograr $O(n)$:</strong> Para evitar recorrer las mitades en cada llamada calculando mínimos y máximos en $O(n)$ (lo cual llevaría a $O(n \log n)$), cada llamada recursiva devuelve directamente una tripla con: <code>(min_val, max_val, mejor_diff)</code>. Así, combinar los resultados requiere únicamente comparaciones entre escalares en tiempo constante $O(1)$:</p>
+</li><li>$min\_actual = \min(min_{izq}, min_{der})$</li><li>$max\_actual = \max(max_{izq}, max_{der})$</li><li>$cruce = \text{si } max_{der} &gt; min_{izq} \text{ entonces } (max_{der} - min_{izq}) \text{ sino } -\infty$</li><li>$mejor\_diff = \max(diff_{izq}, diff_{der}, cruce)$</li></ol>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MayorDiferenciaDyC(L):
+    si longitud(L) &lt; 2:
+        retornar &quot;No existe par válido&quot;
+    (min_val, max_val, mejor_diff) = MayorDiferenciaRec(L, 0, longitud(L) - 1)
+    retornar mejor_diff
+
+Algoritmo MayorDiferenciaRec(L, ini, fin):
+    // Caso base: subarreglo de un solo elemento
+    si ini == fin:
+        retornar (L[ini], L[ini], -infinito)
+
+    medio = (ini + fin) // 2
+
+    (min_izq, max_izq, diff_izq) = MayorDiferenciaRec(L, ini, medio)
+    (min_der, max_der, diff_der) = MayorDiferenciaRec(L, medio + 1, fin)
+
+    // Combinación en tiempo constante O(1)
+    min_actual = min(min_izq, min_der)
+    max_actual = max(max_izq, max_der)
+
+    si max_der &gt; min_izq:
+        cruce = max_der - min_izq
+    sino:
+        cruce = -infinito
+
+    mejor_diff = max(diff_izq, diff_der, cruce)
+
+    retornar (min_actual, max_actual, mejor_diff)
+</code></pre></div>
+<h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
+<ul><li>
+<p><strong>Ecuación de Recurrencia:</strong></p>
+<ul><li>Se dividen los datos en <strong>$a = 2$ llamadas recursivas</strong> sobre instancias de tamaño $n/2$ (<strong>$b = 2$</strong>).</li><li>La combinación ejecuta únicamente comparaciones y restas sobre las triplas devueltas, con costo temporal <strong>$f(n) = O(1)$</strong> (<strong>$c = 0$</strong>).
+$$T(n) = 2 \cdot T(n/2) + O(1)$$</li></ul>
+</li><li>
+<p><strong>Aplicación del Teorema Maestro:</strong></p>
+<ul><li>Calculamos $\log_b a = \log_2 2 = 1$.</li><li>Como $c = 0 &lt; \log_b a = 1$ (<strong>Caso 1 del Teorema Maestro</strong>):
+$$T(n) \in \Theta(n^{\log_b a}) = \Theta(n^1) = \Theta(n)$$</li></ul>
+</li><li>
+<p><strong>Complejidad Espacial:</strong> $\mathcal{O}(\log n)$ debido a la profundidad de la pila de recursión sobre un árbol binario balanceado de altura $\lceil \log_2 n \rceil$.</p>
+</li></ul></div></details></div></article>
+<article class="exercise-card" id="ej-81" data-num="81" data-priority="imprescindible" data-paradigm="backtracking" data-difficulty="3" data-parcial="true" data-title="asignación de tareas a trabajadores con incompatibilidades y tiempo máximo" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 2"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 81</span><h3 class="exercise-title">Asignación de Tareas a Trabajadores con Incompatibilidades y Tiempo Máximo</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-backtracking">Backtracking</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 2">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 2</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="81" onchange="toggleMastered(81, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Una empresa debe asignar $n$ tareas a $m$ trabajadores. Cada tarea tiene una duración conocida $d[i]$. Algunas tareas son incompatibles entre sí y no pueden asignarse al mismo trabajador. Hay una matriz booleana de incompatibilidades. Ningún trabajador puede superar el tiempo máximo de trabajo $T$. Diseñar un algoritmo de backtracking que encuentre una solución válida al problema. Indicar la complejidad del algoritmo. Indicar los criterios de poda aplicados.</p></div><details class="exercise-solution-drawer" id="solution-drawer-81"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li><strong>Espacio de Búsqueda y Árbol de Decisiones:</strong><ul><li>Modelamos la asignación procesando secuencialmente cada tarea $i \in \{0, \dots, n-1\}$.</li><li>En el nivel $i$, decidimos a cuál de los $m$ trabajadores asignar la tarea $i$ (opciones $j \in \{0, \dots, m-1\}$).</li><li>Una hoja en el nivel $n$ representa una asignación válida completa de todas las tareas.</li></ul>
+</li><li><strong>Estructuras de Estado:</strong><ul><li><code>asignacion[i]</code>: identificador del trabajador asignado a la tarea $i$.</li><li><code>carga[j]</code>: suma acumulada de las duraciones de las tareas asignadas al trabajador $j$.</li><li><code>tareas_trabajador[j]</code>: lista de tareas asignadas al trabajador $j$.</li></ul>
+</li><li><strong>Criterios de Poda Aplicados (Explicación obligatoria para el parcial):</strong><ol><li><strong>Poda por Tiempo Máximo de Trabajo $T$ (Capacidad):</strong> Antes de asignar la tarea $i$ al trabajador $j$, verificamos si <code>carga[j] + d[i] &gt; T</code>. Si supera $T$, podar inmediatamente la rama (violación de restricción de tiempo).</li><li><strong>Poda por Incompatibilidad:</strong> Antes de asignar la tarea $i$ al trabajador $j$, verificamos contra la matriz booleana $M$ si existe alguna tarea $k \in \text{tareas\_trabajador}[j]$ tal que $M[i][k] == \text{Verdadero}$. Si hay incompatibilidad, no se asigna y se poda la rama.</li><li><strong>Poda por Capacidad Restante Total (Cota Inferior):</strong> Si la suma de las duraciones de todas las tareas pendientes de asignar supera el tiempo ocioso total disponible en todos los trabajadores ($\sum_{k=i}^{n-1} d[k] &gt; \sum_{j=0}^{m-1} (T - carga[j])$), es imposible completar una solución válida; se podan todas las ramas restantes desde el nodo actual.</li><li><strong>Poda por Simetría de Trabajadores:</strong> Si varios trabajadores tienen actualmente <code>carga[j] == 0</code> (no se les ha asignado ninguna tarea), son equivalentes e indistinguibles. Asignar la tarea $i$ a cualquiera de ellos produce ramas simétricas idénticas. Por lo tanto, solo se prueba asignar al primero de los trabajadores vacíos y se evitan los demás, reduciendo el espacio de búsqueda hasta en un factor $m!$.</li></ol>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo AsignarTareas(n, m, d, M, T):
+    asignacion = arreglo de tamaño n inicializado en -1
+    carga = arreglo de tamaño m inicializado en 0
+    tareas_trabajador = lista de m listas vacias
+
+    si AsignarTareasBT(0, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+        retornar asignacion
+    sino:
+        retornar &quot;No existe asignación válida&quot;
+
+Algoritmo AsignarTareasBT(i, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+    // Caso base: todas las tareas fueron asignadas con exito
+    si i == n:
+        retornar Verdadero
+
+    // Poda por capacidad restante total
+    tiempo_pendiente = 0
+    para k desde i hasta n - 1:
+        tiempo_pendiente = tiempo_pendiente + d[k]
+
+    tiempo_disponible = 0
+    para j desde 0 hasta m - 1:
+        tiempo_disponible = tiempo_disponible + (T - carga[j])
+
+    si tiempo_pendiente &gt; tiempo_disponible:
+        retornar Falso
+
+    probado_trabajador_vacio = Falso
+
+    para j desde 0 hasta m - 1:
+        // Poda por simetria
+        si carga[j] == 0:
+            si probado_trabajador_vacio:
+                continuar
+            probado_trabajador_vacio = Verdadero
+
+        // 1. Poda por tiempo maximo T
+        si carga[j] + d[i] &gt; T:
+            continuar
+
+        // 2. Poda por incompatibilidad
+        incompatible = Falso
+        para cada k en tareas_trabajador[j]:
+            si M[i][k] == Verdadero:
+                incompatible = Verdadero
+                romper
+        si incompatible:
+            continuar
+
+        // Realizar asignacion (Do)
+        asignacion[i] = j
+        carga[j] = carga[j] + d[i]
+        agregar i a tareas_trabajador[j]
+
+        // Llamada recursiva
+        si AsignarTareasBT(i + 1, n, m, d, M, T, asignacion, carga, tareas_trabajador):
+            retornar Verdadero
+
+        // Deshacer asignacion (Backtrack)
+        remover ultimo elemento de tareas_trabajador[j]
+        carga[j] = carga[j] - d[i]
+        asignacion[i] = -1
+
+    retornar Falso
+</code></pre></div>
+<h4>3. Justificación de Complejidad</h4>
+<ul><li><strong>Complejidad Temporal:</strong> En el peor caso (cuando no hay podas efectivas o no existe solución válida), el árbol de recursión tiene $n$ niveles con factor de ramificación $m$. En cada nodo se realizan a lo sumo $\mathcal{O}(n)$ comprobaciones de incompatibilidad. Por lo tanto, la complejidad temporal en el peor caso es <strong>$\mathcal{O}(m^n \cdot n)$</strong>. Las podas de incompatibilidad, capacidad máxima y simetría reducen el árbol drásticamente en el caso promedio.</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(n + m)$</strong>, correspondiente a la profundidad de la pila de llamadas recursivas ($n$) y a las estructuras de asignación, cargas y tareas por trabajador.</li></ul></div></details></div></article>
+<article class="exercise-card" id="ej-83" data-num="83" data-priority="imprescindible" data-paradigm="greedy" data-difficulty="3" data-parcial="true" data-title="algoritmo greedy para proyectos concurrentes, instancia óptima y contraejemplo" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 4"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 83</span><h3 class="exercise-title">Algoritmo Greedy para Proyectos Concurrentes, Instancia Óptima y Contraejemplo</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-greedy">Greedy / Voraz</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 4">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 4</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="83" onchange="toggleMastered(83, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Diseñar un algoritmo greedy que permita resolver el problema anterior (selección de proyectos con inicio $i[i]$, fin $f[i]$ y beneficio $B[i]$, concurrencia máxima 2). Si el algoritmo no asegura la solución óptima, indicar una instancia donde la solución obtenida sea la óptima y una instancia donde la solución obtenida no sea la óptima. Indicar la complejidad del algoritmo desarrollado.</p></div><details class="exercise-solution-drawer" id="solution-drawer-83"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li><strong>Diseño de la Heurística Voraz (Greedy):</strong><ul><li>Para maximizar el beneficio total sin superar la concurrencia máxima de 2 proyectos en paralelo, una regla voraz natural es priorizar los proyectos de <strong>mayor beneficio económico individual $B[i]$</strong>.</li><li><strong>Estrategia Greedy:</strong></li><li>Ordenamos todos los proyectos de mayor a menor beneficio: $B_1 \ge B_2 \ge \dots \ge B_n$.</li><li>Comenzamos con la solución vacía $S = \emptyset$.</li><li>Para cada proyecto candidato $i$, verificamos si agregarlo a $S$ no provoca que en ningún instante de tiempo se superen 2 proyectos activos concurrentes.</li><li>Si entra sin violar la capacidad $\le 2$, lo incorporamos a la solución; si genera conflicto, lo descartamos definitivamente.</li></ul>
+</li><li><strong>¿Asegura la solución óptima siempre?</strong><ul><li><strong>NO asegura la solución óptima.</strong> Al ser un problema ponderado (<em>Weighted Interval Scheduling</em> con $k=2$), la decisión voraz de seleccionar un proyecto de beneficio alto pero de larga duración puede bloquear combinaciones de múltiples proyectos más cortos cuya suma acumulada de beneficios en ambos canales es superior.</li></ul>
+</li></ul>
+<h4>2. Instancia donde la Solución Obtenida SÍ es la Óptima</h4>
+<ul><li><strong>Parámetros de la Instancia:</strong><ul><li>Proyecto 1: $[0, 5]$, Beneficio $B_1 = 100$.</li><li>Proyecto 2: $[0, 5]$, Beneficio $B_2 = 80$.</li><li>Proyecto 3: $[10, 15]$, Beneficio $B_3 = 50$.</li><li>Proyecto 4: $[10, 15]$, Beneficio $B_4 = 40$.</li></ul>
+</li><li><strong>Ejecución Greedy:</strong><ul><li>Proyectos ordenados por beneficio decreciente: $1 \ (100) \to 2 \ (80) \to 3 \ (50) \to 4 \ (40)$.</li><li>Evalúa Proyecto 1: Concurrencia en $[0, 5]$ es $1 \le 2$. Se agrega ($S = \{1\}$).</li><li>Evalúa Proyecto 2: Concurrencia en $[0, 5]$ es $2 \le 2$. Se agrega ($S = \{1, 2\}$).</li><li>Evalúa Proyecto 3: Concurrencia en $[10, 15]$ es $1 \le 2$. Se agrega ($S = \{1, 2, 3\}$).</li><li>Evalúa Proyecto 4: Concurrencia en $[10, 15]$ es $2 \le 2$. Se agrega ($S = \{1, 2, 3, 4\}$).</li></ul>
+</li><li><strong>Resultado:</strong> Beneficio Greedy = $100 + 80 + 50 + 40 = 270$. Coincide con la solución óptima global.</li></ul>
+<h4>3. Instancia donde la Solución Obtenida NO es la Óptima (Contraejemplo Formal)</h4>
+<ul><li><strong>Parámetros de la Instancia:</strong><ul><li>Proyecto A (largo y beneficio moderado): $[0, 10]$, Beneficio $B_A = 100$.</li><li>Proyecto B1: $[0, 5]$, Beneficio $B_{B1} = 60$.</li><li>Proyecto B2: $[5, 10]$, Beneficio $B_{B2} = 60$.</li><li>Proyecto C1: $[0, 5]$, Beneficio $B_{C1} = 60$.</li><li>Proyecto C2: $[5, 10]$, Beneficio $B_{C2} = 60$.</li></ul>
+</li><li><strong>Ejecución del Algoritmo Greedy:</strong><ul><li>Proyectos ordenados por beneficio: $A \ (100) \to B1 \ (60) \to B2 \ (60) \to C1 \ (60) \to C2 \ (60)$.</li><li>Greedy toma primero el <strong>Proyecto A</strong> ($B = 100$), ocupando un canal durante todo el intervalo $[0, 10]$.</li><li>En el canal restante, toma $B1$ ($[0, 5]$, $B = 60$) y $B2$ ($[5, 10]$, $B = 60$).</li><li>Los proyectos $C1$ y $C2$ no pueden agregarse porque en $[0, 5]$ ya están $A$ y $B1$ (2 activos), y en $[5, 10]$ ya están $A$ y $B2$ (2 activos).</li><li><strong>Beneficio obtenido por Greedy:</strong> $B_A + B_{B1} + B_{B2} = 100 + 60 + 60 = 220$.</li></ul>
+</li><li><strong>Solución Óptima Real:</strong><ul><li>Descartar el Proyecto A.</li><li>Asignar al Canal 1 los proyectos $B1$ ($[0, 5]$) y $B2$ ($[5, 10]$).</li><li>Asignar al Canal 2 los proyectos $C1$ ($[0, 5]$) y $C2$ ($[5, 10]$).</li><li>En ningún instante hay más de 2 proyectos activos simultáneos.</li><li><strong>Beneficio Óptimo:</strong> $B_{B1} + B_{B2} + B_{C1} + B_{C2} = 60 + 60 + 60 + 60 = 240$.</li></ul>
+</li><li><strong>Conclusión:</strong> $220 &lt; 240$. Queda demostrado mediante contraejemplo numérico que el algoritmo Greedy <strong>no asegura la solución óptima</strong>.</li></ul>
+<h4>4. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo ProyectosGreedy(proyectos):
+    ordenar proyectos por beneficio decreciente
+    solucion = []
+
+    para cada p en proyectos:
+        // Verificar si p es compatible con la solucion actual (a lo sumo 2 simultaneos)
+        si esFactibleAgregar(solucion, p):
+            agregar p a solucion
+
+    retornar solucion
+</code></pre></div>
+<h4>5. Justificación de Complejidad</h4>
+<ul><li><strong>Ordenamiento:</strong> Ordenar los $n$ proyectos por beneficio toma $\mathcal{O}(n \log n)$.</li><li><strong>Bucle de Selección:</strong> Para cada proyecto, verificar si agregarlo respeta la concurrencia $\le 2$ toma a lo sumo $\mathcal{O}(n)$ comparando con los proyectos ya aceptados, o $\mathcal{O}(\log n)$ manteniendo los eventos en una estructura de barrido.</li><li><strong>Complejidad Temporal Total:</strong> <strong>$\mathcal{O}(n \log n)$</strong> (con barrido) u <strong>$\mathcal{O}(n^2)$</strong> con verificación directa.</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(n)$</strong> para almacenar la lista ordenada y la solución seleccionada.</li></ul>
+<hr /></div></details></div></article>
 <article class="exercise-card" id="ej-54" data-num="54" data-priority="imprescindible" data-paradigm="dp" data-difficulty="4" data-parcial="true" data-title="mochila 2d con selección obligatoria y excluyente de guías de aves" data-origin="parcial 2024-2-1 (5 de noviembre de 2024), ejercicio 3"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 54</span><h3 class="exercise-title">Mochila 2D con Selección Obligatoria y Excluyente de Guías de Aves</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-4" title="Dificultad 4 de 5">★★★★ (4/5)</span><span class="badge badge-paradigm badge-dp">Prog. Dinámica</span><span class="badge badge-origin" title="Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 3">🏛️ Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 3</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="54" onchange="toggleMastered(54, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
 Paolo Casanova llevará una mochila para el fin de semana con capacidad de peso $C$ kilos y volumen $L$ litros. Tiene una lista de $n$ elementos posibles, donde cada elemento $i$ tiene un peso $w_i$, un volumen $v_i$ y un beneficio $b_i$. Los ítems $1$ y $2$ son dos guías de observación de aves distintas. Por utilidad, <strong>no tiene sentido llevar ambas guías, pero Paolo debe llevar obligatoriamente una de las dos</strong> (es decir, debe elegir exactamente la guía $1$ o la guía $2$, nunca ninguna ni las dos). Desarrollar un algoritmo de Programación Dinámica que encuentre la combinación óptima de elementos que maximice el beneficio total respetando las capacidades.</p></div><details class="exercise-solution-drawer" id="solution-drawer-54"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
 <ul><li>
@@ -1135,7 +1316,7 @@ $$OPT_{\text{total}} = \max\Big( b_1 + OPT(m, C - w_1, L - v_1), \;\; b_2 + OPT(
     classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MochilaPaolo(guia1, guia2, libres, C, L):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION MochilaPaolo(guia1, guia2, libres, C, L):
     m &lt;- longitud(libres)   // libres contiene los ítems 3..n (m = n - 2)
     DP &lt;- matriz 3D de (m + 1) x (C + 1) x (L + 1) inicializada en 0
 
@@ -1166,7 +1347,7 @@ $$OPT_{\text{total}} = \max\Big( b_1 + OPT(m, C - w_1, L - v_1), \;\; b_2 + OPT(
             v_rem &lt;- v_rem - libres[i].v
 
     RETORNAR (max(total_A, total_B), elegidos)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n \cdot C \cdot L)$. La matriz tridimensional <code>DP</code> tiene dimensiones $(n - 1) \times (C + 1) \times (L + 1)$ y cada celda se calcula en $\mathcal{O}(1)$ comparando dos opciones. Evaluar ambas guías toma $\mathcal{O}(1)$ y reconstruir la solución toma $\mathcal{O}(n)$ pasos. Es una complejidad <strong>pseudo-polinomial</strong> porque depende de las magnitudes numéricas $C$ y $L$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n \cdot C \cdot L)$ para almacenar la tabla 3D necesaria para reconstruir los elementos elegidos.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -1193,7 +1374,7 @@ $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{
     classDef curr fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION WordWrap(C, n, L):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION WordWrap(C, n, L):
     DP &lt;- arreglo de tamaño (n + 1) inicializado en +INFINITO
     inicio_linea &lt;- arreglo de tamaño (n + 1) inicializado en 0
     DP[0] &lt;- 0
@@ -1225,7 +1406,7 @@ $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{
         actual &lt;- j - 1
 
     RETORNAR (DP[n], lineas)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n^2)$ (o más ajustadamente $\mathcal{O}(n \cdot L)$). La tabla <code>DP</code> tiene $n + 1$ celdas. Para calcular cada celda $i$, el bucle interno retrocede con el índice $j$ a lo sumo $i$ posiciones (y a lo sumo $L$ pasos antes de que <code>largo_actual</code> supere $L$), haciendo cuentas en $\mathcal{O}(1)$ en cada paso gracias a que acumulamos <code>largo_actual</code>.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n)$ para guardar los arreglos <code>DP[0..n]</code> e <code>inicio_linea[1..n]</code>.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -1248,7 +1429,7 @@ $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) &amp; \text{si } W_i &gt; 
     classDef yes fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION DeliveryMochila3D(paquetes, n, C, T, M):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION DeliveryMochila3D(paquetes, n, C, T, M):
     DP &lt;- matriz 4D de (n + 1) x (C + 1) x (T + 1) x (M + 1) inicializada en 0
 
     // 1. Llenado Bottom-Up de los 4 índices
@@ -1274,7 +1455,7 @@ $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) &amp; \text{si } W_i &gt; 
             m &lt;- m - paquetes[i].C
 
     RETORNAR (DP[n][C][T][M], elegidos)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Complejidad Temporal:</strong> $\mathcal{O}(n \cdot C \cdot T \cdot M)$. Tenemos una tabla 4D con $(n + 1)(C + 1)(T + 1)(M + 1)$ celdas, y cada celda se resuelve en tiempo constante $\mathcal{O}(1)$ comparando dos opciones. La reconstrucción recorre $n$ pasos en $\mathcal{O}(n)$. Es una complejidad <strong>pseudo-polinomial</strong> porque depende de las magnitudes numéricas de las capacidades $C, T, M$.</li><li><strong>Complejidad Espacial:</strong> $\mathcal{O}(n \cdot C \cdot T \cdot M)$ para almacenar la tabla 4D.</li></ul>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
@@ -1306,7 +1487,7 @@ Si el conjunto dominante $D$ de $G&#x27;$ eligió algún vértice auxiliar $w_{u
     end
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorDominatingSet(G = (V, E), k, certificado_D):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorDominatingSet(G = (V, E), k, certificado_D):
     SI tamaño(certificado_D) &gt; k:
         RETORNAR FALSO
 
@@ -1328,7 +1509,7 @@ FUNCION TransformarVCaDominatingSet(G = (V, E), k):
         agregar_arista(G', v, w_uv)
 
     RETORNAR (G', k' = k) // Transformación en O(|V| + |E|)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Reducir al revés ($DominatingSet \le_P VertexCover$):</strong> Reducir el problema nuevo al problema conocido demuestra que el nuevo es fácil, pero <strong>no prueba que sea NP-Hard</strong>. La reducción debe partir obligatoriamente desde el problema conocido.</li><li><strong>Olvidar reemplazar los vértices auxiliares en la vuelta:</strong> Si un conjunto dominante contiene $w_{uv}$, no es un subconjunto de los vértices originales. Es obligatorio explicar por qué $w_{uv}$ puede sustituirse por $u$ sin aumentar el tamaño ni perder dominancia.</li></ul>
@@ -1366,7 +1547,7 @@ Cualquier tour cerrado que visite las $n$ ciudades usa exactamente $n$ aristas, 
     end
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorTSP(G', k, certificado_tour):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorTSP(G', k, certificado_tour):
     SI tamaño(certificado_tour) != tamaño(V(G')) O tiene vértices repetidos:
         RETORNAR FALSO
     costo_total &lt;- 0
@@ -1388,7 +1569,7 @@ FUNCION TransformarCicloHamiltonianoATSP(G = (V, E)):
 
     k &lt;- n
     RETORNAR OraculoTSP(G', k) // Transformación en O(n^2)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Asignar peso 0 a las aristas existentes y 1 a las inexistentes:</strong> Si se pone peso 0 a las aristas existentes y cota $k = 0$, matemáticamente es válido, pero muchos docentes exigen pesos estrictamente positivos ($w(e) &gt; 0$). Con pesos $\{1, 2\}$ y cota $k = n$, se respeta la formulación clásica de TSP métrico.</li><li><strong>No explicar por qué no puede haber aristas de peso 2 en la vuelta:</strong> Hay que mencionar explícitamente que si usara una sola arista de peso 2, el tour de $n$ aristas costaría al menos $n + 1 &gt; n$.</li></ul>
@@ -1408,7 +1589,7 @@ Demostrar formalmente que el problema del <strong>Cambio de Monedas</strong> (en
     classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff
 </pre></div>
 <h4>2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorCambioMonedas(D, V, k, certificado_monedas):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorCambioMonedas(D, V, k, certificado_monedas):
     SI tamaño(certificado_monedas) &gt; k:
         RETORNAR FALSO
     suma &lt;- 0
@@ -1433,7 +1614,7 @@ FUNCION TransformarCambioMonedasASubsetSum(D, V, k):
 
     W_objetivo &lt;- V * M + k
     RETORNAR OraculoSubsetSum(L, W_objetivo)
-</code></pre></div></div>
+</code></pre></div>
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Confundir tiempo pseudo-polinomial con polinomial:</strong> Afirmar que como ambos se resuelven con programación dinámica en $O(n V)$ están en P. No están en P bajo codificación binaria porque el tamaño de la entrada es $O(\log V)$, haciendo que $O(V)$ sea exponencial respecto a la longitud en bits.</li><li><strong>Decir que no se puede reducir en sentido inverso:</strong> Creer erróneamente que porque uno parece más general no puede reducirse al otro. Dos problemas NP-Completos cualesquiera siempre admiten reducción mutua bidireccional.</li></ul>
@@ -1465,7 +1646,7 @@ $$\sum_{w: (v, w) \in E} x_{vw} - \sum_{u: (u, v) \in E} x_{uv} = \begin{cases} 
 <p><em>Garantía de Optimalidad:</em> Es <strong>óptimo</strong>. Por la propiedad de <strong>Unimodularidad Total</strong> de la matriz de incidencia de redes, resolver la relajación lineal continua produce automáticamente variables enteras $x_{uv} \in \{0, 1\}$ sin requerir Branch &amp; Bound exponencial.</p>
 </li></ol>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Óptimo en DAG)
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">// 1. Programación Dinámica (Óptimo en DAG)
 Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
     OPT = mapa con valor INFINITO para todo nodo; padre = mapa con NULO
     OPT[ezeiza] = 0
@@ -1486,7 +1667,7 @@ Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
 
 // 2. Greedy (No óptimo): En cada etapa actual, siguiente = argmin_{v} { C[actual][v] }
 // 3. Modelo PL: Min sum C_uv * x_uv  sujeto a sum x_vw - sum x_uv = balance(v)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad</h4>
 <ul><li><strong>Comparativa de Complejidades Temporales y Espaciales:</strong><ul><li><strong>Greedy:</strong> En cada una de las $K$ etapas solo inspecciona las aristas salientes del nodo elegido. Tiempo $\mathcal{O}(|V| + |E|)$ (o $\mathcal{O}(K \cdot \Delta)$), Espacio $\mathcal{O}(|V|)$. Es el más veloz pero <strong>carece de garantía de optimalidad</strong>.</li><li><strong>Programación Dinámica:</strong> Al estar estructurado en etapas (DAG), recorre los vértices y cada arista entrante $(u, v)$ una única vez en orden topológico. Tiempo: <strong>$\Theta(|V| + |E|)$</strong>, Espacio: <strong>$\Theta(|V|)$</strong> para las tablas <code>OPT</code> y <code>padre</code>. <strong>Garantiza la solución óptima</strong> en tiempo lineal respecto al tamaño del grafo.</li><li><strong>Programación Lineal:</strong> Formulación con $|E|$ variables y $|V|$ restricciones de conservación. Resuelto como flujo de costo mínimo con Simplex de redes en tiempo polinomial $\mathcal{O}(|V| \cdot |E|)$. <strong>Garantiza la solución óptima</strong>.</li></ul>
 </li><li><strong>Elección en Examen:</strong> Si se busca la ruta óptima en un grafo por etapas (DAG), <strong>Programación Dinámica</strong> es la solución óptima y más eficiente de implementar.</li></ul>
@@ -1495,6 +1676,120 @@ Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
 <ul><li><strong>En PD, no mencionar el orden topológico por etapas:</strong> La recurrencia $OPT(v) = \min(OPT(u) + C_{uv})$ solo es válida sin ciclos (DAG). En un grafo con ciclos requeriría Dijkstra o Bellman-Ford.</li><li><strong>En PL, olvidar las restricciones de conservación en los nodos intermedios:</strong> Sin el balance $\sum_{\text{salen}} - \sum_{\text{entran}} = 0$ en cada ciudad intermedia, el solver dejaría el camino desconectado.</li></ul>
 </div>
 <hr /></div></details></div></article>
+<article class="exercise-card" id="ej-82" data-num="82" data-priority="imprescindible" data-paradigm="dp" data-difficulty="4" data-parcial="true" data-title="selección óptima de proyectos con concurrencia máxima 2" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 3"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 82</span><h3 class="exercise-title">Selección Óptima de Proyectos con Concurrencia Máxima 2</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-4" title="Dificultad 4 de 5">★★★★ (4/5)</span><span class="badge badge-paradigm badge-dp">Prog. Dinámica</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 3">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 3</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="82" onchange="toggleMastered(82, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Una empresa tiene una serie de $n$ proyectos disponibles para realizar el próximo año. Cada proyecto tiene: Una fecha de inicio $i[i]$, una fecha de fin $f[i]$ y un beneficio $B[i]$. Sabiendo que no puede realizar más de dos proyectos simultáneamente, realizar un algoritmo de programación dinámica que permita saber qué proyectos realizar para alcanzar el beneficio máximo. Indicar la complejidad del algoritmo desarrollado.</p></div><details class="exercise-solution-drawer" id="solution-drawer-82"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li><strong>Clasificación del Problema:</strong> Es una generalización de <em>Weighted Interval Scheduling</em> (selección de intervalos ponderados) a $k = 2$ recursos o canales concurrentes.</li><li><strong>Preprocesamiento:</strong><ol><li>Ordenamos los $n$ proyectos por fecha de fin no decreciente: $f_1 \le f_2 \le \dots \le f_n$. Agregamos un proyecto ficticio $0$ con fin $0$ y beneficio $0$.</li><li>Para cada proyecto $i$, precalculamos mediante búsqueda binaria el proyecto compatible más reciente $p(i)$: el mayor índice $j &lt; i$ tal que $f_j \le inicio_i$.</li></ol>
+</li><li><strong>Definición del Subproblema y Estado:</strong><ul><li>Como a lo sumo 2 proyectos pueden ejecutarse en simultáneo, en cualquier punto de decisión el estado de los canales queda caracterizado por los <strong>dos últimos proyectos activos</strong> asignados a cada canal.</li><li>Definimos $DP(i, j)$ con $0 \le j &lt; i$: el máximo beneficio considerando un subconjunto de proyectos entre $\{1, \dots, i\}$, tal que el último proyecto terminado en uno de los canales es $i$, y el último proyecto terminado en el otro canal es $j$ ($f_j \le f_i$).</li></ul>
+</li><li>
+<p><strong>Ecuación de Recurrencia:</strong>
+Para el proyecto $i$:</p>
+<ul><li>Si el proyecto $i$ no se realiza, se mantiene el valor óptimo previo.</li><li>Si el proyecto $i$ se realiza, se asigna al canal que se libera primero. Como $f_j \le f_k$, el canal que se libera antes es el que tiene fin en $f_j$. Por ende, el proyecto $i$ puede comenzar si $f_j \le inicio_i$. Al tomarlo, el nuevo par de últimos proyectos finalizados es $(k, i)$.</li><li>Formalmente, para cada $0 \le j &lt; i$:
+$$DP(i, j) = \begin{cases}
+DP(i - 1, j) &amp; \text{si no tomamos el proyecto } i \\
+\max_{0 \le k \le p(i)} \{ DP(i - 1, k) \} + B_i &amp; \text{si tomamos } i \text{ (cuando } j = i - 1 \text{)}
+\end{cases}$$</li></ul>
+</li><li>
+<p><strong>Reconstrucción:</strong>
+Se almacena una tabla de decisiones para recuperar el conjunto de proyectos que integran la solución óptima.</p>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo ProyectosConcurrenciaDosDP(proyectos):
+    // proyectos es lista de n tuplas (inicio, fin, beneficio)
+    ordenar proyectos por fin no decreciente
+    n = longitud(proyectos)
+
+    DP = matriz de ceros de (n + 1) x (n + 1)
+    padre = matriz de ceros de (n + 1) x (n + 1)
+
+    // Precalcular p[i]: ultimo proyecto compatible antes de inicio[i]
+    p = arreglo de tamaño n + 1
+    para i desde 1 hasta n:
+        p[i] = BusquedaBinariaCompatible(proyectos, i)
+
+    para i desde 1 hasta n:
+        para j desde 0 hasta i - 1:
+            // Caso 1: no tomar proyecto i
+            DP[i][j] = DP[i - 1][j]
+            padre[i][j] = (i - 1, j, Falso)
+
+            // Caso 2: tomar proyecto i en canal libre
+            si j == i - 1:
+                para k desde 0 hasta p[i]:
+                    valor = DP[i - 1][k] + proyectos[i].beneficio
+                    si valor &gt; DP[i][j]:
+                        DP[i][j] = valor
+                        padre[i][j] = (i - 1, k, Verdadero)
+
+    // Buscar el maximo beneficio en la fila n
+    mejor_valor = 0
+    mejor_j = 0
+    para j desde 0 hasta n - 1:
+        si DP[n][j] &gt; mejor_valor:
+            mejor_valor = DP[n][j]
+            mejor_j = j
+
+    // Reconstruccion hacia atras
+    seleccionados = []
+    curr_i = n
+    curr_j = mejor_j
+    mientras curr_i &gt; 0:
+        (prev_i, prev_j, tomo_i) = padre[curr_i][curr_j]
+        si tomo_i:
+            agregar curr_i a seleccionados
+        curr_i = prev_i
+        curr_j = prev_j
+
+    retornar (mejor_valor, seleccionados)
+</code></pre></div>
+<h4>3. Justificación de Complejidad</h4>
+<ul><li><strong>Complejidad Temporal:</strong><ul><li>El ordenamiento inicial toma $\mathcal{O}(n \log n)$.</li><li>Precalcular $p[i]$ para todos los proyectos mediante búsqueda binaria toma $n \cdot \mathcal{O}(\log n) = \mathcal{O}(n \log n)$.</li><li>La matriz <code>DP</code> contiene $\mathcal{O}(n^2)$ estados $(i, j)$.</li><li>La transición toma $\mathcal{O}(1)$ para la mayoría de las celdas, y a lo sumo $\mathcal{O}(n)$ para $j = i - 1$. Por lo tanto, el llenado de la matriz toma <strong>$\mathcal{O}(n^2)$</strong>.</li><li>La reconstrucción recorre a lo sumo $\mathcal{O}(n)$ pasos.</li><li>Complejidad temporal total: <strong>$\mathcal{O}(n^2)$</strong>.</li></ul>
+</li><li><strong>Complejidad Espacial:</strong> <strong>$\mathcal{O}(n^2)$</strong> para almacenar la matriz <code>DP</code> y la matriz de punteros de reconstrucción <code>padre</code>.</li></ul></div></details></div></article>
+<article class="exercise-card" id="ej-85" data-num="85" data-priority="imprescindible" data-paradigm="reducciones" data-difficulty="4" data-parcial="true" data-title="demostración de np-completitud de independent set (desde vertex cover)" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 6"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 85</span><h3 class="exercise-title">Demostración de NP-Completitud de Independent Set (desde Vertex Cover)</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-4" title="Dificultad 4 de 5">★★★★ (4/5)</span><span class="badge badge-paradigm badge-reducciones">Reducciones NP</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 6">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 6</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="85" onchange="toggleMastered(85, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Se considera el problema de Independent Set: Dado un grafo no dirigido $G=(V,E)$ y un entero $k$, determinar si existe un subconjunto de al menos $k$ vértices tal que ningún par de vértices del subconjunto esté conectado por una arista. También se considera el problema de Vertex Cover: Dado un grafo no dirigido $G&#x27;=(V&#x27;,E&#x27;)$ y un entero $k&#x27;$, determinar si existe un subconjunto de como máximo $k&#x27;$ vértices que cubra todas las aristas del grafo. Es decir, cada arista debe tener al menos uno de sus extremos perteneciente al subconjunto seleccionado. Sabiendo que VC es NP-Completo, demostrar que Independent Set también lo es.</p></div><details class="exercise-solution-drawer" id="solution-drawer-85"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos Canónicos de FIUBA)</h4>
+<ul><li><strong>Paso 1: Demostrar que Independent Set $\in$ NP (Verificador Polinomial):</strong><ul><li><strong>Certificado:</strong> Un subconjunto de vértices $I \subseteq V$ propuesto como solución.</li><li><strong>Algoritmo Verificador:</strong></li><li>Verifica que el tamaño del conjunto sea al menos $k$: $|I| \ge k$ (toma tiempo $\mathcal{O}(|V|)$).</li><li>Recorre cada par de vértices distintos $u, v \in I$ y comprueba en la estructura del grafo que $(u, v) \notin E$ (ningún par conectado por una arista). Esto toma a lo sumo $\binom{|I|}{2} = \mathcal{O}(|V|^2)$ comparaciones.</li><li>Como el verificador es determinístico y finaliza en tiempo $\mathcal{O}(|V|^2 + |E|)$ (estrictamente polinomial respecto al tamaño de la entrada), queda demostrado que <strong>$\text{Independent Set} \in \text{NP}$</strong>.</li></ul>
+</li><li>
+<p><strong>Paso 2: Elección del Problema Conocido y Dirección Sagrada:</strong></p>
+<ul><li>El enunciado establece que <strong>Vertex Cover (VC) es NP-Completo</strong>.</li><li><strong>Dirección Sagrada:</strong> Reducimos <strong>desde</strong> el problema conocido <strong>hacia</strong> el problema nuevo a demostrar:
+$$\text{Vertex Cover} \le_P \text{Independent Set}$$</li></ul>
+</li><li>
+<p><strong>Paso 3: Transformación Polinomial de la Instancia:</strong></p>
+<ul><li>Dada una instancia arbitraria de Vertex Cover: un grafo no dirigido $G&#x27; = (V&#x27;, E&#x27;)$ y un entero $k&#x27;$.</li><li>
+<p>Construimos una instancia $\langle G = (V, E), k \rangle$ de Independent Set definiendo:
+$$G = G&#x27; \quad (\text{mismo conjunto de vértices } V = V&#x27; \text{ y mismas aristas } E = E&#x27;)$$
+$$k = |V&#x27;| - k&#x27;$$</p>
+</li><li>
+<p><strong>Costo de la transformación:</strong> Construir $G = G&#x27;$ y fijar $k = |V&#x27;| - k&#x27;$ toma tiempo $\mathcal{O}(|V&#x27;| + |E&#x27;|)$, que es estrictamente <strong>polinomial</strong> (lineal).</p>
+</li><li><strong>Paso 4: Demostración de Equivalencia Lógica (Ida y Vuelta $\iff$):</strong></li><li>Se fundamenta en el Teorema del Complemento de Gallai: en cualquier grafo $G = (V, E)$, un conjunto $S \subseteq V$ es un <em>Vertex Cover</em> si y solo si su complemento $V \setminus S$ es un <em>Independent Set</em>.</li><li><strong>($\implies$) Ida (Si $G&#x27;$ tiene un Vertex Cover de tamaño $\le k&#x27; \implies G$ tiene un Independent Set de tamaño $\ge k$):</strong></li><li>Supongamos que existe un subconjunto $S \subseteq V&#x27;$ que es Vertex Cover de $G&#x27;$ con $|S| \le k&#x27;$.</li><li>
+<p>Definimos $I = V&#x27; \setminus S$. El tamaño de $I$ es:
+$$|I| = |V&#x27;| - |S| \ge |V&#x27;| - k&#x27; = k$$</p>
+</li><li>
+<p>Demostraremos por el absurdo que $I$ es un conjunto independiente. Si no lo fuera, existirían dos vértices $u, v \in I$ tales que $(u, v) \in E&#x27;$.</p>
+</li><li>Por definición de complemento, si $u \in I$ y $v \in I$, entonces $u \notin S$ y $v \notin S$.</li><li>Pero si $u \notin S$ y $v \notin S$, la arista $(u, v)$ no tiene ninguno de sus dos extremos en $S$, contradiciendo que $S$ es un Vertex Cover de $G&#x27;$.</li><li>Por lo tanto, no hay aristas entre vértices de $I$, demostrando que $I$ es un <strong>Independent Set válido en $G$ con $|I| \ge k$</strong>.</li><li><strong>($\impliedby$) Vuelta (Si $G$ tiene un Independent Set de tamaño $\ge k \implies G&#x27;$ tiene un Vertex Cover de tamaño $\le k&#x27;$):</strong></li><li>Supongamos que existe un subconjunto $I \subseteq V$ que es Independent Set en $G$ con $|I| \ge k$.</li><li>
+<p>Definimos $S = V \setminus I$. El tamaño de $S$ es:
+$$|S| = |V| - |I| \le |V| - k = |V&#x27;| - (|V&#x27;| - k&#x27;) = k&#x27;$$</p>
+</li><li>
+<p>Demostraremos que $S$ cubre todas las aristas de $E&#x27;$. Sea cualquier arista $(u, v) \in E&#x27;$.</p>
+</li><li>Como $I$ es un conjunto independiente, es imposible que ambos extremos $u$ y $v$ pertenezcan a $I$.</li><li>Por lo tanto, al menos uno de los dos extremos debe estar afuera de $I$, es decir, pertenece a $V \setminus I = S$.</li><li>En consecuencia, toda arista de $E&#x27;$ tiene al menos un extremo en $S$, demostrando que $S$ es un <strong>Vertex Cover válido en $G&#x27;$ con $|S| \le k&#x27;$</strong>.</li></ul>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">FUNCION VerificadorIndependentSet(G = (V, E), k, certificado_I):
+    SI tamaño(certificado_I) &lt; k:
+        RETORNAR FALSO
+    PARA CADA u EN certificado_I:
+        PARA CADA v EN certificado_I:
+            SI u != v Y existeArista(G, u, v):
+                RETORNAR FALSO
+    RETORNAR VERDADERO // Tiempo O(|V|^2)
+
+FUNCION TransformarVertexCoverAIndependentSet(G_prima = (V_prima, E_prima), k_prima):
+    G &lt;- G_prima
+    k &lt;- tamaño(V_prima) - k_prima
+    RETORNAR (G, k) // Transformación en tiempo O(|V| + |E|)
+</code></pre></div>
+<h4>3. Conclusión Formal</h4>
+<p>Habiendo demostrado que:</p>
+<ol><li>$\text{Independent Set} \in \text{NP}$.</li><li>$\text{Vertex Cover} \le_P \text{Independent Set}$ mediante una reducción en tiempo polinomial $\mathcal{O}(|V&#x27;| + |E&#x27;|)$.</li><li>$\text{Vertex Cover}$ es NP-Completo.</li></ol>
+<p>Queda formalmente demostrado que <strong>Independent Set es NP-Completo</strong>.</p></div></details></div></article>
 <hr class="my-5">
 <h2>13. Catálogo de Errores Típicos de Parcial y Trampas Frecuentes</h2>
 <p>Este catálogo compila las fallas y penalizaciones más comunes detectadas en las correcciones de exámenes de la cátedra:</p>
@@ -1514,9 +1809,9 @@ Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
 <h2>14. Checklist Definitiva Antes de Entrar al Parcial</h2>
 <p>Utilizá esta lista de verificación durante tu última hora de repaso antes de ingresar al aula:</p>
 <h3>A. Dominio de Paradigmas</h3>
-<ul><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_31511" onchange="toggleChecklistItem('chk_31511', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>División y Conquista:</strong> Me sé de memoria los 3 casos del Teorema Maestro ($T(n) = a \cdot T(n/b) + \Theta(n^c)$) y sé identificar $a, b$ y $c$.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_94064" onchange="toggleChecklistItem('chk_94064', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Greedy:</strong> Sé aplicar la demostración por inducción <em>Greedy Stays Ahead</em> y sé diseñar un contraejemplo numérico si el algoritmo voraz no es óptimo.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_91227" onchange="toggleChecklistItem('chk_91227', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Backtracking:</strong> Sé implementar podas de factibilidad y cotas de Branch &amp; Bound, usando tablas booleanas de control en $O(1)$ y deshaciendo el estado al retornar.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_59954" onchange="toggleChecklistItem('chk_59954', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Programación Dinámica:</strong> Cumplo siempre los 5 pasos: 1) Definición formal del estado, 2) Casos base, 3) Ecuación de recurrencia, 4) Orden de llenado bottom-up, 5) Reconstrucción.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_79000" onchange="toggleChecklistItem('chk_79000', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Programación Lineal:</strong> Sé definir variables con sus dominios, función objetivo lineal, restricciones lineales, linealización de $\min \max$ y conteo de variables/restricciones.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_21084" onchange="toggleChecklistItem('chk_21084', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Redes de Flujo:</strong> Sé construir la super-fuente y el super-sumidero, formular la red residual con aristas hacia atrás y calcular la capacidad del corte mínimo.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_4403" onchange="toggleChecklistItem('chk_4403', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Reducciones NP-Completitud:</strong> Sigo estrictamente los 4 pasos: 1) Certificado y Verificador en NP, 2) Problema conocido en NPC, 3) Transformación polinomial en tiempo polinomial, 4) Demostración de ida ($\implies$) y vuelta ($\impliedby$).</span></label></li></ul>
+<ul><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_86234" onchange="toggleChecklistItem('chk_86234', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>División y Conquista:</strong> Me sé de memoria los 3 casos del Teorema Maestro ($T(n) = a \cdot T(n/b) + \Theta(n^c)$) y sé identificar $a, b$ y $c$.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_47391" onchange="toggleChecklistItem('chk_47391', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Greedy:</strong> Sé aplicar la demostración por inducción <em>Greedy Stays Ahead</em> y sé diseñar un contraejemplo numérico si el algoritmo voraz no es óptimo.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_51135" onchange="toggleChecklistItem('chk_51135', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Backtracking:</strong> Sé implementar podas de factibilidad y cotas de Branch &amp; Bound, usando tablas booleanas de control en $O(1)$ y deshaciendo el estado al retornar.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_37652" onchange="toggleChecklistItem('chk_37652', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Programación Dinámica:</strong> Cumplo siempre los 5 pasos: 1) Definición formal del estado, 2) Casos base, 3) Ecuación de recurrencia, 4) Orden de llenado bottom-up, 5) Reconstrucción.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_56738" onchange="toggleChecklistItem('chk_56738', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Programación Lineal:</strong> Sé definir variables con sus dominios, función objetivo lineal, restricciones lineales, linealización de $\min \max$ y conteo de variables/restricciones.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_33388" onchange="toggleChecklistItem('chk_33388', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Redes de Flujo:</strong> Sé construir la super-fuente y el super-sumidero, formular la red residual con aristas hacia atrás y calcular la capacidad del corte mínimo.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_12902" onchange="toggleChecklistItem('chk_12902', this.checked)"><span class="chk-custom"></span><span class="chk-text"><strong>Reducciones NP-Completitud:</strong> Sigo estrictamente los 4 pasos: 1) Certificado y Verificador en NP, 2) Problema conocido en NPC, 3) Transformación polinomial en tiempo polinomial, 4) Demostración de ida ($\implies$) y vuelta ($\impliedby$).</span></label></li></ul>
 <h3>B. Ejecución en la Hoja de Examen</h3>
-<ul><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_81987" onchange="toggleChecklistItem('chk_81987', this.checked)"><span class="chk-custom"></span><span class="chk-text">Cada ejercicio está escrito en una <strong>hoja separada</strong> con nombre y padrón.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_97557" onchange="toggleChecklistItem('chk_97557', this.checked)"><span class="chk-custom"></span><span class="chk-text">El pseudocódigo usa palabras clave claras (<code>PROCEDIMIENTO</code>, <code>FUNCION</code>, <code>SI</code>, <code>SINO</code>, <code>MIENTRAS</code>, <code>PARA</code>, <code>RETORNAR</code>).</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_45601" onchange="toggleChecklistItem('chk_45601', this.checked)"><span class="chk-custom"></span><span class="chk-text">Contemplé los <strong>casos borde</strong> relevantes (estructuras vacías, un elemento, capacidades nulas, grafos sin aristas).</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_11809" onchange="toggleChecklistItem('chk_11809', this.checked)"><span class="chk-custom"></span><span class="chk-text">Justifiqué la <strong>complejidad temporal y espacial</strong> explicando de dónde sale cada término ($O(n \log n)$, $O(V \cdot E)$, etc.), sin limitarme a tirar una fórmula suelta.</span></label></li></ul><div class="search-empty-state" id="searchEmptyState" style="display: none;"><div class="empty-state-icon">🔍</div><h3 class="empty-state-title">No se encontraron ejercicios con los filtros actuales</h3><p class="empty-state-desc">Probá con otro término de búsqueda, cambiá la dificultad o seleccioná el modo <strong>Todos</strong>.</p><button class="btn btn-primary" type="button" onclick="resetAllFilters()">Restablecer filtros y mostrar todos</button></div>
+<ul><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_87074" onchange="toggleChecklistItem('chk_87074', this.checked)"><span class="chk-custom"></span><span class="chk-text">Cada ejercicio está escrito en una <strong>hoja separada</strong> con nombre y padrón.</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_81486" onchange="toggleChecklistItem('chk_81486', this.checked)"><span class="chk-custom"></span><span class="chk-text">El pseudocódigo usa palabras clave claras (<code>PROCEDIMIENTO</code>, <code>FUNCION</code>, <code>SI</code>, <code>SINO</code>, <code>MIENTRAS</code>, <code>PARA</code>, <code>RETORNAR</code>).</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_66091" onchange="toggleChecklistItem('chk_66091', this.checked)"><span class="chk-custom"></span><span class="chk-text">Contemplé los <strong>casos borde</strong> relevantes (estructuras vacías, un elemento, capacidades nulas, grafos sin aristas).</span></label></li><li class="checklist-interactive-item"><label class="chk-label"><input type="checkbox" class="exam-checklist-input" data-chk-id="chk_20954" onchange="toggleChecklistItem('chk_20954', this.checked)"><span class="chk-custom"></span><span class="chk-text">Justifiqué la <strong>complejidad temporal y espacial</strong> explicando de dónde sale cada término ($O(n \log n)$, $O(V \cdot E)$, etc.), sin limitarme a tirar una fórmula suelta.</span></label></li></ul><div class="search-empty-state" id="searchEmptyState" style="display: none;"><div class="empty-state-icon">🔍</div><h3 class="empty-state-title">No se encontraron ejercicios con los filtros actuales</h3><p class="empty-state-desc">Probá con otro término de búsqueda, cambiá la dificultad o seleccioná el modo <strong>Todos</strong>.</p><button class="btn btn-primary" type="button" onclick="resetAllFilters()">Restablecer filtros y mostrar todos</button></div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="assets/js/app.js" defer></script>

@@ -15,7 +15,7 @@ Este documento fue diseñado con un único objetivo en mente: **aprobar el parci
 
 * **Plan de Emergencia (48 a 72 horas antes del examen):**
   1. Leé la **Sección 3: Guía mental para reconocer el ejercicio en 30 segundos**.
-  2. Entrá a la sección **📝 Parciales (`parciales.html`)**, que agrupa todos los ejercicios tomados en parciales reales sin importar el paradigma (incluido el nuevo **Parcial 2026-2-1**), y resolvé prioritariamente los marcados como 🔴 **IMPRESCINDIBLE**.
+  2. Entrá a la sección **📝 Parciales (`parciales.html`)**, que agrupa todos los ejercicios tomados en parciales reales sin importar el paradigma (incluidos los exámenes oficiales **Parcial 2026-2-1** y **Parcial 2026-2-2**), y resolvé prioritariamente los marcados como 🔴 **IMPRESCINDIBLE**.
   3. Memorizá el esquema de 4 pasos obligatorios para **Reducciones NP-Completas** (Sección 10).
   4. Revisá el **Catálogo de Errores Típicos** y la **Checklist antes de entrar al parcial**.
 * **Plan Táctico (1 semana antes del examen):**
@@ -24,7 +24,7 @@ Este documento fue diseñado con un único objetivo en mente: **aprobar el parci
   3. Escribí en papel (sin mirar la solución) la **Idea y Justificación en Lenguaje Natural** y el **Semi-Pseudocódigo Simplificado** de cada ejercicio.
   4. Resolvé los **Ejercicios Integradores Multi-Paradigma** (Sección 11, destacando **La Mochila — Ej 78** y **El Viajante TSP — Ej 79** en todos los paradigmas) y todos los ejercicios de **📝 Parciales (`parciales.html`)**.
 * **Plan Integral (2 o más semanas):**
-  1. Recorré los **79 ejercicios reales oficiales** de la guía completa clasificados por paradigma y ordenados por defecto de forma ascendente según su dificultad (`1/5` a `5/5`, de `★☆☆☆☆` a `★★★★★`).
+  1. Recorré los **85 ejercicios reales oficiales** de la guía completa clasificados por paradigma y ordenados por defecto de forma ascendente según su dificultad (`1/5` a `5/5`, de `★☆☆☆☆` a `★★★★★`).
   2. Implementá en tu computadora los algoritmos más sensibles (o revisá las implementaciones en Python de la carpeta `Practicas/`).
   3. Dominá las demostraciones formales de optimalidad por *Greedy Stays Ahead*, argumento de intercambio y las recurrencias del Teorema Maestro.
 
@@ -79,18 +79,25 @@ Un examen típico de esta cátedra consta de **5 a 6 ejercicios prácticos**, di
    * *Ej 4 (Greedy):* Algoritmo voraz para el transporte de las $N$ estaciones, instancia óptima e instancia no óptima (contraejemplo).
    * *Ej 5 (Programación Lineal):* Modelo de PLI para el transporte de las $N$ estaciones con conteo de variables y restricciones.
    * *Ej 6 (Redes de Flujo):* Transporte de urnas desde $N$ centros de votación hasta el CNE mediante Ford-Fulkerson maximizando urnas por minuto.
+7. **Parcial 2026-2 — 2ª Oportunidad (TP-2026-2-2.pdf — 17 de noviembre de 2026):**
+   * *Ej 1 (División y Conquista):* Mayor diferencia entre dos elementos $L[j] - L[i]$ con $L[i] < L[j]$ e $i < j$ ($O(n)$).
+   * *Ej 2 (Backtracking):* Asignación de $n$ tareas a $m$ trabajadores con duraciones $d[i]$, matriz de incompatibilidades y tiempo máx $T$.
+   * *Ej 3 (Programación Dinámica):* Selección óptima de $n$ proyectos con beneficio y concurrencia máxima 2 ($O(n^2)$).
+   * *Ej 4 (Greedy):* Algoritmo voraz para proyectos concurrentes, instancia óptima y contraejemplo formal.
+   * *Ej 5 (Programación Lineal):* Modelo de PLI para proyectos concurrentes con recuento explícito de variables y restricciones.
+   * *Ej 6 (Reducciones NP-C):* Demostración de Independent Set NP-Completo reduciendo desde Vertex Cover.
 
 ### Matriz de Frecuencia y Dificultad por Tema
 
 | Tema / Paradigma | Frecuencia en Exámenes | Presencia Relativa | Dificultad Típica | Tipos de Pregunta Habituales |
 | :--- | :---: | :---: | :---: | :--- |
-| **Programación Dinámica (PD)** | 6 de 6 parciales | **100%** | Alta | Mochila multidimensional o con condiciones lógicas, secuencias/texto, saltos de estaciones, mínimas operaciones, caminos en DAGs por etapas. |
-| **Algoritmos Greedy (Voraces)** | 6 de 6 parciales | **100%** | Media-Alta | *Interval Scheduling*, heurísticas de cobertura o transporte con costos, comparación con soluciones óptimas y demostración de contraejemplos. |
-| **Programación Lineal (PL / PLI)** | 5 de 6 parciales | **83%** | Media-Alta | Cobertura de conjuntos (*Set Cover*), ventanas de paradas consecutivas, Flujo de Costo Mínimo, caminos en grafos, linealización de funciones no lineales. Recuento de variables y restricciones. |
-| **Reducciones Polinomiales / NP-C** | 4 de 6 parciales | **67%** | Muy Alta | Demostración formal de NP-Completitud (*Dominating Set*, *TSP*), reducciones numéricas ($\le_P$), verificadores polinomiales. |
-| **Redes de Flujo (Flujo / Corte)** | 4 de 6 parciales | **67%** | Alta | *Matching Bipartito* (médicos/pacientes), transporte multipunto con super-fuente/sumidero (energía, urnas electorales), V/F teórico sobre cortes mínimos. |
-| **Backtracking & Branch and Bound** | 4 de 6 parciales | **67%** | Media | Laberintos $N \times M$ y camino más corto, 8 Reinas con estructuras $O(1)$, descomposición numérica (Lagrange), *Vertex Cover* exacto con podas. |
-| **División y Conquista (DyC)** | 2 de 6 parciales | **33%** | Media | Subarreglo contiguo de suma máxima, multiplicación de matrices por bloques, Teorema Maestro, búsquedas binarias adaptadas. |
+| **Programación Dinámica (PD)** | 7 de 7 parciales | **100%** | Alta | Mochila multidimensional o con condiciones lógicas, secuencias/texto, saltos de estaciones, concurrencia de proyectos, caminos en DAGs. |
+| **Algoritmos Greedy (Voraces)** | 7 de 7 parciales | **100%** | Media-Alta | *Interval Scheduling*, proyectos concurrentes con costos/beneficios, instancias óptimas y demostración de contraejemplos numéricos. |
+| **Programación Lineal (PL / PLI)** | 6 de 7 parciales | **86%** | Media-Alta | Cobertura de conjuntos (*Set Cover*), concurrencia simultánea, ventanas de paradas consecutivas, Flujo de Costo Mínimo. Recuento de variables y restricciones. |
+| **Reducciones Polinomiales / NP-C** | 5 de 7 parciales | **71%** | Muy Alta | Demostración formal de NP-Completitud (*Dominating Set*, *Independent Set*, *TSP*), reducciones numéricas ($\le_P$), verificadores polinomiales. |
+| **Backtracking & Branch and Bound** | 5 de 7 parciales | **71%** | Media | Asignación de tareas con incompatibilidad y tiempo máx $T$, laberintos $N \times M$, 8 Reinas con estructuras $O(1)$, *Vertex Cover* exacto con podas. |
+| **Redes de Flujo (Flujo / Corte)** | 4 de 7 parciales | **57%** | Alta | *Matching Bipartito* (médicos/pacientes), transporte multipunto con super-fuente/sumidero (energía, urnas electorales), V/F teórico sobre cortes mínimos. |
+| **División y Conquista (DyC)** | 3 de 7 parciales | **43%** | Media | Mayor diferencia en subarreglo ($L[j] - L[i]$), suma máxima contigua, multiplicación de matrices por bloques, Teorema Maestro. |
 
 ---
 

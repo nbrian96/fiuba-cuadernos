@@ -633,6 +633,101 @@ FUNCION RutaMenorCostoParadas(T, N):
 
 ---
 
+### Ejercicio 82 — Selección Óptima de Proyectos con Concurrencia Máxima 2
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★★★☆ (4/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 3
+
+**Enunciado**  
+Una empresa tiene una serie de $n$ proyectos disponibles para realizar el próximo año. Cada proyecto tiene: Una fecha de inicio $i[i]$, una fecha de fin $f[i]$ y un beneficio $B[i]$. Sabiendo que no puede realizar más de dos proyectos simultáneamente, realizar un algoritmo de programación dinámica que permita saber qué proyectos realizar para alcanzar el beneficio máximo. Indicar la complejidad del algoritmo desarrollado.
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Clasificación del Problema:** Es una generalización de *Weighted Interval Scheduling* (selección de intervalos ponderados) a $k = 2$ recursos o canales concurrentes.
+* **Preprocesamiento:**
+  1. Ordenamos los $n$ proyectos por fecha de fin no decreciente: $f_1 \le f_2 \le \dots \le f_n$. Agregamos un proyecto ficticio $0$ con fin $0$ y beneficio $0$.
+  2. Para cada proyecto $i$, precalculamos mediante búsqueda binaria el proyecto compatible más reciente $p(i)$: el mayor índice $j < i$ tal que $f_j \le inicio_i$.
+* **Definición del Subproblema y Estado:**
+  - Como a lo sumo 2 proyectos pueden ejecutarse en simultáneo, en cualquier punto de decisión el estado de los canales queda caracterizado por los **dos últimos proyectos activos** asignados a cada canal.
+  - Definimos $DP(i, j)$ con $0 \le j < i$: el máximo beneficio considerando un subconjunto de proyectos entre $\{1, \dots, i\}$, tal que el último proyecto terminado en uno de los canales es $i$, y el último proyecto terminado en el otro canal es $j$ ($f_j \le f_i$).
+* **Ecuación de Recurrencia:**
+  Para el proyecto $i$:
+  - Si el proyecto $i$ no se realiza, se mantiene el valor óptimo previo.
+  - Si el proyecto $i$ se realiza, se asigna al canal que se libera primero. Como $f_j \le f_k$, el canal que se libera antes es el que tiene fin en $f_j$. Por ende, el proyecto $i$ puede comenzar si $f_j \le inicio_i$. Al tomarlo, el nuevo par de últimos proyectos finalizados es $(k, i)$.
+  - Formalmente, para cada $0 \le j < i$:
+    $$DP(i, j) = \begin{cases}
+    DP(i - 1, j) & \text{si no tomamos el proyecto } i \\
+    \max_{0 \le k \le p(i)} \{ DP(i - 1, k) \} + B_i & \text{si tomamos } i \text{ (cuando } j = i - 1 \text{)}
+    \end{cases}$$
+* **Reconstrucción:**
+  Se almacena una tabla de decisiones para recuperar el conjunto de proyectos que integran la solución óptima.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ProyectosConcurrenciaDosDP(proyectos):
+    // proyectos es lista de n tuplas (inicio, fin, beneficio)
+    ordenar proyectos por fin no decreciente
+    n = longitud(proyectos)
+
+    DP = matriz de ceros de (n + 1) x (n + 1)
+    padre = matriz de ceros de (n + 1) x (n + 1)
+
+    // Precalcular p[i]: ultimo proyecto compatible antes de inicio[i]
+    p = arreglo de tamaño n + 1
+    para i desde 1 hasta n:
+        p[i] = BusquedaBinariaCompatible(proyectos, i)
+
+    para i desde 1 hasta n:
+        para j desde 0 hasta i - 1:
+            // Caso 1: no tomar proyecto i
+            DP[i][j] = DP[i - 1][j]
+            padre[i][j] = (i - 1, j, Falso)
+
+            // Caso 2: tomar proyecto i en canal libre
+            si j == i - 1:
+                para k desde 0 hasta p[i]:
+                    valor = DP[i - 1][k] + proyectos[i].beneficio
+                    si valor > DP[i][j]:
+                        DP[i][j] = valor
+                        padre[i][j] = (i - 1, k, Verdadero)
+
+    // Buscar el maximo beneficio en la fila n
+    mejor_valor = 0
+    mejor_j = 0
+    para j desde 0 hasta n - 1:
+        si DP[n][j] > mejor_valor:
+            mejor_valor = DP[n][j]
+            mejor_j = j
+
+    // Reconstruccion hacia atras
+    seleccionados = []
+    curr_i = n
+    curr_j = mejor_j
+    mientras curr_i > 0:
+        (prev_i, prev_j, tomo_i) = padre[curr_i][curr_j]
+        si tomo_i:
+            agregar curr_i a seleccionados
+        curr_i = prev_i
+        curr_j = prev_j
+
+    retornar (mejor_valor, seleccionados)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:**
+  - El ordenamiento inicial toma $\mathcal{O}(n \log n)$.
+  - Precalcular $p[i]$ para todos los proyectos mediante búsqueda binaria toma $n \cdot \mathcal{O}(\log n) = \mathcal{O}(n \log n)$.
+  - La matriz `DP` contiene $\mathcal{O}(n^2)$ estados $(i, j)$.
+  - La transición toma $\mathcal{O}(1)$ para la mayoría de las celdas, y a lo sumo $\mathcal{O}(n)$ para $j = i - 1$. Por lo tanto, el llenado de la matriz toma **$\mathcal{O}(n^2)$**.
+  - La reconstrucción recorre a lo sumo $\mathcal{O}(n)$ pasos.
+  - Complejidad temporal total: **$\mathcal{O}(n^2)$**.
+* **Complejidad Espacial:** **$\mathcal{O}(n^2)$** para almacenar la matriz `DP` y la matriz de punteros de reconstrucción `padre`.
+
+---
+
 ### Errores Frecuentes en Exámenes sobre Programación Dinámica
 
 1. **No definir en palabras qué significa $OPT(\dots)$:** Escribir directamente una fórmula o código sin explicar qué representa el estado anula la justificación.

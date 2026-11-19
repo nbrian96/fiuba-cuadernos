@@ -462,4 +462,86 @@ Algoritmo TransporteGreedy(T, N):
 #### 3. Justificación de Complejidad (Para entregar en el parcial)
 
 * En cada iteración avanzamos al menos 1 estación y miramos solo 3 opciones hacia adelante en $O(1)$. Por lo tanto, la complejidad temporal es **$O(N)$** y espacial **$O(N)$**.
+
+---
+
+### Ejercicio 83 — Algoritmo Greedy para Proyectos Concurrentes, Instancia Óptima y Contraejemplo
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★★☆☆ (3/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 4
+
+**Enunciado**  
+Diseñar un algoritmo greedy que permita resolver el problema anterior (selección de proyectos con inicio $i[i]$, fin $f[i]$ y beneficio $B[i]$, concurrencia máxima 2). Si el algoritmo no asegura la solución óptima, indicar una instancia donde la solución obtenida sea la óptima y una instancia donde la solución obtenida no sea la óptima. Indicar la complejidad del algoritmo desarrollado.
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Diseño de la Heurística Voraz (Greedy):**
+  - Para maximizar el beneficio total sin superar la concurrencia máxima de 2 proyectos en paralelo, una regla voraz natural es priorizar los proyectos de **mayor beneficio económico individual $B[i]$**.
+  - **Estrategia Greedy:**
+    1. Ordenamos todos los proyectos de mayor a menor beneficio: $B_1 \ge B_2 \ge \dots \ge B_n$.
+    2. Comenzamos con la solución vacía $S = \emptyset$.
+    3. Para cada proyecto candidato $i$, verificamos si agregarlo a $S$ no provoca que en ningún instante de tiempo se superen 2 proyectos activos concurrentes.
+    4. Si entra sin violar la capacidad $\le 2$, lo incorporamos a la solución; si genera conflicto, lo descartamos definitivamente.
+* **¿Asegura la solución óptima siempre?**
+  - **NO asegura la solución óptima.** Al ser un problema ponderado (*Weighted Interval Scheduling* con $k=2$), la decisión voraz de seleccionar un proyecto de beneficio alto pero de larga duración puede bloquear combinaciones de múltiples proyectos más cortos cuya suma acumulada de beneficios en ambos canales es superior.
+
+#### 2. Instancia donde la Solución Obtenida SÍ es la Óptima
+
+* **Parámetros de la Instancia:**
+  - Proyecto 1: $[0, 5]$, Beneficio $B_1 = 100$.
+  - Proyecto 2: $[0, 5]$, Beneficio $B_2 = 80$.
+  - Proyecto 3: $[10, 15]$, Beneficio $B_3 = 50$.
+  - Proyecto 4: $[10, 15]$, Beneficio $B_4 = 40$.
+* **Ejecución Greedy:**
+  - Proyectos ordenados por beneficio decreciente: $1 \ (100) \to 2 \ (80) \to 3 \ (50) \to 4 \ (40)$.
+  - Evalúa Proyecto 1: Concurrencia en $[0, 5]$ es $1 \le 2$. Se agrega ($S = \{1\}$).
+  - Evalúa Proyecto 2: Concurrencia en $[0, 5]$ es $2 \le 2$. Se agrega ($S = \{1, 2\}$).
+  - Evalúa Proyecto 3: Concurrencia en $[10, 15]$ es $1 \le 2$. Se agrega ($S = \{1, 2, 3\}$).
+  - Evalúa Proyecto 4: Concurrencia en $[10, 15]$ es $2 \le 2$. Se agrega ($S = \{1, 2, 3, 4\}$).
+* **Resultado:** Beneficio Greedy = $100 + 80 + 50 + 40 = 270$. Coincide con la solución óptima global.
+
+#### 3. Instancia donde la Solución Obtenida NO es la Óptima (Contraejemplo Formal)
+
+* **Parámetros de la Instancia:**
+  - Proyecto A (largo y beneficio moderado): $[0, 10]$, Beneficio $B_A = 100$.
+  - Proyecto B1: $[0, 5]$, Beneficio $B_{B1} = 60$.
+  - Proyecto B2: $[5, 10]$, Beneficio $B_{B2} = 60$.
+  - Proyecto C1: $[0, 5]$, Beneficio $B_{C1} = 60$.
+  - Proyecto C2: $[5, 10]$, Beneficio $B_{C2} = 60$.
+* **Ejecución del Algoritmo Greedy:**
+  - Proyectos ordenados por beneficio: $A \ (100) \to B1 \ (60) \to B2 \ (60) \to C1 \ (60) \to C2 \ (60)$.
+  - Greedy toma primero el **Proyecto A** ($B = 100$), ocupando un canal durante todo el intervalo $[0, 10]$.
+  - En el canal restante, toma $B1$ ($[0, 5]$, $B = 60$) y $B2$ ($[5, 10]$, $B = 60$).
+  - Los proyectos $C1$ y $C2$ no pueden agregarse porque en $[0, 5]$ ya están $A$ y $B1$ (2 activos), y en $[5, 10]$ ya están $A$ y $B2$ (2 activos).
+  - **Beneficio obtenido por Greedy:** $B_A + B_{B1} + B_{B2} = 100 + 60 + 60 = 220$.
+* **Solución Óptima Real:**
+  - Descartar el Proyecto A.
+  - Asignar al Canal 1 los proyectos $B1$ ($[0, 5]$) y $B2$ ($[5, 10]$).
+  - Asignar al Canal 2 los proyectos $C1$ ($[0, 5]$) y $C2$ ($[5, 10]$).
+  - En ningún instante hay más de 2 proyectos activos simultáneos.
+  - **Beneficio Óptimo:** $B_{B1} + B_{B2} + B_{C1} + B_{C2} = 60 + 60 + 60 + 60 = 240$.
+* **Conclusión:** $220 < 240$. Queda demostrado mediante contraejemplo numérico que el algoritmo Greedy **no asegura la solución óptima**.
+
+#### 4. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ProyectosGreedy(proyectos):
+    ordenar proyectos por beneficio decreciente
+    solucion = []
+
+    para cada p en proyectos:
+        // Verificar si p es compatible con la solucion actual (a lo sumo 2 simultaneos)
+        si esFactibleAgregar(solucion, p):
+            agregar p a solucion
+
+    retornar solucion
+```
+
+#### 5. Justificación de Complejidad
+
+* **Ordenamiento:** Ordenar los $n$ proyectos por beneficio toma $\mathcal{O}(n \log n)$.
+* **Bucle de Selección:** Para cada proyecto, verificar si agregarlo respeta la concurrencia $\le 2$ toma a lo sumo $\mathcal{O}(n)$ comparando con los proyectos ya aceptados, o $\mathcal{O}(\log n)$ manteniendo los eventos en una estructura de barrido.
+* **Complejidad Temporal Total:** **$\mathcal{O}(n \log n)$** (con barrido) u **$\mathcal{O}(n^2)$** con verificación directa.
+* **Complejidad Espacial:** **$\mathcal{O}(n)$** para almacenar la lista ordenada y la solución seleccionada.
 """

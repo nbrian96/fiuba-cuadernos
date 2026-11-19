@@ -5,19 +5,19 @@ import html
 import markdown
 
 def get_paradigm_for_exercise(num):
-    if 1 <= num <= 12:
+    if (1 <= num <= 12) or num == 80:
         return ("dyc", "División y Conquista", "badge-dyc")
-    if 13 <= num <= 38:
+    if (13 <= num <= 38) or num == 83:
         return ("greedy", "Greedy / Voraz", "badge-greedy")
-    if 39 <= num <= 52:
+    if (39 <= num <= 52) or num == 81:
         return ("backtracking", "Backtracking", "badge-backtracking")
-    if 53 <= num <= 59:
+    if (53 <= num <= 59) or num == 82:
         return ("dp", "Prog. Dinámica", "badge-dp")
-    if 60 <= num <= 65:
+    if (60 <= num <= 65) or num == 84:
         return ("pl", "Prog. Lineal", "badge-pl")
     if 66 <= num <= 70:
         return ("flujo", "Redes de Flujo", "badge-flujo")
-    if 71 <= num <= 74:
+    if (71 <= num <= 74) or num == 85:
         return ("reducciones", "Reducciones NP", "badge-reducciones")
     if 75 <= num <= 79:
         label = "Multi-Paradigma" if num in (78, 79) else "Integrador"
@@ -27,10 +27,10 @@ def get_paradigm_for_exercise(num):
 SOLUTION_MARKERS = [
     r"<h4>1\.\s*Idea",
     r"<h4>1\.\s*Deducción Metodológica",
+    r"<h4>1\.\s*(?:Resolución|Paradigma|Formulación|Modelo)",
     r"<h4>2\.\s+",
     r"<p><strong>Resolución y Comparativa",
     r"<p><strong>Pseudocódigo del Algoritmo",
-    r"<h4>1\.\s*(?:Resolución|Paradigma)",
     r"<p><strong>Idea de resolución",
     r"<p><strong>Pseudocódigo",
     r"<p><strong>Modelo Matemático",
@@ -42,13 +42,15 @@ SOLUTION_MARKERS = [
     r"<p><strong>Demostración de Optimalidad"
 ]
 
-CODE_BLOCK_PATTERN = r"(<pre><code(?:\s+class=\"([^\"]*)\")?>)(.*?)(</code></pre>)"
+CODE_BLOCK_PATTERN = r"(<div class=\"code-container\">[\s\S]*?</div>)|(<pre><code(?:\s+class=\"([^\"]*)\")?>)(.*?)(</code></pre>)"
 
 def replace_code_block_match(match):
-    code_tag_start = match.group(1)
-    code_class = match.group(2) or ""
-    code_content = match.group(3)
-    code_tag_end = match.group(4)
+    if match.group(1):
+        return match.group(1)
+    code_tag_start = match.group(2)
+    code_class = match.group(3) or ""
+    code_content = match.group(4)
+    code_tag_end = match.group(5)
     if "mermaid" in code_class:
         clean_content = html.unescape(code_content)
         return f'<div class="mermaid-wrapper"><pre class="mermaid">{clean_content}</pre></div>'
@@ -112,7 +114,7 @@ def format_exercise_card(num, title, body_html):
             flags=re.DOTALL
         )
 
-    origin_short = html.escape(origin_text.split("/")[0].strip())
+    origin_short = html.escape(re.split(r"\s+/\s+", origin_text)[0].strip())
     parcial_attr = "true" if is_parcial else "false"
     return (
         f'<article class="exercise-card" id="ej-{num}" data-num="{num}" data-priority="{priority_slug}" '
@@ -230,14 +232,14 @@ def get_hud_and_drawer_html(active_paradigm="all"):
     
     # Menú de paradigmas para dropdown
     paradigms_menu = [
-        ("todos", "todos.html", "📚 Todos los Ejercicios (79)"),
-        ("dyc", "dyc.html", "🔷 División y Conquista (12)"),
-        ("greedy", "greedy.html", "🔶 Greedy / Voraces (26)"),
-        ("backtracking", "backtracking.html", "🟣 Backtracking & B&B (14)"),
-        ("dp", "dp.html", "🟢 Prog. Dinámica (7)"),
-        ("pl", "pl.html", "🔵 Prog. Lineal (6)"),
+        ("todos", "todos.html", "📚 Todos los Ejercicios (85)"),
+        ("dyc", "dyc.html", "🔷 División y Conquista (13)"),
+        ("greedy", "greedy.html", "🔶 Greedy / Voraces (27)"),
+        ("backtracking", "backtracking.html", "🟣 Backtracking & B&B (15)"),
+        ("dp", "dp.html", "🟢 Prog. Dinámica (8)"),
+        ("pl", "pl.html", "🔵 Prog. Lineal (7)"),
         ("flujo", "flujo.html", "🔴 Redes de Flujo (5)"),
-        ("reducciones", "reducciones.html", "🟡 Reducciones NP (4)"),
+        ("reducciones", "reducciones.html", "🟡 Reducciones NP (5)"),
         ("integradores", "integradores.html", "⚡ Integradores (5)")
     ]
     
@@ -256,7 +258,7 @@ def get_hud_and_drawer_html(active_paradigm="all"):
     <nav>
       <ul class="site-nav-links">
         <li><a href="index.html" class="site-nav-link{" active" if is_home else ""}">🏠 Inicio</a></li>
-        <li><a href="parciales.html" class="site-nav-link{" active" if active_paradigm == 'parciales' else ""}">📝 Parciales (29)</a></li>
+        <li><a href="parciales.html" class="site-nav-link{" active" if active_paradigm == 'parciales' else ""}">📝 Parciales (35)</a></li>
         <li class="site-dropdown">
           <a href="#" class="site-nav-link{" active" if active_paradigm in [k for k, _, _ in paradigms_menu] else ""}" onclick="event.preventDefault()">📂 Paradigmas ▾</a>
           <div class="site-dropdown-menu">
@@ -457,7 +459,7 @@ def build_interactive_html(md_text, output_file, active_paradigm="all", page_tit
             bundle_path = os.path.join(js_dir, "catalog-bundle.js")
             with open(bundle_path, "w", encoding="utf-8") as bf:
                 bf.write(
-                    "// Catálogo modular precompilado de los 79 ejercicios para index.html\n"
+                    "// Catálogo modular precompilado de los 85 ejercicios para index.html\n"
                     "(function(){\n"
                     "  var mount = document.getElementById('tdaCatalogMount');\n"
                     "  if (mount) { mount.innerHTML = " + json.dumps(catalog_part, ensure_ascii=False) + "; }\n"

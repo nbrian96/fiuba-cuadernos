@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teoría de Algoritmos — División y Conquista (12 Ejercicios) (FIUBA)</title>
+<title>Teoría de Algoritmos — División y Conquista (13 Ejercicios) (FIUBA)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item active">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item active">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -97,7 +97,7 @@ $$A = \begin{pmatrix} A_{11} &amp; A_{12} \\ A_{21} &amp; A_{22} \end{pmatrix}, 
 <ul><li>Cuadrante superior izquierdo: $C_{11} = A_{11} B_{11} + A_{12} B_{21}$</li><li>Cuadrante superior derecho: $C_{12} = A_{11} B_{12} + A_{12} B_{22}$</li><li>Cuadrante inferior izquierdo: $C_{21} = A_{21} B_{11} + A_{22} B_{21}$</li><li>Cuadrante inferior derecho: $C_{22} = A_{21} B_{12} + A_{22} B_{22}$</li></ul>
 </li><li><strong>Combinación:</strong> Realizamos las 4 sumas de matrices de tamaño $(n/2) \times (n/2)$ y ensamblamos los 4 cuadrantes para devolver la matriz producto $C$ de $n \times n$.</li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesDyC(A, B, n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesDyC(A, B, n):
     // Caso Base: matriz de 1x1
     si n == 1:
         devolver [[ A[0][0] * B[0][0] ]]
@@ -115,7 +115,7 @@ $$A = \begin{pmatrix} A_{11} &amp; A_{12} \\ A_{21} &amp; A_{22} \end{pmatrix}, 
 
     // 3. Combinar los 4 cuadrantes en la matriz C de n x n
     devolver EnsamblarMatriz(C11, C12, C21, C22)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>
 <p><strong>Complejidad Temporal:</strong></p>
@@ -155,7 +155,7 @@ b. Justificar el orden del algoritmo mediante el Teorema Maestro.</p></div><deta
 <ul><li><strong>Idea de la pendiente:</strong> En vez de recorrer todo el arreglo, miramos la posición central <code>m = (ini + fin) / 2</code> y la comparamos con su vecino inmediato <code>v[m + 1]</code>:<ol><li><strong>Caso Base (<code>ini == fin</code>):</strong> Cuando el subarreglo tiene un solo elemento, ese único candidato es garantizadamente el pico y devolvemos su índice <code>ini</code> en $O(1)$.</li><li><strong>Si <code>v[m] &lt; v[m + 1]</code> (sube hacia la derecha):</strong> Como el arreglo sube estrictamente hasta el pico y recién después baja, si en <code>m</code> todavía estamos subiendo, el pico <strong>está sí o sí a la derecha de <code>m</code></strong>. Descartamos toda la mitad izquierda y buscamos recursivamente en <code>[m + 1, fin]</code>.</li><li><strong>Si <code>v[m] &gt; v[m + 1]</code> (baja hacia la derecha):</strong> Significa que ya pasamos el pico o bien <code>m</code> mismo es el pico. Descartamos la derecha y buscamos recursivamente en <code>[ini, m]</code> (incluyendo a <code>m</code> porque puede ser el pico).</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo PosicionPico(v, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo PosicionPico(v, ini, fin):
     // Caso Base: queda un único elemento y es el pico
     si ini == fin:
         devolver ini
@@ -168,7 +168,7 @@ b. Justificar el orden del algoritmo mediante el Teorema Maestro.</p></div><deta
     sino:
         // Si la pendiente baja, el pico está en [ini .. m] (m puede ser el pico)
         devolver PosicionPico(v, ini, m)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada paso descartamos la mitad del arreglo y realizamos <strong>$a = 1$ llamada recursiva</strong> sobre un subproblema de tamaño $n/2$ (<strong>$b = 2$</strong>), haciendo solo una comparación en tiempo constante <strong>$f(n) = \Theta(1)$</strong> (<strong>$c = 0$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -196,7 +196,7 @@ b. Demostrar con el Teorema Maestro que la función es, en efecto, $O(\log n)$.<
 <ul><li>Como el arreglo tiene todos los <code>1</code> al principio y todos los <code>0</code> al final, podemos partir al medio en cada paso buscando el punto exacto donde cambia de <code>1</code> a <code>0</code>:<ol><li><strong>Caso Base (<code>ini &gt; fin</code>):</strong> Si el rango se queda sin elementos, significa que no había ningún <code>0</code> en todo el arreglo y devolvemos <code>-1</code>.</li><li>Calculamos la posición del medio <code>m = (ini + fin) / 2</code> y miramos <code>A[m]</code>:</li><li><strong>Si <code>A[m] == 0</code> y su anterior es <code>1</code> (o <code>m == 0</code>):</strong> Estamos parados justo en el primer <code>0</code> del arreglo, así que devolvemos <code>m</code> inmediatamente.</li><li><strong>Si <code>A[m] == 0</code> y su anterior también es <code>0</code>:</strong> El primer <code>0</code> está más hacia la izquierda; descartamos la mitad derecha y buscamos recursivamente en <code>[ini, m - 1]</code>.</li><li><strong>Si <code>A[m] == 1</code>:</strong> Como antes de un <code>1</code> solo puede haber otros <code>1</code>, el primer <code>0</code> solo puede estar a la derecha; descartamos la mitad izquierda y buscamos recursivamente en <code>[m + 1, fin]</code>.</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo BuscarPrimerCero(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo BuscarPrimerCero(A, ini, fin):
     // Caso Base: rango vacío (no existen ceros en el arreglo)
     si ini &gt; fin:
         devolver -1
@@ -212,7 +212,7 @@ b. Demostrar con el Teorema Maestro que la función es, en efecto, $O(\log n)$.<
     sino:
         // A[m] == 1: descartar mitad izquierda y buscar a la derecha
         devolver BuscarPrimerCero(A, m + 1, fin)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada paso descartamos una mitad completa y hacemos <strong>$a = 1$ llamada recursiva</strong> de tamaño $n/2$ (<strong>$b = 2$</strong>), realizando un número constante de comparaciones en tiempo <strong>$f(n) = \Theta(1)$</strong> (<strong>$c = 0$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -240,7 +240,7 @@ Dada una lista de números enteros (positivos y negativos), se desea obtener el 
 <ul><li><strong>¿Cómo pensamos la división?</strong> Partimos el arreglo a la mitad en dos partes iguales: <code>izquierda</code> y <code>derecha</code>. El subarreglo contiguo de suma máxima tiene <strong>solo tres lugares posibles</strong> donde estar:<ol><li><strong>Completamente en la mitad izquierda:</strong> lo encontramos llamando recursivamente sobre la parte izquierda.</li><li><strong>Completamente en la mitad derecha:</strong> lo encontramos llamando recursivamente sobre la parte derecha.</li><li><strong>Cruzando el medio (empieza en la izquierda y termina en la derecha):</strong> como tiene que ser contiguo, sí o sí pasa por el centro. Para que sume lo máximo posible, caminamos desde el centro hacia la izquierda acumulando la mejor suma parcial, y desde el centro hacia la derecha acumulando la mejor suma parcial. Uniendo esos dos tramos tenemos el mejor subarreglo cruzado en tiempo lineal $O(n)$.</li></ol>
 </li><li>Finalmente, comparamos las sumas de los tres candidatos (<code>izquierda</code>, <code>derecha</code> y <code>cruzado</code>) y devolvemos el que tenga mayor suma.</li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo SubarregloMaximaSuma(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo SubarregloMaximaSuma(A, ini, fin):
     // Caso base: un solo elemento
     si ini == fin:
         devolver (A[ini], ini, fin)   // (suma, inicio, fin)
@@ -275,7 +275,7 @@ función MejorCruzado(A, ini, medio, fin):
             idx_der = j
 
     devolver (mejor_izq + mejor_der, idx_izq, idx_der)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>Hacemos <strong>$a = 2$ llamadas recursivas</strong>, cada una con la mitad de elementos (<strong>$b = 2$</strong>).</li><li>La función <code>MejorCruzado</code> recorre desde el centro hacia ambos extremos pasando una sola vez por cada elemento del intervalo actual, por lo que cuesta tiempo lineal <strong>$f(n) = O(n)$</strong> (es decir, <strong>$c = 1$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -289,7 +289,7 @@ Se consideran $n$ días consecutivos de cotización de una acción, numerados $i
 <ul><li>Si dividimos los días en una <strong>mitad izquierda</strong> (días anteriores) y una <strong>mitad derecha</strong> (días posteriores), la mejor compra-venta puede ocurrir:<ol><li>Comprando y vendiendo dentro de la mitad izquierda (ganancia <code>g1</code>).</li><li>Comprando y vendiendo dentro de la mitad derecha (ganancia <code>g2</code>).</li><li><strong>Comprando en la mitad izquierda y vendiendo en la mitad derecha:</strong> para ganar lo máximo posible cruzando las mitades, nos conviene comprar en el día <strong>más barato</strong> de la izquierda (<code>min1</code>) y vender en el día <strong>más caro</strong> de la derecha (<code>max2</code>), ganando <code>max2 - min1</code>.</li></ol>
 </li><li>Para no recalcular mínimos y máximos con un ciclo en cada paso (lo que llevaría a $O(n \log n)$), hacemos que cada llamada recursiva devuelva directamente una tripla <code>(mínimo, máximo, ganancia)</code>. Así combinamos las dos mitades con solo un par de comparaciones en tiempo constante $O(1)$.</li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo AnalizarIntervalo(precios, inicio, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo AnalizarIntervalo(precios, inicio, fin):
     // Caso base: un único día (no se puede comprar y vender en días distintos)
     si inicio == fin:
         devolver (precios[inicio], precios[inicio], 0)
@@ -307,7 +307,7 @@ Se consideran $n$ días consecutivos de cotización de una acción, numerados $i
     ganancia = max(g1, g2, cruce)
 
     devolver (minimo, maximo, ganancia)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>Se realizan <strong>$a = 2$ llamadas recursivas</strong> sobre mitades de tamaño $n/2$ (<strong>$b = 2$</strong>), y la combinación hace únicamente restas y comparaciones en tiempo constante <strong>$f(n) = \Theta(1)$</strong> (<strong>$c = 0$</strong>).</li><li>
 <p>Ecuación de recurrencia:
@@ -323,7 +323,7 @@ Indicar, utilizando el Teorema Maestro, la complejidad de cada una de las siguie
 </li><li>La regla de decisión sistemática consiste en contrastar $\log_b a$ contra $c$:<ul><li><strong>Caso 1 ($\log_b a &gt; c$): Dominan las hojas.</strong> El costo del nivel base supera al trabajo de combinación. El orden es <strong>$\Theta(n^{\log_b a})$</strong>.</li><li><strong>Caso 2 ($\log_b a = c$): Trabajo balanceado.</strong> Cada uno de los $\log_b n$ niveles del árbol realiza el mismo orden de trabajo $\Theta(n^c)$. El orden es <strong>$\Theta(n^c \log n)$</strong>.</li><li><strong>Caso 3 ($\log_b a &lt; c$): Domina la raíz.</strong> El trabajo en la cima supera la suma geométrica de los niveles inferiores. Si se cumple la condición de regularidad ($a \cdot f(n/b) \le k \cdot f(n)$ para alguna constante $k &lt; 1$), el orden es <strong>$\Theta(n^c)$</strong>.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EvaluarTeoremaMaestro(a, b, c):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EvaluarTeoremaMaestro(a, b, c):
     // Entrada:
     //   a: cantidad de subproblemas recursivos (a &gt;= 1)
     //   b: factor de división del tamaño de entrada (b &gt; 1)
@@ -344,7 +344,7 @@ Indicar, utilizando el Teorema Maestro, la complejidad de cada una de las siguie
         // Caso 3: La suma decrece geométricamente; domina el costo de la raíz f(n)
         // Condición de regularidad: a * (n/b)^c = (a / b^c) * n^c &lt;= k * n^c con k = a / b^c &lt; 1
         devolver &quot;Theta(n^&quot; + c + &quot;)&quot;
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <p>Deducción formal agrupando las 9 recurrencias por su estructura de ramificación $(a, b)$:</p>
 <ul><li>
@@ -380,7 +380,7 @@ Implementar, por división y conquista, una función que, dado un arreglo y su t
 <ul><li>Un arreglo de 0 o 1 elementos siempre está ordenado.</li><li>Si tiene más elementos, lo partimos a la mitad. Para que todo el arreglo esté ordenado deben cumplirse <strong>tres condiciones a la vez</strong>:<ol><li>Que la mitad izquierda esté ordenada.</li><li>Que la mitad derecha esté ordenada.</li><li><strong>Condición de enganche en la frontera:</strong> que el último elemento de la mitad izquierda sea menor o igual al primer elemento de la mitad derecha (<code>A[medio] &lt;= A[medio + 1]</code>).</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EstaOrdenado(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EstaOrdenado(A, ini, fin):
     // Caso base: 0 o 1 elemento siempre está ordenado
     si ini &gt;= fin:
         devolver Verdadero
@@ -393,7 +393,7 @@ Implementar, por división y conquista, una función que, dado un arreglo y su t
 
     // Ambas mitades deben estar ordenadas
     devolver EstaOrdenado(A, ini, medio) y EstaOrdenado(A, medio + 1, fin)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En el peor caso (cuando el arreglo sí está ordenado), el algoritmo verifica las <strong>$a = 2$ mitades</strong> de tamaño $n/2$ (<strong>$b = 2$</strong>) y hace una sola comparación en el borde en tiempo <strong>$O(1)$</strong> (<strong>$c = 0$</strong>).</li><li>Recurrencia: $T(n) = 2 \cdot T(n/2) + O(1)$.</li><li>Por el <strong>Teorema Maestro</strong> ($\log_2 2 = 1 &gt; 0 = c$, <strong>Caso 1</strong>), el orden es <strong>$O(n)$</strong>.</li></ul>
 <hr /></div></details></div></article>
@@ -402,7 +402,7 @@ Se cuenta con un arreglo de enteros ordenado de manera ascendente, que contiene 
 <ul><li><em>(Nota de cátedra: En la versión clásica de FIUBA los elementos son consecutivos, o bien comparamos la diferencia de valores contra la diferencia de índices).</em></li><li><strong>Idea clave de los índices:</strong> Como el arreglo está ordenado de forma estrictamente creciente salvo por el único par duplicado, entre dos posiciones <code>ini</code> y <code>medio</code> sin duplicados los valores están obligados a crecer <strong>al menos tanto como la cantidad de pasos dados</strong>: <code>A[medio] - A[ini] &gt;= medio - ini</code> (o si son enteros consecutivos a partir de <code>A[0]</code>, antes del duplicado se cumple <code>A[i] == A[0] + i</code> y después del duplicado se atrasa en 1: <code>A[i] == A[0] + i - 1</code>).</li><li>Miramos el elemento del medio <code>m</code>:<ul><li>Si <code>A[m]</code> es igual a <code>A[m - 1]</code> o a <code>A[m + 1]</code>, ¡ya encontramos el duplicado!</li><li>Si en la mitad izquierda la diferencia de valores <code>A[m] - A[ini]</code> es <strong>menor</strong> que la cantidad de pasos <code>m - ini</code> (en elementos consecutivos), significa que hubo una repetición que "achicó" el crecimiento en la izquierda: buscamos en <code>[ini, m]</code>.</li><li>Si no, el duplicado está garantizadamente en la mitad derecha: buscamos en <code>[m + 1, fin]</code>.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EncontrarDuplicado(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo EncontrarDuplicado(A, ini, fin):
     medio = (ini + fin) / 2
 
     // 1. Verificar si el duplicado está justo en el medio
@@ -415,7 +415,7 @@ Se cuenta con un arreglo de enteros ordenado de manera ascendente, que contiene 
         devolver EncontrarDuplicado(A, ini, medio - 1)
     sino:
         devolver EncontrarDuplicado(A, medio + 1, fin)
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>En cada paso descartamos una mitad completa y hacemos <strong>$a = 1$ llamada recursiva</strong> de tamaño $n/2$ (<strong>$b = 2$</strong>) con comparaciones en tiempo constante <strong>$O(1)$</strong> (<strong>$c = 0$</strong>).</li><li>Ecuación de recurrencia: $T(n) = 1 \cdot T(n/2) + O(1)$.</li><li>Aplicando el <strong>Teorema Maestro</strong>: $\log_2 1 = 0 = c$ (<strong>Caso 2</strong>), por lo que la complejidad es <strong>$O(\log n)$</strong>.</li></ul>
 <hr /></div></details></div></article>
@@ -424,7 +424,7 @@ Implementar un algoritmo que, por división y conquista, permita obtener la part
 <ul><li>Buscamos el mayor entero $m \in [0, n]$ tal que $m^2 \le n$ y $(m + 1)^2 &gt; n$.</li><li>Como la función $f(m) = m^2$ es estrictamente creciente para números positivos, podemos aplicar búsqueda binaria sobre el rango de candidatos <code>[ini, fin]</code> (inicialmente <code>[0, n]</code>):<ul><li>Probamos el valor central <code>m = (ini + fin) / 2</code>.</li><li>Si <code>m * m &lt;= n</code> y <code>(m + 1) * (m + 1) &gt; n</code>, entonces <code>m</code> es exactamente la parte entera de $\sqrt{n}$.</li><li>Si <code>m * m &gt; n</code>, nos pasamos: buscamos en la mitad menor <code>[ini, m - 1]</code>.</li><li>Si <code>m * m &lt;= n</code> pero <code>(m + 1)^2 &lt;= n</code>, todavía nos quedamos cortos: buscamos en la mitad mayor <code>[m + 1, fin]</code>.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo RaizEntera(n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo RaizEntera(n):
     devolver BuscarRaiz(n, 0, n)
 
 función BuscarRaiz(n, ini, fin):
@@ -438,7 +438,7 @@ función BuscarRaiz(n, ini, fin):
         devolver BuscarRaiz(n, ini, medio - 1)   // Nos pasamos, probar más chicos
     sino:
         devolver BuscarRaiz(n, medio + 1, fin)   // Falta crecer, probar más grandes
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>El rango inicial tiene tamaño $n$, y en cada paso se realiza <strong>$a = 1$ llamada recursiva</strong> sobre la mitad del intervalo (<strong>$b = 2$</strong>), realizando multiplicaciones y comparaciones en tiempo <strong>$O(1)$</strong> (<strong>$c = 0$</strong>).</li><li>Por el <strong>Teorema Maestro</strong>, $T(n) = T(n/2) + O(1)$ tiene $\log_2 1 = 0 = c$ (<strong>Caso 2</strong>), resultando en tiempo <strong>$O(\log n)$</strong>.</li></ul>
 <hr /></div></details></div></article>
@@ -452,7 +452,7 @@ c. Dado lo obtenido en los puntos anteriores, ¿tiene sentido implementar MergeS
 </li><li><strong>Punto c (¿Tiene sentido práctico implementar $k &gt; 2$?):</strong><ul><li><strong>En memoria principal (RAM): NO tiene sentido.</strong></li><li>Aunque la altura del árbol recursivo disminuye a $\log_k n$, el costo de fusionar $k$ vías en cada nivel se incrementa:</li><li>Con comparaciones secuenciales directas, seleccionar cada elemento insume $k - 1$ comparaciones $\implies$ costo de combinación por nivel $O(k \cdot n) \implies$ Total $O(k n \cdot \log_k n) = O\left(\frac{k}{\log_2 k} n \log_2 n\right)$, creciendo desfavorablemente para $k \ge 3$.</li><li>Con una cola de prioridad (Min-Heap) de tamaño $k$, cada extracción e inserción cuesta $O(\log_2 k) \implies$ costo de combinación por nivel $O(n \log_2 k) \implies$ Total $\log_k n \cdot O(n \log_2 k) = \frac{\log_2 n}{\log_2 k} \cdot O(n \log_2 k) = O(n \log_2 n)$.</li><li>La cota asintótica es idéntica a $k = 2$, pero $k &gt; 2$ introduce penalizaciones constantes severas: mayor consumo de memoria auxiliar para el heap, más operaciones de control de punteros y pérdida de localidad temporal/espacial en las líneas de caché de la CPU.</li><li><strong>En memoria secundaria (External Sort en Discos Magnéticos): SÍ tiene sentido.</strong></li><li>Cuando los datos no entran en RAM, el cuello de botella físico son los accesos de I/O a disco. En el ordenamiento externo (<em>$k$-way External MergeSort</em>), elegir un $k$ grande reduce directamente la cantidad de pasadas completas por disco ($\log_k n$), optimizando el factor más costoso del sistema.</li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MergeSort3(A, ini, fin):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MergeSort3(A, ini, fin):
     // Caso Base: 0 o 1 elemento ya se encuentra ordenado
     si ini &gt;= fin:
         retornar
@@ -489,7 +489,7 @@ Algoritmo KMergeConHeap(sublistas, k):
             heap.insertar(valor: sublistas[id][idx + 1], id_lista: id, indice: idx + 1)
 
     retornar resultado
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>
 <p><strong>Punto a ($k = 3$ partes):</strong></p>
@@ -541,7 +541,7 @@ $$A &lt; 49$$</p>
 </li></ul>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesManterola(M1, M2, n, A):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MultiplicarMatricesManterola(M1, M2, n, A):
     // Caso base: para matrices pequeñas (n &lt;= 4), resolver por definición directa
     si n &lt;= 4:
         retornar MultiplicarDirecto(M1, M2) // O(1)
@@ -572,7 +572,7 @@ Strassen        T(n) = 7·T(n/2) + O(n^2)       7   2   2   log_2(7) ≈ 2.807
 Manterola (A)   T(n) = A·T(n/4) + O(n^2)       A   4   2   log_4(A) = log_2(A)/2
 -----------------------------------------------------------------------------------
 Condición de Victoria: log_4(A) &lt; log_2(7) &lt;=&gt; log_2(A) &lt; log_2(49) &lt;=&gt; A &lt; 49
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>
 <p><strong>Planteo de la Recurrencia:</strong>
@@ -607,7 +607,7 @@ Implementar una función (que utilice división y conquista) de orden $O(n \log 
 <ul><li><strong>Propiedad clave:</strong> Si un número aparece <strong>más de la mitad de las veces</strong> en todo el arreglo ($&gt; n/2$), entonces es matemáticamente imposible que aparezca la mitad o menos en ambas mitades a la vez. <strong>Obligatoriamente tiene que ser el elemento mayoritario en la mitad izquierda, o en la mitad derecha (o en ambas)</strong>.</li><li>Entonces creamos una función recursiva <code>BuscarMayoritario(A, ini, fin)</code> que devuelve el elemento mayoritario del rango (o <code>nulo</code> si no hay):<ol><li><strong>Caso Base:</strong> Si el rango tiene 1 solo elemento, ese elemento es el mayoritario de su rango.</li><li><strong>División y Conquista:</strong> Si tiene más, pedimos el candidato mayoritario de la mitad izquierda (<code>cand_izq</code>) y el de la mitad derecha (<code>cand_der</code>).</li><li><strong>Combinación:</strong> Si ambos coinciden, ese mismo es el ganador. Si son distintos, <strong>contamos cuántas veces aparece cada uno</strong> en todo el rango actual <code>[ini, fin]</code> recorriéndolo con un ciclo lineal $O(n)$. Si alguno supera la mitad del tamaño del rango, lo devolvemos; si ninguno supera la mitad, devolvemos <code>nulo</code>.</li></ol>
 </li></ul>
 <h4>2. Semi-Pseudocódigo Simplificado</h4>
-<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TieneMayoritario(A, n):
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo TieneMayoritario(A, n):
     candidato = BuscarMayoritario(A, 0, n - 1)
     devolver (candidato != nulo)
 
@@ -630,13 +630,68 @@ función BuscarMayoritario(A, ini, fin):
         devolver cand_der
 
     devolver nulo
-</code></pre></div></div>
+</code></pre></div>
 <h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
 <ul><li>Dividimos el problema en <strong>$a = 2$ llamadas recursivas</strong> de tamaño $n/2$ (<strong>$b = 2$</strong>).</li><li>En la etapa de combinación, contar cuántas veces aparecen <code>cand_izq</code> y <code>cand_der</code> en el subarreglo actual recorre sus elementos en tiempo lineal <strong>$f(n) = O(n)$</strong> (<strong>$c = 1$</strong>).</li><li>
 <p>Ecuación de recurrencia:
 $$T(n) = 2 \cdot T(n/2) + O(n)$$</p>
 </li><li>
 <p>Por el <strong>Teorema Maestro</strong>, $\log_2 2 = 1 = c$ (<strong>Caso 2</strong>), lo que demuestra que la complejidad temporal es <strong>$O(n \log n)$</strong>.</p>
+</li></ul>
+<hr /></div></details></div></article>
+<article class="exercise-card" id="ej-80" data-num="80" data-priority="imprescindible" data-paradigm="dyc" data-difficulty="3" data-parcial="true" data-title="mayor diferencia en subarreglo con índices crecientes (l[j] - l[i])" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 1"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 80</span><h3 class="exercise-title">Mayor Diferencia en Subarreglo con Índices Crecientes (L[j] - L[i])</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-3" title="Dificultad 3 de 5">★★★ (3/5)</span><span class="badge badge-paradigm badge-dyc">División y Conquista</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 1">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 1</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="80" onchange="toggleMastered(80, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Dada una lista de números enteros (positivos y negativos), se desea obtener la mayor diferencia entre dos elementos $L[i]$ y $L[j]$ tales que $L[i] &lt; L[j]$ siendo $i &lt; j$. Realizar un algoritmo de DyC que resuelva el problema. Justificar la complejidad temporal del algoritmo realizado.</p></div><details class="exercise-solution-drawer" id="solution-drawer-80"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)</h4>
+<ul><li>Se desea maximizar $L[j] - L[i]$ con $i &lt; j$ y $L[i] &lt; L[j]$. Si ningún par satisface la condición (por ejemplo si la lista es monótona no creciente), se retorna $-\infty$ indicando que no hay par válido.</li><li>
+<p><strong>Estrategia de División y Conquista:</strong></p>
+<ol><li><strong>División:</strong> Partimos el arreglo $L$ por la mitad en dos subarreglos de tamaño aproximado $n/2$: la mitad izquierda $L[ini \dots medio]$ y la mitad derecha $L[medio+1 \dots fin]$.</li><li><strong>Conquista:</strong> Resolvemos recursivamente el problema para ambas mitades. La mayor diferencia óptima global puede estar en:</li><li><strong>Caso 1 (Interna izquierda):</strong> Ambos índices en la mitad izquierda ($ini \le i &lt; j \le medio$). Diferencia: $diff_{izq}$.</li><li><strong>Caso 2 (Interna derecha):</strong> Ambos índices en la mitad derecha ($medio+1 \le i &lt; j \le fin$). Diferencia: $diff_{der}$.</li><li>
+<p><strong>Caso 3 (Cruce de mitades):</strong> El índice $i$ está en la izquierda y el índice $j$ en la derecha ($i \le medio &lt; j$). Para maximizar $L[j] - L[i]$, debemos restar el menor valor posible de la izquierda y sumar el mayor valor posible de la derecha:
+$$cruce = \max(L[medio+1 \dots fin]) - \min(L[ini \dots medio])$$
+(siempre que $\max(der) &gt; \min(izq)$).</p>
+</li><li>
+<p><strong>Combinación en $O(1)$ para lograr $O(n)$:</strong> Para evitar recorrer las mitades en cada llamada calculando mínimos y máximos en $O(n)$ (lo cual llevaría a $O(n \log n)$), cada llamada recursiva devuelve directamente una tripla con: <code>(min_val, max_val, mejor_diff)</code>. Así, combinar los resultados requiere únicamente comparaciones entre escalares en tiempo constante $O(1)$:</p>
+</li><li>$min\_actual = \min(min_{izq}, min_{der})$</li><li>$max\_actual = \max(max_{izq}, max_{der})$</li><li>$cruce = \text{si } max_{der} &gt; min_{izq} \text{ entonces } (max_{der} - min_{izq}) \text{ sino } -\infty$</li><li>$mejor\_diff = \max(diff_{izq}, diff_{der}, cruce)$</li></ol>
+</li></ul>
+<h4>2. Semi-Pseudocódigo Simplificado</h4>
+<div class="code-container"><button class="copy-code-btn" type="button" title="Copiar código al portapapeles" onclick="copyCodeBlock(this)">📋 Copiar</button><pre><code class="language-text">Algoritmo MayorDiferenciaDyC(L):
+    si longitud(L) &lt; 2:
+        retornar &quot;No existe par válido&quot;
+    (min_val, max_val, mejor_diff) = MayorDiferenciaRec(L, 0, longitud(L) - 1)
+    retornar mejor_diff
+
+Algoritmo MayorDiferenciaRec(L, ini, fin):
+    // Caso base: subarreglo de un solo elemento
+    si ini == fin:
+        retornar (L[ini], L[ini], -infinito)
+
+    medio = (ini + fin) // 2
+
+    (min_izq, max_izq, diff_izq) = MayorDiferenciaRec(L, ini, medio)
+    (min_der, max_der, diff_der) = MayorDiferenciaRec(L, medio + 1, fin)
+
+    // Combinación en tiempo constante O(1)
+    min_actual = min(min_izq, min_der)
+    max_actual = max(max_izq, max_der)
+
+    si max_der &gt; min_izq:
+        cruce = max_der - min_izq
+    sino:
+        cruce = -infinito
+
+    mejor_diff = max(diff_izq, diff_der, cruce)
+
+    retornar (min_actual, max_actual, mejor_diff)
+</code></pre></div>
+<h4>3. Justificación de Complejidad (Para entregar en el parcial)</h4>
+<ul><li>
+<p><strong>Ecuación de Recurrencia:</strong></p>
+<ul><li>Se dividen los datos en <strong>$a = 2$ llamadas recursivas</strong> sobre instancias de tamaño $n/2$ (<strong>$b = 2$</strong>).</li><li>La combinación ejecuta únicamente comparaciones y restas sobre las triplas devueltas, con costo temporal <strong>$f(n) = O(1)$</strong> (<strong>$c = 0$</strong>).
+$$T(n) = 2 \cdot T(n/2) + O(1)$$</li></ul>
+</li><li>
+<p><strong>Aplicación del Teorema Maestro:</strong></p>
+<ul><li>Calculamos $\log_b a = \log_2 2 = 1$.</li><li>Como $c = 0 &lt; \log_b a = 1$ (<strong>Caso 1 del Teorema Maestro</strong>):
+$$T(n) \in \Theta(n^{\log_b a}) = \Theta(n^1) = \Theta(n)$$</li></ul>
+</li><li>
+<p><strong>Complejidad Espacial:</strong> $\mathcal{O}(\log n)$ debido a la profundidad de la pila de recursión sobre un árbol binario balanceado de altura $\lceil \log_2 n \rceil$.</p>
 </li></ul></div></details></div></article>
 <hr />
 <h3>Errores Frecuentes en Exámenes sobre División y Conquista</h3>

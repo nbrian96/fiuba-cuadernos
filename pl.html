@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teoría de Algoritmos — Programación Lineal y PLI (6 Ejercicios) (FIUBA)</title>
+<title>Teoría de Algoritmos — Programación Lineal y PLI (7 Ejercicios) (FIUBA)</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -29,8 +29,8 @@ document.documentElement.setAttribute("data-bs-theme", "light");
 <a href="index.html" class="site-brand">
 <span style="font-size: 1.25rem;">🚀</span><span>TDA FIUBA</span></a>
 <nav>
-<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (29)</a></li><li class="site-dropdown">
-<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (79)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (12)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (26)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (14)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (7)</a><a href="pl.html" class="site-dropdown-item active">🔵 Prog. Lineal (6)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (4)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
+<ul class="site-nav-links"><li><a href="index.html" class="site-nav-link">🏠 Inicio</a></li><li><a href="parciales.html" class="site-nav-link">📝 Parciales (35)</a></li><li class="site-dropdown">
+<a href="#" class="site-nav-link active" onclick="event.preventDefault()">📂 Paradigmas ▾</a><div class="site-dropdown-menu"><a href="todos.html" class="site-dropdown-item">📚 Todos los Ejercicios (85)</a><a href="dyc.html" class="site-dropdown-item">🔷 División y Conquista (13)</a><a href="greedy.html" class="site-dropdown-item">🔶 Greedy / Voraces (27)</a><a href="backtracking.html" class="site-dropdown-item">🟣 Backtracking & B&B (15)</a><a href="dp.html" class="site-dropdown-item">🟢 Prog. Dinámica (8)</a><a href="pl.html" class="site-dropdown-item active">🔵 Prog. Lineal (7)</a><a href="flujo.html" class="site-dropdown-item">🔴 Redes de Flujo (5)</a><a href="reducciones.html" class="site-dropdown-item">🟡 Reducciones NP (5)</a><a href="integradores.html" class="site-dropdown-item">⚡ Integradores (5)</a></div>
 </li><li><a href="teoria-avanzados.html" class="site-nav-link">🎲 Paradigmas Avanzados</a></li></ul>
 </nav>
 <div class="site-nav-actions"><button class="tool-btn" onclick="openCheatsheet()" title="Abrir recetas rápidas y fórmulas"><span class="tool-icon">📐</span> <span class="tool-text">Fórmulas</span></button><button class="tool-btn" onclick="toggleDarkMode()" id="btnDarkMode" title="Cambiar tema claro / oscuro"><span class="tool-icon" id="darkModeIcon">🌙</span></button></div>
@@ -330,7 +330,30 @@ $$x_i + x_{i+1} + x_{i+2} \ge 1 \quad \forall i \in \{1, 2, \dots, N - 2\}$$</li
 <div class="trap-callout"><div class="trap-header">⚠️ Trampa Típica de Corrección</div>
 <p><strong>Puntos donde restan puntaje los docentes de FIUBA:</strong></p>
 <ul><li><strong>Responder que hay $N$ restricciones en lugar de $N - 2$:</strong> La última terna de $3$ estaciones es $(N-2, \; N-1, \; N)$, que corresponde a $i = N - 2$. Si pusieras $i$ hasta $N$, aparecerían estaciones inexistentes $x_{N+1}$ y $x_{N+2}$.</li><li><strong>Olvidar aclarar el tipo de las variables:</strong> La consigna pide explícitamente <em>cantidad y tipo</em>; es obligatorio especificar que son <strong>binarias</strong> ($x_i \in \{0, 1\}$).</li></ul>
-</div></div></details></div></article>
+</div>
+<hr /></div></details></div></article>
+<article class="exercise-card" id="ej-84" data-num="84" data-priority="imprescindible" data-paradigm="pl" data-difficulty="2" data-parcial="true" data-title="modelo de programación lineal para proyectos con concurrencia máxima 2" data-origin="parcial 2026-2-2 (17/11/2026), ejercicio 5"><header class="card-header"><div class="card-header-left"><span class="exercise-pill-number">EJ 84</span><h3 class="exercise-title">Modelo de Programación Lineal para Proyectos con Concurrencia Máxima 2</h3></div><div class="card-header-meta"><span class="badge badge-priority badge-priority-imprescindible">🔴 IMPRESCINDIBLE</span><span class="badge badge-difficulty diff-2" title="Dificultad 2 de 5">★★ (2/5)</span><span class="badge badge-paradigm badge-pl">Prog. Lineal</span><span class="badge badge-origin" title="Parcial 2026-2-2 (17/11/2026), Ejercicio 5">🏛️ Parcial 2026-2-2 (17/11/2026), Ejercicio 5</span></div><div class="card-header-actions"><label class="mastered-label" title="Marcar como dominado (se guarda automáticamente)"><input type="checkbox" class="mastered-checkbox" data-ej-num="84" onchange="toggleMastered(84, this.checked)"><span class="checkbox-custom"></span><span class="label-text">Dominado</span></label></div></header><div class="card-body"><div class="exercise-statement-box"><p><strong>Enunciado</strong><br />
+Realizar un modelo de programación lineal que resuelva el problema del punto 3 (selección de proyectos con fecha de inicio $i[i]$, fin $f[i]$ y beneficio $B[i]$, no pudiendo realizar más de dos proyectos simultáneamente). Indicar la cantidad y tipo de variables del problema, y la cantidad de restricciones del mismo.</p></div><details class="exercise-solution-drawer" id="solution-drawer-84"><summary class="solution-summary"><span class="summary-toggle-icon">▶</span><span class="summary-title">📝 Respuesta para la Hoja del Parcial (Idea en Lenguaje Natural y Semi-Pseudocódigo)</span><span class="summary-badge">Active Recall</span></summary><div class="solution-inner-content"><h4>1. Idea y Modelo Matemático</h4>
+<ol><li><strong>Variables de decisión y dominios:</strong></li><li>
+<p>$x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, n\}$:
+$$x_i = \begin{cases} 1 &amp; \text{si se decide realizar el proyecto } i \\ 0 &amp; \text{si no se realiza} \end{cases}$$</p>
+</li><li>
+<p><strong>Función Objetivo:</strong>
+Maximizar el beneficio económico total de los proyectos realizados:
+$$\max Z = \sum_{i=1}^{n} B_i \cdot x_i$$</p>
+</li><li>
+<p><strong>Restricciones Lineales de Concurrencia Simultánea $\le 2$:</strong></p>
+</li><li>En ningún instante de tiempo pueden ejecutarse más de 2 proyectos a la vez.</li><li>La cantidad de proyectos activos únicamente puede aumentar en las fechas de inicio de algún proyecto. Por ende, basta asegurar la restricción en cada instante de inicio $t = inicio_k$ para cada proyecto $k \in \{1, \dots, n\}$.</li><li>
+<p>Para cada proyecto $k \in \{1, \dots, n\}$, definimos el conjunto de proyectos concurrentes con su inicio:
+$$A_k = \{ j \in \{1, \dots, n\} \mid inicio_j \le inicio_k &lt; fin_j \}$$</p>
+</li><li>
+<p>Restricción lineal para cada proyecto $k \in \{1, \dots, n\}$:
+$$\sum_{j \in A_k} x_j \le 2 \quad \forall k \in \{1, \dots, n\}$$</p>
+</li></ol>
+<h4>2. Cantidad y Tipo de Variables y Restricciones (Requisito Explícito del Parcial)</h4>
+<ul><li><strong>Cantidad y tipo de variables:</strong><ul><li>Exactamente <strong>$n$ variables binarias</strong>: $x_i \in \{0, 1\}$ para cada proyecto $i \in \{1, \dots, n\}$.</li></ul>
+</li><li><strong>Cantidad de restricciones:</strong><ul><li><strong>Restricciones funcionales de concurrencia:</strong> Exactamente <strong>$n$ restricciones lineales</strong> (una por cada instante de inicio $inicio_k$, evaluando $\sum_{j \in A_k} x_j \le 2$).</li><li><strong>Restricciones de dominio:</strong> $n$ declaraciones de variable binaria ($x_i \in \{0, 1\}$), o $2n$ restricciones de cota ($0 \le x_i \le 1$) si se formaliza en Programación Lineal Entera.</li></ul>
+</li></ul></div></details></div></article>
 <hr />
 <h3>Errores Frecuentes en Exámenes sobre Programación Lineal</h3>
 <ol><li><strong>Multiplicar dos variables de decisión:</strong> Escribir términos como $x_i \cdot y_j$ destruye la linealidad del modelo. En PL/PLI todos los términos deben ser el producto de una constante conocida por una única variable.</li><li><strong>Usar operadores $\max$, $\min$ o valores absolutos $|\cdot|$ directamente:</strong> Deben linealizarse obligatoriamente mediante variables auxiliares continuas ($Z$) y sistemas de desigualdades.</li><li><strong>No declarar el dominio estricto de las variables:</strong> Omitir si una variable es binaria ($x_i \in \{0, 1\}$), continua no negativa ($x_{ij} \ge 0$) o entera no negativa ($z_k \in \mathbb{Z}_{\ge 0}$) es motivo de descuento directo del $40\%$ del valor de la pregunta.</li><li><strong>Omitir el conteo analítico de variables y restricciones:</strong> Si la consigna indica <em>"indicar variables y restricciones"</em>, debe especificarse cuántas variables de cada tipo y cuántas restricciones lineales componen el modelo en función de los parámetros de entrada.</li></ol><div class="search-empty-state" id="searchEmptyState" style="display: none;"><div class="empty-state-icon">🔍</div><h3 class="empty-state-title">No se encontraron ejercicios con los filtros actuales</h3><p class="empty-state-desc">Probá con otro término de búsqueda, cambiá la dificultad o seleccioná el modo <strong>Todos</strong>.</p><button class="btn btn-primary" type="button" onclick="resetAllFilters()">Restablecer filtros y mostrar todos</button></div>

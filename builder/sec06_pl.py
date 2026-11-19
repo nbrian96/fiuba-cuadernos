@@ -433,6 +433,41 @@ flowchart LR
 
 ---
 
+### Ejercicio 84 — Modelo de Programación Lineal para Proyectos con Concurrencia Máxima 2
+
+**Clasificación:** 🔴 IMPRESCINDIBLE  
+**Dificultad:** ★★☆☆☆ (2/5)  
+**Origen:** Parcial 2026-2-2 (17/11/2026), Ejercicio 5
+
+**Enunciado**  
+Realizar un modelo de programación lineal que resuelva el problema del punto 3 (selección de proyectos con fecha de inicio $i[i]$, fin $f[i]$ y beneficio $B[i]$, no pudiendo realizar más de dos proyectos simultáneamente). Indicar la cantidad y tipo de variables del problema, y la cantidad de restricciones del mismo.
+
+#### 1. Idea y Modelo Matemático
+
+1. **Variables de decisión y dominios:**
+   * $x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, n\}$:
+     $$x_i = \begin{cases} 1 & \text{si se decide realizar el proyecto } i \\ 0 & \text{si no se realiza} \end{cases}$$
+2. **Función Objetivo:**
+   Maximizar el beneficio económico total de los proyectos realizados:
+   $$\max Z = \sum_{i=1}^{n} B_i \cdot x_i$$
+3. **Restricciones Lineales de Concurrencia Simultánea $\le 2$:**
+   * En ningún instante de tiempo pueden ejecutarse más de 2 proyectos a la vez.
+   * La cantidad de proyectos activos únicamente puede aumentar en las fechas de inicio de algún proyecto. Por ende, basta asegurar la restricción en cada instante de inicio $t = inicio_k$ para cada proyecto $k \in \{1, \dots, n\}$.
+   * Para cada proyecto $k \in \{1, \dots, n\}$, definimos el conjunto de proyectos concurrentes con su inicio:
+     $$A_k = \{ j \in \{1, \dots, n\} \mid inicio_j \le inicio_k < fin_j \}$$
+   * Restricción lineal para cada proyecto $k \in \{1, \dots, n\}$:
+     $$\sum_{j \in A_k} x_j \le 2 \quad \forall k \in \{1, \dots, n\}$$
+
+#### 2. Cantidad y Tipo de Variables y Restricciones (Requisito Explícito del Parcial)
+
+* **Cantidad y tipo de variables:**
+  - Exactamente **$n$ variables binarias**: $x_i \in \{0, 1\}$ para cada proyecto $i \in \{1, \dots, n\}$.
+* **Cantidad de restricciones:**
+  - **Restricciones funcionales de concurrencia:** Exactamente **$n$ restricciones lineales** (una por cada instante de inicio $inicio_k$, evaluando $\sum_{j \in A_k} x_j \le 2$).
+  - **Restricciones de dominio:** $n$ declaraciones de variable binaria ($x_i \in \{0, 1\}$), o $2n$ restricciones de cota ($0 \le x_i \le 1$) si se formaliza en Programación Lineal Entera.
+
+---
+
 ### Errores Frecuentes en Exámenes sobre Programación Lineal
 
 1. **Multiplicar dos variables de decisión:** Escribir términos como $x_i \cdot y_j$ destruye la linealidad del modelo. En PL/PLI todos los términos deben ser el producto de una constante conocida por una única variable.
