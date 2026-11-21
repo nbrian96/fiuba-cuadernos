@@ -162,3 +162,43 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 | `1B.4` | `f9a2378` | `test(1B.4): agregar suite QA contractual y casos negativos de Etapa 1B` | `tests/test_etapa1b_manifests_and_contracts.py` |
 
 > **Cierre QA Etapa 1B (`1B.5` — Cerrada):** `python run_tests.py` (`53/53 OK` — `46` de Etapa 1A + `7` de `test_etapa1b_manifests_and_contracts.py`, `0` mutaciones y `0` enlaces locales rotos *case-sensitive*), y auditoría independiente read-only resuelta sin hallazgos críticos ni bloqueantes pendientes. Listo para iniciar la **Etapa 2 (Infraestructura Base Astro + Zod + Vitest)**.
+
+---
+
+## 9. Plan de Ejecución de la Etapa 2 (Infraestructura Base Astro + Zod + Vitest)
+
+> **Regla de Alcance:** La Etapa 2 establece la base técnica Astro (`astro` + `@astrojs/mdx` + `@astrojs/react` + `@astrojs/markdown-remark` + `remark-math` + `rehype-katex` + `vitest`), los esquemas Zod contractuales, las colecciones Content Layer, el helper `withBase()` y semillas representativas reales de TDA, conservando intactos `TP0/` y los 12 HTML legacy (salvo el fix factual en `index.html:L184`).
+
+### Correcciones Previas de Auditoría (Pre-Etapa 2)
+- **`tests/test_build_integration.py`:** Exclusión explícita de `node_modules`, `.astro`, `dist`, `.venv`, `venv`, `coverage`, `playwright-report` y `test-results` en el escaneo *case-sensitive* de archivos `.md`.
+- **`run_tests.py`:** Exclusión en `snapshot_workspace_state()` de `node_modules`, `.astro`, `dist`, `.venv` y `venv` para evitar hashear miles de dependencias de terceros mientras se conserva el control de estado vía `git status --porcelain --ignored`.
+- **`index.html`:** Corrección factual de `con 4 simuladores interactivos.` a `con 5 simuladores interactivos.` (`Set Cover`, `Pricing Method`, `Karger`, `MAX 3-SAT`, `Hamlet Streaming`).
+- **`.gitignore`:** Incorporación de `node_modules/`, `.astro/`, `.vitest/`, `coverage/`, `playwright-report/` y `test-results/`.
+
+### Unidades de Trabajo `2.1` a `2.6`
+
+| Unidad | Alcance Técnico Detallado | Entregables | Pruebas y Criterios de Aceptación |
+| :-: | :--- | :--- | :--- |
+| **2.1** | **Inicialización Astro 7 + MDX + React + KaTeX + Vitest:** Configuración base de proyecto Node ESM (`type: "module"`), `tsconfig.json` estricto sin `baseUrl` obsoleto en TypeScript 6, `vitest.config.ts`, wrapper [run-astro.mjs](../scripts/run-astro.mjs) (`ASTRO_TELEMETRY_DISABLED=1`), y procesador `unified` de `@astrojs/markdown-remark` con `remark-math` + `rehype-katex`. | [package.json](../package.json), [astro.config.mjs](../astro.config.mjs), [tsconfig.json](../tsconfig.json), [vitest.config.ts](../vitest.config.ts), [run-astro.mjs](../scripts/run-astro.mjs) | `npm run check` (`0` errores/warnings), `npm run typecheck` OK y `npm test` sin errores de resolución. |
+| **2.2** | **Helper `withBase()` y rutas canónicas:** Implementación de `normalizeBase()`, `withBase()` idempotente (protegido contra colisiones parciales de prefijo y preservando URLs externas/hashes/queries), `stripBase()` y `buildMaterialViewerUrl()` (`{BASE_URL}/{course}/materiales/{resourceId}?page={N}`). | [paths.ts](../src/utils/paths.ts), [paths.test.ts](../tests/vitest/paths.test.ts) | 9/9 pruebas unitarias en `paths.test.ts` incluyendo validación de página y sub-rutas. |
+| **2.3** | **Esquemas Zod y Content Collections:** Implementación estricta de `CourseManifestSchema`, `ResourceManifestSchema`, `AssessmentManifestSchema`, `QuizManifestSchema`, `ExerciseFrontmatterSchema`, `DocFrontmatterSchema`, `ExercisesIndexManifestSchema` y `InteractiveAndNotesManifestSchema` sobre `astro/zod`, y definición de las 6 colecciones con `glob()` en `src/content.config.ts`. | [academic.ts](../src/schemas/academic.ts), [content.config.ts](../src/content.config.ts), [schemas.test.ts](../tests/vitest/schemas.test.ts) | Validación estricta de las 9 `provenance`, 13 `entityType`, coherencia `TP0/` y `pdfMetadata`. |
+| **2.4** | **Datos semilla reales de TDA, isla React y rutas mínimas:** Copia verificada de `course.json`, `resources.json` y `assessments.json` a `src/content/`; externalización 20/20 de `TRAINER_QUESTIONS` a [tda-entrenador-30s.yaml](../src/content/quizzes/tda-entrenador-30s.yaml); 3 `.mdx` semilla (`tda-ej-18`, `tda-adv-aprox-2partition`, `checklist-pre-parcial`); isla [InfraHealthBadge.tsx](../src/components/platform/InfraHealthBadge.tsx); `public/favicon.svg` y 4 rutas Astro mínimas. | `src/content/**`, [InfraHealthBadge.tsx](../src/components/platform/InfraHealthBadge.tsx), [index.astro](../src/pages/index.astro), `[course]/index.astro`, `[course]/ejercicios/[id].astro`, `[course]/docs/[docId].astro` | Compilación estática de 5 páginas con KaTeX pre-renderizado en build-time e isla React hidratable. |
+| **2.5** | **Suite de paridad Vitest y validador dual-base:** Validación Zod de los 5 manifiestos de Etapa 1B, igualdad profunda contra `src/content/`, paridad 20/20 del entrenador contra `assets/js/app.js` vía `node:vm`, verificación de frontmatter MDX y script [verify-astro-build.mjs](../scripts/verify-astro-build.mjs) para `/` y `/tda-2C2026-material/`. | [manifests-parity.test.ts](../tests/vitest/manifests-parity.test.ts), [verify-astro-build.mjs](../scripts/verify-astro-build.mjs) | `21/21` Vitest OK y builds validados tanto en `/` como en `/tda-2C2026-material/`. |
+| **2.6** | **Documentación, navegador real y auditoría independiente:** Verificación de `python run_tests.py` con `node_modules/`/`dist/`, prueba en vivo con `astro preview` + subagente `browser`, auditoría read-only independiente y actualización de este plan para revisión del `git diff`. | [PLAN_DE_TRABAJO.md](PLAN_DE_TRABAJO.md) | `53/53` Python OK (`0` mutaciones), `0` errores JS/HTTP 404 en navegador y auditoría sin bloqueantes. |
+
+### Hallazgos Técnicos Documentados para Etapas Posteriores
+- **Astro 7 (`^7.4.13`) y Markdown (`@astrojs/markdown-remark`):** Astro 7 utiliza Sätteri por defecto; para mantener `remark-math` + `rehype-katex` conforme a `ADR-001` sin advertencias de deprecación, se instaló `@astrojs/markdown-remark` configurando `markdown: { processor: unified(...) }`.
+- **Telemetría Astro en entornos sandbox:** `scripts/run-astro.mjs` ejecuta el binario local de Astro con `ASTRO_TELEMETRY_DISABLED=1`, evitando escrituras en `%APPDATA%\astro\Config` tanto en sandbox Windows como en CI.
+- **Convención `\dollar` en MDX (para Etapa 4):** `micromark-extension-math` (`remark-math@6.0.0`) cierra `$...$` ante cualquier `$` interno aunque esté escapado (`\$`). Se configuró `macros: { "\\dollar": "\\$" }` en `rehypeKatex`; durante la migración masiva de Etapa 4, los `22` usos de `\$` dentro de `$...$` detectados exclusivamente en `builder/sec03_greedy.py` deberán convertirse automáticamente a `\dollar ` en los `.mdx` destino (conservando `builder/sec03_greedy.py` intacto para el build legacy).
+
+### Registro de Commits (Etapa 2)
+
+| Unidad | SHA | Mensaje | Archivos Principales |
+| :--- | :--- | :--- | :--- |
+| `Pre-2` | `7aba16d` | `fix(pre-2): excluir directorios de build/dependencias en tests y corregir conteo de simuladores` | `.gitignore`, `index.html`, `run_tests.py`, `tests/test_build_integration.py` |
+| `2.1` | `cbddcda` | `chore(2.1): configurar Astro 7, MDX, React, unified KaTeX, TypeScript y Vitest` | `package.json`, `package-lock.json`, `astro.config.mjs`, `tsconfig.json`, `vitest.config.ts`, `scripts/run-astro.mjs` |
+| `2.2–2.3` | `16c0ad7` | `feat(2.2-2.3): implementar withBase, esquemas Zod de dominio y Content Collections` | `src/utils/paths.ts`, `src/schemas/academic.ts`, `src/content.config.ts` |
+| `2.4` | `579d531` | `feat(2.4): agregar semillas TDA, isla React InfraHealthBadge y rutas base Astro` | `public/favicon.svg`, `InfraHealthBadge.tsx`, `src/content/**`, `src/pages/**` |
+| `2.5` | `861aa63` | `test(2.5): agregar suite Vitest de rutas, esquemas y paridad y validador dual-base` | `tests/vitest/*.test.ts`, `scripts/verify-astro-build.mjs` |
+
+> **Cierre QA Etapa 2 (`2.6` — Cerrada):** `npm run check` (`0` errors, `0` warnings, `0` hints), `npm run typecheck` OK, `npm test` (`21/21` Vitest OK), builds y verificación dual-base (`/` y `/tda-2C2026-material/`) OK (`5` HTML cada uno), `python run_tests.py` (`53/53 OK`, `0` mutaciones), validación en navegador real (`0` errores JS, `0` HTTP 404, isla React hidratada y KaTeX sin `.katex-error`) y auditoría independiente read-only aprobada sin hallazgos críticos, altos ni medios. Listo para iniciar la **Etapa 3 (Núcleo de Plataforma y Design System WCAG 2.1 AA)**.
