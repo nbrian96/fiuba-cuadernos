@@ -1,0 +1,63 @@
+---
+id: tda-ej-18
+courseId: tda
+number: 18
+title: "Ruta de Transporte con Estaciones (Greedy + Instancia Óptima y No Óptima)"
+unit: greedy
+entityType: CatalogExercise
+provenance: elaborated_solution
+priority: imprescindible
+difficulty: 2
+origin: "Parcial 2026-2-1 (Enunciados), Ejercicio 4"
+isParcial: true
+examIds:
+  - tda-parcial-2026-2-1
+relatedResourceIds:
+  - tda-parcial-2026-2-1-pdf
+legacyPage: greedy.html
+legacyAnchor: "#ej-18"
+---
+
+## Enunciado
+
+Un transporte debe recorrer una ruta hasta su objetivo final pasando por $N$ estaciones intermedias con tarifas fijas $T[1 \dots N]$ por detenerse. Desde cada estación puede ir a la siguiente, o saltear una o dos estaciones (no puede saltear más de dos estaciones consecutivas). Diseñar un algoritmo greedy que permita resolver el problema. Si el algoritmo no asegura la solución óptima, indicar una instancia donde la solución obtenida sea la óptima y una instancia donde la solución obtenida no sea la óptima.
+
+## 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Regla Voraz:** Estando parados en la posición actual $i$ (empezando en el origen $i = 0$), miramos hasta 3 pasos adelante: $(i+1, \; i+2, \; i+3)$. Si el destino final $(N+1)$ ya está a nuestro alcance ($i + 3 \ge N + 1$), saltamos directo al destino sin pagar nada más. Si no, **elegimos parar entre las estaciones alcanzables $\{i+1, \; i+2, \; i+3\}$ en aquella que tenga la menor tarifa inmediata** (y ante empate, en la más lejana).
+* **¿Asegura la solución óptima? NO.** Porque elegir una estación apenas más barata hoy puede dejarnos cortos de alcance y obligarnos a pisar estaciones carísimas más adelante.
+* **Instancia donde SÍ obtiene la solución óptima:**
+  * Tarifas de 3 estaciones: $T = [10, 20, 5]$.
+  * Desde el inicio ($0$) alcanza las estaciones $1$ ($\dollar 10$), $2$ ($\dollar 20$) y $3$ ($\dollar 5$). Elige la más barata: **estación 3** (costo $\dollar 5$), y desde la estación $3$ llega directo al destino ($4$). **Costo Greedy = $\dollar 5$**, que coincide con el óptimo global.
+* **Instancia donde NO obtiene la solución óptima (Contraejemplo):**
+  * Tarifas de 4 estaciones: $T = [5, 6, 100, 100]$.
+  * Desde el inicio ($0$) las alcanzables son $1$ ($\dollar 5$), $2$ ($\dollar 6$) y $3$ ($\dollar 100$). Greedy elige la más barata: **estación 1** ($\dollar 5$).
+  * Pero desde la estación $1$ solo alcanza hasta la $4$ (estaciones $2$, $3$ y $4$, con costos $\dollar 6$, $\dollar 100$ y $\dollar 100$), viéndose obligado a parar de nuevo en la **estación 2** ($\dollar 6$) para recién de ahí llegar al destino ($5$). **Costo Greedy = $\dollar 5 + \dollar 6 = \dollar 11$**.
+  * **Solución Óptima:** Saltar directo del inicio a la **estación 2** ($\dollar 6$) y de la estación $2$ directo al destino ($5$) salteando la $3$ y la $4$. **Costo Óptimo = $\dollar 6 < \dollar 11$**.
+
+## 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo TransporteGreedy(T, N):
+    actual = 0   // 0 es el origen, N+1 es el destino final
+    paradas = []
+    costo_total = 0
+
+    mientras actual + 3 < N + 1:
+        // Entre las 3 estaciones alcanzables (actual+1, actual+2, actual+3),
+        // elegir la de menor tarifa (en empate, la más lejana)
+        mejor_est = actual + 1
+        para k desde actual + 2 hasta actual + 3:
+            si T[k] <= T[mejor_est]:
+                mejor_est = k
+
+        agregar mejor_est a paradas
+        costo_total = costo_total + T[mejor_est]
+        actual = mejor_est
+
+    devolver (costo_total, paradas)
+```
+
+## 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* En cada iteración avanzamos al menos 1 estación y miramos solo 3 opciones hacia adelante en $O(1)$. Por lo tanto, la complejidad temporal es **$O(N)$** y espacial **$O(N)$**.

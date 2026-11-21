@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+import InfraHealthBadge from "@/components/platform/InfraHealthBadge";
+import { withBase } from "@/utils/paths";
+
+const courses = await getCollection("courses");
+const exercises = await getCollection("exercises");
+const docs = await getCollection("docs");
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Cuaderno Universitario — Plataforma Académica</title>
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+        line-height: 1.6;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+      a {
+        color: #1d4ed8;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid #1d4ed8;
+        outline-offset: 2px;
+      }
+      .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .course-card {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+      .btn-link {
+        display: inline-block;
+        margin-top: 0.75rem;
+        background-color: #1d4ed8;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 0.55rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p style="font-size: 0.875rem; font-weight: 600; color: #334155; margin: 0;">
+          Mega Cuaderno Universitario · Etapa 2 (Infraestructura Base Astro)
+        </p>
+        <h1 style="margin: 0.4rem 0 0.75rem;">Hub de Materias</h1>
+        <p style="color: #334155; margin: 0;">
+          Plataforma estática multi-materia construida con Astro, Content Collections (Zod), MDX con KaTeX precompilado e Islas React.
+        </p>
+      </header>
+
+      <InfraHealthBadge
+        client:load
+        courseCount={courses.length}
+        exerciseCount={exercises.length}
+        docCount={docs.length}
+      />
+
+      <section aria-label="Materias disponibles" class="course-grid">
+        {
+          courses.map((course) => (
+            <article class="course-card">
+              <p style="font-size: 0.85rem; color: #475569; margin: 0;">
+                {course.data.institution} · {course.data.codes.join(" / ")}
+              </p>
+              <h2 style="margin: 0.35rem 0 0.5rem;">{course.data.title}</h2>
+              <p style="margin: 0; color: #334155;">{course.data.chair}</p>
+              <p style="margin: 0.65rem 0 0; font-size: 0.9rem; color: #334155;">
+                {course.data.stats.catalogExercises} ejercicios oficiales ·{" "}
+                {course.data.stats.parcialExercises} parciales ·{" "}
+                {course.data.stats.physicalFiles} archivos fuente
+              </p>
+              <a class="btn-link" href={withBase(`/${course.data.id}/`)}>
+                Abrir {course.data.shortTitle}
+              </a>
+            </article>
+          ))
+        }
+      </section>
+    </main>
+  </body>
+</html>

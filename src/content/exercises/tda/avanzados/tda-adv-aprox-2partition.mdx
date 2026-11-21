@@ -1,0 +1,59 @@
+---
+id: tda-adv-aprox-2partition
+courseId: tda
+number: null
+title: "2-Partition Problem (Demostración de 2-Aproximación)"
+unit: avanzados
+entityType: AdvancedTheoryExercise
+provenance: advanced_theory_example
+priority: importante
+difficulty: 3
+origin: "Teoría Avanzada — Sección 16, Ejercicio Propuesto de Clase 1 (Clases 21–22)"
+isParcial: false
+relatedResourceIds:
+  - tda-slide-21-algoritmos-de-aproximacion-i
+  - tda-slide-22-algoritmos-de-aproximacion-ii
+  - tda-guia-08-aproximados
+legacyPage: teoria-avanzados.html
+legacyAnchor: "#ejercicios-clase"
+---
+
+## Enunciado oficial
+
+Dado un conjunto $S$ de números positivos, encontrar una partición de $S$ en dos subconjuntos $P_1$ y $P_2$ tal que el máximo de las sumas sea el mínimo posible.
+
+*Algoritmo propuesto:* Inicializar $P_1 = \emptyset$ y $P_2 = \emptyset$. Para cada elemento $s \in S$, agregarlo al conjunto que tenga menor suma hasta el momento. Demostrar que es una 2-aproximación.
+
+## Demostración Formal
+
+1. Sea $W = \sum_{s \in S} s$. En cualquier partición, la suma total es $W$, por lo que el óptimo $OPT$ cumple:
+
+$$
+OPT \ge \frac{W}{2} = \frac{1}{2} \sum_{s \in S} s \quad (\text{Cota A})
+$$
+
+2. Además, el elemento más grande debe estar en alguna de las particiones, por lo que:
+
+$$
+OPT \ge \max_{s \in S} s \quad (\text{Cota B})
+$$
+
+3. Supongamos sin pérdida de generalidad que $P_1$ termina con la mayor suma $S(P_1) \ge S(P_2)$. Sea $s^*$ el último elemento agregado a $P_1$. En el momento en que se le asignó $s^*$, $P_1$ tenía menor o igual suma que $P_2$:
+
+$$
+S(P_1) - s^* \le S(P_2)
+$$
+
+4. Sumando $S(P_1) - s^*$ a ambos lados:
+
+$$
+2(S(P_1) - s^*) \le S(P_1) - s^* + S(P_2) \le W \implies S(P_1) - s^* \le \frac{W}{2} \le OPT
+$$
+
+5. Despejando y aplicando la Cota B ($s^* \le OPT$):
+
+$$
+S(P_1) \le \frac{W}{2} + s^* \le OPT + OPT = \mathbf{2 \cdot OPT}
+$$
+
+6. **Conclusión:** El algoritmo voraz es garantizadamente una **2-aproximación**. $\blacksquare$

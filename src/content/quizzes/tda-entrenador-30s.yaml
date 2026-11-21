@@ -1,0 +1,150 @@
+schemaVersion: "1.0.0"
+quizId: tda-entrenador-30s
+courseId: tda
+title: "Entrenador Interactivo: Reconocimiento en 30 Segundos"
+provenance: interactive_widget
+timeGoalSeconds: 30
+passThresholdPercent: 75
+options:
+  - key: dyc
+    label: "División y Conquista"
+    icon: "🔷"
+  - key: greedy
+    label: "Greedy (Voraz)"
+    icon: "🔶"
+  - key: backtracking
+    label: "Backtracking & B&B"
+    icon: "🟣"
+  - key: dp
+    label: "Programación Dinámica"
+    icon: "🟢"
+  - key: pl
+    label: "Programación Lineal (PLI)"
+    icon: "🔵"
+  - key: flujo
+    label: "Redes de Flujo"
+    icon: "🔴"
+  - key: reducciones
+    label: "Reducciones NP-C"
+    icon: "🟡"
+questions:
+  - id: q-01
+    prompt: "Dado un número entero positivo K, determinar la mínima cantidad de operaciones necesarias para llegar desde 0 hasta K, sabiendo que las únicas operaciones permitidas son sumar 1 o duplicar el valor actual."
+    answer: dp
+    paradigmName: "Programación Dinámica"
+    trigger: "Subproblemas con superposición: llegar a K depende de K-1 o K/2. Ecuación OPT(x) = 1 + min(OPT(x-1), OPT(x/2)). Es DP clásico de caminos mínimos en DAG de estados (Parcial 2024-2-2)."
+    sourceOrigin: "Parcial 2024-2-2"
+  - id: q-02
+    prompt: "Se tienen N solicitudes de mafias para operar en tramos de ruta costera [s_i, f_i]. Dos tramos no pueden superponerse. Se desea otorgar la máxima cantidad de permisos sin conflictos."
+    answer: greedy
+    paradigmName: "Greedy (Voraz)"
+    trigger: "Interval Scheduling sin pesos: se resuelve vorazmente ordenando por tiempo de finalización más temprano (f_i). Optimalidad demostrada por Greedy Stays Ahead (Parcial 2024-2-2, Arnook)."
+    sourceOrigin: "Parcial 2024-2-2"
+  - id: q-03
+    prompt: "Dado un entero n, encontrar cuatro enteros w, x, y, z >= 0 tales que n = w² + x² + y² + z². Si hay múltiples soluciones, retornar una con estructuras de poda temprana por cotas."
+    answer: backtracking
+    paradigmName: "Backtracking & B&B"
+    trigger: "Búsqueda exhaustiva en espacio de estados con podas por cotas numéricas (w² <= n). Teorema de los 4 cuadrados de Lagrange (Parcial 2024-2-1)."
+    sourceOrigin: "Parcial 2024-2-1"
+  - id: q-04
+    prompt: "Demostrar formalmente que el problema de decidir si un grafo G tiene un conjunto dominante de tamaño a lo sumo k (Dominating Set) es NP-Completo, sabiendo que Vertex Cover es NP-Completo."
+    answer: reducciones
+    paradigmName: "Reducciones NP-C"
+    trigger: "Consigna explícita: 'Demostrar que X es NP-Completo'. Requiere el esquema de 4 pasos: Verificador en NP + Problema conocido VC <=_P DS + Transformación de grafo + Demostración ida y vuelta (Parcial 2024-2-2 y 2024-2-3)."
+    sourceOrigin: "Parcial 2024-2-2 / 2024-2-3"
+  - id: q-05
+    prompt: "Un hospital dispone de M médicos y P pacientes. Cada médico tiene turnos disponibles y cada paciente tiene turnos compatibles. Determinar la asignación que maximice las citas sin superposición."
+    answer: flujo
+    paradigmName: "Redes de Flujo"
+    trigger: "Matching bipartito con capacidades unitarias: modelar red en 4 capas s -> Pacientes -> Turnos (m, h) -> t y resolver con Edmonds-Karp por Teorema de Integralidad (Parcial 2024-2-2)."
+    sourceOrigin: "Parcial 2024-2-2"
+  - id: q-06
+    prompt: "Dada una grilla de comunidades, se desea decidir en qué celdas instalar antenas para cubrir al menos el 70% de comunidades con costo mínimo, indicando cantidad de variables y restricciones."
+    answer: pl
+    paradigmName: "Programación Lineal (PLI)"
+    trigger: "Consigna: 'Formular un modelo matemático con variables y restricciones'. Es Set Cover formulado como Programación Lineal Entera con variables binarias x_i in {0, 1} (Parcial 2024-2-3)."
+    sourceOrigin: "Parcial 2024-2-3"
+  - id: q-07
+    prompt: "Dadas dos matrices cuadradas de n x n, multiplicarlas particionando en 4 bloques de n/2 x n/2 y deduciendo la complejidad formal con el Teorema Maestro."
+    answer: dyc
+    paradigmName: "División y Conquista"
+    trigger: "Partición recursiva en subproblemas disjuntos de tamaño n/b y aplicación del Teorema Maestro T(n) = 8·T(n/2) + Θ(n²) = Θ(n³) (Parcial 2025-1-2)."
+    sourceOrigin: "Parcial 2025-1-2"
+  - id: q-08
+    prompt: "Juan el Vago recibe ofertas de changas diarias v_i. Si trabaja el día i, debe descansar obligatoriamente el día i+1. Maximizar su beneficio total."
+    answer: dp
+    paradigmName: "Programación Dinámica"
+    trigger: "Subproblemas dependientes con exclusión de días adyacentes: OPT(i) = max(OPT(i-1), OPT(i-2) + v_i). (Guía 04, Ej 4)."
+    sourceOrigin: "Guía 04, Ej 4"
+  - id: q-09
+    prompt: "Dada una red energética con generadores (oferta), ciudades (demanda) y líneas de transmisión con capacidades máximas, determinar el balance óptimo y los cuellos de botella."
+    answer: flujo
+    paradigmName: "Redes de Flujo"
+    trigger: "Ford-Fulkerson / Edmonds-Karp con super-fuente y super-sumidero para balancear múltiples fuentes y sumideros con capacidades y análisis de Corte Mínimo (Parcial 2025-1-1)."
+    sourceOrigin: "Parcial 2025-1-1"
+  - id: q-10
+    prompt: "Un cadete debe repartir encomiendas recorriendo n ciudades y regresar al punto de partida. Demostrar que este problema no es más fácil que Ciclo Hamiltoniano."
+    answer: reducciones
+    paradigmName: "Reducciones NP-C"
+    trigger: "Reducción polinomial de Ciclo Hamiltoniano a TSP (Problema del Viajante) con grafo completo y pesos {1, 2} con cota k = n (Parcial 2025-1-1, Marco el cadete)."
+    sourceOrigin: "Parcial 2025-1-1"
+  - id: q-11
+    prompt: "Ubicar 8 reinas en un tablero de ajedrez sin que se ataquen, verificando conflictos de columna y diagonales en O(1) con arreglos booleanos."
+    answer: backtracking
+    paradigmName: "Backtracking & B&B"
+    trigger: "Exploración exhaustiva de tablero con control de factibilidad O(1) mediante arreglos auxiliares y vuelta atrás del estado (Parcial 2025-1-2)."
+    sourceOrigin: "Parcial 2025-1-2"
+  - id: q-12
+    prompt: "Formatear un párrafo de palabras minimizando la suma de cubos/cuadrados de espacios sobrantes al final de cada línea (Word Wrap / Knuth-Plass)."
+    answer: dp
+    paradigmName: "Programación Dinámica"
+    trigger: "La elección del corte de palabras en la línea actual define la longitud de los renglones restantes: OPT(i) = min_{j >= i} (costo(i, j) + OPT(j+1)) (Parcial 2024-2-3)."
+    sourceOrigin: "Parcial 2024-2-3"
+  - id: q-13
+    prompt: "Dado un arreglo donde no hay adyacentes iguales, encontrar un elemento pico (mayor a sus vecinos) en tiempo O(log n)."
+    answer: dyc
+    paradigmName: "División y Conquista"
+    trigger: "Búsqueda binaria sobre la pendiente local: comparar A[m] con A[m+1] descartando la mitad del arreglo en cada paso en O(log n) (Guía 01, Ej 4)."
+    sourceOrigin: "Guía 01, Ej 4"
+  - id: q-14
+    prompt: "Dadas n tareas con tiempos de procesamiento y fechas límite d_i, ordenar la secuencia para minimizar la latencia máxima L = max(0, f_i - d_i)."
+    answer: greedy
+    paradigmName: "Greedy (Voraz)"
+    trigger: "Earliest Deadline First (EDF): ordenar por fecha de entrega más temprana d_i. Se demuestra óptimo por argumento de intercambio de inversiones adyacentes (Guía 02, Ej 9)."
+    sourceOrigin: "Guía 02, Ej 9"
+  - id: q-15
+    prompt: "Se tienen n objetos indivisibles con pesos w_i y valores v_i, y una mochila de capacidad máxima W. Encontrar la combinación de máximo valor respetando la capacidad entera."
+    answer: dp
+    paradigmName: "Programación Dinámica"
+    trigger: "Mochila 0-1: subestructura óptima con superposición de subproblemas OPT(i, w). Requiere tabla (n+1) x (W+1) en O(n · W) pseudo-polinomial (Ejercicio 78)."
+    sourceOrigin: "Ejercicio 78"
+  - id: q-16
+    prompt: "Dado un conjunto de n ciudades con matriz de distancias métricas, hallar un circuito cerrado que visite todas las ciudades con costo garantizado a lo sumo el doble del óptimo."
+    answer: greedy
+    paradigmName: "Algoritmo de Aproximación (MST + Preorden)"
+    trigger: "2-Aproximación de TSP Métrico: calcular Árbol Generador Mínimo (MST) con Prim o Kruskal y recorrer en preorden tomando atajos por desigualdad triangular (Ejercicio 79)."
+    sourceOrigin: "Ejercicio 79"
+  - id: q-17
+    prompt: "Dado un arreglo de números enteros (positivos y negativos), encontrar el subarreglo contiguo cuya suma de elementos sea máxima, partiendo el arreglo a la mitad y analizando el cruce central."
+    answer: dyc
+    paradigmName: "División y Conquista"
+    trigger: "Subarreglo de Suma Máxima por División y Conquista: el óptimo está en la mitad izquierda, mitad derecha o cruza el centro expandiendo desde m hacia ambos lados. Recurrencia T(n) = 2T(n/2) + O(n) = O(n log n) (Parcial 2026-2-1)."
+    sourceOrigin: "Parcial 2026-2-1"
+  - id: q-18
+    prompt: "Dada una matriz que representa un laberinto con paredes, trampas y una celda con un tesoro, encontrar un camino válido desde la entrada hasta el tesoro sin pasar dos veces por la misma celda."
+    answer: backtracking
+    paradigmName: "Backtracking & B&B"
+    trigger: "Búsqueda de camino en grilla/laberinto con restricciones de celdas visitadas: exploración exhaustiva DFS con marcado de visitados y vuelta atrás (desmarcado) al retroceder (Parcial 2026-2-1)."
+    sourceOrigin: "Parcial 2026-2-1"
+  - id: q-19
+    prompt: "Un sistema de transporte recorre N estaciones en línea recta con costos de peaje c_i en cada estación. El vehículo tiene una autonomía que le permite saltar a la estación i+1 o i+2. Minimizar el costo total para llegar a la estación N."
+    answer: dp
+    paradigmName: "Programación Dinámica"
+    trigger: "Decisiones secuenciales con superposición de subproblemas sobre prefijos de estaciones: OPT(i) = c_i + min(OPT(i-1), OPT(i-2)) en tiempo O(N) (Parcial 2026-2-1)."
+    sourceOrigin: "Parcial 2026-2-1"
+  - id: q-20
+    prompt: "En una jornada electoral se deben trasladar urnas desde múltiples centros de votación hacia la sede central del CNE a través de rutas con capacidades máximas de transporte seguras por hora. Determinar si es posible trasladar todas las urnas a tiempo."
+    answer: flujo
+    paradigmName: "Redes de Flujo"
+    trigger: "Transporte de múltiples orígenes a destino con capacidades en rutas: se modela con super-fuente s conectada a cada centro de votación con capacidad igual a sus urnas y se verifica si el Flujo Máximo hacia el CNE satura la oferta total (Parcial 2026-2-1)."
+    sourceOrigin: "Parcial 2026-2-1"

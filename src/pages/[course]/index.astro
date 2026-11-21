@@ -1,0 +1,183 @@
+---
+import { getCollection } from "astro:content";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  return courses.map((course) => ({
+    params: { course: course.data.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const courseId = course.data.id;
+
+const resourceManifests = await getCollection(
+  "resources",
+  (entry) => entry.data.courseId === courseId,
+);
+const assessmentManifests = await getCollection(
+  "assessments",
+  (entry) => entry.data.courseId === courseId,
+);
+const quizzes = await getCollection(
+  "quizzes",
+  (entry) => entry.data.courseId === courseId,
+);
+const exercises = await getCollection(
+  "exercises",
+  (entry) => entry.data.courseId === courseId,
+);
+const docs = await getCollection(
+  "docs",
+  (entry) => entry.data.courseId === courseId,
+);
+
+const totalResources = resourceManifests.reduce(
+  (acc, item) => acc + item.data.resources.length,
+  0,
+);
+const totalExams = assessmentManifests.reduce(
+  (acc, item) => acc + item.data.exams.length,
+  0,
+);
+const totalPracticalWorks = assessmentManifests.reduce(
+  (acc, item) => acc + item.data.practicalWorks.length,
+  0,
+);
+const allCourseResources = resourceManifests.flatMap((item) => item.data.resources);
+const firstPdfResource =
+  allCourseResources.find((res) => Boolean(res.pdfMetadata)) ?? allCourseResources[0];
+const sampleMaterialUrl = firstPdfResource
+  ? buildMaterialViewerUrl(courseId, firstPdfResource.resourceId, 1)
+  : withBase(`/${courseId}/materiales/`);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{course.data.title} — {course.data.institution}</title>
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+        line-height: 1.6;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+      a {
+        color: #1d4ed8;
+      }
+      a:focus-visible {
+        outline: 3px solid #1d4ed8;
+        outline-offset: 2px;
+      }
+      .panel {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+      }
+      .unit-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 0.75rem;
+        list-style: none;
+        padding: 0;
+        margin: 0.75rem 0 0;
+      }
+      .unit-item {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav aria-label="Ruta de navegación">
+        <a href={withBase("/")}>← Volver al Hub de Materias</a>
+      </nav>
+
+      <header style="margin-top: 1rem;">
+        <p style="font-size: 0.875rem; color: #334155; margin: 0;">
+          {course.data.institution} · {course.data.codes.join(" / ")} ·{" "}
+          {course.data.chair}
+        </p>
+        <h1 style="margin: 0.35rem 0 0.5rem;">{course.data.title}</h1>
+      </header>
+
+      <section class="panel" aria-label="Resumen de colecciones validadas">
+        <h2 style="margin-top: 0;">Colecciones Content Layer Verificadas</h2>
+        <ul>
+          <li>Recursos registrados: <strong>{totalResources}</strong></li>
+          <li>Exámenes parciales: <strong>{totalExams}</strong> · Trabajos prácticos: <strong>{totalPracticalWorks}</strong></li>
+          <li>Quizzes activos: <strong>{quizzes.length}</strong> ({quizzes[0]?.data.questions.length ?? 0} preguntas)</li>
+          <li>URL canónica de ejemplo (ADR-004): <code>{sampleMaterialUrl}</code></li>
+        </ul>
+      </section>
+
+      <section class="panel" aria-label="Ejercicios semilla MDX">
+        <h2 style="margin-top: 0;">Ejercicios Semilla Validados (MDX + KaTeX)</h2>
+        <ul>
+          {
+            exercises.map((ex) => (
+              <li>
+                <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
+                  {ex.data.number !== null
+                    ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
+                    : `${ex.data.title} (${ex.data.provenance})`}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="panel" aria-label="Apuntes y resúmenes MDX">
+        <h2 style="margin-top: 0;">Apuntes y Resúmenes Validados</h2>
+        <ul>
+          {
+            docs.map((doc) => (
+              <li>
+                <a href={withBase(`/${courseId}/docs/${doc.data.docId}/`)}>
+                  {doc.data.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="panel" aria-label="Unidades de la materia">
+        <h2 style="margin-top: 0;">Unidades Académicas ({course.data.units.length})</h2>
+        <ul class="unit-list">
+          {
+            course.data.units
+              .slice()
+              .sort((a, b) => a.order - b.order)
+              .map((unit) => (
+                <li class="unit-item">
+                  <strong>{unit.order}. {unit.name}</strong>
+                  <div style="font-size: 0.875rem; color: #334155;">
+                    Slug: <code>{unit.slug}</code> · {unit.exerciseCount} ej.
+                  </div>
+                </li>
+              ))
+          }
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

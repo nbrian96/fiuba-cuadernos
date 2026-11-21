@@ -1,0 +1,108 @@
+---
+import { getCollection, render } from "astro:content";
+import "katex/dist/katex.min.css";
+import { withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const exercises = await getCollection("exercises");
+  return exercises.map((entry) => ({
+    params: {
+      course: entry.data.courseId,
+      id: entry.data.id,
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{entry.data.title} — {entry.data.courseId.toUpperCase()}</title>
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+        line-height: 1.65;
+      }
+      main {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+      a {
+        color: #1d4ed8;
+      }
+      a:focus-visible {
+        outline: 3px solid #1d4ed8;
+        outline-offset: 2px;
+      }
+      article {
+        margin-top: 1.25rem;
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 1.5rem;
+      }
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+      .pill {
+        background-color: #e2e8f0;
+        color: #0f172a;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+      pre {
+        background-color: #0f172a;
+        color: #f8fafc;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav aria-label="Ruta de navegación">
+        <a href={withBase("/")}>Hub</a> /{" "}
+        <a href={withBase(`/${entry.data.courseId}/`)}>
+          {entry.data.courseId.toUpperCase()}
+        </a>
+      </nav>
+
+      <article>
+        <div class="meta-row">
+          <span class="pill">{entry.data.entityType}</span>
+          <span class="pill">{entry.data.provenance}</span>
+          <span class="pill">Unidad: {entry.data.unit}</span>
+          <span class="pill">Dificultad: {entry.data.difficulty}/5</span>
+        </div>
+        <h1 style="margin-top: 0;">
+          {
+            entry.data.number !== null
+              ? `Ejercicio ${entry.data.number}: ${entry.data.title}`
+              : entry.data.title
+          }
+        </h1>
+        <p style="color: #334155; font-size: 0.92rem;">
+          <strong>Origen:</strong> {entry.data.origin}
+        </p>
+        <Content />
+      </article>
+    </main>
+  </body>
+</html>

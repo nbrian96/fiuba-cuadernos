@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "tda",
+  "title": "Teoría de Algoritmos",
+  "shortTitle": "TDA FIUBA",
+  "codes": [
+    "TB024",
+    "75.29",
+    "95.06"
+  ],
+  "institution": "FIUBA",
+  "chair": "Cátedra Echevarría (2024–2026)",
+  "units": [
+    {
+      "slug": "dyc",
+      "name": "División y Conquista",
+      "order": 1,
+      "exerciseCount": 13,
+      "inCatalog": true,
+      "legacyRoute": "dyc.html"
+    },
+    {
+      "slug": "greedy",
+      "name": "Algoritmos Greedy / Voraces",
+      "order": 2,
+      "exerciseCount": 27,
+      "inCatalog": true,
+      "legacyRoute": "greedy.html"
+    },
+    {
+      "slug": "backtracking",
+      "name": "Backtracking y Branch & Bound",
+      "order": 3,
+      "exerciseCount": 15,
+      "inCatalog": true,
+      "legacyRoute": "backtracking.html"
+    },
+    {
+      "slug": "dp",
+      "name": "Programación Dinámica",
+      "order": 4,
+      "exerciseCount": 8,
+      "inCatalog": true,
+      "legacyRoute": "dp.html"
+    },
+    {
+      "slug": "pl",
+      "name": "Programación Lineal y PLI",
+      "order": 5,
+      "exerciseCount": 7,
+      "inCatalog": true,
+      "legacyRoute": "pl.html"
+    },
+    {
+      "slug": "flujo",
+      "name": "Redes de Flujo",
+      "order": 6,
+      "exerciseCount": 5,
+      "inCatalog": true,
+      "legacyRoute": "flujo.html"
+    },
+    {
+      "slug": "reducciones",
+      "name": "Reducciones y NP-Completitud",
+      "order": 7,
+      "exerciseCount": 5,
+      "inCatalog": true,
+      "legacyRoute": "reducciones.html"
+    },
+    {
+      "slug": "integradores",
+      "name": "Problemas Integradores y Multi-Paradigma",
+      "order": 8,
+      "exerciseCount": 5,
+      "inCatalog": true,
+      "legacyRoute": "integradores.html"
+    },
+    {
+      "slug": "avanzados",
+      "name": "Paradigmas Avanzados: Aproximación y Randomizados",
+      "order": 9,
+      "exerciseCount": 2,
+      "inCatalog": false,
+      "legacyRoute": "teoria-avanzados.html"
+    }
+  ],
+  "views": [
+    {
+      "slug": "todos",
+      "name": "Todos los Ejercicios",
+      "exerciseCount": 85,
+      "legacyRoute": "todos.html",
+      "targetRoute": "/tda/ejercicios/"
+    },
+    {
+      "slug": "parciales",
+      "name": "Exámenes Parciales Oficiales",
+      "exerciseCount": 35,
+      "legacyRoute": "parciales.html",
+      "targetRoute": "/tda/parciales/"
+    }
+  ],
+  "stats": {
+    "physicalFiles": 96,
+    "pdfs": 49,
+    "nonPdfs": 47,
+    "catalogExercises": 85,
+    "parcialExercises": 35,
+    "advancedExercises": 2,
+    "interactiveWidgets": 6,
+    "elaboratedNotes": 2,
+    "elaboratedSummaries": 3,
+    "checklistItems": 11,
+    "trainerQuestions": 20
+  },
+  "legacyRoutes": {
+    "index.html": "/tda/",
+    "todos.html": "/tda/ejercicios/",
+    "parciales.html": "/tda/parciales/",
+    "dyc.html": "/tda/unidad/dyc/",
+    "greedy.html": "/tda/unidad/greedy/",
+    "backtracking.html": "/tda/unidad/backtracking/",
+    "dp.html": "/tda/unidad/dp/",
+    "pl.html": "/tda/unidad/pl/",
+    "flujo.html": "/tda/unidad/flujo/",
+    "reducciones.html": "/tda/unidad/reducciones/",
+    "integradores.html": "/tda/unidad/integradores/",
+    "teoria-avanzados.html": "/tda/avanzados/"
+  },
+  "legacyStorageKeys": [
+    "tda_theme",
+    "tda_mastered_exercises",
+    "tda_exam_checklist",
+    "tda_study_mode"
+  ]
+}
