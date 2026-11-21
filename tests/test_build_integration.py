@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 import unittest
 import sys
+from urllib.parse import unquote, urlsplit
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILDER_DIR = os.path.join(BASE_DIR, "builder")
@@ -17,6 +18,50 @@ if BUILDER_DIR not in sys.path:
 import build_manual
 import html_interactive_builder
 import sec11_errores_checklist
+
+
+def _resolve_local_link_case_sensitive(base_dir, source_file, raw_target):
+    """Valida segmento por segmento (case-sensitive) enlaces locales en HTML/Markdown."""
+    target = raw_target.strip()
+    if not target or target.startswith("#") or target.startswith("//"):
+        return True
+
+    parsed = urlsplit(target)
+    if parsed.scheme:
+        return True
+
+    path_str = unquote(parsed.path)
+    if not path_str:
+        return True
+
+    base_dir_abs = os.path.abspath(base_dir)
+    if path_str.startswith("/"):
+        stack = []
+        raw_segs = path_str.lstrip("/").split("/")
+    else:
+        rel_dir = os.path.relpath(os.path.dirname(os.path.abspath(source_file)), base_dir_abs)
+        stack = [] if rel_dir == "." else rel_dir.replace("\\", "/").split("/")
+        raw_segs = path_str.split("/")
+
+    for seg in raw_segs:
+        if seg in ("", "."):
+            continue
+        if seg == "..":
+            if not stack:
+                return False
+            stack.pop()
+        else:
+            stack.append(seg)
+
+    cur = base_dir_abs
+    for seg in stack:
+        if not os.path.isdir(cur) or seg not in os.listdir(cur):
+            return False
+        cur = os.path.join(cur, seg)
+
+    if path_str.endswith("/"):
+        return os.path.isdir(cur)
+    return os.path.exists(cur)
 
 
 class TestBuildIntegration(unittest.TestCase):
@@ -393,6 +438,89 @@ class TestBuildIntegration(unittest.TestCase):
         self.assertIn('id="trainerTotalQuestions">20<', todos_content)
         self.assertIn("85 ejercicios reales oficiales", todos_content)
         self.assertNotIn("79 ejercicios reales oficiales", todos_content)
+
+    def test_all_local_links_valid_case_sensitive_in_html_and_markdown(self):
+        """Valida segmento por segmento (case-sensitive) todos los enlaces locales en HTML y Markdown."""
+        readme_path = os.path.join(BASE_DIR, "README.md")
+
+        # Auto-verificación del validador case-sensitive
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "https://example.com/no-existe"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "#seccion"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tipo_parcial.html"))
+
+        broken_links = []
+
+        # 1. Todos los HTML del repositorio
+        for fname in self.ALL_REPO_HTML_FILES:
+            fpath = os.path.join(BASE_DIR, fname)
+            with open(fpath, "r", encoding="utf-8") as f:
+                raw_html = f.read()
+            clean_html = re.sub(r"<script\b[\s\S]*?</script>", "", raw_html, flags=re.IGNORECASE)
+            clean_html = re.sub(r"<style\b[\s\S]*?</style>", "", clean_html, flags=re.IGNORECASE)
+            for m in re.finditer(r'(?:href|src)\s*=\s*"([^"]*)"', clean_html):
+                target = m.group(1)
+                if not _resolve_local_link_case_sensitive(BASE_DIR, fpath, target):
+                    broken_links.append((fname, target))
+
+        # 2. Todos los HTML compilados en temp_dir
+        for fname in self.ALL_REPO_HTML_FILES:
+            fpath = os.path.join(self.temp_dir, fname)
+            with open(fpath, "r", encoding="utf-8") as f:
+                raw_html = f.read()
+            clean_html = re.sub(r"<script\b[\s\S]*?</script>", "", raw_html, flags=re.IGNORECASE)
+            clean_html = re.sub(r"<style\b[\s\S]*?</style>", "", clean_html, flags=re.IGNORECASE)
+            for m in re.finditer(r'(?:href|src)\s*=\s*"([^"]*)"', clean_html):
+                target = m.group(1)
+                parsed_path = unquote(urlsplit(target.strip()).path)
+                is_generated = parsed_path.endswith(".html") or parsed_path == "assets/js/catalog-bundle.js"
+                ok_in_temp = _resolve_local_link_case_sensitive(self.temp_dir, fpath, target)
+                if is_generated:
+                    ok = ok_in_temp
+                else:
+                    fake_repo_src = os.path.join(BASE_DIR, fname)
+                    ok = ok_in_temp or _resolve_local_link_case_sensitive(BASE_DIR, fake_repo_src, target)
+                if not ok:
+                    broken_links.append((f"temp_dir/{fname}", target))
+
+        # 3. Todos los archivos Markdown (.md) del repositorio
+        md_files = []
+        for root, dirs, files in os.walk(BASE_DIR):
+            dirs[:] = [d for d in sorted(dirs) if d != ".git"]
+            for fn in sorted(files):
+                if fn.endswith(".md"):
+                    md_files.append(os.path.join(root, fn))
+
+        for md_path in md_files:
+            rel_md = os.path.relpath(md_path, BASE_DIR).replace("\\", "/")
+            with open(md_path, "r", encoding="utf-8") as f:
+                raw_md = f.read()
+            clean_md = re.sub(r"```[\s\S]*?```", "", raw_md)
+            clean_md = re.sub(r"`[^`\n]+`", "", clean_md)
+            for m in re.finditer(r'!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)', clean_md):
+                target = m.group(1)
+                if not _resolve_local_link_case_sensitive(BASE_DIR, md_path, target):
+                    broken_links.append((rel_md, target))
+            for m in re.finditer(r'(?:href|src)\s*=\s*"([^"]*)"', clean_md):
+                target = m.group(1)
+                if not _resolve_local_link_case_sensitive(BASE_DIR, md_path, target):
+                    broken_links.append((rel_md, target))
+
+        self.assertEqual(broken_links, [], f"Se detectaron enlaces locales rotos (case-sensitive): {broken_links}")
+
+        # Verificaciones explícitas de README.md
+        with open(readme_path, "r", encoding="utf-8") as f:
+            readme_text = f.read()
+        self.assertNotIn("tipo_parcial.html", readme_text)
+        self.assertIn("parciales.html", readme_text)
+        self.assertIn("todos.html", readme_text)
+        self.assertIn("teoria-avanzados.html", readme_text)
+        self.assertIn("85", readme_text)
+        self.assertIn("35", readme_text)
+        self.assertIn("TP0_Nelson_Avila_100244.pdf", readme_text)
 
 
 if __name__ == "__main__":
