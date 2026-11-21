@@ -38,8 +38,8 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 - **`ADR-002` — Layouts Astro propios unificados (Opción A aprobada):** Toda la plataforma (Hub, Dashboard, Ejercicios, Simuladores, Materiales y Apuntes `/docs/`) se construye con Layouts Astro propios y un único Design System WCAG 2.1 AA, descartando acoplar Starlight.
 - **`ADR-004` — Indexación Pagefind de PDFs con Node API (Opción A aprobada):** Se usa `index.addCustomRecord()` en `astro:build:done` (descartando `data-pagefind-body` en HTML) con URL canónica `{BASE_URL}/{course}/materiales/{resourceId}?page={N}`, validación previa con un prototipo de 4 PDFs representativos antes de escalar a los 49 PDFs, y fallback a metadatos YAML para PDFs sin capa de texto usable.
 
-### 2.2. Decisiones Pendientes para la Etapa 1B
-- Todas las decisiones arquitectónicas previas a la Etapa 1B (`ADR-001` a `ADR-004`) fueron confirmadas y quedan listas para formalizarse en `docs/architecture/adr-001..004.md`.
+### 2.2. Estado de Decisiones para la Etapa 1B
+- Todas las decisiones arquitectónicas (`ADR-001` a `ADR-004`) fueron confirmadas y formalizadas en [docs/architecture/](architecture/README.md), junto con los contratos en [domain-schemas.md](contracts/domain-schemas.md) y [local-storage-migration.md](contracts/local-storage-migration.md).
 
 ---
 
@@ -64,7 +64,7 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 | **Evaluación TP0 y Checklist Oficial (`OfficialTPAssessment`)** | `official_source` | **1 TP (`TP0`)** | `TP0/TP00-2026-2c.pdf` + `TP0/checklist.pdf` |
 | **Entrega Resuelta Autorizada (`ElaboratedTPSubmission`)** | `elaborated_submission` | **1 entrega (`TP0`)** | `TP0/TP0_Nelson_Avila_100244.pdf`, `cuartetos.py`, `cuartetos_malo.py`, `grafico_tiempos.png` |
 | **Prácticas de Código (`CodePractice`)** | `exam_prep_and_practice` | **20** (`1` resuelta + `19` `TODO`) | `Practicas/01_*`..`05_*` + `Practicas/README.md` |
-| **Apuntes Maestros (`ElaboratedNote`)** | `elaborated_notes` | **2 apuntes** | `problema_mochila_y_greedy.md` + 16 secciones de `teoria-avanzados.html` |
+| **Apuntes Maestros (`ElaboratedNote`)** | `elaborated_notes` | **2 apuntes** | `problema_mochila_y_greedy.md` + `17` bloques (`intro` + `16` secciones temáticas) de `teoria-avanzados.html` |
 | **Resúmenes y Checklist Pre-Parcial (`ElaboratedSummary`)** | `elaborated_summary` | **3 resúmenes** | `sec01` (matriz), `sec11` (**Checklist Interactiva de 11 ítems**), Drawer de Fórmulas |
 | **Ejercicios del Catálogo (`CatalogExercise`)** | `elaborated_solution` | **85 ejercicios** | `sec02_dyc.py` (`13`), `sec03`/`sec03b` (`27`), `sec04` (`15`), `sec05` (`8`), `sec06` (`7`), `sec07` (`5`), `sec08` (`5`), `sec09` (`5`) |
 | **Ejercicios Teoría Avanzada (`AdvancedTheoryExercise`)** | `advanced_theory_example` | **2 diferenciados** | `tda-adv-aprox-2partition` y `tda-adv-rand-nreinas` en `teoria-avanzados.html` |
@@ -134,4 +134,31 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 | 1A.6 | `77f5d02` | `build(1A.6): regenerar artefactos HTML y bundle con navbar unificado e IDs chk_ deterministicos` | `todos.html`, `dyc.html`..`parciales.html`, `assets/js/catalog-bundle.js` |
 | 1A.7 | `b673036` | `fix(1A.7): corregir diff-btn dark, KaTeX dinamico en simuladores, Mermaid movil y favicon` | `assets/css/styles.css`, `builder/html_interactive_builder.py`, `index.html`, `teoria-avanzados.html`, `todos.html`..`parciales.html` |
 
-> **Cierre QA Etapa 1A (`1A.7` — Cerrada):** `python run_tests.py` (`46/46 OK`, `0` mutaciones), idempotencia SHA-256 verificada (`13/13` artefactos entre `PYTHONHASHSEED=1` y `999999`), y auditoría computada en Chrome Headless vía CDP + navegador real (`0` errores JS, `0` HTTP 404, estilos `getComputedStyle` conformes a WCAG 2.1 AA en Light/Dark, ruteo `ej-80`, 5 simuladores con KaTeX dinámico y Mermaid móvil sin recorte izquierdo).
+> **Cierre QA Etapa 1A (`1A.7` — Cerrada):** `python run_tests.py` (`46/46 OK`, `0` mutaciones), idempotencia SHA-256 verificada (`13/13` artefactos entre `PYTHONHASHSEED=1` y `999999`), y auditoría computada en Chrome Headless vía CDP + navegador real (`0` errores JS, `0` HTTP 404, estilos `getComputedStyle` conformes a WCAG 2.1 AA en Light/Dark, ruteo `ej-80`, 5 simuladores con KaTeX dinámico y Mermaid móvil sin recorte izquierdo). Publicado en `origin/master` (`a22d98c..7bda802`).
+
+---
+
+## 8. Plan de Ejecución de la Etapa 1B (Modelo Académico, Contratos y ADRs)
+
+> **Regla de Alcance:** La Etapa 1B define la arquitectura formal, contratos declarativos y manifiestos verificables sin instalar ni crear aún código Astro/npm ni modificar los 12 HTML legacy, `assets/`, `builder/` ni `TP0/`.
+
+### Unidades de Trabajo `1B.1` a `1B.5`
+
+| Unidad | Alcance Técnico Detallado | Entregables | Pruebas y Criterios de Aceptación |
+| :-: | :--- | :--- | :--- |
+| **1B.1** | **Formalización de ADRs (`ADR-001` a `ADR-004`):** Documentar contexto, opciones comparadas, decisión, trade-offs y gatillos de revisión para Astro Core, Layouts propios unificados WCAG 2.1 AA (Opción A), modelo de procedencia + preservación `TP0/` + `1..85` + `2` avanzados, y Pagefind Node API (`addCustomRecord()`) con prototipo de 4 PDFs y fallback a metadatos. | [architecture/README.md](architecture/README.md), [adr-001](architecture/adr-001-astro-core.md), [adr-002](architecture/adr-002-unified-astro-layouts.md), [adr-003](architecture/adr-003-academic-content-model.md), [adr-004](architecture/adr-004-pagefind-pdf-indexing.md) | 4 ADRs en estado `Accepted` con las 7 secciones obligatorias y mención exacta de los 4 PDFs prototipo y `{BASE_URL}/{course}/materiales/{resourceId}?page={N}`. |
+| **1B.2** | **Contratos de dominio y migración `localStorage`:** Especificar los 9 valores de `provenance`, 13 `EntityType`, esquemas de `CourseManifest`, `ResourceManifest`, `AssessmentManifest`, `QuizManifest`, `ExerciseFrontmatter`, `DocFrontmatter`, mapa canónico de rutas + compatibilidad de los 12 HTML legacy, y migración no destructiva e idempotente de las 4 claves `tda_*` a `mc:v1:{course}:*`. | [domain-schemas.md](contracts/domain-schemas.md), [local-storage-migration.md](contracts/local-storage-migration.md) | Cobertura completa de campos Zod, los 12 HTML legacy, las 4 claves `tda_*` y matriz de casos de borde contractuales. |
+| **1B.3** | **Manifiestos verificables de TDA (`JSON`):** Generar manifiestos trazables y auditables desde el disco y módulos `builder/` cubriendo los `96` archivos (`49` PDFs con `pageCount`/`textChars`/`emptyPages` medidos con `pypdf`, `4` PDFs prototipo, `6` archivos de `TP0/` con `preservedIntact: true`, `1` práctica resuelta + `19` `TODO` + `README.md`), `85` ejercicios + `2` avanzados, `7` parciales + `2` bloques `TP0`, `6` widgets, `2` apuntes (`17` secciones avanzadas), `3` resúmenes y `11` IDs `chk_<16_hex>`. | [course.json](manifests/tda/course.json), [resources.json](manifests/tda/resources.json), [assessments.json](manifests/tda/assessments.json), [exercises-index.json](manifests/tda/exercises-index.json), [interactive-and-notes.json](manifests/tda/interactive-and-notes.json) | Reconciliación exacta 96/96 archivos (*case-sensitive*), 49/49 PDFs, 85/85 ejercicios + 2 avanzados, 35/35 parciales, 11/11 `chk_` IDs y 20 preguntas de entrenador. |
+| **1B.4** | **Suite de pruebas QA y casos negativos de Etapa 1B:** Validadores puros + pruebas de paridad 1-a-1 en modo 100% read-only (compatible con `WorkspaceIntegrityGuard`) y cobertura de casos de borde negativos (casing inválido, `provenance` desconocido, ID duplicado/inválido, archivo faltante, rango `1..85`, desajuste de parciales). | [test_etapa1b_manifests_and_contracts.py](../tests/test_etapa1b_manifests_and_contracts.py) | `python run_tests.py` pasa al 100% incluyendo Etapa 1A (`46` tests) + Etapa 1B, con `0` mutaciones en el repositorio y `0` enlaces locales rotos. |
+| **1B.5** | **Actualización del plan, verificación y auditoría independiente:** Actualizar este documento, correr `python run_tests.py` y ejecutar revisión independiente de todos los entregables antes de solicitar aprobación de commit. | [PLAN_DE_TRABAJO.md](PLAN_DE_TRABAJO.md) | Auditoría independiente sin hallazgos críticos ni bloqueantes pendientes y `python run_tests.py` 100% en verde. |
+
+### Registro de Commits (Etapa 1B)
+
+| Unidad | SHA | Mensaje | Archivos Principales |
+| :--- | :--- | :--- | :--- |
+| `1B.1` | `c736534` | `docs(1B.1): formalizar ADR-001 a ADR-004 en docs/architecture` | `docs/architecture/README.md`, `adr-001`..`adr-004` |
+| `1B.2` | `67717b2` | `docs(1B.2): definir contratos de dominio, rutas legacy y migracion localStorage` | `docs/contracts/domain-schemas.md`, `local-storage-migration.md` |
+| `1B.3` | `f11563a` | `feat(1B.3): generar manifiestos verificables de TDA (96 archivos, 85+2 ejercicios y parciales)` | `docs/manifests/tda/*.json` (`5` archivos) |
+| `1B.4` | `f9a2378` | `test(1B.4): agregar suite QA contractual y casos negativos de Etapa 1B` | `tests/test_etapa1b_manifests_and_contracts.py` |
+
+> **Cierre QA Etapa 1B (`1B.5` — Cerrada):** `python run_tests.py` (`53/53 OK` — `46` de Etapa 1A + `7` de `test_etapa1b_manifests_and_contracts.py`, `0` mutaciones y `0` enlaces locales rotos *case-sensitive*), y auditoría independiente read-only resuelta sin hallazgos críticos ni bloqueantes pendientes. Listo para iniciar la **Etapa 2 (Infraestructura Base Astro + Zod + Vitest)**.
