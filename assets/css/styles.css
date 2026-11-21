@@ -474,6 +474,8 @@ body.dark-mode .mermaid-wrapper {
   padding: 0 !important;
   margin: 0 !important;
   min-width: min-content;
+  max-width: none;
+  overflow: visible;
 }
 
 .mermaid svg {
@@ -862,9 +864,9 @@ body.dark-mode .pill-btn.active {
 }
 
 .diff-btn.active {
-  background: var(--primary-color) !important;
-  color: #ffffff !important;
-  border-color: var(--primary-color) !important;
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
 }
 
@@ -2423,7 +2425,7 @@ body.dark-mode .warning-box {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -2625,7 +2627,8 @@ body.dark-mode .warning-box {
 
 /* Grid de Tarjetas del Portal Hub */
 .portal-hub-hero {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a8a 100%);
+  background-color: #1e293b;
+  background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a8a 100%);
   color: #ffffff;
   border-radius: var(--radius-lg);
   padding: 38px 32px;
@@ -2849,7 +2852,8 @@ body.dark-mode .site-dropdown-item.active {
 }
 
 body.dark-mode .portal-hub-hero {
-  background: linear-gradient(135deg, #090e1a 0%, #111827 50%, #1e3a8a 100%);
+  background-color: #111827;
+  background-image: linear-gradient(135deg, #090e1a 0%, #111827 50%, #1e3a8a 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
@@ -4323,14 +4327,20 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover {
   }
 
   .mermaid {
+    display: block;
     justify-content: flex-start;
     width: max-content;
     min-width: 100%;
+    max-width: none;
+    overflow: visible;
   }
 
   .mermaid svg {
+    width: auto !important;
+    min-width: 680px !important;
     max-width: none;
     height: auto;
+    display: block;
     margin: 0 auto;
   }
 
