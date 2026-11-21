@@ -6,14 +6,14 @@
 
 :root {
   --primary-color: #1a365d;
-  --primary-light: #2b6cb0;
-  --accent-color: #3182ce;
+  --primary-light: #1e40af;
+  --accent-color: #1d4ed8;
   --accent-soft: #ebf8ff;
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
   --card-bg: #ffffff;
   --text-main: #1e293b;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --border-color: #e2e8f0;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -21,11 +21,11 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --imprescindible-color: #e53e3e;
+  --imprescindible-color: #b91c1c;
   --imprescindible-bg: #fff5f5;
-  --importante-color: #d69e2e;
+  --importante-color: #92400e;
   --importante-bg: #fffaf0;
-  --mastered-color: #38a169;
+  --mastered-color: #166534;
   --mastered-bg: #f0fff4;
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'Liberation Mono', 'DejaVu Sans Mono', Consolas, 'Courier New', monospace;
@@ -468,7 +468,7 @@ body.dark-mode .mermaid-wrapper {
 
 .mermaid {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
@@ -479,6 +479,8 @@ body.dark-mode .mermaid-wrapper {
 .mermaid svg {
   max-width: 100%;
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* ==========================================================================
@@ -803,8 +805,8 @@ body.dark-mode .tool-btn.highlight-tool {
 }
 
 body.dark-mode .pill-btn.active {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
+  background: #0369a1;
+  border-color: #38bdf8;
   color: #ffffff !important;
 }
 
@@ -867,9 +869,9 @@ body.dark-mode .pill-btn.active {
 }
 
 body.dark-mode .diff-btn.active {
-  background: var(--accent-color) !important;
-  border-color: var(--accent-color) !important;
-  color: #ffffff !important;
+  background: #0369a1;
+  border-color: #38bdf8;
+  color: #ffffff;
 }
 
 /* Emergency Banner */
@@ -1012,7 +1014,8 @@ body.dark-mode .card-header {
 }
 
 body.dark-mode .exercise-pill-number {
-  background: var(--accent-color);
+  background: #0369a1;
+  color: #ffffff;
 }
 
 .exercise-title {
@@ -1539,6 +1542,16 @@ body.dark-mode .trainer-feedback.feedback-error {
 
 .btn-primary:hover {
   background: var(--primary-light);
+  color: #ffffff;
+}
+
+body.dark-mode .btn-primary {
+  background: #0369a1;
+  color: #ffffff;
+}
+
+body.dark-mode .btn-primary:hover {
+  background: #1d4ed8;
   color: #ffffff;
 }
 
@@ -2734,14 +2747,45 @@ body.dark-mode hr {
   border-top-color: rgba(255, 255, 255, 0.12);
 }
 
-body.dark-mode a {
+body.dark-mode a:not(.btn):not(.badge):not(.site-nav-link):not(.site-dropdown-item):not(.site-brand):not(.portal-card) {
   color: #38bdf8;
   text-decoration-color: rgba(56, 189, 248, 0.4);
 }
 
-body.dark-mode a:hover {
+body.dark-mode a:not(.btn):not(.badge):not(.site-nav-link):not(.site-dropdown-item):not(.site-brand):not(.portal-card):hover {
   color: #7dd3fc;
   text-decoration-color: #7dd3fc;
+}
+
+body.dark-mode .portal-hero-actions a.btn-warning,
+[data-bs-theme="dark"] .portal-hero-actions a.btn-warning {
+  background-color: #fbbf24;
+  border-color: #fbbf24;
+  color: #0f172a;
+}
+
+body.dark-mode .portal-hero-actions a.btn-warning:hover,
+[data-bs-theme="dark"] .portal-hero-actions a.btn-warning:hover {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: #0f172a;
+}
+
+body.dark-mode .portal-hero-actions a.btn-primary,
+[data-bs-theme="dark"] .portal-hero-actions a.btn-primary {
+  color: #ffffff;
+}
+
+body.dark-mode .portal-hero-actions a.btn-outline-light,
+[data-bs-theme="dark"] .portal-hero-actions a.btn-outline-light {
+  color: #f8fafc;
+  border-color: rgba(248, 250, 252, 0.7);
+}
+
+body.dark-mode .portal-hero-actions a.btn-outline-light:hover,
+[data-bs-theme="dark"] .portal-hero-actions a.btn-outline-light:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 .bg-card {
@@ -2891,7 +2935,7 @@ body.dark-mode .pill-btn:hover {
 }
 
 body.dark-mode .pill-btn.active {
-  background: #0284c7;
+  background: #0369a1;
   color: #ffffff;
   border-color: #38bdf8;
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
@@ -2910,7 +2954,7 @@ body.dark-mode .diff-btn:hover {
 }
 
 body.dark-mode .diff-btn.active {
-  background: #0284c7;
+  background: #0369a1;
   color: #ffffff;
   border-color: #38bdf8;
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
@@ -3274,6 +3318,12 @@ body.dark-mode .copy-code-btn {
 }
 
 body.dark-mode .copy-code-btn:hover {
+  background: #0369a1;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+body.dark-mode .copy-code-btn:hover {
   background: #2563eb;
   border-color: #38bdf8;
   color: #ffffff;
@@ -3569,8 +3619,6 @@ body.dark-mode .bg-success-subtle,
   color: #86efac !important;
   border: 1px solid rgba(34, 197, 94, 0.35) !important;
 }
-  border: 1px solid rgba(34, 197, 94, 0.35) !important;
-}
 
 /* 8d. Componentes Bootstrap adicionales en Dark Mode */
 body.dark-mode .card {
@@ -3723,7 +3771,7 @@ body.dark-mode .badge-portal-teoria,
 
 .badge-portal-dyc {
   background: rgba(2, 132, 199, 0.15);
-  color: #0284c7;
+  color: #0369a1;
   border: 1px solid rgba(2, 132, 199, 0.3);
 }
 body.dark-mode .badge-portal-dyc,
@@ -3735,7 +3783,7 @@ body.dark-mode .badge-portal-dyc,
 
 .badge-portal-greedy {
   background: rgba(217, 119, 6, 0.15);
-  color: #d97706;
+  color: #92400e;
   border: 1px solid rgba(217, 119, 6, 0.3);
 }
 body.dark-mode .badge-portal-greedy,
@@ -4271,6 +4319,19 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover {
     max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    text-align: left;
+  }
+
+  .mermaid {
+    justify-content: flex-start;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .mermaid svg {
+    max-width: none;
+    height: auto;
+    margin: 0 auto;
   }
 
   .custom-table {
@@ -4550,4 +4611,104 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover {
     width: 65vw;
     max-width: 600px;
   }
+}
+
+/* ==========================================================================
+   11. Accesibilidad WCAG 2.1 AA (:focus-visible y estados :disabled)
+   ========================================================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+body.dark-mode a:focus-visible,
+body.dark-mode button:focus-visible,
+body.dark-mode input:focus-visible,
+body.dark-mode select:focus-visible,
+body.dark-mode textarea:focus-visible,
+body.dark-mode summary:focus-visible,
+body.dark-mode [tabindex]:focus-visible,
+[data-bs-theme="dark"] a:focus-visible,
+[data-bs-theme="dark"] button:focus-visible,
+[data-bs-theme="dark"] input:focus-visible,
+[data-bs-theme="dark"] select:focus-visible,
+[data-bs-theme="dark"] textarea:focus-visible,
+[data-bs-theme="dark"] summary:focus-visible,
+[data-bs-theme="dark"] [tabindex]:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+.btn:disabled,
+.trainer-btn:disabled,
+.stepper-btn:disabled,
+[aria-disabled="true"] {
+  background-color: #e2e8f0;
+  color: #475569;
+  border-color: #cbd5e1;
+  opacity: 1;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+button:disabled:hover,
+.btn:disabled:hover,
+.trainer-btn:disabled:hover,
+.stepper-btn:disabled:hover,
+[aria-disabled="true"]:hover {
+  background-color: #e2e8f0;
+  color: #475569;
+  border-color: #cbd5e1;
+  box-shadow: none;
+  transform: none;
+}
+
+body.dark-mode button:disabled,
+body.dark-mode input:disabled,
+body.dark-mode select:disabled,
+body.dark-mode textarea:disabled,
+body.dark-mode .btn:disabled,
+body.dark-mode .trainer-btn:disabled,
+body.dark-mode .stepper-btn:disabled,
+body.dark-mode [aria-disabled="true"],
+[data-bs-theme="dark"] button:disabled,
+[data-bs-theme="dark"] .btn:disabled,
+[data-bs-theme="dark"] .trainer-btn:disabled,
+[data-bs-theme="dark"] .stepper-btn:disabled,
+[data-bs-theme="dark"] [aria-disabled="true"] {
+  background-color: #1e293b;
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.35);
+  opacity: 1;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+body.dark-mode button:disabled:hover,
+body.dark-mode .btn:disabled:hover,
+body.dark-mode .trainer-btn:disabled:hover,
+body.dark-mode .stepper-btn:disabled:hover,
+body.dark-mode [aria-disabled="true"]:hover,
+[data-bs-theme="dark"] button:disabled:hover,
+[data-bs-theme="dark"] .btn:disabled:hover,
+[data-bs-theme="dark"] .trainer-btn:disabled:hover,
+[data-bs-theme="dark"] .stepper-btn:disabled:hover,
+[data-bs-theme="dark"] [aria-disabled="true"]:hover {
+  background-color: #1e293b;
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow: none;
+  transform: none;
 }
