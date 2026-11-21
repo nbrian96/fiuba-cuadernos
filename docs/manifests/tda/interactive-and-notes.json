@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "tda",
+  "summary": {
+    "widgetCount": 6,
+    "noteCount": 2,
+    "summaryCount": 3,
+    "checklistItemCount": 11,
+    "trainerQuestionCount": 20
+  },
+  "widgets": [
+    {
+      "id": "tda-widget-entrenador-30s",
+      "courseId": "tda",
+      "title": "Entrenador Interactivo: Reconocimiento en 30 Segundos",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "assets/js/app.js",
+        "builder/html_interactive_builder.py",
+        "index.html",
+        "todos.html"
+      ],
+      "legacyAnchor": "#entrenador-30s",
+      "questionCount": 20,
+      "timeGoalSeconds": 30,
+      "passThresholdPercent": 75,
+      "handlers": [
+        "checkTrainerAnswer",
+        "nextTrainerQuestion",
+        "resetTrainer"
+      ]
+    },
+    {
+      "id": "tda-sim-set-cover",
+      "courseId": "tda",
+      "title": "Simulador Paso a Paso: Set Cover Aproximado",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "teoria-avanzados.html"
+      ],
+      "legacyAnchor": "#set-cover",
+      "handlers": [
+        "prevSetCoverStep",
+        "nextSetCoverStep",
+        "resetSetCoverStep"
+      ]
+    },
+    {
+      "id": "tda-sim-pricing-method",
+      "courseId": "tda",
+      "title": "Simulador Paso a Paso: Vertex Cover por Pricing Method",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "teoria-avanzados.html"
+      ],
+      "legacyAnchor": "#pricing-method",
+      "handlers": [
+        "prevPricingStep",
+        "nextPricingStep",
+        "resetPricingStep"
+      ]
+    },
+    {
+      "id": "tda-sim-karger-mincut",
+      "courseId": "tda",
+      "title": "Simulador Interactivo: Contracción Aleatoria de Karger",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "teoria-avanzados.html"
+      ],
+      "legacyAnchor": "#karger-mincut",
+      "handlers": [
+        "contractKargerStep",
+        "resetKargerSim"
+      ]
+    },
+    {
+      "id": "tda-sim-max-3sat",
+      "courseId": "tda",
+      "title": "Simulador Monte Carlo: Asignación Aleatoria en MAX 3-SAT",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "teoria-avanzados.html"
+      ],
+      "legacyAnchor": "#max-3sat",
+      "handlers": [
+        "runMax3SatSingle",
+        "runMax3SatMulti"
+      ]
+    },
+    {
+      "id": "tda-sim-hamlet-streaming",
+      "courseId": "tda",
+      "title": "Simulador Streaming: Conteo Probabilístico de Morris (Hamlet)",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "teoria-avanzados.html"
+      ],
+      "legacyAnchor": "#streaming-conteo",
+      "handlers": [
+        "runHamletSimulation",
+        "resetHamletSim"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "id": "tda-note-mochila-greedy",
+      "courseId": "tda",
+      "title": "El Problema de la Mochila y Algoritmos Greedy (Voraces)",
+      "entityType": "ElaboratedNote",
+      "provenance": "elaborated_notes",
+      "sourceFile": "DIapositivas/Explicaciones/problema_mochila_y_greedy.md",
+      "resourceId": "tda-note-mochila-greedy"
+    },
+    {
+      "id": "tda-note-teoria-avanzados",
+      "courseId": "tda",
+      "title": "Paradigmas Avanzados: Algoritmos de Aproximación y Algoritmos Randomizados",
+      "entityType": "ElaboratedNote",
+      "provenance": "elaborated_notes",
+      "sourceFile": "teoria-avanzados.html",
+      "staticComparisonNote": "La sección #balanceo-carga incluye una comparativa visual estática sin controles JS; los 5 simuladores interactivos corresponden a #set-cover, #pricing-method, #karger-mincut, #max-3sat y #streaming-conteo.",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "0. El Dilema de la Complejidad: ¿Qué hacer ante un Problema NP-Hard?"
+        },
+        {
+          "id": "aprox-fundamentos",
+          "title": "1. Fundamentos de Aproximación y el Problema de las Cotas"
+        },
+        {
+          "id": "set-cover",
+          "title": "2. Set Cover Aproximado (Voraz con Cota Armónica)"
+        },
+        {
+          "id": "vc-lineal",
+          "title": "3. Vertex Cover: Aproximación por Relajación Lineal (Rounding)"
+        },
+        {
+          "id": "pricing-method",
+          "title": "4. Vertex Cover por Pricing Method (Método Primal-Dual)"
+        },
+        {
+          "id": "mochila-aprox",
+          "title": "5. El Problema de la Mochila: Heurísticas, Cotas y FPTAS"
+        },
+        {
+          "id": "balanceo-carga",
+          "title": "6. Balanceo de Carga (Load Balancing / Makespan)"
+        },
+        {
+          "id": "tsp-aprox",
+          "title": "7. El Problema del Viajante de Comercio (TSP)"
+        },
+        {
+          "id": "rand-fundamentos",
+          "title": "8. Algoritmos Randomizados: El Azar como Herramienta"
+        },
+        {
+          "id": "colisiones-red",
+          "title": "9. Resolución de Colisiones en Redes (Rotura de Simetría)"
+        },
+        {
+          "id": "karger-mincut",
+          "title": "10. Corte Mínimo Global: Algoritmo de Contracción de Karger (1993)"
+        },
+        {
+          "id": "max-3sat",
+          "title": "11. MAX 3-SAT: El Poder del Método Probabilístico (Garantía 7/8)"
+        },
+        {
+          "id": "quickselect-mediana",
+          "title": "12. Selección de la Mediana y QuickSelect Randomizado"
+        },
+        {
+          "id": "estructuras-rand",
+          "title": "13. Estructuras de Datos Randomizadas: Skip Lists & Treaps"
+        },
+        {
+          "id": "streaming-conteo",
+          "title": "14. Conteo Probabilístico con Memoria Acotada (Ejemplo Hamlet)"
+        },
+        {
+          "id": "hashing-universal",
+          "title": "15. Hashing Universal: Neutralizando el Peor Caso"
+        },
+        {
+          "id": "ejercicios-clase",
+          "title": "16. Ejercicios Propuestos de Clase Resueltos Paso a Paso"
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "id": "tda-summary-matriz-parciales",
+      "courseId": "tda",
+      "title": "Introducción, Radiografía de los 7 Parciales y Matriz de Frecuencia",
+      "entityType": "ElaboratedSummary",
+      "provenance": "elaborated_summary",
+      "sourceFile": "builder/sec01_intro_and_matrix.py"
+    },
+    {
+      "id": "tda-summary-checklist-parcial",
+      "courseId": "tda",
+      "title": "Catálogo de Errores Típicos y Checklist Definitiva Pre-Parcial",
+      "entityType": "ElaboratedSummary",
+      "provenance": "elaborated_summary",
+      "sourceFile": "builder/sec11_errores_checklist.py",
+      "checklistItems": [
+        {
+          "id": "chk_20c98e6a10164095",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 1,
+          "label": "División y Conquista: Me sé de memoria los 3 casos del Teorema Maestro ($T(n) = a \\cdot T(n/b) + \\Theta(n^c)$) y sé identificar $a, b$ y $c$."
+        },
+        {
+          "id": "chk_f7089519b0cf032b",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 2,
+          "label": "Greedy: Sé aplicar la demostración por inducción Greedy Stays Ahead y sé diseñar un contraejemplo numérico si el algoritmo voraz no es óptimo."
+        },
+        {
+          "id": "chk_b743378bc55f2a4b",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 3,
+          "label": "Backtracking: Sé implementar podas de factibilidad y cotas de Branch & Bound, usando tablas booleanas de control en $O(1)$ y deshaciendo el estado al retornar."
+        },
+        {
+          "id": "chk_7e96a32326ff7174",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 4,
+          "label": "Programación Dinámica: Cumplo siempre los 5 pasos: 1) Definición formal del estado, 2) Casos base, 3) Ecuación de recurrencia, 4) Orden de llenado bottom-up, 5) Reconstrucción."
+        },
+        {
+          "id": "chk_cf0c59e664a587a4",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 5,
+          "label": "Programación Lineal: Sé definir variables con sus dominios, función objetivo lineal, restricciones lineales, linealización de $\\min \\max$ y conteo de variables/restricciones."
+        },
+        {
+          "id": "chk_54b1d771e6be75c7",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 6,
+          "label": "Redes de Flujo: Sé construir la super-fuente y el super-sumidero, formular la red residual con aristas hacia atrás y calcular la capacidad del corte mínimo."
+        },
+        {
+          "id": "chk_17b2a08ad97bf6d8",
+          "sectionId": "a-dominio-de-paradigmas",
+          "itemIndex": 7,
+          "label": "Reducciones NP-Completitud: Sigo estrictamente los 4 pasos: 1) Certificado y Verificador en NP, 2) Problema conocido en NPC, 3) Transformación polinomial en tiempo polinomial, 4) Demostración de ida ($\\implies$) y vuelta ($\\impliedby$)."
+        },
+        {
+          "id": "chk_68326103099698d2",
+          "sectionId": "b-ejecucion-en-la-hoja-de-examen",
+          "itemIndex": 1,
+          "label": "Cada ejercicio está escrito en una hoja separada con nombre y padrón."
+        },
+        {
+          "id": "chk_3e78b73d8c6186db",
+          "sectionId": "b-ejecucion-en-la-hoja-de-examen",
+          "itemIndex": 2,
+          "label": "El pseudocódigo usa palabras clave claras (PROCEDIMIENTO, FUNCION, SI, SINO, MIENTRAS, PARA, RETORNAR)."
+        },
+        {
+          "id": "chk_e84d5070e0ec98bd",
+          "sectionId": "b-ejecucion-en-la-hoja-de-examen",
+          "itemIndex": 3,
+          "label": "Contemplé los casos borde relevantes (estructuras vacías, un elemento, capacidades nulas, grafos sin aristas)."
+        },
+        {
+          "id": "chk_f01031adb7187ba6",
+          "sectionId": "b-ejecucion-en-la-hoja-de-examen",
+          "itemIndex": 4,
+          "label": "Justifiqué la complejidad temporal y espacial explicando de dónde sale cada término ($O(n \\log n)$, $O(V \\cdot E)$, etc.), sin limitarme a tirar una fórmula suelta."
+        }
+      ]
+    },
+    {
+      "id": "tda-summary-drawer-formulas",
+      "courseId": "tda",
+      "title": "Drawer de Fórmulas y Recetas Rápidas de Parcial",
+      "entityType": "ElaboratedSummary",
+      "provenance": "elaborated_summary",
+      "sourceFile": "builder/html_interactive_builder.py",
+      "sections": [
+        "1. Teorema Maestro (División y Conquista)",
+        "2. Esquema de 4 Pasos Obligatorios para NP-C",
+        "3. Los 5 Pasos de Programación Dinámica",
+        "4. Reglas de Oro de Programación Lineal (PLI)",
+        "5. Redes de Flujo (Ford-Fulkerson / Edmonds-Karp)",
+        "⚠️ Errores Prohibidos que Anulan el Ejercicio"
+      ]
+    }
+  ]
+}

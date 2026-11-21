@@ -1,0 +1,1853 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "tda",
+  "summary": {
+    "totalResources": 75,
+    "totalPhysicalFiles": 96,
+    "totalPdfs": 49,
+    "totalNonPdfs": 47,
+    "pagefindPrototypePdfCount": 4,
+    "preservedTp0FilesCount": 6
+  },
+  "resources": [
+    {
+      "resourceId": "tda-slide-00-presentacion-del-curso-e-introduccion",
+      "courseId": "tda",
+      "title": "00 - Presentación del Curso e Introducción",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/00 - Presentación del Curso e Introducción.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 30,
+        "textChars": 7575,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-01-repasos",
+      "courseId": "tda",
+      "title": "01 - Repasos",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/01 - Repasos.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 42,
+        "textChars": 10486,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-02-division-y-conquista",
+      "courseId": "tda",
+      "title": "02 - División y Conquista",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/02 - División y Conquista.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 46,
+        "textChars": 9763,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-03a-greedy-i",
+      "courseId": "tda",
+      "title": "03a - Greedy I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/03a - Greedy I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 52,
+        "textChars": 11384,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo",
+      "courseId": "tda",
+      "title": "03b - Seguimiento_MejorGanancia_Division_Conquista Ejemplo",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/03b -  Seguimiento_MejorGanancia_Division_Conquista Ejemplo.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 11,
+        "textChars": 6039,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-03c-complejidad-mejorganancia-teoremamaestro",
+      "courseId": "tda",
+      "title": "03c - Complejidad_MejorGanancia_TeoremaMaestro",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/03c - Complejidad_MejorGanancia_TeoremaMaestro.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 7,
+        "textChars": 2758,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-04-greedy-ii",
+      "courseId": "tda",
+      "title": "04 - Greedy II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/04 - Greedy II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 67,
+        "textChars": 18038,
+        "emptyPages": 2,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-05-backtracking-i",
+      "courseId": "tda",
+      "title": "05 - Backtracking I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/05 - Backtracking I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 84,
+        "textChars": 22694,
+        "emptyPages": 2,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-06-backtracking-ii",
+      "courseId": "tda",
+      "title": "06 - Backtracking II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/06 - Backtracking II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 54,
+        "textChars": 11825,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-07-practica-dc-greedy-backtracking",
+      "courseId": "tda",
+      "title": "07 - Práctica DC-Greedy-Backtracking",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dyc",
+        "greedy",
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/07 - Práctica DC-Greedy-Backtracking.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 15,
+        "textChars": 3347,
+        "emptyPages": 2,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-08-programacion-dinamica-i",
+      "courseId": "tda",
+      "title": "08 - Programación Dinámica I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/08 - Programación Dinámica I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 49,
+        "textChars": 13783,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-09-programacion-dinamica-ii",
+      "courseId": "tda",
+      "title": "09 - Programación Dinámica II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/09 - Programación Dinámica II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 64,
+        "textChars": 12029,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-10-programacion-dinamica-iii",
+      "courseId": "tda",
+      "title": "10 - Programación Dinámica III",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/10 - Programación Dinámica III.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 56,
+        "textChars": 13329,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-11a-programacion-dinamica-iv",
+      "courseId": "tda",
+      "title": "11a - Programación Dinámica IV",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/11a - Programación Dinámica IV.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 22,
+        "textChars": 4538,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-11b-practica-programacion-dinamica",
+      "courseId": "tda",
+      "title": "11b - Práctica Programación Dinámica",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/11b - Práctica Programación Dinámica.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 20,
+        "textChars": 6312,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-12-programacion-lineal-i",
+      "courseId": "tda",
+      "title": "12 - Programación Lineal I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/12 - Programación Lineal I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 46,
+        "textChars": 8634,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-13-programacion-lineal-ii",
+      "courseId": "tda",
+      "title": "13 - Programación Lineal II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/13 - Programación Lineal II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 49,
+        "textChars": 9354,
+        "emptyPages": 5,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": true
+      }
+    },
+    {
+      "resourceId": "tda-slide-14-redes-de-flujo-i",
+      "courseId": "tda",
+      "title": "14 - Redes de Flujo I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "flujo"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/14 - Redes de Flujo I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 45,
+        "textChars": 7053,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-15a-redes-de-flujo-ii",
+      "courseId": "tda",
+      "title": "15a - Redes de Flujo II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "flujo"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/15a - Redes de Flujo II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 28,
+        "textChars": 5608,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-15b-redes-de-flujo-anexo",
+      "courseId": "tda",
+      "title": "15b - Redes de Flujo-Anexo",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "flujo"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/15b - Redes de Flujo-Anexo.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 20,
+        "textChars": 3327,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-16-practica-pl-y-rf",
+      "courseId": "tda",
+      "title": "16 - Práctica PL y RF",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl",
+        "flujo"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/16 - Práctica PL y RF.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 30,
+        "textChars": 6836,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-17-complejidad-y-reducciones-i",
+      "courseId": "tda",
+      "title": "17 - Complejidad y Reducciones I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "reducciones"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/17 - Complejidad y Reducciones I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 33,
+        "textChars": 9101,
+        "emptyPages": 2,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-18-complejidad-y-reducciones-ii",
+      "courseId": "tda",
+      "title": "18 - Complejidad y Reducciones II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "reducciones"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/18 - Complejidad y Reducciones II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 48,
+        "textChars": 15194,
+        "emptyPages": 2,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-19-practica-reducciones",
+      "courseId": "tda",
+      "title": "19 - Práctica Reducciones",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "reducciones"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/19 - Práctica Reducciones.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 25,
+        "textChars": 7661,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-20-repaso",
+      "courseId": "tda",
+      "title": "20 - Repaso",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/20 - Repaso.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 51,
+        "textChars": 10963,
+        "emptyPages": 3,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-21-algoritmos-de-aproximacion-i",
+      "courseId": "tda",
+      "title": "21 - Algoritmos de Aproximación I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/21 - Algoritmos de Aproximación I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 63,
+        "textChars": 18591,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-22-algoritmos-de-aproximacion-ii",
+      "courseId": "tda",
+      "title": "22 - Algoritmos de Aproximación II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/22 - Algoritmos de Aproximación II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 43,
+        "textChars": 12648,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-23-algoritmos-randomizados-i",
+      "courseId": "tda",
+      "title": "23 - Algoritmos randomizados I",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/23 - Algoritmos randomizados I.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 57,
+        "textChars": 14985,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-24-algoritmos-randomizados-ii",
+      "courseId": "tda",
+      "title": "24 - Algoritmos randomizados II",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/24 - Algoritmos randomizados II.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 42,
+        "textChars": 12229,
+        "emptyPages": 4,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-pkg-12-lindo",
+      "courseId": "tda",
+      "title": "Paquete de Ejemplos LINDO (Clase 12 — Programación Lineal)",
+      "entityType": "OfficialCodePackage",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/12 - Lindo/Facaldo.ltx",
+          "extension": ".ltx",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Lindo/mochila.ltx",
+          "extension": ".ltx",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Lindo/scheduling.ltx",
+          "extension": ".ltx",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Lindo/viajante.ltx",
+          "extension": ".ltx",
+          "isPdf": false
+        }
+      ]
+    },
+    {
+      "resourceId": "tda-pkg-12-mochila",
+      "courseId": "tda",
+      "title": "Paquete de Ejemplos Mochila PL/Python (Clase 12)",
+      "entityType": "OfficialCodePackage",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/12 - Mochila/Mochila.lp",
+          "extension": ".lp",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Mochila/mochila.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Mochila/mochila.txt",
+          "extension": ".txt",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Mochila/mochila2.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Mochila/mochila_crear_archivo.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Mochila/mochilagrande.txt",
+          "extension": ".txt",
+          "isPdf": false
+        }
+      ]
+    },
+    {
+      "resourceId": "tda-pkg-12-viajante",
+      "courseId": "tda",
+      "title": "Paquete de Ejemplos TSP / Viajante PL/Python (Clase 12)",
+      "entityType": "OfficialCodePackage",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/12 - Viajante/distancias.xlsx",
+          "extension": ".xlsx",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias10.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias12.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias16.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias24.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias4.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/distancias6.csv",
+          "extension": ".csv",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/viajantealternativa1subtours.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/viajantealternativa2puentes.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/viajantealternativa3secuencia.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/viajantealternativa4MTZ.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "DIapositivas/12 - Viajante/viajantefuerzabruta.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ]
+    },
+    {
+      "resourceId": "tda-note-mochila-greedy",
+      "courseId": "tda",
+      "title": "El Problema de la Mochila y Algoritmos Greedy (Voraces)",
+      "entityType": "ElaboratedNote",
+      "provenance": "elaborated_notes",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "greedy",
+        "dp",
+        "integradores"
+      ],
+      "files": [
+        {
+          "path": "DIapositivas/Explicaciones/problema_mochila_y_greedy.md",
+          "extension": ".md",
+          "isPdf": false
+        }
+      ]
+    },
+    {
+      "resourceId": "tda-guia-01-dyc",
+      "courseId": "tda",
+      "title": "Guía 01 — División y Conquista",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/01_division_y_conquista.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 5,
+        "textChars": 16343,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-02-greedy",
+      "courseId": "tda",
+      "title": "Guía 02 — Algoritmos Greedy",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/02_greedy.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 4,
+        "textChars": 18712,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-03-backtracking",
+      "courseId": "tda",
+      "title": "Guía 03 — Backtracking",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/03_backtracking.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 4,
+        "textChars": 13021,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-04-dp",
+      "courseId": "tda",
+      "title": "Guía 04 — Programación Dinámica",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/04_programacion_dinamica.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 3,
+        "textChars": 11526,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-05-pl",
+      "courseId": "tda",
+      "title": "Guía 05 — Programación Lineal",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/05_programacion_lineal.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 2,
+        "textChars": 4915,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-06-flujo",
+      "courseId": "tda",
+      "title": "Guía 06 — Redes de Flujo",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "flujo"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/06_redes_de_flujo.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 3,
+        "textChars": 9248,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-07-reducciones",
+      "courseId": "tda",
+      "title": "Guía 07 — Reducciones y NP-Completitud",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "reducciones"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/07_reducciones_np.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 3,
+        "textChars": 11972,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-08-aproximados",
+      "courseId": "tda",
+      "title": "Guía 08 — Algoritmos Aproximados",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/08_algoritmos_aproximados.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 2,
+        "textChars": 3514,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-09-randomizados",
+      "courseId": "tda",
+      "title": "Guía 09 — Algoritmos Randomizados",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "avanzados"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/09_algoritmos_randomizados.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 2,
+        "textChars": 3313,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-guia-completa-v1",
+      "courseId": "tda",
+      "title": "Guía Completa de Ejercicios v1.0 (Curso Echevarría)",
+      "entityType": "OfficialGuide",
+      "provenance": "official_source",
+      "sourceFolder": "Guia-Ejercicios",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 19,
+        "textChars": 43138,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": true
+      }
+    },
+    {
+      "resourceId": "tda-parcial-2024-2-1-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2024-2 — 1ª Oportunidad (5 de noviembre de 2024)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2024-2-1.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 3664,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2024-2-1"
+    },
+    {
+      "resourceId": "tda-parcial-2024-2-2-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2024-2 — 2ª Oportunidad (26 de noviembre de 2024)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2024-2-2.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 3302,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2024-2-2"
+    },
+    {
+      "resourceId": "tda-parcial-2024-2-3-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2024-2 — 3ª Oportunidad / Recuperatorio (10 de diciembre de 2024)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2024-2-3.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 3461,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2024-2-3"
+    },
+    {
+      "resourceId": "tda-parcial-2025-1-1-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2025-1 — 1ª Oportunidad (27 de mayo de 2025)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2025-1-1.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 2708,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2025-1-1"
+    },
+    {
+      "resourceId": "tda-parcial-2025-1-2-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2025-1 — 2ª Oportunidad (17 de junio de 2025)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2025-1-2.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 2154,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2025-1-2"
+    },
+    {
+      "resourceId": "tda-parcial-2026-2-1-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2026-2 — 1ª Oportunidad (Enunciados)",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2026-2-1.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 2,
+        "textChars": 2654,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      },
+      "assessmentId": "tda-parcial-2026-2-1"
+    },
+    {
+      "resourceId": "tda-parcial-2026-2-2-pdf",
+      "courseId": "tda",
+      "title": "Parcial 2026-2 — 2ª Oportunidad (17 de noviembre de 2026)",
+      "entityType": "ReconstructedExamPDF",
+      "provenance": "reconstructed_exam_statement",
+      "sourceFolder": "Parciales",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Parciales/TP-2026-2-2.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 2868,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": true
+      },
+      "assessmentId": "tda-parcial-2026-2-2"
+    },
+    {
+      "resourceId": "tda-prac-dyc-ej02-primer-cero-tests",
+      "courseId": "tda",
+      "title": "Práctica DYC — ej02_primer_cero_tests",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "Practicas/01_division_y_conquista/ej02_primer_cero_tests.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "solved"
+    },
+    {
+      "resourceId": "tda-prac-dyc-ej04-arreglo-pico",
+      "courseId": "tda",
+      "title": "Práctica DYC — ej04_arreglo_pico",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "Practicas/01_division_y_conquista/ej04_arreglo_pico.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dyc-ej09-elemento-mayoritario",
+      "courseId": "tda",
+      "title": "Práctica DYC — ej09_elemento_mayoritario",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "Practicas/01_division_y_conquista/ej09_elemento_mayoritario.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dyc-ej14-bolzano-biseccion",
+      "courseId": "tda",
+      "title": "Práctica DYC — ej14_bolzano_biseccion",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dyc"
+      ],
+      "files": [
+        {
+          "path": "Practicas/01_division_y_conquista/ej14_bolzano_biseccion.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-greedy-ej04-seleccion-charlas",
+      "courseId": "tda",
+      "title": "Práctica GREEDY — ej04_seleccion_charlas",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "Practicas/02_greedy/ej04_seleccion_charlas.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-greedy-ej08-mochila-fraccionaria",
+      "courseId": "tda",
+      "title": "Práctica GREEDY — ej08_mochila_fraccionaria",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "Practicas/02_greedy/ej08_mochila_fraccionaria.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-greedy-ej09-minimizar-latencia",
+      "courseId": "tda",
+      "title": "Práctica GREEDY — ej09_minimizar_latencia",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "Practicas/02_greedy/ej09_minimizar_latencia.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-greedy-ej13-antenas-ruta",
+      "courseId": "tda",
+      "title": "Práctica GREEDY — ej13_antenas_ruta",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "greedy"
+      ],
+      "files": [
+        {
+          "path": "Practicas/02_greedy/ej13_antenas_ruta.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-backtracking-ej02-coloreo-grafos",
+      "courseId": "tda",
+      "title": "Práctica BACKTRACKING — ej02_coloreo_grafos",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "Practicas/03_backtracking/ej02_coloreo_grafos.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-backtracking-ej03-n-reinas",
+      "courseId": "tda",
+      "title": "Práctica BACKTRACKING — ej03_n_reinas",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "Practicas/03_backtracking/ej03_n_reinas.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-backtracking-ej04-independent-set-maximo",
+      "courseId": "tda",
+      "title": "Práctica BACKTRACKING — ej04_independent_set_maximo",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "Practicas/03_backtracking/ej04_independent_set_maximo.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-backtracking-ej11-subset-sum",
+      "courseId": "tda",
+      "title": "Práctica BACKTRACKING — ej11_subset_sum",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "backtracking"
+      ],
+      "files": [
+        {
+          "path": "Practicas/03_backtracking/ej11_subset_sum.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dp-ej02-interval-scheduling-ponderado",
+      "courseId": "tda",
+      "title": "Práctica DP — ej02_interval_scheduling_ponderado",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "Practicas/04_programacion_dinamica/ej02_interval_scheduling_ponderado.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dp-ej04-juan-el-vago",
+      "courseId": "tda",
+      "title": "Práctica DP — ej04_juan_el_vago",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "Practicas/04_programacion_dinamica/ej04_juan_el_vago.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dp-ej07-mochila-01",
+      "courseId": "tda",
+      "title": "Práctica DP — ej07_mochila_01",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "Practicas/04_programacion_dinamica/ej07_mochila_01.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-dp-ej08-cambio-monedas",
+      "courseId": "tda",
+      "title": "Práctica DP — ej08_cambio_monedas",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "dp"
+      ],
+      "files": [
+        {
+          "path": "Practicas/04_programacion_dinamica/ej08_cambio_monedas.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-pl-ej01-mochila-pl",
+      "courseId": "tda",
+      "title": "Práctica PL — ej01_mochila_pl",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "Practicas/05_programacion_lineal/ej01_mochila_pl.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-pl-ej02-juan-el-vago-pl",
+      "courseId": "tda",
+      "title": "Práctica PL — ej02_juan_el_vago_pl",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "Practicas/05_programacion_lineal/ej02_juan_el_vago_pl.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-pl-ej03-vertex-cover-pl",
+      "courseId": "tda",
+      "title": "Práctica PL — ej03_vertex_cover_pl",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "Practicas/05_programacion_lineal/ej03_vertex_cover_pl.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-pl-ej12-dos-particiones-min-max-pl",
+      "courseId": "tda",
+      "title": "Práctica PL — ej12_dos_particiones_min_max_pl",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "pl"
+      ],
+      "files": [
+        {
+          "path": "Practicas/05_programacion_lineal/ej12_dos_particiones_min_max_pl.py",
+          "extension": ".py",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "todo"
+    },
+    {
+      "resourceId": "tda-prac-readme",
+      "courseId": "tda",
+      "title": "Guía de Práctica Esencial en Python (README)",
+      "entityType": "CodePractice",
+      "provenance": "exam_prep_and_practice",
+      "sourceFolder": "Practicas",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "Practicas/README.md",
+          "extension": ".md",
+          "isPdf": false
+        }
+      ],
+      "practiceStatus": "guide"
+    },
+    {
+      "resourceId": "tda-tp0-enunciado",
+      "courseId": "tda",
+      "title": "TP0 — Enunciado Oficial (2do Cuatrimestre 2026)",
+      "entityType": "OfficialTPAssessment",
+      "provenance": "official_source",
+      "sourceFolder": "TP0",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "TP0/TP00-2026-2c.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "preservedIntact": true,
+      "assessmentId": "tda-tp0-official",
+      "pdfMetadata": {
+        "pageCount": 2,
+        "textChars": 4277,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-tp0-checklist",
+      "courseId": "tda",
+      "title": "TP0 — Checklist Oficial de Corrección",
+      "entityType": "OfficialTPAssessment",
+      "provenance": "official_source",
+      "sourceFolder": "TP0",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "TP0/checklist.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "preservedIntact": true,
+      "assessmentId": "tda-tp0-official",
+      "pdfMetadata": {
+        "pageCount": 1,
+        "textChars": 921,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-tp0-entrega-informe",
+      "courseId": "tda",
+      "title": "TP0 — Informe Resuelto Autorizado (Nelson Ávila, Padrón 100244)",
+      "entityType": "ElaboratedTPSubmission",
+      "provenance": "elaborated_submission",
+      "sourceFolder": "TP0",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "TP0/TP0_Nelson_Avila_100244.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "preservedIntact": true,
+      "assessmentId": "tda-tp0-submission",
+      "pdfMetadata": {
+        "pageCount": 7,
+        "textChars": 11326,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": true
+      }
+    },
+    {
+      "resourceId": "tda-tp0-entrega-archivos",
+      "courseId": "tda",
+      "title": "TP0 — Implementación y Gráfico de Tiempos (cuartetos.py, cuartetos_malo.py, grafico_tiempos.png)",
+      "entityType": "ElaboratedTPSubmission",
+      "provenance": "elaborated_submission",
+      "sourceFolder": "TP0",
+      "unitSlugs": [
+        "general"
+      ],
+      "files": [
+        {
+          "path": "TP0/cuartetos.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "TP0/cuartetos_malo.py",
+          "extension": ".py",
+          "isPdf": false
+        },
+        {
+          "path": "TP0/grafico_tiempos.png",
+          "extension": ".png",
+          "isPdf": false
+        }
+      ],
+      "preservedIntact": true,
+      "assessmentId": "tda-tp0-submission"
+    }
+  ]
+}
