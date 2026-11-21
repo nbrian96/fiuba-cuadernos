@@ -35,10 +35,11 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 - **Aislamiento total de tests:** Ningún test puede modificar ni crear archivos (versionados o ignorados en `__pycache__/`) dentro del repositorio de trabajo; las compilaciones de prueba se ejecutan en `tempfile.TemporaryDirectory()`.
 - **Gobernanza Git y Rollback Seguro:** Prohibido usar `git checkout --` o `git push`. Se opera mediante checkpoints, commits atómicos aprobados previa revisión del `git diff`, registro de SHAs y reversión selectiva con `git revert --no-edit <sha>`.
 - **Conservación de los 12 HTML existentes durante la transición:** Los archivos HTML actuales de la raíz no se eliminan hasta completar la migración, verificar la paridad funcional/visual, validar las rutas de compatibilidad y confirmar el rollback.
+- **`ADR-002` — Layouts Astro propios unificados (Opción A aprobada):** Toda la plataforma (Hub, Dashboard, Ejercicios, Simuladores, Materiales y Apuntes `/docs/`) se construye con Layouts Astro propios y un único Design System WCAG 2.1 AA, descartando acoplar Starlight.
+- **`ADR-004` — Indexación Pagefind de PDFs con Node API (Opción A aprobada):** Se usa `index.addCustomRecord()` en `astro:build:done` (descartando `data-pagefind-body` en HTML) con URL canónica `{BASE_URL}/{course}/materiales/{resourceId}?page={N}`, validación previa con un prototipo de 4 PDFs representativos antes de escalar a los 49 PDFs, y fallback a metadatos YAML para PDFs sin capa de texto usable.
 
 ### 2.2. Decisiones Pendientes para la Etapa 1B
-- **`ADR-002` (Layouts Astro Propios vs. Starlight como alternativa complementaria):** Decidir entre unificar toda la plataforma bajo Layouts Astro propios (Opción A recomendada) o acoplar Starlight exclusivamente para páginas teóricas `/docs/` manteniendo Layouts propios para Dashboard, Ejercicios y Simuladores (Opción B).
-- **`ADR-004` (Estrategia Pagefind para PDFs):** Aprobar la estrategia única mediante `index.addCustomRecord()` (API Node en `astro:build:done`, descartando `data-pagefind-body` en HTML para evitar duplicación y sobrecarga del DOM) con URL canónica `{BASE_URL}/{course}/materiales/{resourceId}?page={N}` y validación previa con un prototipo de 4 PDFs representativos antes de escalar a los 49 PDFs.
+- Todas las decisiones arquitectónicas previas a la Etapa 1B (`ADR-001` a `ADR-004`) fueron confirmadas y quedan listas para formalizarse en `docs/architecture/adr-001..004.md`.
 
 ---
 
@@ -80,9 +81,9 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 
 ### 4.2. ADRs Propuestos (A Formalizar en Etapa 1B)
 - **`ADR-001`:** Adopción de Astro Core + TypeScript + Content Collections (Zod) como núcleo de plataforma multi-materia.
-- **`ADR-002`:** Elección de Layouts Académicos propios en Astro vs. integración complementaria de Starlight (pendiente de aprobación).
+- **`ADR-002`:** Layouts Académicos propios unificados en Astro (Opción A aprobada; se descarta Starlight).
 - **`ADR-003`:** Modelo de contenido con separación de procedencia (`provenance`), preservación del catálogo `1..85` y diferenciación de los 2 ejercicios avanzados.
-- **`ADR-004`:** Búsqueda global estática con Pagefind e indexación de PDFs mediante `addCustomRecord()` + prototipo previo con 4 PDFs (pendiente de aprobación).
+- **`ADR-004`:** Búsqueda global estática con Pagefind e indexación de PDFs mediante `addCustomRecord()` + prototipo previo con 4 PDFs y fallback a metadatos YAML (Opción A aprobada).
 
 ---
 
@@ -123,5 +124,5 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 
 | Unidad | SHA | Mensaje | Archivos Principales |
 | :--- | :--- | :--- | :--- |
-| Plan | *(Pendiente de registrar tras commit)* | `docs: agregar plan de trabajo arquitectonico y hoja de ruta etapa 1A` | `docs/PLAN_DE_TRABAJO.md` |
-| 1A.1 | *(Pendiente de registrar tras commit)* | `test(1A.1): aislar suite de tests en tempfile e integrar auditoria QA` | `builder/build_manual.py`, `builder/test_qa_audit.py`, `run_tests.py`, `tests/test_build_integration.py`, `tests/test_qa_audit_suite.py` |
+| Plan | `34d2bbb` | `docs: agregar plan de trabajo arquitectonico y hoja de ruta etapa 1A` | `docs/PLAN_DE_TRABAJO.md` |
+| 1A.1 | `dcc38a8` | `test(1A.1): aislar suite de tests en tempfile e integrar auditoria QA` | `builder/build_manual.py`, `builder/test_qa_audit.py`, `run_tests.py`, `tests/test_build_integration.py`, `tests/test_qa_audit_suite.py` |
