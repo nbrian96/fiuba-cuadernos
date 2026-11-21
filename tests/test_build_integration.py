@@ -4,6 +4,7 @@ import os
 import re
 import glob
 import subprocess
+import tempfile
 import unittest
 import sys
 
@@ -16,8 +17,8 @@ if BUILDER_DIR not in sys.path:
 class TestBuildIntegration(unittest.TestCase):
     """Pruebas de integración del proceso de build y los artefactos HTML resultantes."""
 
-    EXPECTED_HTML_FILES = [
-        "index.html",
+    GENERATED_HTML_FILES = [
+        "todos.html",
         "dyc.html",
         "greedy.html",
         "backtracking.html",
@@ -26,34 +27,74 @@ class TestBuildIntegration(unittest.TestCase):
         "flujo.html",
         "reducciones.html",
         "integradores.html",
-        "parciales.html"
+        "parciales.html",
     ]
 
-    BUNDLE_FILE = os.path.join(BASE_DIR, "assets", "js", "catalog-bundle.js")
+    ALL_REPO_HTML_FILES = [
+        "index.html",
+        "teoria-avanzados.html",
+    ] + GENERATED_HTML_FILES
+
+    REPO_BUNDLE_FILE = os.path.join(BASE_DIR, "assets", "js", "catalog-bundle.js")
 
     @classmethod
     def setUpClass(cls):
-        """Ejecuta el compilador build_manual.py para garantizar que los artefactos estén actualizados."""
+        """Ejecuta el compilador build_manual.py en un directorio temporal aislado."""
+        cls._temp_dir_obj = tempfile.TemporaryDirectory(prefix="tda_build_test_")
+        cls.temp_dir = cls._temp_dir_obj.name
+        cls.temp_bundle = os.path.join(cls.temp_dir, "assets", "js", "catalog-bundle.js")
+
         build_script = os.path.join(BUILDER_DIR, "build_manual.py")
-        res = subprocess.run([sys.executable, build_script], capture_output=True, text=True, encoding="utf-8", errors="replace")
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        env["PYTHONPYCACHEPREFIX"] = os.path.join(tempfile.gettempdir(), "tda_test_pycache")
+
+        res = subprocess.run(
+            [sys.executable, build_script, "--output-dir", cls.temp_dir],
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
         if res.returncode != 0:
-            raise RuntimeError(f"Error al compilar el manual con build_manual.py:\n{res.stderr}")
+            cls._temp_dir_obj.cleanup()
+            raise RuntimeError(f"Error al compilar el manual en directorio temporal:\n{res.stderr}")
+
+    @classmethod
+    def tearDownClass(cls):
+        """Limpia el directorio temporal tras finalizar los tests."""
+        if hasattr(cls, "_temp_dir_obj"):
+            cls._temp_dir_obj.cleanup()
 
     def test_all_expected_html_files_exist_and_non_empty(self):
-        """Verifica que todos los archivos HTML y el bundle JS existan con tamaño significativo."""
-        for filename in self.EXPECTED_HTML_FILES:
-            filepath = os.path.join(BASE_DIR, filename)
-            self.assertTrue(os.path.exists(filepath), f"El archivo HTML '{filename}' no fue generado.")
+        """Verifica los HTML/bundle compilados en el directorio temporal y los archivos existentes en el repo."""
+        for filename in self.GENERATED_HTML_FILES:
+            filepath = os.path.join(self.temp_dir, filename)
+            self.assertTrue(os.path.exists(filepath), f"El archivo HTML '{filename}' no fue generado en temp_dir.")
             size = os.path.getsize(filepath)
             self.assertGreater(size, 5000, f"El archivo '{filename}' es sospechosamente pequeño ({size} bytes).")
 
-        self.assertTrue(os.path.exists(self.BUNDLE_FILE), "El bundle 'catalog-bundle.js' no fue generado.")
-        self.assertGreater(os.path.getsize(self.BUNDLE_FILE), 100000, "El bundle JS es sospechosamente pequeño.")
+        self.assertTrue(os.path.exists(self.temp_bundle), "El bundle 'catalog-bundle.js' no fue generado en temp_dir.")
+        self.assertGreater(os.path.getsize(self.temp_bundle), 100000, "El bundle JS en temp_dir es sospechosamente pequeño.")
+
+        for filename in self.ALL_REPO_HTML_FILES:
+            filepath = os.path.join(BASE_DIR, filename)
+            self.assertTrue(os.path.exists(filepath), f"El archivo HTML '{filename}' no existe en el repositorio.")
+            size = os.path.getsize(filepath)
+            self.assertGreater(size, 5000, f"El archivo '{filename}' en el repo es sospechosamente pequeño ({size} bytes).")
+
+        self.assertTrue(os.path.exists(self.REPO_BUNDLE_FILE), "El bundle 'catalog-bundle.js' no existe en el repositorio.")
+        self.assertGreater(os.path.getsize(self.REPO_BUNDLE_FILE), 100000, "El bundle JS del repo es sospechosamente pequeño.")
 
     def test_katex_assets_included_in_all_pages(self):
-        """Verifica que todas las páginas HTML carguen las librerías de KaTeX y su auto-render."""
-        for filename in self.EXPECTED_HTML_FILES:
-            filepath = os.path.join(BASE_DIR, filename)
+        """Verifica que todas las páginas HTML (compiladas en temp_dir y manuales del repo) carguen KaTeX."""
+        page_paths = [os.path.join(self.temp_dir, f) for f in self.GENERATED_HTML_FILES] + [
+            os.path.join(BASE_DIR, "index.html"),
+            os.path.join(BASE_DIR, "teoria-avanzados.html"),
+        ]
+        for filepath in page_paths:
+            filename = os.path.basename(filepath)
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -62,8 +103,8 @@ class TestBuildIntegration(unittest.TestCase):
             self.assertIn("auto-render.min.js", content, f"[{filename}] Falta el script auto-render de KaTeX.")
 
     def test_no_unresolved_placeholders_in_html_or_bundle(self):
-        """Verifica que ningún placeholder temporal del compilador se filtre al HTML o al bundle final."""
-        files_to_check = [os.path.join(BASE_DIR, f) for f in self.EXPECTED_HTML_FILES] + [self.BUNDLE_FILE]
+        """Verifica que ningún placeholder temporal del compilador se filtre al HTML o al bundle generado."""
+        files_to_check = [os.path.join(self.temp_dir, f) for f in self.GENERATED_HTML_FILES] + [self.temp_bundle]
 
         for filepath in files_to_check:
             fname = os.path.basename(filepath)
@@ -75,9 +116,9 @@ class TestBuildIntegration(unittest.TestCase):
             self.assertNotIn("%%PRE_BLOCK_", content, f"[{fname}] Contiene placeholders de bloques pre no reemplazados.")
 
     def test_no_visible_bare_backslash_dollars_in_html(self):
-        """Verifica que en el HTML no queden signos '\\$' en texto que muestren barras invertidas en el navegador."""
-        for filename in self.EXPECTED_HTML_FILES:
-            filepath = os.path.join(BASE_DIR, filename)
+        """Verifica que en el HTML generado no queden signos '\\$' en texto fuera de fórmulas."""
+        for filename in self.GENERATED_HTML_FILES:
+            filepath = os.path.join(self.temp_dir, filename)
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -97,11 +138,11 @@ class TestBuildIntegration(unittest.TestCase):
             )
 
     def test_exercise_18_integration_in_greedy_parciales_and_bundle(self):
-        """Verifica la correcta integración y renderizado del Ejercicio 18 en greedy.html, parciales.html y catalog-bundle.js."""
+        """Verifica la correcta integración del Ejercicio 18 en greedy.html, parciales.html y catalog-bundle.js compilados."""
         targets = [
-            ("greedy.html", os.path.join(BASE_DIR, "greedy.html")),
-            ("parciales.html", os.path.join(BASE_DIR, "parciales.html")),
-            ("catalog-bundle.js", self.BUNDLE_FILE)
+            ("greedy.html", os.path.join(self.temp_dir, "greedy.html")),
+            ("parciales.html", os.path.join(self.temp_dir, "parciales.html")),
+            ("catalog-bundle.js", self.temp_bundle)
         ]
 
         for label, filepath in targets:
@@ -159,21 +200,22 @@ class TestBuildIntegration(unittest.TestCase):
             )
 
     def test_all_85_exercises_present_across_system(self):
-        """Verifica que los 85 ejercicios oficiales estén presentes en el sistema con su estructura de card completa."""
-        index_file = os.path.join(BASE_DIR, "index.html")
-        with open(index_file, "r", encoding="utf-8") as f:
-            index_content = f.read()
+        """Verifica que los 85 ejercicios oficiales estén presentes en todos.html + catalog-bundle.js generados."""
+        todos_file = os.path.join(self.temp_dir, "todos.html")
+        with open(todos_file, "r", encoding="utf-8") as f:
+            todos_content = f.read()
 
-        with open(self.BUNDLE_FILE, "r", encoding="utf-8") as f:
+        with open(self.temp_bundle, "r", encoding="utf-8") as f:
             bundle_content = f.read()
 
-        combined_content = index_content + "\n" + bundle_content
+        self.assertIn("tdaCatalogMount", todos_content, "todos.html debe contener el contenedor #tdaCatalogMount.")
+        self.assertIn("assets/js/catalog-bundle.js", todos_content, "todos.html debe cargar catalog-bundle.js.")
 
         for ej_num in range(1, 86):
             card_pattern = r'id=\\?["\']ej-' + str(ej_num) + r'\\?["\']'
             self.assertRegex(
-                combined_content, card_pattern,
-                f"El Ejercicio {ej_num} no se encontró en el catálogo interactivo."
+                bundle_content, card_pattern,
+                f"El Ejercicio {ej_num} no se encontró en catalog-bundle.js."
             )
 
     def test_future_exercise_scalability_auto_discovery(self):
