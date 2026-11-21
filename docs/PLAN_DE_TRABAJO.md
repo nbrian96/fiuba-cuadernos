@@ -126,3 +126,12 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 | :--- | :--- | :--- | :--- |
 | Plan | `34d2bbb` | `docs: agregar plan de trabajo arquitectonico y hoja de ruta etapa 1A` | `docs/PLAN_DE_TRABAJO.md` |
 | 1A.1 | `dcc38a8` | `test(1A.1): aislar suite de tests en tempfile e integrar auditoria QA` | `builder/build_manual.py`, `builder/test_qa_audit.py`, `run_tests.py`, `tests/test_build_integration.py`, `tests/test_qa_audit_suite.py` |
+| Plan (ADRs) | `6975be4` | `docs: confirmar ADR-002 y ADR-004 opcion A y registrar SHAs previos` | `docs/PLAN_DE_TRABAJO.md` |
+| 1A.2 | `0863386` | `fix(1A.2): unificar navbar, generar IDs chk_ deterministicos y limpiar conflictos` | `builder/build_manual.py`, `builder/html_interactive_builder.py`, `builder/sec01_intro_and_matrix.py`, `index.html`, `teoria-avanzados.html`, `tests/test_build_integration.py`, `tests/test_qa_audit_suite.py` |
+| 1A.3 | `025ec7b` | `fix(1A.3): mapear ejercicios 80..85 en getPageForExercise y validar paridad Python/JS en Node` | `assets/js/app.js`, `tests/test_paradigm_filter.py` |
+| 1A.4 | `a22d98c` | `fix(1A.4): corregir sintaxis CSS, contraste WCAG AA, focus-visible, disabled y Mermaid movil` | `assets/css/styles.css`, `tests/test_dark_mode_and_responsive.py` |
+| 1A.5 | `05750fd` | `docs(1A.5): actualizar README con conteos reales y validar enlaces locales case-sensitive` | `README.md`, `tests/test_build_integration.py` |
+| 1A.6 | `77f5d02` | `build(1A.6): regenerar artefactos HTML y bundle con navbar unificado e IDs chk_ deterministicos` | `todos.html`, `dyc.html`..`parciales.html`, `assets/js/catalog-bundle.js` |
+| 1A.7 | `b673036` | `fix(1A.7): corregir diff-btn dark, KaTeX dinamico en simuladores, Mermaid movil y favicon` | `assets/css/styles.css`, `builder/html_interactive_builder.py`, `index.html`, `teoria-avanzados.html`, `todos.html`..`parciales.html` |
+
+> **Cierre QA Etapa 1A (`1A.7` — Cerrada):** `python run_tests.py` (`46/46 OK`, `0` mutaciones), idempotencia SHA-256 verificada (`13/13` artefactos entre `PYTHONHASHSEED=1` y `999999`), y auditoría computada en Chrome Headless vía CDP + navegador real (`0` errores JS, `0` HTTP 404, estilos `getComputedStyle` conformes a WCAG 2.1 AA en Light/Dark, ruteo `ej-80`, 5 simuladores con KaTeX dinámico y Mermaid móvil sin recorte izquierdo).
