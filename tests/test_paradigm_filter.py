@@ -3,15 +3,23 @@
 Verifica que:
 1. No existan reordenamientos destructivos del DOM que desprendan las tarjetas de sus patrones.
 2. Las tarjetas de ejercicio se encuentren adyacentes a sus patrones correspondientes.
-3. El filtrado por paradigma y el restablecimiento a 'all' conserve la visibilidad e integridad de los 79 ejercicios.
+3. El filtrado por paradigma y el restablecimiento a 'all' conserve la visibilidad e integridad de los 85 ejercicios.
 """
 
 import os
 import re
 import json
+import shutil
+import subprocess
+import sys
 import unittest
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BUILDER_DIR = os.path.join(BASE_DIR, "builder")
+if BUILDER_DIR not in sys.path:
+    sys.path.insert(0, BUILDER_DIR)
+
+import html_interactive_builder
 
 class TestParadigmFilterIntegrity(unittest.TestCase):
 
@@ -165,6 +173,71 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
             self.assertIn('id="progMastered"', html, f"{fname} debe contener el id 'progMastered'")
             self.assertIn('id="progTotal"', html, f"{fname} debe contener el id 'progTotal'")
             self.assertIn('id="progressFill"', html, f"{fname} debe contener el id 'progressFill'")
+
+    def test_js_python_exercise_page_parity_via_real_node_vm(self):
+        """Verifica paridad 85/85 entre Python y getPageForExercise() real de assets/js/app.js en Node/V8."""
+        node_bin = shutil.which("node")
+        if not node_bin:
+            self.fail("Node.js es obligatorio para validar la paridad Python/JS de assets/js/app.js.")
+
+        app_js_path = os.path.join(BASE_DIR, "assets", "js", "app.js")
+        node_script = (
+            'const fs = require("fs"); '
+            'const vm = require("vm"); '
+            'const appJsPath = process.argv[1]; '
+            'const code = fs.readFileSync(appJsPath, "utf8"); '
+            'const sandbox = { '
+            '  window: { addEventListener() {}, pageYOffset: 0 }, '
+            '  document: { addEventListener() {}, documentElement: { scrollTop: 0 } }, '
+            '  console '
+            '}; '
+            'vm.runInNewContext(code, sandbox, { filename: appJsPath }); '
+            'const pages = {}; '
+            'for (let n = 1; n <= 85; n++) { pages[String(n)] = sandbox.getPageForExercise(n); } '
+            'const fallbacks = {}; '
+            'for (const v of [0, -1, 86, 999]) { fallbacks[String(v)] = sandbox.getPageForExercise(v); } '
+            'console.log(JSON.stringify({ pages, fallbacks }));'
+        )
+        res = subprocess.run(
+            [node_bin, "-e", node_script, app_js_path],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        self.assertEqual(res.returncode, 0, f"Fallo al ejecutar assets/js/app.js en Node/V8:\n{res.stderr}")
+
+        payload = json.loads(res.stdout.strip())
+        pages = payload["pages"]
+        fallbacks = payload["fallbacks"]
+
+        html_cache = {}
+        for num in range(1, 86):
+            paradigm_key, _, _ = html_interactive_builder.get_paradigm_for_exercise(num)
+            expected_page = f"{paradigm_key}.html"
+            js_page = pages.get(str(num))
+            self.assertEqual(
+                js_page,
+                expected_page,
+                f"Desajuste de paridad para ej-{num}: JS={js_page!r} vs Python={expected_page!r}.",
+            )
+            if js_page not in html_cache:
+                target_path = os.path.join(BASE_DIR, js_page)
+                self.assertTrue(os.path.exists(target_path), f"El HTML destino '{js_page}' no existe.")
+                with open(target_path, "r", encoding="utf-8") as f:
+                    html_cache[js_page] = f.read()
+            self.assertIn(
+                f'id="ej-{num}"',
+                html_cache[js_page],
+                f"El ejercicio id='ej-{num}' no existe en '{js_page}'.",
+            )
+
+        for invalid_num in (0, -1, 86, 999):
+            self.assertEqual(
+                fallbacks.get(str(invalid_num)),
+                "todos.html",
+                f"Fallback esperado 'todos.html' para num={invalid_num}, obtenido {fallbacks.get(str(invalid_num))!r}.",
+            )
 
 if __name__ == "__main__":
     unittest.main()

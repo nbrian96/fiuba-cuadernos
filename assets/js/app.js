@@ -1,6 +1,6 @@
 // ==========================================================================
 // TDA — Guía Interactiva de Parciales (FIUBA)
-// Lógica Frontend Modular (83 Ejercicios + Filtro de Dificultad 1★-5★ + Simulador)
+// Lógica Frontend Modular (85 Ejercicios + Filtro de Dificultad 1★-5★ + Simulador)
 // ==========================================================================
 
 // Global state
@@ -141,15 +141,15 @@ let trainerScore = 0;
 let trainerAnswered = false;
 
 function getPageForExercise(num) {
-  if (num >= 1 && num <= 12) return "dyc.html";
-  if (num >= 13 && num <= 38) return "greedy.html";
-  if (num >= 39 && num <= 52) return "backtracking.html";
-  if (num >= 53 && num <= 59) return "dp.html";
-  if (num >= 60 && num <= 65) return "pl.html";
+  if ((num >= 1 && num <= 12) || num === 80) return "dyc.html";
+  if ((num >= 13 && num <= 38) || num === 83) return "greedy.html";
+  if ((num >= 39 && num <= 52) || num === 81) return "backtracking.html";
+  if ((num >= 53 && num <= 59) || num === 82) return "dp.html";
+  if ((num >= 60 && num <= 65) || num === 84) return "pl.html";
   if (num >= 66 && num <= 70) return "flujo.html";
-  if (num >= 71 && num <= 74) return "reducciones.html";
+  if ((num >= 71 && num <= 74) || num === 85) return "reducciones.html";
   if (num >= 75 && num <= 79) return "integradores.html";
-  return "index.html";
+  return "todos.html";
 }
 
 // Initialization on DOM ready
