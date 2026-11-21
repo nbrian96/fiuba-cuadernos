@@ -66,3 +66,11 @@ scratch/
 tmp/
 *.tmp
 guia_tda_parciales.pdf
+
+# Node / Astro / Testing
+node_modules/
+.astro/
+.vitest/
+coverage/
+playwright-report/
+test-results/

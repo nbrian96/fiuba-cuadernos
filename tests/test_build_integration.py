@@ -487,9 +487,20 @@ class TestBuildIntegration(unittest.TestCase):
                     broken_links.append((f"temp_dir/{fname}", target))
 
         # 3. Todos los archivos Markdown (.md) del repositorio
+        excluded_md_scan_dirs = {
+            ".git",
+            "node_modules",
+            ".astro",
+            "dist",
+            ".venv",
+            "venv",
+            "coverage",
+            "playwright-report",
+            "test-results",
+        }
         md_files = []
         for root, dirs, files in os.walk(BASE_DIR):
-            dirs[:] = [d for d in sorted(dirs) if d != ".git"]
+            dirs[:] = [d for d in sorted(dirs) if d not in excluded_md_scan_dirs]
             for fn in sorted(files):
                 if fn.endswith(".md"):
                     md_files.append(os.path.join(root, fn))

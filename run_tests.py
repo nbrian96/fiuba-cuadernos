@@ -14,6 +14,7 @@ os.environ["PYTHONPYCACHEPREFIX"] = os.path.join(tempfile.gettempdir(), "tda_tes
 import unittest
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SNAPSHOT_EXCLUDED_DIRS = {".git", "node_modules", ".astro", "dist", ".venv", "venv"}
 
 
 def _sha256_file(filepath):
@@ -25,10 +26,10 @@ def _sha256_file(filepath):
 
 
 def snapshot_workspace_state(base_dir):
-    """Captura un snapshot criptográfico de todos los archivos (versionados e ignorados) fuera de .git/."""
+    """Captura un snapshot criptográfico de todos los archivos (versionados e ignorados) fuera de directorios excluidos."""
     files_state = {}
     for root, dirs, files in os.walk(base_dir):
-        dirs[:] = [d for d in sorted(dirs) if d != ".git"]
+        dirs[:] = [d for d in sorted(dirs) if d not in SNAPSHOT_EXCLUDED_DIRS]
         for fname in sorted(files):
             full_path = os.path.join(root, fname)
             rel_path = os.path.relpath(full_path, base_dir).replace("\\", "/")
