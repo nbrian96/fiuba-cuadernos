@@ -3,6 +3,7 @@
 import os
 import re
 import glob
+import json
 import subprocess
 import tempfile
 import unittest
@@ -12,6 +13,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILDER_DIR = os.path.join(BASE_DIR, "builder")
 if BUILDER_DIR not in sys.path:
     sys.path.insert(0, BUILDER_DIR)
+
+import build_manual
+import html_interactive_builder
+import sec11_errores_checklist
 
 
 class TestBuildIntegration(unittest.TestCase):
@@ -230,6 +235,164 @@ class TestBuildIntegration(unittest.TestCase):
 
         self.assertEqual(len(all_discovered), len(set(all_discovered)), "Existen números de ejercicio duplicados en los módulos.")
         self.assertEqual(len(all_discovered), 85, f"Se esperaban 85 ejercicios en los módulos, encontrados {len(all_discovered)}.")
+
+    def test_all_12_compiled_html_share_identical_navbar_structure_and_active_route(self):
+        """Verifica estructura idéntica de navbar, conteos reales y ruta activa en los 12 HTML compilados."""
+        counts = build_manual.compute_catalog_counts()
+        self.assertEqual(
+            counts,
+            {
+                "dyc": 13,
+                "greedy": 27,
+                "backtracking": 15,
+                "dp": 8,
+                "pl": 7,
+                "flujo": 5,
+                "reducciones": 5,
+                "integradores": 5,
+                "todos": 85,
+                "parciales": 35,
+            },
+        )
+
+        expected_count_labels = [
+            f"Parciales ({counts['parciales']})",
+            f"Todos los Ejercicios ({counts['todos']})",
+            f"División y Conquista ({counts['dyc']})",
+            f"Greedy / Voraces ({counts['greedy']})",
+            f"Backtracking &amp; B&amp;B ({counts['backtracking']})",
+            f"Prog. Dinámica ({counts['dp']})",
+            f"Prog. Lineal ({counts['pl']})",
+            f"Redes de Flujo ({counts['flujo']})",
+            f"Reducciones NP ({counts['reducciones']})",
+            f"Integradores ({counts['integradores']})",
+        ]
+
+        normalized_navbars = {}
+        for filename in self.ALL_REPO_HTML_FILES:
+            filepath = os.path.join(self.temp_dir, filename)
+            self.assertTrue(os.path.exists(filepath), f"Falta {filename} en temp_dir.")
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            matches = list(re.finditer(r'<header\b[^>]*\bid="siteNavbar"[^>]*>[\s\S]*?</header>', content))
+            self.assertEqual(len(matches), 1, f"[{filename}] Debe tener exactamente 1 <header id='siteNavbar'>.")
+            navbar_html = matches[0].group(0)
+
+            for label in expected_count_labels:
+                self.assertIn(label, navbar_html, f"[{filename}] Falta etiqueta actualizada '{label}' en el navbar.")
+
+            active_hrefs = []
+            for am in re.finditer(r"<a\b([^>]*)>", navbar_html):
+                attrs = am.group(1)
+                cls_m = re.search(r'class="([^"]*)"', attrs)
+                href_m = re.search(r'href="([^"]*)"', attrs)
+                if cls_m and "active" in cls_m.group(1).split():
+                    active_hrefs.append(href_m.group(1) if href_m else None)
+
+            if filename in ("index.html", "parciales.html", "teoria-avanzados.html"):
+                expected_actives = [filename]
+            else:
+                expected_actives = ["#", filename]
+            self.assertEqual(
+                active_hrefs,
+                expected_actives,
+                f"[{filename}] Rutas activas inesperadas: {active_hrefs} (esperadas {expected_actives}).",
+            )
+
+            stripped = re.sub(
+                r'class="([^"]*)"',
+                lambda m: f'class="{" ".join(t for t in m.group(1).split() if t != "active")}"',
+                navbar_html,
+            )
+            normalized = re.sub(r">\s+<", "><", re.sub(r"\s+", " ", stripped)).strip()
+            normalized_navbars[filename] = normalized
+
+        self.assertEqual(
+            len(set(normalized_navbars.values())),
+            1,
+            "Los 12 HTML compilados deben compartir una estructura de navbar normalizada idéntica.",
+        )
+
+    def test_checklist_ids_deterministic_across_pythonhashseed_and_collision_rejection(self):
+        """Verifica IDs chk_<16_hex> deterministas entre PYTHONHASHSEED distintos y rechazo de colisiones."""
+        parciales_path = os.path.join(self.temp_dir, "parciales.html")
+        with open(parciales_path, "r", encoding="utf-8") as f:
+            parciales_html = f.read()
+
+        with open(self.temp_bundle, "r", encoding="utf-8") as f:
+            bundle_raw = f.read()
+        prefix = "mount.innerHTML = "
+        start = bundle_raw.find(prefix)
+        end = bundle_raw.rfind("; }")
+        self.assertNotEqual(start, -1, "No se encontró mount.innerHTML en catalog-bundle.js.")
+        bundle_html = json.loads(bundle_raw[start + len(prefix):end].strip())
+
+        for label, html_src in (("parciales.html", parciales_html), ("catalog-bundle.js", bundle_html)):
+            all_ids = re.findall(r'data-chk-id="([^"]+)"', html_src)
+            hex_ids = re.findall(r'data-chk-id="(chk_[0-9a-f]{16})"', html_src)
+            self.assertEqual(len(all_ids), 11, f"[{label}] Se esperaban 11 IDs de checklist, encontrados {len(all_ids)}.")
+            self.assertEqual(all_ids, hex_ids, f"[{label}] Todos los data-chk-id deben cumplir chk_<16_hex>.")
+            self.assertEqual(len(set(all_ids)), 11, f"[{label}] Existen IDs de checklist duplicados.")
+
+        parciales_ids = re.findall(r'data-chk-id="(chk_[0-9a-f]{16})"', parciales_html)
+        bundle_ids = re.findall(r'data-chk-id="(chk_[0-9a-f]{16})"', bundle_html)
+        self.assertEqual(parciales_ids, bundle_ids)
+
+        inline_code = (
+            "import json, re, sys; "
+            f"sys.path.insert(0, {BUILDER_DIR!r}); "
+            "import html_interactive_builder as hb, sec11_errores_checklist as sec11; "
+            "md = hb.normalize_markdown_lists(sec11.get_content()); "
+            "raw_html = hb.convert_markdown_to_html(md); "
+            "out = hb.replace_checklist_items(raw_html); "
+            "print(json.dumps(re.findall(r'data-chk-id=\"([^\"]+)\"', out)))"
+        )
+
+        seed_outputs = []
+        for seed in ("1", "987654"):
+            env = os.environ.copy()
+            env["PYTHONHASHSEED"] = seed
+            env["PYTHONDONTWRITEBYTECODE"] = "1"
+            env["PYTHONPYCACHEPREFIX"] = os.path.join(tempfile.gettempdir(), "tda_test_pycache")
+            res = subprocess.run(
+                [sys.executable, "-c", inline_code],
+                env=env,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+            )
+            self.assertEqual(res.returncode, 0, f"Fallo en subproceso con PYTHONHASHSEED={seed}: {res.stderr}")
+            seed_outputs.append(json.loads(res.stdout.strip()))
+
+        self.assertEqual(seed_outputs[0], seed_outputs[1], "Los IDs chk_ no son deterministas entre PYTHONHASHSEED.")
+        self.assertEqual(seed_outputs[0], parciales_ids)
+
+        seen = {}
+        html_interactive_builder.generate_checklist_id("sec", "1", "item", seen_ids=seen)
+        with self.assertRaises(ValueError):
+            html_interactive_builder.generate_checklist_id("sec", "1", "item", seen_ids=seen)
+
+        with self.assertRaises(ValueError):
+            html_interactive_builder.replace_checklist_items(
+                "<ul><li>[ ] Uno</li><li>[ ] Dos</li></ul>",
+                hash_fn=lambda _: "0123456789abcdef",
+            )
+
+        with self.assertRaises(ValueError):
+            html_interactive_builder.replace_checklist_items(
+                "<h3>A</h3><ul><li>[ ] X</li></ul><h3>A</h3><ul><li>[ ] X</li></ul>"
+            )
+
+    def test_trainer_total_questions_20_and_sec01_85(self):
+        """Verifica que el entrenador de todos.html muestre 20 casos y sec01 indique 85 ejercicios."""
+        todos_file = os.path.join(self.temp_dir, "todos.html")
+        with open(todos_file, "r", encoding="utf-8") as f:
+            todos_content = f.read()
+
+        self.assertIn('id="trainerTotalQuestions">20<', todos_content)
+        self.assertIn("85 ejercicios reales oficiales", todos_content)
+        self.assertNotIn("79 ejercicios reales oficiales", todos_content)
 
 
 if __name__ == "__main__":

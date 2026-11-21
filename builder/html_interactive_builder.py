@@ -1,8 +1,74 @@
 """Generador de HTML interactivo con Bootstrap 5.3 y assets modulares para TDA."""
 
-import re
+import hashlib
 import html
+import re
+import unicodedata
 import markdown
+
+DEFAULT_NAV_COUNTS = {
+    "todos": 85,
+    "parciales": 35,
+    "dyc": 13,
+    "greedy": 27,
+    "backtracking": 15,
+    "dp": 8,
+    "pl": 7,
+    "flujo": 5,
+    "reducciones": 5,
+    "integradores": 5,
+}
+
+
+def _slugify_section_heading(heading_html):
+    text = re.sub(r"<[^>]+>", "", heading_html)
+    normalized = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii").lower()
+    slug = re.sub(r"[^a-z0-9]+", "-", normalized).strip("-")
+    return slug or "root"
+
+
+def generate_checklist_id(section_id, item_id, raw_text, seen_ids=None, hash_fn=None):
+    composite_key = f"{section_id}:{item_id}:{raw_text}"
+    if hash_fn is not None:
+        digest = hash_fn(composite_key.encode("utf-8"))
+    else:
+        digest = hashlib.sha256(composite_key.encode("utf-8")).hexdigest()[:16]
+    check_id = f"chk_{digest}"
+    if seen_ids is not None:
+        if check_id in seen_ids:
+            raise ValueError(
+                f"Colisión de ID de checklist detectada: {check_id} para '{composite_key}' "
+                f"(ya registrado para '{seen_ids[check_id]}')"
+            )
+        seen_ids[check_id] = composite_key
+    return check_id
+
+
+def replace_checklist_items(html_body, seen_ids=None, hash_fn=None):
+    seen = {} if seen_ids is None else seen_ids
+    state = {"section_id": "root", "item_index": 0}
+
+    def _replace(match):
+        if match.group(1) is not None:
+            state["section_id"] = _slugify_section_heading(match.group(1))
+            state["item_index"] = 0
+            return match.group(1)
+        raw_text = match.group(2)
+        state["item_index"] += 1
+        check_id = generate_checklist_id(
+            state["section_id"],
+            str(state["item_index"]),
+            raw_text,
+            seen_ids=seen,
+            hash_fn=hash_fn,
+        )
+        return (
+            f'<li class="checklist-interactive-item"><label class="chk-label">'
+            f'<input type="checkbox" class="exam-checklist-input" data-chk-id="{check_id}" onchange="toggleChecklistItem(\'{check_id}\', this.checked)">'
+            f'<span class="chk-custom"></span><span class="chk-text">{raw_text}</span></label></li>'
+        )
+
+    return re.sub(r"(<h[23]\b[^>]*>.*?</h[23]>)|<li>\[ \]\s*(.*?)</li>", _replace, html_body, flags=re.DOTALL)
 
 def get_paradigm_for_exercise(num):
     if (1 <= num <= 12) or num == 80:
@@ -176,7 +242,7 @@ def inject_interactive_widgets(html_body):
         '<p class="trainer-subtitle">Entrená la habilidad más crítica del parcial: identificar el paradigma exacto sin dudar.</p></div></div>'
         '<div class="trainer-stats"><span class="stat-pill">Aciertos: <strong id="trainerScore">0</strong> / <strong id="trainerTotal">0</strong></span></div></div>'
         '<div class="trainer-card"><div class="trainer-card-header">'
-        '<span class="trainer-counter">Caso <span id="trainerCurrentIndex">1</span> de <span id="trainerTotalQuestions">16</span></span>'
+        '<span class="trainer-counter">Caso <span id="trainerCurrentIndex">1</span> de <span id="trainerTotalQuestions">20</span></span>'
         '<span class="trainer-timer-tag">⏱️ Meta: &lt; 30 segundos</span></div>'
         '<div class="trainer-prompt" id="trainerPrompt">Cargando enunciado de examen...</div>'
         '<div class="trainer-options-grid" id="trainerOptions">'
@@ -207,15 +273,7 @@ def inject_interactive_widgets(html_body):
         if intro_pos != -1:
             html_body = html_body[:intro_pos] + trainer_html + html_body[intro_pos:]
 
-    def make_checkbox(m):
-        raw_text = m.group(1)
-        check_id = "chk_" + str(abs(hash(raw_text)) % 100000)
-        return (
-            f'<li class="checklist-interactive-item"><label class="chk-label">'
-            f'<input type="checkbox" class="exam-checklist-input" data-chk-id="{check_id}" onchange="toggleChecklistItem(\'{check_id}\', this.checked)">'
-            f'<span class="chk-custom"></span><span class="chk-text">{raw_text}</span></label></li>'
-        )
-    html_body = re.sub(r"<li>\[ \]\s*(.*?)</li>", make_checkbox, html_body)
+    html_body = replace_checklist_items(html_body)
 
     empty_state_html = (
         '<div class="search-empty-state" id="searchEmptyState" style="display: none;">'
@@ -227,41 +285,45 @@ def inject_interactive_widgets(html_body):
     )
     return html_body + empty_state_html
 
-def get_hud_and_drawer_html(active_paradigm="all"):
+def get_navbar_html(active_paradigm="all", counts=None):
+    c = dict(DEFAULT_NAV_COUNTS)
+    if counts:
+        c.update(counts)
+
     effective_paradigm = "todos" if active_paradigm == "all" else active_paradigm
     is_home = (active_paradigm == "home")
-    
-    # Menú de paradigmas para dropdown
+
     paradigms_menu = [
-        ("todos", "todos.html", "📚 Todos los Ejercicios (85)"),
-        ("dyc", "dyc.html", "🔷 División y Conquista (13)"),
-        ("greedy", "greedy.html", "🔶 Greedy / Voraces (27)"),
-        ("backtracking", "backtracking.html", "🟣 Backtracking & B&B (15)"),
-        ("dp", "dp.html", "🟢 Prog. Dinámica (8)"),
-        ("pl", "pl.html", "🔵 Prog. Lineal (7)"),
-        ("flujo", "flujo.html", "🔴 Redes de Flujo (5)"),
-        ("reducciones", "reducciones.html", "🟡 Reducciones NP (5)"),
-        ("integradores", "integradores.html", "⚡ Integradores (5)")
+        ("todos", "todos.html", f"📚 Todos los Ejercicios ({c['todos']})"),
+        ("dyc", "dyc.html", f"🔷 División y Conquista ({c['dyc']})"),
+        ("greedy", "greedy.html", f"🔶 Greedy / Voraces ({c['greedy']})"),
+        ("backtracking", "backtracking.html", f"🟣 Backtracking &amp; B&amp;B ({c['backtracking']})"),
+        ("dp", "dp.html", f"🟢 Prog. Dinámica ({c['dp']})"),
+        ("pl", "pl.html", f"🔵 Prog. Lineal ({c['pl']})"),
+        ("flujo", "flujo.html", f"🔴 Redes de Flujo ({c['flujo']})"),
+        ("reducciones", "reducciones.html", f"🟡 Reducciones NP ({c['reducciones']})"),
+        ("integradores", "integradores.html", f"⚡ Integradores ({c['integradores']})")
     ]
-    
+
     dropdown_items_html = "".join(
         f'<a href="{href}" class="site-dropdown-item{" active" if key == effective_paradigm else ""}">{label}</a>'
         for key, href, label in paradigms_menu
     )
 
-    navbar_html = f"""<header class="site-navbar" id="siteNavbar">
+    paradigm_trigger_active = " active" if effective_paradigm in [k for k, _, _ in paradigms_menu] else ""
+    return f"""<header class="site-navbar" id="siteNavbar">
   <div class="site-navbar-container">
     <a href="index.html" class="site-brand">
       <span style="font-size: 1.25rem;">🚀</span>
       <span>TDA FIUBA</span>
     </a>
     
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Navegación principal">
       <ul class="site-nav-links">
         <li><a href="index.html" class="site-nav-link{" active" if is_home else ""}">🏠 Inicio</a></li>
-        <li><a href="parciales.html" class="site-nav-link{" active" if effective_paradigm == 'parciales' else ""}">📝 Parciales (35)</a></li>
+        <li><a href="parciales.html" class="site-nav-link{" active" if effective_paradigm == 'parciales' else ""}">📝 Parciales ({c['parciales']})</a></li>
         <li class="site-dropdown" id="navParadigmsDropdown">
-          <a href="#" class="site-nav-link{" active" if effective_paradigm in [k for k, _, _ in paradigms_menu] else ""}" role="button" aria-haspopup="true" aria-expanded="false" onclick="toggleParadigmDropdown(event)">📂 Paradigmas <span class="dropdown-caret">▾</span></a>
+          <a href="#" class="site-nav-link{paradigm_trigger_active}" role="button" aria-haspopup="true" aria-expanded="false" onclick="toggleParadigmDropdown(event)">📂 Paradigmas <span class="dropdown-caret">▾</span></a>
           <div class="site-dropdown-menu" role="menu" aria-label="Seleccionar paradigma">
             {dropdown_items_html}
           </div>
@@ -276,6 +338,10 @@ def get_hud_and_drawer_html(active_paradigm="all"):
     </div>
   </div>
 </header>"""
+
+def get_hud_and_drawer_html(active_paradigm="all", counts=None):
+    is_home = (active_paradigm == "home")
+    navbar_html = get_navbar_html(active_paradigm=active_paradigm, counts=counts)
 
     # Sub-barra de ejercicios para vistas de ejercicios
     exercise_bar_html = ""
@@ -403,7 +469,7 @@ def compact_html_outside_pre(html_str):
         temp = temp.replace(f"%%PRE_BLOCK_{idx}%%", block)
     return temp + "\n"
 
-def build_interactive_html(md_text, output_file, active_paradigm="all", page_title=None):
+def build_interactive_html(md_text, output_file, active_paradigm="all", page_title=None, nav_counts=None):
     import os
     import json
     title_text = "Teoría de Algoritmos — Guía Interactiva de Parciales (FIUBA)"
@@ -446,7 +512,7 @@ def build_interactive_html(md_text, output_file, active_paradigm="all", page_tit
     else:
         html_with_widgets = inject_interactive_widgets(html_with_cards)
 
-    hud_and_drawer = get_hud_and_drawer_html(active_paradigm=active_paradigm)
+    hud_and_drawer = get_hud_and_drawer_html(active_paradigm=active_paradigm, counts=nav_counts)
 
     extra_bundle_script = ""
     if active_paradigm == "all":

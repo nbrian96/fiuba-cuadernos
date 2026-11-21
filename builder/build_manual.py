@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import re
 import concurrent.futures
 import html_interactive_builder
 
@@ -90,6 +91,60 @@ PARADIGM_TARGETS = [
     }
 ]
 
+STANDALONE_NAVBAR_PAGES = [
+    ("index.html", "home"),
+    ("teoria-avanzados.html", "avanzados"),
+]
+
+
+def compute_catalog_counts():
+    """Calcula los conteos reales por paradigma, total y parciales desde sec02..sec09.py."""
+    counts = {}
+    total = 0
+    parciales = 0
+    for target in PARADIGM_TARGETS:
+        key = target["paradigm_key"]
+        if key == "parciales":
+            continue
+        md_content = "\n\n".join(m.get_content() for m in target["modules"])
+        blocks = [
+            b for b in re.split(r"(?m)^(?=### Ejercicio \d+)", md_content)
+            if b.startswith("### Ejercicio ")
+        ]
+        counts[key] = len(blocks)
+        total += len(blocks)
+        for block in blocks:
+            m = re.search(r"\*\*Origen:\*\*\s*([^\n]+)", block)
+            if m and "parcial" in m.group(1).lower():
+                parciales += 1
+    counts["todos"] = total
+    counts["parciales"] = parciales
+    return counts
+
+
+def sync_standalone_page_navbar(source_path, active_paradigm, counts, output_path=None):
+    """Sincroniza únicamente <header id='siteNavbar'> en una página HTML standalone."""
+    with open(source_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    new_navbar = html_interactive_builder.get_navbar_html(
+        active_paradigm=active_paradigm,
+        counts=counts,
+    )
+    pattern = re.compile(r'<header\b[^>]*\bid="siteNavbar"[^>]*>[\s\S]*?</header>')
+    matches = list(pattern.finditer(content))
+    if len(matches) != 1:
+        raise ValueError(
+            f"Se esperaba exactamente 1 <header id='siteNavbar'> en {source_path}, encontrados {len(matches)}"
+        )
+
+    updated = pattern.sub(lambda _: new_navbar, content, count=1)
+    dest_path = output_path or source_path
+    with open(dest_path, "w", encoding="utf-8") as f:
+        f.write(updated)
+    return dest_path
+
+
 def remove_legacy_files(output_dir=BASE_DIR):
     for fname in LEGACY_FILENAMES:
         path = os.path.join(output_dir, fname)
@@ -129,34 +184,44 @@ def verify_markdown(md_text):
     print(f"      Total de ejercicios resueltos encontrados: {len(ejercicios)}")
     return len(ejercicios)
 
-def compile_single_page(target, output_dir=BASE_DIR):
+def compile_single_page(target, output_dir=BASE_DIR, nav_counts=None):
     out_path = os.path.join(output_dir, target["filename"])
     sections_md = "\n\n---\n\n".join([m.get_content() for m in target["modules"]])
     html_interactive_builder.build_interactive_html(
         sections_md,
         out_path,
         active_paradigm=target["paradigm_key"],
-        page_title=target["title"]
+        page_title=target["title"],
+        nav_counts=nav_counts,
     )
     return target["filename"]
 
-def convert_to_html(md_text, output_dir=BASE_DIR):
+def convert_to_html(md_text, output_dir=BASE_DIR, nav_counts=None):
     print("[3/4] Generando aplicación modular HTML con Bootstrap 5.3 y assets externos...")
+    nav_counts = nav_counts if nav_counts is not None else compute_catalog_counts()
     index_file = os.path.join(output_dir, "todos.html")
     html_interactive_builder.build_interactive_html(
         md_text,
         index_file,
         active_paradigm="all",
-        page_title="Guía Interactiva Completa (85 Ejercicios)"
+        page_title="Guía Interactiva Completa (85 Ejercicios)",
+        nav_counts=nav_counts,
     )
     print(f"      Página maestra generada: {os.path.basename(index_file)}")
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(compile_single_page, target, output_dir): target["filename"] for target in PARADIGM_TARGETS}
+        futures = {executor.submit(compile_single_page, target, output_dir, nav_counts): target["filename"] for target in PARADIGM_TARGETS}
         for future in concurrent.futures.as_completed(futures):
             fname = futures[future]
             future.result()
             print(f"      Módulo por paradigma generado: {fname}")
+
+    for fname, active_key in STANDALONE_NAVBAR_PAGES:
+        src = os.path.join(BASE_DIR, fname)
+        dst = os.path.join(output_dir, fname)
+        if os.path.exists(src):
+            sync_standalone_page_navbar(src, active_key, nav_counts, output_path=dst)
+            print(f"      Navbar sincronizado en vista standalone: {fname}")
 
 def verify_html_line_counts(output_dir=BASE_DIR):
     print("[4/4] Reporte de tamaño y líneas de archivos HTML generados:")
