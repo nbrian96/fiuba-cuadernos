@@ -1,0 +1,94 @@
+---
+id: "tda-ej-43"
+courseId: "tda"
+number: 43
+title: "Explorador en el Laberinto (Camino al Tesoro y Camino Más Corto)"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2026-2-1 (Enunciados), Ejercicio 2"
+isParcial: true
+examIds:
+  - "tda-parcial-2026-2-1"
+relatedResourceIds:
+  - "tda-parcial-2026-2-1-pdf"
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-43"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un explorador se encuentra en un laberinto representado por una matriz de $N \times M$. Debe encontrar un camino desde la Entrada hasta el tesoro. La matriz está codificada con `0` (casilla transitable), `1` (pared, intransitable), `E` (Entrada) y `T` (Tesoro). Puede moverse hacia arriba, abajo, izquierda o derecha, sin atravesar paredes ni visitar dos veces una misma casilla en el mismo camino.
+1. Diseñar un algoritmo de backtracking que encuentre y devuelva un camino desde la entrada hasta el tesoro.
+2. Indicar la complejidad del algoritmo.
+3. Indicar cómo cambiarías el algoritmo si se pide **EL CAMINO MÁS CORTO** hasta el tesoro.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-43">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* **1. Para encontrar UN camino cualquiera:**
+  - Desde la posición actual `(f, c)`, si estamos parados sobre `'T'` (el Tesoro), ¡éxito! Devolvemos `Verdadero`.
+  - Si no, probamos movernos a cada una de las 4 casillas vecinas `(nf, nc)` (arriba, abajo, izquierda, derecha).
+  - **Poda por Factibilidad:** Solo avanzamos a `(nf, nc)` si está dentro de los límites de la matriz, no es pared (`!= 1`) y no fue visitada todavía en el camino actual (`no visitado[nf][nc]`).
+  - Marcamos la casilla como visitada, la agregamos al camino y llamamos recursivamente. Si esa llamada encuentra el tesoro, cortamos y devolvemos el camino; si no tiene salida, **desmarcamos la casilla (`visitado[nf][nc] = Falso`) y la sacamos del camino** (backtrack) para probar otra dirección.
+* **2. Complejidad Temporal:**
+  - En cada casilla tenemos hasta 4 direcciones posibles (3 reales porque no volvemos hacia la casilla de la que acabamos de venir), y la longitud máxima de un camino sin repetir casillas es $N \cdot M$. Por lo tanto, en el peor caso explora **$O(4^{N \cdot M})$** (o más ajustado **$O(3^{N \cdot M})$**) estados, con espacio auxiliar $O(N \cdot M)$.
+* **3. ¿Cómo cambiaríamos el algoritmo si se pide EL CAMINO MÁS CORTO?**
+  - **Con Backtracking (Branch & Bound):**
+    1. En vez de frenar y devolver `Verdadero` al encontrar el primer camino a `'T'`, **guardamos ese camino como `mejor_camino`** (si es más corto que el `mejor_camino` registrado hasta ahora) y **seguimos explorando** el resto de las ramas.
+    2. **Agregamos Poda por Optimalidad (Branch & Bound):** Si en cualquier momento el largo de nuestro `camino_actual` (más la distancia Manhattan hasta `T`) ya es **mayor o igual** al largo del `mejor_camino` que ya tenemos guardado (`longitud(camino_actual) >= longitud(mejor_camino)`), **podamos la rama inmediatamente** sin seguir avanzando.
+  - *(Nota adicional para sumar puntos en el parcial: Como todas las aristas pesan 1 paso, el camino más corto en una grilla sin pesos también se puede resolver de forma óptima en tiempo polinomial $O(N \cdot M)$ cambiando la búsqueda a **BFS — Búsqueda a lo Ancho** con una cola).*
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo BuscarCaminoLaberinto(M, N_filas, M_cols):
+    (f_ini, c_ini) = encontrarPosicion(M, 'E')
+    visitado = matriz de N_filas x M_cols en Falso
+    visitado[f_ini][c_ini] = Verdadero
+    camino = [ (f_ini, c_ini) ]
+
+    si ExplorarBT(M, f_ini, c_ini, visitado, camino):
+        devolver camino
+    devolver "No existe camino al tesoro"
+
+función ExplorarBT(M, f, c, visitado, camino):
+    // Caso base: llegamos al Tesoro
+    si M[f][c] == 'T':
+        devolver Verdadero
+
+    direcciones = [ (-1, 0), (1, 0), (0, -1), (0, 1) ]  // Arriba, Abajo, Izq, Der
+
+    para cada (df, dc) en direcciones:
+        nf = f + df, nc = c + dc
+
+        // Poda de factibilidad: dentro del mapa, no es pared y no fue visitada
+        si esValida(nf, nc, M) y M[nf][nc] != 1 y no visitado[nf][nc]:
+            // 1. Marcar paso
+            visitado[nf][nc] = Verdadero
+            agregar (nf, nc) a camino
+
+            // 2. Explorar recursivamente
+            si ExplorarBT(M, nf, nc, visitado, camino):
+                devolver Verdadero
+
+            // 3. Deshacer paso (Backtrack)
+            quitar_ultimo(camino)
+            visitado[nf][nc] = Falso
+
+    devolver Falso
+```
+
+</SolutionDrawer>

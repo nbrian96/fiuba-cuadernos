@@ -1,0 +1,101 @@
+---
+id: "tda-ej-56"
+courseId: "tda"
+number: 56
+title: "Problema del Delivery: Mochila 3D con Límite de Seguro Financiero"
+unit: "dp"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2025-1-1 (27 de mayo de 2025), Ejercicio 4"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-1"
+relatedResourceIds:
+  - "tda-parcial-2025-1-1-pdf"
+  - "tda-slide-08-programacion-dinamica-i"
+  - "tda-slide-09-programacion-dinamica-ii"
+  - "tda-slide-10-programacion-dinamica-iii"
+  - "tda-slide-11a-programacion-dinamica-iv"
+  - "tda-slide-11b-practica-programacion-dinamica"
+  - "tda-guia-04-dp"
+legacyPage: "dp.html"
+legacyAnchor: "#ej-56"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene el problema del delivery. Para cada paquete $i$ de una lista de $n$ paquetes se conoce su peso $W_i$, su volumen $V_i$, su costo de seguro $C_i$ y su beneficio comercial $B_i$. El repartidor dispone de un vehículo con capacidad máxima de peso $C$ kilos y volumen máximo de $T$ litros. Además, por una cláusula estricta del seguro de transporte, la suma total de los costos de los productos transportados no puede superar los $M$ pesos. Desarrollar un algoritmo de Programación Dinámica que resuelva el problema maximizando el beneficio.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-56">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Definición del Estado:** Es una Mochila 0-1 con **tres capacidades simultáneas** (peso, volumen y monto de seguro). Definimos $OPT(i, w, v, m)$ como el **máximo beneficio comercial obtenible considerando un subconjunto de los primeros $i$ paquetes disponiendo de un peso máximo $w$, un volumen máximo $v$ y un monto de seguro máximo $m$**.
+* **Casos Base:** $OPT(0, w, v, m) = 0$ para todo $w \in [0, C]$, $v \in [0, T]$ y $m \in [0, M]$ (sin paquetes para elegir, la ganancia es $0$).
+* **Decisiones en el paso $i$:**
+  Al evaluar el paquete $i$ (con peso $W_i$, volumen $V_i$, seguro $C_i$ y beneficio $B_i$):
+  1. Si supera cualquiera de las tres capacidades disponibles ($W_i > w \lor V_i > v \lor C_i > m$), **no entra** en el vehículo y nos quedamos con $OPT(i - 1, w, v, m)$.
+  2. Si entra en los tres recursos a la vez ($W_i \le w \land V_i \le v \land C_i \le m$), elegimos el máximo entre **no llevarlo** o **llevarlo** (sumando $B_i$ y descontando $W_i$, $V_i$ y $C_i$):
+* **Ecuación de Bellman (Recurrencia):**
+  $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) & \text{si } W_i > w \lor V_i > v \lor C_i > m \\ \max\Big(OPT(i - 1, w, v, m), \; OPT(i - 1, w - W_i, v - V_i, m - C_i) + B_i\Big) & \text{si } W_i \le w \land V_i \le v \land C_i \le m \end{cases}$$
+
+
+<MermaidDiagram client:visible code={"flowchart TD\n    S[\"Estado Actual: OPT(i, w, v, m)\"] --> COND{\"¿Cabe en los 3 recursos?<br/>W_i ≤ w ∧ V_i ≤ v ∧ C_i ≤ m\"}\n    COND -- No --> EXCL[\"No llevar paquete i:<br/>OPT(i-1, w, v, m)\"]:::no\n    COND -- Sí --> MAX[\"max(<br/>  No llevar: OPT(i-1, w, v, m),<br/>  Llevar: OPT(i-1, w-W_i, v-V_i, m-C_i) + B_i<br/>)\"]:::yes\n    classDef no fill:#991b1b,stroke:#7f1d1d,stroke-width:1.5px,color:#fff\n    classDef yes fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION DeliveryMochila3D(paquetes, n, C, T, M):
+    DP <- matriz 4D de (n + 1) x (C + 1) x (T + 1) x (M + 1) inicializada en 0
+
+    // 1. Llenado Bottom-Up de los 4 índices
+    PARA i <- 1 HASTA n:
+        p <- paquetes[i]
+        PARA w <- 0 HASTA C:
+            PARA v <- 0 HASTA T:
+                PARA m <- 0 HASTA M:
+                    SI p.W > w O p.V > v O p.C > m:
+                        DP[i][w][v][m] <- DP[i - 1][w][v][m]
+                    SINO:
+                        DP[i][w][v][m] <- max(DP[i - 1][w][v][m],
+                                              DP[i - 1][w - p.W][v - p.V][m - p.C] + p.B)
+
+    // 2. Reconstrucción de los paquetes seleccionados
+    elegidos <- lista vacía
+    w <- C;  v <- T;  m <- M
+    PARA i <- n BAJANDO HASTA 1:
+        SI DP[i][w][v][m] != DP[i - 1][w][v][m]:
+            AGREGAR paquetes[i] A elegidos
+            w <- w - paquetes[i].W
+            v <- v - paquetes[i].V
+            m <- m - paquetes[i].C
+
+    RETORNAR (DP[n][C][T][M], elegidos)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** $\mathcal{O}(n \cdot C \cdot T \cdot M)$. Tenemos una tabla 4D con $(n + 1)(C + 1)(T + 1)(M + 1)$ celdas, y cada celda se resuelve en tiempo constante $\mathcal{O}(1)$ comparando dos opciones. La reconstrucción recorre $n$ pasos en $\mathcal{O}(n)$. Es una complejidad **pseudo-polinomial** porque depende de las magnitudes numéricas de las capacidades $C, T, M$.
+* **Complejidad Espacial:** $\mathcal{O}(n \cdot C \cdot T \cdot M)$ para almacenar la tabla 4D.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Olvidar una dimensión en el estado:** Tratar el seguro $M$ por fuera de la tabla o usar solo peso y volumen no garantiza optimalidad; cada restricción acumulativa exige su propio eje en la tabla `DP`.
+
+- **No aclarar que es pseudo-polinomial:** En todo problema de tipo Mochila siempre hay que mencionar que la complejidad es pseudo-polinomial respecto al tamaño de los números $C, T, M$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

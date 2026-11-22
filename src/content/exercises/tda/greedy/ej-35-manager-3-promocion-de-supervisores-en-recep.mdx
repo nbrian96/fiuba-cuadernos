@@ -1,0 +1,70 @@
+---
+id: "tda-ej-35"
+courseId: "tda"
+number: 35
+title: "Manager 3: Promoción de Supervisores en Recepción"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.17"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-35"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Cada empleado de recepción trabaja un único turno $[inicio_i, fin_i]$ en la semana. Reggie quiere promover a algunos empleados a "manager asistente" de modo que **todos los empleados de recepción compartan aunque sea una fracción de su turno con al menos un manager asistente** (un manager asistente se supervisa a sí mismo). Promover a la menor cantidad de empleados posible.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-35">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Queremos elegir la menor cantidad de intervalos para que todo otro intervalo se cruce con al menos uno de los elegidos (*Dominating Set en Grafo de Intervalos*):
+  1. Ordenamos los turnos por su **hora de finalización** de menor a mayor.
+  2. Miramos al **primer empleado todavía no supervisado** $E_1$, cuyo turno termina en $f_1$. Para que alguien supervise a $E_1$, ese supervisor tiene que haber entrado a trabajar **antes de que $E_1$ se vaya** ($inicio_s \le f_1$).
+  3. Entre todos los empleados que entran antes de $f_1$ (y que por lo tanto comparten turno con $E_1$), **promovemos a manager al que su turno termine lo más tarde posible ($f_s$ máximo)**. ¿Por qué? Porque al quedarse hasta más tarde, ese mismo manager supervisará también a la mayor cantidad posible de empleados siguientes.
+  4. Marcamos como supervisados a todos los empleados cuyos turnos se crucen con el de este nuevo manager (los que empiezan antes de $f_s$), y repetimos con el próximo empleado no supervisado.
+* Es **óptimo** y se ejecuta en **$O(n \log n)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo PromoverSupervisores(empleados):
+    ordenar empleados por emp.fin de menor a mayor
+    managers = []
+    i = 0, n = longitud(empleados)
+
+    mientras i < n:
+        // E1 es el empleado no supervisado que se va más temprano
+        fin_limite = empleados[i].fin
+
+        // Entre todos los empleados que comparten turno con E1 (inicio <= fin_limite),
+        // elegir como manager al que termine su turno más tarde
+        mejor_manager = empleados[i]
+        para j desde i hasta n - 1:
+            si empleados[j].inicio <= fin_limite y empleados[j].fin > mejor_manager.fin:
+                mejor_manager = empleados[j]
+
+        agregar mejor_manager a managers
+
+        // Saltar todos los empleados que ya quedan supervisados por mejor_manager
+        mientras i < n y empleados[i].inicio <= mejor_manager.fin:
+            i = i + 1
+
+    devolver managers
+```
+
+</SolutionDrawer>

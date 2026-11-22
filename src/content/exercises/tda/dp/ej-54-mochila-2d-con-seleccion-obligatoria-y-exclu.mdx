@@ -1,0 +1,111 @@
+---
+id: "tda-ej-54"
+courseId: "tda"
+number: 54
+title: "Mochila 2D con Selección Obligatoria y Excluyente de Guías de Aves"
+unit: "dp"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 3"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-1"
+relatedResourceIds:
+  - "tda-parcial-2024-2-1-pdf"
+  - "tda-slide-08-programacion-dinamica-i"
+  - "tda-slide-09-programacion-dinamica-ii"
+  - "tda-slide-10-programacion-dinamica-iii"
+  - "tda-slide-11a-programacion-dinamica-iv"
+  - "tda-slide-11b-practica-programacion-dinamica"
+  - "tda-guia-04-dp"
+legacyPage: "dp.html"
+legacyAnchor: "#ej-54"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Paolo Casanova llevará una mochila para el fin de semana con capacidad de peso $C$ kilos y volumen $L$ litros. Tiene una lista de $n$ elementos posibles, donde cada elemento $i$ tiene un peso $w_i$, un volumen $v_i$ y un beneficio $b_i$. Los ítems $1$ y $2$ son dos guías de observación de aves distintas. Por utilidad, **no tiene sentido llevar ambas guías, pero Paolo debe llevar obligatoriamente una de las dos** (es decir, debe elegir exactamente la guía $1$ o la guía $2$, nunca ninguna ni las dos). Desarrollar un algoritmo de Programación Dinámica que encuentre la combinación óptima de elementos que maximice el beneficio total respetando las capacidades.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-54">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Cómo manejar la restricción obligatoria y excluyente (XOR) de las guías:**
+  Separamos los ítems $1$ y $2$ (las dos guías de aves) del resto de los elementos libres $R = \{3, 4, \dots, n\}$ (que son $m = n - 2$ elementos). Como Paolo está obligado a llevar **exactamente una** de las dos guías, resolvemos una única tabla de **Mochila 2D** (con peso y volumen) sobre los $m$ elementos libres, y al final comparamos los dos casos posibles:
+  * **Caso A (Elegir la Guía 1):** Si entra en la mochila ($w_1 \le C$ y $v_1 \le L$), nos aporta $b_1$ y nos deja capacidad restante $(C - w_1, \; L - v_1)$ para llenar con los elementos libres: beneficio total $b_1 + OPT(m, C - w_1, L - v_1)$.
+  * **Caso B (Elegir la Guía 2):** Si entra en la mochila ($w_2 \le C$ y $v_2 \le L$), nos aporta $b_2$ y nos deja capacidad restante $(C - w_2, \; L - v_2)$: beneficio total $b_2 + OPT(m, C - w_2, L - v_2)$.
+* **Definición del Estado:** Llamamos $OPT(i, p, v)$ al **máximo beneficio obtenible considerando los primeros $i$ elementos libres (del conjunto $R = \{3 \dots n\}$) con un límite de peso $p$ y un límite de volumen $v$**.
+* **Casos Base:** $OPT(0, p, v) = 0$ para todo $p, v$ (con $0$ elementos libres el beneficio es $0$), y $OPT(i, 0, v) = OPT(i, p, 0) = 0$.
+* **Decisiones en el paso $i$ y Ecuación de Bellman (Recurrencia):**
+  Para el $i$-ésimo elemento libre (con peso $w_i$, volumen $v_i$ y beneficio $b_i$):
+  1. Si supera el peso $p$ o el volumen $v$ disponible ($w_i > p \lor v_i > v$), **no podemos llevarlo** y mantenemos $OPT(i - 1, p, v)$.
+  2. Si entra en ambos recursos ($w_i \le p \land v_i \le v$), elegimos el máximo entre **no llevarlo** o **llevarlo** (sumando $b_i$ y restando su peso y volumen):
+  $$OPT(i, p, v) = \begin{cases} OPT(i - 1, p, v) & \text{si } w_i > p \lor v_i > v \\ \max\Big(OPT(i - 1, p, v), \; OPT(i - 1, p - w_i, v - v_i) + b_i\Big) & \text{si } w_i \le p \land v_i \le v \end{cases}$$
+* **Óptimo Global del Problema:**
+  $$OPT_{\text{total}} = \max\Big( b_1 + OPT(m, C - w_1, L - v_1), \;\; b_2 + OPT(m, C - w_2, L - v_2) \Big)$$
+
+
+<MermaidDiagram client:visible code={"flowchart TD\n    P([\"Instancia Original: Capacidades (C, L) e Ítems {1..n}\"]) --> DP[\"Llenar Tabla DP 3D sobre Ítems Libres {3..n}<br/>OPT(i, p, v) para p ∈ [0..C], v ∈ [0..L]\"]:::dp\n    DP --> CA[\"Caso A: Incluir Guía 1 (si w₁ ≤ C y v₁ ≤ L)<br/>Total A = b₁ + DP[n-2][C - w₁][L - v₁]\"]:::branch\n    DP --> CB[\"Caso B: Incluir Guía 2 (si w₂ ≤ C y v₂ ≤ L)<br/>Total B = b₂ + DP[n-2][C - w₂][L - v₂]\"]:::branch\n    CA --> MAX{\"Elegir max(Total A, Total B)\"}\n    CB --> MAX\n    MAX --> SOL([\"Reconstruir desde la capacidad remanente de la Guía ganadora\"]):::done\n    classDef branch fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff\n    classDef dp fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff\n    classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION MochilaPaolo(guia1, guia2, libres, C, L):
+    m <- longitud(libres)   // libres contiene los ítems 3..n (m = n - 2)
+    DP <- matriz 3D de (m + 1) x (C + 1) x (L + 1) inicializada en 0
+
+    // 1. Llenar la tabla DP una sola vez con los m elementos libres
+    PARA i <- 1 HASTA m:
+        item <- libres[i]
+        PARA p <- 0 HASTA C:
+            PARA v <- 0 HASTA L:
+                SI item.w > p O item.v > v:
+                    DP[i][p][v] <- DP[i - 1][p][v]
+                SINO:
+                    DP[i][p][v] <- max(DP[i - 1][p][v], DP[i - 1][p - item.w][v - item.v] + item.b)
+
+    // 2. Comparar Caso A (Guía 1) vs Caso B (Guía 2)
+    total_A <- (guia1.b + DP[m][C - guia1.w][L - guia1.v]) SI (guia1.w <= C Y guia1.v <= L) SINO -INFINITO
+    total_B <- (guia2.b + DP[m][C - guia2.w][L - guia2.v]) SI (guia2.w <= C Y guia2.v <= L) SINO -INFINITO
+
+    SI total_A >= total_B:
+        elegidos <- [guia1];  p_rem <- C - guia1.w;  v_rem <- L - guia1.v
+    SINO:
+        elegidos <- [guia2];  p_rem <- C - guia2.w;  v_rem <- L - guia2.v
+
+    // 3. Reconstruir qué ítems libres se llevaron
+    PARA i <- m BAJANDO HASTA 1:
+        SI DP[i][p_rem][v_rem] != DP[i - 1][p_rem][v_rem]:
+            AGREGAR libres[i] A elegidos
+            p_rem <- p_rem - libres[i].w
+            v_rem <- v_rem - libres[i].v
+
+    RETORNAR (max(total_A, total_B), elegidos)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** $\mathcal{O}(n \cdot C \cdot L)$. La matriz tridimensional `DP` tiene dimensiones $(n - 1) \times (C + 1) \times (L + 1)$ y cada celda se calcula en $\mathcal{O}(1)$ comparando dos opciones. Evaluar ambas guías toma $\mathcal{O}(1)$ y reconstruir la solución toma $\mathcal{O}(n)$ pasos. Es una complejidad **pseudo-polinomial** porque depende de las magnitudes numéricas $C$ y $L$.
+* **Complejidad Espacial:** $\mathcal{O}(n \cdot C \cdot L)$ para almacenar la tabla 3D necesaria para reconstruir los elementos elegidos.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Meter las guías 1 y 2 dentro de la bolsa general de la mochila:** Si no se separan las dos guías en los Casos A y B, el algoritmo podría elegir ambas guías o ninguna de las dos, incumpliendo el enunciado.
+
+- **No verificar que la guía quepa por sí sola:** Antes de consultar `DP[m][C - w_1][L - v_1]` hay que chequear que $w_1 \le C$ y $v_1 \le L$ para no acceder a índices negativos.
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,63 @@
+---
+id: "tda-ej-46"
+courseId: "tda"
+number: 46
+title: "Resolución de Sudoku por Backtracking"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.4"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-46"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dada una matriz de $9 \times 9$ parcialmente completada (con `0` en las casillas vacías), implementar un algoritmo de backtracking que llene la matriz con números del 1 al 9 sin repetir número en cada fila, columna ni subgrupo de $3 \times 3$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-46">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Buscamos la primera celda vacía `(f, c)` del tablero (si no queda ninguna vacía, ¡el Sudoku ya está resuelto!).
+* Probamos colocar cada número `num` del `1` al `9` en esa celda:
+  - **Poda por Factibilidad:** Solo colocamos `num` si todavía no aparece en la fila `f`, ni en la columna `c`, ni en su bloque de $3 \times 3$ (cuyo inicio es `(f // 3) * 3` y `(c // 3) * 3`).
+  - Lo escribimos y llamamos recursivamente. Si la recursión devuelve `Verdadero`, terminamos; si no, **borramos el número volviendo a poner `0`** (backtrack) y probamos el siguiente.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ResolverSudoku(tablero):
+    celda = buscarPrimeraCeldaVacia(tablero)
+    si celda es nulo:
+        devolver Verdadero   // No quedan casillas vacías: Sudoku completo
+
+    (f, c) = celda
+    para num desde 1 hasta 9:
+        si esValidoSudoku(tablero, f, c, num):
+            tablero[f][c] = num
+            si ResolverSudoku(tablero):
+                devolver Verdadero
+            tablero[f][c] = 0    // Backtrack
+
+    devolver Falso
+
+función esValidoSudoku(tablero, f, c, num):
+    // Verificar fila f, columna c y subcuadrante 3x3 de esquina (f - f%3, c - c%3)
+    devolver (num no está en fila f) y (num no está en col c) y (num no está en bloque 3x3 de (f, c))
+```
+
+</SolutionDrawer>

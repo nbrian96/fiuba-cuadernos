@@ -1,0 +1,70 @@
+---
+id: "tda-ej-26"
+courseId: "tda"
+number: 26
+title: "Convención 3: Charlas Cortables (Al menos el 50% en cualquier tramo)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.8"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-26"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En CDEA 2028 se permite entrar y salir de las charlas en cualquier momento. Camila quiere maximizar la cantidad de charlas a las que asiste, siempre y cuando pueda presenciar **por lo menos el 50% de la duración** de cada charla elegida. Diseñar un algoritmo greedy.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-26">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Para cada charla $i$ con inicio $s_i$ y fin $f_i$, la duración mínima que Camila debe quedarse es la mitad: $d_i = (f_i - s_i) / 2$.
+* Si estamos libres a partir del instante `t_actual`, ¿cuándo nos conviene entrar a una charla candidata? **Lo más temprano posible** (`inicio_real = max(t_actual, s_i)`), para cumplir el 50% requerido y **salir lo antes posible** en `fin_real = inicio_real + d_i` (siempre que `fin_real <= f_i`).
+* Por lo tanto, en cada paso elegimos entre las charlas disponibles aquella que nos permita **salir más temprano** (menor `max(t_actual, s_i) + d_i`), o bien ordenamos inicialmente por el tiempo mínimo de salida `s_i + d_i` = punto medio de la charla.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CharlasCortablesCamila(charlas):
+    t_actual = 0
+    agenda = []
+    pendientes = copiar(charlas)
+
+    mientras pendientes no esté vacío:
+        mejor_charla = nulo
+        mejor_salida = infinito
+
+        para cada c en pendientes:
+            mitad = (c.fin - c.inicio) / 2
+            entrada = max(t_actual, c.inicio)
+            salida = entrada + mitad
+            // Es válida si llegamos a escuchar al menos el 50% antes de que termine
+            si salida <= c.fin y salida < mejor_salida:
+                mejor_salida = salida
+                mejor_charla = c
+
+        si mejor_charla es nulo:
+            romper ciclo
+
+        agregar (mejor_charla, mejor_salida - mitad, mejor_salida) a agenda
+        t_actual = mejor_salida
+        quitar mejor_charla de pendientes
+
+    devolver agenda
+```
+
+</SolutionDrawer>

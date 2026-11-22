@@ -1,0 +1,52 @@
+---
+id: "tda-ej-25"
+courseId: "tda"
+number: 25
+title: "Convención 2: Charlas con Puntaje de Interés"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.7"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-25"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Diego asignó a cada charla un puntaje de interés además de sus horarios de inicio y fin. Diseñar un algoritmo greedy para organizar su agenda tratando de maximizar el puntaje total.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-25">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* **Regla Voraz:** Ordenamos las charlas por **mayor puntaje por hora** (`puntaje / (fin - inicio)`) o directamente por mayor puntaje, y vamos agregando toda charla que no se pise con las ya elegidas en nuestra agenda.
+* **Aclaración clave de cátedra:** Con puntajes distintos, **ningún algoritmo Greedy garantiza el óptimo** (por ejemplo, una charla corta de densidad alta en el medio puede bloquear a dos charlas largas compatibles que juntas sumaban mucho más puntaje; el óptimo exacto requiere Programación Dinámica, ver Ejercicio 58).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AgendaConPuntajeGreedy(charlas):
+    ordenar charlas por (c.puntaje / (c.fin - c.inicio)) de mayor a menor
+    agenda = []
+
+    para cada c en charlas:
+        si c no se solapa con ninguna charla ya presente en agenda:
+            agregar c a agenda
+
+    devolver agenda
+```
+
+</SolutionDrawer>

@@ -1,0 +1,66 @@
+---
+id: "tda-ej-48"
+courseId: "tda"
+number: 48
+title: "Coloreo de Grafos con N Colores"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.6 / Guía 03, Ejercicio 2"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-48"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo que reciba un grafo y un número $n$ que, utilizando backtracking, indique si es posible pintar cada vértice con $n$ colores de tal forma que no haya dos vértices adyacentes con el mismo color.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-48">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Numeramos los vértices de `0` a `V - 1` y vamos pintando **un vértice por nivel recursivo**.
+* Al estar en el vértice `v`, probamos asignarle cada color `c` desde `1` hasta `n`:
+  - **Poda por Factibilidad:** Miramos a los vecinos de `v` en el grafo; si ningún vecino tiene puesto el color `c`, se lo asignamos a `v` y pasamos recursivamente al vértice `v + 1`.
+  - Si la llamada falla, despintamos a `v` (`color[v] = 0`) y probamos el siguiente color.
+* Complejidad en peor caso: **$O(n^{|V|})$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ColorearGrafo(G, n_colores):
+    vertices = G.obtenerVertices()
+    color = diccionario inicializado en 0 para cada v en vertices
+    devolver ColorearBT(G, vertices, 0, n_colores, color)
+
+función ColorearBT(G, vertices, idx, n_colores, color):
+    // Caso base: todos los vértices fueron pintados sin conflicto
+    si idx == longitud(vertices):
+        devolver Verdadero
+
+    v = vertices[idx]
+    para c desde 1 hasta n_colores:
+        // Poda de factibilidad: ningún vecino adyacente debe tener el color c
+        si para todo vecino w de v en G se cumple (color[w] != c):
+            color[v] = c
+            si ColorearBT(G, vertices, idx + 1, n_colores, color):
+                devolver Verdadero
+            color[v] = 0   // Backtrack
+
+    devolver Falso
+```
+
+</SolutionDrawer>

@@ -1,0 +1,83 @@
+---
+id: "tda-ej-61"
+courseId: "tda"
+number: 61
+title: "Cobertura de Antenas Celulares con Umbral del 70% de Vecindarios"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-3 (10 de diciembre de 2024), Ejercicio 3"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-3"
+relatedResourceIds:
+  - "tda-parcial-2024-2-3-pdf"
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-61"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una empresa de telefonía celular colocará antenas en una grilla bidimensional de celdas para prestar servicio a vecindarios distribuidos en un mapa. Si se instala una antena en la celda $(i, j)$, brindará cobertura a un bloque de 9 celdas (la propia celda $(i, j)$ y sus 8 celdas contiguas en vecindad de Moore). Instalar una antena tiene un costo fijo $CTE > 0$ idéntico en cualquier celda. Se dispone de un conjunto $V$ de vecindarios distribuidos en la zona. La empresa exige brindar servicio a **por lo menos el 70% de los vecindarios** minimizando la inversión total. Plantear un modelo de Programación Lineal Entera indicando claramente variables, dominios, función objetivo, restricciones y su conteo exacto.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-61">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Dos familias de variables binarias:**
+  1. Para cada celda candidata $c \in C$ de la grilla, definimos $y_c \in \{0, 1\}$, que vale $1$ si instalamos una antena en la celda $c$ y $0$ si no.
+  2. Para cada vecindario $v \in V$, definimos $x_v \in \{0, 1\}$, que vale $1$ si el vecindario $v$ queda cubierto por al menos una antena y $0$ si queda sin servicio.
+* **Qué buscamos minimizar:** La inversión total en antenas instaladas, que es $\sum_{c \in C} CTE \cdot y_c$.
+* **Cómo funcionan las restricciones:**
+  * **Vínculo antena-vecindario:** Para cada vecindario $v$, llamamos $\text{Cubren}(v) \subseteq C$ al conjunto de hasta $9$ celdas (la celda de $v$ y sus $8$ vecinas inmediatas) desde las cuales una antena alcanza a cubrir a $v$. Imponemos $x_v \le \sum_{c \in \text{Cubren}(v)} y_c$. Si no se instala ninguna antena en esas $9$ celdas, la suma da $0$ y obliga a que $x_v = 0$.
+  * **Exigencia del 70%:** Para obligar al modelo a dar servicio a por lo menos el $70\%$ de los vecindarios, exigimos que la suma de vecindarios cubiertos cumpla $\sum_{v \in V} x_v \ge 0.70 \cdot |V|$.
+
+
+<MermaidDiagram client:visible code={"graph TD\n    subgraph CeldaAntena [\"Antena en Celda (i, j) -> y_c = 1\"]\n        C[\"Celda Central (i, j)\"]\n    end\n    subgraph CeldasCubiertas [\"Bloque de 9 Celdas Cubiertas (3x3)\"]\n        V1[\"(i-1, j-1)\"]\n        V2[\"(i-1, j)\"]\n        V3[\"(i-1, j+1)\"]\n        V4[\"(i, j-1)\"]\n        V5[\"(i, j+1)\"]\n        V6[\"(i+1, j-1)\"]\n        V7[\"(i+1, j)\"]\n        V8[\"(i+1, j+1)\"]\n    end\n    C --> V1 & V2 & V3 & V4 & V5 & V6 & V7 & V8"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $y_c \in \{0, 1\} \quad \forall c \in C$: vale $1$ si se instala una antena en la celda $c$, y $0$ si no.
+   * $x_v \in \{0, 1\} \quad \forall v \in V$: vale $1$ si el vecindario $v$ recibe cobertura de al menos una antena, y $0$ si no.
+
+2. **Función Objetivo:**
+   Minimizar el costo total de instalación de antenas:
+   $$\min Z = \sum_{c \in C} CTE \cdot y_c$$
+
+3. **Restricciones lineales:**
+   * **Cobertura mínima del 70% de los vecindarios:**
+     $$\sum_{v \in V} x_v \ge 0.70 \cdot |V|$$
+   * **Vínculo físico de cobertura por vecindario:** (donde $\text{Cubren}(v)$ son las celdas a distancia $\le 1$ en fila y columna del vecindario $v$)
+     $$x_v \le \sum_{c \in \text{Cubren}(v)} y_c \quad \forall v \in V$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** **$|C| + |V|$ variables binarias** ($|C|$ variables binarias $y_c$ para las celdas de la grilla + $|V|$ variables binarias $x_v$ para los vecindarios).
+* **Cantidad de restricciones:** **$|V| + 1$ restricciones lineales funcionales** ($1$ restricción por el umbral global del $70\%$ + $|V|$ restricciones de enlace de cobertura, una por cada vecindario), además de los dominios binarios.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Maximizar vecindarios en lugar de minimizar costo:** La función objetivo es $\min \sum CTE \cdot y_c$. El $70\%$ no es el objetivo a optimizar, sino una **restricción de piso** ($\ge 0.70 \cdot |V|$).
+
+- **Escribir al revés la desigualdad de enlace ($y_c \le x_v$):** La forma correcta es $x_v \le \sum_{c \in \text{Cubren}(v)} y_c$ (sin antenas cercanas no hay cobertura).
+
+</AcademicBlock>
+
+</SolutionDrawer>

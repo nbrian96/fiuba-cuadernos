@@ -1,0 +1,112 @@
+---
+id: "tda-ej-40"
+courseId: "tda"
+number: 40
+title: "Suma de Cuatro Cuadrados de Lagrange con Cotas y Podas"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 1 / Guía v1.0 (Curso Echevarría), Ejercicio 3.10"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-1"
+relatedResourceIds:
+  - "tda-parcial-2024-2-1-pdf"
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-40"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El teorema de los cuatro cuadrados de Lagrange especifica que cualquier número entero no negativo $n$ puede expresarse como la suma de cuatro cuadrados de enteros no negativos:
+$$n = w^2 + x^2 + y^2 + z^2$$
+
+Desarrollar un algoritmo que, dado el valor de $n$, indique cuáles son los cuatro enteros no negativos que lo componen. Justificar detalladamente el árbol de decisiones, las podas aplicadas y la complejidad del algoritmo.
+
+**Qué está evaluando la cátedra**  
+Diseño de un árbol de backtracking acotado a profundidad 4, imposición de orden no creciente para eliminar ramas simétricas redundantes ($w \ge x \ge y \ge z$), poda por cota inferior y determinación analítica del último término en $O(1)$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-40">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Definición del Estado:**
+  - Se busca descomponer un entero $n \ge 0$ en la suma de 4 cuadrados no negativos: $n = w^2 + x^2 + y^2 + z^2$.
+  - El árbol de búsqueda tiene profundidad fija de 4 niveles ($paso = 0, 1, 2, 3$). El estado en cada llamada se define por `(paso, remanente, max_limite)`.
+* **Poda de Simetrías por Orden No Creciente:**
+  - Para no evaluar las $4! = 24$ permutaciones equivalentes de la misma descomposición, imponemos la restricción monótona $w \ge x \ge y \ge z \ge 0$. Cada término $v$ a probar no puede superar el valor asignado en el paso anterior (`max_limite`).
+* **Poda por Factibilidad (Cota Superior):**
+  - Ningún término $v$ puede superar la raíz cuadrada entera del remanente actual $R$: $v \le \min(max\_limite, \lfloor\sqrt{R}\rfloor)$.
+* **Poda por Cota Inferior (Optimalidad / Alcance):**
+  - Quedan $terminos\_restantes = 4 - paso$ términos por asignar. Como los valores son no crecientes, cada uno aportará a lo sumo $v^2$. Si $(4 - paso) \cdot v^2 < R$, es matemáticamente imposible cubrir $R$ con valores menores o iguales a $v$. Se interrumpe el bucle de prueba (`break`), podando todo el subárbol inferior.
+* **Poda Analítica del 4° Término en $O(1)$:**
+  - Al llegar a $paso = 3$, no se itera. Se calcula en $O(1)$ si el remanente $R$ es un cuadrado perfecto: $z = \lfloor\sqrt{R}\rfloor$. Si $z^2 == R$ y $z \le max\_limite$, se asigna $solucion[3] = z$ y se retorna con éxito directamente.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CuatroCuadradosLagrange(n):
+    solucion = arreglo [0, 0, 0, 0]
+    si LagrangeBT(0, n, entero(raiz(n)), solucion):
+        devolver solucion
+    devolver "Sin solución"
+
+función LagrangeBT(paso, remanente, max_limite, solucion):
+    // 4to término resuelto analíticamente en O(1)
+    si paso == 3:
+        z = entero(raiz(remanente))
+        si z * z == remanente y z <= max_limite:
+            solucion[3] = z
+            devolver Verdadero
+        devolver Falso
+
+    limite_sup = min(max_limite, entero(raiz(remanente)))
+    para v desde limite_sup bajando hasta 0:
+        // Poda por cota inferior: ni usando v en los términos restantes alcanzamos remanente
+        si (4 - paso) * (v * v) < remanente:
+            romper bucle // Ningún valor menor podrá alcanzarlo
+
+        solucion[paso] = v
+        si LagrangeBT(paso + 1, remanente - v * v, v, solucion):
+            devolver Verdadero
+
+    devolver Falso
+```
+
+#### 3. Justificación de Complejidad
+
+* **Árbol de Recursión y Estado:**
+  - El árbol posee una profundidad constante de a lo sumo 4 niveles ($paso \in \{0, 1, 2, 3\}$).
+  - En cada nivel $k$, la variable $v$ toma valores entre $0$ y $\lfloor\sqrt{n}\rfloor$.
+* **Complejidad Temporal en Peor Caso:**
+  - Sin optimizaciones, 4 bucles anidados hasta $\sqrt{n}$ requerirían $O((\sqrt{n})^4) = O(n^2)$.
+  - Al resolver el último término analíticamente en $O(1)$ mediante raíz entera, el árbol se reduce a 3 niveles libres, acotando el peor caso teórico a **$O(n^{3/2})$**.
+* **Comportamiento Promedio con Podas:**
+  - La restricción de orden monótono $w \ge x \ge y \ge z$ divide el espacio de búsqueda por $4! = 24$.
+  - La poda por cota inferior $(4 - paso) \cdot v^2 < R$ trunca de raíz las ramas infértiles, provocando que la búsqueda encuentre descomposiciones válidas casi de forma directa.
+* **Complejidad Espacial:**
+  - **$O(1)$** auxiliar: la pila recursiva tiene profundidad fija de 4 marcos y el arreglo de solución tiene 4 posiciones constantes.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Iterar el 4to cuadrado en un bucle:** Si el alumno escribe 4 bucles anidados en lugar de resolver el último término con `isqrt(remanente)` en $O(1)$, la cátedra descuenta puntos por falta de optimización algorítmica.
+
+- **No imponer $w \ge x \ge y \ge z$:** Permitir que los valores crezcan nuevamente en niveles inferiores provoca que el algoritmo evalúe las 24 permutaciones de la misma suma, multiplicando innecesariamente el tiempo de cómputo.
+
+</AcademicBlock>
+
+</SolutionDrawer>

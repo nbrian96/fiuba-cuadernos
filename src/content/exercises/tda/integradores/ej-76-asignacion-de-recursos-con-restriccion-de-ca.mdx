@@ -1,0 +1,96 @@
+---
+id: "tda-ej-76"
+courseId: "tda"
+number: 76
+title: "Asignación de Recursos con Restricción de Capacidad: Redes de Flujo vs PLI"
+unit: "integradores"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Integrador Sistemas de Distribución / Asignación"
+isParcial: false
+legacyPage: "integradores.html"
+legacyAnchor: "#ej-76"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+**Enunciado Integrador**  
+Una empresa dispone de $N$ servidores y $M$ tareas. Cada tarea $j$ requiere una cantidad de memoria $R_j$, y cada servidor $i$ tiene una capacidad máxima $C_i$. Se sabe qué tareas pueden ejecutarse en qué servidores.  
+1. Si todas las tareas tienen requerimiento unitario ($R_j = 1$), ¿qué paradigma conviene usar para maximizar tareas asignadas? Modelarlo.  
+2. Si las tareas tienen requerimientos heterogéneos ($R_j$ arbitrarios), ¿por qué Redes de Flujo estándar ya no puede modelar el problema directamente y se debe recurrir a Programación Lineal Entera?
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-76">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **1. Caso Unitario ($R_j = 1$ para toda tarea $j$) — Redes de Flujo (Polinomial):**
+  - Cuando cada tarea consume exactamente $1$ unidad de capacidad, el problema es un **Matching Bipartito con Capacidades** y se resuelve óptimamente con **Redes de Flujo**:
+    1. Creamos una **Super-Fuente $s$** y un **Super-Sumidero $t$**.
+    2. Aristas $s \to \text{Tarea } j$ con **capacidad $1$** (cada tarea se procesa a lo sumo una vez).
+    3. Aristas $\text{Tarea } j \to \text{Servidor } i$ con **capacidad $1$** para cada par compatible.
+    4. Aristas $\text{Servidor } i \to t$ con **capacidad $C_i$** (máximo de tareas unitarias que admite el servidor $i$).
+  - Por el **Teorema de Integralidad de Ford-Fulkerson**, al ser todas las capacidades enteras, el flujo máximo calculado por Edmonds-Karp es estrictamente entero ($f(e) \in \{0, 1\}$ en las tareas), garantizando asignaciones completas en tiempo polinomial.
+* **2. Caso Heterogéneo ($R_j$ arbitrarios indivisibles) — Por qué falla Flujo y Modelo PLI:**
+  - **Por qué falla Redes de Flujo:** El flujo es un fluido continuo que satisface conservación escalar ($\sum f_{in} = \sum f_{out}$). Si una tarea $j$ requiere $R_j = 5$ GB y ponemos capacidad $5$ en $s \to j$, la red puede **bifurcar el caudal**: enviar $3$ GB al Servidor 1 y $2$ GB al Servidor 2. Flujo satura los $5$ GB requeridos, pero **la tarea se ejecutó partida en dos servidores**, violando la restricción física de indivisibilidad. El problema equivale al *Multiple Knapsack Problem*, que es NP-Hard.
+  - **Modelo Formal en Programación Lineal Entera (PLI):**
+    - **Variables de decisión:** $x_{ji} \in \{0, 1\}$ para cada tarea $j \in \{1, \dots, M\}$ y servidor compatible $i \in \{1, \dots, N\}$ ($1$ si la tarea $j$ se asigna completa al servidor $i$, $0$ si no).
+    - **Función Objetivo (Maximizar tareas asignadas):**
+      $$\max Z = \sum_{j=1}^M \sum_{i=1}^N x_{ji}$$
+    - **Restricción 1 — A lo sumo 1 servidor por tarea ($M$ restricciones):**
+      $$\sum_{i=1}^N x_{ji} \le 1 \qquad \forall j \in \{1, \dots, M\}$$
+    - **Restricción 2 — Capacidad máxima de memoria por servidor ($N$ restricciones):**
+      $$\sum_{j=1}^M R_j \cdot x_{ji} \le C_i \qquad \forall i \in \{1, \dots, N\}$$
+    - **Conteo exacto:** $M \cdot N$ variables binarias y $M + N$ restricciones lineales.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+// Caso Unitario (R_j = 1): Redes de Flujo con Edmonds-Karp
+Algoritmo AsignarTareasUnitarias(Tareas, Servidores, Cap, Compatibles):
+    G = crearRedFlujo(fuente=s, sumidero=t)
+    para cada j en Tareas:
+        agregarArista(G, s, j, cap=1)
+        para cada i en Compatibles[j]:
+            agregarArista(G, j, i, cap=1)
+    para cada i en Servidores:
+        agregarArista(G, i, t, cap=Cap[i])
+
+    (max_tareas, flujo) = EdmondsKarp(G, s, t)
+    asignaciones = [ (j, i) para cada (j, i) con flujo[j][i] == 1 ]
+    devolver (max_tareas, asignaciones)
+
+// Caso Heterogéneo (R_j arbitrario): Modelo PLI Indivisible
+// Variables: x[j][i] in {0, 1} para j in 1..M, i in 1..N
+// Maximizar: sum_{j, i} x[j][i]
+// Sujeto a:  sum_i x[j][i] <= 1   (para todo j en 1..M)
+//            sum_j R[j] * x[j][i] <= C[i]  (para todo i en 1..N)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad en Caso Unitario (Redes de Flujo):**
+  - Tamaño de la red: $|V| = M + N + 2$ vértices, y $|E| \le M + M \cdot N + N$ aristas.
+  - Con el algoritmo de Edmonds-Karp (caminos aumentantes por BFS), la complejidad temporal es **$\mathcal{O}(|V| \cdot |E|^2) = \mathcal{O}((M + N) \cdot (M \cdot N)^2)$**.
+  - Complejidad espacial: $\mathcal{O}(|V| + |E|)$ para la red residual y listas de adyacencia. Es estrictamente **polinomial**.
+* **Complejidad en Caso Heterogéneo (PLI):**
+  - Al generalizar el problema de la mochila (*Multiple Knapsack*), es **NP-Hard**.
+  - Complejidad temporal en peor caso: exponencial **$\mathcal{O}(2^{M \cdot N})$** mediante algoritmos exactos de *Branch & Cut*.
+  - Complejidad espacial del modelo: $\mathcal{O}(M \cdot N)$ variables y $\mathcal{O}(M + N)$ restricciones (polinomial en representación matricial).
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Poner aristas de capacidad $R_j$ en Redes de Flujo para tareas indivisibles:** Es un error clásico de parcial. Poner capacidad $R_j$ entre la tarea $j$ y cada servidor compatible permite que la tarea se parta en pedazos entre varios servidores.
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,109 @@
+---
+id: "tda-ej-39"
+courseId: "tda"
+number: 39
+title: "Problema de las N Reinas con Control de Conflictos en O(1)"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 4 / Guía v1.0 (Curso Echevarría), Ejercicio 3.3"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-2"
+relatedResourceIds:
+  - "tda-parcial-2025-1-2-pdf"
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-39"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Realizar un algoritmo que resuelva el problema de las 8 reinas mediante backtracking. El problema consiste en ubicar 8 reinas en un tablero de ajedrez de $8 \times 8$ de manera que no haya dos reinas en la misma fila, columna o diagonal. Indicar detalladamente las estructuras de datos utilizadas para representar el problema y la solución, garantizando que el chequeo de amenazas se realice en $O(1)$. Justificar la complejidad temporal y espacial.
+
+**Qué está evaluando la cátedra**  
+Construcción de un árbol de búsqueda fila por fila, uso de vectores booleanos de acceso directo para columnas y diagonales directas/inversas en $O(1)$, y gestión simétrica del estado (*hacer decisión $\to$ recursión $\to$ deshacer decisión*).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-39">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Representación del Estado:**
+  - Colocamos exactamente una reina por fila avanzando secuencialmente ($fila = 0, \dots, n-1$). Esto descarta automáticamente cualquier conflicto entre filas y reduce el espacio de búsqueda de $n^n$ a las $n!$ permutaciones de columnas.
+  - El estado se representa con un arreglo unidimensional `solucion` de tamaño $n$, donde `solucion[i] = col` indica que en la fila $i$ la reina se ubica en la columna `col`.
+* **Podas por Factibilidad con Verificación en $O(1)$:**
+  Para validar en tiempo constante si una casilla $(fila, col)$ está amenazada sin recorrer el tablero con bucles $O(n)$, empleamos 3 arreglos booleanos de acceso directo:
+  1. **Columnas (`col_ocupada[n]`):** Si la columna `col` ya tiene una reina, no se puede usar.
+  2. **Diagonal Principal ($\setminus$, clave $fila - col + n - 1$):** Al movernos en diagonal descendente ($\Delta f = +1, \Delta c = +1$), la diferencia $fila - col$ permanece invariante en el rango $[-(n-1), n-1]$. Desplazamos con $+(n-1)$ para mapear a índices válidos $[0, 2n-2]$ en un arreglo booleano `diag_prin[2n - 1]`.
+  3. **Diagonal Secundaria ($/$, clave $fila + col$):** Al movernos en diagonal ascendente ($\Delta f = -1, \Delta c = +1$), la suma $fila + col$ es invariante en el rango $[0, 2n-2]$. Usamos el arreglo booleano `diag_sec[2n - 1]`.
+  - La casilla $(fila, col)$ es factible si y solo si los tres booleanos están en `Falso` (3 accesos indexados en tiempo $O(1)$).
+* **Mecanismo de Backtracking (Restauración de Estado):**
+  Al probar una columna factible, marcamos los 3 booleanos en `Verdadero` y asignamos `solucion[fila] = col`. Si la llamada recursiva no encuentra solución, es **estrictamente obligatorio** desmarcar los 3 booleanos en `Falso` y restaurar `solucion[fila] = -1` antes de probar la columna siguiente.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo NReinas(n):
+    solucion = arreglo[-1] * n
+    col_ocupada = arreglo[Falso] * n
+    diag_prin = arreglo[Falso] * (2*n - 1)  // clave: fila - col + (n - 1)
+    diag_sec = arreglo[Falso] * (2*n - 1)   // clave: fila + col
+    si NReinasBT(0, solucion, col_ocupada, diag_prin, diag_sec, n):
+        devolver solucion
+    devolver "Sin solución"
+
+función NReinasBT(fila, solucion, col_ocupada, diag_prin, diag_sec, n):
+    si fila == n:
+        devolver Verdadero  // Caso Base: se ubicaron las n reinas
+
+    para col desde 0 hasta n - 1:
+        dp = fila - col + (n - 1)
+        ds = fila + col
+        // Poda por factibilidad en O(1)
+        si no col_ocupada[col] y no diag_prin[dp] y no diag_sec[ds]:
+            solucion[fila] = col
+            col_ocupada[col] = diag_prin[dp] = diag_sec[ds] = Verdadero
+            si NReinasBT(fila + 1, solucion, col_ocupada, diag_prin, diag_sec, n):
+                devolver Verdadero
+            solucion[fila] = -1
+            col_ocupada[col] = diag_prin[dp] = diag_sec[ds] = Falso  // Backtrack
+
+    devolver Falso
+```
+
+#### 3. Justificación de Complejidad
+
+* **Árbol de Recursión y Estado:**
+  - El estado en cada llamada está determinado por la `fila` actual ($0 \le fila \le n$), con profundidad máxima $n$.
+  - En la fila $0$ hay $n$ opciones; en la fila $1$, a lo sumo $n-1$ opciones libres; en la fila $k$, a lo sumo $n-k$ opciones.
+* **Complejidad Temporal en Peor Caso:**
+  - En el peor caso teórico (cuando no se poda o se buscan todas las soluciones), el árbol tiene a lo sumo $n!$ hojas. En cada nodo, las verificaciones y transiciones toman $O(1)$ gracias a los vectores booleanos. La cota superior asintótica en el peor caso es **$O(n!)$**.
+* **Comportamiento Promedio con Podas:**
+  - Las podas en $O(1)$ de las diagonales principales y secundarias descartan subárboles completos en los primeros niveles. Para $n = 8$, de las $8^8 \approx 16.7 \times 10^6$ configuraciones ingenuas y las $8! = 40.320$ permutaciones, el algoritmo evalúa apenas **876 nodos** para hallar la primera solución válida.
+* **Complejidad Espacial:**
+  - **$O(n)$** auxiliar: la pila de llamadas tiene profundidad $n$, el vector de solución requiere tamaño $n$, y los arreglos booleanos ocupan $n + 2(2n-1) = 5n - 2 = O(n)$ memoria contigua.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Olvidar desmarcar booleanos al retroceder:** Si omites `col_ocupada[col] = False` tras retornar de la llamada recursiva, las ramas hermanas creerán que la columna continúa ocupada, causando que el algoritmo falle en encontrar soluciones válidas.
+
+- **Verificar colisiones recorriendo las filas anteriores con un bucle:** Hacer un bucle `for f in range(fila): if solucion[f] == col or ...` dentro de cada nodo agrega un costo $O(n)$ por estado, degradando la complejidad de verificación a $O(n \cdot n!)$ en lugar de $O(n!)$ con chequeo $O(1)$.
+
+- **Error de signo en la diagonal principal:** Olvidar el $+7$ en $f - col$ produce índices negativos (en Python mapea al final de la lista alterando otras diagonales; en C/Java arroja error de segmentación).
+
+</AcademicBlock>
+
+</SolutionDrawer>

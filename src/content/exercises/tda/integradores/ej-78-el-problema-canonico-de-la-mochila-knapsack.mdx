@@ -1,0 +1,116 @@
+---
+id: "tda-ej-78"
+courseId: "tda"
+number: 78
+title: "El Problema Canónico de la Mochila (Knapsack) Resuelto en Todos los Paradigmas Algorítmicos"
+unit: "integradores"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 5
+origin: "Problema Arquetípico Canónico de TDA / Evaluación Integral Multi-Paradigma"
+isParcial: false
+legacyPage: "integradores.html"
+legacyAnchor: "#ej-78"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+**Enunciado Integrador**  
+Se dispone de una mochila con capacidad entera máxima de peso $W > 0$ y un conjunto de $n$ elementos disponibles, donde cada elemento $i \in \{1, \dots, n\}$ posee un peso entero $w_i > 0$ y un valor o beneficio entero $v_i > 0$.  
+Resolver y contrastar el problema a través de todos los paradigmas algorítmicos fundamentales evaluados en la materia:
+1. **Paradigma Greedy (Algoritmo Voraz):**
+   * Resolver la **Mochila Fraccionaria (Continuous Knapsack)**: regla voraz por densidad de valor, pseudocódigo y demostración formal de optimalidad por técnica de intercambio.
+   * Analizar la **Mochila 0-1 (Indivisible)**: contraejemplo formal de por qué la regla voraz falla arbitrariamente y desarrollo del **Algoritmo 1/2-Aproximado** con su demostración de cota garantizada.
+2. **Paradigma Programación Dinámica (DP):**
+   * Resolver la **Mochila 0-1 Estándar**: definición formal del subproblema $OPT(i, w)$, casos base, ecuación de recurrencia, pseudocódigo bottom-up con tabla $(n+1) \times (W+1)$, algoritmo de reconstrucción exacta de ítems y optimización de memoria espacial a $O(W)$. Demostración de su complejidad pseudo-polinomial frente al número de bits de la entrada.
+   * Resolver la **Mochila No Acotada (Unbounded Knapsack)** con disponibilidad infinita de cada ítem en $O(n \cdot W)$ tiempo y $O(W)$ espacio.
+3. **Paradigma Backtracking y Branch & Bound:**
+   * Diseñar el árbol binario de decisiones, podas por factibilidad y podas por optimalidad con cota superior (*Branch and Bound*) mediante la relajación continua fraccionaria. Explicar cuándo este enfoque supera a la Programación Dinámica en la práctica.
+4. **Paradigma Programación Lineal Entera (PLI):**
+   * Modelar formalmente el problema indicando variables de decisión binarias, función objetivo, restricciones, conteo de variables/restricciones y su relación directa con la relajación lineal continua (*LP Relaxation*).
+5. **Análisis de División y Conquista (DyC):**
+   * Explicar teóricamente por qué División y Conquista puro fracasa o no es aplicable a la mochila 0-1 (subproblemas no disjuntos).
+6. **Tabla Comparativa Maestra:**
+   * Matriz comparativa multidimensional de complejidades, optimalidad y escenarios de examen.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-78">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+El problema de la mochila dispone de $n$ elementos con pesos $w_i > 0$, valores $v_i > 0$ y una capacidad máxima $W$. Se resuelve en los 4 paradigmas principales según la variante:
+
+1. **Paradigma Greedy (Mochila Fraccionaria vs Mochila 0-1):**
+   * **Mochila Fraccionaria ($x_i \in [0, 1]$):** Se ordenan los elementos por densidad de valor decreciente $r_i = v_i / w_i$ tal que $r_1 \ge r_2 \ge \dots \ge r_n$. Se toman ítems completos con mayor $r_i$; el último ítem que excede la capacidad se fracciona tomando $x_k = \text{capacidad\_remanente} / w_k$. **Es estrictamente óptimo** en $\Theta(n \log n)$ (demostrable por técnica de intercambio: reemplazar masa de menor densidad por masa de mayor densidad nunca reduce el valor acumulado).
+   * **Por qué falla en Mochila 0-1 (Indivisible):** Un ítem de alta densidad pero peso ineficiente puede bloquear la entrada de combinaciones de menor densidad pero mayor beneficio total. *Contraejemplo:* $W = 50$, Ítem 1 ($w=10, v=60, r=6$), Ítem 2 ($w=20, v=100, r=5$), Ítem 3 ($w=30, v=120, r=4$). Greedy toma ítems 1 y 2 (peso 30, valor 160). El óptimo toma ítems 2 y 3 (peso 50, valor $220 > 160$).
+
+2. **Paradigma Programación Dinámica (Mochila 0-1 Indivisible):**
+   * **Subestructura Óptima y Definición del Estado:** Para decidir si incluir o no el ítem $i$, solo importa cuánta capacidad remanente $w$ queda disponible. Definimos:
+     $$OPT(i, w) = \text{máximo valor alcanzable considerando los primeros } i \text{ elementos con capacidad } w$$
+   * **Ecuación de Recurrencia:**
+     $$OPT(i, w) = \begin{cases} OPT(i-1, w) & \text{si } w_i > w \text{ (el ítem } i \text{ no cabe)} \\ \max\Big(OPT(i-1, w), \; OPT(i-1, w - w_i) + v_i\Big) & \text{si } w_i \le w \text{ (excluir vs incluir)} \end{cases}$$
+   * **Casos Base:** $OPT(0, w) = 0$ para todo $w \in [0, W]$ y $OPT(i, 0) = 0$.
+   * **Orden de Llenado:** Tabla $(n+1) \times (W+1)$ iterando $i$ de $1$ a $n$ y $w$ de $0$ a $W$. Puede optimizarse a un vector unidimensional de tamaño $W+1$ recorriendo $w$ en sentido descendente.
+
+3. **Paradigma Backtracking y Branch & Bound (Mochila 0-1 con W Astronómico):**
+   * **Árbol Binario de Decisiones:** Ordenamos previamente los ítems por $v_i / w_i$ decreciente. En cada nivel $i$, ramificamos en: (a) Incluir ítem $i$, (b) Excluir ítem $i$.
+   * **Poda por Factibilidad:** Si $\text{peso\_actual} + w_i > W$, se descarta de inmediato la rama de inclusión.
+   * **Poda por Optimalidad (Branch and Bound con Relajación Continua):** En el nodo $(i, \text{peso}, \text{valor})$, calculamos la cota superior del subárbol resolviendo la mochila fraccionaria con los ítems restantes $i \dots n$. Si $\text{valor} + \text{cota\_fraccionaria} \le \text{mejor\_valor}$, se poda todo el subárbol.
+
+4. **Paradigma Programación Lineal Entera (PLI 0-1):**
+   * **Variables de Decisión:** $x_i \in \{0, 1\}$ para $i \in \{1, \dots, n\}$ ($1$ si se empaca el ítem $i$, $0$ si no).
+   * **Función Objetivo:** Maximizar el valor total: $\max Z = \sum_{i=1}^n v_i \cdot x_i$.
+   * **Restricción de Capacidad (1 restricción):** $\sum_{i=1}^n w_i \cdot x_i \le W$.
+   * **Relación con Relajación:** Relajar $x_i \in [0, 1]$ equivale a la Mochila Fraccionaria, cuya solución óptima es la cota superior utilizada por el solver en cada nodo del árbol de Branch & Cut.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+// 1. Programación Dinámica (Mochila 0/1 con arreglo O(W))
+Algoritmo Mochila01DP(pesos, valores, n, W):
+    DP = arreglo de tamaño (W + 1) inicializado en 0
+    para i desde 0 hasta n - 1:
+        para w desde W bajando hasta pesos[i]:
+            DP[w] = max(DP[w], DP[w - pesos[i]] + valores[i])
+    devolver DP[W]
+
+// 2. Backtracking con Branch & Bound (Cota Fraccionaria)
+función MochilaBT(i, peso_act, val_act, ref mejor_val, pesos, valores, n, W):
+    si val_act > mejor_val:
+        mejor_val = val_act
+    si i == n o peso_act == W:
+        devolver
+
+    // Poda Branch & Bound: cota superior fraccionaria con ítems restantes
+    si val_act + CotaFraccionaria(i, W - peso_act, pesos, valores, n) <= mejor_val:
+        devolver
+
+    // Rama 1: Incluir ítem i (poda de factibilidad si no entra)
+    si peso_act + pesos[i] <= W:
+        MochilaBT(i + 1, peso_act + pesos[i], val_act + valores[i], mejor_val, pesos, valores, n, W)
+
+    // Rama 2: Excluir ítem i
+    MochilaBT(i + 1, peso_act, val_act, mejor_val, pesos, valores, n, W)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Análisis Comparativo de Complejidad:**
+  - **Greedy Fraccionario:** Ordenamiento inicial en $\Theta(n \log n)$ y barrido voraz en $\Theta(n)$. Tiempo total: **$\Theta(n \log n)$**, Espacio auxiliar: $\mathcal{O}(1)$. Es óptimo para la versión continua; en 0-1 no garantiza solución óptima.
+  - **Programación Dinámica 0-1:** Tiempo: **$\Theta(n \cdot W)$**. Espacio: $\Theta(W)$ (con vector optimizado) u $\Theta(n \cdot W)$ (con matriz para reconstrucción de ítems). Es una complejidad **pseudo-polinomial**: es polinomial respecto a la magnitud numérica de $W$, pero exponencial respecto a la cantidad de bits de la entrada $B = \log_2 W$ (dado que $W = 2^B$). Si $W$ es del orden de $10^{12}$, DP colapsa por memoria y tiempo.
+  - **Backtracking con Branch & Bound:** Peor caso asintótico: **$O(2^n)$** tiempo, $\mathcal{O}(n)$ espacio en pila. Sin embargo, gracias a la cota fraccionaria estricta, las podas cortan grandes regiones del árbol. Es la estrategia superior cuando $W \gg 10^9$ pero $n$ es moderado ($n \le 40$).
+  - **Programación Lineal Entera (PLI):** Problema NP-Hard en peor caso ($O(2^n)$), pero con solo $n$ variables binarias y 1 restricción lineal, resuelto eficazmente por solvers modernos con Branch & Cut.
+
+| Paradigma | Variante | Complejidad Temporal | Complejidad Espacial | ¿Garantiza Óptimo? | Cuándo Usarlo en Parcial |
+| :--- | :--- | :--- | :--- | :---: | :--- |
+| **Greedy (Voraz)** | Fraccionaria | **$\Theta(n \log n)$** | **$\mathcal{O}(1)$** | ✅ **SÍ (Óptimo)** | Cuando los objetos admiten división continua (combustible, polvos). |
+| **Prog. Dinámica** | 0-1 (Indivisible) | **$\Theta(n \cdot W)$** | **$\Theta(W)$** | ✅ **SÍ (Exacto)** | Cuando $W$ es moderado ($W \le 10^6$) y se exige el óptimo entero. |
+| **Backtracking (B&B)**| 0-1 (Indivisible) | **$\mathcal{O}(2^n)$** peor caso | **$\mathcal{O}(n)$** | ✅ **SÍ (Exacto)** | Cuando $W$ es astronómico ($W > 10^9$) y $n \le 40$. |
+| **Prog. Lineal (PLI)**| 0-1 (Indivisible) | Exponencial peor caso | $\mathcal{O}(n)$ variables | ✅ **SÍ (Exacto)** | Cuando hay múltiples recursos acoplados (peso, volumen, costo). |
+
+</SolutionDrawer>

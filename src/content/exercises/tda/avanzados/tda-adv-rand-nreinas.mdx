@@ -1,0 +1,43 @@
+---
+id: tda-adv-rand-nreinas
+courseId: tda
+number: null
+title: "Problema de las N-Reinas vía Algoritmo \"Las Vegas\""
+unit: avanzados
+entityType: AdvancedTheoryExercise
+provenance: advanced_theory_example
+priority: importante
+difficulty: 3
+origin: "Teoría Avanzada — Sección 16, Ejercicio Propuesto de Clase 2 (Clases 23–24)"
+isParcial: false
+relatedResourceIds:
+  - tda-slide-23-algoritmos-randomizados-i
+  - tda-slide-24-algoritmos-randomizados-ii
+  - tda-guia-09-randomizados
+legacyPage: teoria-avanzados.html
+legacyAnchor: "#ejercicios-clase"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado oficial">
+
+Proponer un algoritmo randomizado de tipo *Las Vegas* para resolver el problema de las $N$-Reinas. Puede encontrar una solución o fallar. Si falla, se repite el ensayo desde cero. ¿Cuál es la cantidad esperada de veces que hay que repetir el ensayo?
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-adv-rand-nreinas">
+
+#### Diseño del Algoritmo y Análisis
+
+1. **Procedimiento por Columnas:** Para la columna $c = 1 \dots N$, identificamos las filas donde colocar una reina no cause ataques con las reinas ya ubicadas.
+2. **Elección Aleatoria:** Entre las casillas libres válidas de la columna $c$, elegimos una al azar con probabilidad uniforme.
+3. **Condición de Fallo:** Si en alguna columna $c$ no queda ninguna casilla libre disponible, el algoritmo **falla** y se detiene (no hace backtracking pesado).
+4. **Éxito:** Si llega a ubicar las $N$ reinas sin conflicto, devuelve la solución (que es $100\%$ válida, condición de *Las Vegas*).
+5. **Cantidad Esperada de Repeticiones:** Si cada ensayo independiente tiene probabilidad de éxito $p > 0$, la variable aleatoria $X$ (cantidad de ensayos hasta el primer éxito) sigue una distribución geométrica:
+
+$$E[X] = \frac{1}{p}$$
+
+Para $N=8$, empíricamente $p \approx 0.1293$ (aproximadamente 1 de cada 7.7 intentos triunfa), requiriendo en promedio solo $\approx 7.7$ corridas ultrarrápidas, mucho más veloz que explorar todo el árbol exhaustivo.
+
+</SolutionDrawer>

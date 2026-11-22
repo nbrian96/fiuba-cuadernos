@@ -1,0 +1,66 @@
+---
+id: "tda-ej-32"
+courseId: "tda"
+number: 32
+title: "Arquitecto 5: Postas de Hidratación y Puntos Críticos"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.14"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-32"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dadas las coordenadas 2D de los lugares candidatos para postas de hidratación y de los puntos críticos donde los turistas pasan tiempo al sol, diseñar un algoritmo greedy que ponga la menor cantidad de postas posibles de modo que todo punto crítico quede a distancia $\le d$ de al menos una posta. *(Nota: el enunciado dice coloquialmente "ningún punto crítico quede a menos de cierta distancia", refiriéndose a que ninguno quede desprotegido a más de distancia $d$).*
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-32">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Cada posta candidata cubre al subconjunto de puntos críticos que están a distancia euclídea $\le d$ de ella.
+* Queremos cubrir todos los puntos críticos con la **menor cantidad de postas**: es el problema clásico de **Set Cover**.
+* **Regla Voraz:** Mientras queden puntos críticos sin cubrir, elegimos la posta candidata que **cubra la mayor cantidad de puntos críticos que todavía no están cubiertos**, la instalamos y marcamos esos puntos como cubiertos. Complejidad: **$O(P \cdot C)$** donde $P$ es la cantidad de postas y $C$ la de puntos críticos.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ColocarPostasHidratacion(postas, puntos_criticos, d):
+    sin_cubrir = copiar(puntos_criticos)
+    postas_elegidas = []
+
+    mientras sin_cubrir no esté vacío:
+        mejor_posta = nulo
+        max_cubiertos = 0
+
+        // Elegir la posta que cubra más puntos críticos aún descubiertos
+        para cada p en postas:
+            cubiertos_por_p = [ c en sin_cubrir tales que distancia(p, c) <= d ]
+            si longitud(cubiertos_por_p) > max_cubiertos:
+                max_cubiertos = longitud(cubiertos_por_p)
+                mejor_posta = p
+
+        si mejor_posta es nulo:
+            devolver "Infactible: hay puntos críticos inalcanzables"
+
+        agregar mejor_posta a postas_elegidas
+        quitar de sin_cubrir todos los puntos a distancia <= d de mejor_posta
+
+    devolver postas_elegidas
+```
+
+</SolutionDrawer>

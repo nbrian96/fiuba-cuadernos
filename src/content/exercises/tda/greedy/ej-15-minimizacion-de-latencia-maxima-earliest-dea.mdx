@@ -1,0 +1,88 @@
+---
+id: "tda-ej-15"
+courseId: "tda"
+number: 15
+title: "Minimización de Latencia Máxima (Earliest Deadline First)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía de Ejercicios 02, Ejercicio 9 / Práctica"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-15"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tienen $n$ tareas que deben procesarse secuencialmente en una única máquina que comienza en el tiempo $t = 0$. Cada tarea $i$ tiene una duración $t_i$ y una fecha límite de entrega (deadline) $d_i$. Si una tarea comienza en el tiempo $s_i$, finaliza en $f_i = s_i + t_i$. La latencia de la tarea $i$ se define como $L_i = \max(0, f_i - d_i)$. Diseñar un algoritmo greedy que programe las tareas minimizando la latencia máxima $L_{\max} = \max_i L_i$. Demostrar formalmente su optimalidad.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-15">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Regla Voraz (Earliest Deadline First — EDF):** Ordenamos las tareas de menor a mayor según su **fecha límite de entrega ($d_i$)** y las ejecutamos de corrido una tras otra sin pausas.
+* **Demostración de Optimalidad (Argumento de Intercambio):**
+  - Decimos que un orden de tareas tiene una **"inversión"** si hay dos tareas vecinas $i$ y $j$ donde $i$ se hace justo antes que $j$, pero $j$ vencía antes ($d_i > d_j$). Nuestro algoritmo Greedy ordena por vencimiento, así que **no tiene ninguna inversión**.
+  - Supongamos que una solución óptima tiene un par de tareas vecinas invertidas $(i, j)$ con $d_i > d_j$, y **las cambiamos de lugar** (hacemos primero $j$ y después $i$):
+    1. **El resto de las tareas no se entera:** Todas las tareas anteriores a $i$ y posteriores a $j$ terminan exactamente a la misma hora que antes.
+    2. **La tarea $j$ mejora:** Como pasa adelante, termina antes y su retraso baja (o sigue en 0).
+    3. **La tarea $i$ no supera el retraso que antes tenía $j$:** Al pasar atrás, la tarea $i$ termina exactamente a la hora en que antes terminaba $j$ ($T$). Pero como el vencimiento de $i$ es menos urgente que el de $j$ ($d_i > d_j$), el retraso nuevo de $i$ ($T - d_i$) es **menor o igual al retraso que ya sufría antes $j$** ($T - d_j$).
+  - **Conclusión:** Desarmar cualquier inversión entre dos tareas vecinas nunca empeora la latencia máxima. Repitiendo estos cambios hasta eliminar todas las inversiones, transformamos el óptimo en la solución Greedy sin empeorar el resultado. **Por lo tanto, Greedy es óptimo.**
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MinimizarLatenciaEDF(tareas):
+    // 1. Regla voraz: ordenar por fecha de entrega (deadline d_i) de menor a mayor
+    ordenar tareas por t.d ascendente
+
+    tiempo_actual = 0
+    latencia_max = 0
+    cronograma = []
+
+    // 2. Ejecutar de corrido sin tiempo ocioso
+    para cada t en tareas:
+        inicio = tiempo_actual
+        fin = tiempo_actual + t.duracion
+        latencia = max(0, fin - t.d)
+        latencia_max = max(latencia_max, latencia)
+
+        agregar (t, inicio, fin) a cronograma
+        tiempo_actual = fin
+
+    devolver (latencia_max, cronograma)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* Ordenar las $n$ tareas por su deadline $d_i$ toma **$O(n \log n)$**, y asignar los horarios en un único recorrido lineal toma **$O(n)$**. Complejidad temporal total: **$O(n \log n)$** y espacial **$O(n)$**.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    B[\"Tarea B (0 a 2)<br/>d=4 | L=0 (A tiempo)\"] -->|t=2| A[\"Tarea A (2 a 5)<br/>d=6 | L=0 (A tiempo)\"]\n    A -->|t=5| D[\"Tarea D (5 a 9)<br/>d=8 | L=1 (Retraso)\"]\n    D -->|t=9| C[\"Tarea C (9 a 10)<br/>d=9 | L=1 (Retraso)\"]\n    classDef ontime fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef late fill:#b45309,stroke:#92400e,stroke-width:2px,color:#fff\n    class B,A ontime\n    class D,C late"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Definición de Latencia vs Retraso negativo:** La latencia nunca es negativa ($L_i = \max(0, f_i - d_i)$). Entregar temprano da latencia $0$, no compensa retrasos de otras tareas.
+
+- **Ordenar por menor duración ($t_i$) o menor holgura ($d_i - t_i$):** Ambos fallan en minimizar la latencia máxima; la única regla óptima es ordenar por $d_i$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

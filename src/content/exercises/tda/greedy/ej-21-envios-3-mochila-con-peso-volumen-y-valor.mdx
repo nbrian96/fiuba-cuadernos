@@ -1,0 +1,57 @@
+---
+id: "tda-ej-21"
+courseId: "tda"
+number: 21
+title: "Envíos 3: Mochila con Peso, Volumen y Valor"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.3"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-21"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La repartidora exige ahora no superar un volumen máximo $V$ además del peso máximo $P$, teniendo cada objeto un peso, volumen y valor que pueden ser todos distintos. Modificar el algoritmo greedy para asignar los objetos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-21">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Ahora cada objeto aporta un `valor` distinto pero consume dos recursos limitados ($P$ y $V$).
+* Definimos la **densidad combinada** de cada objeto dividiendo su valor por la fracción total de recursos que consume:
+  $$\text{densidad}(i) = \frac{\text{valor}_i}{(\text{peso}_i / P) + (\text{volumen}_i / V)}$$
+* Ordenamos de **mayor a menor densidad combinada** y agregamos cada objeto que quepa en ambos límites ($P$ y $V$). Su complejidad es **$O(n \log n)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MochilaPesoVolumenGreedy(objetos, P_max, V_max):
+    ordenar objetos por (obj.valor / ((obj.peso / P_max) + (obj.volumen / V_max))) descendente
+    elegidos = []
+    p_usado = 0, v_usado = 0
+
+    para cada obj en objetos:
+        si p_usado + obj.peso <= P_max y v_usado + obj.volumen <= V_max:
+            agregar obj a elegidos
+            p_usado = p_usado + obj.peso
+            v_usado = v_usado + obj.volumen
+
+    devolver elegidos
+```
+
+</SolutionDrawer>

@@ -1,0 +1,83 @@
+---
+id: "tda-ej-64"
+courseId: "tda"
+number: 64
+title: "2-Partition Min-Max con Linealización de Variable Auxiliar"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía de Ejercicios 05, Ejercicio 12 / Práctica de Examen"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-64"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dado un conjunto de $n$ tareas con tiempos de procesamiento enteros positivos $T = \{T_1, T_2, \dots, T_n\}$, se desea particionar las tareas entre dos procesadores idénticos $P_1$ y $P_2$ de manera que se minimice el *makespan* (el tiempo de finalización de la máquina más cargada):
+$$\min \max \left( \sum_{i \in P_1} T_i, \sum_{j \in P_2} T_j \right)$$
+Formular el problema como un modelo de Programación Lineal Entera, linealizando rigurosamente el operador $\max$. Indicar variables, dominios y conteo de restricciones.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-64">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Variables binarias de partición:** Como cada tarea $i$ debe asignarse sí o sí al procesador $P_1$ o al procesador $P_2$, nos alcanza con una única variable binaria $x_i \in \{0, 1\}$ por tarea:
+  * Si $x_i = 1$, la tarea $i$ se ejecuta en $P_1$ (aportando $T_i \cdot x_i$ a la carga de $P_1$).
+  * Si $x_i = 0$, la tarea $i$ se ejecuta en $P_2$ (como $1 - x_i = 1$, aporta $T_i \cdot (1 - x_i)$ a la carga de $P_2$).
+* **Cómo linealizar la función $\min \max$:**
+  En Programación Lineal no está permitido escribir $\max(\dots)$ en la función objetivo. Para linealizarlo, introducimos una **variable continua auxiliar $Z \ge 0$** que representa el *makespan* (la carga del procesador más ocupado) y agregamos dos restricciones de cota superior:
+  1. $Z \ge \text{Carga de } P_1$
+  2. $Z \ge \text{Carga de } P_2$
+  Como $Z$ está obligada a ser mayor o igual que ambas cargas simultáneamente, y la función objetivo pide **minimizar $Z$** ($\min Z$), el optimizador reducirá $Z$ todo lo posible hasta que toque a la mayor de las dos cargas, logrando exactamente $Z = \max(\text{Carga}_{P_1}, \text{Carga}_{P_2})$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    P1[\"Carga P₁ = Σ T_i · x_i\"] -->|\"Restricción 1: Z ≥ Carga P₁\"| Z[\"Variable Auxiliar Continua Z\"]\n    P2[\"Carga P₂ = Σ T_i · (1 - x_i)\"] -->|\"Restricción 2: Z ≥ Carga P₂\"| Z\n    MinZ[\"Función Objetivo: min Z\"] -->|\"Empuja Z hacia abajo hasta el máximo\"| Z"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, n\}$: vale $1$ si la tarea $i$ se asigna al procesador $P_1$, y $0$ si se asigna al procesador $P_2$.
+   * $Z \in \mathbb{R}_{\ge 0} \quad (Z \ge 0)$: variable continua auxiliar que representa el tiempo de finalización del procesador más cargado (*makespan*).
+
+2. **Función Objetivo:**
+   Minimizar el tiempo de finalización máximo:
+   $$\min Z$$
+
+3. **Restricciones lineales:**
+   * **Cota superior para el Procesador 1:**
+     $$Z \ge \sum_{i=1}^{n} T_i \cdot x_i$$
+   * **Cota superior para el Procesador 2:**
+     $$Z \ge \sum_{i=1}^{n} T_i \cdot (1 - x_i)$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** **$n + 1$ variables en total**, compuestas por **$n$ variables binarias** ($x_1, \dots, x_n \in \{0, 1\}$) y **$1$ variable continua no negativa** ($Z \ge 0$). *(Nota: si se definieran dos variables binarias $x_{i,1}, x_{i,2}$ por tarea, serían $2n$ binarias + $1$ continua y se agregarían $n$ restricciones $x_{i,1} + x_{i,2} = 1$).*
+* **Cantidad de restricciones:** Exactamente **$2$ restricciones lineales funcionales** (una por cada procesador para acotar inferiormente a $Z$), además de los dominios de las variables.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Dejar $\max(\dots)$ escrito dentro de la función objetivo:** La función $\max$ no es lineal. Si no creás la variable $Z$ y las dos desigualdades $Z \ge \dots$, el ejercicio se considera mal resuelto.
+
+- **Poner $Z \le \text{Carga}$ en vez de $Z \ge \text{Carga}$:** Si ponés $\le$ y pedís minimizar $Z$, el solver fijará $Z = 0$ sin importar cuánto tarden las máquinas.
+
+</AcademicBlock>
+
+</SolutionDrawer>

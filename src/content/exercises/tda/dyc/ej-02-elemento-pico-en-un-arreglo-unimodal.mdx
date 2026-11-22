@@ -1,0 +1,84 @@
+---
+id: "tda-ej-02"
+courseId: "tda"
+number: 2
+title: "Elemento Pico en un Arreglo Unimodal"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.6 / Guía 01, Ejercicio 4 / Parcial FIUBA"
+isParcial: true
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-2"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene un arreglo de $n \ge 3$ elementos en forma de pico, esto es: estrictamente creciente hasta una determinada posición $p$, y estrictamente decreciente a partir de ella (con $0 < p < n - 1$). Por ejemplo, en el arreglo `[1, 2, 3, 1, 0, -2]` la posición del pico es $p = 2$. Se pide:
+a. Implementar un algoritmo de división y conquista de orden $O(\log n)$ *(nota: en la Guía v1.0 figura por errata tipográfica $O(\log \log n)$)* que encuentre la posición $p$ del pico: `PosicionPico(v, ini, fin)`.
+b. Justificar el orden del algoritmo mediante el Teorema Maestro.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-02">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Idea de la pendiente:** En vez de recorrer todo el arreglo, miramos la posición central `m = (ini + fin) / 2` y la comparamos con su vecino inmediato `v[m + 1]`:
+  1. **Caso Base (`ini == fin`):** Cuando el subarreglo tiene un solo elemento, ese único candidato es garantizadamente el pico y devolvemos su índice `ini` en $O(1)$.
+  2. **Si `v[m] < v[m + 1]` (sube hacia la derecha):** Como el arreglo sube estrictamente hasta el pico y recién después baja, si en `m` todavía estamos subiendo, el pico **está sí o sí a la derecha de `m`**. Descartamos toda la mitad izquierda y buscamos recursivamente en `[m + 1, fin]`.
+  3. **Si `v[m] > v[m + 1]` (baja hacia la derecha):** Significa que ya pasamos el pico o bien `m` mismo es el pico. Descartamos la derecha y buscamos recursivamente en `[ini, m]` (incluyendo a `m` porque puede ser el pico).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo PosicionPico(v, ini, fin):
+    // Caso Base: queda un único elemento y es el pico
+    si ini == fin:
+        devolver ini
+
+    m = (ini + fin) / 2
+
+    // Si la pendiente sube hacia la derecha, el pico está en [m + 1 .. fin]
+    si v[m] < v[m + 1]:
+        devolver PosicionPico(v, m + 1, fin)
+    sino:
+        // Si la pendiente baja, el pico está en [ini .. m] (m puede ser el pico)
+        devolver PosicionPico(v, ini, m)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* En cada paso descartamos la mitad del arreglo y realizamos **$a = 1$ llamada recursiva** sobre un subproblema de tamaño $n/2$ (**$b = 2$**), haciendo solo una comparación en tiempo constante **$f(n) = \Theta(1)$** (**$c = 0$**).
+* Ecuación de recurrencia:
+  $$T(n) = 1 \cdot T(n/2) + \Theta(1)$$
+* Aplicando el **Teorema Maestro**: $\log_b a = \log_2 1 = 0 = c$ (**Caso 2**), por lo que la complejidad temporal es **$T(n) = \Theta(n^0 \log n) = O(\log n)$**.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    A[\"Rango [0..6]: m=3<br/>A[3]=3 &lt; A[4]=5\"]:::step -->|\"Descarta izq [0..3]\"| B[\"Rango [4..6]: m=5<br/>A[5]=6 &gt; A[6]=4\"]:::step\n    B -->|\"Conserva m=5\"| C[\"Rango [4..5]: m=4<br/>A[4]=5 &lt; A[5]=6\"]:::step\n    C -->|\"Descarta m=4\"| D[\"Rango [5..5]: ini=fin\"]:::step\n    D --> E([\"Pico Hallado: Índice 5 (A[5] = 6)\"]):::opt\n    classDef step fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Hacer `fin = m - 1` en la rama descendente:** Si $v[m] > v[m+1]$, el elemento $v[m]$ podría ser precisamente el pico. Si pasas `m - 1`, excluyes a $m$ y el algoritmo puede retornar un índice incorrecto. Debe ser `PosicionPico(v, ini, m)`.
+
+- **Desbordamiento de índice al consultar $m+1$:** Como el caso base corta en `ini == fin` y la división entera redondea hacia abajo, siempre se cumple $m < fin$, por lo que `v[m + 1]` nunca se sale de rango.
+
+</AcademicBlock>
+
+</SolutionDrawer>

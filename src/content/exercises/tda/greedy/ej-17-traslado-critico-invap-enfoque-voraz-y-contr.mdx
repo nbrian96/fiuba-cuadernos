@@ -1,0 +1,86 @@
+---
+id: "tda-ej-17"
+courseId: "tda"
+number: 17
+title: "Traslado Crítico INVAP: Enfoque Voraz y Contraejemplo Formal"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 3"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-2"
+relatedResourceIds:
+  - "tda-parcial-2025-1-2-pdf"
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-17"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Para el traslado de una carga peligrosa del INVAP de Ezeiza a Bariloche a través de etapas diarias (con alternativas de ciudades intermedias y costos de seguro asociados a cada tramo):  
+1. Diseñar un algoritmo Greedy que decida el itinerario.  
+2. Indicar si la solución obtenida será óptima o no. Fundamentar con un contraejemplo riguroso con datos numéricos explícitos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-17">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Regla Voraz:** Empezando en Ezeiza ($E$), en cada etapa miramos únicamente las ciudades vecinas de la etapa siguiente y **elegimos avanzar hacia la ciudad conectada que tenga el menor costo de seguro inmediato** en ese tramo, repitiendo hasta llegar a Bariloche ($B$).
+* **¿Asegura la solución óptima? NO.** Porque ahorrar un poco en el tramo de hoy puede meternos en una ciudad cuyas únicas rutas de salida hacia Bariloche sean carísimas.
+* **Contraejemplo numérico concreto (listo para escribir en la hoja):**
+  - Supongamos 2 etapas desde Ezeiza ($E$) hasta Bariloche ($B$) con dos ciudades intermedias $V_1$ y $V_2$:
+    * Tramos desde el origen: $E \to V_1$ cuesta **$\dollar 10$** y $E \to V_2$ cuesta **$\dollar 20$**.
+    * Tramos hacia el destino: $V_1 \to B$ cuesta **$\dollar 100$** y $V_2 \to B$ cuesta **$\dollar 5$**.
+  - **Qué hace Greedy:** Parado en $E$, compara $\dollar 10$ contra $\dollar 20$ y elige ir a $V_1$ ($\dollar 10$). Una vez en $V_1$, su única salida a $B$ cuesta $\dollar 100$. **Costo total Greedy = $10 + 100 = \dollar 110$**.
+  - **Solución Óptima:** Ir por $E \to V_2 \to B$ pagando **$20 + 5 = \dollar 25$**.
+  - Como $\dollar 110 > \dollar 25$, queda demostrado que el algoritmo Greedy **no garantiza la solución óptima** *(para obtener siempre el óptimo habría que usar Programación Dinámica o Dijkstra)*.
+
+
+<MermaidDiagram client:visible code={"graph LR\n    E([\"E (Ezeiza)\"]) -->|Costo: 10| V1[\"V1\"]\n    E -->|Costo: 20| V2[\"V2\"]\n    V1 -->|Costo: 100| B([\"B (Bariloche)\"])\n    V2 -->|Costo: 5| B"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo TrasladoINVAPGreedy(G, origen, destino):
+    actual = origen
+    camino = [ actual ]
+    costo_total = 0
+
+    mientras actual != destino:
+        // Regla voraz miope: elegir el vecino de la etapa siguiente con menor costo inmediato
+        (mejor_vecino, menor_costo) = vecino saliente de menor costo desde actual
+        agregar mejor_vecino a camino
+        costo_total = costo_total + menor_costo
+        actual = mejor_vecino
+
+    devolver (costo_total, camino)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* En cada etapa el algoritmo solo inspecciona las aristas salientes de la ciudad actual (sin retroceder ni visitar las demás ciudades de esa misma etapa). Por lo tanto, recorre a lo sumo una fracción de las aristas en tiempo **$O(V + E)$** y espacio **$O(V)$**.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Contraejemplos sin números:** Explicar en el aire *"puede ser que después venga un camino más caro"* sin dar los nodos y costos concretos ($10+100=110$ vs $20+5=25$) no suma el puntaje del contraejemplo.
+
+</AcademicBlock>
+
+</SolutionDrawer>

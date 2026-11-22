@@ -1,0 +1,108 @@
+---
+id: "tda-ej-73"
+courseId: "tda"
+number: 73
+title: "Reducción de Cambio de Monedas a Subset Sum"
+unit: "reducciones"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 5"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-1"
+relatedResourceIds:
+  - "tda-parcial-2024-2-1-pdf"
+  - "tda-slide-17-complejidad-y-reducciones-i"
+  - "tda-slide-18-complejidad-y-reducciones-ii"
+  - "tda-slide-19-practica-reducciones"
+  - "tda-guia-07-reducciones"
+legacyPage: "reducciones.html"
+legacyAnchor: "#ej-73"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Demostrar formalmente que el problema del **Cambio de Monedas** (en su versión de decisión: dadas denominaciones enteras $D = \{d_1, \dots, d_m\}$, un entero objetivo $V$ y una cota $k$, ¿es posible dar cambio de valor exacto $V$ utilizando a lo sumo $k$ monedas?) **no es más difícil** que el problema de la **Suma de Subconjuntos (Subset Sum)**.  
+¿Es posible demostrar la reducción en sentido inverso? Fundamentar en base a las clases de complejidad teóricas.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Concepto de orden de dificultad entre problemas en NP, transformación con copias de monedas y comprensión de que dos problemas NP-Completos se reducen mutuamente.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-73">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos para la Hoja del Parcial)
+
+**Qué significa "no es más difícil":** Significa probar que **$\text{Cambio de Monedas} \le_P \text{Subset Sum}$**.
+
+1. **Paso 1 (Pertenece a NP — Verificador):**
+   * **Certificado:** Una lista de monedas elegidas (o un subconjunto de números en Subset Sum).
+   * **Verificación en tiempo polinomial:** Chequeamos que la cantidad de monedas sea $\le k$, que cada moneda pertenezca al conjunto $D$ y que la suma de sus valores sea exactamente $V$. Sumar lleva tiempo lineal en la cantidad de elementos y bits $\implies$ ambos pertenecen a **NP**.
+2. **Paso 2 y 3 (Reducción $\text{Cambio de Monedas} \le_P \text{Subset Sum}$):**
+   * En *Cambio de Monedas* podemos repetir denominaciones y usar a lo sumo $k$ monedas en total; en *Subset Sum* cada elemento de la lista se puede usar a lo sumo $1$ vez y no hay tope de cantidad de elementos.
+   * **Transformación en lenguaje natural:**
+     1. Como en total se usan a lo sumo $k$ monedas, creamos una lista $L$ **repitiendo $k$ veces cada denominación $d_i$** (obtenemos $m \cdot k$ elementos).
+     2. Para obligar a que *Subset Sum* elija exactamente $k' \le k$ monedas que sumen $V$, codificamos cada moneda en base $M = k + 1$: reemplazamos cada copia de $d_i$ por el número **$e_i = d_i \cdot (k + 1) + 1$** (el $+1$ cuenta cuántas monedas se usan sin generar acarreo porque $k' < k + 1$).
+     3. Consultamos si existe un subconjunto de $L$ que sume **$W = V \cdot (k + 1) + k'$** (para algún $k' \in \{1, \dots, k\}$, o agregando $k$ elementos comodín de valor $1$ y pidiendo suma exacta $W = V \cdot (k + 1) + k$).
+   * **Cuánto tarda:** Generar los $m \cdot k$ elementos de la lista $L$ toma tiempo **$\mathcal{O}(m \cdot k)$**.
+3. **Paso 4 (Ida y Vuelta $\iff$ y Reducción Inversa):**
+   * **($\implies$) Ida:** Si existen $k' \le k$ monedas que suman $V$, tomamos esas $k'$ copias en $L$ (más $k - k'$ comodines de valor $1$); su suma en la parte alta da $V \cdot (k + 1)$ y en las unidades da $k' + (k - k') = k$, sumando exactamente $W$.
+   * **($\impliedby$) Vuelta:** Si un subconjunto de $L$ suma $W = V \cdot (k + 1) + k$, como la suma de los $+1$ no puede superar $k < k + 1$ (no hay acarreo hacia el múltiplo de $k + 1$), obligatoriamente se eligieron a lo sumo $k$ monedas cuyos valores originales suman exactamente $V$.
+   * **¿Se puede reducir en sentido inverso ($\text{Subset Sum} \le_P \text{Cambio de Monedas}$)? SÍ:** Porque *Subset Sum* pertenece a **NP** y *Cambio de Monedas* (con valores en binario) es **NP-Completo**; por definición, todo problema en NP se reduce polinomialmente a cualquier problema NP-Completo.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    I[\"Instancia Cambio de Monedas:<br/>D = {d₁..dₘ}, monto V, cota k\"]:::src --> R[\"Expansión en k copias:<br/>L tiene m · k elementos\"]:::step\n    R --> G[\"Gadget Base M = k + 1:<br/>eᵢ = dᵢ · (k+1) + 1<br/>+ k comodines de valor 1\"]:::step\n    G --> SS([\"Oráculo Subset Sum:<br/>¿Suma exacta W = V·(k+1) + k?\"]):::opt\n    classDef src fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff\n    classDef step fill:#334155,stroke:#1e293b,stroke-width:1px,color:#fff\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación
+
+```text
+FUNCION VerificadorCambioMonedas(D, V, k, certificado_monedas):
+    SI tamaño(certificado_monedas) > k:
+        RETORNAR FALSO
+    suma <- 0
+    PARA CADA m EN certificado_monedas:
+        SI m NO PERTENECE A D:
+            RETORNAR FALSO
+        suma <- suma + m
+    RETORNAR (suma == V)
+
+FUNCION TransformarCambioMonedasASubsetSum(D, V, k):
+    M <- k + 1
+    L <- lista_vacia()
+
+    // 1. Agregar k copias de cada moneda desplazadas en base M = k + 1
+    PARA CADA d_i EN D:
+        PARA r <- 1 HASTA k:
+            agregar (d_i * M + 1) a L
+
+    // 2. Agregar k elementos comodín de valor 1 (para completar exactamente k unidades)
+    PARA r <- 1 HASTA k:
+        agregar 1 a L
+
+    W_objetivo <- V * M + k
+    RETORNAR OraculoSubsetSum(L, W_objetivo)
+```
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Confundir tiempo pseudo-polinomial con polinomial:** Afirmar que como ambos se resuelven con programación dinámica en $O(n V)$ están en P. No están en P bajo codificación binaria porque el tamaño de la entrada es $O(\log V)$, haciendo que $O(V)$ sea exponencial respecto a la longitud en bits.
+
+- **Decir que no se puede reducir en sentido inverso:** Creer erróneamente que porque uno parece más general no puede reducirse al otro. Dos problemas NP-Completos cualesquiera siempre admiten reducción mutua bidireccional.
+
+</AcademicBlock>
+
+</SolutionDrawer>

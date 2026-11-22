@@ -1,0 +1,57 @@
+---
+id: "tda-ej-27"
+courseId: "tda"
+number: 27
+title: "Convención 4: Entrar Antes de la Mitad y Quedarse hasta el Final"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.9"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-27"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Diego quiere entrar a cada charla en cualquier momento **antes de la mitad**, pero como le gusta hacer preguntas a los oradores, **quiere quedarse hasta el final** en cada charla a la que asiste. Todas las charlas le interesan por igual. Diseñar un algoritmo greedy óptimo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-27">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* ¡Este problema tiene una reducción brillante! Como Diego quiere quedarse desde la mitad hasta el final sin falta, y entrar antes de la mitad solo le ocuparía tiempo extra sin necesidad, a Diego le conviene entrar **exactamente en la mitad de la charla** (`mitad_i = (inicio_i + fin_i) / 2`) y quedarse hasta `fin_i`.
+* Entonces, **reemplazamos cada charla original $[inicio_i, fin_i]$ por su segunda mitad obligatoria $[mitad_i, fin_i]$**, y aplicamos el algoritmo clásico de *Interval Scheduling* (ordenar por `fin_i` ascendente). ¡Esto da la **solución 100% óptima** en tiempo **$O(n \log n)$**!
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AgendaDiegoSegundaMitad(charlas):
+    // 1. Transformar cada charla a su segunda mitad obligatoria [mitad, fin]
+    ordenar charlas por c.fin de menor a mayor
+    agenda = []
+    ultimo_fin = -infinito
+
+    para cada c en charlas:
+        mitad = (c.inicio + c.fin) / 2
+        // Si estamos libres antes o justo en la mitad de la charla, entramos
+        si mitad >= ultimo_fin:
+            agregar (c, desde = mitad, hasta = c.fin) a agenda
+            ultimo_fin = c.fin
+
+    devolver agenda
+```
+
+</SolutionDrawer>

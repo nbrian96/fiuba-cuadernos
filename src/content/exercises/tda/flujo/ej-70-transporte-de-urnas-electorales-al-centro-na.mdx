@@ -1,0 +1,111 @@
+---
+id: "tda-ej-70"
+courseId: "tda"
+number: 70
+title: "Transporte de Urnas Electorales al Centro Nacional de Estadísticas"
+unit: "flujo"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2026-2-1 (Enunciados), Ejercicio 6"
+isParcial: true
+examIds:
+  - "tda-parcial-2026-2-1"
+relatedResourceIds:
+  - "tda-parcial-2026-2-1-pdf"
+  - "tda-slide-14-redes-de-flujo-i"
+  - "tda-slide-15a-redes-de-flujo-ii"
+  - "tda-slide-15b-redes-de-flujo-anexo"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-06-flujo"
+legacyPage: "flujo.html"
+legacyAnchor: "#ej-70"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Luego de las elecciones del domingo, en cierto país limítrofe, se deben llevar las urnas desde los $N$ centros de votación ($C_1, C_2, \dots, C_N$) hasta el Centro Nacional de Estadísticas ($CNE$) para proceder al escrutinio definitivo. Desde los centros de votación hay caminos que pasan por diversos puntos intermedios (como $A$ y $B$ en el grafo de referencia). Para cada camino se sabe la cantidad máxima de urnas por minuto que se pueden transportar. Diseñar un algoritmo que mediante Ford-Fulkerson (FF) calcule la cantidad de urnas a transportar por cada ruta para maximizar la cantidad de urnas transportadas por minuto. Indicar la complejidad del algoritmo desarrollado.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-70">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* El algoritmo de **Ford-Fulkerson** requiere una red de transporte con **una única fuente $s$** y **un único sumidero $t$**. En este problema ya contamos con un único sumidero natural, que es el **Centro Nacional de Estadísticas ($t = CNE$)**, pero tenemos múltiples orígenes ($C_1, C_2, \dots, C_N$).
+* **Reducción a fuente única:** Creamos un nodo ficticio llamado **Super-Fuente $s$** y agregamos una arista dirigida desde $s$ hacia cada uno de los $N$ centros de votación $(s \to C_i)$ con **capacidad $\infty$** (o bien, con capacidad igual a la suma de las capacidades de todos los caminos que salen de $C_i$, ya que el enunciado no impone un tope de emisión en el centro sino en las rutas).
+* **Conservación en puntos intermedios y maximización:** Los puntos de paso intermedios (como $A, B, \dots$) actúan como nodos internos donde rige la ley de conservación de flujo ($\text{urnas que entran por minuto} = \text{urnas que salen por minuto}$), y cada tramo vial dirigido $(u, v)$ conserva su capacidad máxima de urnas por minuto $c(u, v)$. Al ejecutar **Ford-Fulkerson** (implementado mediante **Edmonds-Karp** usando BFS para elegir siempre el camino de aumento más corto en cantidad de aristas) desde $s$ hasta $CNE$, el flujo final $f(u, v)$ en cada arista indica exactamente cuántas urnas por minuto deben enviarse por cada camino para alcanzar el máximo caudal posible hacia el $CNE$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    s((\"Super-Fuente s\")) -->|\"cap = ∞\"| C1((\"C1\"))\n    s -->|\"cap = ∞\"| C2((\"C2\"))\n    s -->|\"cap = ∞\"| C3((\"C3\"))\n\n    C1 -->|\"c(C1, A)\"| A((\"A\"))\n    C1 -->|\"c(C1, CNE)\"| CNE((\"CNE (Sumidero t)\"))\n    C2 -->|\"c(C2, A)\"| A\n    C2 -->|\"c(C2, B)\"| B((\"B\"))\n    C3 -->|\"c(C3, B)\"| B\n    C3 -->|\"c(C3, CNE)\"| CNE\n\n    A -->|\"c(A, B)\"| B\n    A -->|\"c(A, CNE)\"| CNE\n    B -->|\"c(B, CNE)\"| CNE\n\n    classDef src fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff\n    classDef snk fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    class s src\n    class CNE snk"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION MaximizarTransporteUrnasFF(Centros, NodosIntermedios, Caminos, CNE):
+    // 1. Construir la red de flujo G = (V, E) y la red residual G_f
+    Crear grafo dirigido G y grafo residual G_f
+    Crear nodo ficticio SuperFuente s
+    Sumidero t <- CNE
+
+    // Conectar la Super-Fuente s a cada centro de votación C_i
+    PARA CADA C_i EN Centros:
+        agregar_arista(G, s, C_i, capacidad = INFINITO)
+        c_f(s, C_i) <- INFINITO
+        c_f(C_i, s) <- 0
+
+    // Cargar todos los caminos viales (u -> v) con su capacidad máxima de urnas/minuto
+    PARA CADA (u, v, max_urnas_min) EN Caminos:
+        agregar_arista(G, u, v, capacidad = max_urnas_min)
+        f(u, v) <- 0
+        c_f(u, v) <- max_urnas_min
+        c_f(v, u) <- 0
+
+    flujo_total_urnas <- 0
+
+    // 2. Ciclo principal de Ford-Fulkerson (Edmonds-Karp con BFS)
+    MIENTRAS exista un camino P desde s hasta t en G_f con c_f > 0 (hallado con BFS):
+        // Cuello de botella del camino de aumento P
+        delta <- MINIMO { c_f(u, v) para toda arista (u, v) en P }
+
+        // Actualizar flujos y capacidades residuales (directas y reversas)
+        PARA CADA arista (u, v) EN P:
+            SI (u, v) es arista original de G:
+                f(u, v) <- f(u, v) + delta
+            SINO:
+                // Se usó una arista backward (reversa): deshacemos flujo previo
+                f(v, u) <- f(v, u) - delta
+
+            c_f(u, v) <- c_f(u, v) - delta
+            c_f(v, u) <- c_f(v, u) + delta
+
+        flujo_total_urnas <- flujo_total_urnas + delta
+
+    // 3. Devolver el máximo de urnas/minuto y el detalle por cada camino original
+    RETORNAR (flujo_total_urnas, f)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Con Ford-Fulkerson clásico (búsqueda de camino arbitrario con DFS):** En cada iteración se busca un camino de aumento en la red residual en tiempo $\mathcal{O}(|E|)$ (dado que $|V| \le |E| + 1$) y, al ser las capacidades enteras (urnas por minuto), el flujo aumenta al menos en $1$ unidad por iteración. Por lo tanto, la complejidad temporal es **$\mathcal{O}(|E| \cdot |f^*|)$** (pseudo-polinomial), donde $|f^*|$ es el flujo máximo total de urnas por minuto que llegan al $CNE$.
+* **Con Edmonds-Karp (implementación de Ford-Fulkerson usando BFS para elegir el camino más corto en cantidad de aristas):** Se garantiza que ocurren a lo sumo $\mathcal{O}(|V| \cdot |E|)$ aumentos de flujo, y cada BFS toma $\mathcal{O}(|E|)$. Por lo tanto, la complejidad temporal es estrictamente polinomial **$\mathcal{O}(|V| \cdot |E|^2)$**, donde $|V| = N + |\text{NodosIntermedios}| + 2$ y $|E| = N + |\text{Caminos}|$.
+* **Complejidad Espacial:** **$\mathcal{O}(|V| + |E|)$** para almacenar la red de flujo, la red residual $G_f$ y la cola del BFS.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Ejecutar $N$ veces Ford-Fulkerson por separado desde cada centro $C_i$:** Correr flujo máximo desde $C_1$ a $CNE$, luego desde $C_2$, etc., es incorrecto o subóptimo si no se mantiene una única red residual compartida. La forma limpia y estándar es unificar todos los orígenes con una única **Super-Fuente $s$** antes de iniciar el algoritmo.
+
+- **Omitir las aristas reversas (backward) $c_f(v, u)$ en la red residual:** En el grafo del parcial existen enlaces cruzados entre nodos intermedios ($A \to B$). Sin aristas reversas, Ford-Fulkerson no puede reencaminar flujo y puede devolver un valor menor al óptimo.
+
+</AcademicBlock>
+
+</SolutionDrawer>

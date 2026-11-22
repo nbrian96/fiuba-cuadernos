@@ -1,0 +1,92 @@
+---
+id: "tda-ej-16"
+courseId: "tda"
+number: 16
+title: "Ubicación Voraz de Antenas Celulares con Costo por Vecindario"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-3 (10 de diciembre de 2024), Ejercicio 4"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-3"
+relatedResourceIds:
+  - "tda-parcial-2024-2-3-pdf"
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-16"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una empresa de telefonía celular desea colocar antenas en una grilla de celdas para brindar cobertura a un conjunto de vecindarios distribuidos en la zona. Cada antena colocada en una celda $(i, j)$ da cobertura a esa celda y a las 8 que la rodean (un bloque de $3 \times 3$). El costo de instalar una antena en la celda $(i, j)$ es de $CTO_{ij}$ pesos. Se desea cubrir todos los vecindarios minimizando el costo total. Diseñar un algoritmo Greedy que determine en qué celdas colocar antenas. Justificar la regla de elección voraz, la cota de aproximación y la complejidad del algoritmo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-16">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Regla Voraz (Menor costo por cada nuevo vecindario cubierto):**
+  Mientras queden vecindarios sin cubrir, para cada celda candidata $c = (i, j)$ contamos cuántos vecindarios **que todavía no tienen cobertura** ($\text{nuevos}(c)$) entrarían dentro de su bloque de $3 \times 3$, y calculamos su costo marginal por vecindario nuevo:
+  $$\text{Ratio}(c) = \frac{CTO_{ij}}{\text{nuevos}(c)}$$
+  En cada paso instalamos la antena que tenga el **menor ratio** (la más barata por cada nuevo vecindario que suma), marcamos esos vecindarios como cubiertos y repetimos hasta cubrir todos.
+* **¿Es óptimo? NO (Garantía de Aproximación):**
+  Este problema es un caso de *Weighted Set Cover* (Cobertura de Conjuntos con Costos), que es **NP-Completo**. Por lo tanto, el algoritmo Greedy **no garantiza la solución óptima**, sino que actúa como una heurística de aproximación que garantiza un costo total de a lo sumo $(\ln V + 1) \cdot OPT$ (aproximación logarítmica, donde $V$ es la cantidad de vecindarios).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AntenasSetCoverGreedy(vecindarios, antenas):
+    no_cubiertos = copiar(vecindarios)
+    elegidas = []
+
+    mientras no_cubiertos no esté vacío:
+        mejor_antena = nulo
+        mejor_ratio = infinito
+
+        // Buscar la antena con menor costo por cada vecindario NUEVO cubierto
+        para cada A en antenas:
+            nuevos = cantidad(A.cobertura_3x3 intersección no_cubiertos)
+            si nuevos > 0:
+                ratio = A.costo / nuevos
+                si ratio < mejor_ratio:
+                    mejor_ratio = ratio
+                    mejor_antena = A
+
+        agregar mejor_antena a elegidas
+        no_cubiertos = no_cubiertos - mejor_antena.cobertura_3x3
+
+    devolver elegidas
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* Llamando $V$ a la cantidad de vecindarios y $M$ a la cantidad de celdas candidatas para antenas: en cada vuelta del ciclo `mientras` revisamos las $M$ antenas y miramos sus 9 casillas del bloque $3 \times 3$ en tiempo constante $O(1)$, tardando $O(M)$ por iteración.
+* Como en cada paso cubrimos al menos 1 vecindario nuevo, el ciclo se ejecuta a lo sumo $V$ veces. Complejidad temporal total: **$O(V \cdot M)$** y espacial **$O(V + M)$**.
+
+
+<MermaidDiagram client:visible code={"graph TD\n    U[\"Vecindarios No Cubiertos: {v1, v2, v3, v4}\"] --> A1[\"Instalar A1: Cubre {v1, v2} a $5/vecino\"]:::opt\n    A1 --> U2[\"Vecindarios Restantes: {v3, v4}\"]\n    U2 --> A3[\"Instalar A3: Cubre {v3, v4} a $6/vecino\"]:::opt\n    A3 --> FIN([\"Cobertura 100% Completada por $22\"]):::done\n    classDef opt fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff\n    classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Dividir por la cobertura total fija en vez de los vecindarios *nuevos*:** El denominador del ratio debe ser únicamente los vecindarios que *todavía no están cubiertos*. Si divides siempre por la cantidad fija inicial, elegirás antenas redundantes sobre zonas ya cubiertas.
+
+- **Afirmar que este Greedy es óptimo:** Set Cover es NP-Completo; decir que da siempre el óptimo invalida la respuesta teórica.
+
+</AcademicBlock>
+
+</SolutionDrawer>

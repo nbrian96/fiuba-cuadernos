@@ -1,0 +1,113 @@
+---
+id: "tda-ej-55"
+courseId: "tda"
+number: 55
+title: "Justificación de Texto (Word Wrap / Knuth-Plass)"
+unit: "dp"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2024-2-3 (10 de diciembre de 2024), Ejercicio 2"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-3"
+relatedResourceIds:
+  - "tda-parcial-2024-2-3-pdf"
+  - "tda-slide-08-programacion-dinamica-i"
+  - "tda-slide-09-programacion-dinamica-ii"
+  - "tda-slide-10-programacion-dinamica-iii"
+  - "tda-slide-11a-programacion-dinamica-iv"
+  - "tda-slide-11b-practica-programacion-dinamica"
+  - "tda-guia-04-dp"
+legacyPage: "dp.html"
+legacyAnchor: "#ej-55"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene un texto formado por una sucesión de $n$ palabras $W_1, W_2, \dots, W_n$. Cada palabra $W_i$ tiene una longitud de $C_i$ caracteres ($C_i \le L$). Se quiere dividir el texto en líneas de ancho máximo $L$. Si se asignan las palabras contiguas $W_j, \dots, W_i$ a una misma línea, la longitud total ocupada es:
+$$\text{Longitud}(j, i) = \sum_{k=j}^i C_k + (i - j)$$
+donde $(i - j)$ representa el espacio en blanco simple obligatorio entre palabras contiguas. Una línea es válida si $\text{Longitud}(j, i) \le L$. Al valor sobrante de la línea se lo define como:
+$$\text{Sobrante}(j, i) = L - \text{Longitud}(j, i)$$
+Diseñar un algoritmo por Programación Dinámica que realice una partición del texto en líneas minimizando la suma de los cuadrados de los sobrantes de todas las líneas. Desarrollar la recurrencia, complejidad y reconstrucción.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-55">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Definición del Estado:** Llamamos $OPT(i)$ al **mínimo costo total (suma de los cuadrados de los espacios sobrantes) para formatear en líneas las primeras $i$ palabras ($W_1, \dots, W_i$)**.
+* **Caso Base:** $OPT(0) = 0$ (si hay $0$ palabras para acomodar, el costo es $0$).
+* **Decisiones en el paso $i$:**
+  Para acomodar el prefijo de palabras $W_1 \dots W_i$, nos preguntamos: **¿en qué palabra $j$ ($1 \le j \le i$) empieza la última línea?**
+  * Si decidimos que la última línea contenga las palabras desde $W_j$ hasta $W_i$ (lo cual solo es válido si $\text{Longitud}(j, i) \le L$), esa línea tendrá un costo de $\text{Sobrante}(j, i)^2 = (L - \text{Longitud}(j, i))^2$.
+  * Las palabras anteriores ($W_1 \dots W_{j-1}$) deben haberse acomodado de la mejor forma posible, lo cual cuesta $OPT(j - 1)$.
+  * Probamos todos los inicios $j$ posibles que no superen el ancho $L$ y nos quedamos con el que dé el mínimo costo total.
+* **Ecuación de Bellman (Recurrencia):**
+  Para todo $i \in \{1, \dots, n\}$:
+  $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{ OPT(j - 1) + \big(L - \text{Longitud}(j, i)\big)^2 \Big\}$$
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    P0[\"OPT(0) = 0\"] --> Pj[\"OPT(j - 1)<br/>Palabras 1..j-1 óptimas\"]:::prev\n    Pj -->|\"+ (L - Longitud(j, i))²<br/>Última línea con palabras j..i\"| Pi[\"OPT(i)<br/>Mínimo probando todo j válido\"]:::curr\n    classDef prev fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff\n    classDef curr fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION WordWrap(C, n, L):
+    DP <- arreglo de tamaño (n + 1) inicializado en +INFINITO
+    inicio_linea <- arreglo de tamaño (n + 1) inicializado en 0
+    DP[0] <- 0
+
+    // 1. Llenado Bottom-Up para cada prefijo de i palabras
+    PARA i <- 1 HASTA n:
+        largo_actual <- 0
+        // Probamos que la última línea empiece en j (yendo hacia atrás desde i hasta 1)
+        PARA j <- i BAJANDO HASTA 1:
+            SI j == i:
+                largo_actual <- C[i]
+            SINO:
+                largo_actual <- largo_actual + 1 + C[j]   // +1 por el espacio entre palabras
+
+            SI largo_actual > L:
+                ROMPER   // Ya no entran más palabras en esta línea
+
+            costo <- DP[j - 1] + (L - largo_actual)^2
+            SI costo < DP[i]:
+                DP[i] <- costo
+                inicio_linea[i] <- j
+
+    // 2. Reconstrucción de las líneas (de atrás hacia adelante)
+    lineas <- lista vacía
+    actual <- n
+    MIENTRAS actual > 0:
+        j <- inicio_linea[actual]
+        AGREGAR rango (j .. actual) AL INICIO DE lineas
+        actual <- j - 1
+
+    RETORNAR (DP[n], lineas)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** $\mathcal{O}(n^2)$ (o más ajustadamente $\mathcal{O}(n \cdot L)$). La tabla `DP` tiene $n + 1$ celdas. Para calcular cada celda $i$, el bucle interno retrocede con el índice $j$ a lo sumo $i$ posiciones (y a lo sumo $L$ pasos antes de que `largo_actual` supere $L$), haciendo cuentas en $\mathcal{O}(1)$ en cada paso gracias a que acumulamos `largo_actual`.
+* **Complejidad Espacial:** $\mathcal{O}(n)$ para guardar los arreglos `DP[0..n]` e `inicio_linea[1..n]`.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Olvidar el espacio en blanco entre palabras:** Entre $W_j$ y $W_i$ hay $(i - j)$ espacios. Al agregar una palabra más a la línea siempre hay que sumar `1 + C[j]`.
+
+- **No cortar cuando $\text{Longitud}(j, i) > L$:** Como el sobrante se eleva al cuadrado, si no cortás el bucle cuando la línea se pasa de $L$, un sobrante negativo como $(-3)^2 = 9$ daría positivo y el algoritmo armaría líneas ilegales.
+
+</AcademicBlock>
+
+</SolutionDrawer>

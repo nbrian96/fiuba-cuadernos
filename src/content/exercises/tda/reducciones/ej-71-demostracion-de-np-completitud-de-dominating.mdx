@@ -1,0 +1,109 @@
+---
+id: "tda-ej-71"
+courseId: "tda"
+number: 71
+title: "Demostración de NP-Completitud de Dominating Set (desde Vertex Cover)"
+unit: "reducciones"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2024-2-2 (Ej 5) y Parcial 2024-2-3 (Ej 5) / Guía 07 Ejercicio 2 y 14"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-2"
+  - "tda-parcial-2024-2-3"
+relatedResourceIds:
+  - "tda-parcial-2024-2-2-pdf"
+  - "tda-parcial-2024-2-3-pdf"
+  - "tda-slide-17-complejidad-y-reducciones-i"
+  - "tda-slide-18-complejidad-y-reducciones-ii"
+  - "tda-slide-19-practica-reducciones"
+  - "tda-guia-07-reducciones"
+legacyPage: "reducciones.html"
+legacyAnchor: "#ej-71"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un conjunto dominante (*Dominating Set*) en un grafo no dirigido $G = (V, E)$ es un subconjunto de vértices $D \subseteq V$ tal que todo vértice $v \in V$ pertenece a $D$ o es adyacente a al menos un vértice en $D$.  
+El problema de decisión de Dominating Set plantea: dado un grafo $G = (V, E)$ y un entero positivo $k \le |V|$, ¿existe un conjunto dominante $D$ tal que $|D| \le k$?  
+Demostrar formalmente que **Dominating Set es NP-Completo**, reduciendo desde **Vertex Cover**.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Protocolo de 4 pasos completo, diseño del triángulo auxiliar por arista, verificación polinomial y justificación de ida y vuelta en lenguaje claro.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-71">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos para la Hoja del Parcial)
+
+1. **Paso 1 (Pertenece a NP — Verificador):**
+   * **Certificado:** Un subconjunto de vértices $D \subseteq V$ propuesto como solución.
+   * **Verificación en tiempo polinomial:** Chequeamos primero que $|D| \le k$ en $\mathcal{O}(1)$. Luego recorremos cada vértice $u \in D$ y marcamos como "dominados" a $u$ y a todos sus vecinos directos en $G$. Al finalizar, verificamos si quedaron marcados los $|V|$ vértices del grafo. Como recorremos vértices y aristas una sola vez, el verificador tarda **$\mathcal{O}(|V| + |E|)$** (polinomial) $\implies \text{Dominating Set} \in \text{NP}$.
+2. **Paso 2 y 3 (Reducción desde problema conocido $\text{Vertex Cover} \le_P \text{Dominating Set}$):**
+   * Partimos de una instancia $(G = (V, E), k)$ de **Vertex Cover** (sabemos que es NP-Completo: ¿existen $\le k$ vértices que toquen todas las aristas de $G$?).
+   * **Transformación en lenguaje natural:**
+     1. Eliminamos de $G$ los vértices aislados (sin aristas), ya que en Vertex Cover no cubren ninguna arista y en Dominating Set obligarían a gastar vértices extra.
+     2. Copiamos todos los vértices y aristas restantes de $G$ a un nuevo grafo $G'$.
+     3. **Por cada arista $(u, v) \in E$, creamos un vértice nuevo $w_{uv}$ y lo conectamos a $u$ y a $v$** (armando un triángulo entre $u$, $v$ y $w_{uv}$).
+     4. Mantenemos el mismo límite **$k' = k$**.
+   * **Cuánto tarda:** Agregamos $|E|$ vértices nuevos y $2|E|$ aristas en tiempo **$\mathcal{O}(|V| + |E|)$** (polinomial).
+3. **Paso 4 (Ida y Vuelta $\iff$):**
+   * **($\implies$) Ida (Si hay Vertex Cover de tamaño $\le k$ en $G \implies$ hay Dominating Set de tamaño $\le k$ en $G'$):**
+     Tomamos el mismo conjunto $D$ del Vertex Cover. Como cubría todas las aristas $(u, v)$ de $G$, al menos uno entre $u$ y $v$ está en $D$: ese vértice domina al nodo nuevo $w_{uv}$ y también a los extremos de la arista (como no hay vértices aislados, todo vértice original tiene al menos una arista cubierta y queda dominado). Así, $D$ domina todo $G'$ con $|D| \le k$.
+   * **($\impliedby$) Vuelta (Si hay Dominating Set de tamaño $\le k$ en $G' \implies$ hay Vertex Cover de tamaño $\le k$ en $G$):**
+     Si el conjunto dominante $D$ de $G'$ eligió algún vértice auxiliar $w_{uv}$, **lo reemplazamos por $u$** (o por $v$). Esto no aumenta el tamaño de $D$ ni pierde dominancia (porque $w_{uv}$ solo tocaba a $u$ y $v$, y $u$ también los cubre). Ahora $D$ solo tiene vértices originales de $G$, y como cada $w_{uv}$ está dominado sin pertenecer a $D$, sí o sí al menos uno de sus dos únicos vecinos ($u$ o $v$) está en $D$, cubriendo todas las aristas de $G$.
+   * **Conclusión:** $\text{Dominating Set} \in \text{NP-Completo}$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    subgraph AristaG [Arista uv en G]\n        u1[\"Vertice u\"] --- v1[\"Vertice v\"]\n    end\n    subgraph GadgetGPrime [Gadget Triangular en G prima]\n        u2[\"Vertice u\"] --- v2[\"Vertice v\"]\n        u2 --- we[\"Vertice Auxiliar we\"]\n        v2 --- we\n    end"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación
+
+```text
+FUNCION VerificadorDominatingSet(G = (V, E), k, certificado_D):
+    SI tamaño(certificado_D) > k:
+        RETORNAR FALSO
+
+    dominados <- conjunto_vacio()
+    PARA CADA u EN certificado_D:
+        agregar u a dominados
+        PARA CADA v EN Vecinos(G, u):
+            agregar v a dominados
+
+    RETORNAR (tamaño(dominados) == tamaño(V)) // Tiempo O(|V| + |E|)
+
+FUNCION TransformarVCaDominatingSet(G = (V, E), k):
+    G_sin_aislados <- eliminar vértices de grado 0 en G
+    G' <- copiar(G_sin_aislados)
+
+    PARA CADA arista (u, v) EN Aristas(G_sin_aislados):
+        crear vértice nuevo w_uv en G'
+        agregar_arista(G', u, w_uv)
+        agregar_arista(G', v, w_uv)
+
+    RETORNAR (G', k' = k) // Transformación en O(|V| + |E|)
+```
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Reducir al revés ($DominatingSet \le_P VertexCover$):** Reducir el problema nuevo al problema conocido demuestra que el nuevo es fácil, pero **no prueba que sea NP-Hard**. La reducción debe partir obligatoriamente desde el problema conocido.
+
+- **Olvidar reemplazar los vértices auxiliares en la vuelta:** Si un conjunto dominante contiene $w_{uv}$, no es un subconjunto de los vértices originales. Es obligatorio explicar por qué $w_{uv}$ puede sustituirse por $u$ sin aumentar el tamaño ni perder dominancia.
+
+</AcademicBlock>
+
+</SolutionDrawer>

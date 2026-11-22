@@ -1,0 +1,117 @@
+---
+id: "tda-ej-79"
+courseId: "tda"
+number: 79
+title: "El Problema del Viajante de Comercio (TSP) Resuelto en Todos los Paradigmas Algorítmicos"
+unit: "integradores"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 5
+origin: "Problema Arquetípico Canónico de Grafos y NP-Hard / Evaluación Integral Multi-Paradigma"
+isParcial: false
+legacyPage: "integradores.html"
+legacyAnchor: "#ej-79"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+**Enunciado Integrador**  
+Dado un conjunto de $n$ ciudades numeradas $\{1, 2, \dots, n\}$ y una matriz de distancias o costos $C = [c_{ij}]$ no negativos entre cada par de ciudades, el **Problema del Viajante de Comercio (TSP - Travelling Salesperson Problem)** consiste en encontrar un circuito simple (tour cerrado) que visite **exactamente una vez cada ciudad y retorne a la ciudad de origen** minimizando la distancia total recorrida.  
+Resolver y comparar este problema a través de todos los paradigmas algorítmicos fundamentales:
+1. **Paradigma Backtracking y Branch & Bound (Búsqueda Exacta):**
+   * Definir el árbol de permutaciones, podas por factibilidad, poda por cota superior actual y poda avanzada por **Cota Inferior basada en Árbol Generador Mínimo (MST / 1-Tree)**.
+2. **Paradigma Programación Dinámica (Algoritmo de Bellman-Held-Karp):**
+   * Identificar la subestructura óptima y superposición de estados. Definir formalmente el subproblema sobre subconjuntos de vértices $C(S, j)$, la ecuación de recurrencia, el algoritmo tabular y demostrar la reducción de complejidad factorial $O(n!)$ a exponencial $O(n^2 2^n)$.
+3. **Paradigma Greedy y Heurísticas de Aproximación:**
+   * Desarrollar la heurística voraz del **Vecino más Cercano (Nearest Neighbor)** y exhibir un contraejemplo demostrando por qué no es óptima.
+   * Diseñar el **Algoritmo 2-Aproximado para TSP Métrico** (con desigualdad triangular) basado en Árbol Generador Mínimo y recorrido en preorden con atajos (*shortcuts*). Desarrollar la demostración formal paso a paso de la cota $\text{Costo}(\text{Tour}) \le 2 \cdot OPT$.
+4. **Paradigma Programación Lineal Entera (PLI):**
+   * Formular el modelo matemático exacto mediante la **formulación de Miller-Tucker-Zemlin (MTZ)** con variables de orden continuo $u_i$ para eliminar subtours desconectados. Recuento de variables y restricciones.
+5. **Reducciones Polinomiales y Complejidad NP-Completa:**
+   * Enunciar la versión de decisión de TSP. Demostrar formalmente que $\text{TSP} \in \text{NP}$ y que es NP-Completo mediante una reducción polinomial desde **Ciclo Hamiltoniano** ($\text{Ciclo Hamiltoniano} \le_P \text{TSP}$).
+6. **Tabla Comparativa Maestra:**
+   * Síntesis técnica de complejidades, optimalidad, garantías y casos de uso en parcial.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-79">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+El problema del viajante (TSP) consiste en encontrar un circuito simple de costo mínimo que visite exactamente una vez las $n$ ciudades y regrese al punto de partida. Se sintetizan los 4 paradigmas fundamentales solicitados:
+
+1. **Fuerza Bruta y Backtracking con Branch & Bound (Búsqueda Exacta):**
+   * **Espacio de Búsqueda:** Fijamos la ciudad inicial en $1$ para romper la simetría cíclica, explorando las permutaciones de las restantes $n-1$ ciudades (espacio $(n-1)! / 2$).
+   * **Poda por Factibilidad:** Si no existe arista entre la ciudad actual y la candidata ($c_{uv} = \infty$) o la candidata ya fue visitada en la ruta actual, se descarta.
+   * **Poda por Cota Superior:** Si $\text{costo\_acumulado} \ge \text{mejor\_costo}$, se poda de inmediato la rama.
+   * **Poda por Cota Inferior (Branch & Bound con MST / 1-Tree):** Para el conjunto de ciudades restantes no visitadas $V_{\text{no\_vis}}$, cualquier tour válido debe conectarlas formando al menos un árbol generador más 2 aristas de enlace. Cota inferior:
+     $$\text{Cota} = \text{costo\_acum} + \text{CostoMST}(V_{\text{no\_vis}}) + \min_{r \in V_{\text{no\_vis}}} c_{\text{actual}, r} + \min_{r \in V_{\text{no\_vis}}} c_{r, 1}$$
+     Si $\text{Cota} \ge \text{mejor\_costo}$, se poda el subárbol completo.
+
+2. **Programación Dinámica (Algoritmo de Bellman-Held-Karp):**
+   * **Subestructura Óptima:** Para continuar el recorrido desde la ciudad actual $j$, no importa el orden en que se visitaron las ciudades anteriores; solo importa **cuál es la ciudad actual $j$ y cuál es el subconjunto $S \subseteq \{2, \dots, n\}$ de ciudades ya visitadas**.
+   * **Definición del Subproblema:** $C(S, j) =$ costo mínimo de un camino simple que inicia en 1, visita exactamente todas las ciudades de $S$ y finaliza en $j \in S$.
+   * **Casos Base:** $C(\{j\}, j) = c_{1j}$ para todo $j \in \{2, \dots, n\}$.
+   * **Ecuación de Recurrencia:**
+     $$C(S, j) = \min_{k \in S \setminus \{j\}} \Big\{ C(S \setminus \{j\}, k) + c_{kj} \Big\}$$
+   * **Cierre Óptimo:** $\min_{j \in \{2, \dots, n\}} \{ C(\{2, \dots, n\}, j) + c_{j1} \}$. Reduce la complejidad factorial a exponencial $\Theta(n^2 2^n)$.
+
+3. **Programación Lineal Entera (PLI con Restricciones MTZ):**
+   * **Variables:** $x_{ij} \in \{0, 1\}$ ($1$ si se viaja directo de $i$ a $j$) y variables continuas auxiliares $u_i \in \mathbb{R}$ para $i \in \{2, \dots, n\}$ que representan el orden de visita.
+   * **Función Objetivo:** Minimizar $Z = \sum_{i \ne j} c_{ij} \cdot x_{ij}$.
+   * **Restricciones de Asignación:** Salir exactamente una vez de cada ciudad ($\sum_{j} x_{ij} = 1$) y llegar exactamente una vez a cada una ($\sum_{i} x_{ij} = 1$).
+   * **Restricciones de Eliminación de Subtours (Miller-Tucker-Zemlin / MTZ):**
+     $$u_i - u_j + n \cdot x_{ij} \le n - 1 \qquad \forall i \ne j \in \{2, \dots, n\}$$
+   * *Por qué MTZ elimina los subtours:* Si $x_{ij} = 1$, la desigualdad fuerza $u_j \ge u_i + 1$. Un subtour cerrado desconectado que no contenga al nodo $1$ exigiría que las variables de orden $u$ aumenten en cada paso a lo largo del ciclo, generando la contradicción $u_k > u_k$. Esto elimina subtours con solo $O(n^2)$ restricciones (evitando las $O(2^n)$ de la formulación DFJ).
+
+4. **Heurística Greedy y Búsqueda Local (2-Opt / 2-Aprox):**
+   * **Greedy (Vecino más Cercano):** Viajar iterativamente a la ciudad más cercana no visitada. No garantiza cota constante en grafos generales (una última arista de retorno forzada puede tener costo arbitrariamente alto).
+   * **Búsqueda Local 2-Opt:** Partiendo de un tour factible, examina pares de aristas no consecutivas $(u, v)$ y $(w, z)$. Si eliminarlas y reconectar $(u, w)$ y $(v, z)$ revirtiendo el subcamino intermedio reduce el costo ($c_{uw} + c_{vz} < c_{uv} + c_{wz}$), se adopta el cambio. Se itera hasta alcanzar un óptimo local donde ninguna reconexión 2-opt mejore el recorrido.
+   * *(Caso Métrico 2-Aproximado):* Si se cumple la desigualdad triangular, construir el MST, duplicar aristas y recorrer en preorden DFS con atajos garantiza $\text{Costo}(\text{Tour}) \le 2 \cdot OPT$ en $O(n^2)$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+// 1. Programación Dinámica (Held-Karp) en O(n^2 * 2^n)
+Algoritmo TSP_HeldKarp(C, n):
+    DP = tabla indexada por (mascara_S, ciudad_j) en INFINITO
+    para j desde 1 hasta n - 1:
+        DP[1 << (j - 1)][j] = C[0][j]  // Casos base desde origen 0
+
+    para tam desde 2 hasta n - 1:
+        para cada mascara de tamaño tam:
+            para cada j en mascara:
+                prev_mask = mascara sin bit j
+                para cada k en prev_mask:
+                    DP[mascara][j] = min(DP[mascara][j], DP[prev_mask][k] + C[k][j])
+
+    // Cerrar tour retornando al origen 0
+    full_mask = (1 << (n - 1)) - 1
+    devolver min_{j} (DP[full_mask][j] + C[j][0])
+
+// 2. Modelo PLI con Restricciones MTZ:
+// Min sum c_ij * x_ij  sujeto a sum_j x_ij = 1, sum_i x_ij = 1
+// y restricción de orden MTZ: u_i - u_j + n * x_ij <= n - 1 (para i != j >= 1)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Comparativa de Complejidades Temporales y Espaciales:**
+  - **Fuerza Bruta / Backtracking con B&B:** Peor caso asintótico: **$O(n!)$** tiempo, $\mathcal{O}(n)$ espacio. Con cotas inferiores fuertes de MST resuelve instancias de hasta $n \approx 20-25$.
+  - **Programación Dinámica (Held-Karp):** Hay $\binom{n-1}{k}$ subconjuntos de tamaño $k$, y para cada par $(S, j)$ se evalúan $k$ transiciones. Complejidad temporal: **$\Theta(n^2 2^n)$**, Espacio: $\Theta(n \cdot 2^n)$. Para $n = 20$, reduce de $20! \approx 2.43 \times 10^{18}$ operaciones a $20^2 \cdot 2^{20} \approx 4.19 \times 10^8$ operaciones (de milenios a menos de 1 segundo).
+  - **Programación Lineal Entera (PLI con MTZ):** Peor caso exponencial $O(2^{n^2})$. El modelo utiliza $n^2 - 1$ variables y $n^2 - n + 2 = O(n^2)$ restricciones (polinomial en especificación).
+  - **Greedy / 2-Opt:** Vecino más cercano corre en $\mathcal{O}(n^2)$. Cada pasada de 2-opt evalúa $\mathcal{O}(n^2)$ parejas de aristas en tiempo polinomial hacia un óptimo local.
+
+| Paradigma | Enfoque / Algoritmo | Complejidad Temporal | Complejidad Espacial | ¿Garantiza Óptimo? | Cuándo Usarlo en Parcial |
+| :--- | :--- | :--- | :--- | :---: | :--- |
+| **Backtracking (B&B)**| Búsqueda con cota MST | **$O(n!)$** peor caso | **$O(n)$** | ✅ **SÍ (Exacto)** | Cuando $n \le 20$ y piden algoritmo exacto combinatorio con poda de árbol. |
+| **Prog. Dinámica** | Bellman-Held-Karp | **$O(n^2 \cdot 2^n)$** | **$O(n \cdot 2^n)$** | ✅ **SÍ (Exacto)** | Cuando $n \le 23$ y se exige el óptimo reduciendo factorial a exponencial. |
+| **Greedy Heurístico** | Vecino más Cercano | **$O(n^2)$** | **$O(n)$** | ❌ Sin garantía general | Para mostrar por qué una decisión voraz miope puede ser catastrófica. |
+| **Búsqueda Local** | Heurística 2-Opt | **$O(n^2)$** por pasada | **$O(n)$** | ❌ Óptimo Local | Para mejorar tours rápidamente en la práctica industrial. |
+| **Prog. Lineal (PLI)**| Formulación MTZ | Exponencial (peor caso) | $O(n^2)$ variables | ✅ **SÍ (Exacto)** | Para solvers de optimización matemática con eliminación de subtours. |
+
+</SolutionDrawer>

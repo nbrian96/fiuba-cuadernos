@@ -1,0 +1,112 @@
+---
+id: "tda-ej-72"
+courseId: "tda"
+number: 72
+title: "El Dilema de Marco el Cadete: Reducción de Ciclo Hamiltoniano a TSP"
+unit: "reducciones"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Parcial 2025-1-1 (27 de mayo de 2025), Ejercicio 5"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-1"
+relatedResourceIds:
+  - "tda-parcial-2025-1-1-pdf"
+  - "tda-slide-17-complejidad-y-reducciones-i"
+  - "tda-slide-18-complejidad-y-reducciones-ii"
+  - "tda-slide-19-practica-reducciones"
+  - "tda-guia-07-reducciones"
+legacyPage: "reducciones.html"
+legacyAnchor: "#ej-72"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Marco, el cadete administrativo de una empresa de logística, compró un costoso paquete de software para resolver el **Problema del Viajante de Comercio** (TSP en su versión de decisión), cuando la gerencia le había solicitado explícitamente un módulo para resolver **Ciclo Hamiltoniano**. El vendedor del software le aseguró a Marco:  
+*"Si puedes resolver TSP de decisión en un grafo completo ponderado, puedes resolver exactamente Ciclo Hamiltoniano en cualquier grafo en el mismo orden de tiempo"*.  
+Definiciones formales:
+- **Ciclo Hamiltoniano (HC):** Dado un grafo no dirigido $G = (V, E)$, determinar si existe un ciclo simple que visite todos los vértices de $V$ exactamente una vez y retorne al origen.
+- **TSP (Decisión):** Dado un grafo completo $G' = (V', E')$ con pesos enteros $w(e) \ge 0$ en las aristas y un entero $k$, determinar si existe un tour cerrado que visite cada vértice una única vez con costo total $\le k$.
+Determinar con fundamento formal si el vendedor tiene razón o si hay que despedir a Marco. Desarrollar la reducción polinomial completa con demostración de equivalencia.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Reducción entre problemas NP-Completos de grafos, diseño de matrices de costo con penalización asimétrica (gadget métrico), y prueba bidireccional.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-72">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos para la Hoja del Parcial)
+
+**Veredicto inicial:** **El vendedor tiene razón y no hay que despedir a Marco**, porque podemos reducir **$\text{Ciclo Hamiltoniano} \le_P \text{TSP (Decisión)}$** en tiempo polinomial.
+
+1. **Paso 1 (Pertenece a NP — Verificador de TSP):**
+   * **Certificado:** Una secuencia ordenada de vértices $(v_1, v_2, \dots, v_n, v_1)$ propuesta como tour.
+   * **Verificación en tiempo polinomial:** Revisamos en $\mathcal{O}(n)$ que aparezcan las $n = |V|$ ciudades sin repetidos, que empiece y termine en la misma ciudad y que la suma de los pesos de las $n$ aristas consecutivas sea $\le k$. Como tarda **$\mathcal{O}(n)$**, $\text{TSP} \in \text{NP}$.
+2. **Paso 2 y 3 (Reducción desde problema conocido $\text{Ciclo Hamiltoniano} \le_P \text{TSP}$):**
+   * Dada una instancia $G = (V, E)$ de **Ciclo Hamiltoniano** con $n = |V|$ vértices:
+   * **Transformación en lenguaje natural:**
+     1. Creamos un **grafo completo $G'$** con las mismas $n$ ciudades (conectamos todos los pares de vértices entre sí).
+     2. Asignamos el peso de cada arista $(u, v)$ en $G'$ así:
+        * **Peso $1$** si la arista $(u, v)$ **existía** en el grafo original $G$.
+        * **Peso $2$** si la arista $(u, v)$ **no existía** en $G$ (arista agregada con penalización).
+     3. Fijamos el presupuesto máximo del tour en **$k = n$**.
+   * **Cuánto tarda:** Armar la matriz de costos de $n \times n$ consultando las aristas de $G$ toma tiempo **$\mathcal{O}(n^2)$** (polinomial).
+3. **Paso 4 (Ida y Vuelta $\iff$):**
+   * **($\implies$) Ida (Si $G$ tiene Ciclo Hamiltoniano $\implies G'$ tiene tour TSP de costo $\le n$):**
+     El Ciclo Hamiltoniano recorre los $n$ vértices y vuelve al origen usando exactamente $n$ aristas originales de $G$. En $G'$ todas esas aristas pesan $1$, por lo que ese mismo ciclo es un tour válido de TSP con costo total $n \times 1 = n \le k$.
+   * **($\impliedby$) Vuelta (Si $G'$ tiene tour TSP de costo $\le n \implies G$ tiene Ciclo Hamiltoniano):**
+     Cualquier tour cerrado que visite las $n$ ciudades usa exactamente $n$ aristas, y cada arista en $G'$ cuesta al menos $1$. Si el tour hubiera usado aunque sea **una sola arista de peso $2$**, su costo total sería como mínimo $2 + (n - 1) \times 1 = n + 1 > n$, lo cual es imposible. Por lo tanto, las $n$ aristas del tour tienen **todas peso $1$**, existen en $G$ y forman un Ciclo Hamiltoniano.
+
+
+<MermaidDiagram client:visible code={"graph LR\n    subgraph GrafoOriginalG [Grafo G con 4 vertices]\n        A[\"Nodo A\"] -->|Existe en E| B[\"Nodo B\"]\n        B -->|Existe en E| C[\"Nodo C\"]\n        C -->|Existe en E| D[\"Nodo D\"]\n        D -->|Existe en E| A\n    end\n    subgraph GrafoCompletoGPrime [Grafo Completo Ponderado]\n        A2[\"Nodo A\"] -->|peso 1| B2[\"Nodo B\"]\n        B2 -->|peso 1| C2[\"Nodo C\"]\n        C2 -->|peso 1| D2[\"Nodo D\"]\n        D2 -->|peso 1| A2\n        A2 -. Penalizacion peso 2 .-> C2\n        B2 -. Penalizacion peso 2 .-> D2\n    end"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación
+
+```text
+FUNCION VerificadorTSP(G', k, certificado_tour):
+    SI tamaño(certificado_tour) != tamaño(V(G')) O tiene vértices repetidos:
+        RETORNAR FALSO
+    costo_total <- 0
+    PARA i <- 0 HASTA n - 1:
+        u <- certificado_tour[i]
+        v <- certificado_tour[(i + 1) mod n]
+        costo_total <- costo_total + peso(G', u, v)
+    RETORNAR (costo_total <= k) // Tiempo O(n)
+
+FUNCION TransformarCicloHamiltonianoATSP(G = (V, E)):
+    n <- tamaño(V)
+    Crear grafo completo G' con los mismos n vértices de V
+
+    PARA CADA par (u, v) EN V x V con u != v:
+        SI (u, v) PERTENECE A E:
+            peso(G', u, v) <- 1   // Arista real de G
+        SINO:
+            peso(G', u, v) <- 2   // Arista ficticia penalizada
+
+    k <- n
+    RETORNAR OraculoTSP(G', k) // Transformación en O(n^2)
+```
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Asignar peso 0 a las aristas existentes y 1 a las inexistentes:** Si se pone peso 0 a las aristas existentes y cota $k = 0$, matemáticamente es válido, pero muchos docentes exigen pesos estrictamente positivos ($w(e) > 0$). Con pesos $\{1, 2\}$ y cota $k = n$, se respeta la formulación clásica de TSP métrico.
+
+- **No explicar por qué no puede haber aristas de peso 2 en la vuelta:** Hay que mencionar explícitamente que si usara una sola arista de peso 2, el tour de $n$ aristas costaría al menos $n + 1 > n$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

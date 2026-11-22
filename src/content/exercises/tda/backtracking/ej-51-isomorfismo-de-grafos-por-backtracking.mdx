@@ -1,0 +1,75 @@
+---
+id: "tda-ej-51"
+courseId: "tda"
+number: 51
+title: "Isomorfismo de Grafos por Backtracking"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 4
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.9"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-51"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo de backtracking que, dados dos grafos $G_1$ y $G_2$, determine si existe un Isomorfismo entre ambos (una correspondencia biyectiva entre sus vértices que preserve las adyacencias).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-51">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Antes de empezar el backtracking aplicamos **filtros rápidos iniciales**: si $G_1$ y $G_2$ tienen distinta cantidad de vértices, distinta cantidad de aristas o distinta secuencia de grados ordenada, devolvemos `Falso` en el acto.
+* Luego buscamos armar un diccionario `mapeo[u] = v` que asigne a cada vértice $u \in G_1$ un vértice $v \in G_2$ no usado aún:
+  - **Poda por Grado:** Solo probamos mapear $u \to v$ si ambos tienen exactamente el **mismo grado** (`grado(G1, u) == grado(G2, v)`).
+  - **Poda por Consistencia de Adyacencias:** Para todo vecino $u'$ de $u$ en $G_1$ que **ya haya sido mapeado**, su pareja `mapeo[u']` debe ser obligatoriamente vecina de $v$ en $G_2$ (y viceversa). Si falla, descartamos ese emparejamiento en el acto.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo SonIsomorfos(G1, G2):
+    si G1.cantVertices() != G2.cantVertices() o G1.cantAristas() != G2.cantAristas():
+        devolver Falso
+
+    V1 = G1.vertices(), V2 = G2.vertices()
+    mapeo = diccionario vacío      // u de G1 -> v de G2
+    usados_G2 = conjunto vacío
+
+    devolver IsomorfismoBT(G1, G2, V1, V2, 0, mapeo, usados_G2)
+
+función IsomorfismoBT(G1, G2, V1, V2, idx, mapeo, usados_G2):
+    si idx == longitud(V1):
+        devolver Verdadero
+
+    u = V1[idx]
+    para cada v en V2:
+        // Poda 1: v no usado y mismo grado que u
+        si v no está en usados_G2 y G1.grado(u) == G2.grado(v):
+            // Poda 2: preserva todas las aristas y no-aristas con los vértices ya mapeados
+            si preservaAdyacencias(G1, G2, u, v, mapeo):
+                mapeo[u] = v
+                agregar v a usados_G2
+
+                si IsomorfismoBT(G1, G2, V1, V2, idx + 1, mapeo, usados_G2):
+                    devolver Verdadero
+
+                quitar v de usados_G2   // Backtrack
+                borrar mapeo[u]
+
+    devolver Falso
+```
+
+</SolutionDrawer>

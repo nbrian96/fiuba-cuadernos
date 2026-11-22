@@ -1,0 +1,106 @@
+---
+id: "tda-ej-06"
+courseId: "tda"
+number: 6
+title: "Aplicación Sistemática del Teorema Maestro (9 Recurrencias)"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.1"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-6"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Indicar, utilizando el Teorema Maestro, la complejidad de cada una de las siguientes ecuaciones de recurrencia:
+* $A(n) = 2A(n/4) + \sqrt{n}$, $\quad B(n) = 2B(n/4) + n$, $\quad C(n) = 2C(n/4) + n^2$
+* $D(n) = 3D(n/3) + \sqrt{n}$, $\quad E(n) = 3E(n/3) + n$, $\quad F(n) = 3F(n/3) + n^2$
+* $G(n) = 4G(n/2) + \sqrt{n}$, $\quad H(n) = 4H(n/2) + n$, $\quad I(n) = 4I(n/2) + n^2$
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-06">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Para toda ecuación de recurrencia de la forma $T(n) = a \cdot T(n/b) + f(n)$ con $a \ge 1, b > 1$, donde el trabajo no recursivo de partición y combinación satisface $f(n) = \Theta(n^c)$ (con $c \ge 0$), el Teorema Maestro analiza la competencia asintótica entre dos fuerzas dentro del árbol de llamadas recursivas:
+  1. **El trabajo acumulado en las hojas:** en el nivel más profundo ($h = \log_b n$), la cantidad de hojas es $a^{\log_b n} = n^{\log_b a}$, cada una con costo $O(1)$. Por ende, el exponente crítico de las hojas es **$\log_b a$**.
+  2. **El trabajo en la raíz (división y combinación):** en el nivel superior, el trabajo exterior está gobernado por el exponente **$c$** de $f(n) = \Theta(n^c)$. En particular: $\sqrt{n} = n^{0.5}$ ($c = 0.5$), $n = n^1$ ($c = 1$), y $n^2$ ($c = 2$).
+* La regla de decisión sistemática consiste en contrastar $\log_b a$ contra $c$:
+  * **Caso 1 ($\log_b a > c$): Dominan las hojas.** El costo del nivel base supera al trabajo de combinación. El orden es **$\Theta(n^{\log_b a})$**.
+  * **Caso 2 ($\log_b a = c$): Trabajo balanceado.** Cada uno de los $\log_b n$ niveles del árbol realiza el mismo orden de trabajo $\Theta(n^c)$. El orden es **$\Theta(n^c \log n)$**.
+  * **Caso 3 ($\log_b a < c$): Domina la raíz.** El trabajo en la cima supera la suma geométrica de los niveles inferiores. Si se cumple la condición de regularidad ($a \cdot f(n/b) \le k \cdot f(n)$ para alguna constante $k < 1$), el orden es **$\Theta(n^c)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo EvaluarTeoremaMaestro(a, b, c):
+    // Entrada:
+    //   a: cantidad de subproblemas recursivos (a >= 1)
+    //   b: factor de división del tamaño de entrada (b > 1)
+    //   c: exponente del costo de partición/combinación f(n) = Theta(n^c)
+    // Salida: Cota asintótica de T(n) = a * T(n/b) + Theta(n^c)
+
+    exponente_hojas = log(a) / log(b)   // log_b(a)
+
+    si exponente_hojas > c:
+        // Caso 1: La suma geométrica crece hacia las hojas (n^(log_b a) hojas)
+        devolver "Theta(n^" + exponente_hojas + ")"
+
+    sino si exponente_hojas == c:
+        // Caso 2: Cada uno de los log_b(n) niveles aporta Theta(n^c) de costo
+        devolver "Theta(n^" + c + " * log n)"
+
+    sino: // exponente_hojas < c
+        // Caso 3: La suma decrece geométricamente; domina el costo de la raíz f(n)
+        // Condición de regularidad: a * (n/b)^c = (a / b^c) * n^c <= k * n^c con k = a / b^c < 1
+        devolver "Theta(n^" + c + ")"
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+Deducción formal agrupando las 9 recurrencias por su estructura de ramificación $(a, b)$:
+
+* **Familia 1: $a = 2, b = 4 \implies \log_b a = \log_4 2 = 0.5$**
+  - **$A(n) = 2A(n/4) + \sqrt{n}$:** Aquí $f(n) = n^{0.5} \implies c = 0.5$. Como $\log_4 2 = 0.5 = c$, aplica el **Caso 2** (balance equitativo): **$\Theta(\sqrt{n} \log n)$**.
+  - **$B(n) = 2B(n/4) + n$:** Aquí $f(n) = n^1 \implies c = 1$. Como $\log_4 2 = 0.5 < 1 = c$, aplica el **Caso 3** (domina la raíz, regularidad $2(n/4) = n/2 \le \frac{1}{2} n$): **$\Theta(n)$**.
+  - **$C(n) = 2C(n/4) + n^2$:** Aquí $f(n) = n^2 \implies c = 2$. Como $\log_4 2 = 0.5 < 2 = c$, aplica el **Caso 3** (domina la raíz, regularidad $2(n/4)^2 = n^2/8 \le \frac{1}{8} n^2$): **$\Theta(n^2)$**.
+
+* **Familia 2: $a = 3, b = 3 \implies \log_b a = \log_3 3 = 1$**
+  - **$D(n) = 3D(n/3) + \sqrt{n}$:** Aquí $f(n) = n^{0.5} \implies c = 0.5$. Como $\log_3 3 = 1 > 0.5 = c$, aplica el **Caso 1** (dominan las $n^1$ hojas): **$\Theta(n)$**.
+  - **$E(n) = 3E(n/3) + n$:** Aquí $f(n) = n^1 \implies c = 1$. Como $\log_3 3 = 1 = c$, aplica el **Caso 2** (balance equitativo en cada nivel): **$\Theta(n \log n)$**.
+  - **$F(n) = 3F(n/3) + n^2$:** Aquí $f(n) = n^2 \implies c = 2$. Como $\log_3 3 = 1 < 2 = c$, aplica el **Caso 3** (domina la raíz, regularidad $3(n/3)^2 = n^2/3 \le \frac{1}{3} n^2$): **$\Theta(n^2)$**.
+
+* **Familia 3: $a = 4, b = 2 \implies \log_b a = \log_2 4 = 2$**
+  - **$G(n) = 4G(n/2) + \sqrt{n}$:** Aquí $f(n) = n^{0.5} \implies c = 0.5$. Como $\log_2 4 = 2 > 0.5 = c$, aplica el **Caso 1** (dominan las $n^2$ hojas): **$\Theta(n^2)$**.
+  - **$H(n) = 4H(n/2) + n$:** Aquí $f(n) = n^1 \implies c = 1$. Como $\log_2 4 = 2 > 1 = c$, aplica el **Caso 1** (dominan las $n^2$ hojas): **$\Theta(n^2)$**.
+  - **$I(n) = 4I(n/2) + n^2$:** Aquí $f(n) = n^2 \implies c = 2$. Como $\log_2 4 = 2 = c$, aplica el **Caso 2** (balance equitativo): **$\Theta(n^2 \log n)$**.
+
+##### Tabla Resumen de las 9 Recurrencias
+
+| Recurrencia | $a$ | $b$ | $\log_b a$ | $f(n) = n^c$ | Comparación ($\log_b a$ vs $c$) | Caso TM | Complejidad Final |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **$A(n) = 2A(n/4) + \sqrt{n}$** | $2$ | $4$ | $\log_4 2 = 0.5$ | $n^{0.5}$ ($c=0.5$) | $0.5 = 0.5$ | Caso 2 | **$\Theta(\sqrt{n} \log n)$** |
+| **$B(n) = 2B(n/4) + n$** | $2$ | $4$ | $\log_4 2 = 0.5$ | $n^1$ ($c=1$) | $0.5 < 1$ | Caso 3 | **$\Theta(n)$** |
+| **$C(n) = 2C(n/4) + n^2$** | $2$ | $4$ | $\log_4 2 = 0.5$ | $n^2$ ($c=2$) | $0.5 < 2$ | Caso 3 | **$\Theta(n^2)$** |
+| **$D(n) = 3D(n/3) + \sqrt{n}$** | $3$ | $3$ | $\log_3 3 = 1$ | $n^{0.5}$ ($c=0.5$) | $1 > 0.5$ | Caso 1 | **$\Theta(n)$** |
+| **$E(n) = 3E(n/3) + n$** | $3$ | $3$ | $\log_3 3 = 1$ | $n^1$ ($c=1$) | $1 = 1$ | Caso 2 | **$\Theta(n \log n)$** |
+| **$F(n) = 3F(n/3) + n^2$** | $3$ | $3$ | $\log_3 3 = 1$ | $n^2$ ($c=2$) | $1 < 2$ | Caso 3 | **$\Theta(n^2)$** |
+| **$G(n) = 4G(n/2) + \sqrt{n}$** | $4$ | $2$ | $\log_2 4 = 2$ | $n^{0.5}$ ($c=0.5$) | $2 > 0.5$ | Caso 1 | **$\Theta(n^2)$** |
+| **$H(n) = 4H(n/2) + n$** | $4$ | $2$ | $\log_2 4 = 2$ | $n^1$ ($c=1$) | $2 > 1$ | Caso 1 | **$\Theta(n^2)$** |
+| **$I(n) = 4I(n/2) + n^2$** | $4$ | $2$ | $\log_2 4 = 2$ | $n^2$ ($c=2$) | $2 = 2$ | Caso 2 | **$\Theta(n^2 \log n)$** |
+
+</SolutionDrawer>

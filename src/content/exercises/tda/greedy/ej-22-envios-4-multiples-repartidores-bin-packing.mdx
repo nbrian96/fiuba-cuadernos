@@ -1,0 +1,63 @@
+---
+id: "tda-ej-22"
+courseId: "tda"
+number: 22
+title: "Envíos 4: Múltiples Repartidores (Bin Packing 1D)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.4"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-22"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+A cada repartidor se le puede asignar hasta cierto peso $P$ (igual para todos), y se envían cuantos repartidores hagan falta para enviar todos los ítems. Diseñar un algoritmo greedy que divida los ítems en la mínima cantidad de repartidores posible.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-22">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es el problema clásico de **Bin Packing**. Si dejamos los objetos pesados para el final, nos van a obligar a abrir repartidores nuevos. Por eso la mejor estrategia voraz es **First-Fit Decreasing (FFD)**:
+  1. Ordenar los ítems de **mayor a menor peso** (los más difíciles de ubicar van primero).
+  2. Por cada ítem, asignarlo al **primer repartidor ya activo** donde todavía entre; si no entra en ninguno, contratar un nuevo repartidor.
+* Complejidad: **$O(n \log n + n \cdot R) = O(n^2)$** (o $O(n \log n)$ usando un árbol de búsqueda).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AsignarRepartidoresGreedy(items, P_max):
+    ordenar items por peso de mayor a menor
+    repartidores = []   // Lista de mochilas/repartidores activos
+
+    para cada it en items:
+        asignado = Falso
+        para cada rep en repartidores:
+            si rep.peso_actual + it.peso <= P_max:
+                agregar it a rep
+                rep.peso_actual = rep.peso_actual + it.peso
+                asignado = Verdadero
+                romper ciclo
+
+        si no asignado:
+            crear nuevo_rep con it y peso_actual = it.peso
+            agregar nuevo_rep a repartidores
+
+    devolver repartidores
+```
+
+</SolutionDrawer>

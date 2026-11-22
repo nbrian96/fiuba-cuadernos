@@ -1,0 +1,113 @@
+---
+id: "tda-ej-11"
+courseId: "tda"
+number: 11
+title: "Producto de Matrices de la Profesora Manterola vs Strassen"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.8"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-11"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un algoritmo sencillo para multiplicar matrices de $n \times n$ demora $O(n^3)$. El algoritmo de Strassen (que utiliza División y Conquista) lo hace en $O(n^{\log_2 7}) \approx O(n^{2.81})$. La profesora Manterola quiere implementar un algoritmo de División y Conquista que sea aún más veloz, donde divida al problema en $A$ subproblemas de tamaño de $n/4$, y que juntar las soluciones parciales sea $O(n^2)$. ¿Cuál es el máximo $A$ entero para que el orden del algoritmo sea menor que el del algoritmo de Strassen? Justificar.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-11">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Ecuación de Recurrencia del Algoritmo Propuesto:**
+  - **División:** Las matrices de tamaño $n \times n$ se dividen en submatrices de tamaño $(n/4) \times (n/4)$, por lo que el factor de división es **$b = 4$**.
+  - **Conquista:** Se resuelven **$a = A$ llamadas recursivas** para multiplicar submatrices de tamaño $(n/4) \times (n/4)$.
+  - **Combinación:** Se combinan las soluciones parciales sumando y restando submatrices de tamaño $(n/4) \times (n/4)$, con un costo cuadrático $f(n) = O(n^2)$ (**$c = 2$**).
+  - Recurrencia de Manterola:
+    $$T(n) = A \cdot T(n/4) + O(n^2)$$
+* **Comparación con el Algoritmo de Strassen:**
+  - El algoritmo de Strassen divide en mitades ($b = 2$), ejecuta $a = 7$ llamadas recursivas y combina en $O(n^2)$, resultando en $T_S(n) = \Theta(n^{\log_2 7})$ con $\log_2 7 \approx 2.80735$.
+  - Para que el algoritmo de Manterola supere asintóticamente a Strassen, su exponente de complejidad debe ser estrictamente menor a $\log_2 7 \approx 2.807$.
+  - Como el exponente buscado es mayor a 2, nos ubicamos en el **Caso 1 del Teorema Maestro** ($\log_4 A > 2 \implies A > 16$), donde el costo total está gobernado por las hojas: $T_M(n) = \Theta(n^{\log_4 A})$.
+  - Por lo tanto, planteamos la inecuación:
+    $$\log_4 A < \log_2 7$$
+  - Aplicando cambio de base logarítmica:
+    $$\frac{\log_2 A}{\log_2 4} < \log_2 7 \implies \frac{\log_2 A}{2} < \log_2 7 \implies \log_2 A < 2 \cdot \log_2 7 = \log_2(7^2) = \log_2 49$$
+    $$A < 49$$
+  - Siendo $A$ la cantidad entera de subproblemas recursivos ($A \in \mathbb{Z}^+$), el **máximo valor entero posible es $A = 48$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MultiplicarMatricesManterola(M1, M2, n, A):
+    // Caso base: para matrices pequeñas (n <= 4), resolver por definición directa
+    si n <= 4:
+        retornar MultiplicarDirecto(M1, M2) // O(1)
+
+    m = n / 4
+    // 1. División: Partir M1 y M2 en 16 submatrices de m x m en O(1) por índices
+    bloques_M1 = PartirEn16Bloques(M1, m)
+    bloques_M2 = PartirEn16Bloques(M2, m)
+
+    // 2. Conquista: Realizar A multiplicaciones recursivas de combinaciones lineales
+    productos = arreglo_de_tamanio(A)
+    para k desde 1 hasta A:
+        T1_k = CombinarLinealmente(bloques_M1) // Sumas/restas de bloques: O(m^2)
+        T2_k = CombinarLinealmente(bloques_M2) // Sumas/restas de bloques: O(m^2)
+        productos[k] = MultiplicarMatricesManterola(T1_k, T2_k, m, A)
+
+    // 3. Combinación: Reconstruir los 16 bloques de la matriz producto C mediante
+    //    sumas y restas de los A productos calculados: costo total O(n^2)
+    C = ReconstruirMatriz(productos, m)
+    retornar C
+
+Esquema Comparativo de Recurrencias:
+-----------------------------------------------------------------------------------
+Algoritmo       Ecuación de Recurrencia        a   b   c   Exponente Crítico
+-----------------------------------------------------------------------------------
+Tradicional     T(n) = 8·T(n/2) + O(n^2)       8   2   2   log_2(8) = 3.000
+Strassen        T(n) = 7·T(n/2) + O(n^2)       7   2   2   log_2(7) ≈ 2.807
+Manterola (A)   T(n) = A·T(n/4) + O(n^2)       A   4   2   log_4(A) = log_2(A)/2
+-----------------------------------------------------------------------------------
+Condición de Victoria: log_4(A) < log_2(7) <=> log_2(A) < log_2(49) <=> A < 49
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* **Planteo de la Recurrencia:**
+  $$T(n) = A \cdot T(n/4) + \Theta(n^2)$$
+  con $a = A$, $b = 4$, $f(n) = \Theta(n^2) \implies c = 2$.
+* **Análisis de Casos del Teorema Maestro en Función de $A$:**
+  1. Si $A < 16 \implies \log_4 A < 2 = c$: Aplica el Caso 3 $\implies T(n) = \Theta(n^2) < \Theta(n^{2.807})$. (Cota teórica inalcanzable para multiplicación matricial y no maximiza $A$).
+  2. Si $A = 16 \implies \log_4 16 = 2 = c$: Aplica el Caso 2 $\implies T(n) = \Theta(n^2 \log n) < \Theta(n^{2.807})$.
+  3. Si $A > 16 \implies \log_4 A > 2 = c$: Aplica el Caso 1 (dominio de las hojas) $\implies T(n) = \mathbf{\Theta(n^{\log_4 A})}$.
+* **Deducción del Máximo Entero $A$:**
+  Queremos $\Theta(n^{\log_4 A}) < \Theta(n^{\log_2 7})$:
+  $$\log_4 A < \log_2 7$$
+  $$\frac{\log_2 A}{\log_2 4} < \log_2 7 \implies \frac{\log_2 A}{2} < \log_2 7 \implies \log_2 A < 2 \cdot \log_2 7 = \log_2(7^2) = \log_2 49$$
+  $$A < 49$$
+* Como $A$ debe ser un número entero de llamadas recursivas ($A \in \mathbb{Z}^+$), el máximo entero que satisface estrictamente la desigualdad es **$A = 48$**.
+* **Verificación Numérica de Exponentes:**
+  - Cota de Strassen:
+    $$\log_2 7 = \frac{\ln 7}{\ln 2} \approx \frac{1.945910}{0.693147} \approx 2.807355$$
+  - Algoritmo de Manterola con $A = 48$:
+    $$\log_4 48 = \frac{\ln 48}{\ln 4} \approx \frac{3.871201}{1.386294} \approx 2.792481$$
+  - Con $A = 49$, el exponente empataría con Strassen: $\log_4 49 = \frac{\log_2 49}{2} = \log_2 7 \approx 2.807355$.
+  - Con $A = 48$, el orden es $T(n) = \Theta(n^{\log_4 48}) \approx \mathbf{\Theta(n^{2.792})}$, que resulta estrictamente menor a $\Theta(n^{2.807})$.
+* Por lo tanto, el máximo valor entero posible es **$A = 48$**.
+
+</SolutionDrawer>

@@ -1,0 +1,89 @@
+---
+id: "tda-ej-03"
+courseId: "tda"
+number: 3
+title: "Búsqueda del Primer Cero en un Arreglo de Unos y Ceros"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.4 / Guía 01, Ejercicio 2"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-3"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene un arreglo tal que `[1, 1, 1, ..., 0, 0, ...]` (es decir, unos seguidos de ceros). Se pide:
+a. Una función de orden $O(\log n)$ *(nota: en la Guía v1.0 figura por errata tipográfica $O(\log \log n)$)* que encuentre el índice del primer `0`. Si no hay ningún `0` (solo hay unos), debe devolver `-1`.
+b. Demostrar con el Teorema Maestro que la función es, en efecto, $O(\log n)$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-03">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Como el arreglo tiene todos los `1` al principio y todos los `0` al final, podemos partir al medio en cada paso buscando el punto exacto donde cambia de `1` a `0`:
+  1. **Caso Base (`ini > fin`):** Si el rango se queda sin elementos, significa que no había ningún `0` en todo el arreglo y devolvemos `-1`.
+  2. Calculamos la posición del medio `m = (ini + fin) / 2` y miramos `A[m]`:
+     - **Si `A[m] == 0` y su anterior es `1` (o `m == 0`):** Estamos parados justo en el primer `0` del arreglo, así que devolvemos `m` inmediatamente.
+     - **Si `A[m] == 0` y su anterior también es `0`:** El primer `0` está más hacia la izquierda; descartamos la mitad derecha y buscamos recursivamente en `[ini, m - 1]`.
+     - **Si `A[m] == 1`:** Como antes de un `1` solo puede haber otros `1`, el primer `0` solo puede estar a la derecha; descartamos la mitad izquierda y buscamos recursivamente en `[m + 1, fin]`.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo BuscarPrimerCero(A, ini, fin):
+    // Caso Base: rango vacío (no existen ceros en el arreglo)
+    si ini > fin:
+        devolver -1
+
+    m = (ini + fin) / 2
+
+    si A[m] == 0:
+        // Si está en el borde izquierdo o su anterior es 1, es el primer cero
+        si m == 0 o A[m - 1] == 1:
+            devolver m
+        // Si su anterior también es 0, buscar más a la izquierda
+        devolver BuscarPrimerCero(A, ini, m - 1)
+    sino:
+        // A[m] == 1: descartar mitad izquierda y buscar a la derecha
+        devolver BuscarPrimerCero(A, m + 1, fin)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* En cada paso descartamos una mitad completa y hacemos **$a = 1$ llamada recursiva** de tamaño $n/2$ (**$b = 2$**), realizando un número constante de comparaciones en tiempo **$f(n) = \Theta(1)$** (**$c = 0$**).
+* Ecuación de recurrencia:
+  $$T(n) = 1 \cdot T(n/2) + \Theta(1)$$
+* Por el **Teorema Maestro**, como $\log_b a = \log_2 1 = 0 = c$ (**Caso 2**), la complejidad temporal es **$T(n) = \Theta(n^0 \log n) = O(\log n)$**.
+
+
+<MermaidDiagram client:visible code={"graph LR\n    subgraph Unos [Zona de 1s]\n        N0[\"A[0] = 1\"] --> N1[\"A[1] = 1\"] --> N2[\"A[2] = 1\"] --> N3[\"A[3] = 1\"]\n    end\n    subgraph Ceros [Zona de 0s]\n        N4[\"A[4] = 0 (PRIMER CERO)\"]:::primer --> N5[\"A[5] = 0\"] --> N6[\"A[6] = 0\"] --> N7[\"A[7] = 0\"]\n    end\n    N3 -. Frontera de Transición .-> N4\n    classDef primer fill:#15803d,stroke:#166534,stroke-width:3px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Acceder a `A[m - 1]` cuando $m = 0$:** Si el primer cero está en la posición 0, evaluar `A[m - 1]` sin chequear antes `m == 0` consulta `A[-1]` o lanza error de índice fuera de rango. Siempre poner primero `m == 0 o A[m - 1] == 1`.
+
+- **Hacer un recorrido lineal hacia atrás desde $m$:** Al encontrar un 0 en $m$, retroceder con un bucle `while` hasta el primer cero degrada el peor caso a $O(n)$ (cuando todo el arreglo son ceros). Siempre debe seguir partiendo a la mitad con recursión.
+
+</AcademicBlock>
+
+</SolutionDrawer>

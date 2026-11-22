@@ -1,0 +1,54 @@
+---
+id: "tda-ej-24"
+courseId: "tda"
+number: 24
+title: "Convención 1: Selección de Charlas Completas (CDEA 2027)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.6"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-24"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Camila quiere asistir a la mayor cantidad de charlas posible en la convención CDEA 2027. Una vez empezada una charla no se puede entrar ni salir hasta que finaliza. Tiene la lista con el horario de inicio y fin de cada charla. Diseñar un algoritmo greedy para organizar su agenda.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-24">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es el problema clásico de **Interval Scheduling**: para asistir a la mayor cantidad de charlas, nos conviene elegir siempre la charla compatible que **termine lo más temprano posible**, porque así liberamos nuestro tiempo cuanto antes para poder entrar a las siguientes.
+* Es **100% óptimo** (demostrable por *Greedy Stays Ahead*) y tarda **$O(n \log n)$** por el ordenamiento.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo OrganizarAgendaCharlas(charlas):
+    ordenar charlas por hora de fin de menor a mayor
+    agenda = []
+    ultimo_fin = -infinito
+
+    para cada c en charlas:
+        si c.inicio >= ultimo_fin:
+            agregar c a agenda
+            ultimo_fin = c.fin
+
+    devolver agenda
+```
+
+</SolutionDrawer>

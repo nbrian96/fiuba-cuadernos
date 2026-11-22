@@ -1,0 +1,106 @@
+---
+id: "tda-ej-42"
+courseId: "tda"
+number: 42
+title: "Suma de Subconjuntos con Podas Tempranas"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía de Ejercicios 03, Ejercicio 11 / Práctica"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-42"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dada una lista de enteros positivos $L$ y un entero objetivo $S$, implementar un algoritmo por backtracking que determine si existe un subconjunto de $L$ cuya suma sea exactamente $S$, y en caso afirmativo devuelva dicho subconjunto. Indicar y justificar las podas de factibilidad aplicadas y la complejidad.
+
+**Qué está evaluando la cátedra**  
+Árbol binario de inclusión/exclusión, poda temprana por exceso de suma y optimización del espacio de búsqueda mediante ordenamiento previo de los elementos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-42">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Definición del Estado:**
+  - Dada una lista $L$ de $n$ enteros positivos y un entero objetivo $S$, se busca encontrar un subconjunto cuya suma sea exactamente $S$.
+  - Árbol de decisiones binario de inclusión/exclusión: para cada elemento $L[i]$ se decide si formará parte del subconjunto o no. El estado se define por `(i, remanente)`.
+* **Optimización Previa (Ordenamiento Ascendente):**
+  - Se ordena la lista $L$ de menor a mayor en $O(n \log n)$. Esto garantiza que para todo $j > i$, $L[j] \ge L[i]$.
+* **Poda por Factibilidad (Corte Temprano por Ordenamiento):**
+  - Si en el índice actual $L[i] > remanente$, como la lista está ordenada crecientemente, todos los elementos posteriores satisfacen $L[j] \ge L[i] > remanente$. Por lo tanto, **ningún elemento posterior podrá ser incluido sin exceder la suma**. Se corta la búsqueda de inmediato retornando `Falso`, podando el subárbol completo.
+* **Casos Base:**
+  - Éxito: si $remanente == 0$, se alcanzó la suma exacta $S$; se devuelve `Verdadero`.
+  - Fallo: si $i == \text{longitud}(L)$ (se agotaron los elementos) o $remanente < 0$, se devuelve `Falso`.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo SubsetSum(L, S):
+    ordenar L de menor a mayor  // Habilita poda temprana en O(n log n)
+    solucion = []
+    si SubsetSumBT(0, S, L, solucion):
+        devolver solucion
+    devolver "Sin solución"
+
+función SubsetSumBT(i, remanente, L, solucion):
+    si remanente == 0:
+        devolver Verdadero
+    si i == longitud(L) o remanente < 0:
+        devolver Falso
+
+    // Poda temprana: al estar ordenado, ningún elemento posterior entrará
+    si L[i] > remanente:
+        devolver Falso
+
+    // Rama 1: Incluir L[i]
+    agregar L[i] a solucion
+    si SubsetSumBT(i + 1, remanente - L[i], L, solucion):
+        devolver Verdadero
+    quitar_ultimo(solucion)  // Backtrack
+
+    // Rama 2: Excluir L[i]
+    si SubsetSumBT(i + 1, remanente, L, solucion):
+        devolver Verdadero
+
+    devolver Falso
+```
+
+#### 3. Justificación de Complejidad
+
+* **Árbol de Recursión y Estado:**
+  - El estado en cada llamada está determinado por el índice $i$ ($0 \le i \le n$) y el $remanente \ge 0$.
+  - El árbol tiene altura $n$ y factor de ramificación 2 (inclusión y exclusión).
+* **Complejidad Temporal en Peor Caso:**
+  - En el peor caso teórico (cuando no existe solución y los elementos son muy pequeños, impidiendo que actúe la poda temprana hasta el final), el árbol genera a lo sumo $2^{n+1} - 1$ nodos.
+  - Ordenar $L$ cuesta $O(n \log n)$, por lo que la cota asintótica en el peor caso es **$O(2^n)$**.
+* **Comportamiento Promedio con Podas:**
+  - Gracias al ordenamiento previo, la condición $L[i] > remanente$ actúa a niveles altos del árbol, eliminando ramas completas antes de llegar a las hojas y reduciendo drásticamente los nodos evaluados en instancias reales.
+* **Complejidad Espacial:**
+  - **$O(n)$** auxiliar: la pila recursiva alcanza una profundidad máxima de $n$ niveles y el vector `solucion` almacena a lo sumo $n$ elementos.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Aplicar la poda `L[i] &gt; remanente` sin ordenar:** La poda por exceso solo es válida si la lista está previamente ordenada. Si la lista contiene números desordenados (por ejemplo $[10, 2]$ con $R = 5$), descartar por $10 > 5$ omitiría erróneamente al $2$.
+
+- **Números negativos o nulos:** Esta poda asume que todos los elementos son positivos ($L[i] > 0$). Si hubiera números negativos, sumar un elemento posterior podría reducir la suma actual y permitir alcanzar el objetivo.
+
+</AcademicBlock>
+
+</SolutionDrawer>

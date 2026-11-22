@@ -1,0 +1,78 @@
+---
+id: "tda-ej-12"
+courseId: "tda"
+number: 12
+title: "Elemento Mayoritario (Más de la Mitad de las Veces)"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.9 / Guía 01, Ejercicio 9"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-12"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar una función (que utilice división y conquista) de orden $O(n \log n)$ *(nota: en la Guía v1.0 figura por errata tipográfica $O(n \log \log n)$)* que, dado un arreglo de $n$ números enteros, devuelva `true` o `false` según si existe algún elemento que aparezca más de la mitad de las veces, sin ordenar el arreglo ni usar tabla de hash. Justificar el orden de la solución.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-12">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Propiedad clave:** Si un número aparece **más de la mitad de las veces** en todo el arreglo ($> n/2$), entonces es matemáticamente imposible que aparezca la mitad o menos en ambas mitades a la vez. **Obligatoriamente tiene que ser el elemento mayoritario en la mitad izquierda, o en la mitad derecha (o en ambas)**.
+* Entonces creamos una función recursiva `BuscarMayoritario(A, ini, fin)` que devuelve el elemento mayoritario del rango (o `nulo` si no hay):
+  1. **Caso Base:** Si el rango tiene 1 solo elemento, ese elemento es el mayoritario de su rango.
+  2. **División y Conquista:** Si tiene más, pedimos el candidato mayoritario de la mitad izquierda (`cand_izq`) y el de la mitad derecha (`cand_der`).
+  3. **Combinación:** Si ambos coinciden, ese mismo es el ganador. Si son distintos, **contamos cuántas veces aparece cada uno** en todo el rango actual `[ini, fin]` recorriéndolo con un ciclo lineal $O(n)$. Si alguno supera la mitad del tamaño del rango, lo devolvemos; si ninguno supera la mitad, devolvemos `nulo`.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo TieneMayoritario(A, n):
+    candidato = BuscarMayoritario(A, 0, n - 1)
+    devolver (candidato != nulo)
+
+función BuscarMayoritario(A, ini, fin):
+    // Caso base: un único elemento es mayoritario de sí mismo
+    si ini == fin:
+        devolver A[ini]
+
+    medio = (ini + fin) / 2
+    cand_izq = BuscarMayoritario(A, ini, medio)
+    cand_der = BuscarMayoritario(A, medio + 1, fin)
+
+    tamanio = fin - ini + 1
+
+    // Contar apariciones de los candidatos en el rango [ini..fin] en O(n)
+    si cand_izq != nulo y contarApariciones(A, ini, fin, cand_izq) > tamanio / 2:
+        devolver cand_izq
+
+    si cand_der != nulo y contarApariciones(A, ini, fin, cand_der) > tamanio / 2:
+        devolver cand_der
+
+    devolver nulo
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* Dividimos el problema en **$a = 2$ llamadas recursivas** de tamaño $n/2$ (**$b = 2$**).
+* En la etapa de combinación, contar cuántas veces aparecen `cand_izq` y `cand_der` en el subarreglo actual recorre sus elementos en tiempo lineal **$f(n) = O(n)$** (**$c = 1$**).
+* Ecuación de recurrencia:
+  $$T(n) = 2 \cdot T(n/2) + O(n)$$
+* Por el **Teorema Maestro**, $\log_2 2 = 1 = c$ (**Caso 2**), lo que demuestra que la complejidad temporal es **$O(n \log n)$**.
+
+</SolutionDrawer>

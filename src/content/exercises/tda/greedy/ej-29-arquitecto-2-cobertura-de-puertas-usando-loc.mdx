@@ -1,0 +1,73 @@
+---
+id: "tda-ej-29"
+courseId: "tda"
+number: 29
+title: "Arquitecto 2: Cobertura de Puertas usando Locales de Duty Free"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.11"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-29"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En la terminal B los puestos de seguridad solo pueden colocarse en los **locales libres del Duty Free**. Dado un arreglo con la ubicación de las puertas y otro con la ubicación de los locales libres, asignar la menor cantidad de puestos de seguridad para cubrir todas las puertas a distancia $\le d$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-29">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es la misma lógica de estirarse lo más a la derecha posible, pero separando quién necesita cobertura (las `puertas`) de dónde podemos instalar (los `locales`):
+  1. Ordenamos ambos arreglos (`puertas` y `locales`) de menor a mayor.
+  2. Tomamos la primera puerta no cubierta $P$.
+  3. Entre los locales libres que están a distancia $\le d$ de $P$ (es decir, locales $L$ tales que $P - d \le L \le P + d$), **elegimos el local $L^*$ que esté más a la derecha**. (Si no existe ningún local en ese rango, es imposible cubrir la puerta $P$).
+  4. Instalamos el puesto en $L^*$ y marcamos como cubiertas todas las puertas hasta $L^* + d$.
+* Es **óptimo** y su complejidad es **$O(n \log n + m \log m)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CubrirPuertasConLocales(puertas, locales, d):
+    ordenar puertas de menor a mayor
+    ordenar locales de menor a mayor
+    puestos = []
+    i = 0, j = 0   // i recorre puertas, j recorre locales
+
+    mientras i < longitud(puertas):
+        P = puertas[i]
+        mejor_local = nulo
+
+        // Avanzar por los locales buscando el más a la derecha que cubra a P
+        mientras j < longitud(locales) y locales[j] <= P + d:
+            si locales[j] >= P - d:
+                mejor_local = locales[j]
+            j = j + 1
+
+        si mejor_local es nulo:
+            devolver "Infactible: no hay local que cubra la puerta " + P
+
+        agregar mejor_local a puestos
+
+        // Saltar todas las puertas cubiertas por mejor_local
+        mientras i < longitud(puertas) y puertas[i] <= mejor_local + d:
+            i = i + 1
+
+    devolver puestos
+```
+
+</SolutionDrawer>

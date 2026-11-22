@@ -1,0 +1,67 @@
+---
+id: "tda-ej-09"
+courseId: "tda"
+number: 9
+title: "Parte Entera de la Raíz Cuadrada"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.5 / Guía 01, Ejercicio 3"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-9"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo que, por división y conquista, permita obtener la parte entera de la raíz cuadrada de un número $n$, en tiempo $O(\log n)$ *(nota: en la Guía v1.0 figura por errata tipográfica $O(\log \log n)$)*. Por ejemplo, para $n = 10$ debe devolver $3$, y para $n = 25$ debe devolver $5$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-09">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Buscamos el mayor entero $m \in [0, n]$ tal que $m^2 \le n$ y $(m + 1)^2 > n$.
+* Como la función $f(m) = m^2$ es estrictamente creciente para números positivos, podemos aplicar búsqueda binaria sobre el rango de candidatos `[ini, fin]` (inicialmente `[0, n]`):
+  - Probamos el valor central `m = (ini + fin) / 2`.
+  - Si `m * m <= n` y `(m + 1) * (m + 1) > n`, entonces `m` es exactamente la parte entera de $\sqrt{n}$.
+  - Si `m * m > n`, nos pasamos: buscamos en la mitad menor `[ini, m - 1]`.
+  - Si `m * m <= n` pero `(m + 1)^2 <= n`, todavía nos quedamos cortos: buscamos en la mitad mayor `[m + 1, fin]`.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo RaizEntera(n):
+    devolver BuscarRaiz(n, 0, n)
+
+función BuscarRaiz(n, ini, fin):
+    medio = (ini + fin) / 2
+
+    // Si medio^2 no supera n, pero (medio + 1)^2 ya lo supera, encontramos la parte entera
+    si (medio * medio <= n) y ((medio + 1) * (medio + 1) > n):
+        devolver medio
+
+    si medio * medio > n:
+        devolver BuscarRaiz(n, ini, medio - 1)   // Nos pasamos, probar más chicos
+    sino:
+        devolver BuscarRaiz(n, medio + 1, fin)   // Falta crecer, probar más grandes
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* El rango inicial tiene tamaño $n$, y en cada paso se realiza **$a = 1$ llamada recursiva** sobre la mitad del intervalo (**$b = 2$**), realizando multiplicaciones y comparaciones en tiempo **$O(1)$** (**$c = 0$**).
+* Por el **Teorema Maestro**, $T(n) = T(n/2) + O(1)$ tiene $\log_2 1 = 0 = c$ (**Caso 2**), resultando en tiempo **$O(\log n)$**.
+
+</SolutionDrawer>

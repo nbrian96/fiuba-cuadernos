@@ -1,0 +1,57 @@
+---
+id: "tda-ej-36"
+courseId: "tda"
+number: 36
+title: "Cambio 1: Monedas y Brazaletes de Rosario"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.18"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-36"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Existen cuentas/brazaletes con valores `1, 5, 10, 20, 50, 120`. Dado el valor de los ítems a vender y la cantidad de cuentas de cada tipo recibidas como pago, diseñar un algoritmo greedy que calcule cuántas cuentas de cada tipo dar de cambio minimizando la cantidad de cuentas.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-36">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Primero sumamos el dinero total entregado por el cliente multiplicando la cantidad de cada cuenta por su valor, y le restamos el costo de los ítems para obtener el `vuelto` a devolver.
+* **Regla Voraz del Cajero:** Recorremos las denominaciones de **mayor a menor** (`[120, 50, 20, 10, 5, 1]`) y de cada una entregamos la mayor cantidad entera posible (`vuelto // moneda`) sin pasarnos del vuelto restante.
+* *(Nota de cátedra: Con la moneda de 120 y 50, para un vuelto de 150 el algoritmo voraz entrega `120 + 20 + 10` = 3 cuentas, que es igual de óptimo que `50 + 50 + 50` = 3 cuentas, porque 1, 5, 10, 20, 50, 120 es un sistema canónico).*
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CalcularCambioCuentas(valor_items, pago_cuentas):
+    denominaciones = [120, 50, 20, 10, 5, 1]
+    total_pagado = sumatoria de (valor * cantidad) en pago_cuentas
+    vuelto = total_pagado - valor_items
+    cambio = []
+
+    para cada mon en denominaciones:
+        si vuelto >= mon:
+            cant = division_entera(vuelto, mon)
+            agregar (mon, cant) a cambio
+            vuelto = vuelto % mon
+
+    devolver cambio
+```
+
+</SolutionDrawer>

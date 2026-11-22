@@ -1,0 +1,85 @@
+---
+id: "tda-ej-63"
+courseId: "tda"
+number: 63
+title: "Camino de Mínimo Riesgo (INVAP) como Flujo Unitario en PL"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 5"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-2"
+relatedResourceIds:
+  - "tda-parcial-2025-1-2-pdf"
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-63"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Para el traslado de una carga crítica de alta seguridad de la empresa INVAP desde el centro atómico Ezeiza ($s$) hasta el laboratorio central en Bariloche ($t$), se dispone de un grafo dirigido $G = (V, E)$. Cada tramo carretero $(u, v) \in E$ tiene un costo de póliza de seguro $C_{uv} > 0$. Plantear un modelo de Programación Lineal continuo que determine la ruta de menor costo de seguro. Justificar formalmente por qué no es necesario declarar las variables como binarias para obtener una ruta válida. Indicar la cantidad exacta de variables y restricciones.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-63">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Cómo modelar el Camino Mínimo mediante Flujo Unitario:**
+  Imaginamos que inyectamos exactamente **$1$ unidad de flujo** en el origen $s$ (Ezeiza) y la extraemos en el destino $t$ (Bariloche). Por cada tramo carretero $(u, v) \in E$ definimos una variable continua no negativa $x_{uv} \ge 0$ que mide cuánto flujo transita por esa arista, y buscamos minimizar el costo total de seguro $\sum_{(u,v) \in E} C_{uv} \cdot x_{uv}$.
+* **Balance de conservación en cada nodo:**
+  * En **Ezeiza ($s$):** sale $1$ unidad más de la que entra ($\text{Sale}_s - \text{Entra}_s = 1$).
+  * En **Bariloche ($t$):** entra $1$ unidad más de la que sale ($\text{Sale}_t - \text{Entra}_t = -1$).
+  * En **cualquier ciudad intermedia ($i \notin \{s, t\}$):** todo lo que entra debe salir ($\text{Sale}_i - \text{Entra}_i = 0$).
+* **¿Por qué NO hace falta declarar variables binarias?** *(Pregunta obligatoria de examen)*:
+  Porque la matriz de restricciones de conservación de flujo en un grafo dirigido (matriz de incidencia nodo-arista) cumple la propiedad de **Unimodularidad Total (TUM)** (todo subdeterminante vale $0, 1$ o $-1$). Cuando la matriz es Totalmente Unimodular y los términos independientes del lado derecho son enteros ($+1, -1$ y $0$), **todos los vértices del poliedro factible son enteros**. Por lo tanto, al resolver el modelo con Programación Lineal continua (por ejemplo con Simplex), el óptimo hallado tendrá automáticamente valores enteros $x_{uv} \in \{0, 1\}$ marcando el camino óptimo sin fraccionar la carga.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    S_NODE[\"Ezeiza s<br/>Sale - Entra = +1\"] -->|\"C = 12\"| N1[\"Neuquén<br/>Sale - Entra = 0\"]\n    S_NODE -->|\"C = 18\"| N2[\"Bahía Blanca<br/>Sale - Entra = 0\"]\n    N1 -->|\"C = 6\"| T_NODE[\"Bariloche t<br/>Sale - Entra = -1\"]\n    N2 -->|\"C = 7\"| T_NODE\n    N2 -->|\"C = 3\"| N1"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $x_{uv} \in \mathbb{R}_{\ge 0} \quad (x_{uv} \ge 0) \quad \forall (u, v) \in E$: cantidad de flujo que circula por el tramo $(u, v)$ (en el óptimo valdrá $1$ si el tramo pertenece a la ruta elegida y $0$ si no).
+
+2. **Función Objetivo:**
+   Minimizar el costo total de seguro del camino:
+   $$\min Z = \sum_{(u, v) \in E} C_{uv} \cdot x_{uv}$$
+
+3. **Restricciones lineales (Conservación de flujo para cada nodo $i \in V$):**
+   * **En el origen $s$ (Ezeiza):**
+     $$\sum_{v : (s, v) \in E} x_{sv} - \sum_{u : (u, s) \in E} x_{us} = 1$$
+   * **En el destino $t$ (Bariloche):**
+     $$\sum_{v : (t, v) \in E} x_{tv} - \sum_{u : (u, t) \in E} x_{ut} = -1$$
+   * **En los nodos intermedios $i \in V \setminus \{s, t\}$:**
+     $$\sum_{v : (i, v) \in E} x_{iv} - \sum_{u : (u, i) \in E} x_{ui} = 0 \quad \forall i \in V \setminus \{s, t\}$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** Exactamente **$|E|$ variables continuas no negativas** ($x_{uv} \ge 0$, una por cada tramo dirigido del grafo).
+* **Cantidad de restricciones:** Exactamente **$|V|$ restricciones lineales de igualdad** (una ecuación de conservación de flujo por cada vértice del grafo: $1$ en el origen, $1$ en el destino y $|V| - 2$ en los nodos intermedios), además de las $|E|$ cotas de no negatividad $x_{uv} \ge 0$.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Poner $x_{uv} \in \{0, 1\}$:** El enunciado pide explícitamente un modelo *continuo* y justificar por qué da entero. La palabra clave que buscan los correctores es **Unimodularidad Total (TUM)** de la matriz de incidencia.
+
+- **Olvidar las ecuaciones del origen $s$ y destino $t$:** Si solo escribís que lo que entra es igual a lo que sale ($= 0$), la solución óptima trivial será $x_{uv} = 0$ en todas las aristas con costo $0$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

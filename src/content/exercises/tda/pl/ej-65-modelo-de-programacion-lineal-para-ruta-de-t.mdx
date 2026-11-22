@@ -1,0 +1,79 @@
+---
+id: "tda-ej-65"
+courseId: "tda"
+number: 65
+title: "Modelo de Programación Lineal para Ruta de Transporte con Estaciones"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2026-2-1 (Enunciados), Ejercicio 5"
+isParcial: true
+examIds:
+  - "tda-parcial-2026-2-1"
+relatedResourceIds:
+  - "tda-parcial-2026-2-1-pdf"
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-65"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Realizar un modelo de programación lineal que resuelva el problema del punto 3 (transporte con $N$ estaciones intermedias con tarifa $T_i$, sin poder saltear más de dos estaciones consecutivas, minimizando el costo total de paradas). Indicar la cantidad y tipo de variables del problema, y la cantidad de restricciones del mismo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-65">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Variables de decisión binarias:** Por cada estación intermedia $i \in \{1, 2, \dots, N\}$ definimos una variable binaria $x_i \in \{0, 1\}$, que vale $1$ si el transporte se detiene en la estación $i$ (pagando la tarifa $T_i$) y $0$ si decide saltearla.
+* **Qué buscamos minimizar:** La suma de las tarifas de todas las estaciones donde el transporte decide detenerse: $\sum_{i=1}^N T_i \cdot x_i$.
+* **Cómo modelar que no se pueden saltear más de 2 estaciones seguidas:**
+  No poder saltear más de $2$ estaciones consecutivas significa que **en cualquier bloque o ventana de $3$ estaciones seguidas $(i, \; i+1, \; i+2)$, el transporte está obligado a detenerse en al menos una de las tres** (nunca pueden valer $0$ las tres al mismo tiempo).
+  En Programación Lineal Entera, exigir que al menos una de las tres variables binarias consecutivas valga $1$ se escribe directamente sumándolas y pidiendo que den al menos $1$:
+  $$x_i + x_{i+1} + x_{i+2} \ge 1 \quad \forall i \in \{1, \dots, N - 2\}$$
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Ventana1 [\"Ventana 1: x₁ + x₂ + x₃ ≥ 1\"]\n        E1[\"Estación 1 (x₁)\"] --- E2[\"Estación 2 (x₂)\"] --- E3[\"Estación 3 (x₃)\"]\n    end\n    subgraph Ventana2 [\"Ventana 2: x₂ + x₃ + x₄ ≥ 1\"]\n        E2 --- E3 --- E4[\"Estación 4 (x₄)\"]\n    end"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, N\}$: vale $1$ si el transporte se detiene en la estación intermedia $i$, y $0$ si la saltea.
+
+2. **Función Objetivo:**
+   Minimizar el costo total de las paradas realizadas:
+   $$\min Z = \sum_{i=1}^{N} T_i \cdot x_i$$
+
+3. **Restricciones lineales:**
+   * **Autonomía (al menos 1 parada cada 3 estaciones consecutivas):**
+     $$x_i + x_{i+1} + x_{i+2} \ge 1 \quad \forall i \in \{1, 2, \dots, N - 2\}$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** Exactamente **$N$ variables binarias** ($x_i \in \{0, 1\}$, una por cada estación intermedia).
+* **Cantidad de restricciones:** Exactamente **$N - 2$ restricciones lineales funcionales** (una por cada ventana de $3$ estaciones consecutivas $(i, i+1, i+2)$ desde $i = 1$ hasta $N - 2$, asumiendo $N \ge 3$), además de las $N$ declaraciones de dominio binario.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Responder que hay $N$ restricciones en lugar de $N - 2$:** La última terna de $3$ estaciones es $(N-2, \; N-1, \; N)$, que corresponde a $i = N - 2$. Si pusieras $i$ hasta $N$, aparecerían estaciones inexistentes $x_{N+1}$ y $x_{N+2}$.
+
+- **Olvidar aclarar el tipo de las variables:** La consigna pide explícitamente *cantidad y tipo*; es obligatorio especificar que son **binarias** ($x_i \in \{0, 1\}$).
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,129 @@
+---
+id: "tda-ej-10"
+courseId: "tda"
+number: 10
+title: "MergeSort Modificado (División en 3 y en K Partes)"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.7"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-10"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se quiere implementar MergeSort pero, en vez de dividir en dos partes el arreglo, dividirlo en tres, llamando recursivamente al algoritmo para cada una de las partes y luego uniéndolas.
+a. Suponiendo que el merge de las tres partes se realiza en tiempo lineal, calcular el orden del algoritmo.
+b. Si en vez de dividir en tres partes, se dividiera el arreglo en $n$, siendo $n$ la cantidad de elementos del arreglo, ¿a qué otro algoritmo de ordenamiento se asemeja esta implementación? ¿Cuál es el orden de dicho algoritmo?
+c. Dado lo obtenido en los puntos anteriores, ¿tiene sentido implementar MergeSort con $k$ separaciones, para $k > 2$?
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-10">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Punto a (División en 3 partes):**
+  - **División y Conquista:** El arreglo se fracciona en 3 subarreglos disjuntos de tamaño $n/3$, sobre los cuales se realizan **$a = 3$ llamadas recursivas** ($b = 3$).
+  - **Combinación (`Merge3`):** Se fusionan los 3 tercios ordenados comparando secuencialmente los elementos frontales mediante a lo sumo 2 comparaciones por elemento colocado. La fase de merge toma tiempo estrictamente lineal **$f(n) = \Theta(n)$** ($c = 1$).
+  - **Recurrencia y Teorema Maestro:** $T(n) = 3 \cdot T(n/3) + \Theta(n)$. Como $\log_b a = \log_3 3 = 1$ y $c = 1$, aplica el **Caso 2** (balance equitativo en cada nivel): **$\Theta(n \log_3 n) = \Theta(n \log n)$**. La complejidad asintótica se mantiene idéntica a MergeSort binario, cambiando solo la base logarítmica por una constante multiplicativa ($\log_3 n = \frac{\log_2 n}{\log_2 3}$).
+* **Punto b (División extrema en $k = n$ partes de tamaño 1):**
+  - Cada fragmento tiene tamaño 1, cayendo de inmediato en el caso base sin computación recursiva ($T(1) = \Theta(1)$).
+  - Toda la carga algorítmica pasa a la combinación (`K-Merge` de $n$ listas de 1 elemento):
+    - Extraer el 1° mínimo requiere buscar entre $n$ candidatos ($n - 1$ comparaciones).
+    - Extraer el 2° mínimo requiere buscar entre $n - 1$ candidatos ($n - 2$ comparaciones).
+    - Para los $n$ elementos se acumulan $\sum_{i=1}^{n-1} i = \frac{n(n-1)}{2} = \Theta(n^2)$ comparaciones.
+  - Esto equivale conceptualmente a **Selection Sort** (Ordenamiento por Selección), cuya complejidad temporal es **$\Theta(n^2)$**.
+* **Punto c (¿Tiene sentido práctico implementar $k > 2$?):**
+  - **En memoria principal (RAM): NO tiene sentido.**
+    - Aunque la altura del árbol recursivo disminuye a $\log_k n$, el costo de fusionar $k$ vías en cada nivel se incrementa:
+      * Con comparaciones secuenciales directas, seleccionar cada elemento insume $k - 1$ comparaciones $\implies$ costo de combinación por nivel $O(k \cdot n) \implies$ Total $O(k n \cdot \log_k n) = O\left(\frac{k}{\log_2 k} n \log_2 n\right)$, creciendo desfavorablemente para $k \ge 3$.
+      * Con una cola de prioridad (Min-Heap) de tamaño $k$, cada extracción e inserción cuesta $O(\log_2 k) \implies$ costo de combinación por nivel $O(n \log_2 k) \implies$ Total $\log_k n \cdot O(n \log_2 k) = \frac{\log_2 n}{\log_2 k} \cdot O(n \log_2 k) = O(n \log_2 n)$.
+    - La cota asintótica es idéntica a $k = 2$, pero $k > 2$ introduce penalizaciones constantes severas: mayor consumo de memoria auxiliar para el heap, más operaciones de control de punteros y pérdida de localidad temporal/espacial en las líneas de caché de la CPU.
+  - **En memoria secundaria (External Sort en Discos Magnéticos): SÍ tiene sentido.**
+    - Cuando los datos no entran en RAM, el cuello de botella físico son los accesos de I/O a disco. En el ordenamiento externo (*$k$-way External MergeSort*), elegir un $k$ grande reduce directamente la cantidad de pasadas completas por disco ($\log_k n$), optimizando el factor más costoso del sistema.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MergeSort3(A, ini, fin):
+    // Caso Base: 0 o 1 elemento ya se encuentra ordenado
+    si ini >= fin:
+        retornar
+
+    tercio = (fin - ini + 1) / 3
+    m1 = ini + tercio - 1
+    m2 = ini + 2 * tercio - 1
+
+    // 1. Conquista: 3 llamadas recursivas sobre tercios
+    MergeSort3(A, ini, m1)
+    MergeSort3(A, m1 + 1, m2)
+    MergeSort3(A, m2 + 1, fin)
+
+    // 2. Combinación: fusionar 3 sublistas ordenadas en tiempo lineal
+    Merge3(A, ini, m1, m2, fin)
+
+Algoritmo KMergeConHeap(sublistas, k):
+    // Entrada: k sublistas ordenadas de tamaño combinado n
+    // Salida: arreglo fusionado con los n elementos ordenados
+    heap = CrearMinHeap()
+    resultado = arreglo_vacio()
+
+    // 1. Cargar el primer elemento de cada sublista en el Min-Heap
+    para i desde 0 hasta k - 1:
+        si longitud(sublistas[i]) > 0:
+            heap.insertar(valor: sublistas[i][0], id_lista: i, indice: 0)
+
+    // 2. Extraer sucesivamente el menor global y reponer con el siguiente
+    mientras no heap.esta_vacio():
+        (val, id, idx) = heap.extraer_minimo()
+        resultado.agregar(val)
+
+        si idx + 1 < longitud(sublistas[id]):
+            heap.insertar(valor: sublistas[id][idx + 1], id_lista: id, indice: idx + 1)
+
+    retornar resultado
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* **Punto a ($k = 3$ partes):**
+  - Ecuación de recurrencia:
+    $$T(n) = 3 \cdot T(n/3) + \Theta(n)$$
+  - Parámetros: $a = 3$, $b = 3$, $f(n) = \Theta(n) \implies c = 1$.
+  - Comparación de exponentes: $\log_b a = \log_3 3 = 1$ y $c = 1$.
+  - Como $\log_b a = c$, aplica el **Caso 2 del Teorema Maestro** (trabajo equitativo en cada nivel):
+    $$T(n) = \Theta(n^c \log_3 n) = \Theta(n \log_3 n) = \mathbf{\Theta(n \log n)}$$
+
+* **Punto b ($k = n$ partes de tamaño 1):**
+  - Con partes de tamaño 1, no hay llamadas recursivas efectivas ($T(1) = \Theta(1)$).
+  - La combinación mediante comparaciones directas entre las listas restantes acumula:
+    $$T(n) = \sum_{i=1}^{n-1} i = \frac{(n-1) \cdot n}{2} = \frac{n^2 - n}{2} = \mathbf{\Theta(n^2)}$$
+  - Coincide exactamente con la complejidad de **Selection Sort**.
+
+* **Punto c ($k$ partes generalizado):**
+  - Altura del árbol recursivo: $h = \log_k n$.
+  - Utilizando un Min-Heap de tamaño $k$ para fusionar las $k$ vías en cada nivel:
+    - En cada nivel se procesan los $n$ elementos totales.
+    - Cada elemento requiere 1 extracción y 1 inserción en el heap de $k$ nodos: $O(\log_2 k)$ por elemento.
+    - Costo de combinación por nivel: $\Theta(n \log_2 k)$.
+  - Recurrencia:
+    $$T(n) = k \cdot T(n/k) + \Theta(n \log_2 k)$$
+  - Resolviendo por árbol de recursión:
+    $$T(n) = h \cdot \Theta(n \log_2 k) = \log_k n \cdot \Theta(n \log_2 k) = \frac{\log_2 n}{\log_2 k} \cdot \Theta(n \log_2 k) = \mathbf{\Theta(n \log_2 n)}$$
+  - Asintóticamente es idéntico a $k = 2$. En memoria RAM convencional, la administración del heap y las constantes adicionales hacen que $k = 2$ sea superior en velocidad real. En almacenamiento secundario, en cambio, minimizar las pasadas de lectura/escritura en disco ($h = \log_k n$) vuelve indispensable el uso de $k > 2$.
+
+</SolutionDrawer>

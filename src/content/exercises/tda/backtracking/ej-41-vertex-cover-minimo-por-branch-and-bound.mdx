@@ -1,0 +1,111 @@
+---
+id: "tda-ej-41"
+courseId: "tda"
+number: 41
+title: "Vertex Cover Mínimo por Branch and Bound"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-2 (26 de noviembre de 2024), Ejercicio 1 / Guía 03 Ejercicio 13"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-2"
+relatedResourceIds:
+  - "tda-parcial-2024-2-2-pdf"
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-41"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo que dado un grafo no dirigido $G = (V, E)$ devuelva un conjunto de vértices que represente un mínimo Vertex Cover del mismo. Explicar el árbol de decisiones, las podas aplicadas y la complejidad.
+
+**Qué está evaluando la cátedra**  
+Estrategia de ramificación sobre aristas no cubiertas (al menos uno de los dos extremos debe pertenecer a la cobertura), poda por cota superior (*Branch and Bound*) descartando ramas que alcancen o superen el mejor tamaño ya hallado.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-41">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Definición del Problema:**
+  - Un Vertex Cover es un conjunto $C \subseteq V$ tal que toda arista $(u, v) \in E$ tiene al menos un extremo en $C$ ($u \in C \lor v \in C$). Buscamos minimizar $|C|$.
+  - El espacio de búsqueda combinatorio de todos los subconjuntos tiene tamaño $2^{|V|}$.
+* **Estrategia de Ramificación por Arista No Cubierta (Factor de Ramificación 2):**
+  - En lugar de ramificar vértice por vértice, buscamos una arista $(u, v) \in E$ que aún no esté cubierta por la selección actual ($u \notin C \land v \notin C$).
+  - Como obligatoriamente toda arista debe ser cubierta por una solución factible, al menos uno de sus dos extremos debe estar en $C$. Por ende, bifurcamos en exactamente dos ramas:
+    1. **Rama 1:** Incluir el vértice $u$ en $C$ y continuar la búsqueda.
+    2. **Rama 2:** Incluir el vértice $v$ en $C$ y continuar la búsqueda.
+* **Poda por Optimalidad (Branch and Bound):**
+  - Mantenemos la mejor cobertura factible encontrada hasta el momento (`mejor_solucion`), inicializada con $V$ (tamaño $|V|$).
+  - Si en cualquier nodo del árbol $|C_{\text{actual}}| \ge |mejor\_solucion|$, **podamos la rama de inmediato**. Como los costos son no negativos, ninguna extensión de $C_{\text{actual}}$ podrá mejorar el récord actual.
+* **Caso Base:**
+  - Si no quedan aristas sin cubrir y $|C_{\text{actual}}| < |mejor\_solucion|$, se halló una cobertura válida estrictamente menor: se actualiza `mejor_solucion` con una copia profunda de $C_{\text{actual}}$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MinimoVertexCover(V, E):
+    mejor_sol = copiar(V)  // Cota superior inicial
+    actual = conjunto_vacio()
+    VertexCoverBT(actual, mejor_sol, E)
+    devolver mejor_sol
+
+función VertexCoverBT(actual, ref mejor_sol, E):
+    // Poda por optimalidad (Branch & Bound)
+    si tamaño(actual) >= tamaño(mejor_sol):
+        devolver
+
+    arista = BuscarAristaNoCubierta(E, actual)
+    si arista es nulo:  // Caso Base: todas las aristas cubiertas con menor tamaño
+        mejor_sol = copiar(actual)
+        devolver
+
+    (u, v) = arista
+
+    // Rama 1: Incluir u
+    agregar u a actual
+    VertexCoverBT(actual, mejor_sol, E)
+    quitar u de actual  // Backtrack
+
+    // Rama 2: Incluir v
+    agregar v a actual
+    VertexCoverBT(actual, mejor_sol, E)
+    quitar v de actual  // Backtrack
+```
+
+#### 3. Justificación de Complejidad
+
+* **Árbol de Recursión y Estado:**
+  - El estado está definido por el conjunto `actual` de vértices seleccionados.
+  - El árbol es binario (factor de ramificación 2). Cada bifurcación cubre al menos una arista nueva, por lo que la profundidad máxima del árbol está acotada por el tamaño del Vertex Cover óptimo $k = |C^*| \le |V|$.
+* **Complejidad Temporal en Peor Caso:**
+  - La cantidad de nodos del árbol es a lo sumo $2^{k+1} - 1$. En cada nodo se inspecciona el conjunto de aristas para hallar una no cubierta en $O(|E|)$.
+  - Por lo tanto, la complejidad en el peor caso es **$O(2^k \cdot |E|)$** (algoritmo FPT - *Fixed Parameter Tractable*), exponencialmente superior al enfoque ingenuo de subconjuntos $O(2^{|V|} \cdot |E|)$ cuando $k \ll |V|$.
+* **Comportamiento Promedio con Podas:**
+  - La poda de Branch & Bound $|actual| \ge |mejor\_sol|$ elimina ramas completas en cuanto se iguala la cota. Inicializar la cota con una heurística rápida reduce todavía más los nodos evaluados.
+* **Complejidad Espacial:**
+  - **$O(|V| + |E|)$**: $O(|V|)$ para almacenar el conjunto actual y la mejor solución en la pila de recursión (profundidad $\le k \le |V|$), más el almacenamiento del grafo $G$.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Podar con `&gt;` en vez de `&gt;=`:** La poda debe ser `len(actual) &gt;= len(mejor_cobertura)`. Si usas `&gt;`, el algoritmo continuará explorando ramas de tamaño igual al récord que jamás podrán mejorarlo, duplicando el tiempo de ejecución.
+
+- **No copiar la solución óptima:** Escribir `mejor_cobertura = actual` guarda una referencia al conjunto mutable. Al hacer backtracking, `mejor_cobertura` se vacía junto con `actual`. Se debe hacer siempre copia profunda con `set(actual)`.
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,105 @@
+---
+id: "tda-ej-58"
+courseId: "tda"
+number: 58
+title: "Interval Scheduling Ponderado (DP + Búsqueda Binaria)"
+unit: "dp"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía de Ejercicios 04, Ejercicio 2 / Práctica"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-08-programacion-dinamica-i"
+  - "tda-slide-09-programacion-dinamica-ii"
+  - "tda-slide-10-programacion-dinamica-iii"
+  - "tda-slide-11a-programacion-dinamica-iv"
+  - "tda-slide-11b-practica-programacion-dinamica"
+  - "tda-guia-04-dp"
+legacyPage: "dp.html"
+legacyAnchor: "#ej-58"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene un conjunto de $n$ intervalos $[s_i, f_i]$, cada uno con un beneficio o peso $v_i > 0$. No se pueden seleccionar intervalos que se solapen. Diseñar un algoritmo que maximice la suma de los beneficios de los intervalos elegidos en tiempo $O(n \log n)$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-58">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Ordenamiento Previo y Predecesor Compatible $p(i)$:**
+  Primero ordenamos los $n$ intervalos por **tiempo de finalización creciente** ($f_1 \le f_2 \le \dots \le f_n$) en $\mathcal{O}(n \log n)$.
+  Para cada intervalo $i$, definimos $p(i)$ como el **mayor índice $j < i$ que no se solapa con $i$** (es decir, el último intervalo que termina antes o justo cuando empieza $i$: $f_j \le s_i$; si no hay ninguno, $p(i) = 0$). Como los intervalos están ordenados por fin, hallamos $p(i)$ mediante **Búsqueda Binaria** en $\mathcal{O}(\log n)$.
+* **Definición del Estado:** Llamamos $OPT(i)$ al **máximo beneficio obtenible seleccionando intervalos compatibles dentro del prefijo $\{1, \dots, i\}$**.
+* **Caso Base:** $OPT(0) = 0$ (con $0$ intervalos el beneficio es $0$).
+* **Decisiones en el paso $i$:**
+  Para el intervalo $i$, tenemos dos opciones:
+  1. **No elegir el intervalo $i$:** Nos quedamos con el mejor beneficio de los primeros $i - 1$ intervalos, que es $OPT(i - 1)$.
+  2. **Elegir el intervalo $i$:** Ganamos $v_i$ y, para no solaparnos, debemos combinarlo con la mejor solución de los intervalos que terminan a más tardar en $s_i$, que es exactamente $OPT(p(i))$.
+* **Ecuación de Bellman (Recurrencia):**
+  Para todo $i \in \{1, \dots, n\}$:
+  $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(p(i)) + v_i\Big)$$
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    P_i[\"OPT(p(i))<br/>Último j con f_j ≤ s_i (Búsqueda Binaria)\"] -->|\"+ v_i (Incluir intervalo i)\"| OPT_i[\"OPT(i) = max(...)\"]:::opt\n    Prev[\"OPT(i - 1)<br/>Prefijo anterior\"] -->|\"+ 0 (Excluir intervalo i)\"| OPT_i\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION IntervalSchedulingPonderado(intervalos, n):
+    ORDENAR intervalos[1..n] POR tiempo de fin f_i ASCENDENTE
+
+    // 1. Precalcular p[i] con Búsqueda Binaria sobre los tiempos de fin
+    p <- arreglo de tamaño (n + 1) en 0
+    PARA i <- 1 HASTA n:
+        p[i] <- BusquedaBinariaUltimoFinMenorIgual(intervalos[1 .. i-1], intervalos[i].s)
+
+    // 2. Llenado Bottom-Up de la tabla DP
+    DP <- arreglo de tamaño (n + 1) en 0
+    DP[0] <- 0
+    PARA i <- 1 HASTA n:
+        DP[i] <- max(DP[i - 1], DP[p[i]] + intervalos[i].v)
+
+    // 3. Reconstrucción de los intervalos elegidos
+    elegidos <- lista vacía
+    i <- n
+    MIENTRAS i > 0:
+        SI DP[p[i]] + intervalos[i].v >= DP[i - 1]:
+            AGREGAR intervalos[i] A elegidos
+            i <- p[i]    // Saltamos al último compatible
+        SINO:
+            i <- i - 1   // No se usó el intervalo i
+
+    RETORNAR (DP[n], elegidos)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** $\mathcal{O}(n \log n)$.
+  1. Ordenar los $n$ intervalos por tiempo de fin cuesta $\mathcal{O}(n \log n)$.
+  2. Calcular $p(i)$ para los $n$ intervalos mediante búsqueda binaria cuesta $n \times \mathcal{O}(\log n) = \mathcal{O}(n \log n)$.
+  3. Llenar la tabla `DP` de tamaño $n + 1$ cuesta $\mathcal{O}(1)$ por celda, sumando $\mathcal{O}(n)$, y la reconstrucción toma a lo sumo $n$ pasos ($\mathcal{O}(n)$).
+  En total: $\mathcal{O}(n \log n) + \mathcal{O}(n \log n) + \mathcal{O}(n) = \mathcal{O}(n \log n)$.
+* **Complejidad Espacial:** $\mathcal{O}(n)$ para almacenar los arreglos `DP[0..n]` y `p[1..n]`.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Buscar $p(i)$ recorriendo linealmente hacia atrás:** Hacer un bucle desde $i-1$ hasta $1$ lleva el algoritmo a $\mathcal{O}(n^2)$, desaprobando la cota pedida de $\mathcal{O}(n \log n)$. Es obligatorio mencionar la **Búsqueda Binaria**.
+
+- **Ordenar por tiempo de inicio $s_i$ en vez de fin $f_i$:** Si ordenás por inicio, los intervalos compatibles con $i$ no forman un prefijo contiguo $1 \dots p(i)$ y la recurrencia falla.
+
+</AcademicBlock>
+
+</SolutionDrawer>

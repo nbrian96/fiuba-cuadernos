@@ -1,0 +1,57 @@
+---
+id: "tda-ej-34"
+courseId: "tda"
+number: 34
+title: "Manager 2: Guardia Mínima con Múltiples Turnos por Mesero"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.16"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-34"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el bar de la pileta, cada mesero puede venir más de un día/horario a la semana (por ejemplo, lunes y miércoles de 8 a 14 y jueves de 12 a 18). Modificar el algoritmo para encontrar un subconjunto de meseros que mantenga la guardia cubierta minimizando la cantidad de meseros.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-34">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Como cada mesero cubre **varios intervalos separados** en la semana, al elegir un mesero cubrimos varios bloques horarios a la vez. Esto transforma el problema en **Set Cover**:
+* **Regla Voraz:** En cada paso miramos cuánto tiempo (cantidad de horas) de la semana que **todavía está sin cubrir** aporta cada mesero candidato, y elegimos al mesero que **cubra la mayor cantidad de horas aún descubiertas**, hasta completar toda la semana.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo GuardiaMinimaBarMultiturno(meseros, franjas_semana):
+    sin_cubrir = copiar(franjas_semana)
+    elegidos = []
+
+    mientras sin_cubrir no esté vacío:
+        // Elegir el mesero cuyos turnos cubran la mayor cantidad de horas aún en sin_cubrir
+        elegir m en meseros que maximice horasCubiertas(m.turnos, sin_cubrir)
+        si horasCubiertas(m.turnos, sin_cubrir) == 0:
+            devolver "Infactible"
+
+        agregar m a elegidos
+        quitar de sin_cubrir todas las franjas cubiertas por m.turnos
+
+    devolver elegidos
+```
+
+</SolutionDrawer>

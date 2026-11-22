@@ -1,0 +1,71 @@
+---
+id: "tda-ej-33"
+courseId: "tda"
+number: 33
+title: "Manager 1: Guardia Mínima Continua en el Spa"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.15"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-33"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Cada empleado del spa tiene un turno fijo corrido en la semana $[inicio_i, fin_i]$. Reggie quiere mantener al menos un empleado en el spa en todo momento durante toda la semana $[0, T]$, minimizando la cantidad total de trabajadores. Diseñar un algoritmo greedy óptimo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-33">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es el problema canónico de **Interval Covering** (cubrir un intervalo $[0, T]$ con la menor cantidad de tramos):
+  1. Llevamos una marca `cubierto_hasta` (inicialmente `0`, el inicio de la semana).
+  2. Entre todos los empleados cuyo turno **empieza antes o justo en `cubierto_hasta`** ($inicio_i \le \text{cubierto\_hasta}$, para no dejar ningún hueco sin guardia), elegimos al empleado cuyo turno **termine lo más tarde posible** (mayor $fin_i$).
+  3. Lo agregamos a la guardia, actualizamos `cubierto_hasta = fin_elegido` y repetimos hasta alcanzar el final de la semana $T$.
+* **¿Es óptimo?** **Sí, 100% óptimo** (por *Greedy Stays Ahead*: en cada paso estiramos el horizonte cubierto lo máximo posible). Complejidad: **$O(n \log n)$** ordenando por hora de inicio.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo GuardiaMinimaSpa(empleados, InicioSemana, FinSemana):
+    ordenar empleados por emp.inicio de menor a mayor
+    guardia = []
+    cubierto_hasta = InicioSemana
+    i = 0, n = longitud(empleados)
+
+    mientras cubierto_hasta < FinSemana:
+        mejor_emp = nulo
+        mayor_fin = cubierto_hasta
+
+        // Entre todos los que entran a trabajar antes de que se quede vacío el spa,
+        // elegir el que se quede hasta más tarde
+        mientras i < n y empleados[i].inicio <= cubierto_hasta:
+            si empleados[i].fin > mayor_fin:
+                mayor_fin = empleados[i].fin
+                mejor_emp = empleados[i]
+            i = i + 1
+
+        si mejor_emp es nulo:
+            devolver "Infactible: queda un hueco sin cubrir en el spa"
+
+        agregar mejor_emp a guardia
+        cubierto_hasta = mayor_fin
+
+    devolver guardia
+```
+
+</SolutionDrawer>

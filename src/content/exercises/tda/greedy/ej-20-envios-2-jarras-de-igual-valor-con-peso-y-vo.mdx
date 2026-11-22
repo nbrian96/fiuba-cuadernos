@@ -1,0 +1,57 @@
+---
+id: "tda-ej-20"
+courseId: "tda"
+number: 20
+title: "Envíos 2: Jarras de Igual Valor con Peso y Volumen"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.2"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-20"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Las mercancías a entregar son jarras de pintura de laca que tienen un cierto volumen y peso, pero que **valen todas lo mismo**. El contenedor soporta hasta un máximo de peso $P$ y volumen $V$. Diseñar un algoritmo greedy para decidir cuáles jarras enviar maximizando la ganancia.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-20">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Como todas las jarras dan la misma ganancia, **maximizar la ganancia equivale a meter la mayor cantidad posible de jarras**.
+* Como tenemos dos límites distintos (peso $P$ y volumen $V$), para que una jarra sea comparable en ambas dimensiones medimos **qué porcentaje del contenedor ocupa** combinando su peso relativo y su volumen relativo: `ocupacion(i) = (peso_i / P) + (volumen_i / V)` (o el máximo de ambos porcentajes).
+* Ordenamos las jarras de **menor a mayor ocupación** (las más "livianas y chicas" primero) y las vamos agregando mientras alcancen tanto el peso como el volumen restantes. (Es una heurística voraz en $O(n \log n)$).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo EnviosJarrasGreedy(jarras, P_max, V_max):
+    // Ordenar de menor a mayor consumo relativo de recursos
+    ordenar jarras por ((j.peso / P_max) + (j.volumen / V_max)) ascendente
+    elegidas = []
+    p_usado = 0, v_usado = 0
+
+    para cada j en jarras:
+        si p_usado + j.peso <= P_max y v_usado + j.volumen <= V_max:
+            agregar j a elegidas
+            p_usado = p_usado + j.peso
+            v_usado = v_usado + j.volumen
+
+    devolver elegidas
+```
+
+</SolutionDrawer>

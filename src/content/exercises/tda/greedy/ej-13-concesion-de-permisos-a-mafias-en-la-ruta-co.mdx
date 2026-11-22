@@ -1,0 +1,93 @@
+---
+id: "tda-ej-13"
+courseId: "tda"
+number: 13
+title: "Concesión de Permisos a Mafias en la Ruta Costera (Arnook)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2024-2-2 (26 de noviembre de 2024), Ejercicio 3 / Guía 02 Ejercicio 12"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-2"
+relatedResourceIds:
+  - "tda-parcial-2024-2-2-pdf"
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-13"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Trabajamos para el mafioso Arnook, quien organiza los pedidos de pequeñas mafias locales por el control de diferentes kilómetros de la ruta costera de Ciudad República. Cada mafia le pide control sobre un rango de kilómetros $[s_i, f_i]$ (por ejemplo, del kilómetro 1 al 5, del 3 al 8, etc.). Si una mafia toma control de un kilómetro, ninguna otra puede ocupar ese mismo tramo (no pueden solaparse). Arnook cobra una tarifa fija por otorgar el permiso, independientemente de los kilómetros pedidos, por lo que su objetivo es maximizar la cantidad total de permisos otorgados sin conflictos de territorio.  
+1. Implementar un algoritmo Greedy que determine a qué mafias otorgar el permiso.  
+2. Indicar y justificar la complejidad temporal y espacial.  
+3. Justificar por qué el algoritmo planteado es Greedy.  
+4. ¿El algoritmo da la solución óptima siempre? Demostrarlo formalmente.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-13">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Regla Voraz:** Ordenamos todos los pedidos de las mafias de menor a mayor según su **kilómetro de finalización ($f_i$)**. Luego los recorremos en ese orden y le otorgamos el permiso a una mafia siempre que su kilómetro de inicio no se pise con el último permiso entregado (`inicio >= ultimo_fin`).
+* **¿Por qué es un algoritmo Greedy?** Porque una vez ordenados los pedidos, en cada paso aplica una regla local fija (elegir el que termina antes para liberar la ruta lo más rápido posible) y toma una decisión irrevocable sin volver atrás.
+* **¿Da siempre la solución óptima? SÍ. Demostración ("El Voraz se Mantiene Adelante"):**
+  - Comparemos paso a paso los permisos que elige nuestro algoritmo Greedy ($g_1, g_2, \dots, g_k$) contra los de cualquier solución óptima ($o_1, o_2, \dots, o_m$), ambos ordenados de izquierda a derecha en la ruta.
+  - **En el 1er permiso ($r = 1$):** Como Greedy elige el pedido que termina en el kilómetro más chico de todos, seguro termina antes o igual que el primero de la solución óptima (`fin(g_1) <= fin(o_1)`).
+  - **En cualquier permiso siguiente ($r$):** Como el permiso anterior de Greedy terminó antes o igual que el del óptimo (`fin(g_{r-1}) <= fin(o_{r-1})`), a Greedy le queda libre la ruta desde antes. Por lo tanto, el pedido $o_r$ que eligió el óptimo también está disponible sin solaparse para Greedy; y como Greedy siempre agarra el que termina primero, se cumple que `fin(g_r) <= fin(o_r)`.
+  - **Por qué tienen la misma cantidad de permisos ($k = m$):** Si la solución óptima tuviera un permiso más ($o_{k+1}$), como empieza después de `fin(o_k)` y sabemos que `fin(g_k) <= fin(o_k)`, ese pedido tampoco se chocaría con $g_k$ y Greedy lo habría agregado antes de frenar. Por lo tanto, **Greedy siempre es óptimo**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo ConcederPermisosMafias(pedidos):
+    si pedidos está vacío:
+        devolver []
+
+    // 1. Regla voraz: ordenar por kilómetro de fin creciente
+    ordenar pedidos por p.fin de menor a mayor
+
+    seleccionados = [ pedidos[0] ]
+    ultimo_fin = pedidos[0].fin
+
+    // 2. Recorrer y aceptar cada pedido que no se solape con el último aceptado
+    para cada p en pedidos desde el segundo en adelante:
+        si p.inicio >= ultimo_fin:
+            agregar p a seleccionados
+            ultimo_fin = p.fin
+
+    devolver seleccionados
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* **Complejidad Temporal:** Ordenar los $n$ pedidos por su kilómetro de fin cuesta **$O(n \log n)$**, y luego recorrer la lista una sola vez haciendo una comparación en $O(1)$ por pedido cuesta **$O(n)$**. Total temporal: **$O(n \log n)$**.
+* **Complejidad Espacial:** **$O(n)$** para guardar la lista de permisos otorgados.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Ruta [Secuencia de Evaluación Voraz por Fin más Temprano]\n        A[\"1º: Mafia A [1, 4]<br/>ACEPTADO (f_ult = 4)\"]:::opt -->|\"s_B = 3 &lt; 4\"| B[\"2º: Mafia B [3, 5]<br/>RECHAZADO (Solapa)\"]:::bad\n        B -->|\"s_C = 0 &lt; 4\"| C[\"3º: Mafia C [0, 6]<br/>RECHAZADO (Solapa)\"]:::bad\n        C -->|\"s_D = 4 &ge; 4\"| D[\"4º: Mafia D [4, 7]<br/>ACEPTADO (f_ult = 7)\"]:::opt\n        D -->|\"s_E = 6 &lt; 7\"| E[\"5º: Mafia E [6, 9]<br/>RECHAZADO (Solapa)\"]:::bad\n    end\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef bad fill:#991b1b,stroke:#7f1d1d,stroke-width:1px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Confundir Interval Scheduling con Interval Scheduling Ponderado:** Si las mafias ofrecieran dinero diferente por cada permiso ($v_i$), la regla voraz por fin más temprano **deja de ser óptima** y se debe usar Programación Dinámica.
+
+- **Ordenar por menor duración ($f_i - s_i$) o por inicio más temprano ($s_i$):** Ambos fallan; un intervalo corto en el medio puede bloquear a dos intervalos a sus costados, y uno que empieza muy temprano puede ser larguísimo y bloquear toda la ruta.
+
+</AcademicBlock>
+
+</SolutionDrawer>

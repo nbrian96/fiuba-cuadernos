@@ -1,0 +1,109 @@
+---
+id: "tda-ej-75"
+courseId: "tda"
+number: 75
+title: "El Dilema del Transporte en Etapas: Greedy vs Programación Dinámica vs Programación Lineal"
+unit: "integradores"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Integrador Parcial 2025-1-2 (Ejercicios 2, 3 y 5 combinados)"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-2"
+relatedResourceIds:
+  - "tda-parcial-2025-1-2-pdf"
+legacyPage: "integradores.html"
+legacyAnchor: "#ej-75"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+**Enunciado Integrador**  
+El INVAP debe transportar una carga de alta seguridad desde Ezeiza hasta Bariloche a través de un grafo de etapas donde las ciudades intermedias están agrupadas en días de viaje (máximo $400\text{ km/día}$, sin viajar de noche). Para cada tramo dirigido $(u, v)$ entre paradas consecutivas se conoce el costo de seguro $C_{uv} > 0$.  
+1. **Paradigma Greedy:** Formular un algoritmo voraz. Demostrar formalmente mediante un contraejemplo por qué **no garantiza** la solución óptima.  
+2. **Paradigma Programación Dinámica:** Desarrollar la solución óptima definiendo el estado $OPT(v)$, la ecuación de recurrencia, el algoritmo en pseudocódigo y la complejidad temporal.  
+3. **Paradigma Programación Lineal:** Formular un modelo de PL que encuentre la ruta de mínimo costo indicando variables, función objetivo, restricciones y recuento exacto de las mismas.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-75">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+Para transportar la carga desde Ezeiza ($s$) hasta Bariloche ($t$) a través del grafo dirigido por etapas con costo $C_{uv} > 0$, comparamos las 3 alternativas solicitadas:
+
+1. **Alternativa 1 — Greedy (Algoritmo Voraz):**
+   * *Regla Voraz:* Estando en la ciudad actual $u$, elegir avanzar a la ciudad $v$ de la siguiente etapa que tenga el **mínimo costo de seguro inmediato $C_{uv}$**.
+   * *Por qué NO es óptimo (Contraejemplo formal):*
+     Sea Ezeiza ($E$) con dos ciudades posibles en la Etapa 1: Ciudad $A$ con $C_{EA} = 10$ y Ciudad $B$ con $C_{EB} = 20$. En la Etapa 2, de $A$ a Bariloche ($T$) el costo es $C_{AT} = 100$, mientras que de $B$ a $T$ es $C_{BT} = 5$.
+     - **Greedy:** Elige $E \to A$ por ser más barato en el primer paso ($10 < 20$), quedando forzado a pagar $A \to T$ ($100$), con **costo total $= 110$**.
+     - **Óptimo:** Toma la ruta $E \to B \to T$ con **costo total $= 20 + 5 = 25 < 110$**.
+     - *Conclusión:* La decisión voraz miope no garantiza la solución óptima porque ignora los costos posteriores.
+
+2. **Alternativa 2 — Programación Dinámica (Óptimo en DAG):**
+   * *Subestructura Óptima y DAG:* Como los camiones avanzan etapa por etapa (días de viaje) sin retroceder, el grafo es un **Grafo Dirigido Acíclico (DAG)**. Cualquier subcamino de un camino de costo mínimo es a su vez un camino de costo mínimo hacia el nodo intermedio.
+   * *Definición del Estado:* $OPT(v) =$ mínimo costo acumulado para viajar desde Ezeiza hasta la ciudad $v$.
+   * *Ecuación de Recurrencia:*
+     $$OPT(v) = \min_{u \in \text{Predecesores}(v)} \Big\{ OPT(u) + C_{uv} \Big\}$$
+   * *Caso Base:* $OPT(\text{Ezeiza}) = 0$, y para todo otro nodo $OPT(v) = +\infty$.
+   * *Orden de Llenado:* Por etapas en orden topológico estricto (Día 1, Día 2, $\dots$). **Garantiza optimalidad**.
+
+3. **Alternativa 3 — Programación Lineal (PL Continua / Entera):**
+   * *Idea:* Se formula como el envío de **$1$ unidad de flujo de costo mínimo** desde Ezeiza ($+1$) hacia Bariloche ($-1$), con balance $0$ en cada ciudad intermedia.
+   * *Variables de Decisión:* $x_{uv} \in [0, 1]$ para cada tramo $(u, v) \in E$ ($1$ si se transita por el tramo, $0$ si no).
+   * *Función Objetivo (Minimizar costo total):* $\min Z = \sum_{(u, v) \in E} C_{uv} \cdot x_{uv}$.
+   * *Restricciones de Conservación (una por cada vértice $v \in V$):*
+     $$\sum_{w: (v, w) \in E} x_{vw} - \sum_{u: (u, v) \in E} x_{uv} = \begin{cases} +1 & \text{si } v = \text{Ezeiza} \\ -1 & \text{si } v = \text{Bariloche} \\ 0 & \forall v \in V \setminus \{\text{Ezeiza}, \text{Bariloche}\} \end{cases}$$
+   * *Garantía de Optimalidad:* Es **óptimo**. Por la propiedad de **Unimodularidad Total** de la matriz de incidencia de redes, resolver la relajación lineal continua produce automáticamente variables enteras $x_{uv} \in \{0, 1\}$ sin requerir Branch & Bound exponencial.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+// 1. Programación Dinámica (Óptimo en DAG)
+Algoritmo TransporteOptimoDP(etapas, ezeiza, bariloche):
+    OPT = mapa con valor INFINITO para todo nodo; padre = mapa con NULO
+    OPT[ezeiza] = 0
+
+    para k desde 1 hasta total_etapas:
+        para cada ciudad v en etapas[k]:
+            para cada u en Predecesores(v):
+                si OPT[u] + C[u][v] < OPT[v]:
+                    OPT[v] = OPT[u] + C[u][v]
+                    padre[v] = u
+
+    // Reconstrucción del camino óptimo
+    ruta = []; actual = bariloche
+    mientras actual != NULO:
+        insertar actual al inicio de ruta
+        actual = padre[actual]
+    devolver (OPT[bariloche], ruta)
+
+// 2. Greedy (No óptimo): En cada etapa actual, siguiente = argmin_{v} { C[actual][v] }
+// 3. Modelo PL: Min sum C_uv * x_uv  sujeto a sum x_vw - sum x_uv = balance(v)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Comparativa de Complejidades Temporales y Espaciales:**
+  - **Greedy:** En cada una de las $K$ etapas solo inspecciona las aristas salientes del nodo elegido. Tiempo $\mathcal{O}(|V| + |E|)$ (o $\mathcal{O}(K \cdot \Delta)$), Espacio $\mathcal{O}(|V|)$. Es el más veloz pero **carece de garantía de optimalidad**.
+  - **Programación Dinámica:** Al estar estructurado en etapas (DAG), recorre los vértices y cada arista entrante $(u, v)$ una única vez en orden topológico. Tiempo: **$\Theta(|V| + |E|)$**, Espacio: **$\Theta(|V|)$** para las tablas `OPT` y `padre`. **Garantiza la solución óptima** en tiempo lineal respecto al tamaño del grafo.
+  - **Programación Lineal:** Formulación con $|E|$ variables y $|V|$ restricciones de conservación. Resuelto como flujo de costo mínimo con Simplex de redes en tiempo polinomial $\mathcal{O}(|V| \cdot |E|)$. **Garantiza la solución óptima**.
+* **Elección en Examen:** Si se busca la ruta óptima en un grafo por etapas (DAG), **Programación Dinámica** es la solución óptima y más eficiente de implementar.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **En PD, no mencionar el orden topológico por etapas:** La recurrencia $OPT(v) = \min(OPT(u) + C_{uv})$ solo es válida sin ciclos (DAG). En un grafo con ciclos requeriría Dijkstra o Bellman-Ford.
+
+- **En PL, olvidar las restricciones de conservación en los nodos intermedios:** Sin el balance $\sum_{\text{salen}} - \sum_{\text{entran}} = 0$ en cada ciudad intermedia, el solver dejaría el camino desconectado.
+
+</AcademicBlock>
+
+</SolutionDrawer>

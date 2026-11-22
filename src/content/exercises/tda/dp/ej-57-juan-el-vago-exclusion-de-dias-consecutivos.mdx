@@ -1,0 +1,95 @@
+---
+id: "tda-ej-57"
+courseId: "tda"
+number: 57
+title: "Juan el Vago (Exclusión de Días Consecutivos)"
+unit: "dp"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía de Ejercicios 04, Ejercicio 4 / Práctica"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-08-programacion-dinamica-i"
+  - "tda-slide-09-programacion-dinamica-ii"
+  - "tda-slide-10-programacion-dinamica-iii"
+  - "tda-slide-11a-programacion-dinamica-iv"
+  - "tda-slide-11b-practica-programacion-dinamica"
+  - "tda-guia-04-dp"
+legacyPage: "dp.html"
+legacyAnchor: "#ej-57"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Juan dispone de ofertas de trabajo para los próximos $n$ días. Cada día $i$ le ofrece una ganancia $G[i] > 0$. Sin embargo, Juan es vago y no está dispuesto a trabajar dos días seguidos. Diseñar un algoritmo por Programación Dinámica que determine la ganancia máxima que Juan puede obtener y qué días debe trabajar.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-57">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Definición del Estado:** Llamamos $OPT(i)$ a la **ganancia máxima que Juan puede obtener considerando los primeros $i$ días ($1 \le i \le n$) sin trabajar dos días consecutivos**.
+* **Casos Base:**
+  * $OPT(0) = 0$: Si hay $0$ días disponibles, la ganancia es $0$.
+  * $OPT(1) = G[1]$: Si solo hay $1$ día disponible, como $G[1] > 0$, siempre le conviene trabajarlo.
+* **Decisiones en el paso $i$:**
+  Para el día $i$ ($i \ge 2$), Juan tiene solo dos opciones excluyentes:
+  1. **Descansar el día $i$:** No suma ganancia hoy y conserva la mejor ganancia obtenida hasta el día anterior: $OPT(i - 1)$.
+  2. **Trabajar el día $i$:** Cobra $G[i]$, pero por la restricción de no trabajar dos días seguidos **está obligado a haber descansado el día $i - 1$**, por lo que le suma la mejor ganancia acumulada hasta el día $i - 2$: $OPT(i - 2) + G[i]$.
+* **Ecuación de Bellman (Recurrencia):**
+  Para todo $i \ge 2$:
+  $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(i - 2) + G[i]\Big)$$
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    D2[\"OPT(i - 2)\"] -->|\"+ G[i] (Trabaja día i y descansa i-1)\"| Di[\"OPT(i) = max(...)\"]:::opt\n    D1[\"OPT(i - 1)\"] -->|\"+ 0 (Descansa día i)\"| Di\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION JuanElVago(G, n):
+    DP <- arreglo de tamaño (n + 1) inicializado en 0
+    DP[0] <- 0
+    DP[1] <- G[1]
+
+    // 1. Llenado Bottom-Up de la tabla
+    PARA i <- 2 HASTA n:
+        DP[i] <- max(DP[i - 1], DP[i - 2] + G[i])
+
+    // 2. Reconstrucción de qué días trabajó
+    dias_trabajados <- lista vacía
+    i <- n
+    MIENTRAS i >= 1:
+        SI i == 1 O DP[i] == DP[i - 2] + G[i]:
+            AGREGAR i AL INICIO DE dias_trabajados
+            i <- i - 2   // Como trabajó el día i, salteamos el día i - 1
+        SINO:
+            i <- i - 1   // Descansó el día i, pasamos a revisar i - 1
+
+    RETORNAR (DP[n], dias_trabajados)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Complejidad Temporal:** $\mathcal{O}(n)$. El arreglo `DP` tiene $n + 1$ posiciones y cada celda se calcula en $\mathcal{O}(1)$ haciendo una única comparación entre dos sumas. La reconstrucción recorre el arreglo hacia atrás en a lo sumo $n$ pasos ($\mathcal{O}(n)$).
+* **Complejidad Espacial:** $\mathcal{O}(n)$ para almacenar el arreglo `DP[0..n]` y la lista de días trabajados.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **En la reconstrucción, restar 1 en vez de 2 cuando trabaja:** Si se detecta que Juan trabajó el día $i$ (porque `DP[i] == DP[i-2] + G[i]`), el índice debe saltar a `i - 2`. Si pasás a `i - 1` podrías elegir dos días consecutivos.
+
+- **Suponer que conviene elegir solo días pares o solo días impares:** En casos como $G = [100, 1, 1, 100]$, el óptimo elige el día 1 y el día 4 ($200$), combinando un impar y un par.
+
+</AcademicBlock>
+
+</SolutionDrawer>

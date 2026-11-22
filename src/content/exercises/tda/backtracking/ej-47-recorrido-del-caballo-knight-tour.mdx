@@ -1,0 +1,68 @@
+---
+id: "tda-ej-47"
+courseId: "tda"
+number: 47
+title: "Recorrido del Caballo (Knight Tour)"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.5"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-47"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo de backtracking que, dado un caballo en un tablero de ajedrez de $8 \times 8$, determine la secuencia de movimientos en forma de $L$ para que el caballo pase por los 64 casilleros del tablero una única vez.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-47">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Llevamos en la matriz `tablero[8][8]` el número de paso en que visitamos cada casilla (de `1` a `64`, y `0` si está libre).
+* Si `paso == 64`, ya visitamos las 64 casillas y terminamos.
+* Si no, desde la posición actual `(f, c)` probamos los **8 saltos posibles en forma de L** del caballo (`(±2, ±1)` y `(±1, ±2)`).
+* **Poda de factibilidad:** Que la nueva casilla `(nf, nc)` esté dentro del tablero $8 \times 8$ y no haya sido visitada aún (`tablero[nf][nc] == 0`).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo KnightTour(f_ini, c_ini):
+    tablero = matriz de 8x8 inicializada en 0
+    tablero[f_ini][c_ini] = 1   // Paso 1 en la casilla inicial
+
+    si CaballoBT(tablero, f_ini, c_ini, 1):
+        devolver tablero
+    devolver "Sin solución"
+
+función CaballoBT(tablero, f, c, paso):
+    si paso == 64:
+        devolver Verdadero
+
+    saltos_L = [ (2,1), (1,2), (-1,2), (-2,1), (-2,-1), (-1,-2), (1,-2), (2,-1) ]
+
+    para cada (df, dc) en saltos_L:
+        nf = f + df, nc = c + dc
+        si 0 <= nf < 8 y 0 <= nc < 8 y tablero[nf][nc] == 0:
+            tablero[nf][nc] = paso + 1
+            si CaballoBT(tablero, nf, nc, paso + 1):
+                devolver Verdadero
+            tablero[nf][nc] = 0   // Backtrack
+
+    devolver Falso
+```
+
+</SolutionDrawer>

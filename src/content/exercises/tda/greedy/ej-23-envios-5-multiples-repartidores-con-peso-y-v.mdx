@@ -1,0 +1,62 @@
+---
+id: "tda-ej-23"
+courseId: "tda"
+number: 23
+title: "Envíos 5: Múltiples Repartidores con Peso y Volumen"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.5"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-23"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El sindicato fijó un máximo de peso $P$ y un máximo de volumen $V$ igual para cada repartidor. Modificar el algoritmo anterior para dividir todos los ítems minimizando la cantidad de repartidores.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-23">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Extendemos **First-Fit Decreasing** a dos dimensiones: ordenamos los ítems de **mayor a menor tamaño relativo** `(peso / P) + (volumen / V)`, para acomodar primero los paquetes más aparatosos/pesados y rellenar los huecos libres de los repartidores con los paquetes chicos.
+* Al intentar meter un ítem en un repartidor activo, verificamos que no supere ni $P$ ni $V$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo RepartidoresMultivolumenGreedy(items, P_max, V_max):
+    ordenar items por ((it.peso / P_max) + (it.volumen / V_max)) de mayor a menor
+    repartidores = []
+
+    para cada it en items:
+        asignado = Falso
+        para cada rep en repartidores:
+            si rep.peso + it.peso <= P_max y rep.vol + it.vol <= V_max:
+                agregar it a rep
+                rep.peso = rep.peso + it.peso
+                rep.vol = rep.vol + it.vol
+                asignado = Verdadero
+                romper ciclo
+
+        si no asignado:
+            crear nuevo_rep con it (peso = it.peso, vol = it.vol)
+            agregar nuevo_rep a repartidores
+
+    devolver repartidores
+```
+
+</SolutionDrawer>

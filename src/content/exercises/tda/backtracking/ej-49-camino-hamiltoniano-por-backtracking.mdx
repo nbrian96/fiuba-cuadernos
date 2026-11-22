@@ -1,0 +1,68 @@
+---
+id: "tda-ej-49"
+courseId: "tda"
+number: 49
+title: "Camino Hamiltoniano por Backtracking"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.7"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-49"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un camino hamiltoniano es un camino de un grafo que visita todos los vértices del grafo una sola vez. Implementar un algoritmo de backtracking que encuentre un camino hamiltoniano de un grafo dado.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-49">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Probamos iniciar el camino desde cada vértice `v` del grafo.
+* En cada paso recursivo, si la lista `camino` ya tiene longitud `|V|`, visitamos todos los vértices una sola vez y devolvemos `Verdadero`.
+* Si no, miramos los adyacentes del último vértice agregado (`actual`): para cada vecino `w` que **todavía no esté en `visitados`** (poda de factibilidad en $O(1)$ usando un set/arreglo booleano), lo marcamos como visitado, lo agregamos al camino y llamamos recursivamente. Si no llega a solución, lo sacamos y desmarcamos. Complejidad en peor caso: **$O(|V|!)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CaminoHamiltoniano(G):
+    para cada v en G.vertices():
+        camino = [ v ]
+        visitados = { v }
+        si HamiltonianoBT(G, v, camino, visitados):
+            devolver camino
+    devolver nulo
+
+función HamiltonianoBT(G, actual, camino, visitados):
+    si longitud(camino) == G.cantidadVertices():
+        devolver Verdadero
+
+    para cada vecino w en G.adyacentes(actual):
+        si w no está en visitados:
+            agregar w a visitados
+            agregar w a camino
+
+            si HamiltonianoBT(G, w, camino, visitados):
+                devolver Verdadero
+
+            quitar_ultimo(camino)     // Backtrack
+            quitar w de visitados
+
+    devolver Falso
+```
+
+</SolutionDrawer>

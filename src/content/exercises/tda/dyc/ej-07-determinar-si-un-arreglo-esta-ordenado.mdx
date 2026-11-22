@@ -1,0 +1,66 @@
+---
+id: "tda-ej-07"
+courseId: "tda"
+number: 7
+title: "Determinar si un Arreglo está Ordenado"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 1.2"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-7"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar, por división y conquista, una función que, dado un arreglo y su tamaño (cantidad de elementos), determine si el mismo se encuentra ordenado de forma ascendente. Indicar y justificar el orden.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-07">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Un arreglo de 0 o 1 elementos siempre está ordenado.
+* Si tiene más elementos, lo partimos a la mitad. Para que todo el arreglo esté ordenado deben cumplirse **tres condiciones a la vez**:
+  1. Que la mitad izquierda esté ordenada.
+  2. Que la mitad derecha esté ordenada.
+  3. **Condición de enganche en la frontera:** que el último elemento de la mitad izquierda sea menor o igual al primer elemento de la mitad derecha (`A[medio] <= A[medio + 1]`).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo EstaOrdenado(A, ini, fin):
+    // Caso base: 0 o 1 elemento siempre está ordenado
+    si ini >= fin:
+        devolver Verdadero
+
+    medio = (ini + fin) / 2
+
+    // Si en el borde del medio ya está desordenado, cortamos rápido
+    si A[medio] > A[medio + 1]:
+        devolver Falso
+
+    // Ambas mitades deben estar ordenadas
+    devolver EstaOrdenado(A, ini, medio) y EstaOrdenado(A, medio + 1, fin)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* En el peor caso (cuando el arreglo sí está ordenado), el algoritmo verifica las **$a = 2$ mitades** de tamaño $n/2$ (**$b = 2$**) y hace una sola comparación en el borde en tiempo **$O(1)$** (**$c = 0$**).
+* Recurrencia: $T(n) = 2 \cdot T(n/2) + O(1)$.
+* Por el **Teorema Maestro** ($\log_2 2 = 1 > 0 = c$, **Caso 1**), el orden es **$O(n)$**.
+
+</SolutionDrawer>

@@ -1,0 +1,118 @@
+---
+id: "tda-ej-66"
+courseId: "tda"
+number: 66
+title: "Asignación de Turnos Médicos y Pacientes (Matching Bipartito Máximo)"
+unit: "flujo"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-2 (26 de noviembre de 2024), Ejercicio 4 / Guía 06 Ejercicio 15"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-2"
+relatedResourceIds:
+  - "tda-parcial-2024-2-2-pdf"
+  - "tda-slide-14-redes-de-flujo-i"
+  - "tda-slide-15a-redes-de-flujo-ii"
+  - "tda-slide-15b-redes-de-flujo-anexo"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-06-flujo"
+legacyPage: "flujo.html"
+legacyAnchor: "#ej-66"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En un centro médico de alta complejidad se dispone de un conjunto de $M$ profesionales médicos y un conjunto de $P$ pacientes. Cada médico $m \in M$ dispone de un listado de franjas horarias libres $H_m$ para consultas. Cada paciente $p \in P$ requiere a lo sumo una cita médica y ha declarado un listado de tuplas compatibles $(m, h)$ donde puede y desea ser atendido. Se desea diseñar un algoritmo eficiente basado en redes de flujo que determine la asignación que maximice la cantidad total de citas médicas efectivas, garantizando que:
+- Ningún médico atienda a más de un paciente en una misma franja horaria.
+- Ningún paciente reciba más de un turno médico.
+Detallar la topología formal de la red, capacidades, algoritmo empleado, demostración de correctitud y complejidad asintótica.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Modelado de matching con capacidades unitarias y franjas horarias mediante Redes de Flujo, creación de nodos compuestos para evitar colisiones de agenda, demostración mediante Teorema de Integralidad y análisis de complejidad.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-66">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Cómo armamos los nodos (Red en 4 capas):**
+  Para evitar que un mismo médico atienda a dos pacientes en el mismo horario, **no conectamos pacientes directo a médicos**, sino que creamos un nodo compuesto $(m, h)$ por cada par `(médico, horario disponible)`:
+  1. **Super-fuente $s$** y **Super-sumidero $t$**.
+  2. **Capa de Pacientes:** Un nodo $p$ por cada paciente $p \in P$.
+  3. **Capa de Turnos:** Un nodo $(m, h)$ por cada médico $m \in M$ y cada franja libre $h \in H_m$.
+* **Qué capacidades ponemos en las aristas:**
+  * **De $s$ a cada paciente $p$:** Arista dirigida $(s \to p)$ con **capacidad $1$** (garantiza que cada paciente reciba a lo sumo $1$ turno en total).
+  * **De cada paciente $p$ a sus turnos compatibles $(m, h)$:** Arista dirigida $(p \to (m, h))$ con **capacidad $1$** por cada tupla compatible declarada por $p$.
+  * **De cada turno $(m, h)$ al sumidero $t$:** Arista dirigida $((m, h) \to t)$ con **capacidad $1$** (garantiza que ese médico en ese horario atienda a lo sumo a $1$ paciente).
+* **Por qué funciona (Teorema de Integralidad y Optimalidad):**
+  1. **Sin medios turnos (Teorema de Integralidad):** Como todas las capacidades son enteras ($1$), Ford-Fulkerson / Edmonds-Karp garantiza que el flujo óptimo en cada arista será entero ($0$ o $1$). Ningún paciente queda partido entre dos turnos.
+  2. **Conservación y validez:** Por conservación de flujo en los nodos intermedios, cada unidad de flujo que sale de $s$ y llega a $t$ pasa por un único paciente $p$ y un único turno $(m, h)$.
+  3. **Maximización:** El valor del flujo máximo $|f^*|$ de $s$ a $t$ coincide exactamente con la cantidad máxima posible de citas médicas válidas, y las aristas $(p \to (m, h))$ con flujo $f = 1$ indican qué turno se asignó a cada paciente.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    S_SRC[\"Nodo Fuente s\"] -->|1| P1[\"Paciente 1\"]\n    S_SRC -->|1| P2[\"Paciente 2\"]\n    S_SRC -->|1| P3[\"Paciente 3\"]\n    P1 -->|1| T1[\"Dr. Perez 09h\"]\n    P1 -->|1| T2[\"Dr. Perez 10h\"]\n    P2 -->|1| T2\n    P2 -->|1| T3[\"Dra. Gomez 09h\"]\n    P3 -->|1| T3\n    T1 -->|1| T_SNK[\"Nodo Sumidero t\"]\n    T2 -->|1| T_SNK\n    T3 -->|1| T_SNK"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION AsignarTurnosMedicos(Medicos, Pacientes, HorariosPorMedico, Compatibilidades):
+    Crear red de flujo dirigida G con super-fuente s y super-sumidero t
+
+    // 1. Fuente s -> cada paciente p (capacidad 1: a lo sumo 1 turno por paciente)
+    PARA CADA p EN Pacientes:
+        agregar_arista(G, s, p, cap = 1)
+
+    // 2. Paciente p -> cada turno compatible (m, h) (capacidad 1)
+    PARA CADA p EN Pacientes:
+        PARA CADA (m, h) EN Compatibilidades[p]:
+            agregar_arista(G, p, (m, h), cap = 1)
+
+    // 3. Turno (m, h) -> sumidero t (capacidad 1: a lo sumo 1 paciente por médico y hora)
+    PARA CADA m EN Medicos:
+        PARA CADA h EN HorariosPorMedico[m]:
+            agregar_arista(G, (m, h), t, cap = 1)
+
+    // 4. Correr flujo máximo con Edmonds-Karp (Ford-Fulkerson con BFS)
+    flujo <- EdmondsKarp(G, s, t)
+
+    // 5. Recuperar las citas asignadas (aristas con flujo == 1)
+    citas_confirmadas <- []
+    PARA CADA arista (p -> (m, h)) EN G:
+        SI flujo(p, (m, h)) == 1:
+            agregar (p, m, h) a citas_confirmadas
+
+    RETORNAR citas_confirmadas
+```
+
+#### 3. Justificación de Complejidad
+
+* **Tamaño de la red:**
+  * Nodos: $|V| = 2 + |P| + |T|$, donde $|T| = \sum_{m \in M} |H_m|$ es el total de turnos ofrecidos.
+  * Aristas: $|E| = |P| + |C| + |T| = \mathcal{O}(|P| + |C| + |T|)$, donde $|C|$ es el total de compatibilidades declaradas.
+* **Costo de armar la red:** Recorrer pacientes, turnos y compatibilidades toma tiempo y espacio lineal **$\mathcal{O}(|V| + |E|)$**.
+* **Costo de correr Ford-Fulkerson / Edmonds-Karp:** Como todas las aristas de $s$ a los pacientes tienen capacidad $1$, el flujo máximo está acotado por $|f^*| \le \min(|P|, |T|) \le |P|$. Cada búsqueda de camino de aumento por BFS/DFS cuesta $\mathcal{O}(|E|)$ y aumenta el flujo en al menos $1$ unidad, por lo que ocurren a lo sumo $|P|$ iteraciones. La complejidad temporal total es **$\mathcal{O}(|P| \cdot |E|)$** (estrictamente polinomial), y la complejidad espacial es **$\mathcal{O}(|V| + |E|)$**.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Conectar pacientes directamente a los médicos:** Si se crea un nodo por médico con capacidad igual a la cantidad de horarios, se pierde el control de concurrencia: el algoritmo podría asignarle 3 pacientes al Dr. Pérez a las 09:00 hs. Es **obligatorio crear un nodo por cada par (médico, horario)**.
+
+- **Olvidar justificar el Teorema de Integralidad:** Si no se menciona que las capacidades enteras garantizan flujo $0$ o $1$, la cátedra descuenta puntos al asumir que las soluciones podrían ser fraccionarias (ej. paciente atendido $0.5$ por un médico y $0.5$ por otro).
+
+</AcademicBlock>
+
+</SolutionDrawer>

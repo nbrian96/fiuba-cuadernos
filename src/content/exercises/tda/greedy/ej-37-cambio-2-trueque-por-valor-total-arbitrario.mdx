@@ -1,0 +1,54 @@
+---
+id: "tda-ej-37"
+courseId: "tda"
+number: 37
+title: "Cambio 2: Trueque por Valor Total Arbitrario"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 1
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.19"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-37"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Modificar el algoritmo anterior para que, en vez de recibir la cantidad de cuentas de cada tipo dadas como pago, reciba directamente el valor entero positivo total ofrecido como pago en trueque y devuelva el vuelto a dar.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-37">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es aún más directo: restamos `vuelto = valor_pago - valor_items` en $O(1)$ y aplicamos exactamente el mismo ciclo voraz desde la moneda más grande (`120`) hasta la más chica (`1`). Como solo hay 6 denominaciones fijas, su complejidad es **$O(1)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CalcularCambioTrueque(valor_items, valor_pago):
+    denominaciones = [120, 50, 20, 10, 5, 1]
+    vuelto = valor_pago - valor_items
+    cambio = []
+
+    para cada mon en denominaciones:
+        si vuelto >= mon:
+            cant = division_entera(vuelto, mon)
+            agregar (mon, cant) a cambio
+            vuelto = vuelto % mon
+
+    devolver cambio
+```
+
+</SolutionDrawer>

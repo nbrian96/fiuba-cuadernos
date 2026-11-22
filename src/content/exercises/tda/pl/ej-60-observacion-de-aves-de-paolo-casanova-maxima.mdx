@@ -1,0 +1,85 @@
+---
+id: "tda-ej-60"
+courseId: "tda"
+number: 60
+title: "Observación de Aves de Paolo Casanova (Máxima Cobertura con Presupuesto de Tiempo)"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-1 (5 de noviembre de 2024), Ejercicio 4"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-1"
+relatedResourceIds:
+  - "tda-parcial-2024-2-1-pdf"
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-60"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Paolo Casanova dispone de 2 días para realizar salidas a diferentes lugares cercanos y observar la mayor cantidad posible de especies de aves. Hay 10 especies en particular que desea encontrar ($E = \{1, \dots, 10\}$) y 6 lugares posibles a visitar ($L = \{1, \dots, 6\}$). Algunos lugares insumen medio día ($0.5$ días) y otros un día completo ($1.0$ días). Para cada lugar se conoce exactamente qué especies habitan allí según una matriz binaria de presencia $A_{ij}$ ($A_{ij} = 1$ si la especie $i$ habita en el lugar $j$, $0$ si no). Plantear un modelo de Programación Lineal Entera que determine qué lugares visitar para maximizar la cantidad de especies distintas encontradas en el tiempo disponible. Indicar la cantidad exacta de variables y restricciones del modelo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-60">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Dos familias de decisiones binarias:**
+  1. Por cada lugar $j \in \{1, \dots, 6\}$ definimos una variable binaria $y_j \in \{0, 1\}$ que vale $1$ si decidimos visitar ese lugar y $0$ si no.
+  2. Por cada especie de ave $i \in \{1, \dots, 10\}$ definimos otra variable binaria $x_i \in \{0, 1\}$ que vale $1$ si logramos avistar al menos una vez a la especie $i$, y $0$ si no.
+* **Qué buscamos maximizar:** Queremos maximizar la cantidad de **especies distintas** observadas, es decir, la suma $\sum_{i=1}^{10} x_i$.
+* **Cómo funcionan las restricciones:**
+  * **Límite de tiempo:** La suma del tiempo $d_j$ que toman los lugares visitados no puede superar los $2$ días disponibles ($\sum d_j \cdot y_j \le 2$).
+  * **Vínculo lugar-especie (Cobertura):** Para cada especie $i$, imponemos $x_i \le \sum_{j=1}^{6} A_{ij} \cdot y_j$.
+    * Si **no visitamos ningún lugar** donde viva la especie $i$, la suma de la derecha da $0$ y obliga a que $x_i = 0$ (no podemos contar un ave que no vimos).
+    * Si **visitamos uno o más lugares** donde vive la especie $i$, la suma da $\ge 1$. Como $x_i \in \{0, 1\}$ es binaria y estamos maximizando $\sum x_i$, el modelo le asignará automáticamente $x_i = 1$ (contando cada especie distinta a lo sumo una vez, aunque la veamos en varios lugares).
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Lugares [\"Lugares Candidatos (y_j ∈ {0,1})\"]\n        L1[\"Lugar 1 (0.5 días)\"]\n        L2[\"Lugar 2 (1.0 días)\"]\n        L3[\"Lugar 3 (0.5 días)\"]\n    end\n    subgraph Especies [\"Especies Avistadas (x_i ∈ {0,1})\"]\n        E1[\"Especie 1: x₁ ≤ y₁\"]\n        E2[\"Especie 2: x₂ ≤ y₁ + y₂\"]\n        E3[\"Especie 3: x₃ ≤ y₂ + y₃\"]\n    end\n    L1 --> E1\n    L1 --> E2\n    L2 --> E2\n    L2 --> E3\n    L3 --> E3"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $y_j \in \{0, 1\} \quad \forall j \in \{1, \dots, 6\}$: vale $1$ si Paolo visita el lugar $j$, y $0$ en caso contrario.
+   * $x_i \in \{0, 1\} \quad \forall i \in \{1, \dots, 10\}$: vale $1$ si la especie $i$ es observada en al menos un lugar visitado, y $0$ en caso contrario.
+
+2. **Función Objetivo:**
+   Maximizar la cantidad de especies distintas observadas:
+   $$\max Z = \sum_{i=1}^{10} x_i$$
+
+3. **Restricciones lineales:**
+   * **Presupuesto máximo de tiempo (2 días):** (donde $d_j \in \{0.5, 1.0\}$ es la duración del lugar $j$)
+     $$\sum_{j=1}^{6} d_j \cdot y_j \le 2$$
+   * **Activación de avistamiento por especie:** (donde $A_{ij} \in \{0, 1\}$ vale $1$ si la especie $i$ habita en el lugar $j$)
+     $$x_i \le \sum_{j=1}^{6} A_{ij} \cdot y_j \quad \forall i \in \{1, \dots, 10\}$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** Exactamente **$16$ variables binarias** ($6$ variables binarias $y_j$ para los lugares + $10$ variables binarias $x_i$ para las especies; en forma genérica $|L| + |E|$ variables binarias).
+* **Cantidad de restricciones:** Exactamente **$11$ restricciones lineales funcionales** ($1$ restricción de presupuesto de tiempo + $10$ restricciones de enlace de cobertura, una por cada especie; en forma genérica $1 + |E|$ restricciones), además de las declaraciones de dominio binario.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Poner igualdad ($x_i = \sum A_{ij} y_j$) en vez de menor o igual ($\le$):** Si ponés $=$, cuando visites 2 lugares donde habita la misma especie $i$, la suma dará $2$. Como $x_i \in \{0, 1\}$ no puede valer $2$, ¡el modelo te prohibiría visitar dos lugares que compartan un ave! Siempre debe ser $\le$.
+
+- **No crear las variables $x_i$ y maximizar directamente $\sum_i \sum_j A_{ij} y_j$:** Eso contaría varias veces a una misma especie si aparece en múltiples lugares visitados, cuando el enunciado pide maximizar especies *distintas*.
+
+</AcademicBlock>
+
+</SolutionDrawer>

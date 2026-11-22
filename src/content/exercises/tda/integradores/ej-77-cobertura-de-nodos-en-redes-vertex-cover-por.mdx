@@ -1,0 +1,92 @@
+---
+id: "tda-ej-77"
+courseId: "tda"
+number: 77
+title: "Cobertura de Nodos en Redes: Vertex Cover por Backtracking, PLI y Aproximación 2"
+unit: "integradores"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Integrador Problemas NP-Hard (Vertex Cover)"
+isParcial: false
+legacyPage: "integradores.html"
+legacyAnchor: "#ej-77"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+**Enunciado Integrador**  
+Para el problema de Vertex Cover Mínimo en un grafo $G = (V, E)$, comparar tres estrategias de abordaje:  
+1. **Solución Exacta Combinatoria:** Backtracking con Branch and Bound.  
+2. **Solución Exacta Matemática:** Formulación en Programación Lineal Entera.  
+3. **Solución Heurística Polinomial:** Algoritmo de Aproximación con factor $2$ (basado en *Maximal Matching*).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-77">
+
+#### 1. Idea y Comparativa en Lenguaje Natural (Qué escribir en la hoja)
+
+| Dimensión | 1. Backtracking con B&B | 2. Programación Lineal Entera (PLI) | 3. Algoritmo Aproximado (2-Aprox) |
+| :--- | :--- | :--- | :--- |
+| **Garantía de Solución** | Óptima exacta | Óptima exacta | Aproximada: $\lvert C \rvert \le 2 \cdot OPT$ |
+| **Complejidad Temporal** | $\mathcal{O}(2^{\lvert V \rvert})$ (o $\mathcal{O}(2^k \cdot \lvert E \rvert)$) | Exponencial en peor caso (*Branch & Cut*) | **$\mathcal{O}(\lvert V \rvert + \lvert E \rvert)$** (lineal) |
+| **Idea Central para la Hoja** | Elegir una arista descubierta $(u, v)$ y ramificar probando incluir $u$ o incluir $v$, podando si $\lvert C_{\text{actual}} \rvert \ge \lvert C_{\text{mejor}} \rvert$. | Variable binaria $x_v \in \{0, 1\}$ por vértice; exigir $x_u + x_v \ge 1$ en cada arista $(u, v) \in E$ minimizando $\sum x_v$. | Tomar una arista no cubierta $(u, v)$ y **agregar ambos extremos $u$ y $v$** al conjunto $C$, tachando sus aristas incidentes. |
+
+* **Justificación en Lenguaje Natural de por qué el 2-Aproximado garantiza $|C| \le 2 \cdot OPT$:**
+  1. Las aristas que elige el algoritmo no comparten ningún vértice entre sí (forman un *Matching* $M$). Por lo tanto, **cualquier solución óptima está obligada a elegir al menos $1$ vértice distinto por cada arista de $M$**, de modo que $OPT \ge |M|$.
+  2. Como nuestro algoritmo agrega **los $2$ extremos** ($u$ y $v$) por cada arista de $M$, en total elige $|C| = 2 \cdot |M|$ vértices.
+  3. Juntando ambas desigualdades: $|C| = 2 \cdot |M| \le 2 \cdot OPT$. Nunca usa más del doble de vértices que el óptimo y corre en tiempo lineal $\mathcal{O}(|V| + |E|)$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    subgraph MatchingM [Emparejamiento Disjunto M]\n        u1((u1)) ===|\"e1 ∈ M\"| v1((v1))\n        u2((u2)) ===|\"e2 ∈ M\"| v2((v2))\n    end\n    MatchingM -->|\"OPT debe usar ≥ 1 nodo por cada arista de M\"| Cota1[\"Cota Inferior: OPT ≥ |M|\"]:::opt\n    MatchingM -->|\"Algoritmo toma ambos extremos (u y v)\"| Cota2[\"Solución C: |C| = 2·|M| ≤ 2·OPT\"]:::approx\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef approx fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado de los 3 Enfoques (Para la Hoja)
+
+```text
+// ENFOQUE 1: Backtracking con Branch & Bound (Exacto)
+FUNCION VertexCoverBT(G, C_actual, MEJOR_C):
+    // Poda por optimalidad (Branch & Bound)
+    SI tamaño(C_actual) >= tamaño(MEJOR_C):
+        RETORNAR MEJOR_C
+
+    arista_descubierta <- buscar primera arista (u, v) de G con u no en C_actual y v no en C_actual
+    SI arista_descubierta == NULO:
+        RETORNAR copiar(C_actual) // Todas las aristas están cubiertas (nuevo récord)
+
+    // Ramificar: para cubrir (u, v) sí o sí hay que incluir u o incluir v
+    MEJOR_C <- VertexCoverBT(G, C_actual U {u}, MEJOR_C)
+    MEJOR_C <- VertexCoverBT(G, C_actual U {v}, MEJOR_C)
+    RETORNAR MEJOR_C
+
+// ENFOQUE 2: Modelo de Programación Lineal Entera (PLI Exacto)
+// Variables: x_v in {0, 1} para todo v en V (|V| variables)
+// Minimizar: Z = sum_{v en V} x_v
+// Sujeto a:  x_u + x_v >= 1   para toda arista (u, v) en E (|E| restricciones)
+
+// ENFOQUE 3: Algoritmo 2-Aproximado en O(|V| + |E|)
+FUNCION VertexCoverAproximado2(G = (V, E)):
+    C <- conjunto_vacio()
+    PARA CADA arista (u, v) EN E:
+        SI u NO PERTENECE A C Y v NO PERTENECE A C:
+            agregar u a C
+            agregar v a C   // Obligatorio agregar AMBOS extremos
+    RETORNAR C
+```
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Elegir solo 1 extremo en lugar de ambos en el 2-Aproximado:** Si al tomar una arista $(u, v)$ agregas solo $u$ (o el de mayor grado), el algoritmo pierde la garantía de factor 2 (el greedy por mayor grado tiene factor $O(\log |V|)$, no 2). Es obligatorio agregar **ambos extremos** $u$ y $v$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

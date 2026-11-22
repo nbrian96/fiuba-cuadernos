@@ -1,0 +1,100 @@
+---
+id: "tda-ej-14"
+courseId: "tda"
+number: 14
+title: "Mochila 0-1 con Garantía de Aproximación 1/2"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía de Ejercicios 02, Ejercicio 8 / Diapositivas Explicativas de Cátedra"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-14"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se tiene una mochila de capacidad de peso $W$ y $n$ objetos indivisibles (0-1), donde cada objeto $i$ tiene peso $w_i$ y valor $v_i$.  
+1. Explicar por qué la regla voraz estándar basada en ordenar por densidad de valor ($v_i / w_i$) puede fallar de forma arbitraria en la mochila 0-1.  
+2. Diseñar un algoritmo greedy modificado que garantice una calidad de al menos $1/2$ respecto a la solución óptima global ($V_{\text{aprox}} \ge \frac{1}{2} OPT$).  
+3. Demostrar formalmente que $V_{\text{aprox}} / OPT > 1/2$.  
+4. Indicar la complejidad temporal del algoritmo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-14">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **1. ¿Por qué falla el Greedy común por densidad ($v_i / w_i$)? (Contraejemplo corto):**
+  - Sea una mochila de capacidad $W = 100$ con dos objetos: el objeto A ($w_A = 1, v_A = 2$, densidad $2$) y el objeto B ($w_B = 100, v_B = 100$, densidad $1$).
+  - El Greedy común elige primero a A por tener mayor densidad, ocupando $1$ de peso, y luego ya no entra B. Gana apenas **$2$**, mientras que el óptimo era llevar B solo y ganar **$100$**.
+* **2. Algoritmo Greedy Modificado (Garantía $1/2$):**
+  - Descartamos de entrada los objetos con $w_i > W$ (que no entran ni solos).
+  - Ordenamos los restantes de mayor a menor por densidad $v_i / w_i$ y los vamos metiendo en la mochila hasta toparnos con el **primer objeto que no entra por falta de espacio** (llamado **elemento crítico $k$**, de valor $v_k$).
+  - Devolvemos **el que tenga mayor valor entre dos opciones**: quedarnos con la bolsa voraz acumulada ($V_{\text{greedy}}$) o vaciar la mochila y llevar **solamente el elemento crítico $k$ solo** ($v_k$). Es decir: $V_{\text{aprox}} = \max(V_{\text{greedy}}, v_k)$.
+* **3. Demostración de que $V_{\text{aprox}} > OPT / 2$:**
+  - Si pudiéramos partir los objetos (mochila fraccionaria), el valor obtenido $OPT_{\text{frac}}$ sería mayor o igual al mejor valor posible sin partir objetos ($OPT \le OPT_{\text{frac}}$).
+  - La mochila fraccionaria mete exactamente los mismos objetos enteros que metió nuestro Greedy ($V_{\text{greedy}}$) más una fracción (menor al 100%) del objeto crítico $k$ (de valor $v_k$).
+  - Por lo tanto, la suma de ambos supera al óptimo entero: $V_{\text{greedy}} + v_k > OPT_{\text{frac}} \ge OPT$.
+  - Como dos números ($V_{\text{greedy}}$ y $v_k$) suman más que $OPT$, **el mayor de los dos vale sí o sí más de la mitad de $OPT$**: $V_{\text{aprox}} = \max(V_{\text{greedy}}, v_k) > OPT / 2$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MochilaAproxMedio(items, W):
+    // 1. Filtrar los objetos que caben por sí solos y ordenar por v_i / w_i decreciente
+    candidatos = [ it en items tal que it.peso <= W ]
+    ordenar candidatos por (it.valor / it.peso) de mayor a menor
+
+    v_greedy = 0, w_actual = 0
+    sol_greedy = []
+    critico = nulo
+
+    // 2. Meter objetos vorazmente hasta el primero que no entra (elemento crítico)
+    para cada it en candidatos:
+        si w_actual + it.peso <= W:
+            agregar it a sol_greedy
+            w_actual = w_actual + it.peso
+            v_greedy = v_greedy + it.valor
+        sino:
+            critico = it
+            romper bucle
+
+    // 3. Devolver el mejor entre lo acumulado y el elemento crítico solo
+    si critico != nulo y critico.valor > v_greedy:
+        devolver [ critico ]
+    devolver sol_greedy
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* Filtrar los objetos cuesta $O(n)$, ordenarlos por densidad $v_i / w_i$ cuesta **$O(n \log n)$** y recorrerlos linealmente cuesta $O(n)$. Por lo tanto, la complejidad temporal es **$O(n \log n)$** y espacial **$O(n)$**.
+
+
+<MermaidDiagram client:visible code={"graph TD\n    A[\"Ordenar ítems por densidad v_i / w_i\"] --> B[\"Llenado voraz hasta agotar capacidad\"]\n    B --> C[\"¿Quedó capacidad para el siguiente ítem?\"]\n    C -- No --> D[\"Identificar Elemento Crítico k\"]\n    D --> E{\"¿v_k es mayor que V_greedy?\"}\n    E -- Sí --> F[\"Solución = {Elemento Crítico k}\"]:::opt\n    E -- No --> G[\"Solución = Conjunto Voraz\"]:::opt\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Olvidar el filtrado inicial $w_i \le W$:** Si un objeto pesa 150 y la mochila es de 100, jamás puede ser candidato ni elemento crítico.
+
+- **No nombrar la mochila fraccionaria en la demostración:** Para justificar $OPT < V_{\text{greedy}} + v_k$ es obligatorio mencionar que proviene de que $OPT \le OPT_{\text{frac}}$.
+
+</AcademicBlock>
+
+</SolutionDrawer>

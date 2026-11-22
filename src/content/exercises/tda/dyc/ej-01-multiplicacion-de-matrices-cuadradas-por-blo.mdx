@@ -1,0 +1,101 @@
+---
+id: "tda-ej-01"
+courseId: "tda"
+number: 1
+title: "Multiplicación de Matrices Cuadradas por Bloques"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2025-1-2 (17 de junio de 2025), Ejercicio 1"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-2"
+relatedResourceIds:
+  - "tda-parcial-2025-1-2-pdf"
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-1"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Realizar un algoritmo que resuelva la multiplicación de dos matrices cuadradas de orden $n$ ($A$ y $B$) mediante división y conquista. Recordemos la definición: $C = A \times B$ donde $C_{ij} = \sum_{k=1}^n A_{ik} \cdot B_{kj}$ para todo $i, j \in \{1, \dots, n\}$. Para simplificar el algoritmo se puede suponer que $n$ es una potencia de 2. Indicar y justificar el orden de complejidad temporal y espacial del algoritmo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-01">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Caso Base ($n = 1$):** Cuando las matrices son de $1 \times 1$, tienen un solo número cada una y devolvemos directamente el producto $A[0][0] \cdot B[0][0]$ en tiempo $O(1)$.
+* **División ($n > 1$):** Partimos las matrices $A$ y $B$ de $n \times n$ en **4 submatrices (cuadrantes)** de tamaño $(n/2) \times (n/2)$ cada una:
+  $$A = \begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}, \quad B = \begin{pmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{pmatrix}$$
+* **Conquista (8 llamadas recursivas):** Por propiedad de multiplicación de matrices por bloques, para obtener cada cuadrante de $C$ multiplicamos las mitades de las filas de $A$ por las mitades de las columnas de $B$ y sumamos ambos resultados parciales (2 productos por cuadrante, dando **$a = 8$ llamadas recursivas** de tamaño $n/2$):
+  * Cuadrante superior izquierdo: $C_{11} = A_{11} B_{11} + A_{12} B_{21}$
+  * Cuadrante superior derecho: $C_{12} = A_{11} B_{12} + A_{12} B_{22}$
+  * Cuadrante inferior izquierdo: $C_{21} = A_{21} B_{11} + A_{22} B_{21}$
+  * Cuadrante inferior derecho: $C_{22} = A_{21} B_{12} + A_{22} B_{22}$
+* **Combinación:** Realizamos las 4 sumas de matrices de tamaño $(n/2) \times (n/2)$ y ensamblamos los 4 cuadrantes para devolver la matriz producto $C$ de $n \times n$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MultiplicarMatricesDyC(A, B, n):
+    // Caso Base: matriz de 1x1
+    si n == 1:
+        devolver [[ A[0][0] * B[0][0] ]]
+
+    m = n / 2
+    // 1. Dividir A y B en 4 cuadrantes de m x m cada una
+    (A11, A12, A21, A22) = PartirEn4Bloques(A, m)
+    (B11, B12, B21, B22) = PartirEn4Bloques(B, m)
+
+    // 2. Conquista: 8 multiplicaciones recursivas de tamaño n/2
+    C11 = MultiplicarMatricesDyC(A11, B11, m) + MultiplicarMatricesDyC(A12, B21, m)
+    C12 = MultiplicarMatricesDyC(A11, B12, m) + MultiplicarMatricesDyC(A12, B22, m)
+    C21 = MultiplicarMatricesDyC(A21, B11, m) + MultiplicarMatricesDyC(A22, B21, m)
+    C22 = MultiplicarMatricesDyC(A21, B12, m) + MultiplicarMatricesDyC(A22, B22, m)
+
+    // 3. Combinar los 4 cuadrantes en la matriz C de n x n
+    devolver EnsamblarMatriz(C11, C12, C21, C22)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* **Complejidad Temporal:**
+  - En cada paso se hacen **$a = 8$ llamadas recursivas** sobre submatrices de tamaño $n/2$ (**$b = 2$**).
+  - Dividir en cuadrantes y sumar las 4 parejas de matrices de $(n/2) \times (n/2)$ recorre $4 \cdot (n/2)^2 = n^2$ elementos, por lo que cuesta **$f(n) = \Theta(n^2)$** (**$c = 2$**).
+  - Ecuación de recurrencia:
+    $$T(n) = 8 \cdot T(n/2) + \Theta(n^2)$$
+  - Por el **Teorema Maestro**, comparamos $\log_b a = \log_2 8 = 3$ con $c = 2$. Como $\log_b a = 3 > 2 = c$, aplica el **Caso 1** (dominan las hojas) y la complejidad temporal es **$\Theta(n^{\log_2 8}) = \Theta(n^3)$**.
+* **Complejidad Espacial:**
+  - En cada nivel activo de la pila recursiva (de altura $\log_2 n$) se reservan matrices auxiliares cuyo tamaño se reduce geométricamente: $n^2 + (n/2)^2 + (n/4)^2 + \dots = \Theta(n^2)$. Por lo tanto, la complejidad espacial es **$\Theta(n^2)$**.
+
+
+<MermaidDiagram client:visible code={"flowchart TD\n    R[\"Raíz: T(n) — Costo combinación Θ(n²)\"]:::root --> L1[\"M1 = A11·B11<br/>T(n/2)\"]:::mid\n    R --> L2[\"M2 = A12·B21<br/>T(n/2)\"]:::mid\n    R --> L3[\"M3 = A11·B12<br/>T(n/2)\"]:::mid\n    R --> L4[\"M4 = A12·B22<br/>T(n/2)\"]:::mid\n    R --> L5[\"M5 = A21·B11<br/>T(n/2)\"]:::mid\n    R --> L6[\"M6 = A22·B21<br/>T(n/2)\"]:::mid\n    R --> L7[\"M7 = A21·B12<br/>T(n/2)\"]:::mid\n    R --> L8[\"M8 = A22·B22<br/>T(n/2)\"]:::mid\n    L1 & L2 & L3 & L4 & L5 & L6 & L7 & L8 --> H[\"Nivel h = log₂(n): 8^(log₂ n) = n³ hojas de costo Θ(1) ⇒ Total Θ(n³)\"]:::leaf\n    classDef root fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff\n    classDef mid fill:#334155,stroke:#1e293b,stroke-width:1px,color:#fff\n    classDef leaf fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Afirmar que DyC clásico reduce la complejidad a $O(n^2)$ o $O(n^{2.81})$:** El algoritmo estándar por cuadrantes realiza 8 multiplicaciones ($a = 8$), lo que da exactamente $\Theta(n^3)$, igual que el método iterativo cúbico de 3 bucles. Para bajar a $O(n^{\log_2 7}) \approx O(n^{2.81})$ es indispensable el truco algebraico de Volker Strassen (7 multiplicaciones).
+
+- **Confusión de índices en los productos cruzados:** Un error muy penalizado es escribir $A_{12} B_{12}$ en lugar de $A_{12} B_{21}$. Recuerde que la fila de $A$ multiplica a la columna de $B$.
+
+- **Olvidar el costo de partición y combinación:** Copiar matrices o sumarlas no es gratis; toma $\Theta(n^2)$. Omitir este término en la recurrencia anula la justificación del Teorema Maestro.
+
+</AcademicBlock>
+
+</SolutionDrawer>

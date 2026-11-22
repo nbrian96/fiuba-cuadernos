@@ -1,0 +1,101 @@
+---
+id: "tda-ej-69"
+courseId: "tda"
+number: 69
+title: "Actualización de Flujo Máximo ante Aumento de Capacidad Unitaria en O(V + E)"
+unit: "flujo"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía de Ejercicios 06, Ejercicio 5"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-14-redes-de-flujo-i"
+  - "tda-slide-15a-redes-de-flujo-ii"
+  - "tda-slide-15b-redes-de-flujo-anexo"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-06-flujo"
+legacyPage: "flujo.html"
+legacyAnchor: "#ej-69"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dada una red de flujo $G = (V, E)$ con capacidades enteras positivas, se ha calculado previamente un flujo máximo $f^*$ de $s$ a $t$ y se dispone de su red residual asociada $G_f$. Supongamos que se incrementa en una unidad la capacidad de una arista arbitraria $(u, v) \in E$ (de $c(u, v)$ pasa a $c(u, v) + 1$). Diseñar un algoritmo que recalcule el nuevo flujo máximo en tiempo estrictamente acotado por $O(V + E)$. Justificar la correctitud y la cota temporal.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Comprensión profunda de la red residual, explotación del estado previo para actualización incremental (*dynamic max-flow*) y cota estricta de caminos de aumento en $O(V + E)$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-69">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Cómo actualizamos la red residual:**
+  No debemos reiniciar Ford-Fulkerson desde cero (eso tardaría $\mathcal{O}(V E^2)$). Aprovechamos la red residual $G_f$ que ya tenemos calculada y simplemente **sumamos $+1$ a la capacidad residual directa de la arista modificada**:
+  $$c'_f(u, v) = c_f(u, v) + 1$$
+* **Por qué el flujo máximo solo puede subir en $0$ o en $1$ (Teorema de Corte Mínimo e Integralidad):**
+  1. Como solo aumentamos en $+1$ la capacidad de una única arista $(u, v)$, la capacidad del corte mínimo de la red puede aumentar **a lo sumo en $1$ unidad** (sube en $1$ si $(u, v)$ era parte de todos los cortes mínimos, o en $0$ si existe otro cuello de botella).
+  2. Como todas las capacidades son enteras, por el **Teorema de Integralidad** el nuevo flujo máximo solo puede valer $|f^*|$ o $|f^*| + 1$.
+* **Cómo hallamos el nuevo flujo óptimo en un solo paso:**
+  Corremos **un único BFS (o DFS)** desde la fuente $s$ hasta el sumidero $t$ sobre la red residual actualizada $G'_f$:
+  * **Si el BFS encuentra un camino de aumento $P$ de $s$ a $t$:** Como las capacidades residuales son enteras positivas, el cuello de botella es al menos $1$. Empujamos $\Delta = 1$ unidad de flujo por $P$, actualizamos $G'_f$ y devolvemos $|f^*| + 1$ (que ya es máximo porque no puede subir más de $1$).
+  * **Si el BFS no llega a $t$:** No existe camino de aumento en $G'_f$, por lo que el flujo máximo sigue siendo exactamente $f^*$ con valor $|f^*|$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    A[\"c'(u,v) = c(u,v) + 1\"] --> B[\"c'_f(u,v) = c_f(u,v) + 1\"]\n    B --> C{\"¿BFS en G'_f halla<br/>camino s → t?\"}\n    C -->|Sí| D[\"Empujar Δ = 1 por P\"]:::opt\n    D --> E([\"Nuevo Flujo = |f*| + 1\"]):::opt\n    C -->|No| F([\"Flujo se mantiene en |f*|\"]):::same\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef same fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION ActualizarFlujoMasUno(G_f, f, valor_flujo, s, t, u, v):
+    // 1. Actualizar en O(1) la capacidad residual de la única arista modificada
+    c_f(u, v) <- c_f(u, v) + 1
+
+    // 2. Buscar UN único camino de aumento de s a t en G_f usando BFS
+    camino_P <- BuscarCaminoBFS(G_f, s, t)
+
+    // 3. Si existe camino, empujar exactamente 1 unidad de flujo
+    SI camino_P != NULO:
+        PARA CADA arista (x, y) EN camino_P:
+            SI (x, y) es arista original:
+                f(x, y) <- f(x, y) + 1
+            SINO:
+                f(y, x) <- f(y, x) - 1
+            c_f(x, y) <- c_f(x, y) - 1
+            c_f(y, x) <- c_f(y, x) + 1
+
+        RETORNAR (valor_flujo + 1, f)
+
+    // Si no hay camino a t, el flujo máximo no cambió
+    RETORNAR (valor_flujo, f)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Actualización de la arista $(u, v)$:** Incrementar $c_f(u, v)$ en $1$ cuesta **$\mathcal{O}(1)$**.
+* **Búsqueda y aumento en la red residual:** Ejecutamos **una sola vez** el recorrido BFS desde $s$ hasta $t$ sobre $G'_f$, lo cual visita cada nodo y arista a lo sumo una vez en tiempo **$\mathcal{O}(|V| + |E|)$**. Si halla el camino simple $P$ (de longitud a lo sumo $|V|$ aristas), actualizar el flujo a lo largo de $P$ cuesta $\mathcal{O}(|V|)$.
+* **Complejidad Total:** Tiempo **$\mathcal{O}(|V| + |E|)$** y espacio adicional **$\mathcal{O}(|V|)$** para la cola y el arreglo de visitados/padres del BFS.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Ejecutar Edmonds-Karp completo desde cero:** Si se reinicia el algoritmo desde flujo 0, la complejidad vuelve a ser $O(V E^2)$, violando la cota obligatoria de $O(V + E)$ exigida en el enunciado.
+
+- **Buscar más de un camino de aumento:** Como la capacidad de una sola arista aumentó en 1, el flujo máximo no puede crecer en más de 1 unidad. Ejecutar un bucle `while` buscando caminos adicionales es conceptualmente redundante.
+
+</AcademicBlock>
+
+</SolutionDrawer>

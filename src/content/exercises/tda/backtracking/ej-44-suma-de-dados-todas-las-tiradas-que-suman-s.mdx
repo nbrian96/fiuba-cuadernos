@@ -1,0 +1,68 @@
+---
+id: "tda-ej-44"
+courseId: "tda"
+number: 44
+title: "Suma de Dados (Todas las Tiradas que Suman S)"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.1"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-44"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Implementar un algoritmo de backtracking que reciba una cantidad de dados $n$ y una suma $s$, y devuelva todas las tiradas posibles de $n$ dados (caras del 1 al 6) cuya suma sea exactamente $s$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-44">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* En cada nivel decidimos qué valor (del 1 al 6) salió en el dado actual, restándolo de la suma que nos falta (`faltante`).
+* **Podas claves para no explorar ramas inútiles:**
+  If nos quedan `dados_restantes` por tirar:
+  1. **Poda por suma mínima:** Si aun sacando puros `1` en todos los dados que faltan nos pasamos de lo que falta (`faltante < dados_restantes * 1`), podamos.
+  2. **Poda por suma máxima:** Si ni siquiera sacando puros `6` en todos los dados que faltan llegamos a cubrir lo que falta (`faltante > dados_restantes * 6`), podamos.
+* Complejidad en peor caso: **$O(6^n)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo TiradasSumaDados(n, s):
+    resultados = []
+    actual = []
+    DadosBT(n, s, actual, resultados)
+    devolver resultados
+
+función DadosBT(dados_restantes, faltante, actual, resultados):
+    // Caso base: ya tiramos todos los dados
+    si dados_restantes == 0:
+        si faltante == 0:
+            agregar copia(actual) a resultados
+        devolver
+
+    // Podas por mínimo (todos 1) y máximo (todos 6) alcanzables
+    si faltante < dados_restantes * 1 o faltante > dados_restantes * 6:
+        devolver
+
+    para cara desde 1 hasta 6:
+        agregar cara a actual
+        DadosBT(dados_restantes - 1, faltante - cara, actual, resultados)
+        quitar_ultimo(actual)   // Backtrack
+```
+
+</SolutionDrawer>

@@ -1,0 +1,100 @@
+---
+id: "tda-ej-68"
+courseId: "tda"
+number: 68
+title: "Análisis Teórico: Aumento Uniforme de Capacidades y Corte Mínimo"
+unit: "flujo"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2024-2-3 (10 de diciembre de 2024), Ejercicio 1"
+isParcial: true
+examIds:
+  - "tda-parcial-2024-2-3"
+relatedResourceIds:
+  - "tda-parcial-2024-2-3-pdf"
+  - "tda-slide-14-redes-de-flujo-i"
+  - "tda-slide-15a-redes-de-flujo-ii"
+  - "tda-slide-15b-redes-de-flujo-anexo"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-06-flujo"
+legacyPage: "flujo.html"
+legacyAnchor: "#ej-68"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Indicar si la siguiente afirmación es verdadera o falsa. Si es verdadera, proveer una demostración formal rigurosa. Si es falsa, construir un contraejemplo explícito indicando nodos, aristas, capacidades originales, corte original, nuevas capacidades y el nuevo corte mínimo:  
+*“Sea $G = (V, E)$ una red de flujo arbitraria con fuente $s$, sumidero $t$ y capacidades enteras positivas $c(e)$ en cada arista $e \in E$. Sea $(A, B)$ un corte mínimo $s-t$ con respecto a las capacidades $c$. Si se suma $1$ a la capacidad de cada arista de la red ($c'(e) = c(e) + 1$), el corte $(A, B)$ sigue siendo obligatoriamente un corte mínimo respecto a las nuevas capacidades $c'$.”*
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Comprensión matemática rigurosa de la definición de capacidad de un corte, sensibilidad ante perturbaciones uniformes $+1$, y construcción de contraejemplos matemáticos minimales irrebatibles.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-68">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Respuesta directa:** **La afirmación es FALSA.**
+* **Por qué falla (Justificación en un renglón):** Cuando sumamos $+1$ a la capacidad de **cada arista**, la capacidad de un corte $(A, B)$ **no aumenta en $+1$**, sino que aumenta en **$+1$ por cada arista que cruza el corte**:
+  $$C'(A, B) = \sum_{e \in \delta^+(A)} (c(e) + 1) = C(A, B) + |\delta^+(A)|$$
+  Por lo tanto, un corte que era mínimo pero tenía **muchas aristas chicas** sube mucho más que otro corte que tenía **una sola arista grande**, dejando de ser el corte mínimo.
+* **Contraejemplo de un renglón para la hoja:**
+  * Armamos una red donde el **Corte 1** ($A_1 = \{s\}$) tiene **$5$ aristas en paralelo** de capacidad $2$ saliendo de $s$ hacia un nodo intermedio $v$ (capacidad original $C_1 = 5 \times 2 = \mathbf{10}$), y el **Corte 2** ($A_2 = V \setminus \{t\}$) tiene **$1$ sola arista** desde $v$ hacia $t$ de capacidad $\mathbf{11}$ ($C_2 = 11$).
+  * **Antes de sumar $+1$:** El corte mínimo único es el **Corte 1** porque $10 < 11$.
+  * **Después de sumar $+1$ a cada arista:** Las $5$ aristas del Corte 1 pasan a capacidad $3$ y su corte sube a $C'_1 = 5 \times 3 = \mathbf{15}$, mientras que la única arista del Corte 2 pasa de $11$ a $C'_2 = \mathbf{12}$. Como ahora $12 < 15$, el Corte 1 **dejó de ser mínimo** y el nuevo corte mínimo es el Corte 2.
+
+| Corte Evaluado | Aristas que cruzan de $A$ a $B$ | Capacidad Original $C$ | Cantidad de Aristas $\lvert \delta^+ \rvert$ | Nueva Capacidad $C' = C + \lvert \delta^+ \rvert$ | ¿Es Corte Mínimo? |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Corte 1 ($A_1=\{s\}$)** | $5$ aristas de capacidad $2$ | **$10$** | $5$ | $10 + 5 = \mathbf{15}$ | **Antes SÍ ($10 < 11$) / Después NO** |
+| **Corte 2 ($B_2=\{t\}$)** | $1$ arista de capacidad $11$ | $11$ | $1$ | $11 + 1 = \mathbf{12}$ | **Antes NO / Después SÍ ($12 < 15$)** |
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    S_SRC[\"Fuente s\"] -->|c=2 → c'=3| u1[\"u1\"]\n    S_SRC -->|c=2 → c'=3| u2[\"u2\"]\n    S_SRC -->|c=2 → c'=3| u3[\"u3\"]\n    S_SRC -->|c=2 → c'=3| u4[\"u4\"]\n    S_SRC -->|c=2 → c'=3| u5[\"u5\"]\n    u1 -->|c=10| v[\"Hub v\"]\n    u2 -->|c=10| v\n    u3 -->|c=10| v\n    u4 -->|c=10| v\n    u5 -->|c=10| v\n    v -->|c=11 → c'=12| T_SNK[\"Sumidero t\"]"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+// Construcción y verificación formal del contraejemplo en papel:
+PROCEDIMIENTO ContraejemploCorteMinimoMasUno():
+    // Grafo con fuente s, nodos intermedios u1..u5, v y sumidero t
+    // Corte 1: A1 = {s}, B1 = {u1..u5, v, t} -> corta las 5 aristas (s, u_i) de cap 2
+    C_original_Corte1 <- 5 * 2   // = 10 (Corte Mínimo Original)
+
+    // Corte 2: A2 = {s, u1..u5, v}, B2 = {t} -> corta la única arista (v, t) de cap 11
+    C_original_Corte2 <- 1 * 11  // = 11
+
+    // Al sumar +1 a toda arista e de la red, cada corte suma su cantidad de aristas:
+    C_nuevo_Corte1 <- C_original_Corte1 + 5  // 10 + 5 = 15
+    C_nuevo_Corte2 <- C_original_Corte2 + 1  // 11 + 1 = 12
+
+    // Como C_nuevo_Corte2 (12) < C_nuevo_Corte1 (15), A1 dejó de ser corte mínimo
+    RETORNAR FALSO
+```
+
+#### 3. Justificación de Complejidad
+
+* **Verificación del contraejemplo:** El grafo construido tiene $|V| = 8$ nodos y $|E| = 11$ aristas; calcular la capacidad de ambos cortes antes y después de la perturbación toma tiempo constante **$\mathcal{O}(1)$** (y en un grafo general de $|E|$ aristas, evaluar la capacidad de un corte dado $(A, B)$ cuesta **$\mathcal{O}(|E|)$** recorriendo las aristas que van de $A$ hacia $B$).
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Decir que es Verdadera asumiendo que "sumar una constante no cambia el mínimo":** En optimización lineal, sumar una constante a la función objetivo no cambia el óptimo. Pero aquí **no se suma una constante al corte**, se suma 1 a cada arista, por lo que a cada corte se le suma una constante distinta proporcional a su cantidad de aristas ($C' = C + k$).
+
+- **Dar un contraejemplo sin valores numéricos explícitos:** Un contraejemplo debe incluir el grafo completo, los conjuntos de vértices $A$ y $B$, y la cuenta aritmética explícita de antes y después.
+
+</AcademicBlock>
+
+</SolutionDrawer>

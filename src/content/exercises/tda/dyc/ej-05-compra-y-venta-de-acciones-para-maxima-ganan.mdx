@@ -1,0 +1,72 @@
+---
+id: "tda-ej-05"
+courseId: "tda"
+number: 5
+title: "Compra y Venta de Acciones para Máxima Ganancia"
+unit: "dyc"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Problema Resuelto 1.A"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-02-division-y-conquista"
+  - "tda-slide-03b-seguimiento-mejorganancia-division-conquista-ejemplo"
+  - "tda-slide-03c-complejidad-mejorganancia-teoremamaestro"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-01-dyc"
+legacyPage: "dyc.html"
+legacyAnchor: "#ej-5"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se consideran $n$ días consecutivos de cotización de una acción, numerados $i = 1, 2, \dots, n$, con precio $p(i)$ por acción. Se desea comprar 1000 acciones en algún día $i$ y venderlas todas en un día posterior $j$. Determinar por División y Conquista la máxima ganancia que puede obtenerse con complejidad mejor que $O(n^2)$ (en $O(n)$).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-05">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* Si dividimos los días en una **mitad izquierda** (días anteriores) y una **mitad derecha** (días posteriores), la mejor compra-venta puede ocurrir:
+  1. Comprando y vendiendo dentro de la mitad izquierda (ganancia `g1`).
+  2. Comprando y vendiendo dentro de la mitad derecha (ganancia `g2`).
+  3. **Comprando en la mitad izquierda y vendiendo en la mitad derecha:** para ganar lo máximo posible cruzando las mitades, nos conviene comprar en el día **más barato** de la izquierda (`min1`) y vender en el día **más caro** de la derecha (`max2`), ganando `max2 - min1`.
+* Para no recalcular mínimos y máximos con un ciclo en cada paso (lo que llevaría a $O(n \log n)$), hacemos que cada llamada recursiva devuelva directamente una tripla `(mínimo, máximo, ganancia)`. Así combinamos las dos mitades con solo un par de comparaciones en tiempo constante $O(1)$.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AnalizarIntervalo(precios, inicio, fin):
+    // Caso base: un único día (no se puede comprar y vender en días distintos)
+    si inicio == fin:
+        devolver (precios[inicio], precios[inicio], 0)
+
+    medio = (inicio + fin) / 2
+
+    // Resolver ambas mitades
+    (min1, max1, g1) = AnalizarIntervalo(precios, inicio, medio)
+    (min2, max2, g2) = AnalizarIntervalo(precios, medio + 1, fin)
+
+    // Combinar en O(1)
+    minimo = min(min1, min2)
+    maximo = max(max1, max2)
+    cruce = max2 - min1
+    ganancia = max(g1, g2, cruce)
+
+    devolver (minimo, maximo, ganancia)
+```
+
+#### 3. Justificación de Complejidad (Para entregar en el parcial)
+
+* Se realizan **$a = 2$ llamadas recursivas** sobre mitades de tamaño $n/2$ (**$b = 2$**), y la combinación hace únicamente restas y comparaciones en tiempo constante **$f(n) = \Theta(1)$** (**$c = 0$**).
+* Ecuación de recurrencia:
+  $$T(n) = 2 \cdot T(n/2) + \Theta(1)$$
+* Aplicando el **Teorema Maestro**, $\log_b a = \log_2 2 = 1 > 0 = c$ (**Caso 1**), por lo que la complejidad es **$T(n) = O(n^{\log_2 2}) = O(n)$**.
+
+</SolutionDrawer>

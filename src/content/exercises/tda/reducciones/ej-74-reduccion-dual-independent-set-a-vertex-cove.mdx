@@ -1,0 +1,90 @@
+---
+id: "tda-ej-74"
+courseId: "tda"
+number: 74
+title: "Reducción Dual: Independent Set a Vertex Cover"
+unit: "reducciones"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 4
+origin: "Guía de Ejercicios 07, Ejercicio 3"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-17-complejidad-y-reducciones-i"
+  - "tda-slide-18-complejidad-y-reducciones-ii"
+  - "tda-slide-19-practica-reducciones"
+  - "tda-guia-07-reducciones"
+legacyPage: "reducciones.html"
+legacyAnchor: "#ej-74"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dados los problemas de decisión de **Independent Set** (¿existe un subconjunto de vértices $I \subseteq V$ de tamaño $|I| \ge k$ tal que no existan aristas entre vértices de $I$?) y **Vertex Cover** (¿existe un subconjunto $S \subseteq V$ de tamaño $|S| \le k'$ que cubra todas las aristas de $E$?):
+1. Diseñar una reducción polinomial formal de **Independent Set a Vertex Cover**.
+2. Demostrar rigurosamente la equivalencia lógica fundamentando el teorema del complemento en teoría de grafos.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Comprensión de la dualidad entre Independent Set y Vertex Cover por complemento en tiempo `O(1)`.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-74">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Los 4 Pasos para la Hoja del Parcial)
+
+1. **Paso 1 (Pertenece a NP — Verificador de Vertex Cover):**
+   * **Certificado:** Un subconjunto de vértices $S \subseteq V$.
+   * **Verificación en tiempo polinomial:** Chequeamos que $|S| \le k'$ y recorremos todas las aristas $(u, v) \in E$ verificando que para cada una se cumpla $u \in S$ o $v \in S$. Esto tarda **$\mathcal{O}(|V| + |E|)$** (polinomial) $\implies \text{Vertex Cover} \in \text{NP}$.
+2. **Paso 2 y 3 (Reducción desde problema conocido $\text{Independent Set} \le_P \text{Vertex Cover}$):**
+   * Dada una instancia $(G = (V, E), k)$ de **Independent Set** (sabemos que es NP-Completo):
+   * **Transformación en lenguaje natural:**
+     1. Mantenemos **exactamente el mismo grafo $G' = G$**.
+     2. Fijamos la cota máxima del Vertex Cover como **$k' = |V| - k$**.
+   * **Cuánto tarda:** Es una simple resta aritmética sobre el mismo grafo, por lo que tarda **$\mathcal{O}(1)$** (o $\mathcal{O}(|V| + |E|)$ si se copia el grafo).
+3. **Paso 4 (Ida y Vuelta $\iff$ por el Teorema del Complemento):**
+   * **Propiedad clave:** Un conjunto $I \subseteq V$ es un *Independent Set* en $G$ si y solo si su complemento $S = V \setminus I$ es un *Vertex Cover* en $G$.
+   * **($\implies$) Ida (Si $G$ tiene Independent Set $I$ de tamaño $\ge k \implies G'$ tiene Vertex Cover de tamaño $\le |V| - k$):**
+     Tomamos $S = V \setminus I$. Su tamaño es $|S| = |V| - |I| \le |V| - k = k'$. Además, para cualquier arista $(u, v) \in E$, como $I$ es independiente no pueden estar $u$ y $v$ ambos en $I$; por lo tanto, al menos uno de los dos está afuera de $I$, es decir, pertenece a $S = V \setminus I$. Así, $S$ cubre todas las aristas.
+   * **($\impliedby$) Vuelta (Si $G'$ tiene Vertex Cover $S$ de tamaño $\le k' = |V| - k \implies G$ tiene Independent Set de tamaño $\ge k$):**
+     Tomamos $I = V \setminus S$. Su tamaño es $|I| = |V| - |S| \ge |V| - (|V| - k) = k$. Como toda arista $(u, v) \in E$ tiene al menos un extremo en $S$, ninguna arista puede tener sus dos extremos en $V \setminus S = I$. Por ende, $I$ es un conjunto independiente válido de tamaño $\ge k$.
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    IS[\"Independent Set I: tamaño |I| ≥ k\"] ---|Complemento Exacto S = V \\ I| VC[\"Vertex Cover S: tamaño |S| ≤ |V| - k\"]"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación
+
+```text
+FUNCION VerificadorVertexCover(G = (V, E), k_prima, certificado_S):
+    SI tamaño(certificado_S) > k_prima:
+        RETORNAR FALSO
+    PARA CADA arista (u, v) EN E:
+        SI u NO PERTENECE A certificado_S Y v NO PERTENECE A certificado_S:
+            RETORNAR FALSO
+    RETORNAR VERDADERO // Tiempo O(|V| + |E|)
+
+FUNCION TransformarISaVertexCover(G = (V, E), k):
+    G_prima <- G
+    k_prima <- tamaño(V) - k
+    RETORNAR (G_prima, k_prima) // Transformación en O(1)
+```
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Invertir el sentido de las desigualdades:** Olvidar que Independent Set es un problema de **maximización** ($|I| \ge k$) mientras que Vertex Cover es de **minimización** ($|S| \le k'$). Al restar del total $|V|$, la desigualdad se invierte automáticamente ($|I| \ge k \iff |V| - |I| \le |V| - k$).
+
+</AcademicBlock>
+
+</SolutionDrawer>

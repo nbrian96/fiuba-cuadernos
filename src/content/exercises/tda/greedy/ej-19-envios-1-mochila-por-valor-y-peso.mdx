@@ -1,0 +1,58 @@
+---
+id: "tda-ej-19"
+courseId: "tda"
+number: 19
+title: "Envíos 1: Mochila por Valor y Peso"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.1"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-19"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Los hermanos Pill y Tipp montaron su empresa de envíos. Por viaje, su repartidora estrella puede llevar hasta cierto máximo de peso $P$. Tienen objetos con cierto peso y valor monetario. Diseñar un algoritmo greedy que les permita decidir qué objetos darle a su repartidora para maximizar las ganancias.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-19">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* **Criterio Voraz:** Para aprovechar al máximo cada kilo de capacidad, calculamos para cada objeto su **ganancia por kilo** (`valor / peso`) y los ordenamos de mayor a menor relación. Luego recorremos la lista metiendo cada objeto que todavía entre en el peso disponible.
+* **¿Es óptimo?** Si los objetos no se pueden fraccionar (Mochila 0-1), este criterio es una **heurística aproximada** (no siempre da el óptimo porque puede quedar espacio libre desaprovechado; para asegurar al menos la mitad del óptimo podemos quedarnos con el máximo entre lo juntado y el objeto individual más valioso que entre).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo EnviosMochilaGreedy(objetos, PesoMax):
+    ordenar objetos por (obj.valor / obj.peso) de mayor a menor
+    seleccionados = []
+    peso_actual = 0
+
+    para cada obj en objetos:
+        si peso_actual + obj.peso <= PesoMax:
+            agregar obj a seleccionados
+            peso_actual = peso_actual + obj.peso
+
+    devolver seleccionados
+```
+
+#### 3. Complejidad Temporal
+
+* Ordenar los $n$ objetos cuesta **$O(n \log n)$** y recorrerlos cuesta $O(n)$. Total: **$O(n \log n)$**.
+
+</SolutionDrawer>

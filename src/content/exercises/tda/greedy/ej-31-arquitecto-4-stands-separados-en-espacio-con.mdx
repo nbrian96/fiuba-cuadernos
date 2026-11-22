@@ -1,0 +1,58 @@
+---
+id: "tda-ej-31"
+courseId: "tda"
+number: 31
+title: "Arquitecto 4: Stands Separados en Espacio Continuo (Plaza Euclides)"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.13"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-31"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En Plaza Euclides los lugares posibles para stands vienen dados como coordenadas $(x, y)$, y la restricción es que no haya dos stands a menos de 5 metros uno del otro. Diseñar un algoritmo greedy para asignar la mayor cantidad de stands.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-31">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es exactamente el mismo problema de *Independent Set* que el ejercicio anterior, pero usando la **distancia euclídea** $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} < 5$ para determinar si dos ubicaciones entran en conflicto.
+* **Regla Voraz:** En cada paso seleccionamos el lugar candidato disponible que tenga **menor cantidad de otros candidatos libres a menos de 5 metros**, ponemos un stand ahí y descartamos todos los candidatos que estén a menos de 5 metros de él. Complejidad: **$O(n^2)$**.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AsignarStandsEuclides(lugares):
+    stands = []
+    libres = copiar(lugares)
+
+    mientras libres no esté vacío:
+        // Elegir el punto libre que tenga menos vecinos a menos de 5 metros
+        elegir p en libres que minimice cantidad de q en libres con distanciaEuclidea(p, q) < 5
+        agregar p a stands
+
+        // Descartar p y todos los puntos a menos de 5 metros
+        para cada q en libres:
+            si distanciaEuclidea(p, q) < 5:
+                quitar q de libres
+
+    devolver stands
+```
+
+</SolutionDrawer>

@@ -1,0 +1,71 @@
+---
+id: "tda-ej-45"
+courseId: "tda"
+number: 45
+title: "Maximizar Sumatoria sin Superar N"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.2"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-45"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dada una lista de enteros positivos $L$ y un entero $n$, implementar un algoritmo de backtracking que devuelva un subconjunto de $L$ que sume exactamente $n$, o, en caso de no existir, que devuelva el subconjunto de suma máxima sin superar el valor de $n$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-45">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Es una versión de **Branch & Bound** de *Subset Sum*: llevamos registro de la `mejor_solucion` y su `mejor_suma` (inicialmente `0`) que nunca supere $n$.
+* En cada elemento `L[i]` probamos incluirlo (si `suma_actual + L[i] <= n`) o excluirlo.
+* **Podas:**
+  1. **Corte inmediato por óptimo exacto:** Si `mejor_suma == n`, ya encontramos un subconjunto que suma exactamente $n$, así que cortamos todas las llamadas pendientes de inmediato.
+  2. **Poda por cota superior (sufijo restante):** Si sumando `suma_actual` más todos los números que quedan de `i` en adelante (`suma_restante`) no superamos a `mejor_suma` (`suma_actual + suma_restante <= mejor_suma`), podamos la rama porque es imposible mejorar el récord.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo MaximizarSubconjunto(L, n):
+    mejor_sol = []
+    mejor_suma = 0
+    actual = []
+    MaxSumaBT(L, 0, n, 0, sumaTotal(L), actual, mejor_sol, mejor_suma)
+    devolver mejor_sol
+
+función MaxSumaBT(L, i, n, suma_act, resto_disp, actual, ref mejor_sol, ref mejor_suma):
+    si suma_act > mejor_suma:
+        mejor_suma = suma_act
+        mejor_sol = copia(actual)
+
+    // Si ya llegamos exacto a n, o se acabaron los números, o ni sumando todo lo que queda mejoramos:
+    si mejor_suma == n o i == longitud(L) o (suma_act + resto_disp <= mejor_suma):
+        devolver
+
+    // Rama 1: Incluir L[i] (Poda de factibilidad: no pasarse de n)
+    si suma_act + L[i] <= n:
+        agregar L[i] a actual
+        MaxSumaBT(L, i + 1, n, suma_act + L[i], resto_disp - L[i], actual, mejor_sol, mejor_suma)
+        quitar_ultimo(actual)
+
+    // Rama 2: Excluir L[i]
+    si mejor_suma < n:
+        MaxSumaBT(L, i + 1, n, suma_act, resto_disp - L[i], actual, mejor_sol, mejor_suma)
+```
+
+</SolutionDrawer>

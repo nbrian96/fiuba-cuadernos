@@ -1,0 +1,95 @@
+---
+id: "tda-ej-52"
+courseId: "tda"
+number: 52
+title: "Podas para Criptoaritmética: SEND + MORE = MONEY"
+unit: "backtracking"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 3.11"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-05-backtracking-i"
+  - "tda-slide-06-backtracking-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-03-backtracking"
+legacyPage: "backtracking.html"
+legacyAnchor: "#ej-52"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Para el problema de fuerza bruta `"SEND + MORE = MONEY"` (asignar un dígito distinto de 0 a 9 a cada una de las 8 letras `S, E, N, D, M, O, R, Y` para que la suma sea válida), indicar **qué podas realizarías para agilizar su resolución por backtracking**. *(No se pide pseudocódigo, sólo explicar las podas).*
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-52">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Espacio de Búsqueda y Naturaleza del Problema:**
+  - Asignar un dígito único $\{0, \dots, 9\}$ a cada una de las 8 letras $\{S, E, N, D, M, O, R, Y\}$ de modo que $SEND + MORE = MONEY$.
+  - Una búsqueda exhaustiva ingenua sin podas evalúa $10^8 = 100.000.000$ asignaciones, o $P(10, 8) = 1.814.400$ permutaciones si se exige que no se repitan dígitos.
+* **Podas Esenciales de Factibilidad y Dominio:**
+  1. **Poda por Dígitos Únicos (Alldifferent en $O(1)$):** Arreglo booleano `usado[10]`. Ningún dígito puede asignarse a más de una letra.
+  2. **Poda de Ceros a la Izquierda:** Como ningún número puede comenzar con cero, restringimos los dominios iniciales: $S \ne 0$ y $M \ne 0$.
+  3. **Poda Analítica de Acarreo ($M = 1$ y $O = 0$):** Sumar dos números de 4 dígitos produce a lo sumo $9999 + 9999 = 19998$. La quinta cifra $M$ es el acarreo de los miles y debe ser **estrictamente $M = 1$**. Además, para que la columna de miles genere acarreo ($S + 1 + c_3 \ge 10$) con $S \le 9$, la letra resultante $O$ solo puede ser $0$ o $1$; como $M = 1$, forzosamente **$O = 0$** y $S \in \{8, 9\}$.
+  4. **Poda Columna por Columna (Verificación Incremental de Derecha a Izquierda):**
+     En lugar de asignar todas las letras y sumar al final, procesamos por columnas desde las unidades hacia los miles:
+     - **Columna 0 (Unidades):** Asignar $D, E$. El dígito de $Y$ queda fijado analíticamente por $(D + E) \pmod{10}$ con acarreo $c_1 = (D + E) // 10$. Si $Y$ ya está usado o no coincide con una asignación previa, se poda la rama inmediatamente sin explorar las 5 letras restantes.
+     - **Columnas 1, 2 y 3 (Decenas, Centenas, Miles):** Se valida incrementalmente en cada columna $(L_1 + L_2 + c_{prev}) \pmod{10} == L_3$. Al primer fallo se descarta el subárbol completo.
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CriptoSendMoreMoney():
+    asignacion = mapa vacio  // letra -> digito
+    usado = arreglo de 10 booleanos en Falso
+    // Fijaciones analíticas iniciales obligatorias
+    asignar('M', 1, asignacion, usado)
+    asignar('O', 0, asignacion, usado)
+    si CriptoBT(0, 0, asignacion, usado):
+        devolver asignacion
+    devolver "Sin solución"
+
+función CriptoBT(col, acarreo, asignacion, usado):
+    si col == 4:  // Caso Base: se validaron unidades, decenas, centenas y miles
+        devolver (acarreo == asignacion['M'])
+
+    (L1, L2, L3) = LetrasColumna(col)  // ej col 0: (D, E, Y)
+    para cada d1 en Candidatos(L1, asignacion, usado):
+        marcar(L1, d1, asignacion, usado)
+        para cada d2 en Candidatos(L2, asignacion, usado):
+            marcar(L2, d2, asignacion, usado)
+            suma = d1 + d2 + acarreo
+            d3, nuevo_ac = suma % 10, suma // 10
+            // Poda por factibilidad de columna en O(1)
+            si esValidoAsignar(L3, d3, asignacion, usado):
+                marcar(L3, d3, asignacion, usado)
+                si CriptoBT(col + 1, nuevo_ac, asignacion, usado):
+                    devolver Verdadero
+                desmarcar(L3, asignacion, usado)  // Backtrack
+            desmarcar(L2, asignacion, usado)
+        desmarcar(L1, asignacion, usado)
+
+    devolver Falso
+```
+
+#### 3. Justificación de Complejidad
+
+* **Árbol de Recursión y Estado:**
+  - El estado se define por `(col, acarreo)`, con profundidad máxima acotada a las 4 columnas del problema.
+* **Complejidad Temporal en Peor Caso:**
+  - El espacio combinatorio sin podas es $P(10, 8) = \frac{10!}{2!} = 1.814.400$ permutaciones en el peor caso.
+* **Comportamiento Promedio con Podas:**
+  - Al fijar $M = 1$ y $O = 0$, reducir el dominio de $S \in \{8, 9\}$ y verificar la consistencia aritmética de cada columna de derecha a izquierda antes de ramificar, la gran mayoría de las combinaciones se descartan en el nivel 0 (unidades).
+  - El número real de estados evaluados se reduce a menos de 50 llamadas recursivas, hallando la solución única $SEND = 9567, MORE = 1085, MONEY = 10652$ de forma prácticamente instantánea.
+* **Complejidad Espacial:**
+  - **$O(1)$** auxiliar: los arreglos de control de dígitos usados y asignación tienen tamaño 10 constante, y la pila recursiva alcanza una profundidad máxima de 4 marcos.
+
+</SolutionDrawer>

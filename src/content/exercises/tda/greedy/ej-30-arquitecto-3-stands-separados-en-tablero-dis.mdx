@@ -1,0 +1,59 @@
+---
+id: "tda-ej-30"
+courseId: "tda"
+number: 30
+title: "Arquitecto 3: Stands Separados en Tablero Discreto"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.12"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-30"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el Parque El Rectángulo (tablero de $n \times m$) se tienen marcadas las casillas donde pueden ir stands de comida. No se pueden colocar 2 stands a menos de dos casillas de distancia uno del otro (incluyendo en diagonal). Diseñar un algoritmo greedy que asigne la mayor cantidad de puestos posibles.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-30">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* "A menos de 2 casillas incluyendo diagonal" significa que si ponemos un stand en $(f, c)$, bloquea sus 8 casillas vecinas inmediatas (distancia de Chebyshev $< 2$, es decir, $|f_1 - f_2| \le 1$ y $|c_1 - c_2| \le 1$).
+* Esto equivale a buscar un **Conjunto Independiente (Independent Set)** en el grafo de conflictos de las casillas candidatas.
+* **Criterio Voraz (Menor Grado):** En cada paso elegimos la casilla candidata disponible que **bloquee a la menor cantidad de otras casillas candidatas vecinas** (la que tenga menos vecinos libres a distancia 1), colocamos un stand allí y tachamos sus casillas vecinas a distancia 1. (O recorremos de arriba-izquierda a abajo-derecha colocando siempre que sea válido).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo AsignarStandsTablero(candidatas):
+    stands = []
+    libres = copiar(candidatas)
+
+    mientras libres no esté vacío:
+        // Regla voraz: elegir la casilla libre que bloquee a menos casillas libres vecinas
+        elegir casilla c en libres con menor cantidad de vecinas en libres a distancia <= 1
+        agregar c a stands
+
+        // Eliminar a c y a todas las casillas a menos de 2 de distancia (|df| <= 1 y |dc| <= 1)
+        para cada otra en libres:
+            si max(|c.fila - otra.fila|, |c.col - otra.col|) < 2:
+                quitar otra de libres
+
+    devolver stands
+```
+
+</SolutionDrawer>

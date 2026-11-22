@@ -1,0 +1,112 @@
+---
+id: "tda-ej-67"
+courseId: "tda"
+number: 67
+title: "Red de Distribución Energética con Super-Fuente y Super-Sumidero (Ford-Fulkerson)"
+unit: "flujo"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2025-1-1 (27 de mayo de 2025), Ejercicio 1"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-1"
+relatedResourceIds:
+  - "tda-parcial-2025-1-1-pdf"
+  - "tda-slide-14-redes-de-flujo-i"
+  - "tda-slide-15a-redes-de-flujo-ii"
+  - "tda-slide-15b-redes-de-flujo-anexo"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-06-flujo"
+legacyPage: "flujo.html"
+legacyAnchor: "#ej-67"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El sistema interconectado energético nacional está constituido por 9 regiones geográficas ($R_1, \dots, R_9$). Para cada región $i$ se conoce su capacidad de generación prevista $G_i \ge 0$ (MWh) y su demanda requerida $D_i \ge 0$ (MWh). Entre pares de regiones existen líneas de transmisión de alta tensión con capacidad máxima $CAP_{ij}$ MWh/día. Se desea diseñar un algoritmo basado en redes de flujo que determine si es factible abastecer la demanda total de todas las regiones y, en caso afirmativo, cuánta energía transportar por cada línea. Si la demanda no puede cubrirse, el algoritmo debe identificar el conjunto crítico de líneas que causan el cuello de botella.
+
+</AcademicBlock>
+
+<AcademicBlock kind="note" title="Qué evalúa la cátedra">
+
+Modelado de múltiples fuentes y sumideros con cotas heterogéneas, construcción de la red residual, ejecución de Ford-Fulkerson y análisis de corte mínimo para diagnóstico de cuellos de botella energéticos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-67">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Cómo armamos los nodos (Super-Fuente $S$ y Super-Sumidero $T$):**
+  Como tenemos múltiples regiones que generan energía y múltiples regiones que consumen, creamos una **Super-Fuente $S$** (que inyecta toda la generación disponible del país) y un **Super-Sumidero $T$** (que absorbe toda la demanda requerida), además de los $9$ nodos de las regiones $R_1, \dots, R_9$.
+* **Qué capacidades ponemos en las aristas:**
+  * **De la Super-Fuente $S$ a cada región generadora $R_i$ ($G_i > 0$):** Arista dirigida $(S \to R_i)$ con **capacidad $G_i$** (máxima energía que puede aportar esa región).
+  * **De cada región consumidora $R_j$ ($D_j > 0$) al Super-Sumidero $T$:** Arista dirigida $(R_j \to T)$ con **capacidad $D_j$** (demanda que necesita cubrir esa región).
+  * **Entre regiones conectadas $(R_i, R_j)$:** Arista dirigida $(R_i \to R_j)$ con **capacidad $CAP_{ij}$** (límite físico de la línea de alta tensión).
+* **Por qué funciona (Conservación de Flujo y Corte Mínimo):**
+  1. **Condición de factibilidad total:** Sea $D_{\text{total}} = \sum_{j=1}^9 D_j$ la demanda nacional. Por conservación de flujo en cada región, todo lo que entra (generación local desde $S$ $+$ importación) es igual a todo lo que sale (consumo local hacia $T$ $+$ exportación). Como las aristas que llegan a $T$ suman capacidad $D_{\text{total}}$, el flujo máximo de $S$ a $T$ es a lo sumo $D_{\text{total}}$.
+  2. **Si $\text{FlujoMax}(S, T) == D_{\text{total}}$:** Todas las aristas $(R_j \to T)$ se saturaron al $100\%$, por lo que **es factible cubrir toda la demanda** y el flujo $f(R_i, R_j)$ da los MWh a enviar por cada línea.
+  3. **Diagnóstico de cuellos de botella (Teorema Max-Flow Min-Cut):** Si $\text{FlujoMax}(S, T) < D_{\text{total}}$, la demanda no se puede abastecer. Corremos un BFS desde $S$ en la red residual final $G_f$ para obtener el conjunto $A$ de nodos alcanzables y $B = V \setminus A$. Las líneas originales $(R_i \to R_j)$ que cruzan de $A$ hacia $B$ están saturadas al $100\%$ y forman el **corte mínimo (cuello de botella físico)** que impide llegar a $D_{\text{total}}$.
+
+
+<MermaidDiagram client:visible code={"graph LR\n    S((Super-Fuente S)) -->|G1| R1[\"R1 (Generadora)\"]\n    S -->|G2| R2[\"R2 (Generadora)\"]\n    R1 -->|CAP_13| R3[\"R3 (Intermedia)\"]\n    R2 -->|CAP_23| R3\n    R1 -->|CAP_14| R4[\"R4 (Consumidora)\"]\n    R3 -->|CAP_34| R4\n    R4 -->|D4| T((Super-Sumidero T))\n    R3 -->|D3| T"} />
+
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+FUNCION AbastecerRedEnergetica(Regiones, Generacion, Demanda, Lineas):
+    Crear red de flujo G con Super-Fuente S y Super-Sumidero T
+    D_total <- 0
+
+    // 1. Conectar Super-Fuente S a regiones con generación y regiones con demanda a T
+    PARA CADA r EN Regiones:
+        SI Generacion[r] > 0:
+            agregar_arista(G, S, r, cap = Generacion[r])
+        SI Demanda[r] > 0:
+            agregar_arista(G, r, T, cap = Demanda[r])
+            D_total <- D_total + Demanda[r]
+
+    // 2. Agregar líneas de transmisión entre regiones
+    PARA CADA (u, v, CAP_uv) EN Lineas:
+        agregar_arista(G, u, v, cap = CAP_uv)
+
+    // 3. Ejecutar Edmonds-Karp (Ford-Fulkerson con BFS)
+    (flujo_max, f, G_f) <- EdmondsKarp(G, S, T)
+
+    // 4. Verificar si se cubrió el 100% de la demanda o hallar el Corte Mínimo
+    SI flujo_max == D_total:
+        RETORNAR ("FACTIBLE", f)
+    SINO:
+        A <- NodosAlcanzablesConBFS(G_f, S)
+        cuellos_de_botella <- []
+        PARA CADA (u, v, CAP_uv) EN Lineas:
+            SI u PERTENECE A A Y v NO PERTENECE A A:
+                agregar (u, v) a cuellos_de_botella
+        RETORNAR ("INFACTIBLE - Cuellos de botella:", cuellos_de_botella)
+```
+
+#### 3. Justificación de Complejidad
+
+* **Tamaño de la red:** Para $R$ regiones ($R = 9$ en el enunciado), la red tiene $|V| = R + 2$ nodos y $|E| \le 2R + |\text{Líneas}|$ aristas (a lo sumo $9 + 9 + 72 = 90$ aristas).
+* **Costo de armar la red y hallar el corte:** Construir la red y hacer el BFS final sobre $G_f$ cuesta **$\mathcal{O}(|V| + |E|)$**.
+* **Costo de correr Edmonds-Karp:** La complejidad temporal es estrictamente polinomial **$\mathcal{O}(|V| \cdot |E|^2)$** (con $R = 9$ es $\mathcal{O}(1)$ en la práctica, apenas $\sim 11 \times 90^2 \approx 89.100$ operaciones). Si se usa Ford-Fulkerson con DFS, es pseudo-polinomial $\mathcal{O}(|E| \cdot D_{\text{total}})$. Complejidad espacial: **$\mathcal{O}(|V| + |E|)$**.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Crear aristas bidireccionales sumando flujos netos erróneamente:** En una línea de transmisión se debe modelar con dos aristas dirigidas opuestas independientes $(u, v)$ y $(v, u)$, cada una con su capacidad $CAP$.
+
+- **No distinguir capacidad de generación de capacidad de transporte:** Asumir que toda la energía generada llega si $\sum G_i \ge \sum D_i$. El examen evalúa precisamente el cuello de botella en las líneas intermedias.
+
+</AcademicBlock>
+
+</SolutionDrawer>

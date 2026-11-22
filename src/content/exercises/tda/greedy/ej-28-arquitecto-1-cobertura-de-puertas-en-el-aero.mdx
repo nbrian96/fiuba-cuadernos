@@ -1,0 +1,66 @@
+---
+id: "tda-ej-28"
+courseId: "tda"
+number: 28
+title: "Arquitecto 1: Cobertura de Puertas en el Aeropuerto"
+unit: "greedy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Guía v1.0 (Curso Echevarría), Ejercicio 2.10 / Guía 02, Ejercicio 13"
+isParcial: false
+relatedResourceIds:
+  - "tda-slide-03a-greedy-i"
+  - "tda-slide-04-greedy-ii"
+  - "tda-slide-07-practica-dc-greedy-backtracking"
+  - "tda-guia-02-greedy"
+legacyPage: "greedy.html"
+legacyAnchor: "#ej-28"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La terminal A es un pasillo recto con puertas de abordaje. Se quiere colocar puestos de seguridad **en algunas de las puertas**, de modo que ninguna puerta quede a una distancia mayor de $d$ metros de algún puesto. Dado el arreglo con la ubicación de cada puerta en metros, diseñar un algoritmo que asigne la menor cantidad de puestos posible.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-28">
+
+#### 1. Idea y Justificación en Lenguaje Natural
+
+* Ordenamos las puertas de menor a mayor posición. Miramos la **primera puerta todavía no cubierta** (llamémosla $p_1$):
+* Como el puesto debe instalarse **sobre alguna puerta existente** y cubrir a $p_1$, no nos conviene ponerlo en $p_1$ si podemos estirarnos más a la derecha: **avanzamos todo lo que podamos hacia la derecha hasta encontrar la puerta más lejana $p_k$ que esté a distancia $\le d$ de $p_1$** ($p_k \le p_1 + d$).
+* Colocamos el puesto en esa puerta $p_k$. Ese puesto cubre automáticamente a $p_1$ y a todas las puertas subsiguientes hasta $p_k + d$. Saltamos a la primera puerta que supere $p_k + d$ y repetimos.
+* Es **óptimo** (por *Greedy Stays Ahead*: cada puesto se ubica lo más a la derecha posible sin dejar descubierta a $p_1$) y tarda **$O(n \log n)$** (o $O(n)$ si las puertas ya vienen ordenadas).
+
+#### 2. Semi-Pseudocódigo Simplificado
+
+```text
+Algoritmo CubrirPuertasTerminalA(puertas, d):
+    ordenar puertas de menor a mayor
+    n = longitud(puertas)
+    puestos = []
+    i = 0
+
+    mientras i < n:
+        puerta_descubierta = puertas[i]
+
+        // 1. Buscar la puerta más a la derecha que aún cubra a puerta_descubierta
+        mientras i + 1 < n y puertas[i + 1] <= puerta_descubierta + d:
+            i = i + 1
+
+        posicion_puesto = puertas[i]
+        agregar posicion_puesto a puestos
+
+        // 2. Saltar todas las puertas hacia la derecha que ya quedan cubiertas por este puesto
+        mientras i < n y puertas[i] <= posicion_puesto + d:
+            i = i + 1
+
+    devolver puestos
+```
+
+</SolutionDrawer>

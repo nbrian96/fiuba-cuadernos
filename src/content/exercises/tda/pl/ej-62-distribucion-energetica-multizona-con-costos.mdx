@@ -1,0 +1,80 @@
+---
+id: "tda-ej-62"
+courseId: "tda"
+number: 62
+title: "Distribución Energética Multizona con Costos de Transporte (Flujo de Costo Mínimo)"
+unit: "pl"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Parcial 2025-1-1 (27 de mayo de 2025), Ejercicio 3"
+isParcial: true
+examIds:
+  - "tda-parcial-2025-1-1"
+relatedResourceIds:
+  - "tda-parcial-2025-1-1-pdf"
+  - "tda-slide-12-programacion-lineal-i"
+  - "tda-slide-13-programacion-lineal-ii"
+  - "tda-slide-16-practica-pl-y-rf"
+  - "tda-guia-05-pl"
+legacyPage: "pl.html"
+legacyAnchor: "#ej-62"
+---
+
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El sistema interconectado argentino está dividido en 9 regiones eléctricas ($R = \{1, \dots, 9\}$). Para cada región $i$ se conoce su capacidad de generación prevista $G_i \ge 0$ (en MWh) y su demanda requerida $D_i \ge 0$ (en MWh). Desde cualquier región $i$ se puede transmitir energía a otra región $j$ con un costo unitario de transporte $C_{ij} \ge 0$ pesos por MWh. Cada línea de transmisión posee una capacidad máxima de transporte de $CAP_{ij} \ge 0$ MWh/día. Plantear un modelo de Programación Lineal continuo que determine el despacho de energía más económico para satisfacer plenamente la demanda de todas las regiones sin violar capacidades de transporte. Indicar variables y restricciones.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-62">
+
+#### 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
+
+* **Variables de decisión continuas:** Como la energía eléctrica (MWh) es una magnitud continua y divisible, no necesitamos variables enteras ni binarias. Por cada línea de transmisión dirigida desde una región $i$ hacia otra región $j$ ($i \neq j$), definimos una variable continua no negativa $x_{ij} \ge 0$ que indica cuántos MWh se envían de $i$ a $j$.
+* **Qué buscamos minimizar:** El costo total de transporte de energía en todo el país, sumando el costo por MWh $C_{ij}$ multiplicado por la energía enviada $x_{ij}$ en cada línea.
+* **Cómo funcionan las restricciones:**
+  1. **Conservación / Balance de energía en cada región $i$:** En toda región $i$, la energía que se genera localmente ($G_i$) más toda la energía que entra desde otras regiones ($\sum_k x_{ki}$) menos toda la energía que se envía hacia otras regiones ($\sum_j x_{ij}$) tiene que ser igual a la demanda local $D_i$ (o $\ge D_i$ si se permite no usar el $100\%$ de la generación máxima prevista).
+  2. **Tope de cada línea de transmisión:** La energía enviada de $i$ a $j$ no puede superar la capacidad física del cable ($x_{ij} \le CAP_{ij}$).
+
+
+<MermaidDiagram client:visible code={"flowchart LR\n    R1[\"Región 1<br/>Genera G₁, Demanda D₁\"] -->|\"x₁₂ ≤ CAP₁₂ (Costo C₁₂)\"| R2[\"Región 2<br/>Genera G₂, Demanda D₂\"]\n    R1 -->|\"x₁₃ ≤ CAP₁₃ (Costo C₁₃)\"| R3[\"Región 3<br/>Genera G₃, Demanda D₃\"]\n    R2 -->|\"x₂₃ ≤ CAP₂₃ (Costo C₂₃)\"| R3"} />
+
+
+#### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
+
+1. **Variables de decisión y dominios:**
+   * $x_{ij} \in \mathbb{R}_{\ge 0} \quad (x_{ij} \ge 0) \quad \forall i, j \in \{1, \dots, 9\}, \; i \neq j$: cantidad de energía (en MWh) transmitida desde la región $i$ hacia la región $j$.
+
+2. **Función Objetivo:**
+   Minimizar el costo total de transmisión de energía:
+   $$\min Z = \sum_{i=1}^{9} \sum_{\substack{j=1 \\ j \neq i}}^{9} C_{ij} \cdot x_{ij}$$
+
+3. **Restricciones lineales:**
+   * **Balance de energía en cada región:** ($\text{Generación}_i + \text{Entra}_i - \text{Sale}_i = \text{Demanda}_i$; usar $\ge D_i$ si $G_i$ es un tope máximo opcional)
+     $$G_i + \sum_{\substack{k=1 \\ k \neq i}}^{9} x_{ki} - \sum_{\substack{j=1 \\ j \neq i}}^{9} x_{ij} = D_i \quad \forall i \in \{1, \dots, 9\}$$
+   * **Capacidad máxima de transmisión por línea:**
+     $$x_{ij} \le CAP_{ij} \quad \forall i, j \in \{1, \dots, 9\}, \; i \neq j$$
+
+#### 3. Cantidad y Tipo de Variables y Restricciones
+
+* **Cantidad y tipo de variables:** Exactamente **$72$ variables continuas no negativas** ($9 \times 8 = 72$ pares ordenados $(i, j)$ con $i \neq j$; o $|E|$ variables continuas si solo existen ciertas líneas conectadas).
+* **Cantidad de restricciones:** Exactamente **$81$ restricciones lineales funcionales** ($9$ ecuaciones de balance nodal, una por cada región + $72$ desigualdades de capacidad máxima $x_{ij} \le CAP_{ij}$, una por cada línea dirigida), además de las $72$ condiciones de dominio $x_{ij} \ge 0$.
+
+
+<AcademicBlock kind="trap" title="Trampa Típica de Corrección">
+
+**Puntos donde restan puntaje los docentes de FIUBA:**
+
+- **Declarar variables enteras o binarias:** La energía es continua y el enunciado pide explícitamente un modelo de *Programación Lineal continuo*. Poner $x_{ij} \in \mathbb{Z}$ o $\{0, 1\}$ está mal conceptualmente.
+
+- **Invertir entradas y salidas en el balance:** Revisar siempre los subíndices: $\sum_k x_{ki}$ entra al nodo $i$, mientras que $\sum_j x_{ij}$ sale del nodo $i$.
+
+</AcademicBlock>
+
+</SolutionDrawer>
