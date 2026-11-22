@@ -373,5 +373,36 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
       const simHtml = renderToStaticMarkup(sim);
       expect(simHtml).toContain("simulator-panel");
     }
+
+    const multiFileViewerHtml = renderToStaticMarkup(
+      createElement(PdfSplitViewer, {
+        courseId: "tda",
+        resourceId: "tda-tp0-entrega-codigo",
+        title: "Código y gráfico TP0",
+        entityType: "ElaboratedTPSubmission",
+        provenance: "elaborated_submission",
+        sourceFolder: "TP0",
+        unitLabels: ["General"],
+        files: [
+          {
+            path: "tda/TP0/cuartetos.py",
+            extension: ".py",
+            isPdf: false,
+            url: "/materials/tda/TP0/cuartetos.py",
+          },
+          {
+            path: "tda/TP0/grafico_tiempos.png",
+            extension: ".png",
+            isPdf: false,
+            url: "/materials/tda/TP0/grafico_tiempos.png",
+          },
+        ],
+        preservedIntact: true,
+        assetUrl: "/materials/tda/TP0/cuartetos.py",
+        backToMaterialsHref: "/tda/materiales/",
+      }),
+    );
+    expect(multiFileViewerHtml).toContain('href="/materials/tda/TP0/cuartetos.py"');
+    expect(multiFileViewerHtml).toContain('href="/materials/tda/TP0/grafico_tiempos.png"');
   });
 });

@@ -15,7 +15,7 @@ pdfmetrics.registerFont(TTFont('Arial', r'C:\Windows\Fonts\arial.ttf'))
 pdfmetrics.registerFont(TTFont('Arial-Bold', r'C:\Windows\Fonts\arialbd.ttf'))
 pdfmetrics.registerFont(TTFont('Arial-Italic', r'C:\Windows\Fonts\ariali.ttf'))
 
-output_dir = 'Parciales'
+output_dir = os.path.join('tda', 'Parciales')
 os.makedirs(output_dir, exist_ok=True)
 pdf_path = os.path.join(output_dir, 'TP-2026-2-2.pdf')
 

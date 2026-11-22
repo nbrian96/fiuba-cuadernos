@@ -160,22 +160,35 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         self.assertIn("if (progTotal)", content)
 
     def test_all_html_files_with_cards_have_hud_elements(self):
-        """Verifica que todos los archivos HTML con tarjetas de ejercicios contengan progMastered, progTotal y progressFill."""
+        """Verifica que los HTML compilados en temp_dir con tarjetas de ejercicios contengan progMastered, progTotal y progressFill."""
+        import tempfile
         html_files_with_cards = [
             "parciales.html", "dyc.html", "greedy.html", "backtracking.html",
             "dp.html", "pl.html", "flujo.html", "reducciones.html", "integradores.html"
         ]
-        for fname in html_files_with_cards:
-            fpath = os.path.join(BASE_DIR, fname)
-            self.assertTrue(os.path.exists(fpath), f"El archivo {fname} debe existir.")
-            with open(fpath, "r", encoding="utf-8") as f:
-                html = f.read()
-            self.assertIn('id="progMastered"', html, f"{fname} debe contener el id 'progMastered'")
-            self.assertIn('id="progTotal"', html, f"{fname} debe contener el id 'progTotal'")
-            self.assertIn('id="progressFill"', html, f"{fname} debe contener el id 'progressFill'")
+        with tempfile.TemporaryDirectory(prefix="tda_hud_check_") as tmp_dir:
+            env = os.environ.copy()
+            env["PYTHONDONTWRITEBYTECODE"] = "1"
+            res = subprocess.run(
+                [sys.executable, os.path.join(BUILDER_DIR, "build_manual.py"), "--output-dir", tmp_dir],
+                env=env,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+            )
+            self.assertEqual(res.returncode, 0, res.stderr)
+            for fname in html_files_with_cards:
+                fpath = os.path.join(tmp_dir, fname)
+                self.assertTrue(os.path.exists(fpath), f"El archivo {fname} debe generarse.")
+                with open(fpath, "r", encoding="utf-8") as f:
+                    html = f.read()
+                self.assertIn('id="progMastered"', html, f"{fname} debe contener el id 'progMastered'")
+                self.assertIn('id="progTotal"', html, f"{fname} debe contener el id 'progTotal'")
+                self.assertIn('id="progressFill"', html, f"{fname} debe contener el id 'progressFill'")
 
     def test_js_python_exercise_page_parity_via_real_node_vm(self):
         """Verifica paridad 85/85 entre Python y getPageForExercise() real de assets/js/app.js en Node/V8."""
+        import tempfile
         node_bin = shutil.which("node")
         if not node_bin:
             self.fail("Node.js es obligatorio para validar la paridad Python/JS de assets/js/app.js.")
@@ -211,26 +224,38 @@ class TestParadigmFilterIntegrity(unittest.TestCase):
         pages = payload["pages"]
         fallbacks = payload["fallbacks"]
 
-        html_cache = {}
-        for num in range(1, 86):
-            paradigm_key, _, _ = html_interactive_builder.get_paradigm_for_exercise(num)
-            expected_page = f"{paradigm_key}.html"
-            js_page = pages.get(str(num))
-            self.assertEqual(
-                js_page,
-                expected_page,
-                f"Desajuste de paridad para ej-{num}: JS={js_page!r} vs Python={expected_page!r}.",
+        with tempfile.TemporaryDirectory(prefix="tda_parity_check_") as tmp_dir:
+            env = os.environ.copy()
+            env["PYTHONDONTWRITEBYTECODE"] = "1"
+            build_res = subprocess.run(
+                [sys.executable, os.path.join(BUILDER_DIR, "build_manual.py"), "--output-dir", tmp_dir],
+                env=env,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
             )
-            if js_page not in html_cache:
-                target_path = os.path.join(BASE_DIR, js_page)
-                self.assertTrue(os.path.exists(target_path), f"El HTML destino '{js_page}' no existe.")
-                with open(target_path, "r", encoding="utf-8") as f:
-                    html_cache[js_page] = f.read()
-            self.assertIn(
-                f'id="ej-{num}"',
-                html_cache[js_page],
-                f"El ejercicio id='ej-{num}' no existe en '{js_page}'.",
-            )
+            self.assertEqual(build_res.returncode, 0, build_res.stderr)
+
+            html_cache = {}
+            for num in range(1, 86):
+                paradigm_key, _, _ = html_interactive_builder.get_paradigm_for_exercise(num)
+                expected_page = f"{paradigm_key}.html"
+                js_page = pages.get(str(num))
+                self.assertEqual(
+                    js_page,
+                    expected_page,
+                    f"Desajuste de paridad para ej-{num}: JS={js_page!r} vs Python={expected_page!r}.",
+                )
+                if js_page not in html_cache:
+                    target_path = os.path.join(tmp_dir, js_page)
+                    self.assertTrue(os.path.exists(target_path), f"El HTML destino '{js_page}' no existe.")
+                    with open(target_path, "r", encoding="utf-8") as f:
+                        html_cache[js_page] = f.read()
+                self.assertIn(
+                    f'id="ej-{num}"',
+                    html_cache[js_page],
+                    f"El ejercicio id='ej-{num}' no existe en '{js_page}'.",
+                )
 
         for invalid_num in (0, -1, 86, 999):
             self.assertEqual(

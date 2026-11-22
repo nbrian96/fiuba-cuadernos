@@ -141,3 +141,19 @@ export function buildMaterialViewerUrl(
   const route = `/${courseId}/materiales/${resourceId}${page !== undefined ? `?page=${page}` : ""}`;
   return withBase(route, baseOverride);
 }
+
+/**
+ * Normaliza la ruta relativa publicada bajo `dist/materials/` evitando
+ * duplicar el prefijo `{courseId}/` cuando los archivos del repositorio ya
+ * residen dentro de la carpeta del curso.
+ */
+export function toPublishedMaterialRelPath(
+  courseId: string,
+  filePath: string,
+): string {
+  const cleanPath = String(filePath ?? "").replace(/^\/+/, "");
+  if (cleanPath.startsWith(`${courseId}/`)) {
+    return cleanPath;
+  }
+  return `${courseId}/${cleanPath}`;
+}

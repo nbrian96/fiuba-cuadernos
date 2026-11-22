@@ -15,25 +15,25 @@
 
 Para preparar el examen parcial de forma intensiva, el repositorio incluye una **aplicación web modular con Bootstrap 5.3** orientada a la práctica activa (*Active Recall*), filtrado por paradigma y **graduación de dificultad de 1★ a 5★**:
 
-* 🌐 **Guía Online en GitHub Pages:** <a href="https://nbrian96.github.io/tda-2C2026-material/" target="_blank" rel="noopener noreferrer"><strong>https://nbrian96.github.io/tda-2C2026-material/</strong></a>
-* 🏠 **Portal Principal:** [index.html](index.html) (Hub de módulos, Entrenador 30s de 20 casos y Árbol de Decisión)
-* 💻 **Catálogo Completo Local:** [todos.html](todos.html) (85 ejercicios oficiales interactivos)
-* 📝 **Exámenes Parciales Oficiales y Checklist:** [parciales.html](parciales.html) — **35 ejercicios reales (2024–2026)** ordenados por dificultad + checklist pre-parcial
-* 🎲 **Paradigmas Avanzados:** [teoria-avanzados.html](teoria-avanzados.html) — **2 ejercicios resueltos diferenciados** (*2-Partition Aproximado* y *N-Reinas Las Vegas*) + **5 simuladores interactivos**
+* 🌐 **Guía Online en GitHub Pages:** <a href="https://nbrian96.github.io/fiuba-cuadernos/" target="_blank" rel="noopener noreferrer"><strong>https://nbrian96.github.io/fiuba-cuadernos/</strong></a>
+* 🏠 **Portal Principal:** `tda/` (Hub de módulos, Entrenador 30s de 20 casos y Árbol de Decisión — ruta legacy compatible `index.html`)
+* 💻 **Catálogo Completo:** `tda/ejercicios/` (85 ejercicios oficiales interactivos — ruta legacy compatible `todos.html`)
+* 📝 **Exámenes Parciales Oficiales y Checklist:** `tda/parciales/` — **35 ejercicios reales (2024–2026)** ordenados por dificultad + checklist pre-parcial (`parciales.html`)
+* 🎲 **Paradigmas Avanzados:** `tda/avanzados/` — **2 ejercicios resueltos diferenciados** (*2-Partition Aproximado* y *N-Reinas Las Vegas*) + **5 simuladores interactivos** (`teoria-avanzados.html`)
 * 🧩 **Vistas Modulares por Paradigma:**
-  * 🔷 [División y Conquista (`dyc.html`)](dyc.html) — 13 ejercicios
-  * 🔶 [Algoritmos Greedy (`greedy.html`)](greedy.html) — 27 ejercicios
-  * 🟣 [Backtracking y Branch & Bound (`backtracking.html`)](backtracking.html) — 15 ejercicios
-  * 🟢 [Programación Dinámica (`dp.html`)](dp.html) — 8 ejercicios
-  * 🔵 [Programación Lineal y PLI (`pl.html`)](pl.html) — 7 ejercicios
-  * 🔴 [Redes de Flujo (`flujo.html`)](flujo.html) — 5 ejercicios
-  * 🟡 [Reducciones NP-Completas (`reducciones.html`)](reducciones.html) — 5 ejercicios
-  * ⚡ [Problemas Integradores y Multi-Paradigma (`integradores.html`)](integradores.html) — 5 ejercicios
+  * 🔷 División y Conquista (`tda/unidad/dyc/`, legacy `dyc.html`) — 13 ejercicios
+  * 🔶 Algoritmos Greedy (`tda/unidad/greedy/`, legacy `greedy.html`) — 27 ejercicios
+  * 🟣 Backtracking y Branch & Bound (`tda/unidad/backtracking/`, legacy `backtracking.html`) — 15 ejercicios
+  * 🟢 Programación Dinámica (`tda/unidad/dp/`, legacy `dp.html`) — 8 ejercicios
+  * 🔵 Programación Lineal y PLI (`tda/unidad/pl/`, legacy `pl.html`) — 7 ejercicios
+  * 🔴 Redes de Flujo (`tda/unidad/flujo/`, legacy `flujo.html`) — 5 ejercicios
+  * 🟡 Reducciones NP-Completas (`tda/unidad/reducciones/`, legacy `reducciones.html`) — 5 ejercicios
+  * ⚡ Problemas Integradores y Multi-Paradigma (`tda/unidad/integradores/`, legacy `integradores.html`) — 5 ejercicios
 
 ### 🎯 Cómo estudiar con la Guía según tus días disponibles
 
 #### 1. Plan de Emergencia (48 a 72 horas antes del examen)
-1. Abrí [index.html](index.html) (o la <a href="https://nbrian96.github.io/tda-2C2026-material/" target="_blank" rel="noopener noreferrer">versión online</a>), ingresá a [parciales.html](parciales.html) o [todos.html](todos.html) y activá el botón **⚡ Modo Emergencia**.
+1. Abrí la <a href="https://nbrian96.github.io/fiuba-cuadernos/" target="_blank" rel="noopener noreferrer">versión online</a> (o `npm run preview` local), ingresá a `tda/parciales/` o `tda/ejercicios/` y activá el botón **⚡ Modo Emergencia**.
 2. Esto filtrará automáticamente los **ejercicios clave 🔴 IMPRESCINDIBLE** que salieron literalmente en los parciales recientes (`2024-2`, `2025-1` y `2026-2`) junto con los problemas canónicos de la guía.
 3. Usá el **filtro por Dificultad (1★ a 5★)** del HUD superior para avanzar gradualmente desde ejercicios de entrada en calor (`1★` y `2★`) hasta problemas de cierre de examen (`4★` y `5★`).
 4. Practicá con el **Entrenador de Reconocimiento en 30 Segundos** (20 casos reales) para distinguir al instante entre Greedy, Programación Dinámica, Backtracking, Programación Lineal o Redes de Flujo.
@@ -43,63 +43,53 @@ Para preparar el examen parcial de forma intensiva, el repositorio incluye una *
 #### 2. Plan Táctico (1 semana antes)
 1. Completá el Plan de Emergencia y cambiá a **🎯 Modo Táctico** para enfocarte en los ejercicios **🟡 IMPORTANTES** de la Guía Práctica v1.0 y en los que aún tengas pendientes de dominar.
 2. Escribí en papel el pseudocódigo y análisis de complejidad de los ejercicios de Programación Dinámica multidimensional, Redes de Flujo y Branch & Bound.
-3. Repasá los **Ejercicios Integradores Multi-Paradigma** ([`integradores.html`](integradores.html), Ejercicios 78 y 79) para comparar cómo resolver La Mochila y El Viajante (TSP) bajo cada paradigma.
+3. Repasá los **Ejercicios Integradores Multi-Paradigma** (`tda/unidad/integradores/`, Ejercicios 78 y 79) para comparar cómo resolver La Mochila y El Viajante (TSP) bajo cada paradigma.
 
 #### 3. Plan Integral (2 semanas o más)
-1. Recorré los **85 ejercicios oficiales** en **📚 Modo Todos** ([`todos.html`](todos.html)) o navegando pestaña por pestaña en las páginas modulares de cada paradigma, además de los **2 ejercicios avanzados** y **5 simuladores** en [`teoria-avanzados.html`](teoria-avanzados.html).
-2. Probá las implementaciones en Python de la carpeta [`Practicas/`](Practicas/).
-3. Verificá la **Checklist de Entrada al Aula** en [`parciales.html`](parciales.html) antes de rendir.
+1. Recorré los **85 ejercicios oficiales** en **📚 Modo Todos** (`tda/ejercicios/`) o navegando pestaña por pestaña en las páginas modulares de cada paradigma, además de los **2 ejercicios avanzados** y **5 simuladores** en `tda/avanzados/`.
+2. Probá las implementaciones en Python de la carpeta [`tda/Practicas/`](tda/Practicas/).
+3. Verificá la **Checklist de Entrada al Aula** en `tda/docs/checklist-pre-parcial/` antes de rendir.
 
 ---
 
 ## 🌐 Cómo desplegar la Guía en GitHub Pages
 
-1. Ingresá a tu repositorio en GitHub: <a href="https://github.com/nbrian96/tda-2C2026-material" target="_blank" rel="noopener noreferrer">https://github.com/nbrian96/tda-2C2026-material</a>.
+1. Ingresá a tu repositorio en GitHub: <a href="https://github.com/nbrian96/fiuba-cuadernos" target="_blank" rel="noopener noreferrer">https://github.com/nbrian96/fiuba-cuadernos</a>.
 2. Hacé clic en **Settings** (⚙️ Configuración) $\to$ sección **Pages**.
 3. En **Build and deployment**:
-   * **Source:** `Deploy from a branch`.
-   * **Branch:** `master` (o `main`) y carpeta `/ (root)`.
-   * Hacé clic en **Save**.
+   * **Source:** `GitHub Actions` (el workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) compila Astro, copia los materiales, genera el índice Pagefind y publica `dist/` con rutas de compatibilidad `*.html`).
 4. En 1 a 2 minutos tu guía estará publicada en:
-   👉 **<a href="https://nbrian96.github.io/tda-2C2026-material/" target="_blank" rel="noopener noreferrer">https://nbrian96.github.io/tda-2C2026-material/</a>**
+   👉 **<a href="https://nbrian96.github.io/fiuba-cuadernos/" target="_blank" rel="noopener noreferrer">https://nbrian96.github.io/fiuba-cuadernos/</a>**
 
 ---
 
 ## 🗂️ Estructura del Repositorio
 
 ```text
-tda-2C2026-material/
-├── index.html               # Portal Hub, Entrenador 30s (20 casos) y Árbol de Decisión
-├── todos.html               # Catálogo interactivo completo (85 ejercicios oficiales)
-├── dyc.html                 # Vista modular: División y Conquista (13 ejercicios)
-├── greedy.html              # Vista modular: Algoritmos Greedy (27 ejercicios)
-├── backtracking.html        # Vista modular: Backtracking y B&B (15 ejercicios)
-├── dp.html                  # Vista modular: Programación Dinámica (8 ejercicios)
-├── pl.html                  # Vista modular: Programación Lineal y PLI (7 ejercicios)
-├── flujo.html               # Vista modular: Redes de Flujo (5 ejercicios)
-├── reducciones.html         # Vista modular: Reducciones NP-C (5 ejercicios)
-├── integradores.html        # Vista modular: Integradores y Multi-Paradigma (5 ejercicios)
-├── parciales.html           # Vista modular: Exámenes Parciales Oficiales (35 ejercicios) y Checklist
-├── teoria-avanzados.html    # Aproximación y Randomizados (2 ejercicios avanzados + 5 simuladores)
-├── assets/                  # Recursos estáticos modulares (Bootstrap 5.3 + Dark Mode)
-│   ├── css/styles.css       # Estilos WCAG 2.1 AA, badges de dificultad 1★-5★ y HUD
-│   └── js/
-│       ├── app.js           # Lógica de filtrado, búsqueda, ruteo 1..85 y entrenador 30s
-│       └── catalog-bundle.js # Bundle precompilado del catálogo completo para todos.html
-├── builder/                 # Motor de compilación modular en Python
-│   ├── build_manual.py      # Script compilador de vistas HTML y sincronizador de navbar
-│   ├── html_interactive_builder.py # Generador HTML5, cards, navbar y checklist determinista
-│   ├── sec01_... a sec11_   # Módulos temáticos de teoría, 85 ejercicios y checklist
-│   └── test_qa_audit.py     # Auditoría integral QA en modo solo-lectura
-├── tests/                   # Suite de pruebas unitarias, integración, WCAG y enlaces
-├── run_tests.py             # Ejecutor unificado con verificación de aislamiento del workspace
-├── docs/
-│   └── PLAN_DE_TRABAJO.md   # Plan de trabajo arquitectónico y hoja de ruta
-├── DIapositivas/            # 29 presentaciones (00 a 24), ejemplos LINDO/Mochila/Viajante y apuntes
-├── Guia-Ejercicios/         # Guías oficiales 01 a 09 y Guía consolidada v1.0
-├── Practicas/               # 20 prácticas en Python (1 resuelta + 19 plantillas TODO con asserts)
-├── Parciales/               # 7 exámenes parciales oficiales (2024, 2025 y 2026)
-├── TP0/                     # Trabajo Práctico 0: consignas, entrega autorizada y análisis
+fiuba-cuadernos/
+├── .github/workflows/
+│   └── deploy-pages.yml     # CI/CD: check, typecheck, Vitest, build Astro y deploy Pages
+├── src/                     # Plataforma FIUBA Cuadernos (Astro + React + Zod)
+│   ├── components/          # Componentes académicos, simuladores y buscador Pagefind
+│   ├── content/             # Manifiestos JSON/YAML y 87 ejercicios + 3 apuntes en MDX
+│   ├── integrations/        # Publicación de materiales en dist/materials/ + Pagefind PDF + redirects legacy
+│   ├── layouts/             # Layouts unificados Base, Course y Doc (WCAG 2.1 AA)
+│   ├── pages/               # Hub multi-materia y rutas dinámicas [course]/**
+│   ├── schemas/             # Esquemas Zod contractuales
+│   ├── stores/              # Store local namespaced mc:v1:* con migración tda_*
+│   ├── styles/              # Design System CSS sin !important (@layer)
+│   └── utils/               # Helpers de rutas withBase(), KaTeX estático, filtros y simuladores
+├── tda/                     # Materiales físicos fuente de Teoría de Algoritmos (96 archivos)
+│   ├── DIapositivas/        # 29 presentaciones (00 a 24), ejemplos LINDO/Mochila/Viajante y apuntes
+│   ├── Guia-Ejercicios/     # Guías oficiales 01 a 09 y Guía consolidada v1.0
+│   ├── Practicas/           # 20 prácticas en Python (1 resuelta + 19 plantillas TODO con asserts)
+│   ├── Parciales/           # 7 exámenes parciales oficiales (2024, 2025 y 2026)
+│   └── TP0/                 # Trabajo Práctico 0: consignas, entrega autorizada y análisis
+├── scripts/                 # Scripts de migración MDX, build wrapper y verificador dual-base
+├── tests/                   # Suites Vitest, Playwright E2E + axe-core y Python QA
+├── docs/                    # ADRs, contratos, manifiestos y PLAN_DE_TRABAJO.md
+├── builder/ & assets/       # Generador histórico en Python (validado en aislamiento por run_tests.py)
+├── run_tests.py             # Ejecutor unificado Python con verificación de aislamiento
 ├── .nojekyll                # Configuración de GitHub Pages para servir assets estáticos
 └── logo-facultad.png        # Identidad visual FIUBA
 ```
@@ -108,7 +98,7 @@ tda-2C2026-material/
 
 ## 📖 Contenido Detallado de Carpetas
 
-### 1. 📂 [DIapositivas/](DIapositivas/)
+### 1. 📂 [tda/DIapositivas/](tda/DIapositivas/)
 Presentaciones oficiales de las clases teóricas y prácticas (**29 PDFs, clases `00` a `24`**), complementadas con paquetes de ejemplos y apuntes:
 * **00 - 01:** Presentación del curso, introducción y repasos fundamentales.
 * **02 - 03c:** División y Conquista, Teorema Maestro y ejemplos de seguimiento.
@@ -120,11 +110,11 @@ Presentaciones oficiales de las clases teóricas y prácticas (**29 PDFs, clases
 * **17 - 19:** Complejidad, Reducciones Polinomiales NP-Completitud y práctica.
 * **20:** Clase de Repaso general.
 * **21 - 24:** Algoritmos de Aproximación (I y II) y Algoritmos Randomizados (I y II).
-* **Subcarpetas temáticas y apuntes:** `12 - Lindo/` (4 archivos), `12 - Mochila/` (6 archivos), `12 - Viajante/` (12 archivos) y [`Explicaciones/problema_mochila_y_greedy.md`](DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
+* **Subcarpetas temáticas y apuntes:** `12 - Lindo/` (4 archivos), `12 - Mochila/` (6 archivos), `12 - Viajante/` (12 archivos) y [`Explicaciones/problema_mochila_y_greedy.md`](tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
 
 ---
 
-### 2. 📂 [Guia-Ejercicios/](Guia-Ejercicios/)
+### 2. 📂 [tda/Guia-Ejercicios/](tda/Guia-Ejercicios/)
 Guías oficiales publicadas por la cátedra para el cuatrimestre (10 PDFs):
 * `GuiaDeEjercicios-v1.0.pdf` *(Guía consolidada Curso Echevarría — D&C, Greedy y Backtracking, íntegramente resuelta en la plataforma interactiva)*
 * `01_division_y_conquista.pdf`
@@ -139,8 +129,8 @@ Guías oficiales publicadas por la cátedra para el cuatrimestre (10 PDFs):
 
 ---
 
-### 3. 📂 [Practicas/](Practicas/)
-Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_division_y_conquista/ej02_primer_cero_tests.py`, y **19 plantillas `TODO` con pruebas `assert`**), documentadas en [`Practicas/README.md`](Practicas/README.md):
+### 3. 📂 [tda/Practicas/](tda/Practicas/)
+Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_division_y_conquista/ej02_primer_cero_tests.py`, y **19 plantillas `TODO` con pruebas `assert`**), documentadas en [`tda/Practicas/README.md`](tda/Practicas/README.md):
 * **01_division_y_conquista:** `primer_cero`, `arreglo_pico`, `elemento_mayoritario`, `bolzano_biseccion`.
 * **02_greedy:** `seleccion_charlas`, `mochila_fraccionaria`, `minimizar_latencia`, `antenas_ruta`.
 * **03_backtracking:** `coloreo_grafos`, `n_reinas`, `independent_set_maximo`, `subset_sum`.
@@ -149,8 +139,8 @@ Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_divis
 
 ---
 
-### 4. 📂 [Parciales/](Parciales/)
-**7 exámenes parciales** tomados en fechas recientes (los 35 ejercicios están resueltos paso a paso en [`parciales.html`](parciales.html)):
+### 4. 📂 [tda/Parciales/](tda/Parciales/)
+**7 exámenes parciales** tomados en fechas recientes (los 35 ejercicios están resueltos paso a paso en `tda/parciales/` y `parciales.html`):
 * `TP-2024-2-1.pdf`, `TP-2024-2-2.pdf`, `TP-2024-2-3.pdf`
 * `TP-2025-1-1.pdf`, `TP-2025-1-2.pdf`
 * `TP-2026-2-1.pdf` *(6 ejercicios resueltos)*
@@ -158,7 +148,7 @@ Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_divis
 
 ---
 
-### 5. 📂 [TP0/](TP0/)
+### 5. 📂 [tda/TP0/](tda/TP0/)
 Primer trabajo práctico de la materia (6 archivos):
 * `TP00-2026-2c.pdf`, `checklist.pdf`, `cuartetos.py`, `cuartetos_malo.py`, `grafico_tiempos.png` y `TP0_Nelson_Avila_100244.pdf`.
 
@@ -182,7 +172,7 @@ python run_tests.py
 
 ## 🏛️ Metodología de Trabajo y Cómo Incorporar Nuevas Materias (Plataforma Astro Multi-Materia)
 
-El repositorio evoluciona hacia **Mega Cuaderno Universitario**, una plataforma académica estática multi-materia construida con **Astro 7 + React 19 + TypeScript + Zod + KaTeX + Mermaid + Pagefind** (documentada en [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md) y [`docs/architecture/README.md`](docs/architecture/README.md)).
+El repositorio evoluciona hacia **FIUBA Cuadernos**, una plataforma académica estática multi-materia construida con **Astro 7 + React 19 + TypeScript + Zod + KaTeX + Mermaid + Pagefind** (documentada en [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md) y [`docs/architecture/README.md`](docs/architecture/README.md)).
 
 ### 1. Comandos de Desarrollo y Verificación
 
@@ -208,7 +198,7 @@ python run_tests.py                                      # Suite Python de parid
    * Todo recurso, evaluación, ejercicio o apunte debe declarar explícitamente su procedencia validada por [`src/schemas/academic.ts`](src/schemas/academic.ts): `official_source`, `reconstructed_exam_statement`, `elaborated_submission`, `exam_prep_and_practice`, `elaborated_notes`, `elaborated_summary`, `elaborated_solution`, `advanced_theory_example` o `interactive_widget`.
    * Las entregas preservadas (como `TP0/`) no deben alterarse en su contenido original.
 4. **Compatibilidad dual de `base` (`/` y `/<repo>/`):**
-   * Todo enlace interno o carga de assets dentro de `src/` debe construirse mediante `withBase()` o `buildMaterialViewerUrl()` de [`src/utils/paths.ts`](src/utils/paths.ts), y verificarse compilando con `ASTRO_BASE="/"` y `ASTRO_BASE="/tda-2C2026-material/"`.
+   * Todo enlace interno o carga de assets dentro de `src/` debe construirse mediante `withBase()` o `buildMaterialViewerUrl()` de [`src/utils/paths.ts`](src/utils/paths.ts), y verificarse compilando con `ASTRO_BASE="/"` y `ASTRO_BASE="/fiuba-cuadernos/"`.
 5. **Matriz Responsive Obligatoria para QA de UI en Navegador (6 Viewports):**
    * Todo cambio visual o de layout debe validarse en navegador real sobre estos **6 viewports**:
      * **Desktop Full HD:** `1920×1080`

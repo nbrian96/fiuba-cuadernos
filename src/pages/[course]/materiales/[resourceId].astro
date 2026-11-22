@@ -4,9 +4,10 @@ import path from "node:path";
 import { getCollection } from "astro:content";
 import CourseLayout from "@/layouts/CourseLayout.astro";
 import PdfSplitViewer, {
+  type PdfSplitViewerFile,
   type PdfSplitViewerRelatedExercise,
 } from "@/components/platform/PdfSplitViewer";
-import { withBase } from "@/utils/paths";
+import { toPublishedMaterialRelPath, withBase } from "@/utils/paths";
 
 export async function getStaticPaths() {
   const courses = await getCollection("courses");
@@ -61,25 +62,26 @@ const unitLabels = resource.unitSlugs.map(
   (slug) => unitNameBySlug.get(slug) ?? slug,
 );
 
-const primaryFile = resource.files.find((f) => f.isPdf) ?? resource.files[0];
-const publicCandidate = primaryFile
-  ? path.join(process.cwd(), "public", "materials", course.id, primaryFile.path)
-  : "";
-const repoCandidate = primaryFile
-  ? path.join(process.cwd(), primaryFile.path)
-  : "";
-const hasPublishedAsset = Boolean(
-  primaryFile && (fs.existsSync(repoCandidate) || fs.existsSync(publicCandidate)),
-);
-const assetUrl =
-  hasPublishedAsset && primaryFile
-    ? withBase(
-        `/materials/${course.id}/${primaryFile.path
-          .split("/")
-          .map(encodeURIComponent)
-          .join("/")}`,
-      )
-    : null;
+function resolvePublishedFileUrl(courseId: string, rawFilePath: string): string | null {
+  const publishedRel = toPublishedMaterialRelPath(courseId, rawFilePath);
+  const publicCandidate = path.join(process.cwd(), "public", "materials", publishedRel);
+  const repoCandidate = path.join(process.cwd(), rawFilePath);
+  const exists = fs.existsSync(repoCandidate) || fs.existsSync(publicCandidate);
+  if (!exists) return null;
+
+  return withBase(
+    `/materials/${publishedRel.split("/").map(encodeURIComponent).join("/")}`,
+  );
+}
+
+const filesWithUrls: PdfSplitViewerFile[] = resource.files.map((file) => ({
+  ...file,
+  url: resolvePublishedFileUrl(course.id, file.path),
+}));
+
+const primaryFile =
+  filesWithUrls.find((f) => f.isPdf) ?? filesWithUrls[0];
+const assetUrl = primaryFile?.url ?? null;
 ---
 
 <CourseLayout
@@ -107,7 +109,7 @@ const assetUrl =
     provenance={resource.provenance}
     sourceFolder={resource.sourceFolder}
     unitLabels={unitLabels}
-    files={resource.files}
+    files={filesWithUrls}
     pdfMetadata={resource.pdfMetadata}
     preservedIntact={resource.preservedIntact}
     assetUrl={assetUrl}

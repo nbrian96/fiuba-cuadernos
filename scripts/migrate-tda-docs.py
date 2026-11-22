@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BUILDER_DIR = ROOT / "builder"
 DOCS_OUT_DIR = ROOT / "src" / "content" / "docs" / "tda"
-MOCHILA_SRC = ROOT / "DIapositivas" / "Explicaciones" / "problema_mochila_y_greedy.md"
+MOCHILA_SRC = ROOT / "tda" / "DIapositivas" / "Explicaciones" / "problema_mochila_y_greedy.md"
 ASSESSMENTS_PATH = ROOT / "docs" / "manifests" / "tda" / "assessments.json"
 
 

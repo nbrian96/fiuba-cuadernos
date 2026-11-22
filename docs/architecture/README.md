@@ -1,6 +1,6 @@
 # Registro de Decisiones de Arquitectura (ADRs)
 
-Este directorio formaliza las decisiones arquitectónicas estructurales para evolucionar `tda-2C2026-material` hacia **Mega Cuaderno Universitario**, una plataforma académica multi-materia estática desplegable en GitHub Pages, conservando Teoría de Algoritmos (TDA — FIUBA, Cátedra Echevarría) como primer módulo académico.
+Este directorio formaliza las decisiones arquitectónicas estructurales para evolucionar `tda-2C2026-material` hacia **FIUBA Cuadernos** (`fiuba-cuadernos`), una plataforma académica multi-materia estática desplegable en GitHub Pages, conservando Teoría de Algoritmos (TDA — FIUBA, Cátedra Echevarría) como primer módulo académico.
 
 ## Índice de Decisiones
 

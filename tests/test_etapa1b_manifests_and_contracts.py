@@ -51,10 +51,10 @@ ENTITY_PROVENANCE_MAP = {
 RESOURCE_ID_RE = re.compile(r"^[a-z0-9-]+$")
 MATERIAL_FOLDERS = ("DIapositivas", "Guia-Ejercicios", "Parciales", "Practicas", "TP0")
 PROTOTYPE_PDF_PATHS = {
-    "DIapositivas/13 - Programación Lineal II.pdf",
-    "Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
-    "Parciales/TP-2026-2-2.pdf",
-    "TP0/TP0_Nelson_Avila_100244.pdf",
+    "tda/DIapositivas/13 - Programación Lineal II.pdf",
+    "tda/Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
+    "tda/Parciales/TP-2026-2-2.pdf",
+    "tda/TP0/TP0_Nelson_Avila_100244.pdf",
 }
 
 REQUIRED_ADR_SECTIONS = (
@@ -106,12 +106,12 @@ def _exists_case_sensitive(base_dir: str, rel_path: str) -> bool:
     return os.path.isfile(cur)
 
 
-def _collect_physical_material_files(base_dir: str) -> list[str]:
-    """Recopila todos los archivos reales de las 5 carpetas académicas en orden estable."""
+def _collect_physical_material_files(base_dir: str, course_id: str = "tda") -> list[str]:
+    """Recopila todos los archivos reales de las 5 carpetas académicas bajo <courseId>/ en orden estable."""
     found = []
     root = pathlib.Path(base_dir)
     for folder in MATERIAL_FOLDERS:
-        folder_path = root / folder
+        folder_path = root / course_id / folder
         if not folder_path.is_dir():
             continue
         for p in sorted(folder_path.rglob("*"), key=lambda x: x.relative_to(root).as_posix()):
@@ -185,10 +185,12 @@ def validate_resources_manifest(
             raise ValueError(f"[{res_id}] 'files' debe contener al menos un archivo.")
 
         has_pdf = False
+        course_id = data.get("courseId", "tda")
+        expected_prefix = f"{course_id}/{source_folder}/"
         for fentry in files:
             fpath = fentry.get("path", "")
-            if not fpath.startswith(source_folder + "/"):
-                raise ValueError(f"[{res_id}] Ruta '{fpath}' no coincide con sourceFolder '{source_folder}'.")
+            if not (fpath.startswith(expected_prefix) or fpath.startswith(source_folder + "/")):
+                raise ValueError(f"[{res_id}] Ruta '{fpath}' no coincide con '{expected_prefix}'.")
             if not _exists_case_sensitive(base_dir, fpath):
                 raise ValueError(f"[{res_id}] Ruta inexistente o con casing incorrecto en disco: '{fpath}'.")
             if fpath in seen_paths:
@@ -453,7 +455,11 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
         self.assertIn("{BASE_URL}/{course}/materiales/{resourceId}?page={N}", adr4_text)
         self.assertIn("1,264", adr4_text)
         for proto_path in PROTOTYPE_PDF_PATHS:
-            self.assertIn(proto_path, adr4_text, f"ADR-004 debe mencionar el PDF prototipo '{proto_path}'.")
+            short_proto = proto_path.removeprefix("tda/")
+            self.assertTrue(
+                proto_path in adr4_text or short_proto in adr4_text,
+                f"ADR-004 debe mencionar el PDF prototipo '{short_proto}'.",
+            )
 
         domain_path = contracts_dir / "domain-schemas.md"
         storage_path = contracts_dir / "local-storage-migration.md"
@@ -564,15 +570,13 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
             self.assertEqual(ex["legacyPage"], f"{expected['paradigm']}.html")
             self.assertEqual(ex["legacyAnchor"], f"#ej-{num}")
 
-        teoria_html = (pathlib.Path(BASE_DIR) / "teoria-avanzados.html").read_text(encoding="utf-8")
-        sec16_match = re.search(r'<section[^>]*id="ejercicios-clase"[^>]*>([\s\S]*?)</section>', teoria_html)
-        self.assertIsNotNone(sec16_match)
-        sec16_html = sec16_match.group(1)
+        adv_dir = pathlib.Path(BASE_DIR) / "src" / "content" / "exercises" / "tda" / "avanzados"
+        adv_mdx_texts = "\n".join(p.read_text(encoding="utf-8") for p in sorted(adv_dir.glob("*.mdx")))
 
         adv_ids = [a["id"] for a in self.exercises["advancedExercises"]]
         self.assertEqual(adv_ids, ["tda-adv-aprox-2partition", "tda-adv-rand-nreinas"])
-        self.assertIn("2-Partition Problem", sec16_html)
-        self.assertIn("Las Vegas", sec16_html)
+        self.assertIn("2-Partition Problem", adv_mdx_texts)
+        self.assertIn("Las Vegas", adv_mdx_texts)
 
     def test_course_units_views_and_legacy_routes_parity(self):
         """Verifica coherencia de units[], views[] y legacyRoutes de course.json contra disco y ejercicios."""
@@ -588,8 +592,9 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
             self.assertIn(unit["legacyRoute"], self.course["legacyRoutes"])
 
         self.assertEqual(len(self.course["legacyRoutes"]), 12)
-        for legacy_html in self.course["legacyRoutes"]:
-            self.assertTrue(_exists_case_sensitive(BASE_DIR, legacy_html), f"Falta HTML legacy '{legacy_html}'.")
+        for legacy_html, target_route in self.course["legacyRoutes"].items():
+            self.assertTrue(legacy_html.endswith(".html"), f"Ruta legacy inválida: '{legacy_html}'.")
+            self.assertTrue(target_route.startswith("/tda/"), f"Ruta destino inválida: '{target_route}'.")
 
         views_by_slug = {v["slug"]: v for v in self.course["views"]}
         self.assertEqual(views_by_slug["todos"]["exerciseCount"], 85)
@@ -615,7 +620,12 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
     def test_interactive_notes_checklist_and_localstorage_parity(self):
         """Verifica 6 widgets, 17 secciones avanzadas (id+título), 11 chk_ (id+label), drawer y 4 claves localStorage."""
         app_js = (pathlib.Path(BASE_DIR) / "assets" / "js" / "app.js").read_text(encoding="utf-8")
-        teoria_html = (pathlib.Path(BASE_DIR) / "teoria-avanzados.html").read_text(encoding="utf-8")
+        adv_sections = json.loads(
+            (pathlib.Path(BASE_DIR) / "src" / "data" / "tdaAdvancedSections.json").read_text(encoding="utf-8")
+        )
+        adv_page = (
+            pathlib.Path(BASE_DIR) / "src" / "pages" / "[course]" / "avanzados" / "index.astro"
+        ).read_text(encoding="utf-8")
 
         widgets = self.interactive["widgets"]
         self.assertEqual(len(widgets), 6)
@@ -626,16 +636,18 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
         for handler in trainer["handlers"]:
             self.assertIn(f"function {handler}(", app_js)
 
+        sim_by_anchor = {
+            "set-cover": "SetCoverSimulator",
+            "pricing-method": "PricingMethodSimulator",
+            "karger-mincut": "KargerMinCutSimulator",
+            "max-3sat": "Max3SatSimulator",
+            "streaming-conteo": "HamletStreamingSimulator",
+        }
+        sec_ids_json = {s["id"] for s in adv_sections}
         for sim in [w for w in widgets if w["id"] != "tda-widget-entrenador-30s"]:
             sec_id = sim["legacyAnchor"].lstrip("#")
-            sec_m = re.search(rf'<section[^>]*id="{re.escape(sec_id)}"[^>]*>([\s\S]*?)</section>', teoria_html)
-            self.assertIsNotNone(sec_m, f"Falta sección '{sec_id}' en teoria-avanzados.html.")
-            for handler in sim["handlers"]:
-                self.assertIn(f"{handler}(", sec_m.group(1), f"[{sim['id']}] Handler '{handler}' ausente en #{sec_id}.")
-
-        balanceo_m = re.search(r'<section[^>]*id="balanceo-carga"[^>]*>([\s\S]*?)</section>', teoria_html)
-        self.assertIsNotNone(balanceo_m)
-        self.assertEqual(len(re.findall(r"onclick=", balanceo_m.group(1))), 0)
+            self.assertIn(sec_id, sec_ids_json, f"Falta sección '{sec_id}' en tdaAdvancedSections.json.")
+            self.assertIn(sim_by_anchor[sec_id], adv_page, f"Falta componente simulador para '{sec_id}' en avanzados/index.astro.")
 
         notes = self.interactive["notes"]
         self.assertEqual(len(notes), 2)
@@ -643,14 +655,9 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
         self.assertTrue(_exists_case_sensitive(BASE_DIR, md_note["sourceFile"]))
 
         adv_note = next(n for n in notes if n["id"] == "tda-note-teoria-avanzados")
-        actual_sections = []
-        for sm in re.finditer(
-            r'<section[^>]*class="[^"]*topic-section[^"]*"[^>]*id="([^"]+)"[^>]*>([\s\S]*?)</section>',
-            teoria_html,
-        ):
-            hm = re.search(r"<h3[^>]*>([\s\S]*?)</h3>", sm.group(2))
-            actual_title = html.unescape(re.sub(r"<[^>]+>", "", hm.group(1)).strip()) if hm else sm.group(1)
-            actual_sections.append({"id": sm.group(1), "title": actual_title})
+        actual_sections = [{"id": s["id"], "title": s["title"]} for s in adv_sections] + [
+            {"id": "ejercicios-clase", "title": "16. Ejercicios Propuestos de Clase Resueltos Paso a Paso"}
+        ]
         self.assertEqual(len(actual_sections), 17)
         self.assertEqual(adv_note["sections"], actual_sections)
 
@@ -752,7 +759,7 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
 
         # 3. Casing incorrecto en ruta y archivo omitido del manifiesto
         bad_case = copy.deepcopy(self.resources)
-        bad_case["resources"][0]["files"][0]["path"] = "diapositivas/00 - Presentación del Curso e Introducción.pdf"
+        bad_case["resources"][0]["files"][0]["path"] = "tda/diapositivas/00 - Presentación del Curso e Introducción.pdf"
         with self.assertRaises(ValueError):
             validate_resources_manifest(bad_case, BASE_DIR)
 

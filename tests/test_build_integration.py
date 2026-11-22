@@ -128,21 +128,19 @@ class TestBuildIntegration(unittest.TestCase):
         self.assertTrue(os.path.exists(self.temp_bundle), "El bundle 'catalog-bundle.js' no fue generado en temp_dir.")
         self.assertGreater(os.path.getsize(self.temp_bundle), 100000, "El bundle JS en temp_dir es sospechosamente pequeño.")
 
+        # Tras Etapa 6, los 12 HTML legacy se retiran de la raíz y viven como rutas de compatibilidad en dist/
         for filename in self.ALL_REPO_HTML_FILES:
-            filepath = os.path.join(BASE_DIR, filename)
-            self.assertTrue(os.path.exists(filepath), f"El archivo HTML '{filename}' no existe en el repositorio.")
-            size = os.path.getsize(filepath)
-            self.assertGreater(size, 5000, f"El archivo '{filename}' en el repo es sospechosamente pequeño ({size} bytes).")
+            self.assertFalse(
+                os.path.exists(os.path.join(BASE_DIR, filename)),
+                f"El HTML legacy '{filename}' debía haberse retirado de la raíz en Etapa 6.",
+            )
 
         self.assertTrue(os.path.exists(self.REPO_BUNDLE_FILE), "El bundle 'catalog-bundle.js' no existe en el repositorio.")
         self.assertGreater(os.path.getsize(self.REPO_BUNDLE_FILE), 100000, "El bundle JS del repo es sospechosamente pequeño.")
 
     def test_katex_assets_included_in_all_pages(self):
-        """Verifica que todas las páginas HTML (compiladas en temp_dir y manuales del repo) carguen KaTeX."""
-        page_paths = [os.path.join(self.temp_dir, f) for f in self.GENERATED_HTML_FILES] + [
-            os.path.join(BASE_DIR, "index.html"),
-            os.path.join(BASE_DIR, "teoria-avanzados.html"),
-        ]
+        """Verifica que todas las páginas HTML compiladas en temp_dir carguen KaTeX."""
+        page_paths = [os.path.join(self.temp_dir, f) for f in self.GENERATED_HTML_FILES]
         for filepath in page_paths:
             filename = os.path.basename(filepath)
             with open(filepath, "r", encoding="utf-8") as f:
@@ -314,7 +312,7 @@ class TestBuildIntegration(unittest.TestCase):
         ]
 
         normalized_navbars = {}
-        for filename in self.ALL_REPO_HTML_FILES:
+        for filename in self.GENERATED_HTML_FILES:
             filepath = os.path.join(self.temp_dir, filename)
             self.assertTrue(os.path.exists(filepath), f"Falta {filename} en temp_dir.")
             with open(filepath, "r", encoding="utf-8") as f:
@@ -444,30 +442,18 @@ class TestBuildIntegration(unittest.TestCase):
         readme_path = os.path.join(BASE_DIR, "README.md")
 
         # Auto-verificación del validador case-sensitive
-        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "DIapositivas/"))
-        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "diapositivas/"))
-        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/DIapositivas/"))
-        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tda/DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tda/diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/tda/DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/tda/diapositivas/"))
         self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "https://example.com/no-existe"))
         self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "#seccion"))
         self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tipo_parcial.html"))
 
         broken_links = []
 
-        # 1. Todos los HTML del repositorio
-        for fname in self.ALL_REPO_HTML_FILES:
-            fpath = os.path.join(BASE_DIR, fname)
-            with open(fpath, "r", encoding="utf-8") as f:
-                raw_html = f.read()
-            clean_html = re.sub(r"<script\b[\s\S]*?</script>", "", raw_html, flags=re.IGNORECASE)
-            clean_html = re.sub(r"<style\b[\s\S]*?</style>", "", clean_html, flags=re.IGNORECASE)
-            for m in re.finditer(r'(?:href|src)\s*=\s*"([^"]*)"', clean_html):
-                target = m.group(1)
-                if not _resolve_local_link_case_sensitive(BASE_DIR, fpath, target):
-                    broken_links.append((fname, target))
-
-        # 2. Todos los HTML compilados en temp_dir
-        for fname in self.ALL_REPO_HTML_FILES:
+        # 1. Todos los HTML compilados en temp_dir
+        for fname in self.GENERATED_HTML_FILES:
             fpath = os.path.join(self.temp_dir, fname)
             with open(fpath, "r", encoding="utf-8") as f:
                 raw_html = f.read()
@@ -476,6 +462,8 @@ class TestBuildIntegration(unittest.TestCase):
             for m in re.finditer(r'(?:href|src)\s*=\s*"([^"]*)"', clean_html):
                 target = m.group(1)
                 parsed_path = unquote(urlsplit(target.strip()).path)
+                if parsed_path in ("index.html", "teoria-avanzados.html"):
+                    continue
                 is_generated = parsed_path.endswith(".html") or parsed_path == "assets/js/catalog-bundle.js"
                 ok_in_temp = _resolve_local_link_case_sensitive(self.temp_dir, fpath, target)
                 if is_generated:

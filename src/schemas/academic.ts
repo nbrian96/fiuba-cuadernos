@@ -239,11 +239,16 @@ export const ResourceEntrySchema = z
     }
 
     for (const [idx, file] of res.files.entries()) {
-      if (!file.path.startsWith(`${res.sourceFolder}/`)) {
+      const expectedPrefixWithCourse = `${res.courseId}/${res.sourceFolder}/`;
+      const expectedPrefixLegacy = `${res.sourceFolder}/`;
+      if (
+        !file.path.startsWith(expectedPrefixWithCourse) &&
+        !file.path.startsWith(expectedPrefixLegacy)
+      ) {
         ctx.addIssue({
           code: "custom",
           path: ["files", idx, "path"],
-          message: `La ruta '${file.path}' debe comenzar con '${res.sourceFolder}/'`,
+          message: `La ruta '${file.path}' debe comenzar con '${expectedPrefixWithCourse}' o '${expectedPrefixLegacy}'`,
         });
       }
     }

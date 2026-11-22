@@ -12,17 +12,10 @@ class TestDarkModeAndResponsive(unittest.TestCase):
     def setUp(self):
         self.css_path = os.path.join(BASE_DIR, "assets", "css", "styles.css")
         self.js_path = os.path.join(BASE_DIR, "assets", "js", "app.js")
-        self.html_avanzados_path = os.path.join(BASE_DIR, "teoria-avanzados.html")
-        self.html_index_path = os.path.join(BASE_DIR, "index.html")
-        
         with open(self.css_path, "r", encoding="utf-8") as f:
             self.css = f.read()
         with open(self.js_path, "r", encoding="utf-8") as f:
             self.js = f.read()
-        with open(self.html_avanzados_path, "r", encoding="utf-8") as f:
-            self.html_avanzados = f.read()
-        with open(self.html_index_path, "r", encoding="utf-8") as f:
-            self.html_index = f.read()
 
     def test_dark_mode_alerts_and_katex(self):
         """Verifica que las alertas Bootstrap y KaTeX tengan soporte completo y alto contraste en dark mode."""
@@ -72,37 +65,49 @@ class TestDarkModeAndResponsive(unittest.TestCase):
         self.assertIn("darkMode: true", self.js)
 
     def test_all_12_html_files_have_early_dark_detection(self):
-        """Verifica que los 12 archivos HTML incluyan el script de detección temprana de tema en <head>."""
-        html_files = sorted(glob.glob(os.path.join(BASE_DIR, "*.html")))
-        self.assertGreaterEqual(len(html_files), 12, "Debe haber al menos 12 archivos HTML en el proyecto.")
+        """Verifica que el generador HTML incluya el script de detección temprana de tema en <head>."""
+        import sys
+        import tempfile
+        builder_dir = os.path.join(BASE_DIR, "builder")
+        if builder_dir not in sys.path:
+            sys.path.insert(0, builder_dir)
+        import html_interactive_builder
 
-        for fpath in html_files:
-            fname = os.path.basename(fpath)
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read()
+        with tempfile.TemporaryDirectory(prefix="tda_dark_head_") as tmp_dir:
+            out_html = os.path.join(tmp_dir, "sample.html")
+            html_interactive_builder.build_interactive_html(
+                "# Test\n\n### Ejercicio 1: Demo\n\nTexto",
+                out_html,
+                active_paradigm="all",
+                page_title="Test",
+            )
+            with open(out_html, "r", encoding="utf-8") as f:
+                template_sample = f.read()
 
-            self.assertIn("data-bs-theme", content, f"El archivo {fname} debe incluir detección de tema con data-bs-theme en <head>.")
-            self.assertIn("width=device-width", content, f"El archivo {fname} debe incluir la etiqueta viewport responsive.")
-            self.assertIn("styles.css", content, f"El archivo {fname} debe cargar assets/css/styles.css.")
+        self.assertIn("data-bs-theme", template_sample)
+        self.assertIn("width=device-width", template_sample)
+        self.assertIn("styles.css", template_sample)
 
     def test_index_html_rules_and_portal_badges(self):
-        """Verifica que index.html use clases semánticas para listas de examen y badges de portal."""
-        self.assertIn("exam-rules-list", self.html_index)
-        self.assertIn("exam-errors-list", self.html_index)
-        self.assertIn("badge-portal-exam", self.html_index)
-        self.assertIn("badge-portal-teoria", self.html_index)
-        self.assertIn("site-nav-link-adv", self.html_index)
+        """Verifica que styles.css preserve las clases semánticas para listas de examen y badges de portal."""
+        self.assertIn(".exam-rules-list", self.css)
+        self.assertIn(".exam-errors-list", self.css)
+        self.assertIn(".badge-portal-exam", self.css)
+        self.assertIn(".badge-portal-teoria", self.css)
+        self.assertIn(".site-nav-link-adv", self.css)
 
     def test_teoria_avanzados_mermaid_and_cheatsheet(self):
-        """Verifica que teoria-avanzados.html sincronice tema antes de Mermaid y tenga drawer de fórmulas."""
-        self.assertIn("id=\"cheatsheetDrawer\"", self.html_avanzados)
-        self.assertIn("openCheatsheet()", self.html_avanzados)
-        self.assertIn("closeCheatsheet()", self.html_avanzados)
-        mermaid_idx = self.html_avanzados.find("mermaid.initialize")
-        dark_sync_idx = self.html_avanzados.find("document.body.classList.add(\"dark-mode\")")
-        self.assertNotEqual(mermaid_idx, -1)
-        self.assertNotEqual(dark_sync_idx, -1)
-        self.assertLess(dark_sync_idx, mermaid_idx, "El tema dark-mode debe aplicarse antes de llamar a mermaid.initialize.")
+        """Verifica que el builder incluya drawer de fórmulas y sincronización de tema."""
+        import sys
+        builder_dir = os.path.join(BASE_DIR, "builder")
+        if builder_dir not in sys.path:
+            sys.path.insert(0, builder_dir)
+        import html_interactive_builder
+
+        drawer = html_interactive_builder.get_hud_and_drawer_html("all")
+        self.assertIn('id="cheatsheetDrawer"', drawer)
+        self.assertIn("openCheatsheet()", drawer)
+        self.assertIn("closeCheatsheet()", drawer)
 
     def test_mobile_paradigm_dropdown_and_viewport_fix(self):
         """Verifica que el selector de paradigmas sea táctil/interactivo en mobile y que <nav> no desborde el viewport."""
@@ -113,17 +118,16 @@ class TestDarkModeAndResponsive(unittest.TestCase):
         self.assertIn("overflow: visible !important;", self.css)
         self.assertIn("overflow-x: clip;", self.css)
 
-        html_files = sorted(glob.glob(os.path.join(BASE_DIR, "*.html")))
-        for fpath in html_files:
-            fname = os.path.basename(fpath)
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read()
-            self.assertIn("toggleParadigmDropdown(event)", content,
-                          f"El archivo {fname} debe incluir toggleParadigmDropdown(event) en el menú de Paradigmas.")
-            self.assertIn("class=\"site-nav\"", content,
-                          f"El archivo {fname} debe incluir class=\"site-nav\" en el elemento <nav>.")
-            self.assertIn("todos.html", content,
-                          f"El archivo {fname} debe enlazar a todos.html en el menú de Paradigmas.")
+        import sys
+        builder_dir = os.path.join(BASE_DIR, "builder")
+        if builder_dir not in sys.path:
+            sys.path.insert(0, builder_dir)
+        import html_interactive_builder
+
+        navbar = html_interactive_builder.get_navbar_html(active_paradigm="all")
+        self.assertIn("toggleParadigmDropdown(event)", navbar)
+        self.assertIn('class="site-nav"', navbar)
+        self.assertIn("todos.html", navbar)
 
     def test_css_braces_strictly_balanced(self):
         """Verifica que assets/css/styles.css tenga llaves {} estrictamente balanceadas sin cierres huérfanos."""

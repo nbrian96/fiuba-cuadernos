@@ -27,6 +27,11 @@ const MIME_BY_EXT = new Map([
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   ],
   [".svg", "image/svg+xml"],
+  [".png", "image/png"],
+  [".jpg", "image/jpeg"],
+  [".jpeg", "image/jpeg"],
+  [".webp", "image/webp"],
+  [".gif", "image/gif"],
 ]);
 
 function getMimeType(filePath) {
@@ -56,8 +61,11 @@ function buildAllowedMaterialsMap(repoRoot, manifests) {
     const courseId = manifest.courseId;
     for (const resource of manifest.resources) {
       for (const file of resource.files ?? []) {
-        const posixRel = `${courseId}/${String(file.path).replace(/^\/+/, "")}`;
-        const absSource = path.resolve(repoRoot, file.path);
+        const cleanPath = String(file.path).replace(/^\/+/, "");
+        const posixRel = cleanPath.startsWith(`${courseId}/`)
+          ? cleanPath
+          : `${courseId}/${cleanPath}`;
+        const absSource = path.resolve(repoRoot, cleanPath);
         // Asegurar que no escape del repositorio raíz
         const relCheck = path.relative(repoRoot, absSource);
         if (!relCheck.startsWith("..") && !path.isAbsolute(relCheck)) {
@@ -67,6 +75,87 @@ function buildAllowedMaterialsMap(repoRoot, manifests) {
     }
   }
   return allowed;
+}
+
+function loadAllCourseManifests(repoRoot) {
+  const coursesDir = path.join(repoRoot, "src", "content", "courses");
+  if (!fs.existsSync(coursesDir)) return [];
+
+  const manifests = [];
+  for (const entry of fs.readdirSync(coursesDir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith(".json")) continue;
+    const abs = path.join(coursesDir, entry.name);
+    const data = JSON.parse(fs.readFileSync(abs, "utf-8"));
+    if (data && data.id && data.legacyRoutes && typeof data.legacyRoutes === "object") {
+      manifests.push(data);
+    }
+  }
+  return manifests;
+}
+
+function escapeHtmlAttr(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function resolveWithPrefix(urlBasePrefix, route) {
+  const cleanRoute = route.startsWith("/") ? route : `/${route}`;
+  return urlBasePrefix ? `${urlBasePrefix}${cleanRoute}` : cleanRoute;
+}
+
+function buildLegacyRedirectHtml(legacyFile, courseId, targetRoute, urlBasePrefix) {
+  const resolvedTarget = resolveWithPrefix(urlBasePrefix, targetRoute);
+  const courseHome = resolveWithPrefix(urlBasePrefix, `/${courseId}/`);
+  const escapedTarget = escapeHtmlAttr(resolvedTarget);
+  const escapedTitle = escapeHtmlAttr(`Redirigiendo desde ${legacyFile}`);
+
+  return `<!doctype html>
+<html lang="es" data-pagefind-ignore="all">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>${escapedTitle}</title>
+    <link rel="canonical" href="${escapedTarget}" />
+    <meta http-equiv="refresh" content="0; url=${escapedTarget}" />
+    <script>
+      (function () {
+        var target = ${JSON.stringify(resolvedTarget)};
+        var courseHome = ${JSON.stringify(courseHome)};
+        var legacyFile = ${JSON.stringify(legacyFile)};
+        var hash = window.location.hash || "";
+        var search = window.location.search || "";
+        var dest = legacyFile === "todos.html" && hash === "#entrenador-30s"
+          ? courseHome + search + hash
+          : target + search + hash;
+        window.location.replace(dest);
+      })();
+    </script>
+  </head>
+  <body>
+    <main>
+      <p>Redirigiendo a <a href="${escapedTarget}">${escapedTarget}</a>…</p>
+    </main>
+  </body>
+</html>
+`;
+}
+
+function buildLegacyRedirectMap(courseManifests, urlBasePrefix) {
+  const redirects = new Map();
+  for (const course of courseManifests) {
+    for (const [legacyFile, targetRoute] of Object.entries(course.legacyRoutes ?? {})) {
+      if (legacyFile === "index.html") continue;
+      redirects.set(
+        legacyFile,
+        buildLegacyRedirectHtml(legacyFile, course.id, targetRoute, urlBasePrefix),
+      );
+    }
+  }
+  return redirects;
 }
 
 function normalizeUrlBase(rawBase = "/") {
@@ -141,6 +230,8 @@ export default function academicBuildIntegration() {
       "astro:server:setup": ({ server }) => {
         const manifests = loadAllResourceManifests(repoRoot);
         const allowed = buildAllowedMaterialsMap(repoRoot, manifests);
+        const courseManifests = loadAllCourseManifests(repoRoot);
+        const legacyRedirects = buildLegacyRedirectMap(courseManifests, urlBasePrefix);
 
         server.middlewares.use((req, res, next) => {
           const reqUrl = req.url ?? "";
@@ -149,6 +240,15 @@ export default function academicBuildIntegration() {
             urlBasePrefix && rawPath.startsWith(urlBasePrefix)
               ? rawPath.slice(urlBasePrefix.length) || "/"
               : rawPath;
+
+          const legacyCandidate = pathWithoutBase.replace(/^\/+/, "");
+          if (legacyRedirects.has(legacyCandidate)) {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.setHeader("Cache-Control", "no-cache");
+            res.end(legacyRedirects.get(legacyCandidate));
+            return;
+          }
 
           if (pathWithoutBase.startsWith("/materials/")) {
             const relPart = pathWithoutBase.slice("/materials/".length);
@@ -272,6 +372,17 @@ export default function academicBuildIntegration() {
         } finally {
           await pagefind.close();
         }
+
+        const courseManifests = loadAllCourseManifests(repoRoot);
+        const legacyRedirects = buildLegacyRedirectMap(courseManifests, urlBasePrefix);
+        for (const [legacyFile, htmlContent] of legacyRedirects.entries()) {
+          const destHtml = path.join(distDir, legacyFile);
+          fs.writeFileSync(destHtml, htmlContent, "utf-8");
+        }
+        fs.writeFileSync(path.join(distDir, ".nojekyll"), "", "utf-8");
+        logger.info(
+          `Rutas legacy de compatibilidad (${legacyRedirects.size}) y .nojekyll generados en ${distDir}`,
+        );
       },
     },
   };

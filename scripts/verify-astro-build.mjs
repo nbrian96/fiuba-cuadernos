@@ -251,17 +251,57 @@ for (const relRoute of expectedEtapa4Routes) {
 let publishedFiles = 0;
 for (const res of resourcesManifest.resources) {
   for (const file of res.files) {
-    const dest = path.join(distDir, "materials", "tda", file.path);
+    const cleanPath = String(file.path).replace(/^\/+/, "");
+    const publishedRel = cleanPath.startsWith("tda/") ? cleanPath : `tda/${cleanPath}`;
+    const dest = path.join(distDir, "materials", publishedRel);
     assert.ok(
       fs.existsSync(dest),
-      `[Materials] Falta archivo publicado en dist/materials/tda/${file.path}`,
+      `[Materials] Falta archivo publicado en dist/materials/${publishedRel}`,
     );
     publishedFiles++;
   }
 }
 assert.equal(publishedFiles, 96, "Se esperaban exactamente 96 archivos en dist/materials/tda/");
 
-// Índice Pagefind generado
+// .nojekyll y los 11 HTML de compatibilidad legacy en dist/
+assert.ok(
+  fs.existsSync(path.join(distDir, ".nojekyll")),
+  "[Pages] Falta dist/.nojekyll para servir _astro/ en GitHub Pages.",
+);
+
+const basePrefix = base === "/" ? "" : base.slice(0, -1);
+const legacyEntries = Object.entries(courseManifest.legacyRoutes ?? {}).filter(
+  ([legacyFile]) => legacyFile !== "index.html",
+);
+assert.equal(
+  legacyEntries.length,
+  11,
+  "Se esperaban 11 archivos de redirección legacy (excluyendo index.html).",
+);
+
+for (const [legacyFile, targetRoute] of legacyEntries) {
+  const legacyPath = path.join(distDir, legacyFile);
+  assert.ok(
+    fs.existsSync(legacyPath),
+    `[Legacy Redirect] Falta ruta de compatibilidad dist/${legacyFile}`,
+  );
+  const legacyHtml = fs.readFileSync(legacyPath, "utf-8");
+  const expectedTarget = `${basePrefix}${targetRoute}`;
+  assert.ok(
+    legacyHtml.includes('data-pagefind-ignore="all"'),
+    `[Legacy Redirect] dist/${legacyFile} debe incluir data-pagefind-ignore="all"`,
+  );
+  assert.ok(
+    legacyHtml.includes(`url=${expectedTarget}`),
+    `[Legacy Redirect] dist/${legacyFile} debe redirigir a '${expectedTarget}'`,
+  );
+  assert.ok(
+    legacyHtml.includes(`<link rel="canonical" href="${expectedTarget}"`),
+    `[Legacy Redirect] dist/${legacyFile} debe declarar canonical '${expectedTarget}'`,
+  );
+}
+
+// Índice Pagefind generado (sin indexar los 11 redirects legacy)
 for (const pfRel of ["pagefind/pagefind.js", "pagefind/pagefind-entry.json"]) {
   assert.ok(
     fs.existsSync(path.join(distDir, pfRel)),

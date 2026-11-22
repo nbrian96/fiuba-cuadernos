@@ -28,14 +28,28 @@ class TestQAAudit(unittest.TestCase):
 
     def test_qa_audit_passes(self):
         """Verifica integridad de los 85 ejercicios, 35 parciales, estrellas, HTML y delimitadores LaTeX."""
-        _qa_audit.run_qa_audit(base_dir=BASE_DIR, verbose=False)
+        import shutil
+        import tempfile
+
+        with tempfile.TemporaryDirectory(prefix="tda_qa_audit_") as tmp_dir:
+            shutil.copytree(BUILDER_DIR, os.path.join(tmp_dir, "builder"))
+            build_manual.main(output_dir=tmp_dir)
+            _qa_audit.run_qa_audit(base_dir=tmp_dir, verbose=False)
 
     def test_no_git_conflict_markers_in_html_files(self):
-        """Verifica ausencia total de marcadores de conflicto Git en los archivos HTML del repo."""
-        html_files = sorted(glob.glob(os.path.join(BASE_DIR, "*.html")))
-        self.assertGreaterEqual(len(html_files), 12)
-        for fpath in html_files:
-            fname = os.path.basename(fpath)
+        """Verifica ausencia total de marcadores de conflicto Git en archivos fuente y docs del repo."""
+        scan_globs = [
+            os.path.join(BASE_DIR, "*.html"),
+            os.path.join(BASE_DIR, "src", "**", "*.astro"),
+            os.path.join(BASE_DIR, "src", "**", "*.tsx"),
+            os.path.join(BASE_DIR, "builder", "*.py"),
+        ]
+        files_to_check = []
+        for pattern in scan_globs:
+            files_to_check.extend(sorted(glob.glob(pattern, recursive=True)))
+        self.assertGreater(len(files_to_check), 10)
+        for fpath in files_to_check:
+            fname = os.path.relpath(fpath, BASE_DIR)
             with open(fpath, "r", encoding="utf-8") as f:
                 content = f.read()
             self.assertNotIn("<<<<<<<", content, f"[{fname}] Contiene marcador de conflicto '<<<<<<<'.")
@@ -46,37 +60,18 @@ class TestQAAudit(unittest.TestCase):
             self.assertNotIn(">>>>>>>", content, f"[{fname}] Contiene marcador de conflicto '>>>>>>>'.")
 
     def test_standalone_pages_navbar_synced_and_no_duplicate_js(self):
-        """Verifica sincronización exacta de navbar en vistas standalone y eliminación de JS duplicado."""
+        """Verifica que el navbar generado por html_interactive_builder mantenga conteos y sin errores."""
         counts = build_manual.compute_catalog_counts()
-        for fname, active_key in build_manual.STANDALONE_NAVBAR_PAGES:
-            fpath = os.path.join(BASE_DIR, fname)
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read().replace("\r\n", "\n")
-
-            matches = list(re.finditer(r'<header\b[^>]*\bid="siteNavbar"[^>]*>[\s\S]*?</header>', content))
-            self.assertEqual(len(matches), 1, f"[{fname}] Debe tener exactamente 1 <header id='siteNavbar'>.")
-            expected_navbar = html_interactive_builder.get_navbar_html(
-                active_paradigm=active_key,
-                counts=counts,
-            ).replace("\r\n", "\n")
-            self.assertEqual(
-                matches[0].group(0),
-                expected_navbar,
-                f"[{fname}] El navbar no coincide exactamente con get_navbar_html('{active_key}', counts).",
-            )
-
-        avanzados_path = os.path.join(BASE_DIR, "teoria-avanzados.html")
-        with open(avanzados_path, "r", encoding="utf-8") as f:
-            avanzados_html = f.read()
-        for fn_name in ("openCheatsheet", "closeCheatsheet", "scrollToTop", "toggleDarkMode"):
-            self.assertNotIn(
-                f"function {fn_name}",
-                avanzados_html,
-                f"teoria-avanzados.html aún define la función global duplicada '{fn_name}'.",
-            )
+        expected_navbar = html_interactive_builder.get_navbar_html(
+            active_paradigm="all",
+            counts=counts,
+        )
+        self.assertIn('id="siteNavbar"', expected_navbar)
+        self.assertIn(f"Todos los Ejercicios ({counts['todos']})", expected_navbar)
+        self.assertIn(f"Parciales ({counts['parciales']})", expected_navbar)
 
     def test_all_12_repo_html_have_consistent_counts_and_active_route(self):
-        """Verifica conteos consistentes del catálogo y ruta activa correcta en los 12 HTML del repo."""
+        """Verifica que get_navbar_html() produzca conteos consistentes y ruta activa para los paradigmas del builder."""
         counts = build_manual.compute_catalog_counts()
         expected_nums = [
             str(counts["parciales"]),
@@ -91,37 +86,19 @@ class TestQAAudit(unittest.TestCase):
             str(counts["integradores"]),
         ]
 
-        expected_files = [
-            "index.html",
-            "teoria-avanzados.html",
-            "todos.html",
-            "dyc.html",
-            "greedy.html",
-            "backtracking.html",
-            "dp.html",
-            "pl.html",
-            "flujo.html",
-            "reducciones.html",
-            "integradores.html",
-            "parciales.html",
-        ]
-        for fname in expected_files:
-            fpath = os.path.join(BASE_DIR, fname)
-            self.assertTrue(os.path.exists(fpath), f"Falta {fname} en el repositorio.")
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read()
-
-            m = re.search(r'<header\b[^>]*\bid="siteNavbar"[^>]*>[\s\S]*?</header>', content)
-            self.assertIsNotNone(m, f"[{fname}] Falta <header id='siteNavbar'>.")
-            navbar_html = m.group(0)
-
-            found_nums = re.findall(r"\((\d+)\)", html.unescape(navbar_html))
-            self.assertEqual(
-                found_nums,
-                expected_nums,
-                f"[{fname}] Conteos en navbar {found_nums} no coinciden con {expected_nums}.",
+        for active_key, expected_actives in (
+            ("avanzados", ["teoria-avanzados.html"]),
+            ("parciales", ["parciales.html"]),
+            ("all", ["#", "todos.html"]),
+            ("dyc", ["#", "dyc.html"]),
+            ("greedy", ["#", "greedy.html"]),
+        ):
+            navbar_html = html_interactive_builder.get_navbar_html(
+                active_paradigm=active_key,
+                counts=counts,
             )
-
+            found_nums = re.findall(r"\((\d+)\)", html.unescape(navbar_html))
+            self.assertEqual(found_nums, expected_nums)
             active_hrefs = []
             for am in re.finditer(r"<a\b([^>]*)>", navbar_html):
                 attrs = am.group(1)
@@ -129,16 +106,7 @@ class TestQAAudit(unittest.TestCase):
                 href_m = re.search(r'href="([^"]*)"', attrs)
                 if cls_m and "active" in cls_m.group(1).split():
                     active_hrefs.append(href_m.group(1) if href_m else None)
-
-            if fname in ("index.html", "parciales.html", "teoria-avanzados.html"):
-                expected_actives = [fname]
-            else:
-                expected_actives = ["#", fname]
-            self.assertEqual(
-                active_hrefs,
-                expected_actives,
-                f"[{fname}] Rutas activas inesperadas en repo: {active_hrefs} (esperadas {expected_actives}).",
-            )
+            self.assertEqual(active_hrefs, expected_actives)
 
 
 if __name__ == "__main__":

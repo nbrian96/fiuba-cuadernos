@@ -36,8 +36,8 @@ describe("pagefindPdfIndexer (ADR-004)", () => {
       "/tda/materiales/tda-guia-completa-v1/?page=7",
     );
     expect(
-      buildPdfPageUrl("tda", "tda-guia-completa-v1", 3, "/tda-2C2026-material/"),
-    ).toBe("/tda-2C2026-material/tda/materiales/tda-guia-completa-v1/?page=3");
+      buildPdfPageUrl("tda", "tda-guia-completa-v1", 3, "/fiuba-cuadernos/"),
+    ).toBe("/fiuba-cuadernos/tda/materiales/tda-guia-completa-v1/?page=3");
   });
 
   it("selects strictly the 4 prototype PDFs in scope='prototype' and caches extraction", async () => {
@@ -181,7 +181,7 @@ describe("pagefindPdfIndexer (ADR-004)", () => {
 
   it("extracts real text from TP0 PDF via pdfjs-dist and includes unit/entityType filters", async () => {
     const repoRoot = process.cwd();
-    const tp0Path = path.join(repoRoot, "TP0", "TP0_Nelson_Avila_100244.pdf");
+    const tp0Path = path.join(repoRoot, "tda", "TP0", "TP0_Nelson_Avila_100244.pdf");
     const pages = await extractPdfPages(tp0Path);
     expect(pages.length).toBeGreaterThanOrEqual(5);
     expect(pages[0].text.length).toBeGreaterThan(150);
@@ -197,7 +197,7 @@ describe("pagefindPdfIndexer (ADR-004)", () => {
           unitSlugs: ["general"],
           files: [
             {
-              path: "TP0/TP0_Nelson_Avila_100244.pdf",
+              path: "tda/TP0/TP0_Nelson_Avila_100244.pdf",
               extension: ".pdf",
               isPdf: true,
             },

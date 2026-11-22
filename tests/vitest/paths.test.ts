@@ -3,6 +3,7 @@ import {
   buildMaterialViewerUrl,
   normalizeBase,
   stripBase,
+  toPublishedMaterialRelPath,
   withBase,
 } from "@/utils/paths";
 
@@ -17,9 +18,9 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
     });
 
     it("normalizes repository subpaths with single leading and trailing slash", () => {
-      expect(normalizeBase("tda-2C2026-material")).toBe("/tda-2C2026-material/");
-      expect(normalizeBase("/tda-2C2026-material")).toBe("/tda-2C2026-material/");
-      expect(normalizeBase("///tda-2C2026-material///")).toBe("/tda-2C2026-material/");
+      expect(normalizeBase("fiuba-cuadernos")).toBe("/fiuba-cuadernos/");
+      expect(normalizeBase("/fiuba-cuadernos")).toBe("/fiuba-cuadernos/");
+      expect(normalizeBase("///fiuba-cuadernos///")).toBe("/fiuba-cuadernos/");
       expect(normalizeBase("/org//repo/")).toBe("/org/repo/");
     });
   });
@@ -34,39 +35,39 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
     });
 
     it("resolves internal routes under GitHub Pages subpath", () => {
-      const base = "/tda-2C2026-material/";
-      expect(withBase("/", base)).toBe("/tda-2C2026-material/");
-      expect(withBase("", base)).toBe("/tda-2C2026-material/");
-      expect(withBase("/tda/", base)).toBe("/tda-2C2026-material/tda/");
+      const base = "/fiuba-cuadernos/";
+      expect(withBase("/", base)).toBe("/fiuba-cuadernos/");
+      expect(withBase("", base)).toBe("/fiuba-cuadernos/");
+      expect(withBase("/tda/", base)).toBe("/fiuba-cuadernos/tda/");
       expect(withBase("tda/ejercicios/", base)).toBe(
-        "/tda-2C2026-material/tda/ejercicios/",
+        "/fiuba-cuadernos/tda/ejercicios/",
       );
       expect(withBase("/?tab=resumen#top", base)).toBe(
-        "/tda-2C2026-material/?tab=resumen#top",
+        "/fiuba-cuadernos/?tab=resumen#top",
       );
       expect(withBase("/tda/ejercicios/#ej-18", base)).toBe(
-        "/tda-2C2026-material/tda/ejercicios/#ej-18",
+        "/fiuba-cuadernos/tda/ejercicios/#ej-18",
       );
     });
 
     it("is strictly idempotent and rejects deceptive partial prefix collisions", () => {
-      const base = "/tda-2C2026-material/";
+      const base = "/fiuba-cuadernos/";
       const once = withBase("/tda/parciales/", base);
-      expect(once).toBe("/tda-2C2026-material/tda/parciales/");
+      expect(once).toBe("/fiuba-cuadernos/tda/parciales/");
       expect(withBase(once, base)).toBe(once);
-      expect(withBase("/tda-2C2026-material", base)).toBe("/tda-2C2026-material");
-      expect(withBase("/tda-2C2026-material/", base)).toBe(
-        "/tda-2C2026-material/",
+      expect(withBase("/fiuba-cuadernos", base)).toBe("/fiuba-cuadernos");
+      expect(withBase("/fiuba-cuadernos/", base)).toBe(
+        "/fiuba-cuadernos/",
       );
 
-      // Must NOT confuse /tda-2C2026-material-v2/ with /tda-2C2026-material/
-      expect(withBase("/tda-2C2026-material-v2/docs/", base)).toBe(
-        "/tda-2C2026-material/tda-2C2026-material-v2/docs/",
+      // Must NOT confuse /fiuba-cuadernos-v2/ with /fiuba-cuadernos/
+      expect(withBase("/fiuba-cuadernos-v2/docs/", base)).toBe(
+        "/fiuba-cuadernos/fiuba-cuadernos-v2/docs/",
       );
     });
 
     it("preserves external schemes, protocol-relative URLs, pure hashes, and pure queries", () => {
-      const base = "/tda-2C2026-material/";
+      const base = "/fiuba-cuadernos/";
       expect(withBase("https://nbrian96.github.io/x", base)).toBe(
         "https://nbrian96.github.io/x",
       );
@@ -86,14 +87,14 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
 
   describe("stripBase", () => {
     it("strips configured base cleanly without affecting non-matching paths", () => {
-      const base = "/tda-2C2026-material/";
-      expect(stripBase("/tda-2C2026-material/", base)).toBe("/");
-      expect(stripBase("/tda-2C2026-material", base)).toBe("/");
-      expect(stripBase("/tda-2C2026-material/tda/docs/?page=2#sec", base)).toBe(
+      const base = "/fiuba-cuadernos/";
+      expect(stripBase("/fiuba-cuadernos/", base)).toBe("/");
+      expect(stripBase("/fiuba-cuadernos", base)).toBe("/");
+      expect(stripBase("/fiuba-cuadernos/tda/docs/?page=2#sec", base)).toBe(
         "/tda/docs/?page=2#sec",
       );
-      expect(stripBase("/tda-2C2026-material-v2/foo", base)).toBe(
-        "/tda-2C2026-material-v2/foo",
+      expect(stripBase("/fiuba-cuadernos-v2/foo", base)).toBe(
+        "/fiuba-cuadernos-v2/foo",
       );
       expect(stripBase("/tda/", "/")).toBe("/tda/");
     });
@@ -106,10 +107,10 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
           "tda",
           "tda-slide-13-programacion-lineal-ii",
           12,
-          "/tda-2C2026-material/",
+          "/fiuba-cuadernos/",
         ),
       ).toBe(
-        "/tda-2C2026-material/tda/materiales/tda-slide-13-programacion-lineal-ii?page=12",
+        "/fiuba-cuadernos/tda/materiales/tda-slide-13-programacion-lineal-ii?page=12",
       );
       expect(
         buildMaterialViewerUrl("tda", "tda-guia-completa-v1", undefined, "/"),
@@ -126,6 +127,20 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
       expect(() => buildMaterialViewerUrl("tda", "ok-id", 1.5)).toThrow(RangeError);
       expect(() => buildMaterialViewerUrl("tda", "ok-id", Number.NaN)).toThrow(
         RangeError,
+      );
+    });
+  });
+
+  describe("toPublishedMaterialRelPath", () => {
+    it("avoids duplicating courseId prefix whether source path is rooted or under courseId/", () => {
+      expect(toPublishedMaterialRelPath("tda", "DIapositivas/a.pdf")).toBe(
+        "tda/DIapositivas/a.pdf",
+      );
+      expect(toPublishedMaterialRelPath("tda", "tda/DIapositivas/a.pdf")).toBe(
+        "tda/DIapositivas/a.pdf",
+      );
+      expect(toPublishedMaterialRelPath("tda", "/tda/TP0/cuartetos.py")).toBe(
+        "tda/TP0/cuartetos.py",
       );
     });
   });

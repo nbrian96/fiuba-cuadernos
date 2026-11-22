@@ -13,6 +13,7 @@ export interface PdfSplitViewerFile {
   path: string;
   extension: string;
   isPdf: boolean;
+  url?: string | null;
 }
 
 export interface PdfSplitViewerRelatedExercise {
@@ -237,7 +238,17 @@ export function PdfSplitViewer({
             <ul className="plain-list">
               {files.map((file) => (
                 <li key={file.path} style={{ fontSize: "0.875rem", wordBreak: "break-word" }}>
-                  <code>{file.path}</code>
+                  {file.url ? (
+                    <a
+                      href={file.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <code>{file.path}</code>
+                    </a>
+                  ) : (
+                    <code>{file.path}</code>
+                  )}
                 </li>
               ))}
             </ul>

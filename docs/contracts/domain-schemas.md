@@ -18,7 +18,7 @@ Todo recurso, evaluación, ejercicio, apunte, resumen o widget declara exactamen
 | `reconstructed_exam_statement` | Enunciado de examen real reconstruido mediante script reproducible. | `Parciales/TP-2026-2-2.pdf` (generado vía [generate_pdf.py](../../generate_pdf.py)). |
 | `elaborated_submission` | Entrega resuelta autorizada del curso, preservada íntegramente. | `TP0/TP0_Nelson_Avila_100244.pdf`, `TP0/cuartetos.py`, `TP0/cuartetos_malo.py`, `TP0/grafico_tiempos.png`. |
 | `exam_prep_and_practice` | Plantillas y guías de práctica en código para ejercitación. | `Practicas/01_*..05_*/*.py` (1 resuelto + 19 `TODO`) y `Practicas/README.md`. |
-| `elaborated_notes` | Apuntes teóricos maestros elaborados para el estudio. | `DIapositivas/Explicaciones/problema_mochila_y_greedy.md` y 17 bloques de [teoria-avanzados.html](../../teoria-avanzados.html). |
+| `elaborated_notes` | Apuntes teóricos maestros elaborados para el estudio. | `tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md` y 17 bloques de `teoria-avanzados.html` (migrados a `src/data/tdaAdvancedSections.json`). |
 | `elaborated_summary` | Resúmenes estratégicos, matrices de frecuencia, checklists y recetas. | Matriz de parciales (`sec01`), Checklist pre-parcial (`sec11`), Drawer de Fórmulas. |
 | `elaborated_solution` | Soluciones elaboradas del catálogo oficial de ejercicios. | Los `85` ejercicios del catálogo (`1..85`), incluidos los `35` marcados con `isParcial: true`. |
 | `advanced_theory_example` | Ejercicios resueltos diferenciados de paradigmas avanzados. | `tda-adv-aprox-2partition` y `tda-adv-rand-nreinas` (sin numeración artificial en `1..85`). |
@@ -166,7 +166,7 @@ Inventario verificable de widgets interactivos, apuntes maestros y resúmenes de
 
 ## 3. Mapa Canónico de Rutas Multi-Materia y Compatibilidad Legacy
 
-Todas las rutas públicas en Astro se resolverán anteponiendo `{BASE_URL}` mediante el helper centralizado `withBase()` para soportar despliegues en raíz (`/`) o sub-ruta de GitHub Pages (`/tda-2C2026-material/`).
+Todas las rutas públicas en Astro se resolverán anteponiendo `{BASE_URL}` mediante el helper centralizado `withBase()` para soportar despliegues en raíz (`/`) o sub-ruta de GitHub Pages (`/fiuba-cuadernos/`).
 
 ### 3.1. Rutas Canónicas Objetivo (Etapas 3–6)
 
@@ -188,15 +188,15 @@ Los 12 archivos HTML en la raíz permanecen intactos hasta la Etapa 6. Al migrar
 
 | Archivo Legacy en Raíz | Ruta Canónica Destino en TDA | Anchors Preservados |
 | :--- | :--- | :--- |
-| [index.html](../../index.html) | `{BASE_URL}/tda/` | `#entrenador-30s` |
-| [todos.html](../../todos.html) | `{BASE_URL}/tda/ejercicios/` | `#ej-1`..`#ej-85`, `#entrenador-30s` |
-| [parciales.html](../../parciales.html) | `{BASE_URL}/tda/parciales/` | `#ej-{N}` (los `35` parciales) |
-| [dyc.html](../../dyc.html) | `{BASE_URL}/tda/unidad/dyc/` | `#ej-1`..`#ej-12`, `#ej-80` |
-| [greedy.html](../../greedy.html) | `{BASE_URL}/tda/unidad/greedy/` | `#ej-13`..`#ej-38`, `#ej-83` |
-| [backtracking.html](../../backtracking.html) | `{BASE_URL}/tda/unidad/backtracking/` | `#ej-39`..`#ej-52`, `#ej-81` |
-| [dp.html](../../dp.html) | `{BASE_URL}/tda/unidad/dp/` | `#ej-53`..`#ej-59`, `#ej-82` |
-| [pl.html](../../pl.html) | `{BASE_URL}/tda/unidad/pl/` | `#ej-60`..`#ej-65`, `#ej-84` |
-| [flujo.html](../../flujo.html) | `{BASE_URL}/tda/unidad/flujo/` | `#ej-66`..`#ej-70` |
-| [reducciones.html](../../reducciones.html) | `{BASE_URL}/tda/unidad/reducciones/` | `#ej-71`..`#ej-74`, `#ej-85` |
-| [integradores.html](../../integradores.html) | `{BASE_URL}/tda/unidad/integradores/` | `#ej-75`..`#ej-79` |
-| [teoria-avanzados.html](../../teoria-avanzados.html) | `{BASE_URL}/tda/avanzados/` | `#intro`, `#set-cover`..`#ejercicios-clase` |
+| `index.html` | `{BASE_URL}/tda/` | `#entrenador-30s` |
+| `todos.html` | `{BASE_URL}/tda/ejercicios/` | `#ej-1`..`#ej-85`, `#entrenador-30s` |
+| `parciales.html` | `{BASE_URL}/tda/parciales/` | `#ej-{N}` (los `35` parciales) |
+| `dyc.html` | `{BASE_URL}/tda/unidad/dyc/` | `#ej-1`..`#ej-12`, `#ej-80` |
+| `greedy.html` | `{BASE_URL}/tda/unidad/greedy/` | `#ej-13`..`#ej-38`, `#ej-83` |
+| `backtracking.html` | `{BASE_URL}/tda/unidad/backtracking/` | `#ej-39`..`#ej-52`, `#ej-81` |
+| `dp.html` | `{BASE_URL}/tda/unidad/dp/` | `#ej-53`..`#ej-59`, `#ej-82` |
+| `pl.html` | `{BASE_URL}/tda/unidad/pl/` | `#ej-60`..`#ej-65`, `#ej-84` |
+| `flujo.html` | `{BASE_URL}/tda/unidad/flujo/` | `#ej-66`..`#ej-70` |
+| `reducciones.html` | `{BASE_URL}/tda/unidad/reducciones/` | `#ej-71`..`#ej-74`, `#ej-85` |
+| `integradores.html` | `{BASE_URL}/tda/unidad/integradores/` | `#ej-75`..`#ej-79` |
+| `teoria-avanzados.html` | `{BASE_URL}/tda/avanzados/` | `#intro`, `#set-cover`..`#ejercicios-clase` |
