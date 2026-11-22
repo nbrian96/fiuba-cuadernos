@@ -151,7 +151,9 @@ export function toPublishedMaterialRelPath(
   courseId: string,
   filePath: string,
 ): string {
-  const cleanPath = String(filePath ?? "").replace(/^\/+/, "");
+  const cleanPath = String(filePath ?? "")
+    .replace(/^\/+/, "")
+    .replace(/^materias\//, "");
   if (cleanPath.startsWith(`${courseId}/`)) {
     return cleanPath;
   }

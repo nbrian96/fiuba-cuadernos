@@ -142,6 +142,9 @@ describe("paths utility (ADR-001 / ADR-004)", () => {
       expect(toPublishedMaterialRelPath("tda", "/tda/TP0/cuartetos.py")).toBe(
         "tda/TP0/cuartetos.py",
       );
+      expect(
+        toPublishedMaterialRelPath("tda", "materias/tda/TP0/cuartetos.py"),
+      ).toBe("tda/TP0/cuartetos.py");
     });
   });
 });

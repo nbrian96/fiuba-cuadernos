@@ -22,7 +22,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/00 - Presentación del Curso e Introducción.pdf",
+          "path": "materias/tda/DIapositivas/00 - Presentación del Curso e Introducción.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -47,7 +47,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/01 - Repasos.pdf",
+          "path": "materias/tda/DIapositivas/01 - Repasos.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -72,7 +72,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/02 - División y Conquista.pdf",
+          "path": "materias/tda/DIapositivas/02 - División y Conquista.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -97,7 +97,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/03a - Greedy I.pdf",
+          "path": "materias/tda/DIapositivas/03a - Greedy I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -122,7 +122,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/03b -  Seguimiento_MejorGanancia_Division_Conquista Ejemplo.pdf",
+          "path": "materias/tda/DIapositivas/03b -  Seguimiento_MejorGanancia_Division_Conquista Ejemplo.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -147,7 +147,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/03c - Complejidad_MejorGanancia_TeoremaMaestro.pdf",
+          "path": "materias/tda/DIapositivas/03c - Complejidad_MejorGanancia_TeoremaMaestro.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -172,7 +172,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/04 - Greedy II.pdf",
+          "path": "materias/tda/DIapositivas/04 - Greedy II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -197,7 +197,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/05 - Backtracking I.pdf",
+          "path": "materias/tda/DIapositivas/05 - Backtracking I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -222,7 +222,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/06 - Backtracking II.pdf",
+          "path": "materias/tda/DIapositivas/06 - Backtracking II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -249,7 +249,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/07 - Práctica DC-Greedy-Backtracking.pdf",
+          "path": "materias/tda/DIapositivas/07 - Práctica DC-Greedy-Backtracking.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -274,7 +274,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/08 - Programación Dinámica I.pdf",
+          "path": "materias/tda/DIapositivas/08 - Programación Dinámica I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -299,7 +299,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/09 - Programación Dinámica II.pdf",
+          "path": "materias/tda/DIapositivas/09 - Programación Dinámica II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -324,7 +324,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/10 - Programación Dinámica III.pdf",
+          "path": "materias/tda/DIapositivas/10 - Programación Dinámica III.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -349,7 +349,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/11a - Programación Dinámica IV.pdf",
+          "path": "materias/tda/DIapositivas/11a - Programación Dinámica IV.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -374,7 +374,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/11b - Práctica Programación Dinámica.pdf",
+          "path": "materias/tda/DIapositivas/11b - Práctica Programación Dinámica.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -399,7 +399,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/12 - Programación Lineal I.pdf",
+          "path": "materias/tda/DIapositivas/12 - Programación Lineal I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -424,7 +424,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/13 - Programación Lineal II.pdf",
+          "path": "materias/tda/DIapositivas/13 - Programación Lineal II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -449,7 +449,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/14 - Redes de Flujo I.pdf",
+          "path": "materias/tda/DIapositivas/14 - Redes de Flujo I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -474,7 +474,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/15a - Redes de Flujo II.pdf",
+          "path": "materias/tda/DIapositivas/15a - Redes de Flujo II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -499,7 +499,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/15b - Redes de Flujo-Anexo.pdf",
+          "path": "materias/tda/DIapositivas/15b - Redes de Flujo-Anexo.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -525,7 +525,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/16 - Práctica PL y RF.pdf",
+          "path": "materias/tda/DIapositivas/16 - Práctica PL y RF.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -550,7 +550,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/17 - Complejidad y Reducciones I.pdf",
+          "path": "materias/tda/DIapositivas/17 - Complejidad y Reducciones I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -575,7 +575,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/18 - Complejidad y Reducciones II.pdf",
+          "path": "materias/tda/DIapositivas/18 - Complejidad y Reducciones II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -600,7 +600,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/19 - Práctica Reducciones.pdf",
+          "path": "materias/tda/DIapositivas/19 - Práctica Reducciones.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -625,7 +625,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/20 - Repaso.pdf",
+          "path": "materias/tda/DIapositivas/20 - Repaso.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -650,7 +650,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/21 - Algoritmos de Aproximación I.pdf",
+          "path": "materias/tda/DIapositivas/21 - Algoritmos de Aproximación I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -675,7 +675,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/22 - Algoritmos de Aproximación II.pdf",
+          "path": "materias/tda/DIapositivas/22 - Algoritmos de Aproximación II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -700,7 +700,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/23 - Algoritmos randomizados I.pdf",
+          "path": "materias/tda/DIapositivas/23 - Algoritmos randomizados I.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -725,7 +725,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/24 - Algoritmos randomizados II.pdf",
+          "path": "materias/tda/DIapositivas/24 - Algoritmos randomizados II.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -750,22 +750,22 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/12 - Lindo/Facaldo.ltx",
+          "path": "materias/tda/DIapositivas/12 - Lindo/Facaldo.ltx",
           "extension": ".ltx",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Lindo/mochila.ltx",
+          "path": "materias/tda/DIapositivas/12 - Lindo/mochila.ltx",
           "extension": ".ltx",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Lindo/scheduling.ltx",
+          "path": "materias/tda/DIapositivas/12 - Lindo/scheduling.ltx",
           "extension": ".ltx",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Lindo/viajante.ltx",
+          "path": "materias/tda/DIapositivas/12 - Lindo/viajante.ltx",
           "extension": ".ltx",
           "isPdf": false
         }
@@ -783,32 +783,32 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/12 - Mochila/Mochila.lp",
+          "path": "materias/tda/DIapositivas/12 - Mochila/Mochila.lp",
           "extension": ".lp",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Mochila/mochila.py",
+          "path": "materias/tda/DIapositivas/12 - Mochila/mochila.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Mochila/mochila.txt",
+          "path": "materias/tda/DIapositivas/12 - Mochila/mochila.txt",
           "extension": ".txt",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Mochila/mochila2.py",
+          "path": "materias/tda/DIapositivas/12 - Mochila/mochila2.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Mochila/mochila_crear_archivo.py",
+          "path": "materias/tda/DIapositivas/12 - Mochila/mochila_crear_archivo.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Mochila/mochilagrande.txt",
+          "path": "materias/tda/DIapositivas/12 - Mochila/mochilagrande.txt",
           "extension": ".txt",
           "isPdf": false
         }
@@ -826,62 +826,62 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias.xlsx",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias.xlsx",
           "extension": ".xlsx",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias10.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias10.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias12.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias12.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias16.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias16.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias24.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias24.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias4.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias4.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/distancias6.csv",
+          "path": "materias/tda/DIapositivas/12 - Viajante/distancias6.csv",
           "extension": ".csv",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/viajantealternativa1subtours.py",
+          "path": "materias/tda/DIapositivas/12 - Viajante/viajantealternativa1subtours.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/viajantealternativa2puentes.py",
+          "path": "materias/tda/DIapositivas/12 - Viajante/viajantealternativa2puentes.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/viajantealternativa3secuencia.py",
+          "path": "materias/tda/DIapositivas/12 - Viajante/viajantealternativa3secuencia.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/viajantealternativa4MTZ.py",
+          "path": "materias/tda/DIapositivas/12 - Viajante/viajantealternativa4MTZ.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/DIapositivas/12 - Viajante/viajantefuerzabruta.py",
+          "path": "materias/tda/DIapositivas/12 - Viajante/viajantefuerzabruta.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -901,7 +901,7 @@
       ],
       "files": [
         {
-          "path": "tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md",
+          "path": "materias/tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md",
           "extension": ".md",
           "isPdf": false
         }
@@ -919,7 +919,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/01_division_y_conquista.pdf",
+          "path": "materias/tda/Guia-Ejercicios/01_division_y_conquista.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -944,7 +944,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/02_greedy.pdf",
+          "path": "materias/tda/Guia-Ejercicios/02_greedy.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -969,7 +969,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/03_backtracking.pdf",
+          "path": "materias/tda/Guia-Ejercicios/03_backtracking.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -994,7 +994,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/04_programacion_dinamica.pdf",
+          "path": "materias/tda/Guia-Ejercicios/04_programacion_dinamica.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1019,7 +1019,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/05_programacion_lineal.pdf",
+          "path": "materias/tda/Guia-Ejercicios/05_programacion_lineal.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1044,7 +1044,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/06_redes_de_flujo.pdf",
+          "path": "materias/tda/Guia-Ejercicios/06_redes_de_flujo.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1069,7 +1069,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/07_reducciones_np.pdf",
+          "path": "materias/tda/Guia-Ejercicios/07_reducciones_np.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1094,7 +1094,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/08_algoritmos_aproximados.pdf",
+          "path": "materias/tda/Guia-Ejercicios/08_algoritmos_aproximados.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1119,7 +1119,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/09_algoritmos_randomizados.pdf",
+          "path": "materias/tda/Guia-Ejercicios/09_algoritmos_randomizados.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1144,7 +1144,7 @@
       ],
       "files": [
         {
-          "path": "tda/Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
+          "path": "materias/tda/Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1169,7 +1169,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2024-2-1.pdf",
+          "path": "materias/tda/Parciales/TP-2024-2-1.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1195,7 +1195,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2024-2-2.pdf",
+          "path": "materias/tda/Parciales/TP-2024-2-2.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1221,7 +1221,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2024-2-3.pdf",
+          "path": "materias/tda/Parciales/TP-2024-2-3.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1247,7 +1247,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2025-1-1.pdf",
+          "path": "materias/tda/Parciales/TP-2025-1-1.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1273,7 +1273,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2025-1-2.pdf",
+          "path": "materias/tda/Parciales/TP-2025-1-2.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1299,7 +1299,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2026-2-1.pdf",
+          "path": "materias/tda/Parciales/TP-2026-2-1.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1325,7 +1325,7 @@
       ],
       "files": [
         {
-          "path": "tda/Parciales/TP-2026-2-2.pdf",
+          "path": "materias/tda/Parciales/TP-2026-2-2.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1351,7 +1351,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/01_division_y_conquista/ej02_primer_cero_tests.py",
+          "path": "materias/tda/Practicas/01_division_y_conquista/ej02_primer_cero_tests.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1370,7 +1370,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/01_division_y_conquista/ej04_arreglo_pico.py",
+          "path": "materias/tda/Practicas/01_division_y_conquista/ej04_arreglo_pico.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1389,7 +1389,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/01_division_y_conquista/ej09_elemento_mayoritario.py",
+          "path": "materias/tda/Practicas/01_division_y_conquista/ej09_elemento_mayoritario.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1408,7 +1408,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/01_division_y_conquista/ej14_bolzano_biseccion.py",
+          "path": "materias/tda/Practicas/01_division_y_conquista/ej14_bolzano_biseccion.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1427,7 +1427,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/02_greedy/ej04_seleccion_charlas.py",
+          "path": "materias/tda/Practicas/02_greedy/ej04_seleccion_charlas.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1446,7 +1446,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/02_greedy/ej08_mochila_fraccionaria.py",
+          "path": "materias/tda/Practicas/02_greedy/ej08_mochila_fraccionaria.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1465,7 +1465,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/02_greedy/ej09_minimizar_latencia.py",
+          "path": "materias/tda/Practicas/02_greedy/ej09_minimizar_latencia.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1484,7 +1484,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/02_greedy/ej13_antenas_ruta.py",
+          "path": "materias/tda/Practicas/02_greedy/ej13_antenas_ruta.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1503,7 +1503,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/03_backtracking/ej02_coloreo_grafos.py",
+          "path": "materias/tda/Practicas/03_backtracking/ej02_coloreo_grafos.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1522,7 +1522,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/03_backtracking/ej03_n_reinas.py",
+          "path": "materias/tda/Practicas/03_backtracking/ej03_n_reinas.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1541,7 +1541,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/03_backtracking/ej04_independent_set_maximo.py",
+          "path": "materias/tda/Practicas/03_backtracking/ej04_independent_set_maximo.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1560,7 +1560,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/03_backtracking/ej11_subset_sum.py",
+          "path": "materias/tda/Practicas/03_backtracking/ej11_subset_sum.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1579,7 +1579,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/04_programacion_dinamica/ej02_interval_scheduling_ponderado.py",
+          "path": "materias/tda/Practicas/04_programacion_dinamica/ej02_interval_scheduling_ponderado.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1598,7 +1598,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/04_programacion_dinamica/ej04_juan_el_vago.py",
+          "path": "materias/tda/Practicas/04_programacion_dinamica/ej04_juan_el_vago.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1617,7 +1617,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/04_programacion_dinamica/ej07_mochila_01.py",
+          "path": "materias/tda/Practicas/04_programacion_dinamica/ej07_mochila_01.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1636,7 +1636,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/04_programacion_dinamica/ej08_cambio_monedas.py",
+          "path": "materias/tda/Practicas/04_programacion_dinamica/ej08_cambio_monedas.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1655,7 +1655,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/05_programacion_lineal/ej01_mochila_pl.py",
+          "path": "materias/tda/Practicas/05_programacion_lineal/ej01_mochila_pl.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1674,7 +1674,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/05_programacion_lineal/ej02_juan_el_vago_pl.py",
+          "path": "materias/tda/Practicas/05_programacion_lineal/ej02_juan_el_vago_pl.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1693,7 +1693,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/05_programacion_lineal/ej03_vertex_cover_pl.py",
+          "path": "materias/tda/Practicas/05_programacion_lineal/ej03_vertex_cover_pl.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1712,7 +1712,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/05_programacion_lineal/ej12_dos_particiones_min_max_pl.py",
+          "path": "materias/tda/Practicas/05_programacion_lineal/ej12_dos_particiones_min_max_pl.py",
           "extension": ".py",
           "isPdf": false
         }
@@ -1731,7 +1731,7 @@
       ],
       "files": [
         {
-          "path": "tda/Practicas/README.md",
+          "path": "materias/tda/Practicas/README.md",
           "extension": ".md",
           "isPdf": false
         }
@@ -1750,7 +1750,7 @@
       ],
       "files": [
         {
-          "path": "tda/TP0/TP00-2026-2c.pdf",
+          "path": "materias/tda/TP0/TP00-2026-2c.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1777,7 +1777,7 @@
       ],
       "files": [
         {
-          "path": "tda/TP0/checklist.pdf",
+          "path": "materias/tda/TP0/checklist.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1804,7 +1804,7 @@
       ],
       "files": [
         {
-          "path": "tda/TP0/TP0_Nelson_Avila_100244.pdf",
+          "path": "materias/tda/TP0/TP0_Nelson_Avila_100244.pdf",
           "extension": ".pdf",
           "isPdf": true
         }
@@ -1831,17 +1831,17 @@
       ],
       "files": [
         {
-          "path": "tda/TP0/cuartetos.py",
+          "path": "materias/tda/TP0/cuartetos.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/TP0/cuartetos_malo.py",
+          "path": "materias/tda/TP0/cuartetos_malo.py",
           "extension": ".py",
           "isPdf": false
         },
         {
-          "path": "tda/TP0/grafico_tiempos.png",
+          "path": "materias/tda/TP0/grafico_tiempos.png",
           "extension": ".png",
           "isPdf": false
         }

@@ -442,10 +442,10 @@ class TestBuildIntegration(unittest.TestCase):
         readme_path = os.path.join(BASE_DIR, "README.md")
 
         # Auto-verificación del validador case-sensitive
-        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tda/DIapositivas/"))
-        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tda/diapositivas/"))
-        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/tda/DIapositivas/"))
-        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/tda/diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "materias/tda/DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "materias/tda/diapositivas/"))
+        self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/materias/tda/DIapositivas/"))
+        self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "/materias/tda/diapositivas/"))
         self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "https://example.com/no-existe"))
         self.assertTrue(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "#seccion"))
         self.assertFalse(_resolve_local_link_case_sensitive(BASE_DIR, readme_path, "tipo_parcial.html"))

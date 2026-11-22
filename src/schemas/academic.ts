@@ -239,16 +239,18 @@ export const ResourceEntrySchema = z
     }
 
     for (const [idx, file] of res.files.entries()) {
+      const expectedPrefixMaterias = `materias/${res.courseId}/${res.sourceFolder}/`;
       const expectedPrefixWithCourse = `${res.courseId}/${res.sourceFolder}/`;
       const expectedPrefixLegacy = `${res.sourceFolder}/`;
       if (
+        !file.path.startsWith(expectedPrefixMaterias) &&
         !file.path.startsWith(expectedPrefixWithCourse) &&
         !file.path.startsWith(expectedPrefixLegacy)
       ) {
         ctx.addIssue({
           code: "custom",
           path: ["files", idx, "path"],
-          message: `La ruta '${file.path}' debe comenzar con '${expectedPrefixWithCourse}' o '${expectedPrefixLegacy}'`,
+          message: `La ruta '${file.path}' debe comenzar con '${expectedPrefixMaterias}', '${expectedPrefixWithCourse}' o '${expectedPrefixLegacy}'`,
         });
       }
     }

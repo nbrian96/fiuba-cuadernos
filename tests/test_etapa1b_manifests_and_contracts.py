@@ -51,10 +51,10 @@ ENTITY_PROVENANCE_MAP = {
 RESOURCE_ID_RE = re.compile(r"^[a-z0-9-]+$")
 MATERIAL_FOLDERS = ("DIapositivas", "Guia-Ejercicios", "Parciales", "Practicas", "TP0")
 PROTOTYPE_PDF_PATHS = {
-    "tda/DIapositivas/13 - Programación Lineal II.pdf",
-    "tda/Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
-    "tda/Parciales/TP-2026-2-2.pdf",
-    "tda/TP0/TP0_Nelson_Avila_100244.pdf",
+    "materias/tda/DIapositivas/13 - Programación Lineal II.pdf",
+    "materias/tda/Guia-Ejercicios/GuiaDeEjercicios-v1.0.pdf",
+    "materias/tda/Parciales/TP-2026-2-2.pdf",
+    "materias/tda/TP0/TP0_Nelson_Avila_100244.pdf",
 }
 
 REQUIRED_ADR_SECTIONS = (
@@ -107,11 +107,11 @@ def _exists_case_sensitive(base_dir: str, rel_path: str) -> bool:
 
 
 def _collect_physical_material_files(base_dir: str, course_id: str = "tda") -> list[str]:
-    """Recopila todos los archivos reales de las 5 carpetas académicas bajo <courseId>/ en orden estable."""
+    """Recopila todos los archivos reales de las 5 carpetas académicas bajo materias/<courseId>/ en orden estable."""
     found = []
     root = pathlib.Path(base_dir)
     for folder in MATERIAL_FOLDERS:
-        folder_path = root / course_id / folder
+        folder_path = root / "materias" / course_id / folder
         if not folder_path.is_dir():
             continue
         for p in sorted(folder_path.rglob("*"), key=lambda x: x.relative_to(root).as_posix()):
@@ -186,11 +186,12 @@ def validate_resources_manifest(
 
         has_pdf = False
         course_id = data.get("courseId", "tda")
+        expected_prefix_materias = f"materias/{course_id}/{source_folder}/"
         expected_prefix = f"{course_id}/{source_folder}/"
         for fentry in files:
             fpath = fentry.get("path", "")
-            if not (fpath.startswith(expected_prefix) or fpath.startswith(source_folder + "/")):
-                raise ValueError(f"[{res_id}] Ruta '{fpath}' no coincide con '{expected_prefix}'.")
+            if not (fpath.startswith(expected_prefix_materias) or fpath.startswith(expected_prefix) or fpath.startswith(source_folder + "/")):
+                raise ValueError(f"[{res_id}] Ruta '{fpath}' no coincide con '{expected_prefix_materias}'.")
             if not _exists_case_sensitive(base_dir, fpath):
                 raise ValueError(f"[{res_id}] Ruta inexistente o con casing incorrecto en disco: '{fpath}'.")
             if fpath in seen_paths:
@@ -455,7 +456,7 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
         self.assertIn("{BASE_URL}/{course}/materiales/{resourceId}?page={N}", adr4_text)
         self.assertIn("1,264", adr4_text)
         for proto_path in PROTOTYPE_PDF_PATHS:
-            short_proto = proto_path.removeprefix("tda/")
+            short_proto = proto_path.removeprefix("materias/tda/")
             self.assertTrue(
                 proto_path in adr4_text or short_proto in adr4_text,
                 f"ADR-004 debe mencionar el PDF prototipo '{short_proto}'.",
@@ -759,7 +760,7 @@ class TestEtapa1BManifestsAndContracts(unittest.TestCase):
 
         # 3. Casing incorrecto en ruta y archivo omitido del manifiesto
         bad_case = copy.deepcopy(self.resources)
-        bad_case["resources"][0]["files"][0]["path"] = "tda/diapositivas/00 - Presentación del Curso e Introducción.pdf"
+        bad_case["resources"][0]["files"][0]["path"] = "materias/tda/diapositivas/00 - Presentación del Curso e Introducción.pdf"
         with self.assertRaises(ValueError):
             validate_resources_manifest(bad_case, BASE_DIR)
 

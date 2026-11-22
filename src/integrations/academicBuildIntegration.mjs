@@ -61,11 +61,12 @@ function buildAllowedMaterialsMap(repoRoot, manifests) {
     const courseId = manifest.courseId;
     for (const resource of manifest.resources) {
       for (const file of resource.files ?? []) {
-        const cleanPath = String(file.path).replace(/^\/+/, "");
+        const rawRel = String(file.path).replace(/^\/+/, "");
+        const cleanPath = rawRel.replace(/^materias\//, "");
         const posixRel = cleanPath.startsWith(`${courseId}/`)
           ? cleanPath
           : `${courseId}/${cleanPath}`;
-        const absSource = path.resolve(repoRoot, cleanPath);
+        const absSource = path.resolve(repoRoot, rawRel);
         // Asegurar que no escape del repositorio raíz
         const relCheck = path.relative(repoRoot, absSource);
         if (!relCheck.startsWith("..") && !path.isAbsolute(relCheck)) {

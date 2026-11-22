@@ -251,7 +251,7 @@ for (const relRoute of expectedEtapa4Routes) {
 let publishedFiles = 0;
 for (const res of resourcesManifest.resources) {
   for (const file of res.files) {
-    const cleanPath = String(file.path).replace(/^\/+/, "");
+    const cleanPath = String(file.path).replace(/^\/+/, "").replace(/^materias\//, "");
     const publishedRel = cleanPath.startsWith("tda/") ? cleanPath : `tda/${cleanPath}`;
     const dest = path.join(distDir, "materials", publishedRel);
     assert.ok(

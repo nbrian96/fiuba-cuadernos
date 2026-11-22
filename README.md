@@ -47,7 +47,7 @@ Para preparar el examen parcial de forma intensiva, el repositorio incluye una *
 
 #### 3. Plan Integral (2 semanas o más)
 1. Recorré los **85 ejercicios oficiales** en **📚 Modo Todos** (`tda/ejercicios/`) o navegando pestaña por pestaña en las páginas modulares de cada paradigma, además de los **2 ejercicios avanzados** y **5 simuladores** en `tda/avanzados/`.
-2. Probá las implementaciones en Python de la carpeta [`tda/Practicas/`](tda/Practicas/).
+2. Probá las implementaciones en Python de la carpeta [`materias/tda/Practicas/`](materias/tda/Practicas/).
 3. Verificá la **Checklist de Entrada al Aula** en `tda/docs/checklist-pre-parcial/` antes de rendir.
 
 ---
@@ -79,12 +79,13 @@ fiuba-cuadernos/
 │   ├── stores/              # Store local namespaced mc:v1:* con migración tda_*
 │   ├── styles/              # Design System CSS sin !important (@layer)
 │   └── utils/               # Helpers de rutas withBase(), KaTeX estático, filtros y simuladores
-├── tda/                     # Materiales físicos fuente de Teoría de Algoritmos (96 archivos)
-│   ├── DIapositivas/        # 29 presentaciones (00 a 24), ejemplos LINDO/Mochila/Viajante y apuntes
-│   ├── Guia-Ejercicios/     # Guías oficiales 01 a 09 y Guía consolidada v1.0
-│   ├── Practicas/           # 20 prácticas en Python (1 resuelta + 19 plantillas TODO con asserts)
-│   ├── Parciales/           # 7 exámenes parciales oficiales (2024, 2025 y 2026)
-│   └── TP0/                 # Trabajo Práctico 0: consignas, entrega autorizada y análisis
+├── materias/                # Materiales físicos fuente agrupados por materia (<courseId>/)
+│   └── tda/                 # Teoría de Algoritmos (96 archivos)
+│       ├── DIapositivas/    # 29 presentaciones (00 a 24), ejemplos LINDO/Mochila/Viajante y apuntes
+│       ├── Guia-Ejercicios/ # Guías oficiales 01 a 09 y Guía consolidada v1.0
+│       ├── Practicas/       # 20 prácticas en Python (1 resuelta + 19 plantillas TODO con asserts)
+│       ├── Parciales/       # 7 exámenes parciales oficiales (2024, 2025 y 2026)
+│       └── TP0/             # Trabajo Práctico 0: consignas, entrega autorizada y análisis
 ├── scripts/                 # Scripts de migración MDX, build wrapper y verificador dual-base
 ├── tests/                   # Suites Vitest, Playwright E2E + axe-core y Python QA
 ├── docs/                    # ADRs, contratos, manifiestos y PLAN_DE_TRABAJO.md
@@ -98,7 +99,7 @@ fiuba-cuadernos/
 
 ## 📖 Contenido Detallado de Carpetas
 
-### 1. 📂 [tda/DIapositivas/](tda/DIapositivas/)
+### 1. 📂 [materias/tda/DIapositivas/](materias/tda/DIapositivas/)
 Presentaciones oficiales de las clases teóricas y prácticas (**29 PDFs, clases `00` a `24`**), complementadas con paquetes de ejemplos y apuntes:
 * **00 - 01:** Presentación del curso, introducción y repasos fundamentales.
 * **02 - 03c:** División y Conquista, Teorema Maestro y ejemplos de seguimiento.
@@ -110,11 +111,11 @@ Presentaciones oficiales de las clases teóricas y prácticas (**29 PDFs, clases
 * **17 - 19:** Complejidad, Reducciones Polinomiales NP-Completitud y práctica.
 * **20:** Clase de Repaso general.
 * **21 - 24:** Algoritmos de Aproximación (I y II) y Algoritmos Randomizados (I y II).
-* **Subcarpetas temáticas y apuntes:** `12 - Lindo/` (4 archivos), `12 - Mochila/` (6 archivos), `12 - Viajante/` (12 archivos) y [`Explicaciones/problema_mochila_y_greedy.md`](tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
+* **Subcarpetas temáticas y apuntes:** `12 - Lindo/` (4 archivos), `12 - Mochila/` (6 archivos), `12 - Viajante/` (12 archivos) y [`Explicaciones/problema_mochila_y_greedy.md`](materias/tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
 
 ---
 
-### 2. 📂 [tda/Guia-Ejercicios/](tda/Guia-Ejercicios/)
+### 2. 📂 [materias/tda/Guia-Ejercicios/](materias/tda/Guia-Ejercicios/)
 Guías oficiales publicadas por la cátedra para el cuatrimestre (10 PDFs):
 * `GuiaDeEjercicios-v1.0.pdf` *(Guía consolidada Curso Echevarría — D&C, Greedy y Backtracking, íntegramente resuelta en la plataforma interactiva)*
 * `01_division_y_conquista.pdf`
@@ -129,8 +130,8 @@ Guías oficiales publicadas por la cátedra para el cuatrimestre (10 PDFs):
 
 ---
 
-### 3. 📂 [tda/Practicas/](tda/Practicas/)
-Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_division_y_conquista/ej02_primer_cero_tests.py`, y **19 plantillas `TODO` con pruebas `assert`**), documentadas en [`tda/Practicas/README.md`](tda/Practicas/README.md):
+### 3. 📂 [materias/tda/Practicas/](materias/tda/Practicas/)
+Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_division_y_conquista/ej02_primer_cero_tests.py`, y **19 plantillas `TODO` con pruebas `assert`**), documentadas en [`materias/tda/Practicas/README.md`](materias/tda/Practicas/README.md):
 * **01_division_y_conquista:** `primer_cero`, `arreglo_pico`, `elemento_mayoritario`, `bolzano_biseccion`.
 * **02_greedy:** `seleccion_charlas`, `mochila_fraccionaria`, `minimizar_latencia`, `antenas_ruta`.
 * **03_backtracking:** `coloreo_grafos`, `n_reinas`, `independent_set_maximo`, `subset_sum`.
@@ -139,7 +140,7 @@ Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_divis
 
 ---
 
-### 4. 📂 [tda/Parciales/](tda/Parciales/)
+### 4. 📂 [materias/tda/Parciales/](materias/tda/Parciales/)
 **7 exámenes parciales** tomados en fechas recientes (los 35 ejercicios están resueltos paso a paso en `tda/parciales/` y `parciales.html`):
 * `TP-2024-2-1.pdf`, `TP-2024-2-2.pdf`, `TP-2024-2-3.pdf`
 * `TP-2025-1-1.pdf`, `TP-2025-1-2.pdf`
@@ -148,7 +149,7 @@ Suite de **20 prácticas de programación en Python** (**1 resuelta:** `01_divis
 
 ---
 
-### 5. 📂 [tda/TP0/](tda/TP0/)
+### 5. 📂 [materias/tda/TP0/](materias/tda/TP0/)
 Primer trabajo práctico de la materia (6 archivos):
 * `TP00-2026-2c.pdf`, `checklist.pdf`, `cuartetos.py`, `cuartetos_malo.py`, `grafico_tiempos.png` y `TP0_Nelson_Avila_100244.pdf`.
 
@@ -213,9 +214,9 @@ python run_tests.py                                      # Suite Python de parid
 
 La arquitectura separa la **Plataforma** (`src/layouts/`, `src/components/platform/`, `src/styles/`, `src/stores/`) del **Dominio Académico** (`src/content/` y carpetas de materiales). Agregar una nueva materia (por ejemplo `algo2`, `orga`, `analisis2`) **no requiere modificar componentes de plataforma**:
 
-1. **Paso 1 — Ubicar los materiales físicos en la subcarpeta `<courseId>/`:**
-   * Colocá los PDFs, diapositivas, guías, parciales y prácticas de la materia dentro de su propia subcarpeta en la raíz del repositorio: `<courseId>/DIapositivas/`, `<courseId>/Guia-Ejercicios/`, `<courseId>/Parciales/`, `<courseId>/Practicas/`, etc.
-   * *(Nota sobre TDA)*: En la **Etapa 6** del plan, una vez retirados los 12 HTML legacy de la raíz, las carpetas actuales `DIapositivas/`, `Guia-Ejercicios/`, `Parciales/`, `Practicas/` y `TP0/` se reubican mediante `git mv` dentro de `tda/` (`tda/DIapositivas/`, `tda/Guia-Ejercicios/`, `tda/Parciales/`, `tda/Practicas/` y `tda/TP0/`) para mantener la misma convención limpia en todas las materias.
+1. **Paso 1 — Ubicar los materiales físicos en `materias/<courseId>/`:**
+   * Colocá los PDFs, diapositivas, guías, parciales y prácticas de la materia dentro de su propia subcarpeta bajo `materias/`: `materias/<courseId>/DIapositivas/`, `materias/<courseId>/Guia-Ejercicios/`, `materias/<courseId>/Parciales/`, `materias/<courseId>/Practicas/`, etc.
+   * *(En TDA)*: las carpetas fuente viven bajo `materias/tda/` (`materias/tda/DIapositivas/`, `materias/tda/Guia-Ejercicios/`, `materias/tda/Parciales/`, `materias/tda/Practicas/` y `materias/tda/TP0/`), manteniendo limpia la raíz del repositorio.
 2. **Paso 2 — Registrar el manifiesto de la materia (`src/content/courses/<courseId>.json`):**
    * Creá `src/content/courses/<courseId>.json` respetando `CourseManifestSchema` ([`src/schemas/academic.ts`](src/schemas/academic.ts), tomando como plantilla [`src/content/courses/tda.json`](src/content/courses/tda.json)): definí `id`, `title`, `shortTitle`, `institution`, `codes`, `chair`, `term`, `description`, la lista `units` (`slug`, `name`, `order`, `exerciseCount`, `inCatalog`) y `stats`.
 3. **Paso 3 — Registrar el inventario de materiales (`src/content/resources/<courseId>-resources.json`):**

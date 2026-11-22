@@ -181,7 +181,7 @@ describe("pagefindPdfIndexer (ADR-004)", () => {
 
   it("extracts real text from TP0 PDF via pdfjs-dist and includes unit/entityType filters", async () => {
     const repoRoot = process.cwd();
-    const tp0Path = path.join(repoRoot, "tda", "TP0", "TP0_Nelson_Avila_100244.pdf");
+    const tp0Path = path.join(repoRoot, "materias", "tda", "TP0", "TP0_Nelson_Avila_100244.pdf");
     const pages = await extractPdfPages(tp0Path);
     expect(pages.length).toBeGreaterThanOrEqual(5);
     expect(pages[0].text.length).toBeGreaterThan(150);
@@ -197,7 +197,7 @@ describe("pagefindPdfIndexer (ADR-004)", () => {
           unitSlugs: ["general"],
           files: [
             {
-              path: "tda/TP0/TP0_Nelson_Avila_100244.pdf",
+              path: "materias/tda/TP0/TP0_Nelson_Avila_100244.pdf",
               extension: ".pdf",
               isPdf: true,
             },

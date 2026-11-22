@@ -18,7 +18,7 @@ Todo recurso, evaluación, ejercicio, apunte, resumen o widget declara exactamen
 | `reconstructed_exam_statement` | Enunciado de examen real reconstruido mediante script reproducible. | `Parciales/TP-2026-2-2.pdf` (generado vía [generate_pdf.py](../../generate_pdf.py)). |
 | `elaborated_submission` | Entrega resuelta autorizada del curso, preservada íntegramente. | `TP0/TP0_Nelson_Avila_100244.pdf`, `TP0/cuartetos.py`, `TP0/cuartetos_malo.py`, `TP0/grafico_tiempos.png`. |
 | `exam_prep_and_practice` | Plantillas y guías de práctica en código para ejercitación. | `Practicas/01_*..05_*/*.py` (1 resuelto + 19 `TODO`) y `Practicas/README.md`. |
-| `elaborated_notes` | Apuntes teóricos maestros elaborados para el estudio. | `tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md` y 17 bloques de `teoria-avanzados.html` (migrados a `src/data/tdaAdvancedSections.json`). |
+| `elaborated_notes` | Apuntes teóricos maestros elaborados para el estudio. | `materias/tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md` y 17 bloques de `teoria-avanzados.html` (migrados a `src/data/tdaAdvancedSections.json`). |
 | `elaborated_summary` | Resúmenes estratégicos, matrices de frecuencia, checklists y recetas. | Matriz de parciales (`sec01`), Checklist pre-parcial (`sec11`), Drawer de Fórmulas. |
 | `elaborated_solution` | Soluciones elaboradas del catálogo oficial de ejercicios. | Los `85` ejercicios del catálogo (`1..85`), incluidos los `35` marcados con `isParcial: true`. |
 | `advanced_theory_example` | Ejercicios resueltos diferenciados de paradigmas avanzados. | `tda-adv-aprox-2partition` y `tda-adv-rand-nreinas` (sin numeración artificial en `1..85`). |
