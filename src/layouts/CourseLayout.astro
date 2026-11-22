@@ -6,7 +6,13 @@ import { getCheatsheetSections } from "@/data/cheatsheets";
 import type { CourseManifest } from "@/schemas/academic";
 import { withBase } from "@/utils/paths";
 
-export type CourseNavSection = "overview" | "exercises" | "materials" | "docs";
+export type CourseNavSection =
+  | "overview"
+  | "exercises"
+  | "parciales"
+  | "avanzados"
+  | "materials"
+  | "docs";
 
 export interface Props {
   course: CourseManifest;
@@ -34,6 +40,8 @@ const firstDocHref = courseDocs[0]
   ? withBase(`/${course.id}/docs/${courseDocs[0].data.docId}/`)
   : null;
 
+const hasAvanzados = course.units.some((unit) => unit.slug === "avanzados");
+
 const navLinks = [
   {
     key: "overview" as const,
@@ -45,6 +53,20 @@ const navLinks = [
     label: "Ejercicios",
     href: withBase(`/${course.id}/ejercicios/`),
   },
+  {
+    key: "parciales" as const,
+    label: "Parciales",
+    href: withBase(`/${course.id}/parciales/`),
+  },
+  ...(hasAvanzados
+    ? [
+        {
+          key: "avanzados" as const,
+          label: "Avanzados",
+          href: withBase(`/${course.id}/avanzados/`),
+        },
+      ]
+    : []),
   {
     key: "materials" as const,
     label: "Materiales",
@@ -75,7 +97,7 @@ const navLinks = [
     }
   </Fragment>
 
-  <div slot="subnav" class="course-nav-bar">
+  <div slot="subnav" class="course-nav-bar" data-pagefind-ignore>
     <div class="course-nav-inner">
       <div class="course-nav-identity">
         <span class="course-nav-title">{course.shortTitle}</span>

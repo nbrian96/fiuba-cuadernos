@@ -65,7 +65,12 @@ const primaryFile = resource.files.find((f) => f.isPdf) ?? resource.files[0];
 const publicCandidate = primaryFile
   ? path.join(process.cwd(), "public", "materials", course.id, primaryFile.path)
   : "";
-const hasPublishedAsset = Boolean(primaryFile && fs.existsSync(publicCandidate));
+const repoCandidate = primaryFile
+  ? path.join(process.cwd(), primaryFile.path)
+  : "";
+const hasPublishedAsset = Boolean(
+  primaryFile && (fs.existsSync(repoCandidate) || fs.existsSync(publicCandidate)),
+);
 const assetUrl =
   hasPublishedAsset && primaryFile
     ? withBase(

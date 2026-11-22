@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import { unified } from "@astrojs/markdown-remark";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import academicBuildIntegration from "./src/integrations/academicBuildIntegration.mjs";
 
 const rawBase = (process.env.ASTRO_BASE ?? "/").trim();
 const strippedBase = rawBase.replace(/^\/+|\/+$/g, "");
@@ -17,7 +18,7 @@ export default defineConfig({
   build: {
     format: "directory",
   },
-  integrations: [mdx(), react()],
+  integrations: [mdx(), react(), academicBuildIntegration()],
   markdown: {
     processor: unified({
       remarkPlugins: [remarkMath],

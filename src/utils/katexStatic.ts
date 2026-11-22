@@ -53,3 +53,36 @@ export function renderBlockFormulaHtml(tex: string): string {
     displayMode: true,
   });
 }
+
+/**
+ * Compila únicamente tokens $$...$$ y $...$ dentro de un fragmento HTML estático confiable,
+ * respetando etiquetas <pre>, <code> y el marcado estructural existente.
+ */
+export function renderMathTokensInsideTrustedHtml(trustedHtml: string): string {
+  const segments = trustedHtml.split(/(<pre[\s\S]*?<\/pre>|<code[\s\S]*?<\/code>)/gi);
+  const mathPattern =
+    /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\$(?:\\.|[^$\n<])+?\$|\\\((?:\\.|[^\n<])+?\\\))/g;
+
+  return segments
+    .map((segment, index) => {
+      // Los índices impares corresponden a <pre>...</pre> o <code>...</code>
+      if (index % 2 === 1) return segment;
+      return segment.replace(mathPattern, (token) => {
+        const isDisplay =
+          (token.startsWith("$$") && token.endsWith("$$")) ||
+          (token.startsWith("\\[") && token.endsWith("\\]"));
+        const tex = token.slice(2, -2).trim();
+        const inlineTex = token.slice(1, -1).trim();
+        const finalTex = isDisplay
+          ? tex
+          : token.startsWith("\\(")
+            ? tex
+            : inlineTex;
+        return katex.renderToString(finalTex, {
+          ...KATEX_OPTIONS,
+          displayMode: isDisplay,
+        });
+      });
+    })
+    .join("");
+}

@@ -61,7 +61,7 @@ export function ExerciseFilterHUD({
       const activeTag = document.activeElement?.tagName ?? "";
       const isTyping = ["INPUT", "TEXTAREA", "SELECT"].includes(activeTag);
       if (isTyping) return;
-      if (event.key === "/" || (event.ctrlKey && event.key.toLowerCase() === "k")) {
+      if (event.key === "/") {
         event.preventDefault();
         searchInputRef.current?.focus();
         searchInputRef.current?.select();

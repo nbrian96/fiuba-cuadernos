@@ -1,0 +1,145 @@
+---
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ExerciseFilterHUD from "@/components/platform/ExerciseFilterHUD";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import {
+  sortCourseExercises,
+  toExerciseFilterItems,
+} from "@/utils/exerciseFilters";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  const paths = [];
+  for (const course of courses) {
+    for (const unit of course.data.units.filter((u) => u.inCatalog)) {
+      paths.push({
+        params: {
+          course: course.data.id,
+          unit: unit.slug,
+        },
+        props: {
+          course,
+          unit,
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { course, unit } = Astro.props;
+const courseId = course.data.id;
+
+const exercises = sortCourseExercises(
+  await getCollection("exercises", (entry) => entry.data.courseId === courseId),
+);
+const filterItems = toExerciseFilterItems(
+  courseId,
+  exercises,
+  course.data.units,
+);
+const unitExercises = exercises.filter((e) => e.data.unit === unit.slug);
+const unitParcialCount = unitExercises.filter((e) => e.data.isParcial).length;
+
+const unitOptions = course.data.units
+  .slice()
+  .sort((a, b) => a.order - b.order)
+  .map((u) => ({ slug: u.slug, name: u.name }));
+
+const resourceManifests = await getCollection(
+  "resources",
+  (entry) => entry.data.courseId === courseId,
+);
+const unitResources = resourceManifests
+  .flatMap((m) => m.data.resources)
+  .filter((r) => r.unitSlugs.includes(unit.slug));
+---
+
+<CourseLayout
+  course={course.data}
+  title={`${unit.name} — ${course.data.shortTitle}`}
+  description={`Unidad ${unit.order}: ${unit.name} (${unitExercises.length} ejercicios y ${unitResources.length} recursos asociados)`}
+  activeSection="exercises"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle, href: withBase(`/${courseId}/`) },
+    { label: "Ejercicios", href: withBase(`/${courseId}/ejercicios/`) },
+    { label: unit.name },
+  ]}
+>
+  <header class="surface-panel" style="margin-bottom: 1.5rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+      <span class="meta-pill">Unidad {unit.order}</span>
+      <span class="meta-pill">{unitExercises.length} ejercicios</span>
+      <span class="meta-pill meta-pill--parcial">
+        {unitParcialCount} de parcial real
+      </span>
+    </div>
+    <h1 style="margin: 0.25rem 0 0.4rem;">{unit.name}</h1>
+    <p style="margin: 0; color: var(--text-muted);">
+      Ejercicios resueltos paso a paso, diapositivas oficiales y guías de la
+      unidad <code>{unit.slug}</code>.
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+      {
+        course.data.units
+          .filter((u) => u.inCatalog)
+          .sort((a, b) => a.order - b.order)
+          .map((other) => (
+            <a
+              class={`btn ${other.slug === unit.slug ? "btn-primary" : ""}`.trim()}
+              href={withBase(`/${courseId}/unidad/${other.slug}/`)}
+              aria-current={other.slug === unit.slug ? "page" : undefined}
+            >
+              {other.order}. {other.name}
+            </a>
+          ))
+      }
+    </div>
+  </header>
+
+  {
+    unitResources.length > 0 ? (
+      <section class="surface-panel" aria-label="Materiales de la unidad" style="margin-bottom: 1.5rem;">
+        <h2 style="margin-top: 0;">
+          Materiales y guías de {unit.name} ({unitResources.length})
+        </h2>
+        <div class="card-grid">
+          {unitResources.map((res) => (
+            <article class="stat-card" style="display: grid; gap: 0.45rem;">
+              <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                <ProvenanceBadge provenance={res.provenance} />
+                {res.pdfMetadata ? (
+                  <span class="meta-pill">{res.pdfMetadata.pageCount} pág.</span>
+                ) : (
+                  <span class="meta-pill">{res.files.length} archivo(s)</span>
+                )}
+              </div>
+              <a
+                href={buildMaterialViewerUrl(
+                  courseId,
+                  res.resourceId,
+                  res.pdfMetadata ? 1 : undefined,
+                )}
+                style="font-weight: 700;"
+              >
+                {res.title}
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    ) : null
+  }
+
+  <ExerciseFilterHUD
+    client:load
+    courseId={courseId}
+    exercises={filterItems}
+    units={unitOptions}
+    initialUnit={unit.slug}
+  />
+</CourseLayout>

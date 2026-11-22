@@ -82,7 +82,11 @@ const stars = "★".repeat(entry.data.difficulty);
     },
   ]}
 >
-  <article class="surface-panel">
+  <article
+    class="surface-panel"
+    data-pagefind-filter={`provenance:${entry.data.provenance}, kind:exercise, course:${entry.data.courseId}`}
+    data-pagefind-meta={`provenance:${entry.data.provenance}, kind:exercise`}
+  >
     <header style="margin-bottom: 1.25rem;">
       <div
         style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0.75rem;"

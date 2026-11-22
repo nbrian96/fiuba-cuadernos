@@ -168,7 +168,8 @@
   }
 
   .prose-academic {
-    max-width: var(--measure-prose);
+    width: 100%;
+    max-width: none;
   }
 
   .prose-academic p,
@@ -277,6 +278,7 @@
   .hud-toolbar,
   .cheatsheet-backdrop,
   .cheatsheet-drawer,
+  .search-modal-backdrop,
   .pdf-toolbar,
   .doc-toc-desktop,
   .doc-toc-mobile {

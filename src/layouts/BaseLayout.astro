@@ -1,6 +1,7 @@
 ---
 import "katex/dist/katex.min.css";
 import "@/styles/global.css";
+import GlobalSearch from "@/components/platform/GlobalSearch";
 import ThemeToggle from "@/components/platform/ThemeToggle";
 import { withBase } from "@/utils/paths";
 
@@ -55,7 +56,7 @@ const {
   <body>
     <a class="skip-link" href="#main-content">Ir al contenido principal</a>
 
-    <header class="site-header">
+    <header class="site-header" data-pagefind-ignore>
       <div class="site-header-inner">
         <a class="site-brand" href={withBase("/")}>
           <span>Mega Cuaderno</span>
@@ -67,6 +68,7 @@ const {
         </div>
 
         <div class="site-header-actions">
+          <GlobalSearch client:load />
           <slot name="header-actions" />
           <ThemeToggle client:load />
         </div>
@@ -75,10 +77,10 @@ const {
 
     <slot name="subnav" />
 
-    <main id="main-content" class="page-shell" tabindex="-1">
+    <main id="main-content" class="page-shell" tabindex="-1" data-pagefind-body>
       {
         breadcrumbs.length > 0 ? (
-          <nav class="breadcrumbs" aria-label="Ruta de navegación">
+          <nav class="breadcrumbs" aria-label="Ruta de navegación" data-pagefind-ignore>
             <ol>
               {breadcrumbs.map((crumb, index) => {
                 const isLast = index === breadcrumbs.length - 1;
@@ -102,7 +104,7 @@ const {
       <slot />
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" data-pagefind-ignore>
       <div class="site-footer-inner">
         <span>Mega Cuaderno Universitario · Sitio estático accesible WCAG 2.1 AA</span>
         <a href={withBase("/")}>Inicio de plataforma</a>

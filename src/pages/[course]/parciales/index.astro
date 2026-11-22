@@ -1,0 +1,230 @@
+---
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ExerciseFilterHUD from "@/components/platform/ExerciseFilterHUD";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import {
+  sortCourseExercises,
+  toExerciseFilterItems,
+} from "@/utils/exerciseFilters";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  return courses.map((course) => ({
+    params: { course: course.data.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const courseId = course.data.id;
+
+const assessmentManifests = await getCollection(
+  "assessments",
+  (entry) => entry.data.courseId === courseId,
+);
+const resourceManifests = await getCollection(
+  "resources",
+  (entry) => entry.data.courseId === courseId,
+);
+const resourceById = new Map(
+  resourceManifests.flatMap((m) => m.data.resources).map((r) => [r.resourceId, r]),
+);
+
+const exercises = sortCourseExercises(
+  await getCollection("exercises", (entry) => entry.data.courseId === courseId),
+);
+const exerciseById = new Map(exercises.map((ex) => [ex.data.id, ex.data]));
+const filterItems = toExerciseFilterItems(
+  courseId,
+  exercises,
+  course.data.units,
+);
+const unitOptions = course.data.units
+  .slice()
+  .sort((a, b) => a.order - b.order)
+  .map((u) => ({ slug: u.slug, name: u.name }));
+
+const exams = assessmentManifests.flatMap((m) => m.data.exams);
+const practicalWorks = assessmentManifests.flatMap((m) => m.data.practicalWorks);
+const unassignedIds = assessmentManifests.flatMap(
+  (m) => m.data.unassignedGenericParcialExerciseIds,
+);
+const totalParcialExercises = exercises.filter((e) => e.data.isParcial).length;
+---
+
+<CourseLayout
+  course={course.data}
+  title={`Parciales y Evaluaciones — ${course.data.shortTitle}`}
+  description={`Índice de ${exams.length} parciales reales y ${totalParcialExercises} ejercicios de parcial de ${course.data.title}`}
+  activeSection="parciales"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle, href: withBase(`/${courseId}/`) },
+    { label: "Parciales" },
+  ]}
+>
+  <header style="margin-bottom: 1.5rem;">
+    <h1 style="margin-bottom: 0.4rem;">Parciales y Evaluaciones Reales</h1>
+    <p style="margin: 0; color: var(--text-muted);">
+      Trazabilidad directa entre los <strong>{exams.length}</strong> parciales de la
+      cátedra, sus PDFs originales y los <strong>{totalParcialExercises}</strong>{" "}
+      ejercicios de parcial del catálogo resuelto.
+    </p>
+  </header>
+
+  <section class="surface-panel" aria-label="Exámenes parciales registrados" style="margin-bottom: 1.5rem;">
+    <h2 style="margin-top: 0;">Exámenes oficiales y reconstruidos ({exams.length})</h2>
+    <div class="card-grid">
+      {
+        exams.map((exam) => {
+          const pdfRes = exam.pdfResourceId
+            ? resourceById.get(exam.pdfResourceId)
+            : undefined;
+          return (
+            <article class="stat-card" style="display: grid; gap: 0.65rem; align-content: start;">
+              <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
+                <ProvenanceBadge provenance={exam.provenance} />
+                <span class="meta-pill">{exam.term}</span>
+              </div>
+
+              <h3 style="margin: 0; font-size: 1.05rem;">{exam.title}</h3>
+
+              {exam.notes ? (
+                <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+                  {exam.notes}
+                </p>
+              ) : null}
+
+              {exam.catalogExerciseIds.length > 0 ? (
+                <div>
+                  <strong style="font-size: 0.85rem;">
+                    Ejercicios resueltos mapeados ({exam.catalogExerciseIds.length}):
+                  </strong>
+                  <ul class="plain-list" style="margin-top: 0.35rem; font-size: 0.875rem;">
+                    {exam.catalogExerciseIds.map((exId) => {
+                      const ex = exerciseById.get(exId);
+                      return (
+                        <li>
+                          <a href={withBase(`/${courseId}/ejercicios/${exId}/`)}>
+                            {ex
+                              ? ex.number !== null
+                                ? `EJ ${ex.number}: ${ex.title}`
+                                : ex.title
+                              : exId}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : null}
+
+              {pdfRes ? (
+                <div style="margin-top: 0.25rem;">
+                  <a
+                    class="btn btn-primary"
+                    href={buildMaterialViewerUrl(
+                      courseId,
+                      pdfRes.resourceId,
+                      pdfRes.pdfMetadata ? 1 : undefined,
+                    )}
+                  >
+                    Abrir PDF en visor
+                  </a>
+                </div>
+              ) : null}
+            </article>
+          );
+        })
+      }
+    </div>
+
+    {
+      unassignedIds.length > 0 ? (
+        <div class="academic-block academic-block--note" style="margin-bottom: 0;">
+          <p class="academic-block-title">Ejercicios de parcial sin fecha individual</p>
+          <p style="margin: 0;">
+            Los siguientes ejercicios tienen procedencia declarada de parcial real sin
+            PDF individual asignado en la nómina oficial:{" "}
+            {unassignedIds.map((exId, idx) => {
+              const ex = exerciseById.get(exId);
+              return (
+                <>
+                  {idx > 0 ? ", " : ""}
+                  <a href={withBase(`/${courseId}/ejercicios/${exId}/`)}>
+                    {ex && ex.number !== null
+                      ? `EJ ${ex.number}: ${ex.title}`
+                      : exId}
+                  </a>
+                </>
+              );
+            })}
+            .
+          </p>
+        </div>
+      ) : null
+    }
+  </section>
+
+  {
+    practicalWorks.length > 0 ? (
+      <section class="surface-panel" aria-label="Trabajos Prácticos" style="margin-bottom: 1.5rem;">
+        <h2 style="margin-top: 0;">Trabajos Prácticos ({practicalWorks.length})</h2>
+        <div class="card-grid">
+          {practicalWorks.map((tp) => {
+            const tpResources = tp.resourceIds
+              .map((rid) => resourceById.get(rid))
+              .filter((r): r is NonNullable<typeof r> => Boolean(r));
+            return (
+              <article class="stat-card" style="display: grid; gap: 0.5rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                  <ProvenanceBadge provenance={tp.provenance} />
+                  {tp.preservedIntact ? (
+                    <span class="meta-pill meta-pill--preserved">
+                      Preservado intacto
+                    </span>
+                  ) : null}
+                </div>
+                <h3 style="margin: 0; font-size: 1rem;">{tp.title}</h3>
+                {tp.notes ? (
+                  <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+                    {tp.notes}
+                  </p>
+                ) : null}
+                {tpResources.length > 0 ? (
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    {tpResources.map((res) => (
+                      <a
+                        class="btn"
+                        href={buildMaterialViewerUrl(
+                          courseId,
+                          res.resourceId,
+                          res.pdfMetadata ? 1 : undefined,
+                        )}
+                      >
+                        {res.title}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    ) : null
+  }
+
+  <section aria-label="Listado filtrable de ejercicios de parcial">
+    <h2>Ejercicios de parcial en el catálogo</h2>
+    <ExerciseFilterHUD
+      client:load
+      courseId={courseId}
+      exercises={filterItems}
+      units={unitOptions}
+      initialOnlyParcial={true}
+    />
+  </section>
+</CourseLayout>

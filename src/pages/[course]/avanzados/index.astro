@@ -1,0 +1,229 @@
+---
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ExerciseCard from "@/components/platform/ExerciseCard";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import SetCoverSimulator from "@/components/simulators/tda/SetCoverSimulator";
+import PricingMethodSimulator from "@/components/simulators/tda/PricingMethodSimulator";
+import KargerMinCutSimulator from "@/components/simulators/tda/KargerMinCutSimulator";
+import Max3SatSimulator from "@/components/simulators/tda/Max3SatSimulator";
+import HamletStreamingSimulator from "@/components/simulators/tda/HamletStreamingSimulator";
+import advancedSections from "@/data/tdaAdvancedSections.json";
+import { renderMathTokensInsideTrustedHtml } from "@/utils/katexStatic";
+import {
+  sortCourseExercises,
+  toExerciseFilterItems,
+} from "@/utils/exerciseFilters";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  return courses
+    .filter((course) => course.data.units.some((u) => u.slug === "avanzados"))
+    .map((course) => ({
+      params: { course: course.data.id },
+      props: { course },
+    }));
+}
+
+const { course } = Astro.props;
+const courseId = course.data.id;
+
+const resourceManifests = await getCollection(
+  "resources",
+  (entry) => entry.data.courseId === courseId,
+);
+const advancedResources = resourceManifests
+  .flatMap((m) => m.data.resources)
+  .filter((r) => r.unitSlugs.includes("avanzados"));
+
+const advancedExercises = sortCourseExercises(
+  await getCollection(
+    "exercises",
+    (entry) =>
+      entry.data.courseId === courseId && entry.data.unit === "avanzados",
+  ),
+);
+const advancedExerciseItems = toExerciseFilterItems(
+  courseId,
+  advancedExercises,
+  course.data.units,
+);
+
+const tocEntries = [
+  ...advancedSections.map((sec) => ({ id: sec.id, title: sec.title })),
+  {
+    id: "ejercicios-clase",
+    title: "16. Ejercicios Resueltos de Examen y Clase",
+  },
+];
+---
+
+<CourseLayout
+  course={course.data}
+  title={`Teoría Avanzada y Simuladores — ${course.data.shortTitle}`}
+  description={`Algoritmos de Aproximación, Randomizados, Simuladores interactivos y Streaming en ${course.data.title}`}
+  activeSection="avanzados"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle, href: withBase(`/${courseId}/`) },
+    { label: "Teoría Avanzada" },
+  ]}
+>
+  <header class="surface-panel" style="margin-bottom: 1.5rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem;">
+      <span class="meta-pill">Clases 21–24</span>
+      <span class="meta-pill">17 secciones temáticas</span>
+      <span class="meta-pill meta-pill--preserved">5 simuladores interactivos</span>
+    </div>
+    <h1 style="margin: 0.25rem 0 0.5rem;">
+      Teoría Avanzada: Algoritmos de Aproximación y Randomizados
+    </h1>
+    <p style="margin: 0; color: var(--text-muted);">
+      Síntesis completa de cotas de aproximación, Vertex Cover, Set Cover,
+      Balanceo de Carga, TSP Euclídeo, Contracción de Karger, MAX 3-SAT,
+      Streaming (Hamlet) y Hashing Universal con simuladores accesibles.
+    </p>
+  </header>
+
+  <div class="doc-grid">
+    <div
+      class="doc-main"
+      data-pagefind-filter={`provenance:elaborated_notes, kind:doc, course:${courseId}`}
+      data-pagefind-meta="provenance:elaborated_notes, kind:doc"
+    >
+      <details class="doc-toc-mobile">
+        <summary style="font-weight: 700; cursor: pointer;">
+          Contenido de Teoría Avanzada ({tocEntries.length})
+        </summary>
+        <ul class="doc-toc-list" style="margin-top: 0.75rem;">
+          {
+            tocEntries.map((entry) => (
+              <li>
+                <a href={`#${entry.id}`}>{entry.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+
+      {
+        advancedSections.map((sec) => (
+          <section
+            id={sec.id}
+            class="surface-panel prose-academic"
+            style="margin-bottom: 1.5rem;"
+          >
+            <h2 style="margin-top: 0;">{sec.title}</h2>
+
+            {sec.htmlBefore ? (
+              <Fragment
+                set:html={renderMathTokensInsideTrustedHtml(sec.htmlBefore)}
+              />
+            ) : null}
+
+            {sec.mermaidCode ? (
+              <MermaidDiagram
+                client:visible
+                code={sec.mermaidCode}
+                caption="Pipeline 1.5-aproximado de Christofides para TSP Métrico (MST + Matching Perfecto Mínimo + Tour Euleriano con Shortcuts)"
+              />
+            ) : null}
+
+            {sec.htmlAfterMermaid ? (
+              <Fragment
+                set:html={renderMathTokensInsideTrustedHtml(
+                  sec.htmlAfterMermaid,
+                )}
+              />
+            ) : null}
+
+            {sec.simulator === "set-cover" ? (
+              <SetCoverSimulator client:visible />
+            ) : null}
+            {sec.simulator === "pricing-method" ? (
+              <PricingMethodSimulator client:visible />
+            ) : null}
+            {sec.simulator === "karger" ? (
+              <KargerMinCutSimulator client:visible />
+            ) : null}
+            {sec.simulator === "max-3sat" ? (
+              <Max3SatSimulator client:visible />
+            ) : null}
+            {sec.simulator === "hamlet" ? (
+              <HamletStreamingSimulator client:visible />
+            ) : null}
+
+            {sec.htmlAfterSimulator ? (
+              <Fragment
+                set:html={renderMathTokensInsideTrustedHtml(
+                  sec.htmlAfterSimulator,
+                )}
+              />
+            ) : null}
+          </section>
+        ))
+      }
+
+      <section
+        id="ejercicios-clase"
+        class="surface-panel"
+        aria-label="Ejercicios propuestos de Teoría Avanzada"
+      >
+        <h2 style="margin-top: 0;">
+          16. Ejercicios Resueltos de Examen y Clase
+        </h2>
+        <p style="color: var(--text-muted);">
+          Ejercicios diferenciados con demostración formal y solución interactiva
+          integrados al catálogo de la materia.
+        </p>
+
+        <div class="exercise-list">
+          {
+            advancedExerciseItems.map((item) => (
+              <ExerciseCard exercise={item} showDetailLink={true} />
+            ))
+          }
+        </div>
+      </section>
+    </div>
+
+    <aside class="doc-toc-desktop" aria-label="Índice de Teoría Avanzada">
+      <h2 class="doc-toc-title">Contenido ({tocEntries.length})</h2>
+      <ul class="doc-toc-list">
+        {
+          tocEntries.map((entry) => (
+            <li>
+              <a href={`#${entry.id}`}>{entry.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+
+      {
+        advancedResources.length > 0 ? (
+          <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle);">
+            <h3 style="margin: 0 0 0.5rem; font-size: 0.95rem;">
+              Materiales fuente ({advancedResources.length})
+            </h3>
+            <ul class="plain-list" style="font-size: 0.875rem;">
+              {advancedResources.map((res) => (
+                <li>
+                  <a
+                    href={buildMaterialViewerUrl(
+                      courseId,
+                      res.resourceId,
+                      res.pdfMetadata ? 1 : undefined,
+                    )}
+                  >
+                    {res.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null
+      }
+    </aside>
+  </div>
+</CourseLayout>

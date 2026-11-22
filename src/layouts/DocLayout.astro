@@ -58,7 +58,11 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
         ) : null
       }
 
-      <article class="surface-panel prose-academic">
+      <article
+        class="surface-panel prose-academic"
+        data-pagefind-filter={`provenance:${doc.provenance}, kind:doc, course:${doc.courseId}`}
+        data-pagefind-meta={`provenance:${doc.provenance}, kind:doc`}
+      >
         <header style="margin-bottom: 1.25rem;">
           <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.65rem;">
             <ProvenanceBadge provenance={doc.provenance} showFullLabel />

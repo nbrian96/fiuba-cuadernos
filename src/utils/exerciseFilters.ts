@@ -1,4 +1,5 @@
-import type { ExerciseFrontmatter, StudyMode } from "@/schemas/academic";
+import type { CourseManifest, ExerciseFrontmatter, StudyMode } from "@/schemas/academic";
+import { withBase } from "@/utils/paths";
 
 export interface ExerciseFilterItem {
   id: string;
@@ -131,4 +132,40 @@ export function computeFilterSummary(
     tacticalCount,
     progressPercent,
   };
+}
+
+export function sortCourseExercises<T extends { data: Pick<ExerciseFrontmatter, "id" | "number"> }>(
+  entries: readonly T[],
+): T[] {
+  return [...entries].sort((a, b) => {
+    if (a.data.number !== null && b.data.number !== null) {
+      return a.data.number - b.data.number;
+    }
+    if (a.data.number !== null) return -1;
+    if (b.data.number !== null) return 1;
+    return a.data.id.localeCompare(b.data.id);
+  });
+}
+
+export function toExerciseFilterItems(
+  courseId: string,
+  entries: readonly { data: ExerciseFrontmatter }[],
+  units: readonly CourseManifest["units"][number][],
+): ExerciseFilterItem[] {
+  const unitNameBySlug = new Map(units.map((u) => [u.slug, u.name]));
+  return entries.map((entry) => ({
+    id: entry.data.id,
+    courseId: entry.data.courseId,
+    number: entry.data.number,
+    title: entry.data.title,
+    unit: entry.data.unit,
+    unitName: unitNameBySlug.get(entry.data.unit) ?? entry.data.unit,
+    entityType: entry.data.entityType,
+    provenance: entry.data.provenance,
+    priority: entry.data.priority,
+    difficulty: entry.data.difficulty,
+    origin: entry.data.origin,
+    isParcial: entry.data.isParcial,
+    detailHref: withBase(`/${courseId}/ejercicios/${entry.data.id}/`),
+  }));
 }

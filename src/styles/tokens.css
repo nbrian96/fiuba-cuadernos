@@ -67,10 +67,11 @@
     --z-header: 30;
     --z-backdrop: 90;
     --z-drawer: 100;
+    --z-modal: 120;
     --z-skip: 200;
 
     /* Medidas estructurales */
-    --container-max: 76rem;
+    --container-max: 90rem;
     --measure-prose: 72ch;
     --header-height: 3.75rem;
   }

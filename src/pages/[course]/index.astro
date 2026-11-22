@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import CourseLayout from "@/layouts/CourseLayout.astro";
 import QuickRecognitionTrainer from "@/components/platform/QuickRecognitionTrainer";
 import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import { sortCourseExercises } from "@/utils/exerciseFilters";
 import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
 
 export async function getStaticPaths() {
@@ -28,16 +29,14 @@ const quizzes = await getCollection(
   "quizzes",
   (entry) => entry.data.courseId === courseId,
 );
-const exercises = (
-  await getCollection("exercises", (entry) => entry.data.courseId === courseId)
-).sort((a, b) => {
-  if (a.data.number !== null && b.data.number !== null) {
-    return a.data.number - b.data.number;
-  }
-  if (a.data.number !== null) return -1;
-  if (b.data.number !== null) return 1;
-  return a.data.id.localeCompare(b.data.id);
-});
+const exercises = sortCourseExercises(
+  await getCollection("exercises", (entry) => entry.data.courseId === courseId),
+);
+const hasAvanzados = course.data.units.some((u) => u.slug === "avanzados");
+const featuredExercises = [
+  ...exercises.filter((e) => e.data.isParcial).slice(0, 6),
+  ...exercises.filter((e) => e.data.entityType === "AdvancedTheoryExercise"),
+];
 const docs = (
   await getCollection("docs", (entry) => entry.data.courseId === courseId)
 ).sort((a, b) => a.data.order - b.data.order);
@@ -110,6 +109,16 @@ const primaryQuiz = quizzes[0]?.data ?? null;
       <a class="btn btn-primary" href={withBase(`/${courseId}/ejercicios/`)}>
         Explorar ejercicios ({exercises.length} cargados)
       </a>
+      <a class="btn" href={withBase(`/${courseId}/parciales/`)}>
+        Parciales y evaluaciones ({totalExams})
+      </a>
+      {
+        hasAvanzados ? (
+          <a class="btn" href={withBase(`/${courseId}/avanzados/`)}>
+            Teoría Avanzada y Simuladores
+          </a>
+        ) : null
+      }
       <a class="btn" href={withBase(`/${courseId}/materiales/`)}>
         Repositorio de materiales ({totalResources} recursos)
       </a>
@@ -141,11 +150,16 @@ const primaryQuiz = quizzes[0]?.data ?? null;
     ) : null
   }
 
-  <section class="surface-panel" aria-label="Ejercicios disponibles en plataforma" style="margin-top: 1.5rem;">
-    <h2 style="margin-top: 0;">Ejercicios disponibles ({exercises.length})</h2>
+  <section class="surface-panel" aria-label="Ejercicios destacados en plataforma" style="margin-top: 1.5rem;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+      <h2 style="margin: 0;">Ejercicios en plataforma ({exercises.length})</h2>
+      <a class="btn" href={withBase(`/${courseId}/ejercicios/`)}>
+        Ver catálogo completo ({exercises.length})
+      </a>
+    </div>
     <ul class="plain-list">
       {
-        exercises.map((ex) => (
+        featuredExercises.map((ex) => (
           <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
             <ProvenanceBadge provenance={ex.data.provenance} />
             <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
@@ -184,16 +198,21 @@ const primaryQuiz = quizzes[0]?.data ?? null;
         course.data.units
           .slice()
           .sort((a, b) => a.order - b.order)
-          .map((unit) => (
-            <li class="stat-card">
-              <strong>
-                {unit.order}. {unit.name}
-              </strong>
-              <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem;">
-                <code>{unit.slug}</code> · {unit.exerciseCount} ej.
-              </div>
-            </li>
-          ))
+          .map((unit) => {
+            const unitHref = unit.inCatalog
+              ? withBase(`/${courseId}/unidad/${unit.slug}/`)
+              : withBase(`/${courseId}/avanzados/`);
+            return (
+              <li class="stat-card">
+                <a href={unitHref} style="font-weight: 700;">
+                  {unit.order}. {unit.name}
+                </a>
+                <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  <code>{unit.slug}</code> · {unit.exerciseCount} ej.
+                </div>
+              </li>
+            );
+          })
       }
     </ul>
   </section>
