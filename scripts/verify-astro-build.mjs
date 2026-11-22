@@ -41,9 +41,12 @@ assert.ok(fs.existsSync(distDir), "No existe el directorio dist/ tras astro buil
 const expectedPages = [
   "index.html",
   "tda/index.html",
+  "tda/ejercicios/index.html",
   "tda/ejercicios/tda-ej-18/index.html",
   "tda/ejercicios/tda-adv-aprox-2partition/index.html",
   "tda/docs/checklist-pre-parcial/index.html",
+  "tda/materiales/index.html",
+  "tda/materiales/tda-slide-13-programacion-lineal-ii/index.html",
 ];
 
 for (const relPath of expectedPages) {
@@ -118,25 +121,57 @@ for (const val of ["10", "20", "5", "6", "11", "$"]) {
   );
 }
 
-// 3. Si base != '/', verificar que todo href/src/component-url/renderer-url interno comience con base
+// 3. Verificar atributos internos bajo base y existencia de destinos compilados en dist/
 const allHtmlFiles = collectHtmlFiles(distDir);
-if (base !== "/") {
-  const attrRegex = /(?:href|src|component-url|renderer-url)\s*=\s*"(\/(?!\/)[^"]*)"/g;
-  for (const file of allHtmlFiles) {
-    const rel = path.relative(distDir, file).replace(/\\/g, "/");
-    const html = fs.readFileSync(file, "utf-8");
-    const cleanHtml = html
-      .replace(/<script\b[\s\S]*?<\/script>/gi, "")
-      .replace(/<style\b[\s\S]*?<\/style>/gi, "");
+const attrRegex =
+  /(?:href|src|component-url|renderer-url|before-hydration-url)\s*=\s*"(\/(?!\/)[^"]*)"/g;
 
-    let match;
-    while ((match = attrRegex.exec(cleanHtml)) !== null) {
-      const target = match[1];
+function resolveCompiledTarget(targetWithQueryOrHash) {
+  const withoutSuffix = targetWithQueryOrHash.split(/[?#]/)[0];
+  let relPath = withoutSuffix;
+  if (base !== "/") {
+    if (relPath === base.slice(0, -1) || relPath === base) {
+      relPath = "/";
+    } else if (relPath.startsWith(base)) {
+      relPath = `/${relPath.slice(base.length)}`;
+    } else {
+      return null;
+    }
+  }
+
+  const trimmedRel = relPath.replace(/^\/+/, "");
+  const directPath = path.join(distDir, trimmedRel);
+  if (fs.existsSync(directPath) && fs.statSync(directPath).isFile()) {
+    return directPath;
+  }
+  const indexPath = path.join(distDir, trimmedRel, "index.html");
+  if (fs.existsSync(indexPath) && fs.statSync(indexPath).isFile()) {
+    return indexPath;
+  }
+  return null;
+}
+
+for (const file of allHtmlFiles) {
+  const rel = path.relative(distDir, file).replace(/\\/g, "/");
+  const html = fs.readFileSync(file, "utf-8");
+  const cleanHtml = html
+    .replace(/(<script\b[^>]*>)[\s\S]*?(<\/script>)/gi, "$1$2")
+    .replace(/(<style\b[^>]*>)[\s\S]*?(<\/style>)/gi, "$1$2");
+
+  let match;
+  while ((match = attrRegex.exec(cleanHtml)) !== null) {
+    const target = match[1];
+    if (base !== "/") {
       assert.ok(
         target.startsWith(base) || target === base.slice(0, -1),
         `[Base Prefix] Atributo interno sin prefijo '${base}' en dist/${rel}: '${target}'`,
       );
     }
+    const resolved = resolveCompiledTarget(target);
+    assert.ok(
+      resolved !== null,
+      `[Broken Link] Destino interno inexistente en dist/${rel}: '${target}'`,
+    );
   }
 }
 

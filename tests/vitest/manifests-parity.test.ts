@@ -158,5 +158,20 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
       const fm = DocFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
       expect(fm.courseId).toBe("tda");
     }
+
+    const interactive = InteractiveAndNotesManifestSchema.parse(
+      readJson("docs/manifests/tda/interactive-and-notes.json"),
+    );
+    const expectedChecklistIds = (
+      interactive.summaries.find((s) => s.checklistItems)?.checklistItems ?? []
+    ).map((item) => item.id);
+    expect(expectedChecklistIds).toHaveLength(11);
+    const checklistMdx = fs.readFileSync(
+      path.join(ROOT, "src/content/docs/tda/checklist-pre-parcial.mdx"),
+      "utf-8",
+    );
+    for (const chkId of expectedChecklistIds) {
+      expect(checklistMdx).toContain(chkId);
+    }
   });
 });
