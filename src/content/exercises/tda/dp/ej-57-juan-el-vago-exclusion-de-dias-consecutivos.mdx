@@ -48,7 +48,7 @@ Juan dispone de ofertas de trabajo para los próximos $n$ días. Cada día $i$ l
   $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(i - 2) + G[i]\Big)$$
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    D2[\"OPT(i - 2)\"] -->|\"+ G[i] (Trabaja día i y descansa i-1)\"| Di[\"OPT(i) = max(...)\"]:::opt\n    D1[\"OPT(i - 1)\"] -->|\"+ 0 (Descansa día i)\"| Di\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    D2[\"OPT(i - 2)\"] -->|\"+ G[i] (Trabaja día i y descansa i-1)\"| Di[\"OPT(i) = max(...)\"]:::opt\n    D1[\"OPT(i - 1)\"] -->|\"+ 0 (Descansa día i)\"| Di\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

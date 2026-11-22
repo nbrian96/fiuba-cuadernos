@@ -68,7 +68,7 @@ Reducción entre problemas NP-Completos de grafos, diseño de matrices de costo 
      Cualquier tour cerrado que visite las $n$ ciudades usa exactamente $n$ aristas, y cada arista en $G'$ cuesta al menos $1$. Si el tour hubiera usado aunque sea **una sola arista de peso $2$**, su costo total sería como mínimo $2 + (n - 1) \times 1 = n + 1 > n$, lo cual es imposible. Por lo tanto, las $n$ aristas del tour tienen **todas peso $1$**, existen en $G$ y forman un Ciclo Hamiltoniano.
 
 
-<MermaidDiagram client:visible code={"graph LR\n    subgraph GrafoOriginalG [Grafo G con 4 vertices]\n        A[\"Nodo A\"] -->|Existe en E| B[\"Nodo B\"]\n        B -->|Existe en E| C[\"Nodo C\"]\n        C -->|Existe en E| D[\"Nodo D\"]\n        D -->|Existe en E| A\n    end\n    subgraph GrafoCompletoGPrime [Grafo Completo Ponderado]\n        A2[\"Nodo A\"] -->|peso 1| B2[\"Nodo B\"]\n        B2 -->|peso 1| C2[\"Nodo C\"]\n        C2 -->|peso 1| D2[\"Nodo D\"]\n        D2 -->|peso 1| A2\n        A2 -. Penalizacion peso 2 .-> C2\n        B2 -. Penalizacion peso 2 .-> D2\n    end"} />
+<MermaidDiagram client:load code={"graph LR\n    subgraph GrafoOriginalG [Grafo G con 4 vertices]\n        A[\"Nodo A\"] -->|Existe en E| B[\"Nodo B\"]\n        B -->|Existe en E| C[\"Nodo C\"]\n        C -->|Existe en E| D[\"Nodo D\"]\n        D -->|Existe en E| A\n    end\n    subgraph GrafoCompletoGPrime [Grafo Completo Ponderado]\n        A2[\"Nodo A\"] -->|peso 1| B2[\"Nodo B\"]\n        B2 -->|peso 1| C2[\"Nodo C\"]\n        C2 -->|peso 1| D2[\"Nodo D\"]\n        D2 -->|peso 1| A2\n        A2 -. Penalizacion peso 2 .-> C2\n        B2 -. Penalizacion peso 2 .-> D2\n    end"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación

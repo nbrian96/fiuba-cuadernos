@@ -124,7 +124,7 @@ const tocEntries = [
 
             {sec.mermaidCode ? (
               <MermaidDiagram
-                client:visible
+                client:load
                 code={sec.mermaidCode}
                 caption="Pipeline 1.5-aproximado de Christofides para TSP Métrico (MST + Matching Perfecto Mínimo + Tour Euleriano con Shortcuts)"
               />
@@ -139,19 +139,19 @@ const tocEntries = [
             ) : null}
 
             {sec.simulator === "set-cover" ? (
-              <SetCoverSimulator client:visible />
+              <SetCoverSimulator client:load />
             ) : null}
             {sec.simulator === "pricing-method" ? (
-              <PricingMethodSimulator client:visible />
+              <PricingMethodSimulator client:load />
             ) : null}
             {sec.simulator === "karger" ? (
-              <KargerMinCutSimulator client:visible />
+              <KargerMinCutSimulator client:load />
             ) : null}
             {sec.simulator === "max-3sat" ? (
-              <Max3SatSimulator client:visible />
+              <Max3SatSimulator client:load />
             ) : null}
             {sec.simulator === "hamlet" ? (
-              <HamletStreamingSimulator client:visible />
+              <HamletStreamingSimulator client:load />
             ) : null}
 
             {sec.htmlAfterSimulator ? (

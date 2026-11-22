@@ -44,7 +44,7 @@ Realizar un modelo de programación lineal que resuelva el problema del punto 3 
   $$x_i + x_{i+1} + x_{i+2} \ge 1 \quad \forall i \in \{1, \dots, N - 2\}$$
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Ventana1 [\"Ventana 1: x₁ + x₂ + x₃ ≥ 1\"]\n        E1[\"Estación 1 (x₁)\"] --- E2[\"Estación 2 (x₂)\"] --- E3[\"Estación 3 (x₃)\"]\n    end\n    subgraph Ventana2 [\"Ventana 2: x₂ + x₃ + x₄ ≥ 1\"]\n        E2 --- E3 --- E4[\"Estación 4 (x₄)\"]\n    end"} />
+<MermaidDiagram client:load code={"flowchart LR\n    subgraph Ventana1 [\"Ventana 1: x₁ + x₂ + x₃ ≥ 1\"]\n        E1[\"Estación 1 (x₁)\"] --- E2[\"Estación 2 (x₂)\"] --- E3[\"Estación 3 (x₃)\"]\n    end\n    subgraph Ventana2 [\"Ventana 2: x₂ + x₃ + x₄ ≥ 1\"]\n        E2 --- E3 --- E4[\"Estación 4 (x₄)\"]\n    end"} />
 
 
 #### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)

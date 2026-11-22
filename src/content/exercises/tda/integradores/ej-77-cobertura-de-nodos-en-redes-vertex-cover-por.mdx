@@ -44,7 +44,7 @@ Para el problema de Vertex Cover Mínimo en un grafo $G = (V, E)$, comparar tres
   3. Juntando ambas desigualdades: $|C| = 2 \cdot |M| \le 2 \cdot OPT$. Nunca usa más del doble de vértices que el óptimo y corre en tiempo lineal $\mathcal{O}(|V| + |E|)$.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    subgraph MatchingM [Emparejamiento Disjunto M]\n        u1((u1)) ===|\"e1 ∈ M\"| v1((v1))\n        u2((u2)) ===|\"e2 ∈ M\"| v2((v2))\n    end\n    MatchingM -->|\"OPT debe usar ≥ 1 nodo por cada arista de M\"| Cota1[\"Cota Inferior: OPT ≥ |M|\"]:::opt\n    MatchingM -->|\"Algoritmo toma ambos extremos (u y v)\"| Cota2[\"Solución C: |C| = 2·|M| ≤ 2·OPT\"]:::approx\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef approx fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    subgraph MatchingM [Emparejamiento Disjunto M]\n        u1((u1)) ===|\"e1 ∈ M\"| v1((v1))\n        u2((u2)) ===|\"e2 ∈ M\"| v2((v2))\n    end\n    MatchingM -->|\"OPT debe usar ≥ 1 nodo por cada arista de M\"| Cota1[\"Cota Inferior: OPT ≥ |M|\"]:::opt\n    MatchingM -->|\"Algoritmo toma ambos extremos (u y v)\"| Cota2[\"Solución C: |C| = 2·|M| ≤ 2·OPT\"]:::approx\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef approx fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado de los 3 Enfoques (Para la Hoja)

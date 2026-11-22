@@ -47,7 +47,7 @@ Paolo Casanova dispone de 2 días para realizar salidas a diferentes lugares cer
     * Si **visitamos uno o más lugares** donde vive la especie $i$, la suma da $\ge 1$. Como $x_i \in \{0, 1\}$ es binaria y estamos maximizando $\sum x_i$, el modelo le asignará automáticamente $x_i = 1$ (contando cada especie distinta a lo sumo una vez, aunque la veamos en varios lugares).
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Lugares [\"Lugares Candidatos (y_j ∈ {0,1})\"]\n        L1[\"Lugar 1 (0.5 días)\"]\n        L2[\"Lugar 2 (1.0 días)\"]\n        L3[\"Lugar 3 (0.5 días)\"]\n    end\n    subgraph Especies [\"Especies Avistadas (x_i ∈ {0,1})\"]\n        E1[\"Especie 1: x₁ ≤ y₁\"]\n        E2[\"Especie 2: x₂ ≤ y₁ + y₂\"]\n        E3[\"Especie 3: x₃ ≤ y₂ + y₃\"]\n    end\n    L1 --> E1\n    L1 --> E2\n    L2 --> E2\n    L2 --> E3\n    L3 --> E3"} />
+<MermaidDiagram client:load code={"flowchart LR\n    subgraph Lugares [\"Lugares Candidatos (y_j ∈ {0,1})\"]\n        L1[\"Lugar 1 (0.5 días)\"]\n        L2[\"Lugar 2 (1.0 días)\"]\n        L3[\"Lugar 3 (0.5 días)\"]\n    end\n    subgraph Especies [\"Especies Avistadas (x_i ∈ {0,1})\"]\n        E1[\"Especie 1: x₁ ≤ y₁\"]\n        E2[\"Especie 2: x₂ ≤ y₁ + y₂\"]\n        E3[\"Especie 3: x₃ ≤ y₂ + y₃\"]\n    end\n    L1 --> E1\n    L1 --> E2\n    L2 --> E2\n    L2 --> E3\n    L3 --> E3"} />
 
 
 #### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)

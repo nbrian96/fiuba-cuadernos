@@ -177,6 +177,35 @@ for (const file of allHtmlFiles) {
       resolved !== null,
       `[Broken Link] Destino interno inexistente en dist/${rel}: '${target}'`,
     );
+    const hashIndex = target.indexOf("#");
+    if (hashIndex !== -1 && resolved && resolved.endsWith(".html")) {
+      const anchorId = decodeURIComponent(target.slice(hashIndex + 1));
+      if (anchorId) {
+        const targetHtml = fs.readFileSync(resolved, "utf-8");
+        const escapedId = anchorId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const hasId = new RegExp(`\\bid=["']${escapedId}["']`).test(targetHtml);
+        assert.ok(
+          hasId,
+          `[Broken Anchor] Ancla '#${anchorId}' inexistente en destino '${target}' referenciado desde dist/${rel}`,
+        );
+      }
+    }
+  }
+
+  // Verificar también anclas intra-página puras href="#id"
+  const intraHashRegex = /\bhref=["']#([^"']+)["']/gi;
+  const pageIds = new Set(
+    Array.from(cleanHtml.matchAll(/\bid=["']([^"']+)["']/gi), (m) => m[1]),
+  );
+  let hashMatch;
+  while ((hashMatch = intraHashRegex.exec(cleanHtml)) !== null) {
+    const anchorId = decodeURIComponent(hashMatch[1]);
+    if (anchorId) {
+      assert.ok(
+        pageIds.has(anchorId),
+        `[Broken Intra-Page Anchor] Ancla '#${anchorId}' inexistente en dist/${rel}`,
+      );
+    }
   }
 }
 

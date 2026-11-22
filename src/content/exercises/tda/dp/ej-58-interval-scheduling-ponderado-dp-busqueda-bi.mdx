@@ -49,7 +49,7 @@ Se tiene un conjunto de $n$ intervalos $[s_i, f_i]$, cada uno con un beneficio o
   $$OPT(i) = \max\Big(OPT(i - 1), \;\; OPT(p(i)) + v_i\Big)$$
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    P_i[\"OPT(p(i))<br/>Último j con f_j ≤ s_i (Búsqueda Binaria)\"] -->|\"+ v_i (Incluir intervalo i)\"| OPT_i[\"OPT(i) = max(...)\"]:::opt\n    Prev[\"OPT(i - 1)<br/>Prefijo anterior\"] -->|\"+ 0 (Excluir intervalo i)\"| OPT_i\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    P_i[\"OPT(p(i))<br/>Último j con f_j ≤ s_i (Búsqueda Binaria)\"] -->|\"+ v_i (Incluir intervalo i)\"| OPT_i[\"OPT(i) = max(...)\"]:::opt\n    Prev[\"OPT(i - 1)<br/>Prefijo anterior\"] -->|\"+ 0 (Excluir intervalo i)\"| OPT_i\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

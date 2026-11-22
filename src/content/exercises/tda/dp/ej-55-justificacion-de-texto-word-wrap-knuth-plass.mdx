@@ -54,7 +54,7 @@ Diseñar un algoritmo por Programación Dinámica que realice una partición del
   $$OPT(i) = \min_{\substack{1 \le j \le i \\ \text{Longitud}(j, i) \le L}} \Big\{ OPT(j - 1) + \big(L - \text{Longitud}(j, i)\big)^2 \Big\}$$
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    P0[\"OPT(0) = 0\"] --> Pj[\"OPT(j - 1)<br/>Palabras 1..j-1 óptimas\"]:::prev\n    Pj -->|\"+ (L - Longitud(j, i))²<br/>Última línea con palabras j..i\"| Pi[\"OPT(i)<br/>Mínimo probando todo j válido\"]:::curr\n    classDef prev fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff\n    classDef curr fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    P0[\"OPT(0) = 0\"] --> Pj[\"OPT(j - 1)<br/>Palabras 1..j-1 óptimas\"]:::prev\n    Pj -->|\"+ (L - Longitud(j, i))²<br/>Última línea con palabras j..i\"| Pi[\"OPT(i)<br/>Mínimo probando todo j válido\"]:::curr\n    classDef prev fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff\n    classDef curr fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

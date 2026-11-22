@@ -61,7 +61,7 @@ Concepto de orden de dificultad entre problemas en NP, transformación con copia
    * **¿Se puede reducir en sentido inverso ($\text{Subset Sum} \le_P \text{Cambio de Monedas}$)? SÍ:** Porque *Subset Sum* pertenece a **NP** y *Cambio de Monedas* (con valores en binario) es **NP-Completo**; por definición, todo problema en NP se reduce polinomialmente a cualquier problema NP-Completo.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    I[\"Instancia Cambio de Monedas:<br/>D = {d₁..dₘ}, monto V, cota k\"]:::src --> R[\"Expansión en k copias:<br/>L tiene m · k elementos\"]:::step\n    R --> G[\"Gadget Base M = k + 1:<br/>eᵢ = dᵢ · (k+1) + 1<br/>+ k comodines de valor 1\"]:::step\n    G --> SS([\"Oráculo Subset Sum:<br/>¿Suma exacta W = V·(k+1) + k?\"]):::opt\n    classDef src fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff\n    classDef step fill:#334155,stroke:#1e293b,stroke-width:1px,color:#fff\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    I[\"Instancia Cambio de Monedas:<br/>D = {d₁..dₘ}, monto V, cota k\"]:::src --> R[\"Expansión en k copias:<br/>L tiene m · k elementos\"]:::step\n    R --> G[\"Gadget Base M = k + 1:<br/>eᵢ = dᵢ · (k+1) + 1<br/>+ k comodines de valor 1\"]:::step\n    G --> SS([\"Oráculo Subset Sum:<br/>¿Suma exacta W = V·(k+1) + k?\"]):::opt\n    classDef src fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff\n    classDef step fill:#334155,stroke:#1e293b,stroke-width:1px,color:#fff\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación

@@ -134,7 +134,12 @@ export function CheatsheetDrawer({
           </button>
         </div>
 
-        <div className="cheatsheet-drawer-body">
+        <div
+          className="cheatsheet-drawer-body"
+          tabIndex={0}
+          role="region"
+          aria-label="Contenido de fórmulas y recetas"
+        >
           {sections.map((section) => {
             const ListTag = section.listType;
             return (

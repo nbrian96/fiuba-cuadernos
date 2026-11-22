@@ -76,7 +76,7 @@ Algoritmo ConcederPermisosMafias(pedidos):
 * **Complejidad Espacial:** **$O(n)$** para guardar la lista de permisos otorgados.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    subgraph Ruta [Secuencia de Evaluación Voraz por Fin más Temprano]\n        A[\"1º: Mafia A [1, 4]<br/>ACEPTADO (f_ult = 4)\"]:::opt -->|\"s_B = 3 &lt; 4\"| B[\"2º: Mafia B [3, 5]<br/>RECHAZADO (Solapa)\"]:::bad\n        B -->|\"s_C = 0 &lt; 4\"| C[\"3º: Mafia C [0, 6]<br/>RECHAZADO (Solapa)\"]:::bad\n        C -->|\"s_D = 4 &ge; 4\"| D[\"4º: Mafia D [4, 7]<br/>ACEPTADO (f_ult = 7)\"]:::opt\n        D -->|\"s_E = 6 &lt; 7\"| E[\"5º: Mafia E [6, 9]<br/>RECHAZADO (Solapa)\"]:::bad\n    end\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef bad fill:#991b1b,stroke:#7f1d1d,stroke-width:1px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    subgraph Ruta [Secuencia de Evaluación Voraz por Fin más Temprano]\n        A[\"1º: Mafia A [1, 4]<br/>ACEPTADO (f_ult = 4)\"]:::opt -->|\"s_B = 3 &lt; 4\"| B[\"2º: Mafia B [3, 5]<br/>RECHAZADO (Solapa)\"]:::bad\n        B -->|\"s_C = 0 &lt; 4\"| C[\"3º: Mafia C [0, 6]<br/>RECHAZADO (Solapa)\"]:::bad\n        C -->|\"s_D = 4 &ge; 4\"| D[\"4º: Mafia D [4, 7]<br/>ACEPTADO (f_ult = 7)\"]:::opt\n        D -->|\"s_E = 6 &lt; 7\"| E[\"5º: Mafia E [6, 9]<br/>RECHAZADO (Solapa)\"]:::bad\n    end\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef bad fill:#991b1b,stroke:#7f1d1d,stroke-width:1px,color:#fff"} />
 
 
 

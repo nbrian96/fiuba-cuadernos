@@ -48,7 +48,7 @@ Se tiene el problema del delivery. Para cada paquete $i$ de una lista de $n$ paq
   $$OPT(i, w, v, m) = \begin{cases} OPT(i - 1, w, v, m) & \text{si } W_i > w \lor V_i > v \lor C_i > m \\ \max\Big(OPT(i - 1, w, v, m), \; OPT(i - 1, w - W_i, v - V_i, m - C_i) + B_i\Big) & \text{si } W_i \le w \land V_i \le v \land C_i \le m \end{cases}$$
 
 
-<MermaidDiagram client:visible code={"flowchart TD\n    S[\"Estado Actual: OPT(i, w, v, m)\"] --> COND{\"¿Cabe en los 3 recursos?<br/>W_i ≤ w ∧ V_i ≤ v ∧ C_i ≤ m\"}\n    COND -- No --> EXCL[\"No llevar paquete i:<br/>OPT(i-1, w, v, m)\"]:::no\n    COND -- Sí --> MAX[\"max(<br/>  No llevar: OPT(i-1, w, v, m),<br/>  Llevar: OPT(i-1, w-W_i, v-V_i, m-C_i) + B_i<br/>)\"]:::yes\n    classDef no fill:#991b1b,stroke:#7f1d1d,stroke-width:1.5px,color:#fff\n    classDef yes fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart TD\n    S[\"Estado Actual: OPT(i, w, v, m)\"] --> COND{\"¿Cabe en los 3 recursos?<br/>W_i ≤ w ∧ V_i ≤ v ∧ C_i ≤ m\"}\n    COND -- No --> EXCL[\"No llevar paquete i:<br/>OPT(i-1, w, v, m)\"]:::no\n    COND -- Sí --> MAX[\"max(<br/>  No llevar: OPT(i-1, w, v, m),<br/>  Llevar: OPT(i-1, w-W_i, v-V_i, m-C_i) + B_i<br/>)\"]:::yes\n    classDef no fill:#991b1b,stroke:#7f1d1d,stroke-width:1.5px,color:#fff\n    classDef yes fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

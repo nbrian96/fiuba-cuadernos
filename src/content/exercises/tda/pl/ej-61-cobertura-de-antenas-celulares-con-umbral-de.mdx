@@ -45,7 +45,7 @@ Una empresa de telefonía celular colocará antenas en una grilla bidimensional 
   * **Exigencia del 70%:** Para obligar al modelo a dar servicio a por lo menos el $70\%$ de los vecindarios, exigimos que la suma de vecindarios cubiertos cumpla $\sum_{v \in V} x_v \ge 0.70 \cdot |V|$.
 
 
-<MermaidDiagram client:visible code={"graph TD\n    subgraph CeldaAntena [\"Antena en Celda (i, j) -> y_c = 1\"]\n        C[\"Celda Central (i, j)\"]\n    end\n    subgraph CeldasCubiertas [\"Bloque de 9 Celdas Cubiertas (3x3)\"]\n        V1[\"(i-1, j-1)\"]\n        V2[\"(i-1, j)\"]\n        V3[\"(i-1, j+1)\"]\n        V4[\"(i, j-1)\"]\n        V5[\"(i, j+1)\"]\n        V6[\"(i+1, j-1)\"]\n        V7[\"(i+1, j)\"]\n        V8[\"(i+1, j+1)\"]\n    end\n    C --> V1 & V2 & V3 & V4 & V5 & V6 & V7 & V8"} />
+<MermaidDiagram client:load code={"graph TD\n    subgraph CeldaAntena [\"Antena en Celda (i, j) -> y_c = 1\"]\n        C[\"Celda Central (i, j)\"]\n    end\n    subgraph CeldasCubiertas [\"Bloque de 9 Celdas Cubiertas (3x3)\"]\n        V1[\"(i-1, j-1)\"]\n        V2[\"(i-1, j)\"]\n        V3[\"(i-1, j+1)\"]\n        V4[\"(i, j-1)\"]\n        V5[\"(i, j+1)\"]\n        V6[\"(i+1, j-1)\"]\n        V7[\"(i+1, j)\"]\n        V8[\"(i+1, j+1)\"]\n    end\n    C --> V1 & V2 & V3 & V4 & V5 & V6 & V7 & V8"} />
 
 
 #### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)

@@ -55,7 +55,7 @@ Un transporte debe recorrer una ruta hasta su objetivo final. Para hacerlo tiene
   $$OPT(i) = T[i] + \min\Big(OPT(i - 1), \; OPT(i - 2), \; OPT(i - 3)\Big)$$
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    I3[\"OPT(i - 3)<br/>Saltea 2 estaciones\"] -->|\"+ T[i]\"| I[\"OPT(i) = T[i] + min(...)\"]:::opt\n    I2[\"OPT(i - 2)<br/>Saltea 1 estación\"] -->|\"+ T[i]\"| I\n    I1[\"OPT(i - 1)<br/>Sin saltear\"] -->|\"+ T[i]\"| I\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"flowchart LR\n    I3[\"OPT(i - 3)<br/>Saltea 2 estaciones\"] -->|\"+ T[i]\"| I[\"OPT(i) = T[i] + min(...)\"]:::opt\n    I2[\"OPT(i - 2)<br/>Saltea 1 estación\"] -->|\"+ T[i]\"| I\n    I1[\"OPT(i - 1)<br/>Sin saltear\"] -->|\"+ T[i]\"| I\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

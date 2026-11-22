@@ -11,9 +11,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "test:python": "python run_tests.py",
     "verify:build": "node scripts/verify-astro-build.mjs",
-    "test:all": "npm run check && npm test && npm run build && npm run verify:build && python run_tests.py"
+    "test:all": "npm run check && npm run typecheck && npm test && npm run build && npm run verify:build && npm run test:e2e && python run_tests.py"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.10",
@@ -29,6 +30,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",

@@ -83,7 +83,7 @@ Algoritmo MochilaAproxMedio(items, W):
 * Filtrar los objetos cuesta $O(n)$, ordenarlos por densidad $v_i / w_i$ cuesta **$O(n \log n)$** y recorrerlos linealmente cuesta $O(n)$. Por lo tanto, la complejidad temporal es **$O(n \log n)$** y espacial **$O(n)$**.
 
 
-<MermaidDiagram client:visible code={"graph TD\n    A[\"Ordenar ítems por densidad v_i / w_i\"] --> B[\"Llenado voraz hasta agotar capacidad\"]\n    B --> C[\"¿Quedó capacidad para el siguiente ítem?\"]\n    C -- No --> D[\"Identificar Elemento Crítico k\"]\n    D --> E{\"¿v_k es mayor que V_greedy?\"}\n    E -- Sí --> F[\"Solución = {Elemento Crítico k}\"]:::opt\n    E -- No --> G[\"Solución = Conjunto Voraz\"]:::opt\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"graph TD\n    A[\"Ordenar ítems por densidad v_i / w_i\"] --> B[\"Llenado voraz hasta agotar capacidad\"]\n    B --> C[\"¿Quedó capacidad para el siguiente ítem?\"]\n    C -- No --> D[\"Identificar Elemento Crítico k\"]\n    D --> E{\"¿v_k es mayor que V_greedy?\"}\n    E -- Sí --> F[\"Solución = {Elemento Crítico k}\"]:::opt\n    E -- No --> G[\"Solución = Conjunto Voraz\"]:::opt\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 

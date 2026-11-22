@@ -93,7 +93,11 @@ export function MermaidDiagram({
             dangerouslySetInnerHTML={{ __html: svgHtml }}
           />
         ) : (
-          <pre className="mermaid-fallback" aria-label="Código fuente del diagrama">
+          <pre
+            className="mermaid-fallback"
+            aria-label="Código fuente del diagrama"
+            tabIndex={0}
+          >
             <code>{code.trim()}</code>
           </pre>
         )}

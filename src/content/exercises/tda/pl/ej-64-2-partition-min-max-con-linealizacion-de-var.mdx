@@ -45,7 +45,7 @@ Formular el problema como un modelo de Programación Lineal Entera, linealizando
   Como $Z$ está obligada a ser mayor o igual que ambas cargas simultáneamente, y la función objetivo pide **minimizar $Z$** ($\min Z$), el optimizador reducirá $Z$ todo lo posible hasta que toque a la mayor de las dos cargas, logrando exactamente $Z = \max(\text{Carga}_{P_1}, \text{Carga}_{P_2})$.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    P1[\"Carga P₁ = Σ T_i · x_i\"] -->|\"Restricción 1: Z ≥ Carga P₁\"| Z[\"Variable Auxiliar Continua Z\"]\n    P2[\"Carga P₂ = Σ T_i · (1 - x_i)\"] -->|\"Restricción 2: Z ≥ Carga P₂\"| Z\n    MinZ[\"Función Objetivo: min Z\"] -->|\"Empuja Z hacia abajo hasta el máximo\"| Z"} />
+<MermaidDiagram client:load code={"flowchart LR\n    P1[\"Carga P₁ = Σ T_i · x_i\"] -->|\"Restricción 1: Z ≥ Carga P₁\"| Z[\"Variable Auxiliar Continua Z\"]\n    P2[\"Carga P₂ = Σ T_i · (1 - x_i)\"] -->|\"Restricción 2: Z ≥ Carga P₂\"| Z\n    MinZ[\"Función Objetivo: min Z\"] -->|\"Empuja Z hacia abajo hasta el máximo\"| Z"} />
 
 
 #### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)

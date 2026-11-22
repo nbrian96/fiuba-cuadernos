@@ -75,7 +75,7 @@ Algoritmo AntenasSetCoverGreedy(vecindarios, antenas):
 * Como en cada paso cubrimos al menos 1 vecindario nuevo, el ciclo se ejecuta a lo sumo $V$ veces. Complejidad temporal total: **$O(V \cdot M)$** y espacial **$O(V + M)$**.
 
 
-<MermaidDiagram client:visible code={"graph TD\n    U[\"Vecindarios No Cubiertos: {v1, v2, v3, v4}\"] --> A1[\"Instalar A1: Cubre {v1, v2} a $5/vecino\"]:::opt\n    A1 --> U2[\"Vecindarios Restantes: {v3, v4}\"]\n    U2 --> A3[\"Instalar A3: Cubre {v3, v4} a $6/vecino\"]:::opt\n    A3 --> FIN([\"Cobertura 100% Completada por $22\"]):::done\n    classDef opt fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff\n    classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
+<MermaidDiagram client:load code={"graph TD\n    U[\"Vecindarios No Cubiertos: {v1, v2, v3, v4}\"] --> A1[\"Instalar A1: Cubre {v1, v2} a $5/vecino\"]:::opt\n    A1 --> U2[\"Vecindarios Restantes: {v3, v4}\"]\n    U2 --> A3[\"Instalar A3: Cubre {v3, v4} a $6/vecino\"]:::opt\n    A3 --> FIN([\"Cobertura 100% Completada por $22\"]):::done\n    classDef opt fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#fff\n    classDef done fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff"} />
 
 
 

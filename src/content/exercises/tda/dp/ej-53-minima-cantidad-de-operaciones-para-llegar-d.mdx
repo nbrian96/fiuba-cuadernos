@@ -55,7 +55,7 @@ Implementar un algoritmo que, por programación dinámica, obtenga la menor cant
 * **Orden de llenado:** Llenamos el arreglo `DP` desde $i = 1$ hasta $K$. Como $i - 1$ e $i / 2$ son siempre estrictamente menores que $i$, al avanzar de menor a mayor nos aseguramos de que ambos valores ya están calculados cuando los necesitamos (no hay ciclos).
 
 
-<MermaidDiagram client:visible code={"graph LR\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef normal fill:#475569,stroke:#334155,stroke-width:1px,color:#fff\n\n    N0[\"0\"]:::opt -->|+1| N1[\"1\"]:::opt\n    N1 -->|x2| N2[\"2\"]:::opt\n    N2 -->|+1| N3[\"3\"]:::normal\n    N2 -->|x2| N4[\"4\"]:::opt\n    N3 -->|+1| N4\n    N3 -->|x2| N6[\"6\"]:::normal\n    N4 -->|+1| N5[\"5\"]:::opt\n    N4 -->|x2| N8[\"8\"]:::normal\n    N5 -->|+1| N6\n    N5 -->|x2| N10[\"10\"]:::opt"} />
+<MermaidDiagram client:load code={"graph LR\n    classDef opt fill:#15803d,stroke:#166534,stroke-width:2px,color:#fff\n    classDef normal fill:#475569,stroke:#334155,stroke-width:1px,color:#fff\n\n    N0[\"0\"]:::opt -->|+1| N1[\"1\"]:::opt\n    N1 -->|x2| N2[\"2\"]:::opt\n    N2 -->|+1| N3[\"3\"]:::normal\n    N2 -->|x2| N4[\"4\"]:::opt\n    N3 -->|+1| N4\n    N3 -->|x2| N6[\"6\"]:::normal\n    N4 -->|+1| N5[\"5\"]:::opt\n    N4 -->|x2| N8[\"8\"]:::normal\n    N5 -->|+1| N6\n    N5 -->|x2| N10[\"10\"]:::opt"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

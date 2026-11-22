@@ -72,7 +72,7 @@ Algoritmo BuscarPrimerCero(A, ini, fin):
 * Por el **Teorema Maestro**, como $\log_b a = \log_2 1 = 0 = c$ (**Caso 2**), la complejidad temporal es **$T(n) = \Theta(n^0 \log n) = O(\log n)$**.
 
 
-<MermaidDiagram client:visible code={"graph LR\n    subgraph Unos [Zona de 1s]\n        N0[\"A[0] = 1\"] --> N1[\"A[1] = 1\"] --> N2[\"A[2] = 1\"] --> N3[\"A[3] = 1\"]\n    end\n    subgraph Ceros [Zona de 0s]\n        N4[\"A[4] = 0 (PRIMER CERO)\"]:::primer --> N5[\"A[5] = 0\"] --> N6[\"A[6] = 0\"] --> N7[\"A[7] = 0\"]\n    end\n    N3 -. Frontera de Transición .-> N4\n    classDef primer fill:#15803d,stroke:#166534,stroke-width:3px,color:#fff"} />
+<MermaidDiagram client:load code={"graph LR\n    subgraph Unos [Zona de 1s]\n        N0[\"A[0] = 1\"] --> N1[\"A[1] = 1\"] --> N2[\"A[2] = 1\"] --> N3[\"A[3] = 1\"]\n    end\n    subgraph Ceros [Zona de 0s]\n        N4[\"A[4] = 0 (PRIMER CERO)\"]:::primer --> N5[\"A[5] = 0\"] --> N6[\"A[6] = 0\"] --> N7[\"A[7] = 0\"]\n    end\n    N3 -. Frontera de Transición .-> N4\n    classDef primer fill:#15803d,stroke:#166534,stroke-width:3px,color:#fff"} />
 
 
 

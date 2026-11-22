@@ -58,7 +58,7 @@ Comprensión de la dualidad entre Independent Set y Vertex Cover por complemento
      Tomamos $I = V \setminus S$. Su tamaño es $|I| = |V| - |S| \ge |V| - (|V| - k) = k$. Como toda arista $(u, v) \in E$ tiene al menos un extremo en $S$, ninguna arista puede tener sus dos extremos en $V \setminus S = I$. Por ende, $I$ es un conjunto independiente válido de tamaño $\ge k$.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    IS[\"Independent Set I: tamaño |I| ≥ k\"] ---|Complemento Exacto S = V \\ I| VC[\"Vertex Cover S: tamaño |S| ≤ |V| - k\"]"} />
+<MermaidDiagram client:load code={"flowchart LR\n    IS[\"Independent Set I: tamaño |I| ≥ k\"] ---|Complemento Exacto S = V \\ I| VC[\"Vertex Cover S: tamaño |S| ≤ |V| - k\"]"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado del Verificador y la Transformación

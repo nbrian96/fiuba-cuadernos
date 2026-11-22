@@ -79,7 +79,7 @@ def convert_mermaid_blocks(md_text: str) -> tuple[str, bool]:
         nonlocal used
         used = True
         code = match.group(1).strip()
-        return f"\n<MermaidDiagram client:visible code={{{json.dumps(code, ensure_ascii=False)}}} />\n"
+        return f"\n<MermaidDiagram client:load code={{{json.dumps(code, ensure_ascii=False)}}} />\n"
 
     out = re.sub(r"```mermaid\s*\n([\s\S]*?)```", _replace, md_text)
     return out, used

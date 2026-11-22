@@ -61,7 +61,7 @@ Modelado de matching con capacidades unitarias y franjas horarias mediante Redes
   3. **Maximización:** El valor del flujo máximo $|f^*|$ de $s$ a $t$ coincide exactamente con la cantidad máxima posible de citas médicas válidas, y las aristas $(p \to (m, h))$ con flujo $f = 1$ indican qué turno se asignó a cada paciente.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    S_SRC[\"Nodo Fuente s\"] -->|1| P1[\"Paciente 1\"]\n    S_SRC -->|1| P2[\"Paciente 2\"]\n    S_SRC -->|1| P3[\"Paciente 3\"]\n    P1 -->|1| T1[\"Dr. Perez 09h\"]\n    P1 -->|1| T2[\"Dr. Perez 10h\"]\n    P2 -->|1| T2\n    P2 -->|1| T3[\"Dra. Gomez 09h\"]\n    P3 -->|1| T3\n    T1 -->|1| T_SNK[\"Nodo Sumidero t\"]\n    T2 -->|1| T_SNK\n    T3 -->|1| T_SNK"} />
+<MermaidDiagram client:load code={"flowchart LR\n    S_SRC[\"Nodo Fuente s\"] -->|1| P1[\"Paciente 1\"]\n    S_SRC -->|1| P2[\"Paciente 2\"]\n    S_SRC -->|1| P3[\"Paciente 3\"]\n    P1 -->|1| T1[\"Dr. Perez 09h\"]\n    P1 -->|1| T2[\"Dr. Perez 10h\"]\n    P2 -->|1| T2\n    P2 -->|1| T3[\"Dra. Gomez 09h\"]\n    P3 -->|1| T3\n    T1 -->|1| T_SNK[\"Nodo Sumidero t\"]\n    T2 -->|1| T_SNK\n    T3 -->|1| T_SNK"} />
 
 
 #### 2. Semi-Pseudocódigo Simplificado

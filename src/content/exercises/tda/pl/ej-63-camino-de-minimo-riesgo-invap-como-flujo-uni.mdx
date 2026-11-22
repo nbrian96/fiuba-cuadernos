@@ -46,7 +46,7 @@ Para el traslado de una carga crítica de alta seguridad de la empresa INVAP des
   Porque la matriz de restricciones de conservación de flujo en un grafo dirigido (matriz de incidencia nodo-arista) cumple la propiedad de **Unimodularidad Total (TUM)** (todo subdeterminante vale $0, 1$ o $-1$). Cuando la matriz es Totalmente Unimodular y los términos independientes del lado derecho son enteros ($+1, -1$ y $0$), **todos los vértices del poliedro factible son enteros**. Por lo tanto, al resolver el modelo con Programación Lineal continua (por ejemplo con Simplex), el óptimo hallado tendrá automáticamente valores enteros $x_{uv} \in \{0, 1\}$ marcando el camino óptimo sin fraccionar la carga.
 
 
-<MermaidDiagram client:visible code={"flowchart LR\n    S_NODE[\"Ezeiza s<br/>Sale - Entra = +1\"] -->|\"C = 12\"| N1[\"Neuquén<br/>Sale - Entra = 0\"]\n    S_NODE -->|\"C = 18\"| N2[\"Bahía Blanca<br/>Sale - Entra = 0\"]\n    N1 -->|\"C = 6\"| T_NODE[\"Bariloche t<br/>Sale - Entra = -1\"]\n    N2 -->|\"C = 7\"| T_NODE\n    N2 -->|\"C = 3\"| N1"} />
+<MermaidDiagram client:load code={"flowchart LR\n    S_NODE[\"Ezeiza s<br/>Sale - Entra = +1\"] -->|\"C = 12\"| N1[\"Neuquén<br/>Sale - Entra = 0\"]\n    S_NODE -->|\"C = 18\"| N2[\"Bahía Blanca<br/>Sale - Entra = 0\"]\n    N1 -->|\"C = 6\"| T_NODE[\"Bariloche t<br/>Sale - Entra = -1\"]\n    N2 -->|\"C = 7\"| T_NODE\n    N2 -->|\"C = 3\"| N1"} />
 
 
 #### 2. Modelo de Programación Lineal (Listo para la Hoja del Parcial)
