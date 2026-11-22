@@ -180,5 +180,66 @@ python run_tests.py
 
 ---
 
+## 🏛️ Metodología de Trabajo y Cómo Incorporar Nuevas Materias (Plataforma Astro Multi-Materia)
+
+El repositorio evoluciona hacia **Mega Cuaderno Universitario**, una plataforma académica estática multi-materia construida con **Astro 7 + React 19 + TypeScript + Zod + KaTeX + Mermaid + Pagefind** (documentada en [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md) y [`docs/architecture/README.md`](docs/architecture/README.md)).
+
+### 1. Comandos de Desarrollo y Verificación
+
+```bash
+npm run dev                                              # Servidor local de desarrollo (http://localhost:4321/)
+npm run check                                            # Diagnóstico Astro + TypeScript + Content Collections (Zod)
+npm run typecheck                                        # Verificación estricta tsc --noEmit
+npm test                                                 # Suite unitaria y de integración con Vitest
+npm run build                                            # Compilación estática en dist/ + copia de materiales + índice Pagefind PDF
+npm run preview                                          # Previsualización local del build compilado (http://localhost:4321/)
+node scripts/verify-astro-build.mjs --base=/             # Verificador de rutas, enlaces internos, materiales, Pagefind y KaTeX
+python run_tests.py                                      # Suite Python de paridad legacy, enlaces case-sensitive e integridad
+```
+
+### 2. Reglas Obligatorias de Metodología de Trabajo
+
+1. **Desarrollo por etapas y commits atómicos:** Todo cambio sigue la hoja de ruta de [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md). Ninguna etapa se cierra sin pasar todas las verificaciones automatizadas, QA en navegador real y una auditoría independiente.
+2. **Design System WCAG 2.1 AA sin `!important` ([`ADR-002`](docs/architecture/adr-002-unified-astro-layouts.md)):**
+   * Los estilos viven en [`src/styles/tokens.css`](src/styles/tokens.css), [`src/styles/base.css`](src/styles/base.css) y [`src/styles/components.css`](src/styles/components.css) bajo cascada declarativa `@layer reset, tokens, base, layouts, components, utilities`.
+   * Está **prohibido el uso de `!important`** bajo `src/` (validado automáticamente por [`tests/vitest/design-system-wcag.test.ts`](tests/vitest/design-system-wcag.test.ts)).
+   * Todo componente debe respetar un contraste mínimo `>= 4.5:1` en texto normal (`>= 3.0:1` en bordes/controles activos) tanto en tema claro como oscuro (`data-theme="light" | "dark"`).
+3. **Trazabilidad y procedencia académica (`provenance`, [`ADR-003`](docs/architecture/adr-003-academic-content-model.md)):**
+   * Todo recurso, evaluación, ejercicio o apunte debe declarar explícitamente su procedencia validada por [`src/schemas/academic.ts`](src/schemas/academic.ts): `official_source`, `reconstructed_exam_statement`, `elaborated_submission`, `exam_prep_and_practice`, `elaborated_notes`, `elaborated_summary`, `elaborated_solution`, `advanced_theory_example` o `interactive_widget`.
+   * Las entregas preservadas (como `TP0/`) no deben alterarse en su contenido original.
+4. **Compatibilidad dual de `base` (`/` y `/<repo>/`):**
+   * Todo enlace interno o carga de assets dentro de `src/` debe construirse mediante `withBase()` o `buildMaterialViewerUrl()` de [`src/utils/paths.ts`](src/utils/paths.ts), y verificarse compilando con `ASTRO_BASE="/"` y `ASTRO_BASE="/tda-2C2026-material/"`.
+5. **Matriz Responsive Obligatoria para QA de UI en Navegador (6 Viewports):**
+   * Todo cambio visual o de layout debe validarse en navegador real sobre estos **6 viewports**:
+     * **Desktop Full HD:** `1920×1080`
+     * **Desktop Wide:** `1440×900`
+     * **Desktop Laptop:** `1280×800`
+     * **Tablet:** `768×1024`
+     * **Mobile Vertical (Portrait):** `390×844`
+     * **Mobile Horizontal (Landscape):** `844×390`
+   * Criterios de aceptación en los 6 viewports: `0` overflow horizontal global (`document.documentElement.scrollWidth <= window.innerWidth`), aprovechamiento completo del ancho útil del panel en ejercicios/apuntes (`.prose-academic` al 100% del panel), tablas anchas con scroll horizontal interno, `0` errores JS en consola y `0` respuestas HTTP `>= 400`.
+
+### 3. Cómo Incorporar una Nueva Materia (`<courseId>`) Paso a Paso
+
+La arquitectura separa la **Plataforma** (`src/layouts/`, `src/components/platform/`, `src/styles/`, `src/stores/`) del **Dominio Académico** (`src/content/` y carpetas de materiales). Agregar una nueva materia (por ejemplo `algo2`, `orga`, `analisis2`) **no requiere modificar componentes de plataforma**:
+
+1. **Paso 1 — Ubicar los materiales físicos en la subcarpeta `<courseId>/`:**
+   * Colocá los PDFs, diapositivas, guías, parciales y prácticas de la materia dentro de su propia subcarpeta en la raíz del repositorio: `<courseId>/DIapositivas/`, `<courseId>/Guia-Ejercicios/`, `<courseId>/Parciales/`, `<courseId>/Practicas/`, etc.
+   * *(Nota sobre TDA)*: En la **Etapa 6** del plan, una vez retirados los 12 HTML legacy de la raíz, las carpetas actuales `DIapositivas/`, `Guia-Ejercicios/`, `Parciales/`, `Practicas/` y `TP0/` se reubican mediante `git mv` dentro de `tda/` (`tda/DIapositivas/`, `tda/Guia-Ejercicios/`, `tda/Parciales/`, `tda/Practicas/` y `tda/TP0/`) para mantener la misma convención limpia en todas las materias.
+2. **Paso 2 — Registrar el manifiesto de la materia (`src/content/courses/<courseId>.json`):**
+   * Creá `src/content/courses/<courseId>.json` respetando `CourseManifestSchema` ([`src/schemas/academic.ts`](src/schemas/academic.ts), tomando como plantilla [`src/content/courses/tda.json`](src/content/courses/tda.json)): definí `id`, `title`, `shortTitle`, `institution`, `codes`, `chair`, `term`, `description`, la lista `units` (`slug`, `name`, `order`, `exerciseCount`, `inCatalog`) y `stats`.
+3. **Paso 3 — Registrar el inventario de materiales (`src/content/resources/<courseId>-resources.json`):**
+   * Creá `src/content/resources/<courseId>-resources.json` según `ResourceManifestSchema` (plantilla: [`src/content/resources/tda-resources.json`](src/content/resources/tda-resources.json)).
+   * Durante `npm run build`, [`src/integrations/academicBuildIntegration.mjs`](src/integrations/academicBuildIntegration.mjs) copiará automáticamente todos los archivos declarados hacia `dist/materials/<courseId>/...` y [`src/utils/pagefindPdfIndexer.mjs`](src/utils/pagefindPdfIndexer.mjs) extraerá e indexará el texto de cada página PDF en **Pagefind** con enlaces directos al visor split-screen (`/<courseId>/materiales/<resourceId>/?page=N`).
+4. **Paso 4 — Registrar evaluaciones y cuestionarios (`src/content/assessments/` y `src/content/quizzes/`):**
+   * Creá `src/content/assessments/<courseId>.json` (`AssessmentManifestSchema`, plantilla: [`src/content/assessments/tda.json`](src/content/assessments/tda.json)) para vincular parciales reales y trabajos prácticos con sus PDFs y ejercicios resueltos.
+   * Opcionalmente, agregá un entrenador de reconocimiento rápido en `src/content/quizzes/<courseId>-entrenador.yaml` (`QuizManifestSchema`, plantilla: [`src/content/quizzes/tda-entrenador-30s.yaml`](src/content/quizzes/tda-entrenador-30s.yaml)).
+5. **Paso 5 — Agregar ejercicios y apuntes en MDX (`src/content/exercises/<courseId>/` y `src/content/docs/<courseId>/`):**
+   * Creá los ejercicios en `src/content/exercises/<courseId>/<unitSlug>/*.mdx` (`ExerciseFrontmatterSchema`) usando `<AcademicBlock kind="statement">`, `<SolutionDrawer client:load exerciseId="...">` y `<MermaidDiagram client:visible code={...} />` (ejemplo: [`src/content/exercises/tda/greedy/ej-18-ruta-transporte.mdx`](src/content/exercises/tda/greedy/ej-18-ruta-transporte.mdx)).
+   * Creá los apuntes o resúmenes en `src/content/docs/<courseId>/*.mdx` (`DocFrontmatterSchema`, ejemplo: [`src/content/docs/tda/matriz-parciales.mdx`](src/content/docs/tda/matriz-parciales.mdx)).
+   * Astro generará automáticamente las páginas de la nueva materia en `/`, `/<courseId>/`, `/<courseId>/ejercicios/`, `/<courseId>/ejercicios/<id>/`, `/<courseId>/unidad/<unit>/`, `/<courseId>/parciales/`, `/<courseId>/materiales/`, `/<courseId>/materiales/<resourceId>/` y `/<courseId>/docs/<docId>/`, aislando su progreso en `localStorage` bajo `mc:v1:<courseId>:*`.
+
+---
+
 ## 📜 Licencia y Atribución
 Material docente y práctico correspondiente a la cátedra de **Teoría de Algoritmos** de la **Facultad de Ingeniería de la Universidad de Buenos Aires (FIUBA)**.

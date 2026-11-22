@@ -14,6 +14,7 @@ Este directorio formaliza las decisiones arquitectónicas estructurales para evo
 ## Documentos Relacionados
 
 - [PLAN_DE_TRABAJO.md](../PLAN_DE_TRABAJO.md) — Plan maestro y hoja de ruta (Etapas 0 a 7).
+- [README.md](../../README.md) — Guía general del repositorio, reglas de metodología de trabajo y procedimiento paso a paso para incorporar nuevas materias.
 - [domain-schemas.md](../contracts/domain-schemas.md) — Contratos de esquemas de dominio y mapas de rutas.
 - [local-storage-migration.md](../contracts/local-storage-migration.md) — Contrato de almacenamiento local y migración no destructiva desde `tda_*`.
 - Manifiestos verificables de TDA: [course.json](../manifests/tda/course.json), [resources.json](../manifests/tda/resources.json), [assessments.json](../manifests/tda/assessments.json), [exercises-index.json](../manifests/tda/exercises-index.json), [interactive-and-notes.json](../manifests/tda/interactive-and-notes.json).
