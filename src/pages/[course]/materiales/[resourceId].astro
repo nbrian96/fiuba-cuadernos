@@ -1,0 +1,112 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import PdfSplitViewer, {
+  type PdfSplitViewerRelatedExercise,
+} from "@/components/platform/PdfSplitViewer";
+import { withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  const courseById = new Map(courses.map((c) => [c.data.id, c.data]));
+  const resourceManifests = await getCollection("resources");
+  const exercises = await getCollection("exercises");
+
+  const exercisesByResource = new Map<string, PdfSplitViewerRelatedExercise[]>();
+  for (const ex of exercises) {
+    for (const resId of ex.data.relatedResourceIds ?? []) {
+      const key = `${ex.data.courseId}:${resId}`;
+      const list = exercisesByResource.get(key) ?? [];
+      list.push({
+        id: ex.data.id,
+        label:
+          ex.data.number !== null
+            ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
+            : ex.data.title,
+        href: withBase(`/${ex.data.courseId}/ejercicios/${ex.data.id}/`),
+      });
+      exercisesByResource.set(key, list);
+    }
+  }
+
+  const paths = [];
+  for (const manifest of resourceManifests) {
+    const course = courseById.get(manifest.data.courseId);
+    if (!course) continue;
+
+    for (const resource of manifest.data.resources) {
+      const relatedKey = `${course.id}:${resource.resourceId}`;
+      paths.push({
+        params: {
+          course: course.id,
+          resourceId: resource.resourceId,
+        },
+        props: {
+          course,
+          resource,
+          relatedExercises: exercisesByResource.get(relatedKey) ?? [],
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { course, resource, relatedExercises } = Astro.props;
+
+const unitNameBySlug = new Map(course.units.map((u) => [u.slug, u.name]));
+const unitLabels = resource.unitSlugs.map(
+  (slug) => unitNameBySlug.get(slug) ?? slug,
+);
+
+const primaryFile = resource.files.find((f) => f.isPdf) ?? resource.files[0];
+const publicCandidate = primaryFile
+  ? path.join(process.cwd(), "public", "materials", course.id, primaryFile.path)
+  : "";
+const hasPublishedAsset = Boolean(primaryFile && fs.existsSync(publicCandidate));
+const assetUrl =
+  hasPublishedAsset && primaryFile
+    ? withBase(
+        `/materials/${course.id}/${primaryFile.path
+          .split("/")
+          .map(encodeURIComponent)
+          .join("/")}`,
+      )
+    : null;
+---
+
+<CourseLayout
+  course={course}
+  title={`${resource.title} — ${course.shortTitle}`}
+  description={`Visor de material académico ${resource.title} (${course.title})`}
+  activeSection="materials"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.shortTitle, href: withBase(`/${course.id}/`) },
+    { label: "Materiales", href: withBase(`/${course.id}/materiales/`) },
+    { label: resource.title },
+  ]}
+>
+  <header style="margin-bottom: 1.25rem;">
+    <h1>{resource.title}</h1>
+  </header>
+
+  <PdfSplitViewer
+    client:load
+    courseId={course.id}
+    resourceId={resource.resourceId}
+    title={resource.title}
+    entityType={resource.entityType}
+    provenance={resource.provenance}
+    sourceFolder={resource.sourceFolder}
+    unitLabels={unitLabels}
+    files={resource.files}
+    pdfMetadata={resource.pdfMetadata}
+    preservedIntact={resource.preservedIntact}
+    assetUrl={assetUrl}
+    relatedExercises={relatedExercises}
+    backToMaterialsHref={withBase(`/${course.id}/materiales/`)}
+  />
+</CourseLayout>

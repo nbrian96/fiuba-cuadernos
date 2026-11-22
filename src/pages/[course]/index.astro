@@ -1,5 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import QuickRecognitionTrainer from "@/components/platform/QuickRecognitionTrainer";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
 import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
 
 export async function getStaticPaths() {
@@ -25,14 +28,19 @@ const quizzes = await getCollection(
   "quizzes",
   (entry) => entry.data.courseId === courseId,
 );
-const exercises = await getCollection(
-  "exercises",
-  (entry) => entry.data.courseId === courseId,
-);
-const docs = await getCollection(
-  "docs",
-  (entry) => entry.data.courseId === courseId,
-);
+const exercises = (
+  await getCollection("exercises", (entry) => entry.data.courseId === courseId)
+).sort((a, b) => {
+  if (a.data.number !== null && b.data.number !== null) {
+    return a.data.number - b.data.number;
+  }
+  if (a.data.number !== null) return -1;
+  if (b.data.number !== null) return 1;
+  return a.data.id.localeCompare(b.data.id);
+});
+const docs = (
+  await getCollection("docs", (entry) => entry.data.courseId === courseId)
+).sort((a, b) => a.data.order - b.data.order);
 
 const totalResources = resourceManifests.reduce(
   (acc, item) => acc + item.data.resources.length,
@@ -46,138 +54,147 @@ const totalPracticalWorks = assessmentManifests.reduce(
   (acc, item) => acc + item.data.practicalWorks.length,
   0,
 );
-const allCourseResources = resourceManifests.flatMap((item) => item.data.resources);
+const allCourseResources = resourceManifests.flatMap(
+  (item) => item.data.resources,
+);
 const firstPdfResource =
-  allCourseResources.find((res) => Boolean(res.pdfMetadata)) ?? allCourseResources[0];
+  allCourseResources.find((res) => Boolean(res.pdfMetadata)) ??
+  allCourseResources[0];
 const sampleMaterialUrl = firstPdfResource
   ? buildMaterialViewerUrl(courseId, firstPdfResource.resourceId, 1)
   : withBase(`/${courseId}/materiales/`);
+
+const primaryQuiz = quizzes[0]?.data ?? null;
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{course.data.title} — {course.data.institution}</title>
-    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
-        line-height: 1.6;
-      }
-      main {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 3rem;
-      }
-      a {
-        color: #1d4ed8;
-      }
-      a:focus-visible {
-        outline: 3px solid #1d4ed8;
-        outline-offset: 2px;
-      }
-      .panel {
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 1.25rem;
-        margin-top: 1.25rem;
-      }
-      .unit-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 0.75rem;
-        list-style: none;
-        padding: 0;
-        margin: 0.75rem 0 0;
-      }
-      .unit-item {
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 0.75rem;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <nav aria-label="Ruta de navegación">
-        <a href={withBase("/")}>← Volver al Hub de Materias</a>
-      </nav>
+<CourseLayout
+  course={course.data}
+  title={`${course.data.title} — ${course.data.institution}`}
+  description={`Panel principal de ${course.data.title} (${course.data.chair})`}
+  activeSection="overview"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle },
+  ]}
+>
+  <header style="margin-bottom: 1.5rem;">
+    <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+      {course.data.institution} · {course.data.codes.join(" / ")} ·{" "}
+      {course.data.chair}
+    </p>
+    <h1 style="margin: 0.35rem 0 0.5rem;">{course.data.title}</h1>
 
-      <header style="margin-top: 1rem;">
-        <p style="font-size: 0.875rem; color: #334155; margin: 0;">
-          {course.data.institution} · {course.data.codes.join(" / ")} ·{" "}
-          {course.data.chair}
-        </p>
-        <h1 style="margin: 0.35rem 0 0.5rem;">{course.data.title}</h1>
-      </header>
+    <div class="stat-grid" aria-label="Indicadores de la materia">
+      <div class="stat-card">
+        <div class="stat-value">{course.data.stats.catalogExercises}</div>
+        <div class="stat-label">Ejercicios de catálogo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{course.data.stats.parcialExercises}</div>
+        <div class="stat-label">Ejercicios de parciales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{course.data.stats.physicalFiles}</div>
+        <div class="stat-label">Archivos de material</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{course.data.stats.pdfs}</div>
+        <div class="stat-label">Documentos PDF</div>
+      </div>
+    </div>
+  </header>
 
-      <section class="panel" aria-label="Resumen de colecciones validadas">
-        <h2 style="margin-top: 0;">Colecciones Content Layer Verificadas</h2>
-        <ul>
-          <li>Recursos registrados: <strong>{totalResources}</strong></li>
-          <li>Exámenes parciales: <strong>{totalExams}</strong> · Trabajos prácticos: <strong>{totalPracticalWorks}</strong></li>
-          <li>Quizzes activos: <strong>{quizzes.length}</strong> ({quizzes[0]?.data.questions.length ?? 0} preguntas)</li>
-          <li>URL canónica de ejemplo (ADR-004): <code>{sampleMaterialUrl}</code></li>
-        </ul>
-      </section>
+  <section class="surface-panel" aria-label="Accesos principales de la materia">
+    <h2 style="margin-top: 0;">Espacios de estudio</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+      <a class="btn btn-primary" href={withBase(`/${courseId}/ejercicios/`)}>
+        Explorar ejercicios ({exercises.length} cargados)
+      </a>
+      <a class="btn" href={withBase(`/${courseId}/materiales/`)}>
+        Repositorio de materiales ({totalResources} recursos)
+      </a>
+      <a class="btn" href={sampleMaterialUrl}>
+        Abrir visor de PDFs
+      </a>
+      {
+        docs[0] ? (
+          <a
+            class="btn"
+            href={withBase(`/${courseId}/docs/${docs[0].data.docId}/`)}
+          >
+            {docs[0].data.title}
+          </a>
+        ) : null
+      }
+    </div>
+    <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+      Evaluaciones registradas: <strong>{totalExams}</strong> parciales y{" "}
+      <strong>{totalPracticalWorks}</strong> bloques de trabajos prácticos.
+    </p>
+  </section>
 
-      <section class="panel" aria-label="Ejercicios semilla MDX">
-        <h2 style="margin-top: 0;">Ejercicios Semilla Validados (MDX + KaTeX)</h2>
-        <ul>
-          {
-            exercises.map((ex) => (
-              <li>
-                <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
-                  {ex.data.number !== null
-                    ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
-                    : `${ex.data.title} (${ex.data.provenance})`}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+  {
+    primaryQuiz ? (
+      <div style="margin-top: 1.5rem;">
+        <QuickRecognitionTrainer client:load quiz={primaryQuiz} />
+      </div>
+    ) : null
+  }
 
-      <section class="panel" aria-label="Apuntes y resúmenes MDX">
-        <h2 style="margin-top: 0;">Apuntes y Resúmenes Validados</h2>
-        <ul>
-          {
-            docs.map((doc) => (
-              <li>
-                <a href={withBase(`/${courseId}/docs/${doc.data.docId}/`)}>
-                  {doc.data.title}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+  <section class="surface-panel" aria-label="Ejercicios disponibles en plataforma" style="margin-top: 1.5rem;">
+    <h2 style="margin-top: 0;">Ejercicios disponibles ({exercises.length})</h2>
+    <ul class="plain-list">
+      {
+        exercises.map((ex) => (
+          <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <ProvenanceBadge provenance={ex.data.provenance} />
+            <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
+              {ex.data.number !== null
+                ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
+                : ex.data.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 
-      <section class="panel" aria-label="Unidades de la materia">
-        <h2 style="margin-top: 0;">Unidades Académicas ({course.data.units.length})</h2>
-        <ul class="unit-list">
-          {
-            course.data.units
-              .slice()
-              .sort((a, b) => a.order - b.order)
-              .map((unit) => (
-                <li class="unit-item">
-                  <strong>{unit.order}. {unit.name}</strong>
-                  <div style="font-size: 0.875rem; color: #334155;">
-                    Slug: <code>{unit.slug}</code> · {unit.exerciseCount} ej.
-                  </div>
-                </li>
-              ))
-          }
-        </ul>
-      </section>
-    </main>
-  </body>
-</html>
+  <section class="surface-panel" aria-label="Apuntes y resúmenes">
+    <h2 style="margin-top: 0;">Apuntes y resúmenes ({docs.length})</h2>
+    <ul class="plain-list">
+      {
+        docs.map((doc) => (
+          <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <ProvenanceBadge provenance={doc.data.provenance} />
+            <a href={withBase(`/${courseId}/docs/${doc.data.docId}/`)}>
+              {doc.data.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="surface-panel" aria-label="Unidades de la materia">
+    <h2 style="margin-top: 0;">
+      Unidades académicas ({course.data.units.length})
+    </h2>
+    <ul class="card-grid" style="list-style: none; padding: 0; margin: 0;">
+      {
+        course.data.units
+          .slice()
+          .sort((a, b) => a.order - b.order)
+          .map((unit) => (
+            <li class="stat-card">
+              <strong>
+                {unit.order}. {unit.name}
+              </strong>
+              <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem;">
+                <code>{unit.slug}</code> · {unit.exerciseCount} ej.
+              </div>
+            </li>
+          ))
+      }
+    </ul>
+  </section>
+</CourseLayout>

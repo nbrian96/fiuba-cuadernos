@@ -1,0 +1,118 @@
+---
+import type { MarkdownHeading } from "astro";
+import CourseLayout from "./CourseLayout.astro";
+import type { BreadcrumbItem } from "./BaseLayout.astro";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import type { CourseManifest, DocFrontmatter } from "@/schemas/academic";
+import { withBase } from "@/utils/paths";
+
+export interface DocNavRef {
+  docId: string;
+  title: string;
+}
+
+export interface Props {
+  course: CourseManifest;
+  doc: DocFrontmatter;
+  headings?: MarkdownHeading[];
+  prevDoc?: DocNavRef | null;
+  nextDoc?: DocNavRef | null;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  course,
+  doc,
+  headings = [],
+  prevDoc = null,
+  nextDoc = null,
+  breadcrumbs = [],
+} = Astro.props;
+
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<CourseLayout
+  course={course}
+  title={`${doc.title} — ${course.shortTitle}`}
+  description={`${doc.title} (${course.title})`}
+  activeSection="docs"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="doc-grid">
+    <div class="doc-main">
+      {
+        tocHeadings.length > 0 ? (
+          <details class="doc-toc-mobile">
+            <summary style="font-weight: 700; cursor: pointer;">
+              Contenido del apunte ({tocHeadings.length})
+            </summary>
+            <ul class="doc-toc-list" style="margin-top: 0.75rem;">
+              {tocHeadings.map((heading) => (
+                <li class={heading.depth === 3 ? "doc-toc-item-sub" : ""}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ) : null
+      }
+
+      <article class="surface-panel prose-academic">
+        <header style="margin-bottom: 1.25rem;">
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.65rem;">
+            <ProvenanceBadge provenance={doc.provenance} showFullLabel />
+            <span class="meta-pill">{doc.entityType}</span>
+          </div>
+          <h1 style="margin-bottom: 0;">{doc.title}</h1>
+        </header>
+
+        <slot />
+      </article>
+
+      {
+        prevDoc || nextDoc ? (
+          <nav class="doc-pager" aria-label="Navegación entre apuntes">
+            <div>
+              {prevDoc ? (
+                <a
+                  class="btn"
+                  href={withBase(`/${course.id}/docs/${prevDoc.docId}/`)}
+                >
+                  Anterior: {prevDoc.title}
+                </a>
+              ) : null}
+            </div>
+            <div>
+              {nextDoc ? (
+                <a
+                  class="btn btn-primary"
+                  href={withBase(`/${course.id}/docs/${nextDoc.docId}/`)}
+                >
+                  Siguiente: {nextDoc.title}
+                </a>
+              ) : null}
+            </div>
+          </nav>
+        ) : null
+      }
+    </div>
+
+    {
+      tocHeadings.length > 0 ? (
+        <aside class="doc-toc-desktop" aria-label="Tabla de contenidos">
+          <p class="doc-toc-title">En este documento</p>
+          <nav aria-label="Secciones del documento">
+            <ul class="doc-toc-list">
+              {tocHeadings.map((heading) => (
+                <li class={heading.depth === 3 ? "doc-toc-item-sub" : ""}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      ) : null
+    }
+  </div>
+</CourseLayout>

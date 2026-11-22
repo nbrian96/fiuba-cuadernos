@@ -17,10 +17,16 @@ relatedResourceIds:
 legacyPage: greedy.html
 legacyAnchor: "#ej-18"
 ---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
 
-## Enunciado
+<AcademicBlock kind="statement" title="Enunciado">
 
 Un transporte debe recorrer una ruta hasta su objetivo final pasando por $N$ estaciones intermedias con tarifas fijas $T[1 \dots N]$ por detenerse. Desde cada estación puede ir a la siguiente, o saltear una o dos estaciones (no puede saltear más de dos estaciones consecutivas). Diseñar un algoritmo greedy que permita resolver el problema. Si el algoritmo no asegura la solución óptima, indicar una instancia donde la solución obtenida sea la óptima y una instancia donde la solución obtenida no sea la óptima.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-18">
 
 ## 1. Idea y Justificación en Lenguaje Natural (Qué escribir en la hoja)
 
@@ -61,3 +67,5 @@ Algoritmo TransporteGreedy(T, N):
 ## 3. Justificación de Complejidad (Para entregar en el parcial)
 
 * En cada iteración avanzamos al menos 1 estación y miramos solo 3 opciones hacia adelante en $O(1)$. Por lo tanto, la complejidad temporal es **$O(N)$** y espacial **$O(N)$**.
+
+</SolutionDrawer>

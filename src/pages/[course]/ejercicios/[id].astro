@@ -1,108 +1,153 @@
 ---
 import { getCollection, render } from "astro:content";
-import "katex/dist/katex.min.css";
-import { withBase } from "@/utils/paths";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import ExerciseMasteryToggle from "@/components/platform/ExerciseMasteryToggle";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
 
 export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  const courseById = new Map(courses.map((c) => [c.data.id, c.data]));
   const exercises = await getCollection("exercises");
-  return exercises.map((entry) => ({
-    params: {
-      course: entry.data.courseId,
-      id: entry.data.id,
-    },
-    props: { entry },
-  }));
+  const resourceManifests = await getCollection("resources");
+
+  const resourcesByCourse = new Map<
+    string,
+    Map<string, { resourceId: string; title: string; hasPdf: boolean }>
+  >();
+  for (const manifest of resourceManifests) {
+    const map =
+      resourcesByCourse.get(manifest.data.courseId) ?? new Map();
+    for (const res of manifest.data.resources) {
+      map.set(res.resourceId, {
+        resourceId: res.resourceId,
+        title: res.title,
+        hasPdf: Boolean(res.pdfMetadata),
+      });
+    }
+    resourcesByCourse.set(manifest.data.courseId, map);
+  }
+
+  return exercises
+    .filter((entry) => courseById.has(entry.data.courseId))
+    .map((entry) => {
+      const course = courseById.get(entry.data.courseId)!;
+      const resMap = resourcesByCourse.get(entry.data.courseId) ?? new Map();
+      const relatedResources = (entry.data.relatedResourceIds ?? [])
+        .map((id) => resMap.get(id))
+        .filter((r): r is NonNullable<typeof r> => Boolean(r));
+
+      return {
+        params: {
+          course: entry.data.courseId,
+          id: entry.data.id,
+        },
+        props: {
+          entry,
+          course,
+          relatedResources,
+        },
+      };
+    });
 }
 
-const { entry } = Astro.props;
+const { entry, course, relatedResources } = Astro.props;
 const { Content } = await render(entry);
+
+const unitName =
+  course.units.find((u) => u.slug === entry.data.unit)?.name ?? entry.data.unit;
+const displayTitle =
+  entry.data.number !== null
+    ? `Ejercicio ${entry.data.number}: ${entry.data.title}`
+    : entry.data.title;
+const priorityLabel =
+  entry.data.priority === "imprescindible" ? "Imprescindible" : "Importante";
+const stars = "★".repeat(entry.data.difficulty);
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{entry.data.title} — {entry.data.courseId.toUpperCase()}</title>
-    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
-        line-height: 1.65;
-      }
-      main {
-        max-width: 880px;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 3rem;
-      }
-      a {
-        color: #1d4ed8;
-      }
-      a:focus-visible {
-        outline: 3px solid #1d4ed8;
-        outline-offset: 2px;
-      }
-      article {
-        margin-top: 1.25rem;
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 1.5rem;
-      }
-      .meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
-      }
-      .pill {
-        background-color: #e2e8f0;
-        color: #0f172a;
-        padding: 0.2rem 0.6rem;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-      pre {
-        background-color: #0f172a;
-        color: #f8fafc;
-        padding: 1rem;
-        border-radius: 8px;
-        overflow-x: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <nav aria-label="Ruta de navegación">
-        <a href={withBase("/")}>Hub</a> /{" "}
-        <a href={withBase(`/${entry.data.courseId}/`)}>
-          {entry.data.courseId.toUpperCase()}
-        </a>
-      </nav>
-
-      <article>
-        <div class="meta-row">
-          <span class="pill">{entry.data.entityType}</span>
-          <span class="pill">{entry.data.provenance}</span>
-          <span class="pill">Unidad: {entry.data.unit}</span>
-          <span class="pill">Dificultad: {entry.data.difficulty}/5</span>
-        </div>
-        <h1 style="margin-top: 0;">
+<CourseLayout
+  course={course}
+  title={`${displayTitle} — ${course.shortTitle}`}
+  description={`${displayTitle} (${entry.data.origin})`}
+  activeSection="exercises"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.shortTitle, href: withBase(`/${course.id}/`) },
+    { label: "Ejercicios", href: withBase(`/${course.id}/ejercicios/`) },
+    {
+      label:
+        entry.data.number !== null
+          ? `EJ ${entry.data.number}`
+          : entry.data.title,
+    },
+  ]}
+>
+  <article class="surface-panel">
+    <header style="margin-bottom: 1.25rem;">
+      <div
+        style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0.75rem;"
+      >
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <ProvenanceBadge provenance={entry.data.provenance} showFullLabel />
+          <span class={`meta-pill meta-pill--${entry.data.priority}`}>
+            {priorityLabel}
+          </span>
+          <span
+            class="meta-pill"
+            aria-label={`Dificultad ${entry.data.difficulty} de 5`}
+          >
+            {stars} ({entry.data.difficulty}/5)
+          </span>
+          <span class="meta-pill">{unitName}</span>
           {
-            entry.data.number !== null
-              ? `Ejercicio ${entry.data.number}: ${entry.data.title}`
-              : entry.data.title
+            entry.data.isParcial ? (
+              <span class="meta-pill meta-pill--parcial">Parcial real</span>
+            ) : null
           }
-        </h1>
-        <p style="color: #334155; font-size: 0.92rem;">
-          <strong>Origen:</strong> {entry.data.origin}
-        </p>
-        <Content />
-      </article>
-    </main>
-  </body>
-</html>
+        </div>
+
+        <ExerciseMasteryToggle
+          client:load
+          courseId={entry.data.courseId}
+          exerciseId={entry.data.id}
+        />
+      </div>
+
+      <h1 style="margin: 0.75rem 0 0.4rem;">{displayTitle}</h1>
+      <p style="margin: 0; color: var(--text-muted); font-size: 0.9375rem;">
+        <strong>Origen:</strong> {entry.data.origin}
+      </p>
+    </header>
+
+    <div class="prose-academic">
+      <Content />
+    </div>
+  </article>
+
+  {
+    relatedResources.length > 0 ? (
+      <section
+        class="surface-panel"
+        aria-label="Materiales fuente vinculados"
+        style="margin-top: 1.25rem;"
+      >
+        <h2 style="margin-top: 0;">Materiales vinculados</h2>
+        <ul class="plain-list">
+          {relatedResources.map((res) => (
+            <li>
+              <a
+                href={buildMaterialViewerUrl(
+                  course.id,
+                  res.resourceId,
+                  res.hasPdf ? 1 : undefined,
+                )}
+              >
+                {res.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+</CourseLayout>

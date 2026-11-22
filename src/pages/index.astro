@@ -1,105 +1,74 @@
 ---
 import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import InfraHealthBadge from "@/components/platform/InfraHealthBadge";
 import { withBase } from "@/utils/paths";
 
-const courses = await getCollection("courses");
+const courses = (await getCollection("courses")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, "es"),
+);
 const exercises = await getCollection("exercises");
 const docs = await getCollection("docs");
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mega Cuaderno Universitario — Plataforma Académica</title>
-    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
-        line-height: 1.6;
-      }
-      main {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 3rem;
-      }
-      a {
-        color: #1d4ed8;
-      }
-      a:focus-visible,
-      button:focus-visible {
-        outline: 3px solid #1d4ed8;
-        outline-offset: 2px;
-      }
-      .course-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-      .course-card {
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 1.25rem;
-      }
-      .btn-link {
-        display: inline-block;
-        margin-top: 0.75rem;
-        background-color: #1d4ed8;
-        color: #ffffff;
-        text-decoration: none;
-        padding: 0.55rem 1rem;
-        border-radius: 8px;
-        font-weight: 600;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <header>
-        <p style="font-size: 0.875rem; font-weight: 600; color: #334155; margin: 0;">
-          Mega Cuaderno Universitario · Etapa 2 (Infraestructura Base Astro)
-        </p>
-        <h1 style="margin: 0.4rem 0 0.75rem;">Hub de Materias</h1>
-        <p style="color: #334155; margin: 0;">
-          Plataforma estática multi-materia construida con Astro, Content Collections (Zod), MDX con KaTeX precompilado e Islas React.
-        </p>
-      </header>
+<BaseLayout
+  title="Mega Cuaderno Universitario — Plataforma Académica"
+  description="Plataforma académica multi-materia estática, accesible (WCAG 2.1 AA) y verificable."
+>
+  <header style="margin-bottom: 1.5rem;">
+    <h1>Hub de Materias</h1>
+    <p style="margin: 0; color: var(--text-muted); max-width: 68ch;">
+      Plataforma académica estática multi-materia construida con Astro, Content
+      Collections validadas por Zod, MDX con KaTeX precompilado y Design System
+      WCAG 2.1 AA en modo claro y oscuro.
+    </p>
+  </header>
 
-      <InfraHealthBadge
-        client:load
-        courseCount={courses.length}
-        exerciseCount={exercises.length}
-        docCount={docs.length}
-      />
+  <InfraHealthBadge
+    client:load
+    courseCount={courses.length}
+    exerciseCount={exercises.length}
+    docCount={docs.length}
+  />
 
-      <section aria-label="Materias disponibles" class="course-grid">
-        {
-          courses.map((course) => (
-            <article class="course-card">
-              <p style="font-size: 0.85rem; color: #475569; margin: 0;">
-                {course.data.institution} · {course.data.codes.join(" / ")}
-              </p>
-              <h2 style="margin: 0.35rem 0 0.5rem;">{course.data.title}</h2>
-              <p style="margin: 0; color: #334155;">{course.data.chair}</p>
-              <p style="margin: 0.65rem 0 0; font-size: 0.9rem; color: #334155;">
-                {course.data.stats.catalogExercises} ejercicios oficiales ·{" "}
-                {course.data.stats.parcialExercises} parciales ·{" "}
-                {course.data.stats.physicalFiles} archivos fuente
-              </p>
-              <a class="btn-link" href={withBase(`/${course.data.id}/`)}>
-                Abrir {course.data.shortTitle}
-              </a>
-            </article>
-          ))
-        }
-      </section>
-    </main>
-  </body>
-</html>
+  <section aria-label="Materias disponibles" class="card-grid">
+    {
+      courses.map((course) => (
+        <article class="surface-panel">
+          <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+            {course.data.institution} · {course.data.codes.join(" / ")}
+          </p>
+          <h2 style="margin: 0.4rem 0 0.35rem;">{course.data.title}</h2>
+          <p style="margin: 0; color: var(--text-muted);">
+            {course.data.chair}
+          </p>
+
+          <p style="margin: 0.85rem 0 1rem; font-size: 0.9375rem;">
+            <strong>{course.data.stats.catalogExercises}</strong> ejercicios en
+            catálogo ·{" "}
+            <strong>{course.data.stats.parcialExercises}</strong> de parciales ·{" "}
+            <strong>{course.data.stats.physicalFiles}</strong> materiales fuente
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a class="btn btn-primary" href={withBase(`/${course.data.id}/`)}>
+              Abrir {course.data.shortTitle}
+            </a>
+            <a
+              class="btn"
+              href={withBase(`/${course.data.id}/ejercicios/`)}
+            >
+              Ejercicios
+            </a>
+            <a
+              class="btn"
+              href={withBase(`/${course.data.id}/materiales/`)}
+            >
+              Materiales
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

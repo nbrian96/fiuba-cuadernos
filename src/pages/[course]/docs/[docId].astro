@@ -1,90 +1,116 @@
 ---
 import { getCollection, render } from "astro:content";
-import "katex/dist/katex.min.css";
-import { withBase } from "@/utils/paths";
+import DocLayout from "@/layouts/DocLayout.astro";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
 
 export async function getStaticPaths() {
-  const docs = await getCollection("docs");
-  return docs.map((entry) => ({
-    params: {
-      course: entry.data.courseId,
-      docId: entry.data.docId,
-    },
-    props: { entry },
-  }));
+  const courses = await getCollection("courses");
+  const courseById = new Map(courses.map((c) => [c.data.id, c.data]));
+  const allDocs = await getCollection("docs");
+  const resourceManifests = await getCollection("resources");
+
+  const resourcesByCourse = new Map<
+    string,
+    Map<string, { resourceId: string; title: string; hasPdf: boolean }>
+  >();
+  for (const manifest of resourceManifests) {
+    const map =
+      resourcesByCourse.get(manifest.data.courseId) ?? new Map();
+    for (const res of manifest.data.resources) {
+      map.set(res.resourceId, {
+        resourceId: res.resourceId,
+        title: res.title,
+        hasPdf: Boolean(res.pdfMetadata),
+      });
+    }
+    resourcesByCourse.set(manifest.data.courseId, map);
+  }
+
+  const docsByCourse = new Map<string, typeof allDocs>();
+  for (const doc of allDocs) {
+    const list = docsByCourse.get(doc.data.courseId) ?? [];
+    list.push(doc);
+    docsByCourse.set(doc.data.courseId, list);
+  }
+  for (const list of docsByCourse.values()) {
+    list.sort((a, b) => a.data.order - b.data.order);
+  }
+
+  return allDocs
+    .filter((entry) => courseById.has(entry.data.courseId))
+    .map((entry) => {
+      const course = courseById.get(entry.data.courseId)!;
+      const orderedDocs = docsByCourse.get(entry.data.courseId) ?? [];
+      const idx = orderedDocs.findIndex(
+        (item) => item.data.docId === entry.data.docId,
+      );
+      const prevEntry = idx > 0 ? orderedDocs[idx - 1] : null;
+      const nextEntry =
+        idx >= 0 && idx < orderedDocs.length - 1 ? orderedDocs[idx + 1] : null;
+
+      const resMap = resourcesByCourse.get(entry.data.courseId) ?? new Map();
+      const relatedResources = (entry.data.relatedResourceIds ?? [])
+        .map((id) => resMap.get(id))
+        .filter((r): r is NonNullable<typeof r> => Boolean(r));
+
+      return {
+        params: {
+          course: entry.data.courseId,
+          docId: entry.data.docId,
+        },
+        props: {
+          entry,
+          course,
+          prevDoc: prevEntry
+            ? { docId: prevEntry.data.docId, title: prevEntry.data.title }
+            : null,
+          nextDoc: nextEntry
+            ? { docId: nextEntry.data.docId, title: nextEntry.data.title }
+            : null,
+          relatedResources,
+        },
+      };
+    });
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { entry, course, prevDoc, nextDoc, relatedResources } = Astro.props;
+const { Content, headings } = await render(entry);
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{entry.data.title} — {entry.data.courseId.toUpperCase()}</title>
-    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
-        line-height: 1.65;
-      }
-      main {
-        max-width: 880px;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 3rem;
-      }
-      a {
-        color: #1d4ed8;
-      }
-      a:focus-visible {
-        outline: 3px solid #1d4ed8;
-        outline-offset: 2px;
-      }
-      article {
-        margin-top: 1.25rem;
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 1.5rem;
-      }
-      .meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
-      }
-      .pill {
-        background-color: #e2e8f0;
-        color: #0f172a;
-        padding: 0.2rem 0.6rem;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <nav aria-label="Ruta de navegación">
-        <a href={withBase("/")}>Hub</a> /{" "}
-        <a href={withBase(`/${entry.data.courseId}/`)}>
-          {entry.data.courseId.toUpperCase()}
-        </a>
-      </nav>
+<DocLayout
+  course={course}
+  doc={entry.data}
+  headings={headings}
+  prevDoc={prevDoc}
+  nextDoc={nextDoc}
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.shortTitle, href: withBase(`/${course.id}/`) },
+    { label: entry.data.title },
+  ]}
+>
+  <Content />
 
-      <article>
-        <div class="meta-row">
-          <span class="pill">{entry.data.entityType}</span>
-          <span class="pill">{entry.data.provenance}</span>
-        </div>
-        <h1 style="margin-top: 0;">{entry.data.title}</h1>
-        <Content />
-      </article>
-    </main>
-  </body>
-</html>
+  {
+    relatedResources.length > 0 ? (
+      <section aria-label="Materiales de referencia" style="margin-top: 1.5rem;">
+        <h2>Materiales de referencia</h2>
+        <ul>
+          {relatedResources.map((res) => (
+            <li>
+              <a
+                href={buildMaterialViewerUrl(
+                  course.id,
+                  res.resourceId,
+                  res.hasPdf ? 1 : undefined,
+                )}
+              >
+                {res.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+</DocLayout>

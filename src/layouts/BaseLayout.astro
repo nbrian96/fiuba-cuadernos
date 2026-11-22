@@ -1,0 +1,112 @@
+---
+import "katex/dist/katex.min.css";
+import "@/styles/global.css";
+import ThemeToggle from "@/components/platform/ThemeToggle";
+import { withBase } from "@/utils/paths";
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  title: string;
+  description?: string;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  title,
+  description = "Plataforma académica multi-materia de estudio y práctica universitaria.",
+  breadcrumbs = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <script is:inline>
+      (function () {
+        try {
+          var nextTheme = localStorage.getItem("mc:v1:global:theme");
+          if (nextTheme !== "dark" && nextTheme !== "light") {
+            var legacyTheme = localStorage.getItem("tda_theme");
+            if (legacyTheme === "dark" || legacyTheme === "light") {
+              nextTheme = legacyTheme;
+            } else {
+              var prefersDark =
+                typeof window.matchMedia === "function" &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches;
+              nextTheme = prefersDark ? "dark" : "light";
+            }
+          }
+          document.documentElement.setAttribute("data-theme", nextTheme);
+        } catch (_err) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Ir al contenido principal</a>
+
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-brand" href={withBase("/")}>
+          <span>Mega Cuaderno</span>
+          <span class="site-brand-sub">Plataforma Académica</span>
+        </a>
+
+        <div class="site-header-nav">
+          <slot name="header-nav" />
+        </div>
+
+        <div class="site-header-actions">
+          <slot name="header-actions" />
+          <ThemeToggle client:load />
+        </div>
+      </div>
+    </header>
+
+    <slot name="subnav" />
+
+    <main id="main-content" class="page-shell" tabindex="-1">
+      {
+        breadcrumbs.length > 0 ? (
+          <nav class="breadcrumbs" aria-label="Ruta de navegación">
+            <ol>
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <li>
+                    {crumb.href && !isLast ? (
+                      <a href={crumb.href}>{crumb.label}</a>
+                    ) : (
+                      <span aria-current={isLast ? "page" : undefined}>
+                        {crumb.label}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        ) : null
+      }
+
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>Mega Cuaderno Universitario · Sitio estático accesible WCAG 2.1 AA</span>
+        <a href={withBase("/")}>Inicio de plataforma</a>
+      </div>
+    </footer>
+  </body>
+</html>

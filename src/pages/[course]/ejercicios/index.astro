@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ExerciseFilterHUD from "@/components/platform/ExerciseFilterHUD";
+import type { ExerciseFilterItem } from "@/utils/exerciseFilters";
+import { withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  return courses.map((course) => ({
+    params: { course: course.data.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const courseId = course.data.id;
+
+const unitNameBySlug = new Map(
+  course.data.units.map((u) => [u.slug, u.name]),
+);
+
+const exercises = (
+  await getCollection("exercises", (entry) => entry.data.courseId === courseId)
+).sort((a, b) => {
+  if (a.data.number !== null && b.data.number !== null) {
+    return a.data.number - b.data.number;
+  }
+  if (a.data.number !== null) return -1;
+  if (b.data.number !== null) return 1;
+  return a.data.id.localeCompare(b.data.id);
+});
+
+const filterItems: ExerciseFilterItem[] = exercises.map((entry) => ({
+  id: entry.data.id,
+  courseId: entry.data.courseId,
+  number: entry.data.number,
+  title: entry.data.title,
+  unit: entry.data.unit,
+  unitName: unitNameBySlug.get(entry.data.unit) ?? entry.data.unit,
+  entityType: entry.data.entityType,
+  provenance: entry.data.provenance,
+  priority: entry.data.priority,
+  difficulty: entry.data.difficulty,
+  origin: entry.data.origin,
+  isParcial: entry.data.isParcial,
+  detailHref: withBase(`/${courseId}/ejercicios/${entry.data.id}/`),
+}));
+
+const unitOptions = course.data.units
+  .slice()
+  .sort((a, b) => a.order - b.order)
+  .map((u) => ({ slug: u.slug, name: u.name }));
+---
+
+<CourseLayout
+  course={course.data}
+  title={`Ejercicios — ${course.data.shortTitle}`}
+  description={`Catálogo filtrable de ejercicios de ${course.data.title}`}
+  activeSection="exercises"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle, href: withBase(`/${courseId}/`) },
+    { label: "Ejercicios" },
+  ]}
+>
+  <header style="margin-bottom: 1.25rem;">
+    <h1>Catálogo de ejercicios</h1>
+    <p style="margin: 0; color: var(--text-muted); max-width: 70ch;">
+      Filtrá por modo de estudio, dificultad, unidad temática, condición de
+      parcial real o palabra clave. El progreso marcado se conserva en este
+      navegador.
+    </p>
+  </header>
+
+  <ExerciseFilterHUD
+    client:load
+    courseId={courseId}
+    exercises={filterItems}
+    units={unitOptions}
+  />
+</CourseLayout>

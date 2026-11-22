@@ -1,0 +1,106 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout, { type BreadcrumbItem } from "./BaseLayout.astro";
+import CheatsheetDrawer from "@/components/platform/CheatsheetDrawer";
+import { getCheatsheetSections } from "@/data/cheatsheets";
+import type { CourseManifest } from "@/schemas/academic";
+import { withBase } from "@/utils/paths";
+
+export type CourseNavSection = "overview" | "exercises" | "materials" | "docs";
+
+export interface Props {
+  course: CourseManifest;
+  title: string;
+  description?: string;
+  activeSection?: CourseNavSection;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  course,
+  title,
+  description,
+  activeSection = "overview",
+  breadcrumbs = [],
+} = Astro.props;
+
+const cheatsheetSections = getCheatsheetSections(course.id);
+
+const courseDocs = (
+  await getCollection("docs", (entry) => entry.data.courseId === course.id)
+).sort((a, b) => a.data.order - b.data.order);
+
+const firstDocHref = courseDocs[0]
+  ? withBase(`/${course.id}/docs/${courseDocs[0].data.docId}/`)
+  : null;
+
+const navLinks = [
+  {
+    key: "overview" as const,
+    label: "Resumen",
+    href: withBase(`/${course.id}/`),
+  },
+  {
+    key: "exercises" as const,
+    label: "Ejercicios",
+    href: withBase(`/${course.id}/ejercicios/`),
+  },
+  {
+    key: "materials" as const,
+    label: "Materiales",
+    href: withBase(`/${course.id}/materiales/`),
+  },
+  ...(firstDocHref
+    ? [
+        {
+          key: "docs" as const,
+          label: "Apuntes",
+          href: firstDocHref,
+        },
+      ]
+    : []),
+];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <Fragment slot="header-actions">
+    {
+      cheatsheetSections.length > 0 ? (
+        <CheatsheetDrawer
+          client:load
+          courseTitle={course.title}
+          sections={cheatsheetSections}
+        />
+      ) : null
+    }
+  </Fragment>
+
+  <div slot="subnav" class="course-nav-bar">
+    <div class="course-nav-inner">
+      <div class="course-nav-identity">
+        <span class="course-nav-title">{course.shortTitle}</span>
+        <span class="course-nav-codes">{course.codes.join(" · ")}</span>
+      </div>
+
+      <nav aria-label={`Secciones de ${course.shortTitle}`}>
+        <ul class="course-nav-links">
+          {
+            navLinks.map((item) => (
+              <li>
+                <a
+                  class="course-nav-link"
+                  href={item.href}
+                  aria-current={activeSection === item.key ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <slot />
+</BaseLayout>

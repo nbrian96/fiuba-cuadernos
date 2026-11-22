@@ -13,6 +13,110 @@ relatedResourceIds:
   - tda-guia-completa-v1
 legacyPage: parciales.html
 ---
+import InteractiveChecklist from "@/components/platform/InteractiveChecklist";
+import { renderInlineMathTextToHtml } from "@/utils/katexStatic";
+
+export const checklistItems = [
+  {
+    id: "chk_20c98e6a10164095",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 1,
+    labelHtml: renderInlineMathTextToHtml(
+      String.raw`División y Conquista: Me sé de memoria los 3 casos del Teorema Maestro ($T(n) = a \cdot T(n/b) + \Theta(n^c)$) y sé identificar $a, b$ y $c$.`,
+    ),
+  },
+  {
+    id: "chk_f7089519b0cf032b",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 2,
+    labelHtml: renderInlineMathTextToHtml(
+      "Greedy: Sé aplicar la demostración por inducción Greedy Stays Ahead y sé diseñar un contraejemplo numérico si el algoritmo voraz no es óptimo.",
+    ),
+  },
+  {
+    id: "chk_b743378bc55f2a4b",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 3,
+    labelHtml: renderInlineMathTextToHtml(
+      "Backtracking: Sé implementar podas de factibilidad y cotas de Branch & Bound, usando tablas booleanas de control en $O(1)$ y deshaciendo el estado al retornar.",
+    ),
+  },
+  {
+    id: "chk_7e96a32326ff7174",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 4,
+    labelHtml: renderInlineMathTextToHtml(
+      "Programación Dinámica: Cumplo siempre los 5 pasos: 1) Definición formal del estado, 2) Casos base, 3) Ecuación de recurrencia, 4) Orden de llenado bottom-up, 5) Reconstrucción.",
+    ),
+  },
+  {
+    id: "chk_cf0c59e664a587a4",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 5,
+    labelHtml: renderInlineMathTextToHtml(
+      String.raw`Programación Lineal: Sé definir variables con sus dominios, función objetivo lineal, restricciones lineales, linealización de $\min \max$ y conteo de variables/restricciones.`,
+    ),
+  },
+  {
+    id: "chk_54b1d771e6be75c7",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 6,
+    labelHtml: renderInlineMathTextToHtml(
+      "Redes de Flujo: Sé construir la super-fuente y el super-sumidero, formular la red residual con aristas hacia atrás y calcular la capacidad del corte mínimo.",
+    ),
+  },
+  {
+    id: "chk_17b2a08ad97bf6d8",
+    sectionId: "a-dominio-de-paradigmas",
+    sectionTitle: "A. Dominio de Paradigmas",
+    itemIndex: 7,
+    labelHtml: renderInlineMathTextToHtml(
+      String.raw`Reducciones NP-Completitud: Sigo estrictamente los 4 pasos: 1) Certificado y Verificador en NP, 2) Problema conocido en NPC, 3) Transformación polinomial en tiempo polinomial, 4) Demostración de ida ($\implies$) y vuelta ($\impliedby$).`,
+    ),
+  },
+  {
+    id: "chk_68326103099698d2",
+    sectionId: "b-ejecucion-en-la-hoja-de-examen",
+    sectionTitle: "B. Ejecución en la Hoja de Examen",
+    itemIndex: 1,
+    labelHtml: renderInlineMathTextToHtml(
+      "Cada ejercicio está escrito en una hoja separada con nombre y padrón.",
+    ),
+  },
+  {
+    id: "chk_3e78b73d8c6186db",
+    sectionId: "b-ejecucion-en-la-hoja-de-examen",
+    sectionTitle: "B. Ejecución en la Hoja de Examen",
+    itemIndex: 2,
+    labelHtml: renderInlineMathTextToHtml(
+      "El pseudocódigo usa palabras clave claras (PROCEDIMIENTO, FUNCION, SI, SINO, MIENTRAS, PARA, RETORNAR).",
+    ),
+  },
+  {
+    id: "chk_e84d5070e0ec98bd",
+    sectionId: "b-ejecucion-en-la-hoja-de-examen",
+    sectionTitle: "B. Ejecución en la Hoja de Examen",
+    itemIndex: 3,
+    labelHtml: renderInlineMathTextToHtml(
+      "Contemplé los casos borde relevantes (estructuras vacías, un elemento, capacidades nulas, grafos sin aristas).",
+    ),
+  },
+  {
+    id: "chk_f01031adb7187ba6",
+    sectionId: "b-ejecucion-en-la-hoja-de-examen",
+    sectionTitle: "B. Ejecución en la Hoja de Examen",
+    itemIndex: 4,
+    labelHtml: renderInlineMathTextToHtml(
+      String.raw`Justifiqué la complejidad temporal y espacial explicando de dónde sale cada término ($O(n \log n)$, $O(V \cdot E)$, etc.), sin limitarme a tirar una fórmula suelta.`,
+    ),
+  },
+];
 
 ## Catálogo de Errores Típicos de Parcial y Trampas Frecuentes
 
@@ -62,19 +166,9 @@ Este catálogo compila las fallas y penalizaciones más comunes detectadas en la
 
 Utilizá esta lista de verificación durante tu última hora de repaso antes de ingresar al aula:
 
-### A. Dominio de Paradigmas
-
-- [ ] **División y Conquista:** Me sé de memoria los 3 casos del Teorema Maestro ($T(n) = a \cdot T(n/b) + \Theta(n^c)$) y sé identificar $a, b$ y $c$.
-- [ ] **Greedy:** Sé aplicar la demostración por inducción *Greedy Stays Ahead* y sé diseñar un contraejemplo numérico si el algoritmo voraz no es óptimo.
-- [ ] **Backtracking:** Sé implementar podas de factibilidad y cotas de Branch & Bound, usando tablas booleanas de control en $O(1)$ y deshaciendo el estado al retornar.
-- [ ] **Programación Dinámica:** Cumplo siempre los 5 pasos: 1) Definición formal del estado, 2) Casos base, 3) Ecuación de recurrencia, 4) Orden de llenado bottom-up, 5) Reconstrucción.
-- [ ] **Programación Lineal:** Sé definir variables con sus dominios, función objetivo lineal, restricciones lineales, linealización de $\min \max$ y conteo de variables/restricciones.
-- [ ] **Redes de Flujo:** Sé construir la super-fuente y el super-sumidero, formular la red residual con aristas hacia atrás y calcular la capacidad del corte mínimo.
-- [ ] **Reducciones NP-Completitud:** Sigo estrictamente los 4 pasos: 1) Certificado y Verificador en NP, 2) Problema conocido en NPC, 3) Transformación polinomial en tiempo polinomial, 4) Demostración de ida ($\implies$) y vuelta ($\impliedby$).
-
-### B. Ejecución en la Hoja de Examen
-
-- [ ] Cada ejercicio está escrito en una **hoja separada** con nombre y padrón.
-- [ ] El pseudocódigo usa palabras clave claras (`PROCEDIMIENTO`, `FUNCION`, `SI`, `SINO`, `MIENTRAS`, `PARA`, `RETORNAR`).
-- [ ] Contemplé los **casos borde** relevantes (estructuras vacías, un elemento, capacidades nulas, grafos sin aristas).
-- [ ] Justifiqué la **complejidad temporal y espacial** explicando de dónde sale cada término ($O(n \log n)$, $O(V \cdot E)$, etc.), sin limitarme a tirar una fórmula suelta.
+<InteractiveChecklist
+  client:load
+  courseId="tda"
+  title="Checklist interactivo pre-parcial"
+  items={checklistItems}
+/>

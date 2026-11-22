@@ -1,0 +1,123 @@
+---
+import { getCollection } from "astro:content";
+import CourseLayout from "@/layouts/CourseLayout.astro";
+import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
+import { getEntityTypeLabel } from "@/utils/provenance";
+import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses");
+  return courses.map((course) => ({
+    params: { course: course.data.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const courseId = course.data.id;
+
+const unitNameBySlug = new Map(
+  course.data.units.map((u) => [u.slug, u.name]),
+);
+
+const resourceManifests = await getCollection(
+  "resources",
+  (entry) => entry.data.courseId === courseId,
+);
+const allResources = resourceManifests.flatMap((m) => m.data.resources);
+
+const groupedByFolder = new Map<string, typeof allResources>();
+for (const res of allResources) {
+  const list = groupedByFolder.get(res.sourceFolder) ?? [];
+  list.push(res);
+  groupedByFolder.set(res.sourceFolder, list);
+}
+
+const totalFiles = allResources.reduce((acc, r) => acc + r.files.length, 0);
+const totalPdfs = allResources.reduce(
+  (acc, r) => acc + r.files.filter((f) => f.isPdf).length,
+  0,
+);
+---
+
+<CourseLayout
+  course={course.data}
+  title={`Materiales — ${course.data.shortTitle}`}
+  description={`Índice completo de materiales y recursos fuente de ${course.data.title}`}
+  activeSection="materials"
+  breadcrumbs={[
+    { label: "Hub de materias", href: withBase("/") },
+    { label: course.data.shortTitle, href: withBase(`/${courseId}/`) },
+    { label: "Materiales" },
+  ]}
+>
+  <header style="margin-bottom: 1.5rem;">
+    <h1>Repositorio de materiales</h1>
+    <p style="margin: 0; color: var(--text-muted); max-width: 72ch;">
+      Inventario trazable de <strong>{allResources.length}</strong> recursos
+      declarados ({totalFiles} archivos físicos, {totalPdfs} PDFs) clasificados
+      por carpeta de origen y procedencia académica.
+    </p>
+  </header>
+
+  {
+    Array.from(groupedByFolder.entries()).map(([folder, resources]) => (
+      <section class="surface-panel" aria-label={`Carpeta ${folder}`}>
+        <h2 style="margin-top: 0;">
+          {folder} ({resources.length} recursos)
+        </h2>
+
+        <div class="card-grid">
+          {resources.map((res) => {
+            const hasPdf = Boolean(res.pdfMetadata);
+            const viewerHref = buildMaterialViewerUrl(
+              courseId,
+              res.resourceId,
+              hasPdf ? 1 : undefined,
+            );
+            const unitText = res.unitSlugs
+              .map((slug) => unitNameBySlug.get(slug) ?? slug)
+              .join(", ");
+
+            return (
+              <article
+                class="stat-card"
+                style="display: grid; gap: 0.5rem; align-content: space-between; background-color: var(--bg-surface);"
+              >
+                <div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem;">
+                    <ProvenanceBadge provenance={res.provenance} />
+                    <span class="meta-pill">
+                      {getEntityTypeLabel(res.entityType)}
+                    </span>
+                    {res.preservedIntact ? (
+                      <span class="meta-pill meta-pill--preserved">
+                        Preservado íntegro
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <h3 style="margin: 0 0 0.35rem; font-size: 1rem;">
+                    {res.title}
+                  </h3>
+                  <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+                    Unidades: {unitText} · {res.files.length} archivo(s)
+                    {res.pdfMetadata
+                      ? ` · ${res.pdfMetadata.pageCount} pág.`
+                      : ""}
+                  </p>
+                </div>
+
+                <div>
+                  <a class="btn btn-primary" href={viewerHref}>
+                    Abrir recurso
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    ))
+  }
+</CourseLayout>
