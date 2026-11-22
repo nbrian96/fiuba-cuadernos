@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 function parseArgs(argv) {
-  let rawBase = "/";
+  let rawBase = process.env.ASTRO_BASE ?? "/";
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--base" && argv[i + 1]) {
       rawBase = argv[i + 1];
@@ -139,12 +139,17 @@ function resolveCompiledTarget(targetWithQueryOrHash) {
     }
   }
 
-  const trimmedRel = relPath.replace(/^\/+/, "");
-  const directPath = path.join(distDir, trimmedRel);
+  let decodedRel = relPath.replace(/^\/+/, "");
+  try {
+    decodedRel = decodeURIComponent(decodedRel);
+  } catch {
+    return null;
+  }
+  const directPath = path.join(distDir, decodedRel);
   if (fs.existsSync(directPath) && fs.statSync(directPath).isFile()) {
     return directPath;
   }
-  const indexPath = path.join(distDir, trimmedRel, "index.html");
+  const indexPath = path.join(distDir, decodedRel, "index.html");
   if (fs.existsSync(indexPath) && fs.statSync(indexPath).isFile()) {
     return indexPath;
   }
@@ -175,6 +180,103 @@ for (const file of allHtmlFiles) {
   }
 }
 
+// Verificaciones integrales de Etapa 4
+const rootDir = process.cwd();
+const exercisesIndex = JSON.parse(
+  fs.readFileSync(
+    path.join(rootDir, "docs/manifests/tda/exercises-index.json"),
+    "utf-8",
+  ),
+);
+const courseManifest = JSON.parse(
+  fs.readFileSync(path.join(rootDir, "src/content/courses/tda.json"), "utf-8"),
+);
+const resourcesManifest = JSON.parse(
+  fs.readFileSync(
+    path.join(rootDir, "src/content/resources/tda-resources.json"),
+    "utf-8",
+  ),
+);
+
+const expectedEtapa4Routes = [
+  "tda/parciales/index.html",
+  "tda/avanzados/index.html",
+  "tda/docs/matriz-parciales/index.html",
+  "tda/docs/problema-mochila-y-greedy/index.html",
+  ...courseManifest.units
+    .filter((u) => u.inCatalog)
+    .map((u) => `tda/unidad/${u.slug}/index.html`),
+  ...exercisesIndex.catalogExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
+  ...exercisesIndex.advancedExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
+  ...resourcesManifest.resources.map((r) => `tda/materiales/${r.resourceId}/index.html`),
+];
+
+for (const relRoute of expectedEtapa4Routes) {
+  assert.ok(
+    fs.existsSync(path.join(distDir, relRoute)),
+    `[Etapa 4 Route] Falta HTML generado: dist/${relRoute}`,
+  );
+}
+
+// Todos los 96 materiales físicos publicados en dist/materials/tda/
+let publishedFiles = 0;
+for (const res of resourcesManifest.resources) {
+  for (const file of res.files) {
+    const dest = path.join(distDir, "materials", "tda", file.path);
+    assert.ok(
+      fs.existsSync(dest),
+      `[Materials] Falta archivo publicado en dist/materials/tda/${file.path}`,
+    );
+    publishedFiles++;
+  }
+}
+assert.equal(publishedFiles, 96, "Se esperaban exactamente 96 archivos en dist/materials/tda/");
+
+// Índice Pagefind generado
+for (const pfRel of ["pagefind/pagefind.js", "pagefind/pagefind-entry.json"]) {
+  assert.ok(
+    fs.existsSync(path.join(distDir, pfRel)),
+    `[Pagefind] Falta artefacto de índice: dist/${pfRel}`,
+  );
+}
+
+// 0 errores KaTeX ni delimitadores crudos sin compilar bajo dist/tda/
+const tdaHtmlFiles = allHtmlFiles.filter((f) =>
+  path.relative(distDir, f).replace(/\\/g, "/").startsWith("tda/"),
+);
+for (const htmlFile of tdaHtmlFiles) {
+  const rel = path.relative(distDir, htmlFile).replace(/\\/g, "/");
+  const visibleHtml = fs
+    .readFileSync(htmlFile, "utf-8")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<astro-island\b[^>]*>/gi, "")
+    .replace(/<annotation\b[^>]*>[\s\S]*?<\/annotation>/gi, "");
+
+  assert.ok(
+    !visibleHtml.includes("katex-error"),
+    `[KaTeX] Se detectó 'katex-error' en dist/${rel}`,
+  );
+  assert.ok(
+    !visibleHtml.includes("$$"),
+    `[KaTeX] Se detectó '$$' sin renderizar en dist/${rel}`,
+  );
+  assert.ok(
+    !visibleHtml.includes("\\dollar"),
+    `[KaTeX] Se detectó '\\dollar' literal en dist/${rel}`,
+  );
+  if (rel === "tda/avanzados/index.html") {
+    assert.ok(
+      !visibleHtml.includes("\\(") &&
+        !visibleHtml.includes("\\)") &&
+        !visibleHtml.includes("$70") &&
+        !visibleHtml.includes("$Z_{\\text{opt}}") &&
+        !visibleHtml.includes("$0 \\le"),
+      "[KaTeX] Se detectó delimitador LaTeX crudo en tda/avanzados/index.html",
+    );
+  }
+}
+
 console.log(
-  `[verify-astro-build] OK (${allHtmlFiles.length} HTML verificados bajo base='${base}').`,
+  `[verify-astro-build] OK (${allHtmlFiles.length} HTML verificados, ${publishedFiles} materiales, Pagefind OK bajo base='${base}').`,
 );

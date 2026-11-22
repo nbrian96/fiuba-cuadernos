@@ -175,3 +175,104 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
     }
   });
 });
+
+describe("Etapa 4 full TDA migration parity", () => {
+  it("contains all 85 catalog exercises and 2 advanced theory exercises (87 total, 35 parciales)", () => {
+    const idx = ExercisesIndexManifestSchema.parse(
+      readJson("docs/manifests/tda/exercises-index.json"),
+    );
+    const exFiles = listMdxFiles("src/content/exercises");
+    expect(exFiles).toHaveLength(87);
+
+    const parsed = exFiles.map((rel) =>
+      ExerciseFrontmatterSchema.parse(parseMdxFrontmatter(rel)),
+    );
+    const catalogParsed = parsed.filter(
+      (e) => e.entityType === "CatalogExercise",
+    );
+    const advancedParsed = parsed.filter(
+      (e) => e.entityType === "AdvancedTheoryExercise",
+    );
+
+    expect(catalogParsed).toHaveLength(85);
+    expect(advancedParsed).toHaveLength(2);
+    expect(parsed.filter((e) => e.isParcial)).toHaveLength(35);
+
+    const parsedIds = new Set(parsed.map((e) => e.id));
+    for (const expected of [...idx.catalogExercises, ...idx.advancedExercises]) {
+      expect(parsedIds.has(expected.id)).toBe(true);
+    }
+  });
+
+  it("contains all 3 expected docs in src/content/docs/tda/", () => {
+    const docFiles = listMdxFiles("src/content/docs");
+    expect(docFiles).toHaveLength(3);
+    const docIds = new Set(
+      docFiles.map((rel) => DocFrontmatterSchema.parse(parseMdxFrontmatter(rel)).docId),
+    );
+    expect(docIds).toEqual(
+      new Set([
+        "matriz-parciales",
+        "checklist-pre-parcial",
+        "problema-mochila-y-greedy",
+      ]),
+    );
+  });
+
+  it("confirms all 96 physical files referenced in tda-resources.json exist on disk", () => {
+    const resManifest = readJson("src/content/resources/tda-resources.json") as {
+      resources: Array<{ files: Array<{ path: string }> }>;
+    };
+    const allPaths = resManifest.resources.flatMap((r) =>
+      r.files.map((f) => f.path),
+    );
+    expect(allPaths).toHaveLength(96);
+    for (const relPath of allPaths) {
+      expect(
+        fs.existsSync(path.join(ROOT, relPath)),
+        `Archivo físico faltante: ${relPath}`,
+      ).toBe(true);
+    }
+  });
+
+  it("validates extracted advanced theory sections hierarchy, simulators, SVG markers, and Mermaid", () => {
+    const sections = readJson("src/data/tdaAdvancedSections.json") as Array<{
+      order: number;
+      id: string;
+      title: string;
+      htmlBefore: string;
+      htmlAfterMermaid: string;
+      mermaidCode: string | null;
+      simulator: string | null;
+      htmlAfterSimulator: string;
+    }>;
+
+    expect(sections).toHaveLength(16);
+    const sims: string[] = [];
+    const mermaids: string[] = [];
+
+    for (const sec of sections) {
+      expect(sec.title.length).toBeGreaterThan(sec.id.length);
+      expect(sec.title).not.toBe(sec.id);
+
+      const combined = `${sec.htmlBefore}\n${sec.htmlAfterMermaid}\n${sec.htmlAfterSimulator}`;
+      expect(combined).not.toMatch(/<h[1256]\b/i);
+      expect(combined).not.toMatch(/<script\b/i);
+      expect(combined).not.toMatch(/table-scroll"[^>]*>\s*<div[^>]*class="table-scroll"/i);
+      if (combined.includes("url(#arrow)")) {
+        expect(combined).toContain('id="arrow"');
+      }
+      if (sec.simulator) sims.push(sec.simulator);
+      if (sec.mermaidCode) mermaids.push(sec.id);
+    }
+
+    expect(sims).toEqual([
+      "set-cover",
+      "pricing-method",
+      "karger",
+      "max-3sat",
+      "hamlet",
+    ]);
+    expect(mermaids).toEqual(["tsp-aprox"]);
+  });
+});

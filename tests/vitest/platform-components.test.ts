@@ -26,7 +26,17 @@ import {
   filterExercises,
   type ExerciseFilterItem,
 } from "@/utils/exerciseFilters";
-import { renderInlineMathTextToHtml } from "@/utils/katexStatic";
+import { renderInlineMathTextToHtml, renderMathTokensInsideTrustedHtml } from "@/utils/katexStatic";
+import GlobalSearch, {
+  renderSafeExcerpt,
+  resolveSearchHref,
+} from "@/components/platform/GlobalSearch";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import SetCoverSimulator from "@/components/simulators/tda/SetCoverSimulator";
+import PricingMethodSimulator from "@/components/simulators/tda/PricingMethodSimulator";
+import KargerMinCutSimulator from "@/components/simulators/tda/KargerMinCutSimulator";
+import Max3SatSimulator from "@/components/simulators/tda/Max3SatSimulator";
+import HamletStreamingSimulator from "@/components/simulators/tda/HamletStreamingSimulator";
 import {
   buildPdfEmbedUrl,
   buildUpdatedPageSearch,
@@ -310,5 +320,58 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
     );
     expect(checklistHtml).toContain("<strong>0</strong> / 11");
     expect(checklistHtml).toContain('class="katex"');
+  });
+
+  it("renders Etapa 4 GlobalSearch (XSS-safe excerpts & safe hrefs), MermaidDiagram, trusted-HTML math, and 5 simulators", () => {
+    const searchTriggerHtml = renderToStaticMarkup(createElement(GlobalSearch));
+    expect(searchTriggerHtml).toContain('data-testid="global-search-trigger"');
+    expect(searchTriggerHtml).toContain("Ctrl+K");
+
+    expect(resolveSearchHref("//evil.example.com")).toBe("/");
+    expect(resolveSearchHref("/tda/materiales/doc/?page=3")).toBe(
+      "/tda/materiales/doc/?page=3",
+    );
+
+    const safeExcerptHtml = renderToStaticMarkup(
+      createElement(
+        "p",
+        null,
+        renderSafeExcerpt(
+          'Texto <mark>simplex</mark> y carga <img src=x onerror="alert(1)"> segura',
+        ),
+      ),
+    );
+    expect(safeExcerptHtml).toContain("<mark>simplex</mark>");
+    expect(safeExcerptHtml).not.toContain("<img");
+    expect(safeExcerptHtml).not.toContain("onerror=");
+
+    const mermaidSsr = renderToStaticMarkup(
+      createElement(MermaidDiagram, {
+        code: "flowchart LR\nA --> B",
+        caption: "Flujo prueba",
+      }),
+    );
+    expect(mermaidSsr).toContain("mermaid-diagram");
+    expect(mermaidSsr).toContain("A --&gt; B");
+    expect(mermaidSsr).toContain("Flujo prueba");
+
+    const trustedMath = renderMathTokensInsideTrustedHtml(
+      "<p>Cota \\(p\\) y $70 \\lt 80$</p><code>$raw$</code>",
+    );
+    expect(trustedMath).toContain('class="katex"');
+    expect(trustedMath).toContain("<code>$raw$</code>");
+    expect(trustedMath).not.toContain("\\(p\\)");
+
+    const simulators = [
+      createElement(SetCoverSimulator),
+      createElement(PricingMethodSimulator),
+      createElement(KargerMinCutSimulator),
+      createElement(Max3SatSimulator),
+      createElement(HamletStreamingSimulator),
+    ];
+    for (const sim of simulators) {
+      const simHtml = renderToStaticMarkup(sim);
+      expect(simHtml).toContain("simulator-panel");
+    }
   });
 });
