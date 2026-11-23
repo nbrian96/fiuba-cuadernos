@@ -293,8 +293,23 @@ export async function buildPdfIndexRecords({
     }
   }
 
-  if (cacheDirty && cachePath) {
-    savePdfCache(cachePath, cache);
+  if (cachePath) {
+    const resolvedRoot = path.resolve(repoRoot);
+    for (const key of Object.keys(cache.files)) {
+      const candidateAbs = path.resolve(resolvedRoot, key);
+      const relCheck = path.relative(resolvedRoot, candidateAbs);
+      if (
+        relCheck.startsWith("..") ||
+        path.isAbsolute(relCheck) ||
+        !fs.existsSync(candidateAbs)
+      ) {
+        delete cache.files[key];
+        cacheDirty = true;
+      }
+    }
+    if (cacheDirty) {
+      savePdfCache(cachePath, cache);
+    }
   }
 
   stats.elapsedMs = Date.now() - startedAt;
