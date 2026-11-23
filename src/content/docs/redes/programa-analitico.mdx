@@ -1,0 +1,240 @@
+---
+docId: programa-analitico
+courseId: redes
+title: "Programa Analítico y Régimen de Cursada"
+order: 0
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - datos-materia
+  - esquema-evaluaciones
+  - fundamentacion
+  - objetivos
+  - contenidos
+  - estrategias-ensenanza
+  - evaluacion
+  - bibliografia
+relatedResourceIds:
+  - redes-presentacion-01
+  - redes-presentacion-12
+  - redes-presentacion-13
+  - redes-presentacion-18
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Redes (Código: `TA048`)  
+> **Cátedra:** Cátedra Volpi  
+> **Equipo Docente:**  
+> • Ing. Marcelo E. Volpi  
+> • Ing. Lucas Giorgi  
+> • Ing. Vanesa Llasat  
+
+---
+
+## Esquema Curricular y Alcance de Evaluaciones
+
+<div class="academic-block academic-block--important" style="margin: 1.5rem 0;">
+  <p class="academic-block-title">Alcance Obligatorio de Exámenes y Presentaciones de Cátedra</p>
+  <p>
+    Conforme a la planificación pedagógica de la cátedra, el material bibliográfico y las diapositivas de clase se estructuran en dos bloques evaluativos principales más un proyecto grupal de aplicación:
+  </p>
+  <ul>
+    <li>
+      <strong>Primer Parcial (1P) — Presentaciones 1 a 12:</strong> Comprende la totalidad de los fundamentos físicos y lógicos de conectividad, transmisión de datos, cableado estructurado (cobre y fibra óptica), centros de datos, redes legacy (X.25, Frame Relay, ATM), capas de enlace y red (Ethernet, switching, IPv4, IPv6, ICMP, ARP), capas de transporte (TCP/UDP), capas de aplicación (5, 6 y 7) y el dimensionamiento integral de una red corporativa multisede.
+    </li>
+    <li>
+      <strong>Examen Integrador Final — Presentaciones 13 a 18 y Temario Completo:</strong> Instancia requerida para la aprobación definitiva de la materia. Evalúa las tecnologías avanzadas y de transporte: redes MPLS, infraestructura Wi-Fi (IEEE 802.11), redes de acceso por radio móvil (RAN 2G–5G), virtualización de funciones de red (NFV), redes WAN definidas por software (SD-WAN), IoT y redes industriales (IIoT/OT), integradas transversalmente con los conceptos del primer bloque.
+    </li>
+    <li>
+      <strong>Trabajo Final Grupal:</strong> Proyecto integrador para ser resuelto en equipo en base a una necesidad puntual empresaria propuesta por los alumnos, que permite cerrar la cursada.
+    </li>
+  </ul>
+</div>
+
+<MermaidDiagram
+  client:load
+  caption="Mapa de correlación entre Clases de Cátedra y Régimen de Evaluación"
+  code={`flowchart TD
+    subgraph P1["Bloque 1: Primer Parcial (1P)"]
+      direction TB
+      C1["Clases 1–4: Fundamentos, Telecomunicaciones, Señales y Modelo OSI/TCP-IP"]
+      C2["Clases 5–7: Medios Cobre, Fibra Óptica y Redes en Datacenter"]
+      C3["Clases 8–11: Redes Legacy, Protocolo IP (Capa 3), Transporte (Capa 4) y Aplicación (5–7)"]
+      C4["Clase 12: Dimensionamiento de Red Corporativa Multisede"]
+      C1 --> C2 --> C3 --> C4
+    end
+
+    subgraph P2["Bloque 2: Examen Integrador Final"]
+      direction TB
+      C5["Clase 13: Redes de Transporte MPLS"]
+      C6["Clases 14–15: Conectividad Inalámbrica Wi-Fi y Redes Móviles RAN (2G a 5G)"]
+      C7["Clases 16–17: Virtualización NFV y Redes Programables SD-WAN"]
+      C8["Clase 18: Internet de las Cosas (IoT) y Redes Industriales (IIoT / OT)"]
+      C5 --> C6 --> C7 --> C8
+    end
+
+    subgraph PROY["Proyecto de Cursada"]
+      TP["Trabajo Final Grupal: Proyecto Integrador Empresarial"]
+    end
+
+    P1 -->|"Aprobación 1P"| EVAL{"Instancia Evaluativa"}
+    P2 -->|"Aprobación Integrador"| EVAL
+    PROY -->|"Cierre de Cursada"| EVAL
+    EVAL -->|"Aprobación de Materia"| FIN["Aprobación de Redes (TA048)"]`}
+/>
+
+---
+
+## 1. Fundamentación y Propósitos
+
+El objeto de la materia es que el alumno adquiera las nociones básicas y conocimientos fundamentales del funcionamiento de una **Red de Datos**, que le permita entender, diagramar y diseñar sistemas de comunicación de datos orientados a soluciones en los ámbitos empresariales.
+
+Dentro de las competencias a adquirir en la materia, se identifica la necesidad de aplicar la información correspondiente a cada situación particular que se plantea, y que permita planificar las estrategias necesarias para la resolución de problemas a partir de la identificación de los datos relevados, las variables involucradas y los accionamientos correspondientes.
+
+---
+
+## 2. Objetivos de Aprendizaje
+
+### Objetivo General
+Desarrollar en los estudiantes las capacidades necesarias para aplicar técnicas y metodologías propias de la ingeniería en el análisis, diseño, especificación y planificación de proyectos de redes y sistemas de comunicaciones, integrando los fundamentos tecnológicos con los requerimientos funcionales y las necesidades de las organizaciones.
+
+### Objetivos Específicos
+1. **Aplicación de técnicas de ingeniería:** desarrollar habilidades para aplicar métodos, herramientas y procedimientos de ingeniería en la resolución de problemas relacionados con redes y sistemas de comunicaciones.
+2. **Fundamentos para comunicaciones efectivas:** comprender los principios, modelos y tecnologías que permiten establecer sistemas de comunicación eficientes, confiables y seguros, considerando los requerimientos de transmisión e intercambio de información.
+3. **Especificación de proyectos de desarrollo de software:** adquirir competencias para relevar requerimientos, analizar necesidades, definir alcances y elaborar especificaciones técnicas y funcionales de proyectos de desarrollo de software vinculados con entornos de redes y comunicaciones.
+4. **Especificación de proyectos para sistemas de comunicaciones:** desarrollar capacidades para analizar, diseñar y documentar proyectos de infraestructura de redes y sistemas de comunicaciones, estableciendo arquitecturas, componentes, protocolos, requerimientos de capacidad, disponibilidad, seguridad y escalabilidad.
+
+### Competencias Esperadas
+Al finalizar la asignatura, el estudiante estará en condiciones de:
+- Aplicar metodologías de ingeniería para resolver problemas tecnológicos.
+- Analizar necesidades de comunicación y traducirlas en requerimientos técnicos.
+- Elaborar especificaciones funcionales y técnicas de proyectos de software.
+- Diseñar y especificar soluciones de redes y sistemas de comunicaciones.
+- Integrar componentes de hardware, software y servicios de comunicaciones.
+- Evaluar alternativas tecnológicas considerando criterios de eficiencia, confiabilidad, seguridad y viabilidad técnica.
+
+### Enfoque Académico
+La asignatura busca que el estudiante no solo comprenda las tecnologías de redes, sino que pueda utilizarlas como herramientas de ingeniería para formular, especificar y desarrollar proyectos tecnológicos concretos.
+
+---
+
+## 3. Contenidos Analíticos por Unidad Temática
+
+### 1. Introducción a las Telecomunicaciones y Redes
+Fundamentos de telecomunicaciones y redes de datos. Evolución de las comunicaciones de voz, datos e Internet. Clasificación de redes: LAN, MAN, WAN y redes de acceso. Topologías, arquitecturas y modelos de comunicación. Evolución hacia redes convergentes basadas en IP.
+
+### 2. Transmisión de Datos y Sistemas de Comunicaciones
+Señales analógicas y digitales. Muestreo, cuantización y conversión analógico-digital y digital-analógica. Ancho de banda, capacidad de transmisión, ruido, atenuación y distorsión. Técnicas de detección y corrección de errores. Multiplexación TDM, FDM y WDM. Evolución de los sistemas PDH, SDH y SONET hacia las modernas redes de transporte óptico.
+
+### 3. Tecnologías de Redes Legacy
+Fundamentos de conmutación de circuitos y paquetes. Arquitectura y funcionamiento de X.25, Frame Relay y ATM. Circuitos virtuales permanentes y conmutados (PVC y SVC). Calidad de servicio (QoS). Evolución, aplicaciones y limitaciones de estas tecnologías frente a las arquitecturas Ethernet e IP.
+
+### 4. Modelos y Arquitecturas de Comunicación: OSI y TCP/IP
+Modelo de referencia OSI y arquitectura TCP/IP. Funciones y servicios de las distintas capas. Encapsulamiento y unidades de datos (PDU). Protocolos e interacción entre capas. Aplicación de los modelos a redes LAN y WAN. Utilización del modelo por capas para el diseño, diagnóstico y resolución de problemas de conectividad.
+
+### 5. Ethernet y Tecnologías de Redes LAN
+Fundamentos y evolución de Ethernet. Estándar IEEE 802.3. Direccionamiento MAC y estructura de tramas. Hubs, bridges y switches. Protocolos de acceso al medio: CSMA/CD y Full Duplex. Fast Ethernet, Gigabit Ethernet y Ethernet de alta velocidad. Conmutación de Capa 2 y evolución de las redes LAN.
+
+### 6. Infraestructura Física de Redes: Cobre y Fibra Óptica
+Sistemas de cableado estructurado. Medios de transmisión de cobre: UTP, STP, categorías, conectores, diafonía (NEXT, FEXT) y parámetros de desempeño. Patch panels, racks y canalizaciones. Alimentación eléctrica sobre Ethernet (PoE) y estándares internacionales. Fibra óptica monomodo (SMF) y multimodo (MMF). Conectores, empalmes mecánicos y por fusión, distribuidores ópticos (ODF) y transceptores SFP/QSFP. Diseño de enlaces y cálculo del presupuesto óptico.
+
+### 7. Conmutación Avanzada y Segmentación de Redes
+Arquitecturas de switching. VLAN y segmentación lógica de redes. Estándar IEEE 802.1Q. Puertos Access y Trunk. Enrutamiento entre VLAN. Protocolos Spanning Tree: STP (IEEE 802.1D), RSTP (IEEE 802.1w) y MST. Agregación de enlaces y LACP (IEEE 802.3ad). Redundancia, tolerancia a fallas, alta disponibilidad y calidad de servicio (QoS).
+
+### 8. Arquitectura y Protocolos IP: IPv4 e IPv6
+Arquitectura y funcionamiento del protocolo IP. Direccionamiento IPv4, subnetting, CIDR y VLSM. NAT/PAT, ARP e ICMP. Fundamentos de enrutamiento. Arquitectura IPv6, direccionamiento, autoconfiguración (SLAAC y DHCPv6), ICMPv6 y Neighbor Discovery (NDP). Migración y coexistencia de IPv4 e IPv6 (Dual Stack, túneles, traducción).
+
+### 9. Enrutamiento y Redes de Transporte: BGP y MPLS
+Fundamentos de routing estático y dinámico. Protocolos Distance Vector (RIP) y Link State (OSPF). Arquitectura y funcionamiento de OSPF y BGP. Sistemas Autónomos (AS) e interconexión de redes en Internet. MPLS (Multiprotocol Label Switching), conmutación de etiquetas (LSP, LER, LSR), VPN MPLS de Capa 2 y Capa 3, y Traffic Engineering. Aplicaciones en redes de operadores y grandes infraestructuras.
+
+### 10. Protocolos de Transporte y Servicios de Internet
+Protocolos TCP y UDP. Puertos, sockets, establecimiento y cierre de conexión, control de flujo por ventana deslizante y mecanismos de control de congestión (Tahoe, Reno). Servicios y protocolos de aplicación: HTTP/HTTPS, DNS, DHCP, FTP, SMTP, IMAP, POP3, SSH, SNMP y NTP. Fundamentos de seguridad en capa de transporte (TLS/SSL) y servicios basados en APIs.
+
+### 11. Redes Inalámbricas, Comunicaciones Móviles, IoT y 5G
+Arquitecturas WLAN y evolución de los estándares Wi-Fi (IEEE 802.11a/b/g/n/ac/ax/be). Canales, modulación, SNR/RSSI, capacidad, roaming y mecanismos de seguridad (WPA2, WPA3, 802.1X). Tecnologías WWAN y WiMAX. Evolución de las redes móviles desde 2G hasta 5G (LTE, NR). Arquitecturas RAN (Radio Access Network) y Core. Internet de las Cosas (IoT), redes LPWAN y LoRaWAN. Aplicaciones empresariales e industriales de comunicaciones inalámbricas.
+
+### 12. Redes de Datacenter, Cloud y Edge Computing
+Arquitecturas de redes para centros de datos. Modelos Core/Distribution/Access y Leaf-Spine. Tráfico Este-Oeste (East-West) y Norte-Sur (North-South). Virtualización de servidores y redes. Cloud Networking y arquitecturas híbridas. Tecnologías de encapsulamiento e interconexión: VXLAN y EVPN. Edge y Fog Computing. Requerimientos de conectividad, capacidad y baja latencia para plataformas de procesamiento de datos e inteligencia artificial.
+
+### 13. Diseño de Redes Empresariales, Campus e Infraestructuras IoT
+Principios de diseño y dimensionamiento de redes corporativas y campus. Integración de redes LAN, WLAN y WAN. Arquitecturas jerárquicas modulares, segmentación y alta disponibilidad. Integración de dispositivos y plataformas IoT. Edificios inteligentes, sistemas de gestión de infraestructura y redes para instalaciones críticas. Integración de tecnologías de información y operación (IT/OT).
+
+### 14. Redes Definidas por Software y Virtualización: SDN, NFV y SD-WAN
+Evolución hacia arquitecturas de redes programables. Separación de los planos de control y de datos (Control Plane y Data Plane). Arquitectura SDN, controladores de red y protocolos de interfaz sur (OpenFlow). Virtualización de funciones de red (NFV), funciones de red virtuales (VNF) y en contenedores (CNF). Virtualización de routers, firewalls, balanceadores y funciones RAN. Arquitecturas SD-WAN: conceptos de Underlay y Overlay, optimización de trayectorias y aplicaciones en redes corporativas distribuidas.
+
+### 15. Seguridad, Automatización e Inteligencia Artificial Aplicada a Redes
+Fundamentos de ciberseguridad en infraestructuras de red. Firewalls de próxima generación (NGFW), IDS/IPS, VPN IPsec, servicios AAA (RADIUS/TACACS+), IEEE 802.1X y segmentación de seguridad. Arquitecturas Zero Trust. Monitoreo, gestión y observabilidad de redes (telemetría, syslog, SNMP, NetFlow). Automatización mediante APIs, Python, NETCONF/RESTCONF e Infraestructura como Código (IaC). Metodologías DevOps y NetDevOps. Aplicaciones de inteligencia artificial para monitoreo, detección de anomalías, análisis de tráfico y operación autónoma.
+
+### 16. Redes Industriales y Comunicaciones en Entornos OT
+Fundamentos y arquitectura de las redes de comunicación industrial. Diferencias críticas entre redes IT (Information Technology) y OT (Operational Technology). Requerimientos de disponibilidad, determinismo temporal, baja latencia, confiabilidad y tolerancia a fallas en planta. Modelos de comunicación industrial y arquitecturas de automatización (Pirámide de Automatización). Protocolos y tecnologías: Modbus RTU/TCP, PROFIBUS, PROFINET, EtherNet/IP, EtherCAT, bus CAN y OPC UA. Ethernet Industrial y redes inalámbricas industriales. Integración de controladores lógicos programables (PLC), sensores, actuadores, sistemas SCADA y DCS. Comunicación entre sistemas de control de planta y plataformas empresariales (ERP/MES). Arquitecturas IIoT (Industrial Internet of Things), convergencia IT/OT y ciberseguridad industrial bajo normativa IEC 62443.
+
+---
+
+## 4. Estrategias de Enseñanza
+
+- Las clases son dictadas en **modalidad teórico/práctico**, introduciendo los conceptos de cada unidad temática por parte de los docentes y fomentando activamente la formulación de preguntas y discusión de casos reales de ingeniería.
+- Se efectúan **actividades grupales de ejercitación y trabajos prácticos de laboratorio** para afianzar la configuración, el diagnóstico y el análisis de protocolos de red.
+- Se desarrollará un **Proyecto Integrador** en equipo de trabajo, sustentado en una necesidad puntual empresaria propuesta por los alumnos, permitiendo experimentar el ciclo completo de relevamiento, arquitectura, cálculo y especificación de ingeniería.
+
+---
+
+## 5. Recursos para la Enseñanza
+
+Para la materia se utiliza el material de diapositivas brindado por la cátedra, con apoyo de la bibliografía básica y complementaria, más los recursos de software y hardware necesarios para la implementación de las prácticas y laboratorios.
+
+---
+
+## 6. Régimen de Evaluación y Aprobación
+
+- **Parciales de Cursada:** Dos exámenes parciales durante el cuatrimestre:
+  - **Primer Parcial (1P):** Evalúa exhaustivamente los contenidos de las **Presentaciones 1 a 12**.
+  - Se dispondrán de **dos instancias de recuperación** para cada Parcial.
+- **Trabajo Final Grupal:** Desarrollo de una solución integral ante una necesidad corporativa propuesta por el equipo de trabajo; requisito para cerrar la cursada.
+- **Aprobación de la Materia:** Para la aprobación definitiva de la materia se precisa aprobar un **EXAMEN INTEGRADOR FINAL**, enfocado en las **Presentaciones 13 a 18** y la articulación global de todos los tópicos del cuatrimestre.
+
+---
+
+## 7. Bibliografía y Estándares Técnicos
+
+### Bibliografía Básica
+- **COMER, Douglas E.** *Computer Networks and Internets.* Pearson.
+- **TANENBAUM, Andrew S.; WETHERALL, David J.** *Computer Networks.* Pearson.
+- **KUROSE, James F.; ROSS, Keith W.** *Computer Networking: A Top-Down Approach.* Pearson.
+- **FOROUZAN, Behrouz A.** *Data Communications and Networking.* McGraw-Hill.
+
+### Bibliografía Complementaria
+- **STALLINGS, William.** *Data and Computer Communications.* Pearson.
+- **DOOLEY, Kevin; BROWN, Ian.** *Networking Fundamentals.* Cisco Press.
+- **CISCO PRESS.** *Internetworking Technologies Handbook.* Cisco Press.
+- **MAUFER, Thomas A.** *A Field Guide to Wireless LANs for Administrators and Power Users.* Prentice Hall.
+- **ODOM, Wendell.** *CCNA 200-301 Official Cert Guide.* Cisco Press.
+- **PETERSON, Larry L.; DAVIE, Bruce S.** *Computer Networks: A Systems Approach.* Morgan Kaufmann.
+
+### Bibliografía Específica y Tecnologías Emergentes
+- **HUCABY, Dave.** *CCNP and CCIE Enterprise Core ENCOR 350-401 Official Cert Guide.* Cisco Press.
+- **FEAMSTER, Nick; REXFORD, Jennifer; ZEGURA, Ellen.** *The Road to SDN: An Intellectual History of Programmable Networks.* ACM SIGCOMM.
+- **BONAVENTURE, Olivier.** *Computer Networking: Principles, Protocols and Practice.*
+- **STALLINGS, William.** *Network Security Essentials: Applications and Standards.* Pearson.
+- **BARR, Michael; MASSA, Anthony.** *Programming Embedded Systems.* O'Reilly Media.
+- **BOLTON, William.** *Programmable Logic Controllers.* Newnes.
+
+### Estándares y Documentación Técnica de Referencia
+- **IEEE (Institute of Electrical and Electronics Engineers):**
+  - IEEE 802.3 — Ethernet (CSMA/CD, Fast, Gigabit, 10G/40G/100G).
+  - IEEE 802.11 — Wireless LAN (Wi-Fi 4, 5, 6, 7).
+  - IEEE 802.1Q — VLANs y etiquetado de tramas en bridges.
+  - IEEE 802.1X — Control de acceso a puertos basado en autenticación.
+  - IEEE 802.1D / IEEE 802.1w — Protocolos Spanning Tree (STP y RSTP).
+- **IETF (Internet Engineering Task Force):**
+  - Especificaciones técnicas y RFCs sobre IPv4, IPv6, TCP, UDP, DNS, DHCP, ICMP, BGP, OSPF, MPLS y protocolos asociados.
+  - Documentación normativa sobre seguridad IP (IPsec), VPNs y mecanismos de transporte.
+- **ITU-T (International Telecommunication Union):**
+  - Recomendaciones sobre redes de transporte, telecomunicaciones, fibra óptica, sistemas de transmisión y redes de acceso.
+- **Organismos y Estándares de Redes Industriales:**
+  - IEC 61158 — Fieldbus para control industrial.
+  - IEC 61784 — Perfiles de comunicación industrial.
+  - IEC 62443 — Ciberseguridad en sistemas de automatización y control industrial (IACS).
+  - OPC Foundation — Especificaciones de interoperabilidad OPC Unified Architecture (OPC UA).
+  - ODVA — Especificaciones EtherNet/IP y CIP (Common Industrial Protocol).
+  - PROFIBUS & PROFINET International (PI) — Especificaciones de comunicación industrial.

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "redes",
+  "sections": [
+    {
+      "id": "capacidad-canal",
+      "title": "1. Capacidad de Canal y Límites Físicos",
+      "formula": "C = B \\log_2(1 + \\text{SNR})",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Teorema de Nyquist (canal sin ruido):",
+          "body": "Para un ancho de banda $B$ y $M$ niveles discretos de señal, la tasa máxima es $C = 2B \\log_2(M)$ bps."
+        },
+        {
+          "lead": "Teorema de Shannon-Hartley (canal con ruido térmico):",
+          "body": "Cota teórica máxima con ruido blanco aditivo gaussiano: $C = B \\log_2(1 + \\text{SNR})$ bps."
+        },
+        {
+          "lead": "Relación Señal a Ruido en Decibelios:",
+          "body": "$\\text{SNR}_{\\text{dB}} = 10 \\log_{10}(\\text{SNR})$. Un valor de $30 \\text{ dB}$ equivale a una relación de potencia de $1000:1$."
+        }
+      ]
+    },
+    {
+      "id": "presupuesto-optico",
+      "title": "2. Presupuesto Óptico y Enlaces de Fibra",
+      "formula": "P_{\\text{rx}} = P_{\\text{tx}} - (\\alpha \\cdot L + A_{\\text{conectores}} + A_{\\text{empalmes}} + M_{\\text{seguridad}})",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Cálculo de potencia recibida:",
+          "body": "La potencia óptica en el receptor debe superar la sensibilidad mínima del transceptor SFP/QSFP para garantizar la tasa de error (BER)."
+        },
+        {
+          "lead": "Monomodo (SMF) vs Multimodo (MMF):",
+          "body": "SMF utiliza núcleo estrecho (~$9\\,\\mu\\text{m}$) eliminando la dispersión modal para largas distancias; MMF (~$50\\,\\mu\\text{m}$) se reserva para distancias cortas en centro de datos."
+        }
+      ]
+    },
+    {
+      "id": "subnetting-ip",
+      "title": "3. Direccionamiento IPv4 y VLSM",
+      "formula": "N_{\\text{hosts utilizables}} = 2^{32 - P} - 2",
+      "variant": "warning",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Cálculo de subredes con prefijo $P$:",
+          "body": "Se descuentan 2 direcciones por subred: la primera representa la red y la última el broadcast de subred."
+        },
+        {
+          "lead": "Enlaces punto a punto:",
+          "body": "En enlaces de enrutamiento /30 se obtienen 2 hosts utilizables ($2^{2} - 2 = 2$); bajo RFC 3021 se admite /31 sin broadcast ni ID de red en enlaces dedicados."
+        }
+      ]
+    }
+  ]
+}

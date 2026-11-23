@@ -15,6 +15,9 @@ test.describe("Etapa 5 — Link Checker E2E y Resolución de Recursos Estáticos
       "/tda/docs/matriz-parciales/",
       "/tda/docs/checklist-pre-parcial/",
       "/tda/docs/problema-mochila-y-greedy/",
+      "/redes/",
+      "/redes/docs/programa-analitico/",
+      "/redes/materiales/",
     ];
 
     const discoveredInternalUrls = new Set<string>();

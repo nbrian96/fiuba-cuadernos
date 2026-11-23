@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "redes",
+  "exams": [
+    {
+      "id": "redes-primer-parcial",
+      "courseId": "redes",
+      "title": "Primer Parcial (1P) — Clases 1 a 12",
+      "date": "2026-10-15",
+      "term": "2C 2026",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "pdfResourceId": "redes-presentacion-01",
+      "catalogExerciseIds": [],
+      "notes": "Abarca los contenidos teóricos y prácticos de las Presentaciones 1 a 12: Fundamentos de Telecomunicaciones, Transmisión de Datos, Modelo de Capas (OSI/TCP-IP), Tecnologías de Cobre y Fibra Óptica, Redes en el Centro de Datos, Redes Legacy/Capa 2, Protocolo IP (Capa 3), Transporte (Capa 4), Aplicación (Capas 5-7) y Dimensionamiento de Red Corporativa."
+    },
+    {
+      "id": "redes-examen-integrador",
+      "courseId": "redes",
+      "title": "Examen Integrador Final — Clases 13 a 18 y Temario Completo",
+      "date": "2026-12-10",
+      "term": "2C 2026",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "pdfResourceId": "redes-presentacion-13",
+      "catalogExerciseIds": [],
+      "notes": "Instancia obligatoria para la aprobación de la materia. Abarca con énfasis específico las Presentaciones 13 a 18 (MPLS, Redes Wi-Fi, RAN Móvil 2G-5G, Virtualización de Funciones de Red NFV, SD-WAN, IoT y Redes Industriales IIoT/OT) articuladas transversalmente con la totalidad de los contenidos de la cursada."
+    }
+  ],
+  "unassignedGenericParcialExerciseIds": [],
+  "practicalWorks": [
+    {
+      "id": "redes-proyecto-integrador-final",
+      "courseId": "redes",
+      "title": "Trabajo Final Grupal: Proyecto Integrador de Red Corporativa",
+      "entityType": "OfficialTPAssessment",
+      "provenance": "official_source",
+      "preservedIntact": false,
+      "resourceIds": ["redes-presentacion-12"],
+      "notes": "Trabajo en equipo para el diseño, dimensionamiento y justificación tecnológica de una red ante una necesidad puntual empresaria propuesta por los alumnos, integrando voz, datos, video y servicios corporativos."
+    }
+  ]
+}

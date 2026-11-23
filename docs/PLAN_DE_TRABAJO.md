@@ -326,16 +326,29 @@ La auditoría inicial verificó sobre código, contenido académico, tests y nav
 - **Suites de Paridad y Verificación Multi-Materia:** Desacople dinámico multi-materia en [manifests-parity.test.ts](../tests/vitest/manifests-parity.test.ts) y [verify-astro-build.mjs](../scripts/verify-astro-build.mjs), y actualización documental de [README.md](../README.md) y [domain-schemas.md](contracts/domain-schemas.md).
 
 ### 14.2. Validación Declarativa de Segunda Materia (`algo2` — `0` cambios en plataforma)
-- **Materiales físicos (`materias/algo2/`):** [01_estructuras_fundamentales.pdf](../materias/algo2/Guias/01_estructuras_fundamentales.pdf) (`2` páginas, `1,292` caracteres extraíbles vía `pdfjs-dist`), [01_heap_binario.py](../materias/algo2/Practicas/01_heap_binario.py) (ejecutado OK) y [resumen_complejidades.md](../materias/algo2/Apuntes/resumen_complejidades.md).
-- **Contenido declarativo (`src/content/`):** [algo2.json](../src/content/courses/algo2.json), [algo2-resources.json](../src/content/resources/algo2-resources.json), [algo2.json (assessments)](../src/content/assessments/algo2.json), [algo2-entrenador.yaml](../src/content/quizzes/algo2-entrenador.yaml), [algo2.json (cheatsheets)](../src/content/cheatsheets/algo2.json), [ej-01-validar-abb.mdx](../src/content/exercises/algo2/abb/ej-01-validar-abb.mdx), [ej-02-k-mayores-heap.mdx](../src/content/exercises/algo2/heaps/ej-02-k-mayores-heap.mdx) y [complejidad-estructuras.mdx](../src/content/docs/algo2/complejidad-estructuras.mdx).
-- **Suite E2E Multi-Materia:** [multi-course.spec.ts](../tests/e2e/multi-course.spec.ts) validando Hub compartido, recorrido completo de `algo2`, filtro `GlobalSearch` por materia, aislamiento `mc:v1:algo2:*` vs `mc:v1:tda:*`, WCAG 2.1 AA en Light/Dark y responsive sin overflow horizontal.
+- **Materiales físicos (`materias/algo2/` — etapa histórica):** `01_estructuras_fundamentales.pdf` (`2` páginas, `1,292` caracteres extraíbles vía `pdfjs-dist`), `01_heap_binario.py` (ejecutado OK) y `resumen_complejidades.md`.
+- **Contenido declarativo (`src/content/` — etapa histórica):** `algo2.json`, `algo2-resources.json`, `algo2.json` (assessments), `algo2-entrenador.yaml`, `algo2.json` (cheatsheets), `ej-01-validar-abb.mdx`, `ej-02-k-mayores-heap.mdx` y `complejidad-estructuras.mdx`.
+- **Suite E2E Multi-Materia:** [multi-course.spec.ts](../tests/e2e/multi-course.spec.ts) validando Hub compartido, filtro `GlobalSearch` por materia, aislamiento `mc:v1:*`, WCAG 2.1 AA en Light/Dark y responsive sin overflow horizontal.
 
-> **Cierre QA Etapa 7 (Cerrada):** `npm run check` (`55` archivos: `0` errors, `0` warnings, `0` hints), `npm run typecheck` (`0` errores), `npm test` (`8/8` suites, `57/57` Vitest OK), compilación y verificación dual-base (`/` y `/fiuba-cuadernos/`, `202` HTML verificados en cada base, `99` materiales publicados incluyendo `96` de TDA + `3` de `algo2`, Pagefind indexando `49` PDFs de TDA + `1` PDF de `algo2`), `npm run test:e2e` (`21/21` Playwright E2E OK en `1.9m`), `0` ocurrencias de `!important` bajo `src/`, y `python run_tests.py` (`53/53 OK`, `0` mutaciones y `0` enlaces locales rotos *case-sensitive*). Listo para revisión final y aprobación de commit por el usuario.
+> **Cierre QA Etapa 7 (Cerrada):** `npm run check` (`55` archivos: `0` errors, `0` warnings, `0` hints), `npm run typecheck` (`0` errores), `npm test` (`8/8` suites, `57/57` Vitest OK), compilación y verificación dual-base (`/` y `/fiuba-cuadernos/`), `0` ocurrencias de `!important` bajo `src/`. Listo para revisión final y aprobación de commit por el usuario.
 
 ---
 
 ## 15. Cierre de Tareas Opcionales (Deploy en Vivo, Limpieza Legacy y Optimización CI)
 
-- **Validación en vivo en GitHub Pages (`https://nbrian96.github.io/fiuba-cuadernos/`):** Verificado en navegador real (`tda` + `algo2` publicados en Hub `/fiuba-cuadernos/`, `/tda/`, `/tda/ejercicios/`, `/algo2/` y `/algo2/docs/complejidad-estructuras/` con hidratación React, KaTeX y Mermaid operativos, `0` errores JS y `0` HTTP `>= 400`).
+- **Validación en vivo en GitHub Pages (`https://nbrian96.github.io/fiuba-cuadernos/`):** Verificado en navegador real con hidratación React, KaTeX y Mermaid operativos, `0` errores JS y `0` HTTP `>= 400`.
 - **Optimización de CI y caché PDF ([deploy-pages.yml](../.github/workflows/deploy-pages.yml), [pagefindPdfIndexer.mjs](../src/utils/pagefindPdfIndexer.mjs)):** Incorporado `actions/cache@v4` sobre `.astro/pdf-text-cache.json` (`hashFiles('materias/**/*.pdf')`) y poda automática de entradas huérfanas en caché cuando el archivo fuente ya no existe en disco.
 - **Retiro limpio del legado Python y migración a Vitest ([markdown-links.test.ts](../tests/vitest/markdown-links.test.ts)):** Retirados `builder/`, `assets/`, `run_tests.py`, `tests/test_*.py` y `scripts/migrate-tda-*.py` (conservando intacto `materias/tda/TP0/` y `generate_pdf.py`); migrada la verificación *case-sensitive* de enlaces locales `.md` y ausencia de marcadores de conflicto Git a `tests/vitest/markdown-links.test.ts`.
+
+---
+
+## 16. Incorporación de Materia Redes (Cátedra Volpi) y Retiro de Algo2
+
+- **Incorporación de Redes (Cátedra Volpi — Código `TA048`):**
+  - **Materiales físicos (`materias/redes/Presentaciones/`):** 18 presentaciones de clase oficiales (`REDES1.pdf` a `REDES18.pdf`, 424 páginas, 192,446 caracteres indexables).
+  - **Programa Analítico (`src/content/docs/redes/`):** Detallado exhaustivo en [programa-analitico.mdx](../src/content/docs/redes/programa-analitico.mdx) con objetivos, competencias, estrategias, 16 unidades temáticas, bibliografía completa y estándares IEEE/IETF/ITU-T/IEC.
+  - **Alcance y Correlación de Evaluaciones:** Aclaración explícita y formal de que las **Presentaciones 1 a 12** entran para el **Primer Parcial (1P)** y las **Presentaciones 13 a 18** para el **Examen Integrador Final** (junto al Trabajo Final Grupal de proyecto empresarial), plasmado en manifiestos de evaluación, recursos con `assessmentId` y diagrama Mermaid en el documento de programa analítico.
+  - **Contratos declarativos:** [redes.json](../src/content/courses/redes.json) (16 unidades oficiales), [redes-resources.json](../src/content/resources/redes-resources.json) (18 recursos), [redes.json (assessments)](../src/content/assessments/redes.json) y [redes.json (cheatsheets)](../src/content/cheatsheets/redes.json).
+- **Retiro de Algoritmos y Estructuras de Datos (`algo2`):**
+  - Retiradas carpetas físicas `materias/algo2/` y contenido declarativo `src/content/*/algo2.*`.
+  - Actualizada la suite E2E [multi-course.spec.ts](../tests/e2e/multi-course.spec.ts) para validar el ecosistema multi-materia entre `tda` y `redes`.

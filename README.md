@@ -209,7 +209,7 @@ python run_tests.py                                      # Suite Python de parid
 
 ### 3. Cómo Incorporar una Nueva Materia (`<courseId>`) Paso a Paso
 
-La arquitectura separa la **Plataforma** (`src/layouts/`, `src/components/platform/`, `src/styles/`, `src/stores/`) del **Dominio Académico** (`src/content/` y carpetas de materiales). Agregar una nueva materia (por ejemplo `algo2`, `orga`, `analisis2`) **no requiere modificar componentes de plataforma**:
+La arquitectura separa la **Plataforma** (`src/layouts/`, `src/components/platform/`, `src/styles/`, `src/stores/`) del **Dominio Académico** (`src/content/` y carpetas de materiales). Agregar una nueva materia (por ejemplo `redes`, `orga`, `analisis2`) **no requiere modificar componentes de plataforma**:
 
 1. **Paso 1 — Ubicar los materiales físicos en `materias/<courseId>/`:**
    * Colocá los PDFs, diapositivas, guías, parciales y prácticas de la materia dentro de su propia subcarpeta bajo `materias/`: `materias/<courseId>/DIapositivas/`, `materias/<courseId>/Guia-Ejercicios/`, `materias/<courseId>/Parciales/`, `materias/<courseId>/Practicas/`, etc.

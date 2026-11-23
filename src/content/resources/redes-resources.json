@@ -1,0 +1,487 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "redes",
+  "summary": {
+    "totalResources": 18,
+    "totalPhysicalFiles": 18,
+    "totalPdfs": 18,
+    "totalNonPdfs": 0,
+    "pagefindPrototypePdfCount": 1,
+    "preservedTp0FilesCount": 0
+  },
+  "resources": [
+    {
+      "resourceId": "redes-presentacion-01",
+      "courseId": "redes",
+      "title": "Clase 01: Introducción a las Telecomunicaciones y Redes [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u01-intro-telecom"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES1.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 29,
+        "textChars": 12313,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": true
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-02",
+      "courseId": "redes",
+      "title": "Clase 02: Conceptos de la Transmisión de Datos — Generalidades [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u02-transmision-datos"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES2.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 27,
+        "textChars": 11959,
+        "emptyPages": 1,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-03",
+      "courseId": "redes",
+      "title": "Clase 03: Redes de Datos y Modelo de Capas (OSI / TCP-IP) [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u01-intro-telecom",
+        "u04-modelos-osi-tcpip"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES3.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 25,
+        "textChars": 9182,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-04",
+      "courseId": "redes",
+      "title": "Clase 04: El Factor Tecnológico en la Evolución de las Redes [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u01-intro-telecom",
+        "u02-transmision-datos"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES4.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 20,
+        "textChars": 6664,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-05",
+      "courseId": "redes",
+      "title": "Clase 05: Infraestructura de Redes — Tecnologías de Cobre [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u06-cobre-fibra"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES5.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 29,
+        "textChars": 7747,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-06",
+      "courseId": "redes",
+      "title": "Clase 06: Infraestructura de Redes — Tecnologías de Fibra Óptica [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u06-cobre-fibra"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES6.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 27,
+        "textChars": 6468,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-07",
+      "courseId": "redes",
+      "title": "Clase 07: Redes en el Centro de Datos (Datacenter & Cloud) [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u12-datacenter-cloud"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES7.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 25,
+        "textChars": 6118,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-08",
+      "courseId": "redes",
+      "title": "Clase 08: Redes Legacy y Protocolos de Capa 2 (X.25, Frame Relay, ATM) [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u03-redes-legacy",
+        "u05-ethernet-lan"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES8.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 25,
+        "textChars": 9964,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-09",
+      "courseId": "redes",
+      "title": "Clase 09: Protocolo de Capa 3 — Internet Protocol (IPv4 / IPv6) [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u08-ip-ipv4-ipv6"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES9.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 30,
+        "textChars": 15717,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-10",
+      "courseId": "redes",
+      "title": "Clase 10: Protocolos de Capa 4 — Transporte (TCP / UDP) [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u10-transporte-servicios"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES10.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 27,
+        "textChars": 10808,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-11",
+      "courseId": "redes",
+      "title": "Clase 11: Protocolos de Capas 5, 6 y 7 — Sesión, Presentación y Aplicación [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u10-transporte-servicios"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES11.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 15,
+        "textChars": 6891,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-12",
+      "courseId": "redes",
+      "title": "Clase 12: Dimensionamiento de una Red Corporativa Multisede [Primer Parcial]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u13-diseno-redes-campus"
+      ],
+      "assessmentId": "redes-primer-parcial",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES12.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 11,
+        "textChars": 7044,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-13",
+      "courseId": "redes",
+      "title": "Clase 13: Redes MPLS (Multiprotocol Label Switching) [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u09-enrutamiento-bgp-mpls"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES13.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 18,
+        "textChars": 10773,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-14",
+      "courseId": "redes",
+      "title": "Clase 14: Infraestructura de Redes Wi-Fi (WLAN IEEE 802.11) [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u11-inalambricas-iot-5g"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES14.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 24,
+        "textChars": 10475,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-15",
+      "courseId": "redes",
+      "title": "Clase 15: RAN — Radio Access Network (Comunicaciones Móviles 2G-5G) [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u11-inalambricas-iot-5g"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES15.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 25,
+        "textChars": 21368,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-16",
+      "courseId": "redes",
+      "title": "Clase 16: NFV — Virtualización de Funciones de Red (VNF, CNF) [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u14-sdn-nfv-sdwan"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES16.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 24,
+        "textChars": 13137,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-17",
+      "courseId": "redes",
+      "title": "Clase 17: SD-WAN — Software-Defined Wide Area Networking [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u14-sdn-nfv-sdwan"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES17.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 17,
+        "textChars": 10240,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "redes-presentacion-18",
+      "courseId": "redes",
+      "title": "Clase 18: IoT & Redes Industriales (+ IIoT / Redes OT) [Examen Integrador]",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "Presentaciones",
+      "unitSlugs": [
+        "u11-inalambricas-iot-5g",
+        "u15-seguridad-ia-redes",
+        "u16-redes-industriales-ot"
+      ],
+      "assessmentId": "redes-examen-integrador",
+      "files": [
+        {
+          "path": "materias/redes/Presentaciones/REDES18.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 26,
+        "textChars": 15578,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    }
+  ]
+}

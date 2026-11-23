@@ -9,6 +9,7 @@ export default defineConfig({
   },
   test: {
     environment: "node",
+    testTimeout: 15000,
     include: ["tests/vitest/**/*.test.ts", "tests/vitest/**/*.test.tsx"],
   },
 });

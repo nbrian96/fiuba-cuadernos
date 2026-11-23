@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "redes",
+  "title": "Redes",
+  "shortTitle": "Redes FIUBA",
+  "codes": ["TA048"],
+  "institution": "FIUBA",
+  "chair": "Cátedra Volpi (Ing. Marcelo E. Volpi, Ing. Lucas Giorgi, Ing. Vanesa Llasat)",
+  "units": [
+    {
+      "slug": "u01-intro-telecom",
+      "name": "1. Introducción a las Telecomunicaciones y Redes",
+      "order": 1,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u02-transmision-datos",
+      "name": "2. Transmisión de Datos y Sistemas de Comunicaciones",
+      "order": 2,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u03-redes-legacy",
+      "name": "3. Tecnologías de Redes Legacy (X.25, Frame Relay, ATM)",
+      "order": 3,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u04-modelos-osi-tcpip",
+      "name": "4. Modelos y Arquitecturas de Comunicación: OSI y TCP/IP",
+      "order": 4,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u05-ethernet-lan",
+      "name": "5. Ethernet y Tecnologías de Redes LAN",
+      "order": 5,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u06-cobre-fibra",
+      "name": "6. Infraestructura Física de Redes: Cobre y Fibra Óptica",
+      "order": 6,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u07-switching-vlans",
+      "name": "7. Conmutación Avanzada y Segmentación de Redes (VLAN, STP)",
+      "order": 7,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u08-ip-ipv4-ipv6",
+      "name": "8. Arquitectura y Protocolos IP: IPv4 e IPv6",
+      "order": 8,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u09-enrutamiento-bgp-mpls",
+      "name": "9. Enrutamiento y Redes de Transporte: BGP y MPLS",
+      "order": 9,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u10-transporte-servicios",
+      "name": "10. Protocolos de Transporte (TCP/UDP) y Servicios de Internet",
+      "order": 10,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u11-inalambricas-iot-5g",
+      "name": "11. Redes Inalámbricas, Comunicaciones Móviles, IoT y 5G",
+      "order": 11,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u12-datacenter-cloud",
+      "name": "12. Redes de Datacenter, Cloud y Edge Computing",
+      "order": 12,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u13-diseno-redes-campus",
+      "name": "13. Diseño de Redes Empresariales, Campus e Infraestructuras IoT",
+      "order": 13,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u14-sdn-nfv-sdwan",
+      "name": "14. Redes Definidas por Software y Virtualización: SDN, NFV y SD-WAN",
+      "order": 14,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u15-seguridad-ia-redes",
+      "name": "15. Seguridad, Automatización e Inteligencia Artificial Aplicada a Redes",
+      "order": 15,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u16-redes-industriales-ot",
+      "name": "16. Redes Industriales y Comunicaciones en Entornos OT",
+      "order": 16,
+      "exerciseCount": 0,
+      "inCatalog": true
+    }
+  ],
+  "stats": {
+    "physicalFiles": 18,
+    "pdfs": 18,
+    "nonPdfs": 0,
+    "catalogExercises": 0,
+    "parcialExercises": 0,
+    "advancedExercises": 0,
+    "interactiveWidgets": 0,
+    "elaboratedNotes": 1,
+    "elaboratedSummaries": 0,
+    "checklistItems": 0,
+    "trainerQuestions": 0
+  }
+}
