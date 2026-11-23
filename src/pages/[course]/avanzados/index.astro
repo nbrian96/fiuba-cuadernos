@@ -19,7 +19,11 @@ import { buildMaterialViewerUrl, withBase } from "@/utils/paths";
 export async function getStaticPaths() {
   const courses = await getCollection("courses");
   return courses
-    .filter((course) => course.data.units.some((u) => u.slug === "avanzados"))
+    .filter(
+      (course) =>
+        course.data.id === "tda" &&
+        course.data.units.some((u) => u.slug === "avanzados"),
+    )
     .map((course) => ({
       params: { course: course.data.id },
       props: { course },

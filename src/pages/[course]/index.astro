@@ -32,11 +32,14 @@ const quizzes = await getCollection(
 const exercises = sortCourseExercises(
   await getCollection("exercises", (entry) => entry.data.courseId === courseId),
 );
-const hasAvanzados = course.data.units.some((u) => u.slug === "avanzados");
-const featuredExercises = [
+const hasAvanzados =
+  courseId === "tda" && course.data.units.some((u) => u.slug === "avanzados");
+const rawFeatured = [
   ...exercises.filter((e) => e.data.isParcial).slice(0, 6),
   ...exercises.filter((e) => e.data.entityType === "AdvancedTheoryExercise"),
 ];
+const featuredExercises =
+  rawFeatured.length > 0 ? rawFeatured : exercises.slice(0, 6);
 const docs = (
   await getCollection("docs", (entry) => entry.data.courseId === courseId)
 ).sort((a, b) => a.data.order - b.data.order);
@@ -123,7 +126,9 @@ const primaryQuiz = quizzes[0]?.data ?? null;
         Repositorio de materiales ({totalResources} recursos)
       </a>
       <a class="btn" href={sampleMaterialUrl}>
-        Abrir visor de PDFs
+        {firstPdfResource?.pdfMetadata
+          ? "Abrir visor de PDFs"
+          : "Explorar materiales"}
       </a>
       {
         docs[0] ? (
@@ -157,36 +162,48 @@ const primaryQuiz = quizzes[0]?.data ?? null;
         Ver catálogo completo ({exercises.length})
       </a>
     </div>
-    <ul class="plain-list">
-      {
-        featuredExercises.map((ex) => (
-          <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
-            <ProvenanceBadge provenance={ex.data.provenance} />
-            <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
-              {ex.data.number !== null
-                ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
-                : ex.data.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      featuredExercises.length > 0 ? (
+        <ul class="plain-list">
+          {featuredExercises.map((ex) => (
+            <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+              <ProvenanceBadge provenance={ex.data.provenance} />
+              <a href={withBase(`/${courseId}/ejercicios/${ex.data.id}/`)}>
+                {ex.data.number !== null
+                  ? `Ejercicio ${ex.data.number}: ${ex.data.title}`
+                  : ex.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="margin: 0; color: var(--text-muted);">
+          Todavía no hay ejercicios cargados en el catálogo de esta materia.
+        </p>
+      )
+    }
   </section>
 
   <section class="surface-panel" aria-label="Apuntes y resúmenes">
     <h2 style="margin-top: 0;">Apuntes y resúmenes ({docs.length})</h2>
-    <ul class="plain-list">
-      {
-        docs.map((doc) => (
-          <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
-            <ProvenanceBadge provenance={doc.data.provenance} />
-            <a href={withBase(`/${courseId}/docs/${doc.data.docId}/`)}>
-              {doc.data.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      docs.length > 0 ? (
+        <ul class="plain-list">
+          {docs.map((doc) => (
+            <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+              <ProvenanceBadge provenance={doc.data.provenance} />
+              <a href={withBase(`/${courseId}/docs/${doc.data.docId}/`)}>
+                {doc.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="margin: 0; color: var(--text-muted);">
+          Todavía no hay apuntes registrados para esta materia.
+        </p>
+      )
+    }
   </section>
 
   <section class="surface-panel" aria-label="Unidades de la materia">
@@ -199,9 +216,10 @@ const primaryQuiz = quizzes[0]?.data ?? null;
           .slice()
           .sort((a, b) => a.order - b.order)
           .map((unit) => {
-            const unitHref = unit.inCatalog
-              ? withBase(`/${courseId}/unidad/${unit.slug}/`)
-              : withBase(`/${courseId}/avanzados/`);
+            const unitHref =
+              unit.inCatalog || !hasAvanzados || unit.slug !== "avanzados"
+                ? withBase(`/${courseId}/unidad/${unit.slug}/`)
+                : withBase(`/${courseId}/avanzados/`);
             return (
               <li class="stat-card">
                 <a href={unitHref} style="font-weight: 700;">

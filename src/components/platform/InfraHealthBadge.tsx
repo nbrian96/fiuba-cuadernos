@@ -36,7 +36,7 @@ export function InfraHealthBadge({
             Núcleo Astro + Islas React activo
           </strong>
           <div style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
-            {courseCount} materia(s) · {exerciseCount} ejercicios semilla ·{" "}
+            {courseCount} materia(s) · {exerciseCount} ejercicios ·{" "}
             {docCount} apunte(s)
           </div>
         </div>

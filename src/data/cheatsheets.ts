@@ -213,3 +213,28 @@ export function getCheatsheetSections(courseId: string): CheatsheetSection[] {
   const builder = COURSE_CHEATSHEETS[courseId];
   return builder ? builder() : [];
 }
+
+export interface RawCheatsheetSectionInput {
+  id: string;
+  title: string;
+  variant?: "default" | "warning";
+  formula?: string;
+  listType?: "ul" | "ol";
+  items: Array<{ lead?: string; body: string }>;
+}
+
+export function compileCheatsheetSections(
+  rawSections: RawCheatsheetSectionInput[],
+): CheatsheetSection[] {
+  return rawSections.map((sec) => ({
+    id: sec.id,
+    title: sec.title,
+    variant: sec.variant ?? "default",
+    formulaHtml: sec.formula ? renderBlockFormulaHtml(sec.formula) : undefined,
+    listType: sec.listType ?? "ul",
+    items: sec.items.map((item) => ({
+      lead: item.lead,
+      bodyHtml: renderInlineMathTextToHtml(item.body),
+    })),
+  }));
+}

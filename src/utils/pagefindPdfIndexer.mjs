@@ -186,7 +186,11 @@ export async function buildPdfIndexRecords({
       Array.isArray(res.files) && res.files.some((file) => Boolean(file.isPdf));
     if (!hasPdf) return false;
     if (normalizedScope === "prototype") {
-      return prototypeSet.has(res.resourceId);
+      return (
+        res.pdfMetadata?.inPagefindPrototype === true ||
+        (res.pdfMetadata?.inPagefindPrototype === undefined &&
+          prototypeSet.has(res.resourceId))
+      );
     }
     return true;
   });

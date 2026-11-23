@@ -2,6 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import {
   AssessmentManifestSchema,
+  CheatsheetManifestSchema,
   CourseManifestSchema,
   DocFrontmatterSchema,
   ExerciseFrontmatterSchema,
@@ -57,6 +58,14 @@ const docs = defineCollection({
   schema: DocFrontmatterSchema,
 });
 
+const cheatsheets = defineCollection({
+  loader: glob({
+    base: "./src/content/cheatsheets",
+    pattern: "**/*.{json,yaml,yml}",
+  }),
+  schema: CheatsheetManifestSchema,
+});
+
 export const collections = {
   courses,
   resources,
@@ -64,4 +73,5 @@ export const collections = {
   quizzes,
   exercises,
   docs,
+  cheatsheets,
 };

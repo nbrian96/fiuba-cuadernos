@@ -105,7 +105,7 @@ export function QuickRecognitionTrainer({ quiz }: QuickRecognitionTrainerProps) 
           <div
             className="trainer-options"
             role="group"
-            aria-label="Opciones de paradigma"
+            aria-label="Opciones de respuesta"
           >
             {quiz.options.map((opt) => {
               const isCorrectOption =
@@ -147,7 +147,7 @@ export function QuickRecognitionTrainer({ quiz }: QuickRecognitionTrainerProps) 
                 <strong>
                   {state.lastAnswerCorrect
                     ? `Respuesta correcta: ${currentQuestion.paradigmName}`
-                    : `Paradigma recomendado: ${currentQuestion.paradigmName}`}
+                    : `Enfoque recomendado: ${currentQuestion.paradigmName}`}
                 </strong>
                 <p className="trainer-feedback-detail">
                   <strong>Disparador de examen:</strong> {currentQuestion.trigger}

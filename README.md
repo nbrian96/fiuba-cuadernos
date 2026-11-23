@@ -13,7 +13,7 @@
 
 ## ⚡ Guía Interactiva de Parciales ("Salvando el Cuatrimestre" — 85 Ejercicios)
 
-Para preparar el examen parcial de forma intensiva, el repositorio incluye una **aplicación web modular con Bootstrap 5.3** orientada a la práctica activa (*Active Recall*), filtrado por paradigma y **graduación de dificultad de 1★ a 5★**:
+Para preparar el examen parcial de forma intensiva, la plataforma **FIUBA Cuadernos** (construida con **Astro + React + Pagefind** y diseño accesible WCAG 2.1 AA) incluye práctica activa (*Active Recall*), filtrado por paradigma y **graduación de dificultad de 1★ a 5★**:
 
 * 🌐 **Guía Online en GitHub Pages:** <a href="https://nbrian96.github.io/fiuba-cuadernos/" target="_blank" rel="noopener noreferrer"><strong>https://nbrian96.github.io/fiuba-cuadernos/</strong></a>
 * 🏠 **Portal Principal:** `tda/` (Hub de módulos, Entrenador 30s de 20 casos y Árbol de Decisión — ruta legacy compatible `index.html`)
@@ -155,15 +155,18 @@ Primer trabajo práctico de la materia (6 archivos):
 
 ---
 
-## 🛠️ Cómo recompilar y validar la plataforma interactiva
+## 🛠️ Cómo compilar y validar la plataforma interactiva
 
-Si editás los módulos de contenido en `builder/sec01_...` a `sec11_...` o los recursos en `assets/`, podés regenerar todas las páginas HTML corriendo:
+La plataforma principal se compila con **Astro + Vite + Pagefind**:
 
 ```bash
-python builder/build_manual.py
+npm run dev      # Servidor de desarrollo local (http://localhost:4321/)
+npm run build    # Compilación estática en dist/ + copia de materiales + índice Pagefind PDF
+npm test         # Suite unitaria y de integración (Vitest)
+npm run test:e2e # Suite extremo a extremo + WCAG 2.1 AA (Playwright)
 ```
 
-El compilador verificará automáticamente la integridad de los bloques de código, generará `todos.html`, las 9 páginas modulares (`dyc.html`..`parciales.html`) y `assets/js/catalog-bundle.js`, y sincronizará el navbar de `index.html` y `teoria-avanzados.html`. Para ejecutar toda la suite de validación sin modificar el repositorio:
+*(Legado)* La suite Python de paridad e integridad de enlaces *case-sensitive* se ejecuta sin modificar el repositorio mediante:
 
 ```bash
 python run_tests.py
@@ -218,7 +221,8 @@ La arquitectura separa la **Plataforma** (`src/layouts/`, `src/components/platfo
    * Colocá los PDFs, diapositivas, guías, parciales y prácticas de la materia dentro de su propia subcarpeta bajo `materias/`: `materias/<courseId>/DIapositivas/`, `materias/<courseId>/Guia-Ejercicios/`, `materias/<courseId>/Parciales/`, `materias/<courseId>/Practicas/`, etc.
    * *(En TDA)*: las carpetas fuente viven bajo `materias/tda/` (`materias/tda/DIapositivas/`, `materias/tda/Guia-Ejercicios/`, `materias/tda/Parciales/`, `materias/tda/Practicas/` y `materias/tda/TP0/`), manteniendo limpia la raíz del repositorio.
 2. **Paso 2 — Registrar el manifiesto de la materia (`src/content/courses/<courseId>.json`):**
-   * Creá `src/content/courses/<courseId>.json` respetando `CourseManifestSchema` ([`src/schemas/academic.ts`](src/schemas/academic.ts), tomando como plantilla [`src/content/courses/tda.json`](src/content/courses/tda.json)): definí `id`, `title`, `shortTitle`, `institution`, `codes`, `chair`, `term`, `description`, la lista `units` (`slug`, `name`, `order`, `exerciseCount`, `inCatalog`) y `stats`.
+   * Creá `src/content/courses/<courseId>.json` respetando `CourseManifestSchema` ([`src/schemas/academic.ts`](src/schemas/academic.ts), tomando como plantilla [`src/content/courses/tda.json`](src/content/courses/tda.json)): definí `schemaVersion`, `id`, `title`, `shortTitle`, `institution`, `codes`, `chair`, la lista `units` (`slug`, `name`, `order`, `exerciseCount`, `inCatalog`) y `stats` (`views`, `legacyRoutes` y `legacyStorageKeys` son opcionales para materias nuevas).
+   * Opcionalmente, podés declarar un resumen de fórmulas rápidas en `src/content/cheatsheets/<courseId>.json` (`CheatsheetManifestSchema`) sin tocar código de plataforma.
 3. **Paso 3 — Registrar el inventario de materiales (`src/content/resources/<courseId>-resources.json`):**
    * Creá `src/content/resources/<courseId>-resources.json` según `ResourceManifestSchema` (plantilla: [`src/content/resources/tda-resources.json`](src/content/resources/tda-resources.json)).
    * Durante `npm run build`, [`src/integrations/academicBuildIntegration.mjs`](src/integrations/academicBuildIntegration.mjs) copiará automáticamente todos los archivos declarados hacia `dist/materials/<courseId>/...` y [`src/utils/pagefindPdfIndexer.mjs`](src/utils/pagefindPdfIndexer.mjs) extraerá e indexará el texto de cada página PDF en **Pagefind** con enlaces directos al visor split-screen (`/<courseId>/materiales/<resourceId>/?page=N`).

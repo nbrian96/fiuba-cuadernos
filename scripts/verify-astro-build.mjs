@@ -209,96 +209,122 @@ for (const file of allHtmlFiles) {
   }
 }
 
-// Verificaciones integrales de Etapa 4
+// Verificaciones integrales multi-materia
 const rootDir = process.cwd();
-const exercisesIndex = JSON.parse(
-  fs.readFileSync(
-    path.join(rootDir, "docs/manifests/tda/exercises-index.json"),
-    "utf-8",
-  ),
-);
-const courseManifest = JSON.parse(
-  fs.readFileSync(path.join(rootDir, "src/content/courses/tda.json"), "utf-8"),
-);
-const resourcesManifest = JSON.parse(
-  fs.readFileSync(
-    path.join(rootDir, "src/content/resources/tda-resources.json"),
-    "utf-8",
-  ),
-);
+const coursesDir = path.join(rootDir, "src/content/courses");
+const courseFiles = fs
+  .readdirSync(coursesDir)
+  .filter((f) => f.endsWith(".json"));
+assert.ok(courseFiles.length >= 1, "Debe existir al menos un manifiesto en src/content/courses/");
 
-const expectedEtapa4Routes = [
-  "tda/parciales/index.html",
-  "tda/avanzados/index.html",
-  "tda/docs/matriz-parciales/index.html",
-  "tda/docs/problema-mochila-y-greedy/index.html",
-  ...courseManifest.units
-    .filter((u) => u.inCatalog)
-    .map((u) => `tda/unidad/${u.slug}/index.html`),
-  ...exercisesIndex.catalogExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
-  ...exercisesIndex.advancedExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
-  ...resourcesManifest.resources.map((r) => `tda/materiales/${r.resourceId}/index.html`),
-];
-
-for (const relRoute of expectedEtapa4Routes) {
-  assert.ok(
-    fs.existsSync(path.join(distDir, relRoute)),
-    `[Etapa 4 Route] Falta HTML generado: dist/${relRoute}`,
-  );
-}
-
-// Todos los 96 materiales físicos publicados en dist/materials/tda/
 let publishedFiles = 0;
-for (const res of resourcesManifest.resources) {
-  for (const file of res.files) {
-    const cleanPath = String(file.path).replace(/^\/+/, "").replace(/^materias\//, "");
-    const publishedRel = cleanPath.startsWith("tda/") ? cleanPath : `tda/${cleanPath}`;
-    const dest = path.join(distDir, "materials", publishedRel);
+const allCoursePrefixes = [];
+
+for (const file of courseFiles) {
+  const courseManifest = JSON.parse(
+    fs.readFileSync(path.join(coursesDir, file), "utf-8"),
+  );
+  const cid = courseManifest.id;
+  allCoursePrefixes.push(`${cid}/`);
+
+  const courseRoutes = [
+    `${cid}/index.html`,
+    `${cid}/ejercicios/index.html`,
+    `${cid}/parciales/index.html`,
+    `${cid}/materiales/index.html`,
+    ...courseManifest.units
+      .filter((u) => u.inCatalog || !(cid === "tda" && u.slug === "avanzados"))
+      .map((u) => `${cid}/unidad/${u.slug}/index.html`),
+  ];
+
+  const resPath = path.join(rootDir, `src/content/resources/${cid}-resources.json`);
+  let coursePublishedCount = 0;
+  if (fs.existsSync(resPath)) {
+    const resManifest = JSON.parse(fs.readFileSync(resPath, "utf-8"));
+    for (const r of resManifest.resources) {
+      courseRoutes.push(`${cid}/materiales/${r.resourceId}/index.html`);
+      for (const f of r.files) {
+        const cleanPath = String(f.path).replace(/^\/+/, "").replace(/^materias\//, "");
+        const publishedRel = cleanPath.startsWith(`${cid}/`) ? cleanPath : `${cid}/${cleanPath}`;
+        const dest = path.join(distDir, "materials", publishedRel);
+        assert.ok(
+          fs.existsSync(dest),
+          `[Materials:${cid}] Falta archivo publicado en dist/materials/${publishedRel}`,
+        );
+        publishedFiles++;
+        coursePublishedCount++;
+      }
+    }
+  }
+
+  for (const relRoute of courseRoutes) {
     assert.ok(
-      fs.existsSync(dest),
-      `[Materials] Falta archivo publicado en dist/materials/${publishedRel}`,
+      fs.existsSync(path.join(distDir, relRoute)),
+      `[Course:${cid}] Falta HTML generado: dist/${relRoute}`,
     );
-    publishedFiles++;
+  }
+
+  if (cid === "tda") {
+    assert.equal(coursePublishedCount, 96, "Se esperaban exactamente 96 archivos en dist/materials/tda/");
+    const exercisesIndex = JSON.parse(
+      fs.readFileSync(path.join(rootDir, "docs/manifests/tda/exercises-index.json"), "utf-8"),
+    );
+    const tdaSpecificRoutes = [
+      "tda/avanzados/index.html",
+      "tda/docs/matriz-parciales/index.html",
+      "tda/docs/problema-mochila-y-greedy/index.html",
+      ...exercisesIndex.catalogExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
+      ...exercisesIndex.advancedExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
+    ];
+    for (const relRoute of tdaSpecificRoutes) {
+      assert.ok(
+        fs.existsSync(path.join(distDir, relRoute)),
+        `[TDA Route] Falta HTML generado: dist/${relRoute}`,
+      );
+    }
   }
 }
-assert.equal(publishedFiles, 96, "Se esperaban exactamente 96 archivos en dist/materials/tda/");
 
-// .nojekyll y los 11 HTML de compatibilidad legacy en dist/
+// .nojekyll y los HTML de compatibilidad legacy en dist/
 assert.ok(
   fs.existsSync(path.join(distDir, ".nojekyll")),
   "[Pages] Falta dist/.nojekyll para servir _astro/ en GitHub Pages.",
 );
 
 const basePrefix = base === "/" ? "" : base.slice(0, -1);
-const legacyEntries = Object.entries(courseManifest.legacyRoutes ?? {}).filter(
-  ([legacyFile]) => legacyFile !== "index.html",
-);
-assert.equal(
-  legacyEntries.length,
-  11,
-  "Se esperaban 11 archivos de redirección legacy (excluyendo index.html).",
-);
+const tdaManifestPath = path.join(coursesDir, "tda.json");
+if (fs.existsSync(tdaManifestPath)) {
+  const tdaManifest = JSON.parse(fs.readFileSync(tdaManifestPath, "utf-8"));
+  const legacyEntries = Object.entries(tdaManifest.legacyRoutes ?? {}).filter(
+    ([legacyFile]) => legacyFile !== "index.html",
+  );
+  assert.equal(
+    legacyEntries.length,
+    11,
+    "Se esperaban 11 archivos de redirección legacy (excluyendo index.html).",
+  );
 
-for (const [legacyFile, targetRoute] of legacyEntries) {
-  const legacyPath = path.join(distDir, legacyFile);
-  assert.ok(
-    fs.existsSync(legacyPath),
-    `[Legacy Redirect] Falta ruta de compatibilidad dist/${legacyFile}`,
-  );
-  const legacyHtml = fs.readFileSync(legacyPath, "utf-8");
-  const expectedTarget = `${basePrefix}${targetRoute}`;
-  assert.ok(
-    legacyHtml.includes('data-pagefind-ignore="all"'),
-    `[Legacy Redirect] dist/${legacyFile} debe incluir data-pagefind-ignore="all"`,
-  );
-  assert.ok(
-    legacyHtml.includes(`url=${expectedTarget}`),
-    `[Legacy Redirect] dist/${legacyFile} debe redirigir a '${expectedTarget}'`,
-  );
-  assert.ok(
-    legacyHtml.includes(`<link rel="canonical" href="${expectedTarget}"`),
-    `[Legacy Redirect] dist/${legacyFile} debe declarar canonical '${expectedTarget}'`,
-  );
+  for (const [legacyFile, targetRoute] of legacyEntries) {
+    const legacyPath = path.join(distDir, legacyFile);
+    assert.ok(
+      fs.existsSync(legacyPath),
+      `[Legacy Redirect] Falta ruta de compatibilidad dist/${legacyFile}`,
+    );
+    const legacyHtml = fs.readFileSync(legacyPath, "utf-8");
+    const expectedTarget = `${basePrefix}${targetRoute}`;
+    assert.ok(
+      legacyHtml.includes('data-pagefind-ignore="all"'),
+      `[Legacy Redirect] dist/${legacyFile} debe incluir data-pagefind-ignore="all"`,
+    );
+    assert.ok(
+      legacyHtml.includes(`url=${expectedTarget}`),
+      `[Legacy Redirect] dist/${legacyFile} debe redirigir a '${expectedTarget}'`,
+    );
+    assert.ok(
+      legacyHtml.includes(`<link rel="canonical" href="${expectedTarget}"`),
+      `[Legacy Redirect] dist/${legacyFile} debe declarar canonical '${expectedTarget}'`,
+    );
+  }
 }
 
 // Índice Pagefind generado (sin indexar los 11 redirects legacy)
@@ -309,11 +335,12 @@ for (const pfRel of ["pagefind/pagefind.js", "pagefind/pagefind-entry.json"]) {
   );
 }
 
-// 0 errores KaTeX ni delimitadores crudos sin compilar bajo dist/tda/
-const tdaHtmlFiles = allHtmlFiles.filter((f) =>
-  path.relative(distDir, f).replace(/\\/g, "/").startsWith("tda/"),
-);
-for (const htmlFile of tdaHtmlFiles) {
+// 0 errores KaTeX ni delimitadores crudos sin compilar bajo todas las materias en dist/
+const courseHtmlFiles = allHtmlFiles.filter((f) => {
+  const rel = path.relative(distDir, f).replace(/\\/g, "/");
+  return allCoursePrefixes.some((prefix) => rel.startsWith(prefix));
+});
+for (const htmlFile of courseHtmlFiles) {
   const rel = path.relative(distDir, htmlFile).replace(/\\/g, "/");
   const visibleHtml = fs
     .readFileSync(htmlFile, "utf-8")

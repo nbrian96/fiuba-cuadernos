@@ -116,10 +116,10 @@ export const CourseManifestSchema = z
     institution: z.string().min(1),
     chair: z.string().min(1),
     units: z.array(UnitDefinitionSchema).min(1),
-    views: z.array(ViewDefinitionSchema),
+    views: z.array(ViewDefinitionSchema).default([]),
     stats: CourseStatsSchema,
-    legacyRoutes: z.record(z.string().min(1), z.string().startsWith("/")),
-    legacyStorageKeys: z.array(z.string().min(1)),
+    legacyRoutes: z.record(z.string().min(1), z.string().startsWith("/")).default({}),
+    legacyStorageKeys: z.array(z.string().min(1)).default([]),
   })
   .superRefine((course, ctx) => {
     const seenSlugs = new Set<string>();
@@ -271,7 +271,7 @@ export const ResourceEntrySchema = z
       });
     }
 
-    if (res.sourceFolder === "TP0" && res.preservedIntact !== true) {
+    if (res.courseId === "tda" && res.sourceFolder === "TP0" && res.preservedIntact !== true) {
       ctx.addIssue({
         code: "custom",
         path: ["preservedIntact"],
@@ -562,8 +562,8 @@ export const ExerciseFrontmatterSchema = z
     isParcial: z.boolean(),
     examIds: z.array(SlugSchema).optional(),
     relatedResourceIds: z.array(SlugSchema).optional(),
-    legacyPage: z.string().min(1),
-    legacyAnchor: z.string().startsWith("#"),
+    legacyPage: z.string().min(1).optional(),
+    legacyAnchor: z.string().startsWith("#").optional(),
   })
   .superRefine((ex, ctx) => {
     if (!ENTITY_PROVENANCE_MAP[ex.entityType].includes(ex.provenance)) {
@@ -935,3 +935,24 @@ export const InteractiveAndNotesManifestSchema = z
 export type InteractiveAndNotesManifest = z.infer<
   typeof InteractiveAndNotesManifestSchema
 >;
+
+export const CheatsheetItemInputSchema = z.object({
+  lead: z.string().min(1).optional(),
+  body: z.string().min(1),
+});
+
+export const CheatsheetSectionInputSchema = z.object({
+  id: SlugSchema,
+  title: z.string().min(1),
+  variant: z.enum(["default", "warning"]).default("default"),
+  formula: z.string().min(1).optional(),
+  listType: z.enum(["ul", "ol"]).default("ul"),
+  items: z.array(CheatsheetItemInputSchema).min(1),
+});
+
+export const CheatsheetManifestSchema = z.object({
+  schemaVersion: SchemaVersionSchema,
+  courseId: SlugSchema,
+  sections: z.array(CheatsheetSectionInputSchema).min(1),
+});
+export type CheatsheetManifest = z.infer<typeof CheatsheetManifestSchema>;

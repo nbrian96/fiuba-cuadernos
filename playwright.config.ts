@@ -65,7 +65,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : 3,
+  workers: process.env.CI ? 2 : process.platform === "win32" ? 1 : 3,
   reporter: "list",
   timeout: 90_000,
   use: {

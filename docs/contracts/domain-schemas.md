@@ -58,10 +58,10 @@ Todo recurso, evaluación, ejercicio, apunte, resumen o widget declara exactamen
 | `institution` | `string` | Sí | Institución académica (`"FIUBA"`). |
 | `chair` | `string` | Sí | Cátedra y período de referencia. |
 | `units` | `UnitDefinition[]` | Sí | Lista ordenada de unidades (`slug`, `name`, `order`, `exerciseCount`, `inCatalog`, `legacyRoute`). |
-| `views` | `ViewDefinition[]` | Sí | Vistas transversales configuradas (ej. `todos`, `parciales`). |
+| `views` | `ViewDefinition[]` | No (`[]`) | Vistas transversales configuradas (ej. `todos`, `parciales`). |
 | `stats` | `CourseStats` | Sí | Conteos verificables globales (`physicalFiles`, `pdfs`, `nonPdfs`, `catalogExercises`, `parcialExercises`, `advancedExercises`, `interactiveWidgets`, `elaboratedNotes`, `elaboratedSummaries`, `checklistItems`, `trainerQuestions`). |
-| `legacyRoutes` | `Record<string, string>` | Sí | Mapeo exacto de cada HTML legacy hacia su ruta canónica en Astro. |
-| `legacyStorageKeys` | `string[]` | Sí | Claves `localStorage` previas soportadas en migración. |
+| `legacyRoutes` | `Record<string, string>` | No (`{}`) | Mapeo exacto de cada HTML legacy hacia su ruta canónica en Astro (opcional para materias sin pasado legacy). |
+| `legacyStorageKeys` | `string[]` | No (`[]`) | Claves `localStorage` previas soportadas en migración (opcional para materias nuevas). |
 
 ### 2.2. `ResourceManifest` (`src/content/resources/*-resources.yaml` / `resources.json`)
 
@@ -77,7 +77,7 @@ Todo recurso, evaluación, ejercicio, apunte, resumen o widget declara exactamen
 | `files` | `ResourceFile[]` | Sí | Arreglo no vacío; cada ítem contiene `path` (relativo exacto *case-sensitive* desde la raíz del repo), `extension` (ej. `".pdf"`, `".py"`, `".md"`, `".ltx"`, `".csv"`, `".xlsx"`, `".png"`, `".txt"`, `".lp"`) e `isPdf` (`boolean`). |
 | `pdfMetadata` | `PdfMetadata` | Condicional | Obligatorio cuando algún archivo del recurso tiene `isPdf: true` (y ausente en recursos sin PDF). Campos: `pageCount` (`int >= 1`), `textChars` (`int >= 0`), `emptyPages` (`int >= 0`), `textLayerStatus` (`"extractable" \| "sparse" \| "metadata_fallback"`), `inPagefindPrototype` (`boolean`). |
 | `practiceStatus` | `"solved" \| "todo" \| "guide"` | No | Usado en recursos `CodePractice` o guía de `Practicas/`. |
-| `preservedIntact` | `boolean` | No | Obligatorio `true` para todos los recursos de `TP0/`. |
+| `preservedIntact` | `boolean` | No | Obligatorio `true` para todos los recursos de `TP0/` en `tda`. |
 | `assessmentId` | `string` | No | Referencia cruzada al identificador de examen o TP en `AssessmentManifest`. |
 
 ### 2.3. `AssessmentManifest` (`src/content/assessments/*.yaml` / `assessments.json`)
@@ -120,8 +120,8 @@ Contrato destino para el motor de simulacros cronometrados y entrenadores de rec
 | `isParcial` | `boolean` | Sí | `true` exactamente para los `35` ejercicios de parciales reales. |
 | `examIds` | `string[]` | No | Referencias cruzadas a `AssessmentManifest.exams[].id`. |
 | `relatedResourceIds` | `string[]` | No | Referencias cruzadas a guías, parciales o prácticas en código. |
-| `legacyPage` | `string` | Sí | Archivo HTML actual donde reside (ej. `"dyc.html"`, `"teoria-avanzados.html"`). |
-| `legacyAnchor` | `string` | Sí | Ancla legacy preservada (ej. `"#ej-18"`, `"#ejercicios-clase"`). |
+| `legacyPage` | `string` | No | Archivo HTML legacy donde residía (ej. `"dyc.html"`), opcional para materias nuevas. |
+| `legacyAnchor` | `string` | No | Ancla legacy preservada (ej. `"#ej-18"`), opcional para materias nuevas. |
 
 ### 2.6. `DocFrontmatter` (`src/content/docs/{course}/**/*.mdx`)
 

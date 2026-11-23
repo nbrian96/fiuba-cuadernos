@@ -150,6 +150,11 @@ function buildLegacyRedirectMap(courseManifests, urlBasePrefix) {
   for (const course of courseManifests) {
     for (const [legacyFile, targetRoute] of Object.entries(course.legacyRoutes ?? {})) {
       if (legacyFile === "index.html") continue;
+      if (redirects.has(legacyFile)) {
+        throw new Error(
+          `[academicBuildIntegration] Colisión de ruta legacy '${legacyFile}' declarada por múltiples materias`,
+        );
+      }
       redirects.set(
         legacyFile,
         buildLegacyRedirectHtml(legacyFile, course.id, targetRoute, urlBasePrefix),
@@ -193,7 +198,14 @@ function isRealPathInside(baseDir, candidatePath) {
   }
 }
 
-function streamStaticFile(res, absFilePath) {
+function streamStaticFile(req, res, absFilePath) {
+  if (req?.method === "HEAD") {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", getMimeType(absFilePath));
+    res.setHeader("Cache-Control", "no-cache");
+    res.end();
+    return;
+  }
   const stream = fs.createReadStream(absFilePath);
   res.on("close", () => {
     if (!stream.destroyed) {
@@ -266,7 +278,7 @@ export default function academicBuildIntegration() {
               fs.statSync(absSource).isFile() &&
               isRealPathInside(repoRoot, absSource)
             ) {
-              streamStaticFile(res, absSource);
+              streamStaticFile(req, res, absSource);
               return;
             }
           }
@@ -289,7 +301,7 @@ export default function academicBuildIntegration() {
               fs.statSync(candidate).isFile() &&
               isRealPathInside(distPagefindRoot, candidate)
             ) {
-              streamStaticFile(res, candidate);
+              streamStaticFile(req, res, candidate);
               return;
             }
           }

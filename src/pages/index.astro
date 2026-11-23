@@ -9,6 +9,7 @@ const courses = (await getCollection("courses")).sort((a, b) =>
 );
 const exercises = await getCollection("exercises");
 const docs = await getCollection("docs");
+const hasTda = courses.some((c) => c.data.id === "tda");
 const trainerTarget = withBase("/tda/#entrenador-30s");
 ---
 
@@ -16,11 +17,15 @@ const trainerTarget = withBase("/tda/#entrenador-30s");
   title="FIUBA Cuadernos — Plataforma Académica"
   description="Plataforma académica multi-materia estática, accesible (WCAG 2.1 AA) y verificable."
 >
-  <script is:inline define:vars={{ trainerTarget }}>
-    if (window.location.hash === "#entrenador-30s") {
-      window.location.replace(trainerTarget);
-    }
-  </script>
+  {
+    hasTda ? (
+      <script is:inline define:vars={{ trainerTarget }}>
+        if (window.location.hash === "#entrenador-30s") {
+          window.location.replace(trainerTarget);
+        }
+      </script>
+    ) : null
+  }
   <header style="margin-bottom: 1.5rem;">
     <h1>Hub de Materias</h1>
     <p style="margin: 0; color: var(--text-muted); max-width: 68ch;">

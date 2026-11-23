@@ -13,7 +13,9 @@ export async function getStaticPaths() {
   const courses = await getCollection("courses");
   const paths = [];
   for (const course of courses) {
-    for (const unit of course.data.units.filter((u) => u.inCatalog)) {
+    for (const unit of course.data.units.filter(
+      (u) => u.inCatalog || !(course.data.id === "tda" && u.slug === "avanzados"),
+    )) {
       paths.push({
         params: {
           course: course.data.id,

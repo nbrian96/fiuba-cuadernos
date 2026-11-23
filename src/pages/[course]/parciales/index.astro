@@ -76,70 +76,76 @@ const totalParcialExercises = exercises.filter((e) => e.data.isParcial).length;
 
   <section class="surface-panel" aria-label="Exámenes parciales registrados" style="margin-bottom: 1.5rem;">
     <h2 style="margin-top: 0;">Exámenes oficiales y reconstruidos ({exams.length})</h2>
-    <div class="card-grid">
-      {
-        exams.map((exam) => {
-          const pdfRes = exam.pdfResourceId
-            ? resourceById.get(exam.pdfResourceId)
-            : undefined;
-          return (
-            <article class="stat-card" style="display: grid; gap: 0.65rem; align-content: start;">
-              <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
-                <ProvenanceBadge provenance={exam.provenance} />
-                <span class="meta-pill">{exam.term}</span>
-              </div>
-
-              <h3 style="margin: 0; font-size: 1.05rem;">{exam.title}</h3>
-
-              {exam.notes ? (
-                <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
-                  {exam.notes}
-                </p>
-              ) : null}
-
-              {exam.catalogExerciseIds.length > 0 ? (
-                <div>
-                  <strong style="font-size: 0.85rem;">
-                    Ejercicios resueltos mapeados ({exam.catalogExerciseIds.length}):
-                  </strong>
-                  <ul class="plain-list" style="margin-top: 0.35rem; font-size: 0.875rem;">
-                    {exam.catalogExerciseIds.map((exId) => {
-                      const ex = exerciseById.get(exId);
-                      return (
-                        <li>
-                          <a href={withBase(`/${courseId}/ejercicios/${exId}/`)}>
-                            {ex
-                              ? ex.number !== null
-                                ? `EJ ${ex.number}: ${ex.title}`
-                                : ex.title
-                              : exId}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
+    {
+      exams.length > 0 ? (
+        <div class="card-grid">
+          {exams.map((exam) => {
+            const pdfRes = exam.pdfResourceId
+              ? resourceById.get(exam.pdfResourceId)
+              : undefined;
+            return (
+              <article class="stat-card" style="display: grid; gap: 0.65rem; align-content: start;">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
+                  <ProvenanceBadge provenance={exam.provenance} />
+                  <span class="meta-pill">{exam.term}</span>
                 </div>
-              ) : null}
 
-              {pdfRes ? (
-                <div style="margin-top: 0.25rem;">
-                  <a
-                    class="btn btn-primary"
-                    href={buildMaterialViewerUrl(
-                      courseId,
-                      pdfRes.resourceId,
-                      pdfRes.pdfMetadata ? 1 : undefined,
-                    )}
-                  >
-                    Abrir PDF en visor
-                  </a>
-                </div>
-              ) : null}
-            </article>
-          );
-        })
-      }
-    </div>
+                <h3 style="margin: 0; font-size: 1.05rem;">{exam.title}</h3>
+
+                {exam.notes ? (
+                  <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+                    {exam.notes}
+                  </p>
+                ) : null}
+
+                {exam.catalogExerciseIds.length > 0 ? (
+                  <div>
+                    <strong style="font-size: 0.85rem;">
+                      Ejercicios resueltos mapeados ({exam.catalogExerciseIds.length}):
+                    </strong>
+                    <ul class="plain-list" style="margin-top: 0.35rem; font-size: 0.875rem;">
+                      {exam.catalogExerciseIds.map((exId) => {
+                        const ex = exerciseById.get(exId);
+                        return (
+                          <li>
+                            <a href={withBase(`/${courseId}/ejercicios/${exId}/`)}>
+                              {ex
+                                ? ex.number !== null
+                                  ? `EJ ${ex.number}: ${ex.title}`
+                                  : ex.title
+                                : exId}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {pdfRes ? (
+                  <div style="margin-top: 0.25rem;">
+                    <a
+                      class="btn btn-primary"
+                      href={buildMaterialViewerUrl(
+                        courseId,
+                        pdfRes.resourceId,
+                        pdfRes.pdfMetadata ? 1 : undefined,
+                      )}
+                    >
+                      Abrir PDF en visor
+                    </a>
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <p style="margin: 0; color: var(--text-muted);">
+          Todavía no hay exámenes parciales registrados para esta materia.
+        </p>
+      )
+    }
 
     {
       unassignedIds.length > 0 ? (

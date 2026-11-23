@@ -134,7 +134,7 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
       ].map((e) => [e.id, e]),
     );
 
-    const exFiles = listMdxFiles("src/content/exercises");
+    const exFiles = listMdxFiles("src/content/exercises/tda");
     expect(exFiles.length).toBeGreaterThanOrEqual(2);
     for (const relPath of exFiles) {
       const fm = ExerciseFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
@@ -152,7 +152,7 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
       expect(fm.legacyAnchor).toBe(indexed!.legacyAnchor);
     }
 
-    const docFiles = listMdxFiles("src/content/docs");
+    const docFiles = listMdxFiles("src/content/docs/tda");
     expect(docFiles.length).toBeGreaterThanOrEqual(1);
     for (const relPath of docFiles) {
       const fm = DocFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
@@ -181,7 +181,7 @@ describe("Etapa 4 full TDA migration parity", () => {
     const idx = ExercisesIndexManifestSchema.parse(
       readJson("docs/manifests/tda/exercises-index.json"),
     );
-    const exFiles = listMdxFiles("src/content/exercises");
+    const exFiles = listMdxFiles("src/content/exercises/tda");
     expect(exFiles).toHaveLength(87);
 
     const parsed = exFiles.map((rel) =>
@@ -205,7 +205,7 @@ describe("Etapa 4 full TDA migration parity", () => {
   });
 
   it("contains all 3 expected docs in src/content/docs/tda/", () => {
-    const docFiles = listMdxFiles("src/content/docs");
+    const docFiles = listMdxFiles("src/content/docs/tda");
     expect(docFiles).toHaveLength(3);
     const docIds = new Set(
       docFiles.map((rel) => DocFrontmatterSchema.parse(parseMdxFrontmatter(rel)).docId),
@@ -274,5 +274,59 @@ describe("Etapa 4 full TDA migration parity", () => {
       "hamlet",
     ]);
     expect(mermaids).toEqual(["tsp-aprox"]);
+  });
+});
+
+describe("Multi-course content integrity", () => {
+  it("validates every declared course, its resources, assessments, exercises, docs and physical files", () => {
+    const coursesDir = path.join(ROOT, "src/content/courses");
+    const courseFiles = fs
+      .readdirSync(coursesDir)
+      .filter((f) => f.endsWith(".json"));
+    expect(courseFiles.length).toBeGreaterThanOrEqual(1);
+
+    for (const file of courseFiles) {
+      const course = CourseManifestSchema.parse(
+        readJson(`src/content/courses/${file}`),
+      );
+      const unitSlugs = new Set(course.units.map((u) => u.slug));
+
+      const resRel = `src/content/resources/${course.id}-resources.json`;
+      if (fs.existsSync(path.join(ROOT, resRel))) {
+        const resManifest = ResourceManifestSchema.parse(readJson(resRel));
+        expect(resManifest.courseId).toBe(course.id);
+        for (const res of resManifest.resources) {
+          for (const f of res.files) {
+            expect(
+              fs.existsSync(path.join(ROOT, f.path)),
+              `[${course.id}] Archivo físico faltante: ${f.path}`,
+            ).toBe(true);
+          }
+        }
+      }
+
+      const assessRel = `src/content/assessments/${course.id}.json`;
+      if (fs.existsSync(path.join(ROOT, assessRel))) {
+        const assess = AssessmentManifestSchema.parse(readJson(assessRel));
+        expect(assess.courseId).toBe(course.id);
+      }
+
+      const exDirRel = `src/content/exercises/${course.id}`;
+      if (fs.existsSync(path.join(ROOT, exDirRel))) {
+        for (const relPath of listMdxFiles(exDirRel)) {
+          const fm = ExerciseFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
+          expect(fm.courseId).toBe(course.id);
+          expect(unitSlugs.has(fm.unit)).toBe(true);
+        }
+      }
+
+      const docDirRel = `src/content/docs/${course.id}`;
+      if (fs.existsSync(path.join(ROOT, docDirRel))) {
+        for (const relPath of listMdxFiles(docDirRel)) {
+          const fm = DocFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
+          expect(fm.courseId).toBe(course.id);
+        }
+      }
+    }
   });
 });

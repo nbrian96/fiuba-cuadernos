@@ -309,16 +309,15 @@ export function PdfSplitViewer({
                 {hasPdf ? (
                   <>
                     Vista previa PDF pendiente de publicación en{" "}
-                    <code>public/materials/</code>; la navegación por página (
+                    <code>dist/materials/</code>; la navegación por página (
                     <code>?page={currentPage}</code>) y los metadatos ya se
                     encuentran operativos sin generar enlaces rotos.
                   </>
                 ) : (
                   <>
                     Recurso fuente no-PDF registrado en el inventario; la
-                    publicación estática en <code>public/materials/</code>{" "}
-                    habilitará su descarga directa en la etapa de migración de
-                    activos.
+                    publicación estática desde <code>materias/</code> hacia{" "}
+                    <code>dist/materials/</code> habilitará su descarga directa.
                   </>
                 )}
               </p>

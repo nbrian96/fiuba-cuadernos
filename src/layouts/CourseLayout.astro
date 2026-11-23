@@ -2,7 +2,10 @@
 import { getCollection } from "astro:content";
 import BaseLayout, { type BreadcrumbItem } from "./BaseLayout.astro";
 import CheatsheetDrawer from "@/components/platform/CheatsheetDrawer";
-import { getCheatsheetSections } from "@/data/cheatsheets";
+import {
+  compileCheatsheetSections,
+  getCheatsheetSections,
+} from "@/data/cheatsheets";
 import type { CourseManifest } from "@/schemas/academic";
 import { withBase } from "@/utils/paths";
 
@@ -30,7 +33,14 @@ const {
   breadcrumbs = [],
 } = Astro.props;
 
-const cheatsheetSections = getCheatsheetSections(course.id);
+const cheatsheetEntries = await getCollection(
+  "cheatsheets",
+  (entry) => entry.data.courseId === course.id,
+);
+const cheatsheetSections =
+  cheatsheetEntries.length > 0
+    ? compileCheatsheetSections(cheatsheetEntries[0].data.sections)
+    : getCheatsheetSections(course.id);
 
 const courseDocs = (
   await getCollection("docs", (entry) => entry.data.courseId === course.id)
@@ -40,7 +50,8 @@ const firstDocHref = courseDocs[0]
   ? withBase(`/${course.id}/docs/${courseDocs[0].data.docId}/`)
   : null;
 
-const hasAvanzados = course.units.some((unit) => unit.slug === "avanzados");
+const hasAvanzados =
+  course.id === "tda" && course.units.some((unit) => unit.slug === "avanzados");
 
 const navLinks = [
   {
@@ -84,7 +95,12 @@ const navLinks = [
 ];
 ---
 
-<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+<BaseLayout
+  title={title}
+  description={description}
+  breadcrumbs={breadcrumbs}
+  currentCourseId={course.id}
+>
   <Fragment slot="header-actions">
     {
       cheatsheetSections.length > 0 ? (

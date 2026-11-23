@@ -66,8 +66,21 @@ const PROVENANCE_OPTIONS: Array<{ value: "all" | Provenance; label: string }> = 
   { value: "elaborated_notes", label: "Apuntes elaborados" },
   { value: "elaborated_summary", label: "Resúmenes" },
   { value: "reconstructed_exam_statement", label: "Parcial reconstruido" },
-  { value: "elaborated_submission", label: "Entrega TP0" },
+  {
+    value: "elaborated_submission",
+    label: PROVENANCE_META.elaborated_submission.shortLabel,
+  },
 ];
+
+export interface GlobalSearchCourseOption {
+  id: string;
+  shortTitle: string;
+}
+
+export interface GlobalSearchProps {
+  courses?: GlobalSearchCourseOption[];
+  currentCourseId?: string;
+}
 
 function isProvenance(value: string | undefined): value is Provenance {
   return Boolean(value && value in PROVENANCE_META);
@@ -111,7 +124,10 @@ export function renderSafeExcerpt(rawExcerpt: string): ReactNode[] {
   });
 }
 
-export function GlobalSearch() {
+export function GlobalSearch({
+  courses = [],
+  currentCourseId,
+}: GlobalSearchProps = {}) {
   const [isOpen, setIsOpen] = useState(false);
   const [canPortal, setCanPortal] = useState(false);
   const [query, setQuery] = useState("");
@@ -120,6 +136,8 @@ export function GlobalSearch() {
   const [provenanceFilter, setProvenanceFilter] = useState<"all" | Provenance>(
     "all",
   );
+  const [courseFilter, setCourseFilter] = useState<string>("all");
+  void currentCourseId;
   const [results, setResults] = useState<RenderedResult[]>([]);
   const [totalMatches, setTotalMatches] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -251,6 +269,9 @@ export function GlobalSearch() {
         if (provenanceFilter !== "all") {
           filters.provenance = [provenanceFilter];
         }
+        if (courseFilter !== "all") {
+          filters.course = [courseFilter];
+        }
 
         const searchResponse = await pagefindRef.current.search(
           trimmed,
@@ -296,7 +317,7 @@ export function GlobalSearch() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [isOpen, query, kindFilter, provenanceFilter]);
+  }, [isOpen, query, kindFilter, provenanceFilter, courseFilter]);
 
   return (
     <>
@@ -358,7 +379,7 @@ export function GlobalSearch() {
                       type="search"
                       className="hud-input"
                       style={{ width: "100%" }}
-                      placeholder="Ej: simplex, mochila, Karger, dualidad, NP-completo..."
+                      placeholder="Ej: complejidad, grafo, parcial, heap, programación dinámica..."
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       data-testid="global-search-input"
@@ -378,6 +399,26 @@ export function GlobalSearch() {
                         {opt.label}
                       </button>
                     ))}
+
+                    {courses.length > 1 ? (
+                      <label style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                        <span className="sr-only">Materia</span>
+                        <select
+                          className="hud-select"
+                          value={courseFilter}
+                          onChange={(e) => setCourseFilter(e.target.value)}
+                          aria-label="Filtrar resultados por materia"
+                          data-testid="global-search-course"
+                        >
+                          <option value="all">Todas las materias</option>
+                          {courses.map((c) => (
+                            <option key={c.id} value={c.id}>
+                              {c.shortTitle}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    ) : null}
 
                     <label style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", marginLeft: "auto" }}>
                       <span className="sr-only">Procedencia</span>

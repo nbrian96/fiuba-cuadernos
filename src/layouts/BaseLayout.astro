@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import "katex/dist/katex.min.css";
 import "@/styles/global.css";
 import GlobalSearch from "@/components/platform/GlobalSearch";
@@ -14,13 +15,19 @@ export interface Props {
   title: string;
   description?: string;
   breadcrumbs?: BreadcrumbItem[];
+  currentCourseId?: string;
 }
 
 const {
   title,
   description = "Plataforma académica multi-materia de estudio y práctica universitaria.",
   breadcrumbs = [],
+  currentCourseId,
 } = Astro.props;
+
+const allCourses = (await getCollection("courses"))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, "es"))
+  .map((c) => ({ id: c.data.id, shortTitle: c.data.shortTitle }));
 ---
 
 <!doctype html>
@@ -68,7 +75,11 @@ const {
         </div>
 
         <div class="site-header-actions">
-          <GlobalSearch client:load />
+          <GlobalSearch
+            client:load
+            courses={allCourses}
+            currentCourseId={currentCourseId}
+          />
           <slot name="header-actions" />
           <ThemeToggle client:load />
         </div>
