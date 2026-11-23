@@ -90,7 +90,7 @@ Todo recurso, evaluación, ejercicio, apunte, resumen o widget declara exactamen
 
 ### 2.4. `QuizManifest` (`src/content/quizzes/*.yaml`, objetivo de Etapa 2/3)
 
-Contrato destino para el motor de simulacros cronometrados y entrenadores de reconocimiento en Astro/React (en Etapa 1B el **Entrenador 30s** de `20` preguntas se inventaría en [interactive-and-notes.json](../manifests/tda/interactive-and-notes.json) apuntando a [app.js](../../assets/js/app.js), y en Etapa 2/4 se externalizará a `quizzes/*.yaml` bajo este esquema):
+Contrato destino para el motor de simulacros cronometrados y entrenadores de reconocimiento en Astro/React (en Etapa 1B el **Entrenador 30s** de `20` preguntas se inventaría en [interactive-and-notes.json](../manifests/tda/interactive-and-notes.json) apuntando a `app.js`, y en Etapa 2/4 se externalizará a `quizzes/*.yaml` bajo este esquema):
 
 | Campo | Tipo | Obligatorio | Restricciones / Validación Zod |
 | :--- | :--- | :---: | :--- |

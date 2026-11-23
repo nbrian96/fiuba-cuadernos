@@ -1,19 +1,19 @@
 # Contrato de Almacenamiento Local (`localStorage`) y Migración desde `tda_*`
 
-Este documento define el contrato del store namespaced `mc:v1:{course}:*` que implementará `src/stores/progressStore.ts` en la Etapa 3, garantizando la preservación transparente del progreso previo de estudiantes en [app.js](../../assets/js/app.js) y en las 12 páginas HTML actuales.
+Este documento define el contrato del store namespaced `mc:v1:{course}:*` que implementará `src/stores/progressStore.ts` en la Etapa 3, garantizando la preservación transparente del progreso previo de estudiantes en `app.js` y en las 12 páginas HTML actuales.
 
 ---
 
 ## 1. Inventario Verificado de Claves Legacy (Etapa 1A)
 
-La inspección directa de [app.js](../../assets/js/app.js) y de los 12 archivos HTML en la raíz confirma exactamente **4 claves legacy**:
+La inspección directa de `app.js` y de los 12 archivos HTML en la raíz confirma exactamente **4 claves legacy**:
 
 | Clave Legacy | Archivos donde se lee/escribe | Tipo y Formato Legacy | Observaciones Verificadas |
 | :--- | :--- | :--- | :--- |
-| `tda_theme` | Los `12` HTML (`<head>`) y [app.js](../../assets/js/app.js) | `"dark" \| "light"` (string plano, sin JSON) | Si está ausente, se evalúa `prefers-color-scheme: dark`. |
-| `tda_mastered_exercises` | [app.js](../../assets/js/app.js) (`loadSavedState`, `saveState`) | JSON `number[]` (ej. `[1, 18, 80]`) | Se parsea como enteros válidos `1..85`. |
-| `tda_exam_checklist` | [app.js](../../assets/js/app.js) (`loadSavedState`, `saveState`) | JSON `Record<string, boolean>` | Desde `1A.2`/`1A.6` usa exactamente `11` claves deterministas `chk_<16_hex>`. |
-| `tda_study_mode` | [app.js](../../assets/js/app.js) (`loadSavedState`, `saveState`) | `"emergency" \| "tactical" \| "all"` (string plano) | Valor por defecto si falta o es inválido: `"all"`. |
+| `tda_theme` | Los `12` HTML (`<head>`) y `app.js` | `"dark" \| "light"` (string plano, sin JSON) | Si está ausente, se evalúa `prefers-color-scheme: dark`. |
+| `tda_mastered_exercises` | `app.js` (`loadSavedState`, `saveState`) | JSON `number[]` (ej. `[1, 18, 80]`) | Se parsea como enteros válidos `1..85`. |
+| `tda_exam_checklist` | `app.js` (`loadSavedState`, `saveState`) | JSON `Record<string, boolean>` | Desde `1A.2`/`1A.6` usa exactamente `11` claves deterministas `chk_<16_hex>`. |
+| `tda_study_mode` | `app.js` (`loadSavedState`, `saveState`) | `"emergency" \| "tactical" \| "all"` (string plano) | Valor por defecto si falta o es inválido: `"all"`. |
 
 ---
 
@@ -56,7 +56,7 @@ La migración se ejecuta al inicializar `progressStore` cuando `course === "tda"
 
 ## 4. Referencia de Mapeo de los 11 IDs de Checklist Deterministas
 
-Generados por `generate_checklist_id()` en [html_interactive_builder.py](../../builder/html_interactive_builder.py) sobre [sec11_errores_checklist.py](../../builder/sec11_errores_checklist.py) y registrados en [interactive-and-notes.json](../manifests/tda/interactive-and-notes.json):
+Generados por `generate_checklist_id()` en `html_interactive_builder.py` sobre `sec11_errores_checklist.py` y registrados en [interactive-and-notes.json](../manifests/tda/interactive-and-notes.json):
 
 | # | Sección | ID Determinista (`chk_<16_hex>`) |
 | :---: | :--- | :--- |

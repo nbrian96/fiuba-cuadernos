@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import vm from "node:vm";
 import { load as loadYaml } from "js-yaml";
 import { describe, expect, it } from "vitest";
 import {
@@ -82,7 +81,7 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
     );
   });
 
-  it("validates tda-entrenador-30s.yaml and verifies 20/20 parity against assets/js/app.js", () => {
+  it("validates tda-entrenador-30s.yaml with 20 unique questions and valid answers", () => {
     const quizRaw = loadYaml(
       fs.readFileSync(
         path.join(ROOT, "src/content/quizzes/tda-entrenador-30s.yaml"),
@@ -91,35 +90,11 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
     );
     const quiz = QuizManifestSchema.parse(quizRaw);
     expect(quiz.questions).toHaveLength(20);
-
-    const appJsCode = fs.readFileSync(
-      path.join(ROOT, "assets/js/app.js"),
-      "utf-8",
-    );
-    const sandbox: Record<string, unknown> = {
-      window: { addEventListener() {}, pageYOffset: 0 },
-      document: { addEventListener() {}, documentElement: { scrollTop: 0 } },
-      console,
-    };
-    vm.runInNewContext(
-      `${appJsCode}\n;globalThis.__TRAINER_QUESTIONS__ = TRAINER_QUESTIONS;`,
-      sandbox,
-    );
-    const legacyQuestions = sandbox.__TRAINER_QUESTIONS__ as Array<{
-      prompt: string;
-      answer: string;
-      paradigmName: string;
-      trigger: string;
-    }>;
-
-    expect(legacyQuestions).toHaveLength(20);
-    for (let i = 0; i < 20; i++) {
-      expect(quiz.questions[i].prompt).toBe(legacyQuestions[i].prompt);
-      expect(quiz.questions[i].answer).toBe(legacyQuestions[i].answer);
-      expect(quiz.questions[i].paradigmName).toBe(
-        legacyQuestions[i].paradigmName,
-      );
-      expect(quiz.questions[i].trigger).toBe(legacyQuestions[i].trigger);
+    const optionKeys = new Set(quiz.options.map((o) => o.key));
+    const questionIds = new Set(quiz.questions.map((q) => q.id));
+    expect(questionIds.size).toBe(20);
+    for (const q of quiz.questions) {
+      expect(optionKeys.has(q.answer)).toBe(true);
     }
   });
 

@@ -4,7 +4,7 @@
 Accepted (Opción A aprobada explícitamente en [PLAN_DE_TRABAJO.md](../PLAN_DE_TRABAJO.md), Sección 2.1 — 2026-11-21)
 
 ## Context
-- **Problem:** La plataforma acumula contenido HTML/MDX (85 ejercicios, 2 avanzados, apuntes, resúmenes) y **49 archivos PDF** de clases, guías, parciales y TP0 que suman exactamente **1,264 páginas** (`DIapositivas`: 1,199; `Guia-Ejercicios`: 47; `Parciales`: 8; `TP0`: 10). La búsqueda actual en [app.js](../../assets/js/app.js) solo filtra tarjetas ya montadas en la página activa y no indexa apuntes ni el interior de los 49 PDFs. Se necesita un buscador estático global compatible con GitHub Pages que lleve al usuario al recurso y página exacta del PDF relevante.
+- **Problem:** La plataforma acumula contenido HTML/MDX (85 ejercicios, 2 avanzados, apuntes, resúmenes) y **49 archivos PDF** de clases, guías, parciales y TP0 que suman exactamente **1,264 páginas** (`DIapositivas`: 1,199; `Guia-Ejercicios`: 47; `Parciales`: 8; `TP0`: 10). La búsqueda actual en `app.js` solo filtra tarjetas ya montadas en la página activa y no indexa apuntes ni el interior de los 49 PDFs. Se necesita un buscador estático global compatible con GitHub Pages que lleve al usuario al recurso y página exacta del PDF relevante.
 - **Constraints:**
   - Entorno 100% estático en GitHub Pages: no existe backend ni motor Elasticsearch/Algolia de servidor.
   - Auditoría real ejecutada con `pypdf` sobre los 49 PDFs de TDA (`DIapositivas/`: 29, `Guia-Ejercicios/`: 10, `Parciales/`: 7, `TP0/`: 3):

@@ -4,7 +4,7 @@
 Accepted (confirmada en [PLAN_DE_TRABAJO.md](../PLAN_DE_TRABAJO.md), Etapa 1B — 2026-11-21)
 
 ## Context
-- **Problem:** El sistema actual generado por [build_manual.py](../../builder/build_manual.py) compila HTML monolíticos para un único curso (`TDA`) mediante sustituciones con expresiones regulares en [html_interactive_builder.py](../../builder/html_interactive_builder.py), mantiene dos páginas clave desconectadas del compilador (`index.html` y `teoria-avanzados.html`), renderiza KaTeX únicamente en el navegador en tiempo de ejecución y carece de validación tipada de esquemas y de separación entre plataforma y contenido académico multi-materia.
+- **Problem:** El sistema actual generado por `build_manual.py` compila HTML monolíticos para un único curso (`TDA`) mediante sustituciones con expresiones regulares en `html_interactive_builder.py`, mantiene dos páginas clave desconectadas del compilador (`index.html` y `teoria-avanzados.html`), renderiza KaTeX únicamente en el navegador en tiempo de ejecución y carece de validación tipada de esquemas y de separación entre plataforma y contenido académico multi-materia.
 - **Constraints:**
   - Despliegue 100% estático en GitHub Pages (sin backend, sin base de datos y bajo sub-ruta configurable `base` mediante el helper `withBase()`).
   - Conservación íntegra de los 12 archivos HTML actuales en la raíz durante la transición hasta verificar paridad funcional, visual y rutas de compatibilidad en Etapa 6.
@@ -33,7 +33,7 @@ La plataforma es primordialmente un sitio académico intensivo en lectura técni
   - Introduce un toolchain Node/TypeScript adicional al toolchain Python existente durante la etapa de transición.
   - Los 12 HTML legacy deben coexistir sin regresiones hasta finalizar la migración y validar las redirecciones/rutas de compatibilidad.
 - **Mitigation:**
-  - Mantener intactos los archivos HTML actuales y [run_tests.py](../../run_tests.py) durante las Etapas 1B–5.
+  - Mantener intactos los archivos HTML actuales y `run_tests.py` durante las Etapas 1B–5.
   - Ejecutar la migración de TDA mediante contratos y manifiestos verificables (`docs/manifests/tda/*.json`) validados automáticamente antes de crear los archivos Astro.
 
 ## Revisit Trigger

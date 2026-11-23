@@ -41,7 +41,7 @@ Separar `provenance` del tipo de entidad y anclar la identidad del catálogo ofi
 - **Negative:**
   - Los componentes de UI (`ExerciseCard`, `PdfSplitViewer`, listados de recursos) deben contemplar la representación de badges de procedencia y casos donde `number` sea `null`.
 - **Mitigation:**
-  - Documentar formalmente todos los campos y enumeraciones en [domain-schemas.md](../contracts/domain-schemas.md) y cubrir con tests automatizados en [test_etapa1b_manifests_and_contracts.py](../../tests/test_etapa1b_manifests_and_contracts.py).
+  - Documentar formalmente todos los campos y enumeraciones en [domain-schemas.md](../contracts/domain-schemas.md) y cubrir con tests automatizados en `test_etapa1b_manifests_and_contracts.py`.
 
 ## Revisit Trigger
 - Si la incorporación de una nueva materia requiere un décimo valor de `provenance` o un nuevo `entityType` no contemplado en las 13 entidades actuales (deberá extenderse primero el esquema Zod y el presente ADR antes de incorporarlo).

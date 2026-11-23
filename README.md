@@ -166,12 +166,6 @@ npm test         # Suite unitaria y de integración (Vitest)
 npm run test:e2e # Suite extremo a extremo + WCAG 2.1 AA (Playwright)
 ```
 
-*(Legado)* La suite Python de paridad e integridad de enlaces *case-sensitive* se ejecuta sin modificar el repositorio mediante:
-
-```bash
-python run_tests.py
-```
-
 ---
 
 ## 🏛️ Metodología de Trabajo y Cómo Incorporar Nuevas Materias (Plataforma Astro Multi-Materia)

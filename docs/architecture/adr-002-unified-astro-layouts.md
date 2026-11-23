@@ -4,7 +4,7 @@
 Accepted (Opción A aprobada explícitamente en [PLAN_DE_TRABAJO.md](../PLAN_DE_TRABAJO.md), Sección 2.1 — 2026-11-21)
 
 ## Context
-- **Problem:** La interfaz actual arrastra deuda visual y estructural documentada en la Etapa 0: [styles.css](../../assets/css/styles.css) creció a más de 4,500 líneas con overrides por especificidad y uso de `!important`, mientras que `teoria-avanzados.html` define un bloque `<style>` embebido propio y `index.html` mantiene maquetación manual independiente. Al evolucionar hacia una plataforma multi-materia que incluye Hub de Carrera, Dashboard de Materia, Listados de Ejercicios, Simuladores, Visor de Materiales PDF y Apuntes (`/docs/`), debe definirse si la sección de apuntes usará Starlight o un sistema unificado de layouts propios.
+- **Problem:** La interfaz actual arrastra deuda visual y estructural documentada en la Etapa 0: `styles.css` creció a más de 4,500 líneas con overrides por especificidad y uso de `!important`, mientras que `teoria-avanzados.html` define un bloque `<style>` embebido propio y `index.html` mantiene maquetación manual independiente. Al evolucionar hacia una plataforma multi-materia que incluye Hub de Carrera, Dashboard de Materia, Listados de Ejercicios, Simuladores, Visor de Materiales PDF y Apuntes (`/docs/`), debe definirse si la sección de apuntes usará Starlight o un sistema unificado de layouts propios.
 - **Constraints:**
   - Cumplimiento estricto de contraste **WCAG 2.1 AA** ($\ge 4.5:1$ en texto normal y botones/badges, $\ge 3.0:1$ en anillos `:focus-visible` y componentes UI grandes) tanto en modo claro como oscuro.
   - Navegación global coherente entre materias, barra de contexto de ejercicios, drawer de fórmulas rápidas y persistencia de tema unificada (`mc:v1:global:theme`).
@@ -25,7 +25,7 @@ En una plataforma académica unificada, el estudiante salta continuamente entre 
 ## Consequences
 - **Positive:**
   - Consistencia total de UI/UX, navegación y contraste WCAG 2.1 AA en el 100% de las rutas de la plataforma.
-  - Reducción sustancial de CSS heredado respecto a los estilos Bootstrap + overrides acumulados en [styles.css](../../assets/css/styles.css).
+  - Reducción sustancial de CSS heredado respecto a los estilos Bootstrap + overrides acumulados en `styles.css`.
   - Extensibilidad multi-materia transparente: cualquier nueva materia hereda el mismo `CourseLayout` y `DocLayout` sin duplicar hojas de estilo.
 - **Negative:**
   - Componentes habituales de documentación (índice lateral de encabezados en apuntes, navegación anterior/siguiente entre secciones de apunte) deben implementarse explícitamente como componentes Astro ligeros.
