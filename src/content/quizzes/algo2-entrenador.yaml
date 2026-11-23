@@ -1,0 +1,45 @@
+schemaVersion: "1.0.0"
+quizId: algo2-entrenador
+courseId: algo2
+title: "Entrenador Rápido: Elección de Estructura de Datos"
+provenance: interactive_widget
+timeGoalSeconds: 30
+passThresholdPercent: 75
+options:
+  - key: pila
+    label: "Pila (LIFO)"
+    icon: "📚"
+  - key: cola
+    label: "Cola (FIFO)"
+    icon: "🚶"
+  - key: heap
+    label: "Heap Binario"
+    icon: "🔺"
+  - key: abb
+    label: "ABB / AVL"
+    icon: "🌳"
+questions:
+  - id: algo2-q-01
+    prompt: "Se necesita validar si una expresión con paréntesis, corchetes y llaves está balanceada en una única pasada O(n)."
+    answer: pila
+    paradigmName: "Pila (LIFO)"
+    trigger: "El último símbolo de apertura debe cerrarse primero (orden LIFO en O(1) por operación)."
+    sourceOrigin: "Guía 01 — Estructuras Lineales"
+  - id: algo2-q-02
+    prompt: "Se desea implementar un recorrido por niveles (BFS) sobre un árbol o grafo procesando nodos en orden de descubrimiento."
+    answer: cola
+    paradigmName: "Cola (FIFO)"
+    trigger: "Los nodos descubiertos primero deben visitarse primero (orden FIFO en O(1))."
+    sourceOrigin: "Guía 01 — Estructuras Lineales"
+  - id: algo2-q-03
+    prompt: "Se reciben tareas con prioridad dinámica y siempre se requiere extraer la de menor prioridad en O(log n) y consultar la mínima en O(1)."
+    answer: heap
+    paradigmName: "Heap Binario"
+    trigger: "Cola de prioridad con peek en O(1) y push/pop en O(log n) usando memoria contigua."
+    sourceOrigin: "Práctica 01 — Heap Binario"
+  - id: algo2-q-04
+    prompt: "Se necesita mantener un conjunto dinámico ordenado con búsquedas por rango y recorrido in-order en O(log n) garantizado."
+    answer: abb
+    paradigmName: "ABB / AVL"
+    trigger: "Árbol balanceado AVL garantiza altura O(log n) para búsqueda, inserción, borrado y sucesor."
+    sourceOrigin: "Guía 01 — ABB y AVL"

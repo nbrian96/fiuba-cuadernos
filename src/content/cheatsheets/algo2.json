@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "algo2",
+  "sections": [
+    {
+      "id": "complejidades-abb-heap",
+      "title": "1. Complejidades de Árboles y Heaps",
+      "formula": "h_{\\text{AVL}}(n) \\le 1.44 \\log_2(n + 2) - 0.328",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Heapify bottom-up:",
+          "body": "Construir un Heap desde $n$ elementos toma $\\Theta(n)$ comparaciones (no $O(n \\log n)$)."
+        },
+        {
+          "lead": "Operaciones en AVL:",
+          "body": "Búsqueda, inserción y borrado en $O(\\log n)$ peor caso mediante rotaciones en $O(1)$."
+        }
+      ]
+    },
+    {
+      "id": "invariantes-clave",
+      "title": "2. Invariantes Clave de Parcial",
+      "variant": "warning",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Validar ABB con cotas globales:",
+          "body": "No alcanza comparar solo con hijo izquierdo y derecho; se deben propagar cotas $(min, max)$."
+        },
+        {
+          "lead": "Heap vs ABB:",
+          "body": "Un Heap no soporta búsqueda arbitraria en $O(\\log n)$; solo garantiza acceso al extremo en $O(1)$."
+        }
+      ]
+    }
+  ]
+}

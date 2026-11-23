@@ -1,0 +1,40 @@
+---
+id: algo2-ej-02
+courseId: algo2
+number: 2
+title: "Top-K Elementos Mayores con Min-Heap de Tamaño K"
+unit: heaps
+entityType: CatalogExercise
+provenance: elaborated_solution
+priority: importante
+difficulty: 3
+origin: "Práctica de Colas de Prioridad (Algo2), Ejercicio 2"
+isParcial: false
+relatedResourceIds:
+  - algo2-practica-01-heap
+  - algo2-guia-01-estructuras
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dado un flujo de $n$ enteros y un parámetro $k \ll n$, obtener los $k$ elementos más grandes usando memoria auxiliar $O(k)$ y tiempo $O(n \log k)$.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="algo2-ej-02">
+
+## 1. Por qué usar un Min-Heap (y no un Max-Heap)
+
+Mantenemos un **Min-Heap** de tamaño a lo sumo $k$ con los $k$ mayores candidatos vistos hasta el momento. La raíz del Min-Heap contiene el **menor** de esos $k$ candidatos:
+
+1. Si llegan menos de $k$ elementos, insertamos directamente en $O(\log k)$.
+2. Si el heap ya tiene tamaño $k$ y el nuevo elemento $x$ satisface $x > \text{heap.peek()}$, reemplazamos la raíz y aplicamos `downheap` en $O(\log k)$.
+
+## 2. Complejidad
+
+- **Temporal:** $O(n \log k)$, mejor que ordenar todo en $O(n \log n)$ cuando $k \ll n$.
+- **Espacial:** $O(k)$ para el arreglo del Min-Heap.
+
+</SolutionDrawer>
