@@ -1,0 +1,57 @@
+---
+id: "redes-ej-26"
+courseId: "redes"
+number: 26
+title: "Centros de Datos: Clasificación por Tiers (ANSI/TIA-942 y Uptime Institute)"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 6"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El estándar **ANSI/TIA-942** y las directrices del **Uptime Institute** definen cuatro niveles de confiabilidad e infraestructura para Centros de Datos:
+1. Confeccione un cuadro comparativo detallado entre los niveles **Tier I**, **Tier II**, **Tier III** y **Tier IV**, analizando:
+   - Esquema de redundancia de componentes de potencia y clima ($N, N+1, 2N$).
+   - Cantidad de vías de distribución eléctrica hacia los racks de TI.
+   - Capacidad de **Mantenimiento Concurrente**.
+   - Disponibilidad teórica porcentual y tiempo de inactividad máximo anual admisible (*Downtime*).
+2. Explique por qué el Tier III es el estándar de referencia corporativo para la banca comercial y proveedores de nube, y en qué se diferencia sustancialmente del Tier IV.
+
+**Qué está evaluando la cátedra**  
+Dominio de las normas de diseño electromecánico de Centros de Datos, comprensión del principio de mantenimiento concurrente y evaluación de costos vs disponibilidad.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-26">
+
+## 1. Cuadro Comparativo Canónico de Tiers
+
+| Nivel de Tier | Topología y Redundancia | Vías de Distribución | Mantenimiento Concurrente | Disponibilidad Anual | Downtime Máximo Anual |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Tier I (Básico)** | Capacidad básica sin redundancia ($N$). 1 generador, 1 UPS. | 1 única vía para energía y clima hacia los racks. | **No**. Cualquier mantenimiento o falla exige apagar todo el Centro de Datos. | **$99.671\%$** | **$28.8\text{ horas / año}$** |
+| **Tier II (Redundante)** | Componentes redundantes ($N+1$). Múltiples UPS o generadores en paralelo. | 1 única vía de distribución compartida. | **No**. Si se interviene un tablero principal o cañería de agua, se debe cortar el servicio. | **$99.741\%$** | **$22.0\text{ horas / año}$** |
+| **Tier III (Mantenible Simultáneamente)** | Componentes redundantes ($N+1$). | **Múltiples vías de distribución** (1 activa y 1 pasiva de respaldo). | **Sí (Obligatorio)**. Cualquier componente, UPS o tablero puede ser aislado y reparado sin afectar la carga de TI. | **$99.982\%$** | **$1.6\text{ horas / año}$** (95 minutos) |
+| **Tier IV (Tolerante a Fallas)** | **Tolerante a fallas**. Redundancia dual completa ($2N$ o $2(N+1)$). Sistemas físicamente compartimentados. | **Múltiples vías activas simultáneas** (doble alimentación activa e independiente). | **Sí**. Mantenimiento concurrente más absorción automática de eventos catastróficos no planificados. | **$99.995\%$** | **$26.3\text{ minutos / año}$** |
+
+---
+
+## 2. Tier III como Estándar Corporativo y Diferencia con Tier IV
+
+* **Por qué Tier III es el Estándar de Referencia:**  
+  Un Centro de Datos Tier III ofrece una disponibilidad del $99.982\%$ con la capacidad operativa de que los ingenieros realicen mantenimiento preventivo, cambio de baterías de UPS o actualización de conmutadores sin coordinar costosas ventanas de corte de servicio nocturno. Provee el balance óptimo entre inversión de capital (*CapEx*) y continuidad de negocio para el sector financiero, telecomunicaciones y hospitales.
+* **Diferencia Sustancial entre Tier III y Tier IV:**
+  - **Tier III:** Está diseñado para **eventos planificados** (mantenimiento concurrente). Sin embargo, ante un fallo imprevisto catastrófico (por ejemplo, el incendio súbito de un tablero eléctrico principal mientras la segunda vía estaba en mantenimiento), los servidores pueden experimentar una caída de servicio.
+  - **Tier IV:** Está diseñado para **eventos no planificados (Tolerancia Total a Fallas)**. Todas las rutas de distribución y equipos están duplicados activamente ($2N$) y físicamente separados en salas cortafuego independientes. La falla imprevista de cualquier transformador, generador o tablero no causa la mínima perturbación en los servidores de TI.
+
+</SolutionDrawer>

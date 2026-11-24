@@ -283,9 +283,20 @@ for (const file of courseFiles) {
       );
     }
   }
+  if (cid === "redes") {
+    assert.equal(coursePublishedCount, 18, "Se esperaban exactamente 18 archivos en dist/materials/redes/");
+    for (const relRoute of [
+      "redes/docs/programa-analitico/index.html",
+      "redes/docs/apunte-teorico-primer-parcial/index.html",
+      "redes/docs/resumen-activo-primer-parcial/index.html",
+    ]) {
+      assert.ok(
+        fs.existsSync(path.join(distDir, relRoute)),
+        `[Redes Route] Falta HTML generado: dist/${relRoute}`,
+      );
+    }
+  }
 }
-
-// .nojekyll y los HTML de compatibilidad legacy en dist/
 assert.ok(
   fs.existsSync(path.join(distDir, ".nojekyll")),
   "[Pages] Falta dist/.nojekyll para servir _astro/ en GitHub Pages.",
@@ -354,12 +365,20 @@ for (const htmlFile of courseHtmlFiles) {
     `[KaTeX] Se detectó 'katex-error' en dist/${rel}`,
   );
   assert.ok(
+    !visibleHtml.includes('mathcolor="#cc0000"'),
+    `[KaTeX] Se detectó error silencioso de KaTeX (mathcolor="#cc0000") en dist/${rel}`,
+  );
+  assert.ok(
     !visibleHtml.includes("$$"),
     `[KaTeX] Se detectó '$$' sin renderizar en dist/${rel}`,
   );
   assert.ok(
     !visibleHtml.includes("\\dollar"),
     `[KaTeX] Se detectó '\\dollar' literal en dist/${rel}`,
+  );
+  assert.ok(
+    !visibleHtml.includes("$\\to$"),
+    `[KaTeX] Se detectó '$\\to$' sin renderizar en dist/${rel}`,
   );
   if (rel === "tda/avanzados/index.html") {
     assert.ok(

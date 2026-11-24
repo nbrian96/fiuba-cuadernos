@@ -1,0 +1,240 @@
+schemaVersion: "1.0.0"
+quizId: redes-simulacro-35-mc
+courseId: redes
+title: "Entrenador Interactivo de Redes: Diagnóstico Conceptual en 30 Segundos"
+provenance: interactive_widget
+timeGoalSeconds: 30
+passThresholdPercent: 75
+options:
+  - key: fisica-cobre-fibra
+    label: "Capa Física (Cobre, Fibra y Potencia)"
+    icon: "🔌"
+  - key: enlace-switching-stp
+    label: "Capa de Enlace (Ethernet, CAM, STP, VLANs)"
+    icon: "🔀"
+  - key: red-ip-enrutamiento
+    label: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    icon: "🌐"
+  - key: transporte-tcp-quic
+    label: "Capa de Transporte (TCP, Congestión, QUIC)"
+    icon: "⚡"
+  - key: datacenter-arquitecturas
+    label: "Datacenters y Arquitecturas (Tiers, Spine-Leaf, SDN)"
+    icon: "🏢"
+  - key: servicios-aplicacion
+    label: "Capa de Aplicación (DNS, DHCP, HTTP)"
+    icon: "📱"
+  - key: dimensionamiento-trafico
+    label: "Dimensionamiento y Tráfico Corporativo"
+    icon: "📊"
+questions:
+  - id: q-01
+    prompt: "Determinar la frecuencia mínima de muestreo para digitalizar sin aliasing una señal analógica de voz limitada a 4 kHz y derivar la tasa del canal telefónico DS0."
+    answer: fisica-cobre-fibra
+    paradigmName: "Capa Física (Cobre, Fibra y Potencia)"
+    trigger: "Teorema de Nyquist (FM >= 2 * FS): para voz de 4 kHz exige 8000 muestras/s; con cuantización PCM de 8 bits/muestra resulta el canal DS0 de 64 kbps (Simulacro P1)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-02
+    prompt: "Determinar el pulido de férula óptica con corte biselado de 8 grados para maximizar la pérdida de retorno (ORL >= 65 dB) en redes GPON y video."
+    answer: fisica-cobre-fibra
+    paradigmName: "Capa Física (Cobre, Fibra y Potencia)"
+    trigger: "Conector APC (color verde, ángulo 8°). Refleja la luz hacia el cladding impidiendo ruido de fase en láseres DFB (Simulacro P2)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-03
+    prompt: "Verificar la distancia máxima normalizada bajo ANSI/TIA-568-D para un canal de cobre completo incluyendo enlace permanente y patch cords."
+    answer: fisica-cobre-fibra
+    paradigmName: "Capa Física (Cobre, Fibra y Potencia)"
+    trigger: "Canal máximo de 100 metros (90 m de enlace permanente fijo + 10 m combinados de cables de parcheo) (Simulacro P3)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-04
+    prompt: "Restricción de agrupamiento de haces de cables según TIA TSB-184-A para evitar sobrecalentamiento por efecto Joule al suministrar 90W."
+    answer: fisica-cobre-fibra
+    paradigmName: "Capa Física (Cobre, Fibra y Potencia)"
+    trigger: "PoE Tipo 4 (IEEE 802.3bt): el calor acumulado en el haz eleva la temperatura y aumenta la atenuación por inserción del cobre (Simulacro P4)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-05
+    prompt: "Comportamiento de un conmutador Ethernet cuando recibe una trama cuya dirección MAC de destino no figura en su memoria asociativa."
+    answer: enlace-switching-stp
+    paradigmName: "Capa de Enlace (Ethernet, CAM, STP, VLANs)"
+    trigger: "Unknown Unicast Flooding: el switch replica la trama por todos los puertos activos de la misma VLAN excepto el puerto de ingreso (Simulacro P5)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-06
+    prompt: "Identificar la razón por la cual un bucle cerrado en Capa 2 genera una tormenta de broadcast infinita a diferencia de lo que ocurre en Capa 3."
+    answer: enlace-switching-stp
+    paradigmName: "Capa de Enlace (Ethernet, CAM, STP, VLANs)"
+    trigger: "Ausencia de campo TTL en la trama Ethernet: sin Spanning Tree, las tramas de broadcast recirculan y se duplican eternamente (Simulacro P6)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-07
+    prompt: "Cantidad de bits reservados para el identificador numérico de red lógica dentro del tag de 4 bytes de la norma IEEE 802.1Q."
+    answer: enlace-switching-stp
+    paradigmName: "Capa de Enlace (Ethernet, CAM, STP, VLANs)"
+    trigger: "VLAN ID (VID) de 12 bits: admite hasta 4096 identificadores lógicos (rango utilizable 1 a 4094) (Simulacro P7)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-08
+    prompt: "Identificar el fenómeno físico limitante dominante en fibras ópticas multimodo de 50 um en distancias superiores a 500 metros."
+    answer: fisica-cobre-fibra
+    paradigmName: "Capa Física (Cobre, Fibra y Potencia)"
+    trigger: "Dispersión Modal: múltiples caminos de luz en el núcleo ancho llegan a destiempo provocando interferencia intersimbólica (Simulacro P8)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-09
+    prompt: "Justificación histórica del tamaño mínimo de trama Ethernet fijado en 64 bytes (512 bit times a 10 Mbps)."
+    answer: enlace-switching-stp
+    paradigmName: "Capa de Enlace (Ethernet, CAM, STP, VLANs)"
+    trigger: "Slot Time en CSMA/CD: garantizar que el emisor continúe transmitiendo mientras la colisión regresa desde el extremo más lejano (Simulacro P9)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-10
+    prompt: "Mecanismo en redes MPLS donde el penúltimo router retira la etiqueta exterior utilizando la etiqueta reservada 3 (Implicit Null)."
+    answer: red-ip-enrutamiento
+    paradigmName: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    trigger: "Penultimate Hop Popping (PHP): alivia la carga de procesamiento del Egress LER evitando una doble búsqueda LFIB y FIB (Simulacro P10)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-11
+    prompt: "Topología Clos bipartita de dos niveles en Centros de Datos que elimina Spanning Tree mediante ECMP y ofrece 3 saltos constantes."
+    answer: datacenter-arquitecturas
+    paradigmName: "Datacenters y Arquitecturas (Tiers, Spine-Leaf, SDN)"
+    trigger: "Spine-Leaf Fabric: cada switch Leaf se conecta a todos los Spines, optimizando el tráfico Este-Oeste inter-servidor (Simulacro P11)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-12
+    prompt: "Clasificación de confiabilidad de Centro de Datos que exige mantenimiento concurrente (N+1) sin interrupción de la carga crítica."
+    answer: datacenter-arquitecturas
+    paradigmName: "Datacenters y Arquitecturas (Tiers, Spine-Leaf, SDN)"
+    trigger: "Tier III (ANSI/TIA-942): componentes redundantes y doble vía que permiten reparar cualquier elemento sin parar servicios (Simulacro P12)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-13
+    prompt: "Procedimiento ante un paquete IPv6 que supera la MTU de un enlace intermedio en un router de tránsito."
+    answer: red-ip-enrutamiento
+    paradigmName: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    trigger: "No fragmentar: el router descarta el paquete y emite un ICMPv6 Packet Too Big asistiendo al Path MTU Discovery (Simulacro P13)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-14
+    prompt: "Mapeo secuencial de routers intermedios mediante el incremento secuencial del campo TTL y mensajes ICMP Time Exceeded."
+    answer: red-ip-enrutamiento
+    paradigmName: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    trigger: "Traceroute: aprovecha que cada router decrementa TTL en 1 y emite ICMP Type 11 al llegar a cero (Simulacro P14)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-15
+    prompt: "Desacoplamiento entre la CPU que calcula tablas de enrutamiento (RIB) y los ASICs de hardware que conmutan paquetes (FIB)."
+    answer: datacenter-arquitecturas
+    paradigmName: "Datacenters y Arquitecturas (Tiers, Spine-Leaf, SDN)"
+    trigger: "Separación estricta de Plano de Control (cerebro) y Plano de Datos (músculo de reenvío wire-speed) (Simulacro P15)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-16
+    prompt: "Atributo de ruta en BGP utilizado tanto para la prevención de bucles como métrica de longitud de saltos entre Sistemas Autónomos."
+    answer: red-ip-enrutamiento
+    paradigmName: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    trigger: "AS_PATH: descarta anuncios que contengan el propio ASN y prefiere rutas con menor cantidad de AS atravesados (Simulacro P16)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-17
+    prompt: "Acuerdo bilateral de interconexión donde dos operadores intercambian tráfico de sus clientes en un IXP de forma gratuita sin tránsito."
+    answer: red-ip-enrutamiento
+    paradigmName: "Capa de Red (IPv4, IPv6, ICMP, BGP)"
+    trigger: "Peering Bilateral (Settlement-Free): intercambio mutuo de tráfico entre pares locales en conmutadores CABASE (Simulacro P17)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-18
+    prompt: "Protocolo de transferencia directa de memoria sobre Ethernet para clústeres de entrenamiento de IA sin pérdida de paquetes."
+    answer: datacenter-arquitecturas
+    paradigmName: "Datacenters y Arquitecturas (Tiers, Spine-Leaf, SDN)"
+    trigger: "RoCEv2 con Lossless Ethernet: combina PFC (IEEE 802.1Qbb) para pausas por prioridad y ECN para alerta temprana (Simulacro P18)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-19
+    prompt: "Mensaje emitido en broadcast por un cliente DHCP para aceptar formalmente una dirección y avisar a los demás que liberen sus ofertas."
+    answer: servicios-aplicacion
+    paradigmName: "Capa de Aplicación (DNS, DHCP, HTTP)"
+    trigger: "DHCP Request: tercer paso del ciclo DORA transmitido en broadcast para notificar a todos los servidores de la red (Simulacro P19)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-20
+    prompt: "Función de un router L3 que intercepta paquetes broadcast DHCP locales y los reenvía por unicast hacia un servidor en otro datacenter."
+    answer: servicios-aplicacion
+    paradigmName: "Capa de Aplicación (DNS, DHCP, HTTP)"
+    trigger: "DHCP Relay Agent (Opción 82): cruza fronteras de broadcast reenviando tráfico DHCP sobre UDP unicast al servidor central (Simulacro P20)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-21
+    prompt: "Flags de control activos en el segmento que el servidor emite en respuesta al SYN inicial del cliente durante el Three-Way Handshake."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "SYN-ACK (SYN=1, ACK=1): sincroniza el número de secuencia inicial del servidor y reconoce el byte del cliente (Simulacro P21)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-22
+    prompt: "Estado del socket TCP que retiene la tupla durante 2 MSL tras emitir el último ACK para absorber segmentos extraviados."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "TIME_WAIT: garantiza que el último ACK arribe al extremo remoto y permite el desvanecimiento de tramas duplicadas (Simulacro P22)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-23
+    prompt: "Distinción entre la protección del búfer del host receptor y la protección de los enlaces intermedios de los routers en TCP."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Control de Flujo (rwnd anunciado por el receptor) vs Control de Congestión (cwnd deducido por el emisor) (Simulacro P23)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-24
+    prompt: "Comportamiento de la ventana cwnd en TCP que suma 1 MSS por RTT en régimen estable y se reduce a la mitad ante congestión."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "AIMD (Additive Increase, Multiplicative Decrease): base matemática de estabilidad y equidad en la congestión de TCP (Simulacro P24)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-25
+    prompt: "Evento de control en TCP que dispara la retransmisión inmediata de un segmento sin esperar a que expire el temporizador RTO."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Fast Retransmit: recepción de 3 ACKs duplicados consecutivos indicando que los paquetes posteriores llegaron con éxito (Simulacro P25)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-26
+    prompt: "Problema en HTTP/2 donde la pérdida de un solo paquete IP congela todos los streams multiplexados sobre la misma conexión TCP."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Head-of-Line Blocking a nivel de Transporte: la abstracción de byte stream estricto de TCP bloquea flujos independientes (Simulacro P26)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-27
+    prompt: "Razón para implementar el protocolo QUIC sobre datagramas UDP en espacio de usuario en lugar de modificar el kernel de TCP."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Evitar la osificación de la red: middleboxes y firewalls descartan opciones TCP desconocidas; UDP viaja libremente (Simulacro P27)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-28
+    prompt: "Mecanismo que permite a un smartphone conmutar de Wi-Fi a 4G manteniendo una descarga web activa sin interrumpir la sesión."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Connection Migration en QUIC: la conexión se identifica por un Connection ID (CID) de 64 bits independiente de la IP (Simulacro P28)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-29
+    prompt: "Capacidad de transmitir datos de aplicación cifrados en el primerísimo paquete saliente hacia un servidor previamente visitado."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Handshake 0-RTT en QUIC y TLS 1.3: reutilización de tickets de sesión para eliminar la latencia de ida y vuelta (Simulacro P29)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-30
+    prompt: "Opción negociada en el SYN de TCP para superar el límite histórico de 64 kB en enlaces con alto producto ancho de banda-retardo."
+    answer: transporte-tcp-quic
+    paradigmName: "Capa de Transporte (TCP, Congestión, QUIC)"
+    trigger: "Window Scale (RFC 7323): multiplica el campo de ventana por un factor de hasta 2^14 alcanzando hasta 1 GB de buffer (Simulacro P30)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-31
+    prompt: "Tipo de registro en el Sistema de Nombres de Dominio utilizado para publicar firmas criptográficas DKIM y políticas SPF de correo."
+    answer: servicios-aplicacion
+    paradigmName: "Capa de Aplicación (DNS, DHCP, HTTP)"
+    trigger: "Registro DNS TXT: transporta cadenas de texto de autenticación para mitigar suplantación de remitente y phishing (Simulacro P31)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-32
+    prompt: "Cálculo del ancho de banda base en hora pico para una sede corporativa de 500 puestos con concurrencia C = 0.30 a 2 Mbps por usuario."
+    answer: dimensionamiento-trafico
+    paradigmName: "Dimensionamiento y Tráfico Corporativo"
+    trigger: "Metodología Nc = 500 * 0.30 = 150 usuarios concurrentes; BWbase = 150 * 2 Mbps = 300 Mbps (Simulacro P32)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-33
+    prompt: "Justificación de asignar 100 kbps de ancho de banda a una llamada VoIP con códec G.711 cuya carga útil neta de audio es de 64 kbps."
+    answer: dimensionamiento-trafico
+    paradigmName: "Dimensionamiento y Tráfico Corporativo"
+    trigger: "Sobrecarga de cabeceras RTP + UDP + IP + Ethernet en paquetes pequeños de 20 ms, sumado a señalización SIP (Simulacro P33)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-34
+    prompt: "Beneficio directo de migrar la compresión de video de cámaras IP de seguridad de H.264 (MPEG-4 AVC) a H.265 (HEVC)."
+    answer: dimensionamiento-trafico
+    paradigmName: "Dimensionamiento y Tráfico Corporativo"
+    trigger: "Reducción del 50% de ancho de banda y almacenamiento: CTU dinámico de 64x64 reduce 4 Mbps a 2 Mbps en 1080p (Simulacro P34)."
+    sourceOrigin: "Simulacro Cátedra Volpi"
+  - id: q-35
+    prompt: "Zona especial de infraestructura inversa bajo la cual se configuran los registros PTR para traducir una dirección IPv4 a nombre FQDN."
+    answer: servicios-aplicacion
+    paradigmName: "Capa de Aplicación (DNS, DHCP, HTTP)"
+    trigger: "in-addr.arpa con octetos invertidos (ej. 45.89.16.200.in-addr.arpa para 200.16.89.45) (Simulacro P35)."
+    sourceOrigin: "Simulacro Cátedra Volpi"

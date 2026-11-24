@@ -1,0 +1,73 @@
+---
+id: "redes-ej-03"
+courseId: "redes"
+number: 3
+title: "Par Trenzado: Tipologías de Apantallamiento (UTP, FTP, S/FTP) y Métricas de Rendimiento"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 3"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-05"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El estándar internacional **ISO/IEC 11801** define una nomenclatura precisa para clasificar el grado de blindaje electromagnético en cables de par trenzado con el formato **$X/Y\text{TP}$**.  
+1. Explique el significado de cada letra en la designación y detalle la composición constructiva de los cables: **U/UTP**, **F/UTP**, **U/FTP** y **S/FTP**.  
+2. Defina los parámetros de certificación de campo **NEXT (Near-End Crosstalk)**, **FEXT (Far-End Crosstalk)** y **Return Loss (Pérdida de Retorno)**. Indique si es deseable que estos valores medidos en decibelios (dB) sean altos o bajos, fundamentando técnicamente su respuesta.
+
+**Qué está evaluando la cátedra**  
+Dominio de las normas de fabricación y apantallamiento de medios guiados de cobre, comprensión del fenómeno de acoplamiento capacitivo/inductivo (diafonía) y correcta interpretación de las mediciones de certificación eléctrica.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-03">
+
+## 1. Nomenclatura ISO/IEC 11801 de Apantallamiento ($X/Y\text{TP}$)
+
+La convención estandarizada utiliza el formato:
+$$\mathbf{X} / \mathbf{Y}\text{TP}$$
+- **$X$:** Tipo de blindaje exterior global que envuelve al conjunto de los 4 pares ($U$ = sin blindaje, $F$ = lámina de aluminio o *foil*, $S$ = malla metálica trenzada de cobre estañado o *braided screening*, $SF$ = combinación de lámina + malla).
+- **$Y$:** Tipo de blindaje individual de cada uno de los pares trenzados ($U$ = sin blindaje, $F$ = par envuelto individualmente en lámina de aluminio).
+- **TP:** *Twisted Pair* (Par Trenzado).
+
+* **U/UTP (Unshielded / Unshielded Twisted Pair):**
+  - Construcción: Ningún blindaje exterior ni individual. Cuatro pares trenzados directamente bajo la cubierta de PVC o LSZH.
+  - Aplicación: Cableado horizontal comercial estándar de bajo costo para 1 Gbps (Cat 5e/Cat 6) en entornos libres de ruidos industriales.
+* **F/UTP (Foiled / Unshielded Twisted Pair):**
+  - Construcción: Una lámina global de aluminio envuelve a los 4 pares, acompañada por un hilo de drenaje (*drain wire*). Los pares individuales no tienen blindaje.
+  - Aplicación: Protección contra interferencia electromagnética externa (RFI/EMI) generada por motores, iluminación fluorescente o bandejas portacables compartidas.
+* **U/FTP (Unshielded / Foiled Twisted Pair):**
+  - Construcción: Sin malla global, pero cada par trenzado está envuelto de forma independiente en una lámina de aluminio.
+  - Aplicación: Elimina casi por completo la diafonía interna entre pares contiguos (**NEXT**), facilitando la transmisión de alta frecuencia (Cat 6A) y ofreciendo mayor flexibilidad mecánica que un cable totalmente mallado.
+* **S/FTP (Screened / Foiled Twisted Pair):**
+  - Construcción: Malla metálica trenzada envolviendo todo el cable y lámina de aluminio blindando individualmente cada uno de los 4 pares.
+  - Aplicación: Máxima protección contra diafonía alienígena (*Alien Crosstalk*) y ruidos electromagnéticos severos. Obligatorio en **Categoría 7, 7A y 8** para operar a 10G/25G/40G en Centros de Cómputo e industrias.
+
+---
+
+## 2. Parámetros de Certificación Eléctrica
+
+* **NEXT (Near-End Crosstalk — Diafonía en el Extremo Cercano):**
+  - **Definición:** Medida del acoplamiento electromagnético indeseado (inductivo y capacitivo) que una señal transmitida en un par induce sobre un par receptor adyacente dentro del mismo extremo del cable.
+  - **Criterio de Aceptación:** **Debe ser ALTO en dB**.
+  - **Fundamento:** El instrumento mide la atenuación del ruido: $\text{NEXT [dB]} = 10 \cdot \log_{10}(P_{tx\_par1} / P_{ruido\_par2})$. Cuanto mayor sea el valor en dB, menor será la energía que se transfiere al par vecino, garantizando mayor aislamiento y menor tasa de errores.
+
+* **FEXT (Far-End Crosstalk — Diafonía en el Extremo Lejano):**
+  - **Definición:** Medida de la interferencia que viaja a lo largo del cable y se manifiesta en el extremo opuesto receptor del par contiguo.
+  - **Criterio de Aceptación:** Expresado como **ACRF (Attenuation Crosstalk Ratio Far-End)**, **debe ser ALTO en dB** (representa la diferencia entre la potencia de la señal útil recibida y el ruido inducido en el extremo distante).
+
+* **Return Loss (Pérdida de Retorno):**
+  - **Definición:** Medición de la porción de potencia de la señal que se refleja de regreso hacia el transmisor debido a discontinuidades o variaciones en la impedancia característica del cable (nominalmente $100\,\Omega \pm 15\%$).
+  - **Criterio de Aceptación:** **Debe ser ALTO en dB**.
+  - **Fundamento:** $\text{Return Loss [dB]} = 10 \cdot \log_{10}(P_{incidente} / P_{reflejada})$. Un valor alto en dB significa que la potencia reflejada es insignificante en comparación con la potencia inyectada. Valores bajos de Return Loss delatan problemas físicos graves: conectores RJ45 mal ensamblados, destrenzado excesivo en los extremos ($> 13\text{ mm}$ viola la norma TIA) o radios de curvatura inferiores al límite del fabricante.
+
+</SolutionDrawer>

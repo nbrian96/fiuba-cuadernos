@@ -1,0 +1,68 @@
+---
+id: "redes-ej-25"
+courseId: "redes"
+number: 25
+title: "Infraestructura de Red para Clústeres de IA: RoCEv2, Ethernet sin Pérdidas (PFC) y ECN"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 5"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El entrenamiento distribuido de Grandes Modelos de Inteligencia Artificial (LLMs) impone demandas extremas sobre la red de interconexión de GPUs:
+1. Explique el concepto de **RDMA (Remote Direct Memory Access)**: ¿cómo permite transferir datos entre GPUs remotas sin intervención de la CPU del servidor ni copias en el kernel del sistema operativo?
+2. Compare **InfiniBand** frente a **RoCEv2 (RDMA over Converged Ethernet)**.
+3. Para lograr que una red Ethernet tradicional opere como un medio "libre de pérdidas" (*Lossless Ethernet*), explique el funcionamiento de:
+   - **PFC (Priority-based Flow Control - IEEE 802.1Qbb)**.
+   - **ECN (Explicit Congestion Notification - RFC 3168)**.
+
+**Qué está evaluando la cátedra**  
+Comprensión de las arquitecturas de red de última generación para cómputo intensivo de IA y mecanismos avanzados de control de congestión en conmutadores Ethernet.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-25">
+
+## 1. Concepto y Funcionamiento de RDMA (Remote Direct Memory Access)
+
+* **Enfoque Tradicional (Pila TCP/IP):**  
+  Una transferencia de memoria entre dos servidores requiere múltiples copias intermedias: GPU $\to$ RAM de host $\to$ búferes del kernel del SO $\to$ segmentación TCP en CPU $\to$ interfaz de red. Este proceso introduce sobrecarga masiva de CPU y latencias elevadas ($10\text{ a }50\,\mu\text{s}$).
+* **Enfoque RDMA:**  
+  Permite a la tarjeta de red especializada (**RNIC**) leer y escribir directamente en la memoria HBM de la GPU de un servidor remoto a través del bus PCIe, sin involucrar a la CPU del host ni realizar copias en el espacio del kernel del sistema operativo (*Zero-Copy, Kernel Bypass*). Esto reduce la latencia a **menos de $1\,\mu\text{s}$**.
+
+---
+
+## 2. InfiniBand vs RoCEv2
+
+| Característica | InfiniBand | RoCEv2 (RDMA over Converged Ethernet) |
+| :--- | :--- | :--- |
+| **Capa de Red Subyacente** | Arquitectura propietaria de red con conmutadores y cables dedicados. | **Ethernet estándar** sobre datagramas UDP/IP (puerto UDP 4791, estándar IBTA Annex A17). |
+| **Garantía Libre de Pérdidas** | **Nativa**. Control de flujo por créditos en hardware a nivel físico. | **Requiere configuración de Ethernet sin pérdidas** (PFC + ECN). |
+| **Costo y Flexibilidad** | Alto costo y dependencia de un fabricante dominante (NVIDIA/Mellanox). | Mucho menor costo. Conmutadores Ethernet comerciales y cables estándar. |
+| **Latencia Extremo a Extremo** | Extremadamente baja ($< 0.6\,\mu\text{s}$). | Muy baja ($1\text{ a }2\,\mu\text{s}$). |
+
+---
+
+## 3. Mecanismos de Ethernet sin Pérdidas (Lossless Ethernet)
+
+Para que RoCEv2 no experimente pérdidas de paquetes por saturación de búferes en los switches Leaf/Spine, se configuran dos estándares en tándem:
+
+* **PFC (Priority-based Flow Control — IEEE 802.1Qbb):**
+  - **Mecanismo:** A diferencia del mecanismo clásico de pausa Ethernet (IEEE 802.3x) que congela todo el tráfico de un puerto físico, PFC opera sobre **8 colas de prioridad lógicas independientes** (asociadas a los bits CoS/PCP de IEEE 802.1Q).
+  - **Acción:** Cuando el búfer de entrada de una cola de alta prioridad (dedicada al tráfico de IA) alcanza un umbral crítico, el conmutador envía una trama de pausa PFC al switch emisor frenando **únicamente esa cola**, mientras el tráfico ofimático o de almacenamiento en las demás colas continúa fluyendo con normalidad.
+* **ECN (Explicit Congestion Notification — RFC 3168):**
+  - **Mecanismo:** El conmutador intermedio monitorea continuamente el llenado de sus búferes. Cuando la cola supera un umbral de advertencia temprana, **no descarta el paquete**: en su lugar, modifica dos bits en la cabecera IP (**bits ECN marcados como CE - Congestion Experienced**).
+  - **Reacción:** El receptor detecta la marca y envía un paquete de notificación de congestión (**CNP - Congestion Notification Packet**) al emisor original, el cual reduce preventivamente su tasa de inyección de paquetes antes de que se dispare una pausa PFC, evitando bloqueos en cascada (*Head-of-Line Blocking*).
+
+</SolutionDrawer>

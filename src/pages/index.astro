@@ -1,21 +1,18 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import InfraHealthBadge from "@/components/platform/InfraHealthBadge";
 import { withBase } from "@/utils/paths";
 
 const courses = (await getCollection("courses")).sort((a, b) =>
   a.data.title.localeCompare(b.data.title, "es"),
 );
-const exercises = await getCollection("exercises");
-const docs = await getCollection("docs");
 const hasTda = courses.some((c) => c.data.id === "tda");
 const trainerTarget = withBase("/tda/#entrenador-30s");
 ---
 
 <BaseLayout
   title="FIUBA Cuadernos — Plataforma Académica"
-  description="Plataforma académica multi-materia estática, accesible (WCAG 2.1 AA) y verificable."
+  description="Cuadernos interactivos de estudio para materias de FIUBA: apuntes teóricos, resúmenes activos, ejercicios resueltos, parciales y materiales de cátedra."
 >
   {
     hasTda ? (
@@ -29,23 +26,16 @@ const trainerTarget = withBase("/tda/#entrenador-30s");
   <header style="margin-bottom: 1.5rem;">
     <h1>Hub de Materias</h1>
     <p style="margin: 0; color: var(--text-muted); max-width: 68ch;">
-      Plataforma académica estática multi-materia construida con Astro, Content
-      Collections validadas por Zod, MDX con KaTeX precompilado y Design System
-      WCAG 2.1 AA en modo claro y oscuro.
+      Cuadernos interactivos de estudio para materias de FIUBA: apuntes teóricos,
+      resúmenes activos, ejercicios resueltos, parciales y buscador unificado
+      sobre materiales de cátedra.
     </p>
   </header>
-
-  <InfraHealthBadge
-    client:load
-    courseCount={courses.length}
-    exerciseCount={exercises.length}
-    docCount={docs.length}
-  />
 
   <section aria-label="Materias disponibles" class="card-grid">
     {
       courses.map((course) => (
-        <article class="surface-panel">
+        <article class="surface-panel course-card">
           <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
             {course.data.institution} · {course.data.codes.join(" / ")}
           </p>
@@ -54,14 +44,14 @@ const trainerTarget = withBase("/tda/#entrenador-30s");
             {course.data.chair}
           </p>
 
-          <p style="margin: 0.85rem 0 1rem; font-size: 0.9375rem;">
+          <p style="margin: 0.85rem 0 0; font-size: 0.9375rem;">
             <strong>{course.data.stats.catalogExercises}</strong> ejercicios en
             catálogo ·{" "}
             <strong>{course.data.stats.parcialExercises}</strong> de parciales ·{" "}
             <strong>{course.data.stats.physicalFiles}</strong> materiales fuente
           </p>
 
-          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <div class="course-card-actions">
             <a class="btn btn-primary" href={withBase(`/${course.data.id}/`)}>
               Abrir {course.data.shortTitle}
             </a>

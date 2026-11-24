@@ -1,0 +1,97 @@
+---
+id: "redes-ej-14"
+courseId: "redes"
+number: 14
+title: "Protocolo IPv4: Estructura del Encabezado, Mecanismos de Fragmentación y Rol del TTL"
+unit: "u08-ip-ipv4-ipv6"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 14"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-09"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **IPv4 (RFC 791)** es la base del direccionamiento lógico y reenvío de paquetes en Internet:
+1. Grafique y describa los campos principales del encabezado IPv4 estándar de 20 bytes: Version, IHL, Total Length, Identification, Flags, Fragment Offset, Time to Live (TTL), Protocol y Header Checksum.
+2. Explique cómo funciona el mecanismo de **fragmentación en routers IPv4**:
+   - ¿Qué función cumplen los bits **DF (Don't Fragment)** y **MF (More Fragments)**?
+   - ¿En qué unidades se expresa el campo **Fragment Offset** y por qué debe ser múltiplo de 8 bytes?
+3. Analice el comportamiento del campo **TTL**: ¿cuándo se decrementa, qué mensaje de error ICMP se genera cuando llega a 0 y qué utilidad práctica tiene este comportamiento en herramientas de diagnóstico de red?
+
+**Qué está evaluando la cátedra**  
+Dominio del formato de la PDU de Capa 3, comprensión detallada de la fragmentación de datagramas y análisis del ciclo de vida del paquete IP mediante el control de saltos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-14">
+
+## 1. Formato del Encabezado IPv4 (20 bytes mínimos sin opciones)
+
+```
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version|  IHL  |Type of Service|          Total Length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Identification        |Flags|      Fragment Offset    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Time to Live |    Protocol   |        Header Checksum        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       Source IP Address                       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Destination IP Address                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+
+* **Version (4 bits):** Fijado en `4` (`0100`).
+* **IHL (Internet Header Length, 4 bits):** Longitud del encabezado expresada en palabras de 32 bits (4 bytes). Valor mínimo estándar sin opciones: `5` ($5 \times 4\text{ bytes} = 20\text{ bytes}$).
+* **Type of Service / DSCP + ECN (8 bits):** Prioridad y señalización de congestión de Calidad de Servicio (QoS).
+* **Total Length (16 bits):** Longitud total del datagrama (cabecera + carga útil) en bytes. Tamaño máximo: $65.535\text{ bytes}$.
+* **Identification (16 bits):** Número asignado secuencialmente por el host emisor para identificar a qué paquete original pertenecen los fragmentos.
+* **Flags (3 bits):**
+  - Bit 0: Reservado (debe ser `0`).
+  - Bit 1: **DF (Don't Fragment)**. Si está en 1, prohíbe fragmentar el paquete.
+  - Bit 2: **MF (More Fragments)**. Si está en 1, indica que restan más fragmentos subsiguientes; si está en 0, indica que este es el último fragmento.
+* **Fragment Offset (13 bits):** Desplazamiento del fragmento.
+* **TTL (Time to Live, 8 bits):** Contador de saltos para prevenir la recirculación indefinida del paquete.
+* **Protocol (8 bits):** Protocolo encapsulado en el payload (`1` = ICMP, `6` = TCP, `17` = UDP, `89` = OSPF).
+* **Header Checksum (16 bits):** Complemento a uno de la suma de palabras de 16 bits del encabezado.
+
+---
+
+## 2. Mecanismo de Fragmentación en IPv4
+
+* **Disparo de la Fragmentación:**  
+  Ocurre cuando un router recibe un paquete cuyo tamaño total excede la **MTU** del enlace físico de salida (por ejemplo, un paquete de 1500 bytes que debe ingresar a un enlace con MTU de 576 bytes).
+* **Comportamiento según el Bit DF:**
+  - Si **`DF = 1`**: El router no puede fragmentar el paquete; **lo descarta** y devuelve al host emisor un mensaje **ICMP Destination Unreachable con código Fragmentation Needed (Type 3, Code 4)** indicando la MTU del enlace restrictivo. (Este mecanismo es la base del *Path MTU Discovery*).
+  - Si **`DF = 0`**: El router procede a trocear la carga útil en múltiples paquetes independientes más pequeños, duplicando la cabecera IP original en cada uno con los campos correspondientes actualizados.
+* **El Campo Fragment Offset y la Restricción de 8 Bytes:**
+  - Dado que el campo *Total Length* tiene 16 bits (hasta 65.535 bytes) y el campo *Fragment Offset* dispone únicamente de 13 bits ($2^{13} = 8192$ valores), **el offset se expresa en unidades de bloques de 8 bytes (64 bits)**:
+    $$8192 \times 8\text{ bytes} = 65.536\text{ bytes}$$
+  - En consecuencia, la cantidad de datos transportada en cada fragmento intermedio debe ser **obligatoriamente un múltiplo entero de 8 bytes**.
+* **Reensamblado:**  
+  Los fragmentos son reensamblados **exclusivamente en el host de destino final**, nunca por los routers intermedios de tránsito.
+
+---
+
+## 3. Rol del Campo TTL y Diagnóstico de Red
+
+* **Mecánica del TTL:**
+  - Cada router intermedio que procesa y reenvía el paquete **decrementa el campo TTL exactamente en 1 unidad**.
+  - Si tras el decremento el valor alcanza **$\text{TTL} = 0$**, el router **destruye el paquete** (lo descarta) y emite un mensaje **ICMP Time Exceeded (Type 11, Code 0)** dirigido a la dirección IP de origen del paquete original.
+  - Además, dado que el campo TTL cambió, el router debe recalcular obligatoriamente el campo **Header Checksum**.
+* **Utilidad Práctica:**
+  - **Prevención de Bucles Infinitos:** Garantiza que ante un bucle de enrutamiento transitorio, los paquetes no recirculen eternamente consumiendo el ancho de banda del canal.
+  - **Base Operativa de Traceroute:** Herramientas como `traceroute` o `tracert` explotan deliberadamente este comportamiento enviando paquetes con $\text{TTL} = 1, 2, 3\dots$ para provocar mensajes ICMP *Time Exceeded* de cada router en la ruta, descubriendo paso a paso la topología de la red.
+
+</SolutionDrawer>

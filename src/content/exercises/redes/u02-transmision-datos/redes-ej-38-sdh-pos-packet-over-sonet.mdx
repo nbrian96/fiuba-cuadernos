@@ -1,0 +1,59 @@
+---
+id: "redes-ej-38"
+courseId: "redes"
+number: 38
+title: "Capa de Transmisión SDH: Jerarquía de Velocidades STM y Packet over SONET/SDH (POS)"
+unit: "u02-transmision-datos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2do Intento 21-11-2026 / 1° Recuperatorio 2025 Cátedra Volpi"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-02"
+  - "redes-presentacion-04"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En las redes troncales de operadores de telecomunicaciones, la transmisión óptica síncrona representó el estándar dominante durante dos décadas:
+1. Explique el concepto de la **Jerarquía Digital Síncrona (SDH)** y detalle las tasas de transmisión normalizadas para: **STM-1**, **STM-4**, **STM-16**, **STM-64** y **STM-256**.
+2. Explique el concepto subyacente de **POS (Packet over SONET/SDH - RFC 2615)**: ¿cómo se encapsulan los paquetes IP sobre tramas ópticas, qué protocolo de enlace intermedio se utiliza (PPP/HDLC) y qué ventaja sustancial aportó frente al transporte previo basado en celdas ATM?
+
+**Qué está evaluando la cátedra**  
+Dominio de la jerarquía digital de transporte síncrono, conocimiento de las tasas de transmisión binarias de telecomunicaciones y comprensión de los mecanismos de encapsulamiento óptico POS.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-38">
+
+## 1. Concepto de SDH y Jerarquía de Velocidades STM
+
+* **Definición de SDH (Synchronous Digital Hierarchy):**  
+  Estándar internacional de transporte de telecomunicaciones (definido por el ITU-T, equivalente a SONET en Norteamérica) que emplea multiplexación por división de tiempo síncrona (TDM) sobre fibra óptica, gobernada por una red de relojes atómicos de referencia de altísima precisión.
+* **Escala Canónica de Velocidades STM (Synchronous Transport Module):**
+  - **STM-1:** **$155.52\text{ Mbps}$** (Módulo de transporte síncrono básico de nivel 1).
+  - **STM-4:** **$622.08\text{ Mbps}$** ($4 \times 155.52\text{ Mbps}$).
+  - **STM-16:** **$2.488\text{ Gbps} \approx 2.5\text{ Gbps}$** ($16 \times \text{STM-1}$).
+  - **STM-64:** **$9.953\text{ Gbps} \approx 10\text{ Gbps}$** ($64 \times \text{STM-1}$).
+  - **STM-256:** **$39.813\text{ Gbps} \approx 40\text{ Gbps}$**.
+
+---
+
+## 2. Concepto Subyacente en POS (Packet over SONET/SDH)
+
+* **Principio de Encapsulación:**  
+  POS es una tecnología de enlace que mapea y transporta datagramas IP directamente sobre la carga útil síncrona (*Synchronous Payload Envelope*) de las tramas SDH/SONET sin requerir una capa de conmutación de celdas intermedia:
+  $$\text{Paquete IP} \longrightarrow \text{Entramado PPP en HDLC (RFC 1662)} \longrightarrow \text{Contenedor Virtual VC-4 SDH} \longrightarrow \text{Transmisor Óptico}$$
+* **Ventajas frente al Transporte sobre ATM:**
+  1. **Eliminación del "Cell Tax":** En redes IP sobre ATM sobre SDH, la sobrecarga fija de las celdas de 53 bytes desperdiciaba casi un $10\%$ del ancho de banda del enlace óptico en cabeceras de celdas. Con POS, la sobrecarga de la trama PPP/HDLC es inferior al **$1.5\%$**, aprovechando prácticamente toda la capacidad de la fibra para datos útiles de usuario.
+  2. **Eliminación de la Complejidad de SAR:** Al no requerir segmentación y reensamblado de paquetes IP en cientos de celdas de 48 bytes, los procesadores de los routers de borde reducen el consumo de memoria y la latencia de tránsito a una fracción mínima.
+  3. **Simplicidad Operativa:** Permite conectar interfaces de routers IP directamente a los anillos ópticos síncronos de los carriers de telecomunicaciones con monitoreo y restauración automática ante corte de fibra en menos de $50\text{ ms}$ (*APS - Automatic Protection Switching*).
+
+</SolutionDrawer>

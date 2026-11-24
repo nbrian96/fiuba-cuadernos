@@ -1,0 +1,77 @@
+---
+id: "redes-ej-12"
+courseId: "redes"
+number: 12
+title: "Tecnologías WAN Legacy: X.25, Frame Relay y Modo de Transferencia Asíncrono (ATM)"
+unit: "u03-redes-legacy"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 12"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-08"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El desarrollo de las redes de transporte de área amplia (WAN) atravesó tres etapas paradigmáticas antes de la hegemonía de MPLS y Ethernet sobre fibra:
+1. Explique por qué el protocolo **X.25** implementaba control de errores, verificación por suma de comprobación y confirmación de entrega (ACK) salto a salto en cada nodo de conmutación intermedio. ¿Qué consecuencias operativas provocaba este diseño sobre la latencia y la sobrecarga computacional?
+2. Describa cómo **Frame Relay** optimizó la conmutación eliminando el control salto a salto. Defina el concepto de Circuito Virtual Permanente (PVC) y el identificador **DLCI (Data Link Connection Identifier)**.
+3. Analice la tecnología **ATM (Asynchronous Transfer Mode)**:
+   - ¿Cuál es la estructura exacta de su celda de longitud fija de **53 bytes** (distribución de encabezado y carga útil)?
+   - ¿Qué ventajas ofrecía una celda fija de tamaño reducido para el tráfico de voz y video en tiempo real?
+   - ¿Qué factores técnicos y económicos (*cell tax*, complejidad de SAR) determinaron su reemplazo definitivo por redes IP/MPLS?
+
+**Qué está evaluando la cátedra**  
+Perspectiva histórica y evolutiva de arquitecturas WAN, comprensión de la relación de compromiso entre verificación en el medio físico y latencia de conmutación, y análisis crítico del empaquetamiento en celdas ATM.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-12">
+
+## 1. X.25 y el Control de Errores Salto a Salto
+
+* **Contexto Tecnológico (Años 1970/1980):**
+  - X.25 fue concebido para operar sobre medios de transmisión físicos analógicos basados en pares de cobre de larga distancia o radioenlaces de microondas con **altísimas tasas de error de bit ($BER \approx 10^{-3}$ a $10^{-5}$)**.
+  - Para evitar que los paquetes corruptos se propagaran consumiendo el escaso ancho de banda troncal, la norma estipuló que **cada conmutador intermedio de la red X.25 debía verificar el CRC, esperar el ACK y retransmitir los paquetes perdidos a nivel de enlace nodo a nodo**.
+* **Consecuencias Operativas:**
+  - **Latencia Enorme:** Cada nodo intermedio debía recibir el paquete completo en memoria, verificar el CRC y procesar el reconocimiento antes de reenviarlo al siguiente salto (*Store-and-Forward* estricto y secuencial).
+  - **Sobrecarga de CPU:** El plano de control de los conmutadores consumía casi toda su capacidad de cómputo en gestionar colas de retransmisión y ventanas de flujo, limitando las tasas máximas de transferencia a unos escasos **$64\text{ kbps}$**.
+
+---
+
+## 2. Frame Relay: Conmutación Ligera de Tramas
+
+* **Optimización respecto a X.25:**
+  - En la década de 1990, la generalización de la fibra óptica redujo la tasa de error a valores despreciables ($BER < 10^{-9}$).
+  - Frame Relay eliminó por completo el control de flujo y la corrección de errores salto a salto. Si una trama llega dañada a un switch intermedio, simplemente **se descarta en silencio**, delegando la detección y recuperación de pérdidas a los protocolos de transporte de los extremos (como TCP).
+  - Esto redujo la sobrecarga a un mínimo encabezado de 2 bytes, alcanzando velocidades de **$1.544\text{ Mbps}$ (T1) o $2.048\text{ Mbps}$ (E1)**.
+* **Conceptos Clave:**
+  - **PVC (Permanent Virtual Circuit):** Circuito lógico establecido permanentemente por el operador entre dos sitios corporativos que comparten infraestructura física con otros clientes.
+  - **DLCI (Data Link Connection Identifier):** Número de 10 bits ubicado en la cabecera de Frame Relay que identifica localmente al circuito virtual en la interfaz de acceso (*Local Significance*). No tiene validez global; el switch intermedio traduce el DLCI de entrada por un DLCI de salida asignado al enlace hacia el nodo remoto.
+
+---
+
+## 3. ATM (Asynchronous Transfer Mode) y la Celda de 53 Bytes
+
+* **Estructura Canónica de la Celda ATM:**
+  ATM abandonó los paquetes de longitud variable en favor de celdas estrictamente fijas de **53 bytes**:
+  - **Encabezado (5 bytes):** Contiene los campos de direccionamiento lógico **VPI** (Virtual Path Identifier, 8 o 12 bits) y **VCI** (Virtual Channel Identifier, 16 bits), tipo de carga útil (**PT**), prioridad de descarte (**CLP**) y control de error de cabecera (**HEC** de 8 bits).
+  - **Carga Útil (Payload, 48 bytes):** Datos de usuario.
+
+* **Ventajas Históricas del Tamaño Fijo Reducido:**
+  - **Latencia y Jitter Mínimos y Predecibles:** Un paquete IP largo de 1500 bytes en un enlace lento podía bloquear la línea durante decenas de milisegundos. Al trocear la información en celdas de 53 bytes, una muestra de voz digitalizada no tenía que esperar en cola detrás de una descarga pesada, permitiendo conmutar celdas de voz prioritarias de forma intercalada en hardware (*Cell Interleaving*).
+  - **Conmutación Pura por Hardware:** A principios de los 90, los ASICs podían conmutar estructuras fijas de 53 bytes a velocidades de gigabits en hardware, cuando los procesadores aún no podían enrutar paquetes IP variables a esa velocidad.
+
+* **Causas Técnicas de su Obsolescencia frente a IP/MPLS:**
+  1. **"Cell Tax" (Impuesto de Celda Ineficiente):** Un encabezado de 5 bytes sobre una carga útil de 48 bytes representa una sobrecarga fija del **$5 / 53 \approx 9.43\%$** exclusivamente en Capa 2. En enlaces troncales de alto ancho de banda, desperdiciar casi un $10\%$ de la capacidad en cabeceras era inadmisible frente a Ethernet o MPLS (cuya sobrecarga es $< 1.5\%$).
+  2. **Complejidad de Segmentación y Reensamblado (SAR):** Trocear un paquete IP de 1500 bytes en 32 celdas de 48 bytes y reensamblarlas en destino exigía costosos módulos de hardware (*AAL5 - ATM Adaptation Layer*). Además, si se perdía una sola celda de 53 bytes en tránsito, todo el paquete IP de 1500 bytes quedaba corrupto y debía ser retransmitido en su totalidad (*Early Packet Discard* palió esto, pero demostró la ineficiencia de la celda pequeña).
+  3. **Evolución del Hardware IP y MPLS:** El surgimiento de matrices de conmutación Ethernet no bloqueantes y el protocolo MPLS permitieron conmutar paquetes de tamaño variable a velocidad de línea (*wire-speed*), ofreciendo Calidad de Servicio superior sin la rigidez de ATM.
+
+</SolutionDrawer>

@@ -58,7 +58,8 @@ function resolveLocalBrowserChannel(): "chrome" | "msedge" | undefined {
 }
 
 const channel = resolveLocalBrowserChannel();
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:4321";
+const previewPort = process.env.PLAYWRIGHT_PORT ?? "4323";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${previewPort}`;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -82,9 +83,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run preview",
-    url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    command: `node ./node_modules/astro/bin/astro.mjs preview --port ${previewPort}`,
+    port: Number(previewPort),
+    reuseExistingServer: !process.env.CI && Boolean(process.env.PLAYWRIGHT_BASE_URL),
     timeout: 60_000,
+    env: { ASTRO_TELEMETRY_DISABLED: "1" },
   },
 });

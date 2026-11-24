@@ -1,0 +1,64 @@
+---
+id: "redes-ej-23"
+courseId: "redes"
+number: 23
+title: "Redes Definidas por Software (SDN): Arquitectura, Controlador Centralizado y APIs"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 3"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+  - "redes-presentacion-16"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El paradigma de **Redes Definidas por Software (SDN)** transforma el modelo de operación de redes tradicionales:
+1. Explique el principio fundamental de SDN: ¿cómo se desacoplan el plano de control y el plano de datos y qué rol cumple el **Controlador SDN**?
+2. Diferencie las interfaces de programación **Southbound APIs** (ej. OpenFlow, P4, NETCONF) de las **Northbound APIs** (RESTful, gRPC), indicando qué entidades se comunican a través de cada una.
+3. Analice las ventajas de SDN en términos de visibilidad global de la red, automatización y programabilidad frente a la gestión tradicional caja por caja.
+
+**Qué está evaluando la cátedra**  
+Comprensión de los modelos SDN modernos, dominio de la arquitectura de capas y protocolos de señalización de planos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-23">
+
+## 1. Principio Fundamental de SDN y el Controlador Centralizado
+
+* **Desacoplamiento Físico de Planos:**  
+  En las redes tradicionales, cada switch o router posee su propio plano de control local (toma decisiones de forma autónoma con una visión parcial del entorno). SDN **extrae el plano de control fuera de los conmutadores físicos** y lo centraliza de manera lógica en un sistema de software dedicado: el **Controlador SDN** (ej. OpenDaylight, ONOS, Cisco ACI).
+* **Rol del Controlador SDN:**  
+  El controlador mantiene una base de datos con la **visión topológica global y en tiempo real** de toda la infraestructura. Los conmutadores físicos quedan reducidos a simples dispositivos de conmutación del plano de datos (*White-box switches*) que se limitan a seguir las tablas de flujos programadas por el controlador.
+
+---
+
+## 2. Southbound APIs vs Northbound APIs
+
+* **Southbound APIs (Interfaces Hacia el Sur):**
+  - **Función:** Conectan el Controlador SDN con los conmutadores y routers físicos del plano de datos.
+  - **Protocolos:** **OpenFlow**, **P4**, **NETCONF/YANG**, **BGP-LS**.
+  - **Uso:** El controlador programa directamente las tablas de coincidencia y acción (*Match-Action Tables*) en los conmutadores físicos y recopila contadores de tráfico y alarmas.
+* **Northbound APIs (Interfaces Hacia el Norte):**
+  - **Función:** Conectan el Controlador SDN con las aplicaciones de negocio, sistemas de orquestación en la nube (Kubernetes, OpenStack) y herramientas de gestión empresarial.
+  - **Protocolos:** Interfaces **RESTful (JSON sobre HTTPS)** y **gRPC**.
+  - **Uso:** Permite a los desarrolladores y administradores solicitar recursos de red (crear una VLAN, aislar un microservicio, aplicar políticas de firewall) mediante código de software sin conocer la topología física subyacente.
+
+---
+
+## 3. Ventajas Estratégicas de SDN
+
+1. **Visibilidad Global y Optimización de Tráfico:** Al contar con un mapa centralizado de toda la red, el controlador puede calcular rutas óptimas globales considerando el retardo y la utilización real de los enlaces, superando la visión fragmentada y miope de los protocolos IGP tradicionales.
+2. **Automatización y Eliminación de Errores Humanos:** Reemplaza la configuración manual comando por comando (CLI) en cientos de conmutadores por políticas declarativas centralizadas (*Intent-Based Networking*).
+3. **Aprovisionamiento Dinámico de Servicios:** Reduce los tiempos de despliegue de nuevas redes o políticas de seguridad de semanas a segundos, habilitando la verdadera computación en la nube elástica.
+
+</SolutionDrawer>

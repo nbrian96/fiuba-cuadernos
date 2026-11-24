@@ -35,12 +35,32 @@
         {
           "lead": "Monomodo (SMF) vs Multimodo (MMF):",
           "body": "SMF utiliza núcleo estrecho (~$9\\,\\mu\\text{m}$) eliminando la dispersión modal para largas distancias; MMF (~$50\\,\\mu\\text{m}$) se reserva para distancias cortas en centro de datos."
+        },
+        {
+          "lead": "Conectores UPC vs APC:",
+          "body": "UPC (azul, $0^\\circ$) tiene $\\text{ORL} \\ge 50\\text{ dB}$; APC (verde, $8^\\circ$) tiene $\\text{ORL} \\ge 65\\text{ dB}$, obligatorio en GPON, video RF y DWDM."
+        }
+      ]
+    },
+    {
+      "id": "codigo-hamming",
+      "title": "3. Código de Hamming y Detección de Errores",
+      "formula": "2^K \\ge M + K + 1",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Condición de bits de paridad:",
+          "body": "Para $M$ bits de datos, se agregan $K$ bits de paridad ubicados en las posiciones potencia de dos ($1, 2, 4, 8...$)."
+        },
+        {
+          "lead": "Distancia de Hamming ($d$):",
+          "body": "Para detectar $e$ errores se requiere $d \\ge e + 1$. Para corregir $t$ errores simples de 1 bit se requiere $d \\ge 2t + 1$ (mínimo $d = 3$)."
         }
       ]
     },
     {
       "id": "subnetting-ip",
-      "title": "3. Direccionamiento IPv4 y VLSM",
+      "title": "4. Direccionamiento IPv4 y VLSM",
       "formula": "N_{\\text{hosts utilizables}} = 2^{32 - P} - 2",
       "variant": "warning",
       "listType": "ul",
@@ -52,6 +72,22 @@
         {
           "lead": "Enlaces punto a punto:",
           "body": "En enlaces de enrutamiento /30 se obtienen 2 hosts utilizables ($2^{2} - 2 = 2$); bajo RFC 3021 se admite /31 sin broadcast ni ID de red en enlaces dedicados."
+        }
+      ]
+    },
+    {
+      "id": "concurrencia-dimensionamiento",
+      "title": "5. Concurrencia y Dimensionamiento de Enlaces",
+      "formula": "N_c = N_{\\text{total}} \\times C",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Usuarios concurrentes ($N_c$):",
+          "body": "$N_c = N_{total} \\times C$, donde $C$ es el factor de concurrencia ($0.20$ a $0.35$ en oficinas, $0.60$ a $0.85$ en call centers)."
+        },
+        {
+          "lead": "Ancho de banda con margen operativo:",
+          "body": "$BW_{total} = BW_{base} \\times (1 + M_{seguridad}) \\times (1 + T_{crecimiento})^n$, donde $M_{seguridad} \\approx 20\\%-30\\%$ y $T_{crecimiento} \\approx 15\\%$ anual."
         }
       ]
     }

@@ -79,8 +79,15 @@ export function ExerciseCard({
             }
           />
           {showDetailLink ? (
-            <a className="btn btn-primary" href={exercise.detailHref}>
+            <a
+              className="btn btn-primary"
+              href={exercise.detailHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Abrir ejercicio
+              <span aria-hidden="true"> ↗</span>
+              <span className="sr-only"> (se abre en una nueva pestaña)</span>
             </a>
           ) : null}
         </div>

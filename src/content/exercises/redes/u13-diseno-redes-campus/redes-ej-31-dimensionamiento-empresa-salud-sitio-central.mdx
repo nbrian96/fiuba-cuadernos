@@ -1,0 +1,92 @@
+---
+id: "redes-ej-31"
+courseId: "redes"
+number: 31
+title: "Dimensionamiento de Red Corporativa: Empresa de Salud — Sitio Central (Caso 1)"
+unit: "u13-diseno-redes-campus"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Manual Maestro Unificado FIUBA — Clase 12, Caso 1"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-12"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una **Empresa de Salud** requiere dimensionar los enlaces de conectividad WAN de su **Sitio Central** aplicando la metodología oficial de dimensionamiento corporativo de la cátedra:
+
+- **Población del sitio:** $N_{\text{total}} = 60$ usuarios (personal administrativo, coordinación médica y soporte).
+- **Factor de concurrencia en hora pico:** $C = 40\%$ ($0{,}40$).
+- **Perfil de consumo por usuario concurrente ($N_c$):**
+  - Tráfico **IT corporativo** (sistemas de gestión, turnos e historia clínica): $0{,}4\text{ Mbps/usuario}$.
+  - Tráfico de **Internet corporativo** (navegación, nube y portales web): $1{,}5\text{ Mbps/usuario}$.
+  - Tráfico en **Tiempo Real** (telefonía VoIP y videoconferencia operativa): $1{,}0\text{ Mbps/usuario}$.
+- **Servicios de infraestructura fijos (100% simultaneidad):**
+  - **Gestión, monitoreo y telemetría de red** (SNMP, syslog, respaldo administrativo): $2{,}4\text{ Mbps}$.
+- **Criterio de ingeniería:** aplicar un **margen de crecimiento y seguridad operativa del $+40\%$**.
+
+Se solicita:
+1. Calcular la cantidad de usuarios concurrentes ($N_c$) y el ancho de banda base por servicio ($BW_{\text{base}}$).
+2. Aplicar el margen operativo del $+40\%$ para determinar el ancho de banda total requerido ($BW_{\text{total}}$).
+3. Emitir el dictamen de ingeniería comparando la alternativa de **enlace único consolidado** frente a una **arquitectura desacoplada (MPLS + Internet)**, incluyendo lineamientos de QoS.
+
+**Qué está evaluando la cátedra**  
+Aplicación paso a paso de la metodología de Clase 12 ($N_c = N_{\text{total}} \times C$), desagregación por perfiles de tráfico (IT, Internet, Tiempo Real y Gestión), cálculo de margen operativo y criterio de ingeniería para elegir circuitos comerciales y políticas de calidad de servicio.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-31">
+
+## 1. Cálculo de Usuarios Concurrentes y Tráfico Base
+
+1. **Usuarios concurrentes en hora pico ($N_c$):**
+   $$N_c = N_{\text{total}} \times C = 60 \times 0{,}40 = 24 \text{ usuarios concurrentes}$$
+
+2. **Desglose de demanda por perfil de tráfico:**
+
+| Servicio / Categoría | Cálculo | Ancho de Banda |
+| :--- | :--- | :---: |
+| **IT Corporativo** | $24 \times 0{,}4\text{ Mbps}$ | $9{,}6\text{ Mbps}$ |
+| **Internet Corporativo** | $24 \times 1{,}5\text{ Mbps}$ | $36{,}0\text{ Mbps}$ |
+| **Tiempo Real (VoIP / Video)** | $24 \times 1{,}0\text{ Mbps}$ | $24{,}0\text{ Mbps}$ |
+| **Gestión y Monitoreo (fijo)** | Carga continua $100\%$ | $2{,}4\text{ Mbps}$ |
+| **Total Base ($BW_{\text{base}}$)** | $9{,}6 + 36{,}0 + 24{,}0 + 2{,}4$ | **$72{,}0\text{ Mbps}$** |
+
+$$BW_{\text{base}} = 9{,}6 + 36{,}0 + 24{,}0 + 2{,}4 = 72{,}0\text{ Mbps}$$
+
+---
+
+## 2. Aplicación del Margen Operativo ($+40\%$)
+
+Para absorber ráfagas en hora pico, crecimiento vegetativo de usuarios y evitar que el enlace opere por encima del umbral de saturación ($\approx 70\%\text{–}75\%$ de utilización sostenida), se aplica el margen de diseño:
+
+$$BW_{\text{total}} = BW_{\text{base}} \times (1 + 0{,}40) = 72{,}0\text{ Mbps} \times 1{,}40 = \mathbf{100{,}8\text{ Mbps}}$$
+
+---
+
+## 3. Dictamen de Ingeniería y Arquitectura WAN
+
+Dado que la demanda dimensionada con margen asciende a **$100{,}8\text{ Mbps}$** (superando ligeramente el escalón comercial de $100\text{ Mbps}$), se evalúan dos alternativas de contratación:
+
+### Alternativa A — Enlace Único Consolidado
+- **Capacidad recomendada:** circuito simétrico dedicado de **$150\text{–}200\text{ Mbps}$** sobre fibra óptica con SLA corporativo.
+- **Condición obligatoria:** implementar **QoS DiffServ** en el router de borde para proteger los $24{,}0\text{ Mbps}$ de Tiempo Real (`EF / DSCP 46`) y los $9{,}6\text{ Mbps}$ de IT (`AF31/AF41`), evitando que la navegación de Internet degrade llamadas o sistemas clínicos.
+- **Limitación:** presenta punto único de falla si no se complementa con un enlace de contingencia.
+
+### Alternativa B — Arquitectura Desacoplada (Recomendada)
+- **Tráfico corporativo privado (IT + Tiempo Real + Gestión):**
+  $$BW_{\text{privado}} = (9{,}6 + 24{,}0 + 2{,}4) \times 1{,}40 = 36{,}0 \times 1{,}40 = 50{,}4\text{ Mbps}$$
+  Se contrata un enlace **MPLS L3VPN de $50\text{–}100\text{ Mbps}$** (idealmente **$100\text{ Mbps}$** para mantener holgura de crecimiento y baja latencia garantizada).
+- **Tráfico de salida a Internet:**
+  $$BW_{\text{Internet}} = 36{,}0 \times 1{,}40 = 50{,}4\text{ Mbps}$$
+  Se contrata un enlace **Internet Corporativo Dedicado de $100\text{ Mbps}$** con salida local directa (protegida por NGFW), el cual además actúa como **contingencia mediante túnel IPsec / SD-WAN** ante una caída del circuito MPLS.
+
+</SolutionDrawer>

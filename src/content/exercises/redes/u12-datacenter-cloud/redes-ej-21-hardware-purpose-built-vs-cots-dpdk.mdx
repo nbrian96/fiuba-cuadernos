@@ -1,0 +1,57 @@
+---
+id: "redes-ej-21"
+courseId: "redes"
+number: 21
+title: "Evolución de Hardware de Red: Purpose-Built (ASIC) vs COTS con Aceleración DPDK"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 1"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+  - "redes-presentacion-16"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En la arquitectura de sistemas de telecomunicaciones modernos, el diseño de hardware ha evolucionado desde cajas negras propietarias hacia plataformas abiertas:
+1. Compare los equipos **Purpose-Built** basados en circuitos integrados de aplicación específica (**ASIC**) frente a plataformas basadas en servidores **COTS (Commercial Off-The-Shelf)** x86. Detalle ventajas y desventajas en términos de rendimiento (*wire-speed*), flexibilidad de programación, costo de adquisición (*CapEx*) y dependencia del fabricante (*vendor lock-in*).
+2. Explique cómo el marco de trabajo **DPDK (Data Plane Development Kit)** y la virtualización **SR-IOV (Single Root I/O Virtualization)** permiten a un servidor COTS alcanzar tasas de procesamiento de decenas de millones de paquetes por segundo (Mpps). ¿Qué cuello de botella del kernel del sistema operativo resuelven?
+
+**Qué está evaluando la cátedra**  
+Comprensión de las tendencias tecnológicas en infraestructura de operadores y centros de datos, optimización del plano de datos en software y técnicas de elusión de interrupciones del kernel.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-21">
+
+## 1. Purpose-Built (ASIC Propietario) vs COTS x86
+
+| Criterio | Purpose-Built (ASIC Propietario) | COTS (Commercial Off-The-Shelf x86) |
+| :--- | :--- | :--- |
+| **Rendimiento de Conmutación** | **Máximo rendimiento a velocidad de línea (*Wire-Speed*)**. Conmutación de terabits con latencias sub-microsegundo por hardware. | Alto con aceleración (DPDK/SR-IOV), pero inferior a ASICs dedicados en cargas masivas de terabits. |
+| **Flexibilidad y Ciclo de Vida** | Rígido. Modificar funciones de red exige rediseñar el silicio (ciclos de innovación de 2 a 4 años). | **Totalmente programable**. Nuevas funciones y protocolos se despliegan mediante actualizaciones de software en minutos. |
+| **Costo (CapEx / OpEx)** | Muy elevado. Hardware propietario costoso y soporte cautivo (*Vendor Lock-in*). | **Económico**. Servidores comerciales estándar de alta disponibilidad y múltiples proveedores. |
+| **Eficiencia Energética** | Muy alta por paquete conmutado. | Menor eficiencia energética en comparación con un ASIC dedicado. |
+
+---
+
+## 2. Mecanismo de Aceleración con DPDK y SR-IOV
+
+* **El Cuello de Botella del Kernel Tradicional:**  
+  En un sistema operativo convencional (Linux estándar), cada paquete recibido genera una interrupción de hardware hacia la CPU. Esto fuerza un cambio de contexto (*context switch*), copias de memoria intermedias (*sk_buff*) entre el espacio del kernel y el espacio de usuario, y contención por bloqueos de CPU. A 10 Gbps o 40 Gbps, la CPU colapsa atendiendo millones de interrupciones por segundo.
+* **Solución de DPDK (Data Plane Development Kit):**
+  1. **Controladores en Modo Sondeo (Poll Mode Drivers - PMD):** Elude el stack de red del kernel. Un hilo de CPU dedicado sondea directamente los anillos de la tarjeta de red (NIC) en memoria de espacio de usuario, eliminando interrupciones y cambios de contexto.
+  2. **HugePages:** Utiliza páginas de memoria de 2 MB o 1 GB en lugar de 4 KB, minimizando fallos en la memoria TLB de la CPU.
+  3. **Zero-Copy DMA:** Los paquetes son transferidos directamente desde la interfaz física a la memoria de la aplicación sin copias intermedias.
+* **Rol de SR-IOV (Single Root I/O Virtualization):**  
+  Permite que una única tarjeta de red física se presente ante el bus PCIe como múltiples funciones virtuales independientes (**VF - Virtual Functions**), entregando acceso directo a máquinas virtuales (VMs) o contenedores sin sobrecarga de emulación del hipervisor.
+
+</SolutionDrawer>

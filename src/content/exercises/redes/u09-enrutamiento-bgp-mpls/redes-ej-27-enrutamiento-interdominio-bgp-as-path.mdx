@@ -1,0 +1,69 @@
+---
+id: "redes-ej-27"
+courseId: "redes"
+number: 27
+title: "Enrutamiento Interdominio con BGP-4: Vector de Caminos y Selección por Atributos"
+unit: "u09-enrutamiento-bgp-mpls"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 7"
+isParcial: true
+examIds:
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-09"
+  - "redes-presentacion-13"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **BGP-4 (Border Gateway Protocol - RFC 4271)** es el único protocolo de enrutamiento exterior que mantiene cohesionada la malla global de Internet:
+1. Explique por qué BGP se clasifica como un protocolo de **Vector de Caminos (Path Vector)** y no como un protocolo de estado de enlace (como OSPF) o de vector de distancias clásico.
+2. Detalle la estructura y doble función del atributo **`AS_PATH`**: ¿cómo previene bucles de enrutamiento y cómo actúa como métrica de preferencia de caminos?
+3. Enuncie en orden jerárquico estricto los primeros cinco criterios del **Algoritmo de Selección de la Mejor Ruta BGP** (BGP Best Path Selection).
+
+**Qué está evaluando la cátedra**  
+Comprensión del modelo de Sistemas Autónomos en Internet, dominio de los mecanismos de prevención de bucles en BGP y aplicación de las reglas jerárquicas de selección de rutas.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-27">
+
+## 1. Concepto de Vector de Caminos (Path Vector)
+
+* **Diferencia con Protocolos Interiores (IGP):**  
+  Protocolos como OSPF buscan el camino más corto calculando métricas basadas en el ancho de banda del enlace (algoritmo de Dijkstra) dentro de una única organización confiable.
+* **Vector de Caminos en BGP:**  
+  Internet está formada por miles de **Sistemas Autónomos (AS)** independientes con relaciones comerciales antagónicas. Un operador no puede confiar ciegamente en métricas numéricas internas de terceros.
+  - En lugar de anunciar una simple distancia o costo métrico, un router BGP anuncia la **secuencia exacta de Sistemas Autónomos (el camino completo)** que debe atravesarse para alcanzar un prefijo de red de destino.
+  - Esto permite aplicar **políticas comerciales contractuales**, filtrado de prefijos y acuerdos de tránsito/peering sin depender de una métrica universal compartida.
+
+---
+
+## 2. El Atributo AS_PATH y sus Dos Funciones Críticas
+
+El atributo `AS_PATH` es una lista ordenada de números de Sistema Autónomo (ASN) que el anuncio de red ha atravesado:
+$$\text{Prefijo: 200.16.89.0/24} \quad \mathbf{AS\_PATH: [29257, 10429, 3549]}$$
+
+1. **Prevención de Bucles Interdominio:**  
+   Cuando un router BGP recibe una actualización de ruta proveniente de un vecino externo (eBGP), inspecciona la lista `AS_PATH`. Si detecta que **su propio número de Sistema Autónomo ya figura en la lista**, concluye inmediatamente que el anuncio dio una vuelta completa y descarta la ruta de forma automática, impidiendo la formación de bucles globales.
+2. **Métrica de Distancia Inter-AS:**  
+   En igualdad de condiciones de políticas comerciales locales, un camino que atraviesa una menor cantidad de Sistemas Autónomos intermedios (menor longitud del vector `AS_PATH`) es preferido sobre un camino más largo, asumiendo menor latencia y menor cantidad de saltos de red.
+
+---
+
+## 3. Los Primeros Cinco Criterios del Algoritmo de Selección BGP
+
+Cuando un router BGP recibe múltiples caminos válidos hacia un mismo prefijo de red, evalúa secuencialmente los siguientes atributos hasta desempatar:
+
+1. **Mayor Weight (Peso — específico de Cisco):** Valor numérico de configuración puramente local (rango 0 a 65535). No se transmite a ningún otro router.
+2. **Mayor Local Preference (`LOCAL_PREF`):** Valor preferido globalmente dentro del Sistema Autónomo propio (por defecto 100). Se propaga mediante iBGP para definir la salida preferida hacia Internet.
+3. **Ruta originada localmente:** Prefiere rutas originadas en el propio router mediante comandos `network` o redistribución sobre rutas aprendidas de otros routers.
+4. **Menor longitud de `AS_PATH`:** Prefiere la ruta que contenga la menor cantidad de números de AS en su lista.
+5. **Mejor Origin Code:** Prefiere rutas con origen IGP (`i`) sobre EGP (`e`), y EGP sobre Incomplete (`?`).
+
+</SolutionDrawer>

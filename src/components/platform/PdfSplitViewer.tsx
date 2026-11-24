@@ -182,6 +182,8 @@ export function PdfSplitViewer({
               rel="noopener noreferrer"
             >
               Abrir archivo
+              <span aria-hidden="true"> ↗</span>
+              <span className="sr-only"> (se abre en una nueva pestaña)</span>
             </a>
           ) : null}
         </div>
@@ -245,6 +247,8 @@ export function PdfSplitViewer({
                       rel="noopener noreferrer"
                     >
                       <code>{file.path}</code>
+                      <span aria-hidden="true"> ↗</span>
+                      <span className="sr-only"> (se abre en una nueva pestaña)</span>
                     </a>
                   ) : (
                     <code>{file.path}</code>
@@ -292,6 +296,8 @@ export function PdfSplitViewer({
                 rel="noopener noreferrer"
               >
                 Abrir o descargar archivo
+                <span aria-hidden="true"> ↗</span>
+                <span className="sr-only"> (se abre en una nueva pestaña)</span>
               </a>
             </div>
           ) : (

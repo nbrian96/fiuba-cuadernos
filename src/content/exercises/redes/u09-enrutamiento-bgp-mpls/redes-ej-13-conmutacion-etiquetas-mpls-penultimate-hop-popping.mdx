@@ -1,0 +1,81 @@
+---
+id: "redes-ej-13"
+courseId: "redes"
+number: 13
+title: "Conmutación por Etiquetas MPLS: Estructura Shim Header, Operaciones Push/Swap/Pop y PHP"
+unit: "u09-enrutamiento-bgp-mpls"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 13"
+isParcial: true
+examIds:
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-13"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **MPLS (Multi-Protocol Label Switching - RFC 3031)** constituye la base del transporte de datos en los núcleos (*Core*) de los principales operadores de telecomunicaciones e ISPs:
+1. Grafique y describa los cuatro campos que componen la etiqueta MPLS (*Shim Header* de 32 bits): Label Value, Traffic Class (EXP), Bottom of Stack (S) y TTL.
+2. Defina los roles de los conmutadores en la red MPLS: **Ingress LER**, **Core LSR** y **Egress LER**, detallando las tres operaciones básicas sobre la pila de etiquetas: **Push**, **Swap** y **Pop**.
+3. Explique detalladamente el mecanismo de optimización **Penultimate Hop Popping (PHP)**: ¿qué problema de sobrecarga de procesamiento en el router de egreso resuelve y qué valor de etiqueta reservada se utiliza para señalizarlo?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los mecanismos de conmutación por etiquetas en redes de transporte troncal, manipulación de la pila de etiquetas de 32 bits y optimización de planos de datos en routers de borde.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-13">
+
+## 1. Estructura de la Etiqueta MPLS (Shim Header de 32 bits)
+
+La etiqueta se inserta como una "cuña" (*shim*) entre el encabezado de Capa 2 (trama Ethernet) y el encabezado de Capa 3 (paquete IP):
+
+```
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                Label Value (20 bits)          |  TC |S|  TTL  |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+
+* **Label Value (Valor de Etiqueta, 20 bits):** Identificador numérico de la etiqueta de conmutación. Admite $2^{20} = 1.048.576$ valores posibles. Los valores 0 a 15 están estrictamente reservados por la IETF (ej. Etiqueta 0: *IPv4 Explicit Null*, Etiqueta 3: *Implicit Null*).
+* **Traffic Class / EXP (3 bits):** Antiguamente denominado campo Experimental. Se utiliza para mapear la Calidad de Servicio (**QoS / CoS**), preservando los valores de precedencia IP o DSCP en la red de conmutación para encolamiento prioritario (*DiffServ*).
+* **Bottom of Stack ($S$, 1 bit):** Bit de fin de pila. Vale `1` si esta etiqueta es la última de la pila (es decir, inmediatamente detrás se encuentra el encabezado IP de Capa 3). Vale `0` si hay más etiquetas apiladas debajo (indispensable para soportar VPNs MPLS de Capa 3 o túneles de ingeniería de tráfico MPLS-TE).
+* **TTL (Time to Live, 8 bits):** Copia el valor del TTL del paquete IP en el momento del ingreso. Se decrementa en 1 en cada conmutador LSR atravesado para prevenir bucles de conmutación.
+
+---
+
+## 2. Roles de Routers y Operaciones sobre Etiquetas
+
+* **Roles en la Red:**
+  - **Ingress LER (Label Edge Router):** Router de borde de entrada a la nube MPLS. Recibe paquetes IP nativos desde los clientes, clasifica el tráfico en Clases de Equivalencia de Reenvío (**FEC - Forwarding Equivalence Class**) y les asigna una etiqueta.
+  - **Core LSR (Label Switch Router):** Router de tránsito dentro del núcleo del operador. Conmuta paquetes basándose exclusivamente en el valor de la etiqueta entrante leyendo su tabla **LFIB (Label Forwarding Information Base)**. No inspecciona direcciones IP.
+  - **Egress LER (Label Edge Router):** Router de borde de salida que retira la etiqueta MPLS y reenvía el paquete IP tradicional hacia la red del cliente final.
+
+* **Operaciones Básicas:**
+  - **PUSH:** Operación ejecutada por el *Ingress LER* consistente en insertar una o más etiquetas MPLS al paquete entrante.
+  - **SWAP:** Operación ejecutada por los *Core LSR*. El router lee la etiqueta superior entrante, busca en la tabla LFIB, la reemplaza por una nueva etiqueta saliente y transmite el paquete por la interfaz física correspondiente hacia el siguiente salto.
+  - **POP:** Retira la etiqueta superior de la pila.
+
+---
+
+## 3. Penultimate Hop Popping (PHP) y Etiqueta Reservada 3
+
+* **El Problema Sin PHP (Doble Búsqueda Ineficiente):**
+  Si el router penúltimo en el camino de conmutación (*LSP*) transmite el paquete con la etiqueta hacia el *Egress LER*:
+  1. El *Egress LER* recibe el paquete, lee la etiqueta y consulta su tabla de etiquetas LFIB para descubrir que la acción es removerla (*Pop*).
+  2. Luego de quitar la etiqueta, debe realizar una **segunda búsqueda de enrutamiento**, esta vez sobre la cabecera IPv4 en su tabla de enrutamiento FIB tradicional para determinar a qué cliente o interfaz entregar el paquete.
+  Esta doble búsqueda por paquete degrada drásticamente la capacidad de conmutación de los conmutadores de borde.
+
+* **Solución PHP (Penultimate Hop Popping):**
+  - El *Egress LER*, durante la señalización del camino mediante el protocolo **LDP (Label Distribution Protocol)** o **RSVP-TE**, le anuncia a su router vecino anterior una etiqueta especial de valor reservado: **Etiqueta 3 (Implicit Null Label)**.
+  - Al ver la etiqueta 3 asignada a ese destino, el router penúltimo retira la etiqueta exterior (**hace el POP antes de transmitir**) y envía el paquete con su encabezado IP nativo directamente al *Egress LER*.
+  - De este modo, el *Egress LER* recibe el paquete directamente en formato IP y efectúa una **única búsqueda en su tabla FIB**, optimizando la velocidad del plano de datos y reduciendo la latencia de entrega.
+
+</SolutionDrawer>

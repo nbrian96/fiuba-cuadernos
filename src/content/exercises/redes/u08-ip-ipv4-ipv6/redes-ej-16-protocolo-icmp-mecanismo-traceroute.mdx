@@ -1,0 +1,95 @@
+---
+id: "redes-ej-16"
+courseId: "redes"
+number: 16
+title: "Protocolo ICMP: Tipos de Mensajes y Principio de Funcionamiento de Traceroute"
+unit: "u08-ip-ipv4-ipv6"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 16"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-09"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **ICMP (Internet Control Message Protocol - RFC 792)** proporciona control y señalización operativa en la Capa de Red:
+1. Describa la función de los mensajes ICMP más relevantes indicando su Tipo y Código:
+   - Echo Request / Echo Reply (utilizados por `ping`).
+   - Destination Unreachable (con códigos de red inalcanzable, host inalcanzable, puerto inalcanzable y fragmentación requerida con DF activo).
+   - Time Exceeded (con código de tiempo de vida en tránsito agotado).
+2. Desarrolle detalladamente el algoritmo de la herramienta **Traceroute**:
+   - ¿Qué tipo de paquetes transmite inicialmente (UDP vs ICMP)?
+   - ¿Cómo se manipula el campo **TTL** de los paquetes y cómo se descubre la dirección IP de cada router en la ruta?
+   - ¿Cómo detecta la herramienta que ha alcanzado el host de destino final en sistemas Linux (sondas UDP a puertos no asignados) vs sistemas Windows (`tracert` con ICMP)?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los mecanismos de diagnóstico de Capa 3, interacción entre protocolos de señalización y transporte, y análisis de trazas de paquetes en Internet.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-16">
+
+## 1. Mensajes ICMP Fundamentales
+
+El protocolo ICMP se encapsula directamente dentro de datagramas IP (campo *Protocol* = 1 en IPv4):
+
+* **Echo Request (Type 8, Code 0) y Echo Reply (Type 0, Code 0):**
+  - Base de la utilidad `ping`. El emisor envía un Echo Request con un identificador, número de secuencia y timestamp; el receptor devuelve un Echo Reply duplicando la carga útil para calcular la conectividad y el retardo de ida y vuelta (**RTT**).
+* **Destination Unreachable (Type 3):**
+  - Señaliza que un paquete no pudo ser entregado al destinatario:
+    - *Code 0 — Net Unreachable:* El router no posee ninguna ruta en su tabla FIB hacia la red destino.
+    - *Code 1 — Host Unreachable:* El router de destino no pudo resolver la dirección MAC del host mediante ARP (equipo apagado o desconectado).
+    - *Code 3 — Port Unreachable:* El datagrama de transporte arribó al host pero ningún proceso de software estaba escuchando en el puerto UDP solicitado.
+    - *Code 4 — Fragmentation Needed and DF was Set:* El paquete excede la MTU del enlace de salida y tenía el bit DF en 1 (clave para Path MTU Discovery).
+* **Time Exceeded (Type 11, Code 0 — Time to Live exceeded in transit):**
+  - Emitido por un router intermedio cuando el campo **TTL** del datagrama recibido alcanza el valor cero tras ser decrementado. El router descarta el paquete y devuelve este mensaje incluyendo la cabecera IP original y los primeros 8 bytes del payload para que el emisor identifique la conexión afectada.
+
+---
+
+## 2. Algoritmo Detallado de Traceroute
+
+La herramienta mapea la secuencia topológica de routers de Capa 3 que median entre el cliente y el servidor:
+
+```
+Paso 1: [Cliente] -- (Paquete con TTL = 1) --> [Router 1: TTL=0 -> Descarta] 
+        [Cliente] <-- (ICMP Time Exceeded desde IP_Router_1) -- [Router 1]
+
+Paso 2: [Cliente] -- (Paquete con TTL = 2) --> [Router 1: TTL=1] --> [Router 2: TTL=0 -> Descarta]
+        [Cliente] <-- (ICMP Time Exceeded desde IP_Router_2) -- [Router 2]
+
+Paso 3: ... se incrementa sucesivamente TTL = 3, 4, ... hasta alcanzar el destino final.
+```
+
+1. **Mapeo Salto a Salto:**
+   - El cliente envía tres sondas sucesivas con **$\text{TTL} = 1$**.
+   - El primer router en el camino decrementa el TTL a 0, descarta el paquete y devuelve un mensaje **ICMP Time Exceeded (Type 11, Code 0)**.
+   - El cliente extrae la **dirección IP de origen** de ese mensaje ICMP (que corresponde a la interfaz del primer router) y calcula el tiempo de ida y vuelta (*Round Trip Time - RTT*) midiendo el intervalo entre el envío y la recepción.
+2. **Incremento Progresivo:**
+   - El cliente envía tres sondas con **$\text{TTL} = 2$**. El primer router lo decrementa a 1 y lo reenvía; el segundo router lo decrementa a 0 y emite el ICMP *Time Exceeded*.
+   - El cliente incrementa sucesivamente el TTL ($\text{TTL} = 3, 4, 5\dots$), registrando cada router del camino.
+
+---
+
+## 3. Detección del Host de Destino Final
+
+Existen dos implementaciones estándar en la industria según el sistema operativo:
+
+* **Implementación Unix / Linux (`traceroute` estándar):**
+  - Transmite datagramas **UDP** dirigidos a **puertos altos e inusuales** (rango 33434 a 33534).
+  - Los routers intermedios descartan el paquete por expiración de TTL y devuelven ICMP *Time Exceeded*.
+  - **Condición de Finalización:** Cuando el paquete finalmente arriba al host de destino, el TTL todavía es mayor a cero. El sistema operativo del servidor inspecciona el paquete UDP y descubre que no hay ningún servicio escuchando en el puerto 33434. Por especificación de transporte, el servidor devuelve un mensaje **ICMP Destination Unreachable con código Port Unreachable (Type 3, Code 3)**.
+  - Al recibir un *Port Unreachable*, el cliente concluye que alcanzó el host final y detiene la traza.
+* **Implementación Windows (`tracert`):**
+  - Utiliza paquetes **ICMP Echo Request (Type 8)** directamente en lugar de datagramas UDP.
+  - Los routers intermedios responden con ICMP *Time Exceeded* (Type 11).
+  - **Condición de Finalización:** Al llegar al host final, este responde con un mensaje **ICMP Echo Reply (Type 0, Code 0)**, lo que indica la finalización exitosa del trazado.
+
+</SolutionDrawer>

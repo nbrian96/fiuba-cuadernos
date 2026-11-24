@@ -37,6 +37,8 @@ export function CheatsheetDrawer({
   useEffect(() => {
     if (isOpen) {
       wasOpenRef.current = true;
+      const prevBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
 
       const inertTargets: Array<{ el: Element; hadInert: boolean }> = [];
       for (const child of Array.from(document.body.children)) {
@@ -79,6 +81,7 @@ export function CheatsheetDrawer({
       document.addEventListener("keydown", onKeyDown);
       return () => {
         document.removeEventListener("keydown", onKeyDown);
+        document.body.style.overflow = prevBodyOverflow;
         for (const item of inertTargets) {
           if (!item.hadInert) {
             item.el.removeAttribute("inert");
@@ -152,14 +155,20 @@ export function CheatsheetDrawer({
                 <h3 className="cheatsheet-section-title">{section.title}</h3>
                 {section.formulaHtml ? (
                   <div
-                    className="katex-display"
+                    className="cheatsheet-formula"
                     dangerouslySetInnerHTML={{ __html: section.formulaHtml }}
                   />
                 ) : null}
                 <ListTag style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.25rem" }}>
                   {section.items.map((item, idx) => (
                     <li key={`${section.id}-${idx}`}>
-                      {item.lead ? <strong>{item.lead} </strong> : null}
+                      {item.leadHtml ? (
+                        <>
+                          <strong dangerouslySetInnerHTML={{ __html: item.leadHtml }} />{" "}
+                        </>
+                      ) : item.lead ? (
+                        <strong>{item.lead} </strong>
+                      ) : null}
                       <span dangerouslySetInnerHTML={{ __html: item.bodyHtml }} />
                     </li>
                   ))}
@@ -180,7 +189,7 @@ export function CheatsheetDrawer({
         className="btn btn-ghost"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        aria-controls="cheatsheet-drawer"
+        aria-controls={isOpen ? "cheatsheet-drawer" : undefined}
         onClick={() => setIsOpen(true)}
         data-testid="cheatsheet-trigger"
       >

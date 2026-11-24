@@ -1,0 +1,68 @@
+---
+id: "redes-ej-20"
+courseId: "redes"
+number: 20
+title: "Protocolo DHCP: Ciclo DORA, Temporizadores de Concesión y Relay Agent (Opción 82)"
+unit: "u10-transporte-servicios"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 20"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-11"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **DHCP (RFC 2131)** automatiza la configuración de red de terminales:
+1. Explique los 4 pasos del ciclo **DORA (Discover, Offer, Request, Acknowledge)**: puertos UDP utilizados, direcciones IP origen/destino de cada mensaje y por qué el mensaje *Request* se transmite en broadcast.
+2. Defina los temporizadores de concesión (*Lease Time*): **T1 (Renovación)** y **T2 (Revinculación)**.
+3. ¿Por qué es necesario un **DHCP Relay Agent (Agente de Retransmisión con Opción 82)** cuando el servidor DHCP se encuentra en una subred o Centro de Datos diferente a la de los clientes?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los mecanismos de autoconfiguración IPv4, comportamiento de broadcasts a través de routers y operación de agentes de retransmisión L3.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-20">
+
+## 1. Ciclo DORA (Discover, Offer, Request, Acknowledge)
+
+DHCP opera sobre UDP: puerto servidor 67 y puerto cliente 68.
+
+1. **DHCP Discover (Cliente $\to$ Broadcast):**
+   - El cliente no posee dirección IP. Envía un paquete con $\text{IP origen} = 0.0.0.0$, $\text{IP dest} = 255.255.255.255$, $\text{MAC origen} = \text{NIC Cliente}$, $\text{MAC dest} = \text{FF:FF:FF:FF:FF:FF}$.
+2. **DHCP Offer (Servidor $\to$ Unicast/Broadcast):**
+   - Los servidores DHCP que reciben la solicitud reservan una IP disponible y responden ofreciendo la dirección IP propuesta, máscara de subred, gateway predeterminado y tiempo de concesión (*Lease Time*).
+3. **DHCP Request (Cliente $\to$ Broadcast):**
+   - El cliente selecciona una de las ofertas recibidas y emite un Request formalizando su elección.
+   - **Por qué viaja en Broadcast:** Para notificar a todos los demás servidores DHCP de la red que su oferta fue declinada, permitiéndoles liberar de inmediato las direcciones IP que habían reservado temporalmente.
+4. **DHCP Acknowledge (Servidor $\to$ Unicast/Broadcast):**
+   - El servidor seleccionado confirma la asignación final, fijando el inicio del contrato de concesión.
+
+---
+
+## 2. Temporizadores de Concesión (Lease Timers)
+
+* **T1 (Timer de Renovación — $50\%$ del Lease Time):**  
+  El cliente envía un *DHCP Request* por **unicast directo** al servidor original para extender el contrato. Si el servidor responde con *ACK*, el temporizador se reinicia.
+* **T2 (Timer de Revinculación — $87.5\%$ del Lease Time):**  
+  Si el servidor original no respondió en T1 (por caída del equipo), el cliente emite un *DHCP Request* en **broadcast** hacia cualquier servidor DHCP disponible en la red para evitar perder su dirección IP.
+* **Expiración ($100\%$):** Si expira el tiempo sin confirmación, el cliente libera la dirección IP inmediatamente y recomienza el ciclo con un *DHCP Discover*.
+
+---
+
+## 3. Rol del DHCP Relay Agent y Opción 82
+
+* **Problema:** Los routers de Capa 3 descartan por especificación todas las tramas de difusión (*broadcast*) locales. Si el servidor DHCP corporativo está centralizado en el Data Center, los mensajes *DHCP Discover* de las sucursales nunca llegarían.
+* **Solución del Relay Agent:**
+  - El router local intercepta el *Discover* en el puerto UDP 67, lo desencapsula y lo reenvía como un paquete **unicast enrutado directamente a la IP del servidor DHCP central**.
+  - **Opción 82 (Relay Agent Information Option):** El router adjunta información del conector físico de acceso (identificador de switch, slot y puerto del cliente) permitiendo que el servidor DHCP central asigne políticas de IP según la ubicación física del usuario.
+
+</SolutionDrawer>

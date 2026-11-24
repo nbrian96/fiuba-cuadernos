@@ -1,0 +1,91 @@
+---
+id: "redes-ej-08"
+courseId: "redes"
+number: 8
+title: "La Trama Ethernet IEEE 802.3: Estructura de Campos, Direccionamiento MAC y FCS (CRC-32)"
+unit: "u05-ethernet-lan"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 8"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-08"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El formato de la trama **Ethernet II / IEEE 802.3** es el estándar de Capa 2 predominante en redes locales e Internet:
+1. Grafique y describa todos los campos que componen la trama indicando su tamaño en bytes: Preámbulo, SFD, MAC Destino, MAC Origen, EtherType / Length, Payload (Carga Útil) y FCS.
+2. Analice la estructura binaria de una dirección MAC de 48 bits: ¿qué significan los 24 bits del OUI, qué representan los bits I/G (Individual/Group) y U/L (Universal/Local), y cómo se identifica una dirección de Broadcast?
+3. ¿Cómo opera el campo **FCS (Frame Check Sequence)** mediante el algoritmo de redundancia cíclica **CRC-32**? ¿Qué acción exacta realiza el hardware del switch o de la tarjeta de red cuando el valor computado no coincide con el FCS recibido en la trama?
+
+**Qué está evaluando la cátedra**  
+Conocimiento detallado de la PDU de Capa 2, comprensión del direccionamiento físico IEEE 802 y mecanismos de verificación de integridad por hardware.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-08">
+
+## 1. Estructura de Campos de la Trama Ethernet II
+
+```
++------------+--------+-------------+-------------+-----------+----------------------+----------+
+| Preámbulo  |  SFD   | MAC Destino | MAC Origen  | EtherType |       Payload        |   FCS    |
+|  (7 bytes) | (1 B)  |   (6 bytes) |   (6 bytes) | (2 bytes) |   (46 - 1500 bytes)  | (4 bytes)|
++------------+--------+-------------+-------------+-----------+----------------------+----------+
+```
+
+* **Preámbulo (7 bytes):** Patrón de bits alternado `10101010` (enviado el bit menos significativo primero). Permite que el oscilador y el circuito PLL (*Phase-Locked Loop*) del receptor sincronicen su reloj con la tasa de transmisión del emisor.
+* **SFD (Start Frame Delimiter, 1 byte):** Secuencia fija `10101011`. El último par de unos consecutivos rompe el patrón de sincronización y le indica al receptor que el próximo bit corresponde al inicio de la dirección MAC de destino.
+* **Dirección MAC Destino (6 bytes / 48 bits):** Dirección física de la tarjeta de red (NIC) de destino en el segmento local, o dirección multicast/broadcast.
+* **Dirección MAC Origen (6 bytes / 48 bits):** Dirección física de la interfaz del host o router que transmitió la trama.
+* **EtherType (2 bytes):** Identifica el protocolo de Capa de Red encapsulado en la carga útil:
+  - `0x0800`: IPv4
+  - `0x86DD`: IPv6
+  - `0x0806`: ARP
+  - `0x8100`: Trama etiquetada con VLAN IEEE 802.1Q
+* **Payload (Carga Útil, 46 a 1500 bytes):** Transporta el paquete de red (típicamente paquete IPv4 o IPv6). El tamaño máximo estándar es la **MTU (1500 bytes)**. Si el paquete superior contiene menos de 46 bytes, se agrega relleno (*Padding*) para que la trama completa alcance los **64 bytes mínimos**.
+* **FCS (Frame Check Sequence, 4 bytes):** Código de detección de errores de 32 bits calculado sobre los campos MAC Destino hasta el final del Payload.
+
+---
+
+## 2. Estructura Binaria de la Dirección MAC (IEEE 802)
+
+Una dirección MAC consta de 48 bits representados habitualmente en 6 pares de dígitos hexadecimales separados por dos puntos o guiones (ej. `00:1A:2B:3C:4D:5E`).
+
+* **OUI (Organizationally Unique Identifier — 24 bits iniciales):**
+  Asignado por el IEEE al fabricante de hardware (por ejemplo, Intel, Cisco, Apple). Garantiza unicidad global.
+* **NIC Specific / Device Identifier (24 bits finales):**
+  Asignado secuencialmente por el fabricante a cada tarjeta producida.
+* **Bits Especiales en el Primer Octeto (Bit 0 y Bit 1):**
+  - **Bit I/G (Individual / Group — bit menos significativo del primer octeto):**
+    - `0`: Dirección **Unicast** (Individual, identifica una interfaz única).
+    - `1`: Dirección **Multicast o Broadcast** (Grupo de hosts).
+  - **Bit U/L (Universal / Local — segundo bit menos significativo):**
+    - `0`: Dirección administrada universalmente (fijada de fábrica por el OUI del IEEE).
+    - `1`: Dirección administrada localmente (modificada administrativamente por software en el host).
+* **Dirección de Broadcast:**
+  Todos los 48 bits en 1 binario (`FF:FF:FF:FF:FF:FF`). Todos los conmutadores L2 replican esta trama por todos los puertos activos de la misma VLAN.
+
+---
+
+## 3. Operación del FCS mediante CRC-32
+
+1. **Cálculo en el Emisor:**
+   - El transmisor trata el flujo binario continuo desde el primer bit de la MAC Destino hasta el último bit del Payload/Padding como los coeficientes de un polinomio binario $M(x)$.
+   - Se multiplica $M(x)$ por $x^{32}$ y se divide mediante aritmética de módulo 2 por el polinomio generador irreducible estándar del IEEE 802.3:
+     $$G(x) = x^{32} + x^{26} + x^{23} + x^{22} + x^{16} + x^{12} + x^{11} + x^{10} + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1$$
+   - El resto de 32 bits de esta división polinomial se inserta en el campo **FCS** al final de la trama.
+2. **Verificación en el Receptor (Switch o Host):**
+   - El hardware receptor computa el mismo polinomio sobre los bits recibidos y compara el residuo con el FCS.
+3. **Acción ante Error de Verificación:**
+   - Si el CRC calculado no coincide exactamente con el valor del FCS (delatando un bit alterado por ruido eléctrico, diafonía o interferencia), **la trama se descarta inmediatamente de forma silenciosa por hardware**.
+   - En Ethernet, el receptor **nunca solicita retransmisión a nivel de Capa 2** ni emite mensajes de error hacia el emisor. La recuperación de la pérdida se delega enteramente a las capas superiores de transporte confiable (como los mecanismos de retransmisión de TCP o QUIC).
+
+</SolutionDrawer>

@@ -1,0 +1,63 @@
+---
+id: "redes-ej-37"
+courseId: "redes"
+number: 37
+title: "Fibras Ópticas Multimodo en Centros de Datos: OM4 vs OM5 y la Tecnología SWDM"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2do Intento 21-11-2026 / 1° Recuperatorio 2025 Cátedra Volpi"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-06"
+  - "redes-presentacion-07"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En la evolución de medios físicos ópticos para Centros de Datos de alta densidad:
+1. Explique el concepto subyacente de transmisión sobre una fibra óptica **OM5 (Wideband Multimode Fiber - WBMMF)** en comparación con la fibra **OM4**.
+2. ¿Qué es la tecnología **SWDM (Short Wavelength Division Multiplexing)** y en qué rango de longitudes de onda opera?
+3. ¿Cuál es la ventaja económica y estructural clave de utilizar OM5 frente a OM4 en enlaces de 100G y 400G (cantidad de hilos de fibra necesarios y tipo de conectorización)?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los avances recientes en cableado estructurado para Data Centers, técnicas de multiplexación óptica por longitud de onda corta y optimización del costo por puerto.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-37">
+
+## 1. Concepto Subyacente: OM4 vs OM5
+
+* **Fibra OM4 (Multimodo Tradicional):**  
+  Posee un núcleo de $50\,\mu\text{m}$ con perfil de índice gradual optimizado para operar con fuentes láser VCSEL en una **única longitud de onda central estricta de $850\text{ nm}$**. Para escalar a 40 Gbps o 100 Gbps, OM4 requiere recurrir a **ópticas paralelas** (enviar 4 canales de 10G o 25G a través de 4 pares de fibras independientes mediante conectores multifibra MPO/MTP de 8 o 12 hilos).
+* **Fibra OM5 (Wideband Multimode Fiber - WBMMF):**  
+  Fue diseñada específicamente para mantener un ancho de banda modal efectivo (*EMB*) uniforme y elevado a lo largo de un espectro continuo de longitudes de onda que abarca desde **$850\text{ nm}$ hasta $953\text{ nm}$**.
+
+---
+
+## 2. Tecnología SWDM (Short Wavelength Division Multiplexing)
+
+* **Principio de Operación:**  
+  SWDM multiplexa **cuatro longitudes de onda ópticas diferentes** espaciadas por $30\text{ nm}$ sobre un **único hilo de fibra multimodo**:
+  $$\lambda_1 = 850\text{ nm}, \quad \lambda_2 = 880\text{ nm}, \quad \lambda_3 = 910\text{ nm}, \quad \lambda_4 = 940\text{ nm}$$
+* Un filtro óptico en el transceptor (*SWDM4 Mux/Demux*) combina las cuatro ondas para emitirlas por un hilo de fibra Tx y las separa en el receptor Rx.
+
+---
+
+## 3. Ventaja Estructural y Económica en 100G y 400G
+
+* **Reducción Drástica de Hilos de Fibra Óptica:**
+  - Para transmitir **100 Gbps** con fibra OM4 tradicional (100GBASE-SR4), se requieren **8 hilos de fibra óptica** ($4 \times \text{Tx}$ y $4 \times \text{Rx}$) y conectores ribbon MPO/MTP costosos y propensos a la suciedad.
+  - Con fibra OM5 y transceptores 100G-SWDM4, se transmiten 4 señales de 25 Gbps sobre longitudes de onda distintas utilizando **únicamente 2 hilos de fibra óptica (1 par dúplex estándar)** con conectores LC tradicionales.
+* **Escalabilidad y Ahorro:**  
+  Permite reutilizar la infraestructura de bandejas y canalizaciones existentes con conectores LC dúplex para migrar de 10G/40G a 100G y 400G, ahorrando hasta un $75\%$ en el tendido de fibras físicas dentro de las salas de servidores del Centro de Datos.
+
+</SolutionDrawer>

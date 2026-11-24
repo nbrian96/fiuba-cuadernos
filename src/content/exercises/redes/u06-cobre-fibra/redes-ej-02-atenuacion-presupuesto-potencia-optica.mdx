@@ -1,0 +1,88 @@
+---
+id: "redes-ej-02"
+courseId: "redes"
+number: 2
+title: "Atenuación y Cálculo de Presupuesto de Potencia Óptica (Optical Link Budget)"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 2"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-06"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Se proyecta un enlace troncal de fibra óptica monomodo (SMF) de $25\text{ km}$ de longitud entre dos edificios corporativos operando a una longitud de onda de $1310\text{ nm}$.  
+Los parámetros del enlace son:
+- Potencia óptica mínima del transmisor: $P_{tx} = -3\text{ dBm}$.
+- Sensibilidad mínima requerida por el receptor: $S_{rx} = -24\text{ dBm}$.
+- Atenuación de la fibra monomodo a 1310 nm: $\alpha = 0.35\text{ dB/km}$.
+- Cantidad de empalmes por fusión a lo largo del tendido: 5 empalmes con una pérdida unitaria de $0.08\text{ dB/empalme}$.
+- Cantidad de pares de conectores ópticos en los extremos (patch panels): 2 pares de conectores con una pérdida de $0.35\text{ dB/conector}$.
+
+Se solicita:
+1. Formular la ecuación del balance de potencia óptica (*Optical Power Budget*) y calcular el margen de potencia disponible.
+2. Determinar la atenuación total calculada del canal (*Total Link Loss*).
+3. Determinar el margen de seguridad operativo (*System Operating Margin - SOM*) resultante y dictaminar si el enlace es viable técnicamente según las mejores prácticas de ingeniería (margen mínimo de seguridad $\ge 3\text{ dB}$).
+
+**Qué está evaluando la cátedra**  
+Capacidad de cálculo de balances de enlace óptico en decibelios, discriminación entre pérdidas continuas por propagación y pérdidas concentradas por empalmes y conectores, y aplicación de márgenes de envejecimiento en diseño de infraestructura.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-02">
+
+## 1. Formulación del Presupuesto de Potencia Óptica
+
+El presupuesto de potencia disponible (*Power Budget*) representa la atenuación máxima total que puede tolerar la señal entre la salida del transmisor y la entrada del receptor sin degradar la tasa de error de bit (BER):
+
+$$\text{Power Budget Disponible [dB]} = P_{tx\text{ (min)}} \text{ [dBm]} - S_{rx\text{ (min)}} \text{ [dBm]}$$
+
+Sustituyendo los datos del problema:
+$$\text{Power Budget Disponible} = -3\text{ dBm} - (-24\text{ dBm}) = -3 + 24 = 21.0\text{ dB}$$
+
+---
+
+## 2. Cálculo de la Atenuación Total del Enlace (Link Loss)
+
+La pérdida total del canal se compone de la atenuación distribuida a lo largo de la fibra más la sumatoria de las pérdidas concentradas por empalmes y conectores:
+
+$$\text{Pérdida Total (Link Loss)} = (L \cdot \alpha) + (N_{emp} \cdot \alpha_{emp}) + (N_{con} \cdot \alpha_{con})$$
+
+Donde:
+- $L = 25\text{ km}$
+- $\alpha = 0.35\text{ dB/km}$ (atenuación intrínseca de la fibra monomodo a 1310 nm)
+- $N_{emp} = 5$ empalmes de fusión
+- $\alpha_{emp} = 0.08\text{ dB/empalme}$
+- $N_{con} = 2$ pares de conectores en distribuidores ópticos (ODF)
+- $\alpha_{con} = 0.35\text{ dB/conector}$
+
+Cálculos parciales:
+- Pérdida en la fibra: $25\text{ km} \times 0.35\text{ dB/km} = 8.75\text{ dB}$.
+- Pérdida en empalmes: $5 \times 0.08\text{ dB} = 0.40\text{ dB}$.
+- Pérdida en conectores: $2 \times 0.35\text{ dB} = 0.70\text{ dB}$.
+
+$$\text{Pérdida Total} = 8.75\text{ dB} + 0.40\text{ dB} + 0.70\text{ dB} = 9.85\text{ dB}$$
+
+---
+
+## 3. Determinación del Margen de Seguridad y Dictamen de Viabilidad
+
+El Margen de Seguridad Operativo (*System Operating Margin - SOM*) se obtiene restando la atenuación total calculada del presupuesto disponible:
+
+$$SOM = \text{Power Budget Disponible} - \text{Pérdida Total}$$
+$$SOM = 21.0\text{ dB} - 9.85\text{ dB} = 11.15\text{ dB}$$
+
+**Dictamen de Ingeniería:**
+- El margen operativo obtenido es de **$11.15\text{ dB}$**, superando ampliamente el umbral mínimo recomendado por norma ($3\text{ dB}$ a $5\text{ dB}$).
+- **El enlace es 100% viable.** El margen remanente de más de 11 dB permite absorber holgadamente el envejecimiento de la fuente láser emisora (que pierde potencia con los años), acumulación de suciedad en las interfaces ópticas y la realización de futuros empalmes por reparaciones mecánicas del cable subterráneo.
+
+</SolutionDrawer>

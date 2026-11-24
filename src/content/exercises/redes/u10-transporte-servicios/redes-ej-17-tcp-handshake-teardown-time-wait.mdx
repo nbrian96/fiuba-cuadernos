@@ -1,0 +1,92 @@
+---
+id: "redes-ej-17"
+courseId: "redes"
+number: 17
+title: "Protocolo TCP: Three-Way Handshake, Four-Way Teardown y el Estado TIME_WAIT"
+unit: "u10-transporte-servicios"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 17"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-10"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo **TCP (RFC 793 / RFC 9293)** gestiona conexiones full-duplex confiables mediante máquinas de estados finitos en ambos extremos:
+1. Grafique el diagrama de secuencia temporal del establecimiento de conexión (**Three-Way Handshake**): detalle los flags involucrados (`SYN`, `ACK`), la sincronización de los números de secuencia iniciales ($ISN$) y los parámetros negociados en las opciones de cabecera (MSS, Window Scale, SACK Permitted).
+2. Explique por qué el cierre ordenado de una conexión requiere cuatro pasos (**Four-Way Teardown**) con flags `FIN` y `ACK`. ¿Por qué no puede realizarse en solo dos pasos?
+3. Analice el estado **`TIME_WAIT`** en el host que inicia activamente el cierre:
+   - ¿Cuánto tiempo permanece en este estado ($2 \times \text{MSL}$) y cuál es el valor numérico típico?
+   - Justifique las dos razones técnicas indispensables por las cuales el socket no puede destruirse inmediatamente al emitir el último ACK.
+
+**Qué está evaluando la cátedra**  
+Dominio de la máquina de estados de TCP, comprensión del intercambio bidireccional asimétrico de cierre y justificación rigurosa de la temporización de sockets.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-17">
+
+## 1. Three-Way Handshake (Establecimiento de Conexión)
+
+```
+Cliente                                         Servidor
+   |                                                |
+   | --- [1] SYN (Seq = ISN_c, MSS, WScale, SACK) ->|  (Servidor pasa a SYN_RCVD)
+   |                                                |
+   |<- [2] SYN-ACK (Seq = ISN_s, Ack = ISN_c + 1)---|  (Cliente pasa a ESTABLISHED)
+   |                                                |
+   | --- [3] ACK (Seq = ISN_c + 1, Ack = ISN_s + 1) ->|  (Servidor pasa a ESTABLISHED)
+   |                                                |
+```
+
+* **Paso 1 (Cliente $\to$ Servidor):**  
+  El cliente selecciona un número de secuencia inicial pseudoaleatorio ($\text{Seq} = ISN_c$) para evitar colisiones con conexiones anteriores y mitigar ataques de spoofing. Activa el flag **`SYN=1`** y envía opciones de cabecera:
+  - **MSS (Maximum Segment Size):** Notifica el payload máximo de TCP que puede recibir (ej. 1460 bytes).
+  - **Window Scale Permitted:** Negocia el factor multiplicador de ventana de 16 bits.
+  - **SACK Permitted:** Habilita el reconocimiento selectivo de bloques desordenados.
+* **Paso 2 (Servidor $\to$ Cliente):**  
+  El servidor reserva búferes en el kernel, genera su propio número de secuencia inicial ($\text{Seq} = ISN_s$) y envía un segmento con flags **`SYN=1, ACK=1`**. El campo *Acknowledgment Number* reconoce el byte virtual del SYN del cliente: $\text{Ack} = ISN_c + 1$.
+* **Paso 3 (Cliente $\to$ Servidor):**  
+  El cliente confirma el SYN del servidor enviando un segmento con **`ACK=1`**, $\text{Seq} = ISN_c + 1$ y $\text{Ack} = ISN_s + 1$. A partir de este momento, ambos extremos se encuentran en estado **`ESTABLISHED`** y pueden cursar datos de aplicación.
+
+---
+
+## 2. Four-Way Teardown (Cierre de Conexión)
+
+* **Por qué requiere cuatro intercambios:**  
+  Una conexión TCP es **estrictamente bidireccional (Full-Duplex)**. Cada sentido de transmisión es independiente del otro (*dos canales simplex acoplados*).
+  - Cuando un host emite un segmento con el flag **`FIN=1`**, solo está cerrando su propio canal de salida (indica *"ya no tengo más datos que transmitirte"*).
+  - El host receptor responde con un **`ACK`** confirmando la recepción del FIN, pero **puede continuar enviando datos en el sentido inverso** durante el tiempo que sea necesario (*TCP Half-Close*).
+  - Solo cuando la aplicación receptora finaliza completamente el envío de sus datos restantes, emite su propio segmento **`FIN`**, el cual a su vez es reconocido por el primer host mediante un último **`ACK`**.
+  - Este desacoplamiento exige dos intercambios `FIN` $\to$ `ACK` (4 segmentos en total).
+
+---
+
+## 3. El Estado TIME_WAIT y su Justificación
+
+El host que ejecuta el cierre activo (*Active Close*), tras emitir el último `ACK`, ingresa al estado **`TIME_WAIT`** y retiene el socket reservado durante un intervalo de:
+
+$$\text{Duración} = 2 \times \text{MSL} \quad (\text{Maximum Segment Lifetime})$$
+
+El estándar RFC 793 fija el MSL en 120 segundos ($2 \times \text{MSL} = 4\text{ minutos}$), aunque la mayoría de los sistemas operativos modernos (Linux, Windows) lo ajustan a **60 segundos** ($2 \times \text{MSL} = 60\text{ a }120\text{ segundos}$).
+
+* **Justificación 1: Garantizar la Entrega Confiable del Último ACK:**  
+  En las redes de paquetes, los mensajes de reconocimiento no son confirmados. Si el último segmento `ACK` enviado por el cliente se pierde en un router intermedio, el servidor no sabrá si llegó y su temporizador de retransmisión disparará nuevamente el reenvío del segmento `FIN`.
+  - Si el cliente hubiese destruido el socket de inmediato al enviar el ACK, al recibir la retransmisión del `FIN` respondería con un paquete **`RST` (Reset)**, provocando una terminación abrupta con error en la aplicación del servidor en lugar de un cierre limpio.
+  - Al permanecer en `TIME_WAIT`, si arriba un `FIN` retransmitido, el cliente simplemente reemite el `ACK` y reinicia el temporizador de $2\text{ MSL}$.
+
+* **Justificación 2: Desvanecimiento de Segmentos Huérfanos o Duplicados en la Red:**  
+  Durante la vida de una conexión, paquetes IP pueden quedar retenidos temporalmente en colas de routers lentos o tomar rutas alternativas más largas (*old duplicate segments*).
+  - Si el socket se liberara de inmediato, la aplicación podría abrir inmediatamente una nueva conexión reutilizando la misma tupla de 4 elementos: `(IP_origen, Puerto_origen, IP_dest, Puerto_dest)`.
+  - Si un paquete rezagado de la conexión anterior arribara en ese instante con un número de secuencia válido dentro de la nueva ventana, la pila TCP lo aceptaría como dato válido, corrompiendo la información de la nueva aplicación.
+  - El período de $2 \times \text{MSL}$ garantiza que cualquier paquete extraviado en Internet expire indefectiblemente por agotamiento del campo TTL antes de que los mismos puertos puedan ser reasignados.
+
+</SolutionDrawer>

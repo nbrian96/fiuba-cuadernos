@@ -1,0 +1,62 @@
+---
+id: "redes-ej-07"
+courseId: "redes"
+number: 7
+title: "Power over Ethernet (PoE IEEE 802.3af/at/bt) y Gestión Térmica de Haces de Cables"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 7"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-05"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La tecnología **Power over Ethernet (PoE)** permite energizar dispositivos finales a través del mismo cable de par trenzado que transporta datos Ethernet:
+1. Confeccione un cuadro comparativo entre los estándares **IEEE 802.3af (PoE Tipo 1)**, **IEEE 802.3at (PoE+ Tipo 2)**, **IEEE 802.3bt Tipo 3** y **IEEE 802.3bt Tipo 4**, detallando: número de pares de cobre utilizados, potencia máxima suministrada por el switch (PSE), potencia mínima garantizada en el dispositivo cliente (PD) y rango de tensión de operación.
+2. Explique por qué el estándar de cableado estructurado **TIA TSB-184-A** establece restricciones rigurosas sobre el tamaño máximo de los haces (*bundles*) de cables agrupados en bandejas y pasamuros cuando se utiliza PoE de alta potencia (Tipo 3 y 4). ¿Qué impacto físico directo tiene el calentamiento sobre la atenuación y la longitud máxima del canal?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los estándares de alimentación sobre pares trenzados, dimensionamiento energético de infraestructura y los efectos termodinámicos de la disipación por efecto Joule en el rendimiento de Capa 1.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-07">
+
+## 1. Cuadro Comparativo de Estándares PoE
+
+| Parámetro | IEEE 802.3af (Tipo 1) | IEEE 802.3at (PoE+ Tipo 2) | IEEE 802.3bt (4PPoE Tipo 3) | IEEE 802.3bt (4PPoE Tipo 4) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Pares de Cobre Activos** | 2 pares (Par alternativo A o B) | 2 pares | **4 pares** (Todos los conductores energizados) | **4 pares** |
+| **Potencia en Puerto PSE (Switch)** | $15.4\text{ W}$ | $30.0\text{ W}$ | **$60.0\text{ W}$** | **$90.0\text{ W}$** |
+| **Potencia Garantizada en PD (Host)**| $12.95\text{ W}$ | $25.5\text{ W}$ | **$51.0\text{ W}$** | **$71.3\text{ W}$** |
+| **Pérdida Máxima en el Cable (100m)**| $2.45\text{ W}$ | $4.50\text{ W}$ | $9.00\text{ W}$ | **$18.7\text{ W}$** |
+| **Tensión Nominal de Salida (PSE)** | $44.0\text{ a }57.0\text{ V DC}$ | $50.0\text{ a }57.0\text{ V DC}$ | $50.0\text{ a }57.0\text{ V DC}$ | $52.0\text{ a }57.0\text{ V DC}$ |
+| **Dispositivos Típicos Alimentados** | Teléfonos VoIP básicos, sensores IoT | Cámaras fijas con visión IR, Puntos de acceso Wi-Fi 5 | APs Wi-Fi 6/6E, cámaras domo PTZ con zoom motorizado | APs Wi-Fi 7 densos, pantallas interactivas, iluminación LED inteligente |
+
+---
+
+## 2. Termodinámica del Cableado y Restricciones de la Guía TIA TSB-184-A
+
+* **Origen Físico del Calentamiento:**  
+  La corriente continua que circula por los delgados conductores de cobre (calibres AWG 24 o AWG 23 con una resistencia de bucle de aproximadamente $14\text{ a }18\,\Omega$ por 100 metros) genera calor disipado por **efecto Joule**:
+  $$P_{disipada} = I^2 \cdot R_{bucle}$$
+  En PoE de Tipo 4 suministrando 90 W, la corriente total supera los $0.96\text{ A}$ (casi $0.5\text{ A}$ por conductor). Con 18.7 W disipados en forma de calor por cada cable de 100 metros, si decenas de cables se amarran juntos en un haz apretado con precintos plásticos, el calor no puede evacuarse por convección natural, provocando un aumento térmico sustancial en los cables situados en el centro del haz (con elevaciones de hasta $+15^\circ\text{C}$ a $+20^\circ\text{C}$ sobre la temperatura ambiente).
+
+* **Impacto Físico en la Transmisión de Datos:**
+  1. **Aumento de la Resistencia y Atenuación por Inserción (*Insertion Loss*):** El cobre tiene un coeficiente térmico positivo ($\alpha_{Cu} \approx +0.00393 / ^\circ\text{C}$). Al elevarse la temperatura, aumenta la resistencia del conductor, lo que incrementa linealmente la atenuación de la señal de alta frecuencia que transporta los datos Ethernet.
+  2. **Degradación del Alcance Máximo del Canal (Derating):**  
+     Para que el enlace cumpla con el presupuesto de atenuación de la norma ANSI/TIA-568-D a temperaturas superiores a $20^\circ\text{C}$, se debe aplicar una reducción de longitud (*derating factor*):
+     - A $40^\circ\text{C}$, la longitud máxima del canal debe acortarse de 100 metros a aproximadamente **88 a 90 metros**.
+     - A $60^\circ\text{C}$ (típico dentro de ductos metálicos cerrados bajo techos de chapa), la longitud máxima se reduce a menos de **75 metros**.
+  3. **Prescripción de Instalación:** TIA TSB-184-A recomienda limitar el tamaño de los haces cerrados a un máximo de **24 o 48 cables**, utilizar cables de Categoría 6A S/FTP (cuyo blindaje metálico disipa mejor el calor hacia el exterior) y evitar precintos plásticos excesivamente apretados que deformen la geometría del dieléctrico de los pares.
+
+</SolutionDrawer>

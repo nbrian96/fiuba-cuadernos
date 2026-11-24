@@ -1,0 +1,67 @@
+---
+id: "redes-ej-29"
+courseId: "redes"
+number: 29
+title: "Evolución del Transporte Web: Limitaciones de HTTP/2 y Eliminación del Head-of-Line Blocking con QUIC"
+unit: "u10-transporte-servicios"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 9"
+isParcial: true
+examIds:
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-10"
+  - "redes-presentacion-11"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El protocolo HTTP ha evolucionado para superar las ineficiencias de transporte de la Web:
+1. Explique cómo **HTTP/2 (RFC 7540)** introdujo la **multiplexación binaria** de múltiples flujos (*streams*) sobre una única conexión TCP.
+2. Analice por qué HTTP/2 sufre del fenómeno de **Bloqueo en Cabeza de Línea (Head-of-Line Blocking)** a nivel de transporte cuando se pierden paquetes en la red, provocando que en redes con pérdida (Wi-Fi débil o redes móviles) su rendimiento sea incluso inferior al de HTTP/1.1 con conexiones paralelas.
+3. Describa cómo **QUIC (RFC 9000)** y **HTTP/3 (RFC 9114)** resuelven definitivamente este problema ejecutándose sobre **UDP**.
+
+**Qué está evaluando la cátedra**  
+Comprensión de los cuellos de botella de TCP en la web moderna, dominio de la multiplexación de flujos y arquitectura de transporte de QUIC.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-29">
+
+## 1. Multiplexación Binaria en HTTP/2
+
+* **Problema en HTTP/1.1:**  
+  Cada solicitud y respuesta HTTP requería abrir una conexión TCP individual (con su correspondiente handshake de 3 vías) o procesarse de forma estrictamente secuencial sobre una conexión persistente (*Keep-Alive*), sufriendo *Head-of-Line Blocking a nivel de aplicación*.
+* **Innovación de HTTP/2:**  
+  Introduce una **capa de entramado binario (Binary Framing Layer)**. Divide los mensajes en tramas pequeñas independientes identificadas por un número de flujo (*Stream ID*), permitiendo intercalar solicitudes y respuestas de múltiples recursos (imágenes, scripts, CSS) de forma simultánea y bidireccional sobre una **única conexión TCP subyacente**.
+
+---
+
+## 2. El Head-of-Line Blocking de Transporte en HTTP/2 sobre TCP
+
+* **La Abstracción Secuencial de TCP:**  
+  El protocolo TCP entrega a la aplicación un flujo de bytes continuo y en orden estricto. TCP desconoce por completo la existencia de los streams de HTTP/2; para él, todo es una única secuencia lineal de números de bytes ($1, 2, 3\dots N$).
+* **El Fenómeno del Bloqueo:**  
+  Si se pierde un solo paquete IP en la red (por ejemplo, el paquete que transporta una trama del flujo correspondiente a una imagen de fondo), **la pila TCP del kernel del receptor detiene por completo la entrega de datos a la aplicación**.
+  - Aunque los paquetes subsiguientes que arriban con éxito contengan datos perfectamente válidos de un archivo JavaScript crítico para renderizar la página, el receptor los retiene en el búfer de reordenamiento de TCP hasta que el segmento perdido sea retransmitido y reconocido.
+  - En redes móviles o enlaces inalámbricos con tasas de pérdida moderadas ($1\%$ a $2\%$), este bloqueo generalizado congela simultáneamente a todos los streams de la conexión, degradando el tiempo de carga total.
+
+---
+
+## 3. Eliminación del Bloqueo HOL en QUIC / HTTP/3 sobre UDP
+
+* **Arquitectura de QUIC:**  
+  QUIC se ejecuta en el **espacio de usuario sobre datagramas UDP independientes**.
+* **Streams Verdaderamente Desacoplados:**  
+  En QUIC, el concepto de flujo (*Stream*) está implementado de forma nativa a nivel de transporte:
+  - Cada stream posee sus propios contadores de offset y de secuencia independientes.
+  - Si un datagrama UDP correspondiente al Stream 3 se pierde en tránsito, **únicamente el Stream 3 se pone en pausa** a la espera de la retransmisión.
+  - Los datagramas pertenecientes al Stream 5 o Stream 7 se procesan y entregan de inmediato a la aplicación web sin sufrir ninguna demora.
+* **Resultado:** Eliminación total del Head-of-Line Blocking a nivel de transporte, maximizando la velocidad y fluidez de la navegación en conexiones celulares inestables.
+
+</SolutionDrawer>

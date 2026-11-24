@@ -16,6 +16,8 @@
   body {
     margin: 0;
     min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     background-color: var(--bg-canvas);
     color: var(--text-primary);
     font-family: var(--font-sans);
@@ -167,6 +169,13 @@
     font-size: inherit;
   }
 
+  mark {
+    background-color: var(--mark-bg);
+    color: var(--text-primary);
+    padding: 0.05em 0.25em;
+    border-radius: var(--radius-xs);
+  }
+
   .prose-academic {
     width: 100%;
     max-width: none;
@@ -187,10 +196,28 @@
     margin-block-start: 0.35rem;
   }
 
+  .prose-academic blockquote {
+    margin-block: var(--space-4);
+    margin-inline: 0;
+    padding: var(--space-3) var(--space-4);
+    border-inline-start: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-subtle);
+    color: var(--text-primary);
+  }
+
+  .prose-academic blockquote > :last-child {
+    margin-block-end: 0;
+  }
+
   .prose-academic hr {
     border: 0;
     border-top: 1px solid var(--border-subtle);
     margin-block: var(--space-6);
+  }
+
+  .prose-academic table {
+    margin-block: var(--space-4);
   }
 
   .table-scroll {
@@ -200,6 +227,10 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     background-color: var(--bg-surface);
+  }
+
+  .table-scroll table {
+    margin-block: 0;
   }
 
   table {
@@ -270,6 +301,7 @@
     --info-bg: #ffffff;
     --advanced: #4c1d95;
     --advanced-bg: #ffffff;
+    --mark-bg: #e2e8f0;
   }
 
   .site-header,

@@ -1,0 +1,78 @@
+---
+id: "redes-ej-10"
+courseId: "redes"
+number: 10
+title: "Prevención de Bucles de Conmutación: Spanning Tree Protocol (STP 802.1D vs RSTP 802.1w)"
+unit: "u07-switching-vlans"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 10"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-08"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La redundancia física de enlaces entre conmutadores es vital para la tolerancia a fallos, pero introduce el riesgo de bucles de Capa 2:
+1. Explique qué es una **Tormenta de Broadcast (Broadcast Storm)** y cómo la inestabilidad de la tabla CAM (**MAC Flapping**) colapsa el plano de control y datos de los conmutadores.
+2. Describa las cuatro fases de cálculo del algoritmo de Spanning Tree (**STA**): elección del *Root Bridge*, cálculo del *Root Port (RP)* en conmutadores no-root, designación de *Designated Ports (DP)* y bloqueo de enlaces redundantes (*Alternate / Blocking Ports*).
+3. Compare los tiempos de convergencia y los mecanismos operativos entre el estándar clásico **IEEE 802.1D (STP)** y el estándar moderno **IEEE 802.1w (RSTP)**. ¿Por qué RSTP logra converger en menos de 1 segundo?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los riesgos de bucles topológicos en redes L2 sin TTL, dominio del algoritmo distribuido de Spanning Tree y análisis de mecanismos de convergencia acelerada en redes modernas.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-10">
+
+## 1. Tormentas de Broadcast y MAC Flapping en Bucles L2
+
+* **Tormenta de Broadcast (Broadcast Storm):**
+  - **Origen:** Ocurre cuando existen caminos físicos redundantes en una topología de conmutadores interconectados sin un protocolo de control de bucles activo.
+  - **Mecanismo:** Cuando un host emite una trama de broadcast (como un ARP Request `FF:FF:FF:FF:FF:FF`), el switch 1 la inunda por todos sus puertos hacia el switch 2. El switch 2 la recibe y la reenvía de vuelta al switch 1 por el camino redundante. Dado que **la trama Ethernet no posee campo TTL ni contador de saltos**, cada ciclo de reenvío replica y amplifica exponencialmente las tramas.
+  - **Consecuencia:** En milisegundos los enlaces físicos alcanzan el $100\%$ de saturación de ancho de banda, los búferes de memoria de los conmutadores colapsan y la red queda inutilizable.
+* **Inestabilidad de la Tabla CAM (MAC Flapping):**
+  - Al recibir las copias duplicadas de la misma trama que rebotan alternadamente por diferentes puertos troncales, los conmutadores actualizan compulsivamente el registro de la MAC de origen en su tabla CAM decenas de miles de veces por segundo entre el puerto $A$ y el puerto $B$.
+  - Esto satura el plano de control y la CPU del switch, impidiendo que procese paquetes legítimos y desconectando a los clientes.
+
+---
+
+## 2. Las Cuatro Fases del Algoritmo de Spanning Tree (STA)
+
+El protocolo Spanning Tree calcula una topología lógica en árbol libre de bucles desactivando selectivamente los puertos redundantes:
+
+1. **Elección del Root Bridge (Puente Raíz):**
+   - Los conmutadores intercambian tramas de control **BPDU (Bridge Protocol Data Units)**.
+   - Resulta electo como *Root Bridge* aquel conmutador que posea el menor valor de **Bridge ID (BID)**:
+     $$\text{Bridge ID} = \text{Prioridad (múltiplo de 4096, defecto 32768)} + \text{VLAN ID} + \text{Dirección MAC base}$$
+2. **Determinación del Root Port (RP) en Switches No-Root:**
+   - En cada conmutador que no sea el Root Bridge, se selecciona un único puerto como *Root Port*: aquel que ofrezca el **menor costo de ruta acumulado hacia el Root Bridge** (los costos están normalizados según el ancho de banda del enlace: 10 Gbps = 2, 1 Gbps = 4, 100 Mbps = 19).
+3. **Determinación de Designated Ports (DP) en Segmentos de Red:**
+   - En cada enlace físico entre dos switches, el puerto que anuncia el menor costo acumulado hacia la raíz se declara como *Designated Port*. Todos los puertos del Root Bridge son Designated Ports.
+4. **Bloqueo de Enlaces Redundantes (Alternate / Blocking):**
+   - Cualquier puerto que no haya sido electo ni como Root Port ni como Designated Port se coloca en estado de **Bloqueo (Blocking / Alternate)**.
+   - En este estado, el puerto no aprende direcciones MAC ni reenvía tráfico de usuarios; únicamente escucha tramas BPDU para detectar si el enlace primario falla.
+
+---
+
+## 3. Comparativa: 802.1D (STP) vs 802.1w (RSTP)
+
+| Característica | IEEE 802.1D (STP Clásico) | IEEE 802.1w (Rapid STP) |
+| :--- | :--- | :--- |
+| **Tiempo Típico de Convergencia** | **30 a 50 segundos** (Inaceptable para VoIP o clusters) | **Inferior a 1 segundo** (Típicamente $\approx 50\text{ a }100\text{ ms}$) |
+| **Estados del Puerto** | Disabled $\to$ Blocking $\to$ Listening (15s) $\to$ Learning (15s) $\to$ Forwarding | **Discarding**, **Learning**, **Forwarding** |
+| **Mecanismo de Transición** | Temporizadores rígidos basados en espera pasiva (*Forward Delay* = 15s) | **Apretón de Manos Activo (Proposal / Agreement Handshake)** |
+| **Puertos de Borde (Edge Ports)** | No contemplado nativamente (requería extensiones propietarias *PortFast*) | Estandarizado: puertos conectados a PCs o servidores transicionan **instantáneamente a Forwarding** sin demoras |
+| **Detección de Falla del Enlace** | Requiere esperar la expiración del temporizador *Max Age* (20s) | Detecta pérdida de señal física inmediata (*Link Down*) o pérdida de 3 BPDUs consecutivas (6s) |
+
+**Fundamento de la Rapidez de RSTP:**  
+RSTP abandona los temporizadores estáticos de espera. En enlaces punto a punto full-duplex entre dos switches, el conmutador emite un mensaje explícito de *Proposal*; el vecino bloquea temporalmente sus puertos que no están en la raíz (*sync*) y responde de inmediato con un mensaje de *Agreement*. Al recibir la confirmación directa, el puerto pasa inmediatamente a *Forwarding* en milisegundos, sin esperar 30 segundos de temporizadores ciegos.
+
+</SolutionDrawer>

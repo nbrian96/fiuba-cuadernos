@@ -44,6 +44,7 @@ const filterItems = toExerciseFilterItems(
 );
 const unitExercises = exercises.filter((e) => e.data.unit === unit.slug);
 const unitParcialCount = unitExercises.filter((e) => e.data.isParcial).length;
+const unitExercisesLabel = `${unitExercises.length} ${unitExercises.length === 1 ? "ejercicio" : "ejercicios"}`;
 
 const unitOptions = course.data.units
   .slice()
@@ -62,7 +63,7 @@ const unitResources = resourceManifests
 <CourseLayout
   course={course.data}
   title={`${unit.name} — ${course.data.shortTitle}`}
-  description={`Unidad ${unit.order}: ${unit.name} (${unitExercises.length} ejercicios y ${unitResources.length} recursos asociados)`}
+  description={`Unidad ${unit.order}: ${unit.name} (${unitExercisesLabel} y ${unitResources.length} ${unitResources.length === 1 ? "recurso asociado" : "recursos asociados"})`}
   activeSection="exercises"
   breadcrumbs={[
     { label: "Hub de materias", href: withBase("/") },
@@ -74,7 +75,7 @@ const unitResources = resourceManifests
   <header class="surface-panel" style="margin-bottom: 1.5rem;">
     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
       <span class="meta-pill">Unidad {unit.order}</span>
-      <span class="meta-pill">{unitExercises.length} ejercicios</span>
+      <span class="meta-pill">{unitExercisesLabel}</span>
       <span class="meta-pill meta-pill--parcial">
         {unitParcialCount} de parcial real
       </span>

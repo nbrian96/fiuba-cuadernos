@@ -1,0 +1,80 @@
+---
+id: "redes-ej-09"
+courseId: "redes"
+number: 9
+title: "Operación de Conmutación de Capa 2: Autoaprendizaje, Memoria CAM y Unknown Unicast Flooding"
+unit: "u07-switching-vlans"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 9"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-08"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un conmutador (Switch) Ethernet opera como un puente multipuerto inteligente que segmenta los dominios de colisión:
+1. Explique el ciclo de vida de la **Tabla CAM (Content Addressable Memory)**: ¿cómo se ejecuta el proceso de autoaprendizaje (*MAC learning*), qué información almacena cada registro y cuál es el rol del temporizador de envejecimiento (*Aging Timer*)?
+2. Detalle la lógica algorítmica de decisión de reenvío que aplica el switch ante la recepción de una trama distinguiendo tres escenarios:
+   - Trama con MAC destino conocida en un puerto diferente al de entrada.
+   - Trama con MAC destino conocida en el mismo puerto por el que ingresó.
+   - Trama con MAC destino desconocida (*Unknown Unicast*) o de difusión (*Broadcast*).
+3. ¿En qué consiste el ataque de seguridad denominado **MAC Address Flooding (Saturación de Tabla CAM)** y cómo altera el comportamiento operativo del conmutador?
+
+**Qué está evaluando la cátedra**  
+Dominio de la lógica interna de conmutación de paquetes L2, gestión de tablas de memoria asociativa por hardware y análisis de vulnerabilidades intrínsecas de switches Ethernet.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-09">
+
+## 1. Ciclo de Vida de la Tabla CAM y Autoaprendizaje
+
+La memoria CAM (*Content Addressable Memory*) es una memoria de hardware especializada que permite buscar un dato (en este caso, una dirección MAC de 48 bits) en una única operación de reloj, devolviendo el puerto físico donde está conectado el equipo.
+
+* **Proceso de Autoaprendizaje (Inspección de Origen):**
+  Cada vez que una trama Ethernet ingresa por un puerto físico $P$ perteneciente a la VLAN $V$, el conmutador lee el campo **MAC Origen**:
+  1. Si la dirección MAC ya existe asociada al puerto $P$ y VLAN $V$, el conmutador simplemente **reinicia el temporizador de envejecimiento (*Aging Timer*)** de esa entrada.
+  2. Si la dirección MAC no existe, el switch crea una nueva entrada en la tabla CAM vinculando la terna: `[Dirección MAC, Puerto Físico P, VLAN V]`.
+  3. Si la dirección MAC ya existía pero estaba asociada a un puerto distinto $P'$, el switch actualiza la entrada asignándola al nuevo puerto $P$ (movimiento de estación o *roaming*).
+* **Rol del Aging Timer (Temporizador de Envejecimiento):**
+  - Valor típico por defecto: **300 segundos (5 minutos)**.
+  - Si un host no emite ninguna trama durante 300 segundos, la entrada expira y es purgada automáticamente de la tabla CAM.
+  - Esto previene que la memoria se sature con dispositivos desconectados y asegura que si un usuario traslada su computadora a otra oficina, el switch no continúe enviando sus tramas hacia la roseta anterior.
+
+---
+
+## 2. Lógica de Decisión de Reenvío (Forwarding Logic)
+
+Cuando el switch recibe una trama, lee el campo **MAC Destino** y evalúa:
+
+1. **MAC Destino Conocida en Puerto Distinto al de Entrada (*Forwarding*):**
+   - El switch consulta la tabla CAM en la misma VLAN.
+   - Si la MAC de destino está registrada en el puerto $P_{salida} \ne P_{entrada}$, el switch conmuta la trama **únicamente por dicho puerto físico**, aislando la comunicación y manteniendo libre de tráfico a todos los demás puertos.
+2. **MAC Destino Conocida en el Mismo Puerto de Entrada (*Filtering / Dropping*):**
+   - Ocurre si dos hosts están conectados a través de un hub compartido o switch secundario aguas abajo en el mismo puerto $P$.
+   - El switch sabe que el destinatario ya escuchó la trama en el segmento compartido local; por lo tanto, **descarta la trama** evitando reenviarla nuevamente al mismo puerto.
+3. **MAC Destino Desconocida (*Unknown Unicast Flooding*) o Broadcast:**
+   - Si la dirección MAC de destino no figura en la tabla CAM (o si el bit I/G indica Broadcast `FF:FF:FF:FF:FF:FF`):
+   - El conmutador replica y reenvía una copia de la trama por **todos los puertos activos pertenecientes a esa misma VLAN**, excepto por el puerto físico por el que ingresó la trama original (*Flooding*).
+
+---
+
+## 3. Ataque de Saturación de Tabla CAM (MAC Flooding Attack)
+
+* **Mecanismo del Ataque:**
+  Un atacante conectado a un puerto de acceso del switch ejecuta una herramienta de software (como *macof*) que inyecta decenas de miles de tramas Ethernet por segundo con **direcciones MAC de origen aleatorias y falsas**.
+* **Impacto Operativo en el Conmutador:**
+  1. La tabla CAM del switch posee una capacidad finita en hardware (típicamente entre 8.000 y 32.000 entradas según el modelo). Al llenarse completamente con registros basura, el switch no puede aprender nuevas direcciones legítimas.
+  2. **Modo Fail-Open (Comportamiento de Hub):** Al no encontrar las direcciones MAC legítimas en su memoria saturada, el switch se ve forzado a tratar todo el tráfico subsiguiente como *Unknown Unicast*, recurriendo a la **inundación permanente (*Flooding*)** por todos sus puertos.
+  3. **Consecuencia de Seguridad:** El atacante pone su tarjeta de red en modo promiscuo y pasa a capturar todo el tráfico confidencial de los demás usuarios del switch (contraseñas, sesiones web sin cifrar), transformando un conmutador de Capa 2 en un simple concentrador repetidor (hub).
+* **Mitigación Oficial:** Implementación de **Port Security** en los puertos de acceso del conmutador (limitando el número máximo de MACs aprendidas por interfaz a 1 o 2, y bloqueando el puerto ante violaciones mediante `switchport port-security violation shutdown`).
+
+</SolutionDrawer>

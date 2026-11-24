@@ -25,10 +25,9 @@ const assessmentManifests = await getCollection(
   "assessments",
   (entry) => entry.data.courseId === courseId,
 );
-const quizzes = await getCollection(
-  "quizzes",
-  (entry) => entry.data.courseId === courseId,
-);
+const quizzes = (
+  await getCollection("quizzes", (entry) => entry.data.courseId === courseId)
+).sort((a, b) => a.id.localeCompare(b.id, "es"));
 const exercises = sortCourseExercises(
   await getCollection("exercises", (entry) => entry.data.courseId === courseId),
 );

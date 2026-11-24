@@ -14,8 +14,12 @@ import ProvenanceBadge from "@/components/platform/ProvenanceBadge";
 import QuickRecognitionTrainer from "@/components/platform/QuickRecognitionTrainer";
 import SolutionDrawer from "@/components/platform/SolutionDrawer";
 import ThemeToggle from "@/components/platform/ThemeToggle";
-import { getCheatsheetSections } from "@/data/cheatsheets";
 import {
+  compileCheatsheetSections,
+  getCheatsheetSections,
+} from "@/data/cheatsheets";
+import {
+  CheatsheetManifestSchema,
   InteractiveAndNotesManifestSchema,
   PROVENANCE_VALUES,
   ENTITY_TYPE_VALUES,
@@ -184,6 +188,32 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
       }
     }
     expect(getCheatsheetSections("otra-materia")).toEqual([]);
+
+    const redesCheatsheet = CheatsheetManifestSchema.parse(
+      JSON.parse(
+        fs.readFileSync(
+          path.join(ROOT, "src/content/cheatsheets/redes.json"),
+          "utf-8",
+        ),
+      ),
+    );
+    const redesSections = compileCheatsheetSections(redesCheatsheet.sections);
+    expect(redesSections.length).toBeGreaterThanOrEqual(4);
+    for (const section of redesSections) {
+      if (section.formulaHtml) {
+        expect(section.formulaHtml).toContain('class="katex"');
+        expect(section.formulaHtml).not.toContain("katex-error");
+      }
+      for (const item of section.items) {
+        expect(item.bodyHtml).not.toContain("katex-error");
+        if (item.leadHtml) {
+          expect(item.leadHtml).not.toContain("$d$");
+          expect(item.leadHtml).not.toContain("$P$");
+          expect(item.leadHtml).not.toContain("$N_c$");
+          expect(item.leadHtml).not.toContain("katex-error");
+        }
+      }
+    }
   });
 
   it("renders all platform UI components cleanly via SSR without hydration traps", () => {
@@ -217,6 +247,9 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
     );
     expect(catalogCardHtml).toContain("EJ 18");
     expect(catalogCardHtml).toContain("Parcial real");
+    expect(catalogCardHtml).toContain('target="_blank"');
+    expect(catalogCardHtml).toContain('rel="noopener noreferrer"');
+    expect(catalogCardHtml).toContain("se abre en una nueva pestaña");
 
     const advCardHtml = renderToStaticMarkup(
       createElement(ExerciseCard, { exercise: SAMPLE_EXERCISES[1] }),

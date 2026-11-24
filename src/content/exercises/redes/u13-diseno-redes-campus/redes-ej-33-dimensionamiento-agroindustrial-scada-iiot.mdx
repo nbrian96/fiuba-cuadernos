@@ -1,0 +1,92 @@
+---
+id: "redes-ej-33"
+courseId: "redes"
+number: 33
+title: "Dimensionamiento de Red Corporativa: Red Agroindustrial y Manufacturera con SCADA/IIoT (Caso 3)"
+unit: "u13-diseno-redes-campus"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Manual Maestro Unificado FIUBA — Clase 12, Caso 3"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-12"
+  - "redes-presentacion-18"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una **planta agroindustrial y manufacturera** con convergencia IT/OT necesita dimensionar su conectividad WAN entre la planta productiva, la casa matriz y los servicios en la nube:
+
+- **Población de planta y administración:** $N_{\text{total}} = 100$ empleados.
+- **Factor de concurrencia en hora pico:** $C = 50\%$ ($0{,}50$).
+- **Perfil de consumo por usuario concurrente ($N_c$):**
+  - **IT Corporativo (ERP SAP / MES):** $0{,}4\text{ Mbps/usuario}$.
+  - **Internet corporativo:** $1{,}5\text{ Mbps/usuario}$.
+  - **Tiempo Real (VoIP y videoconferencia operativa):** $1{,}0\text{ Mbps/usuario}$.
+- **Tráfico continuo de planta e infraestructura (100% simultaneidad):**
+  - **Red Industrial OT (SCADA + 25 PLCs / telemetría IIoT):** $12{,}0\text{ Mbps}$ continuos.
+  - **Gestión y monitoreo de red:** $3{,}0\text{ Mbps}$.
+- **Criterio de ingeniería:** aplicar un **margen operativo de crecimiento y seguridad del $+35\%$**.
+
+Se solicita:
+1. Calcular la cantidad de usuarios concurrentes ($N_c$) y el ancho de banda base total ($BW_{\text{base}}$).
+2. Determinar el ancho de banda total requerido ($BW_{\text{total}}$) aplicando el margen del $+35\%$.
+3. Definir el dictamen de conectividad WAN híbrida (MPLS / SD-WAN + Internet) y los criterios esenciales de seguridad y segmentación IT/OT.
+
+**Qué está evaluando la cátedra**  
+Integración de tráfico corporativo IT con flujos continuos determinísticos de entorno industrial OT (SCADA y PLCs), aplicación correcta del margen de diseño y especificación de una arquitectura WAN híbrida con segmentación industrial.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-33">
+
+## 1. Cálculo de Concurrencia y Tráfico Base
+
+1. **Usuarios concurrentes en hora pico ($N_c$):**
+   $$N_c = N_{\text{total}} \times C = 100 \times 0{,}50 = 50 \text{ usuarios concurrentes}$$
+
+2. **Desglose de demanda por servicio:**
+
+| Servicio / Categoría | Cálculo | Ancho de Banda |
+| :--- | :--- | :---: |
+| **IT Corporativo (ERP SAP)** | $50 \times 0{,}4\text{ Mbps}$ | $20{,}0\text{ Mbps}$ |
+| **Internet Corporativo** | $50 \times 1{,}5\text{ Mbps}$ | $75{,}0\text{ Mbps}$ |
+| **Tiempo Real (VoIP / Video)** | $50 \times 1{,}0\text{ Mbps}$ | $50{,}0\text{ Mbps}$ |
+| **Industrial OT (SCADA + 25 PLCs)** | Carga continua $100\%$ | $12{,}0\text{ Mbps}$ |
+| **Gestión y Monitoreo (fijo)** | Carga continua $100\%$ | $3{,}0\text{ Mbps}$ |
+| **Total Base ($BW_{\text{base}}$)** | $20{,}0 + 75{,}0 + 50{,}0 + 12{,}0 + 3{,}0$ | **$160{,}0\text{ Mbps}$** |
+
+$$BW_{\text{base}} = 20{,}0 + 75{,}0 + 50{,}0 + 12{,}0 + 3{,}0 = 160{,}0\text{ Mbps}$$
+
+---
+
+## 2. Ancho de Banda Total con Margen Operativo ($+35\%$)
+
+$$BW_{\text{total}} = BW_{\text{base}} \times (1 + 0{,}35) = 160{,}0\text{ Mbps} \times 1{,}35 = \mathbf{216{,}0\text{ Mbps}}$$
+
+---
+
+## 3. Dictamen de Ingeniería, WAN Híbrida y Convergencia IT/OT
+
+Con una demanda total proyectada de **$216{,}0\text{ Mbps}$**, resulta crítico separar el plano corporativo/industrial de misión crítica del tráfico de Internet general:
+
+### Arquitectura WAN Recomendada
+- **Enlace WAN Privado (MPLS / SD-WAN) de $150\text{ Mbps}$:**
+  - Cursará el tráfico **Industrial OT (SCADA + 25 PLCs)**, **ERP SAP**, **Tiempo Real** y **Gestión**:
+    $$BW_{\text{crítico}} = (20{,}0 + 50{,}0 + 12{,}0 + 3{,}0) \times 1{,}35 = 85{,}0 \times 1{,}35 = 114{,}75\text{ Mbps}$$
+  - El circuito de **$150\text{ Mbps}$** garantiza holgura operativa, determinismo de latencia y QoS de extremo a extremo.
+- **Enlace Internet Dedicado de $100\text{–}150\text{ Mbps}$:**
+  - Absorbe la salida local a Internet ($75{,}0 \times 1{,}35 = 101{,}25\text{ Mbps}$) y actúa bajo **SD-WAN** como camino de contingencia activo-activo con balanceo inteligente por aplicación y túnel cifrado IPsec ante degradación del enlace primario.
+
+### Lineamientos de Segmentación IT/OT (IEC 62443)
+- **DMZ Industrial (Nivel 3.5 del Modelo Purdue):** los 25 PLCs y el servidor SCADA operan en una red OT aislada sin acceso directo a Internet; el intercambio con SAP/ERP ocurre únicamente a través de una zona desmilitarizada controlada por firewall industrial.
+- **Políticas QoS:** prioridad estricta (`EF / CoS 5`) para telecontrol SCADA/PLCs y voz, `AF31` para ERP SAP y control de ancho de banda (*policing*) para navegación general.
+
+</SolutionDrawer>

@@ -1,0 +1,62 @@
+---
+id: "redes-ej-18"
+courseId: "redes"
+number: 18
+title: "TCP: Control de Flujo con Ventana Deslizante vs Control de Congestión"
+unit: "u10-transporte-servicios"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 18"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-10"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el protocolo TCP, diferencie con precisión los conceptos de **Control de Flujo** y **Control de Congestión**:
+1. ¿A quién protege cada mecanismo (receptor vs red) y qué variable gobierna cada uno?
+2. Explique cómo opera la **Ventana Deslizante (Sliding Window)** mediante el campo **Receive Window (rwnd)**.
+3. Defina la regla que determina la cantidad efectiva máxima de bytes en tránsito que el emisor tiene permitido transmitir.
+
+**Qué está evaluando la cátedra**  
+Comprensión de los dos mecanismos reguladores de tráfico en TCP, distinción de sus objetivos y cálculo de la ventana efectiva de transmisión.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-18">
+
+## 1. Distinción Conceptual y Objetivos
+
+* **Control de Flujo (Flow Control):**
+  - **Objetivo:** Proteger al **host receptor** para evitar que un emisor rápido desborde la capacidad finita de sus búferes de memoria del socket.
+  - **Variable Gobernadora:** **`rwnd` (Receive Window)**, anunciada explícitamente por el receptor en cada segmento TCP enviado de retorno.
+* **Control de Congestión (Congestion Control):**
+  - **Objetivo:** Proteger a los **conmutadores y enlaces intermedios de la red** para prevenir el colapso por saturación de búferes en routers de Internet.
+  - **Variable Gobernadora:** **`cwnd` (Congestion Window)**, deducida y calculada internamente por el emisor en función de los ACKs, RTT y pérdidas de paquetes.
+
+---
+
+## 2. Operación de la Ventana Deslizante (rwnd)
+
+1. El receptor reserva un búfer de memoria de tamaño $RcvBuffer$.
+2. En cada instante, el receptor calcula el espacio libre disponible:
+   $$rwnd = RcvBuffer - (\text{Último byte recibido} - \text{Último byte leído por la aplicación})$$
+3. El receptor inserta este valor numérico en el campo *Window* de 16 bits de la cabecera TCP.
+4. Si la aplicación receptora se detiene y el búfer se llena, el receptor anuncia **$rwnd = 0$ (Zero Window)**, obligando al emisor a detener la transmisión de datos. Para evitar interbloqueos (*deadlock*), el emisor inicia el temporizador de persistencia y envía periódicamente sondas de 1 byte (*Zero Window Probes*) para consultar si la ventana volvió a abrirse.
+
+---
+
+## 3. Ventana Efectiva de Envío
+
+El emisor nunca puede emitir más datos de los que la red o el receptor puedan absorber. La cantidad máxima de bytes no confirmados permitidos en vuelo es:
+
+$$W_{efectiva} = \min(cwnd, rwnd)$$
+
+</SolutionDrawer>

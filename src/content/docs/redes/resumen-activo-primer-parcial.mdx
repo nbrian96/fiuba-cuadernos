@@ -1,0 +1,810 @@
+---
+docId: resumen-activo-primer-parcial
+courseId: redes
+title: "Resumen Activo de Estudio — Primer Parcial (Clases 01 a 12)"
+order: 2
+entityType: ElaboratedSummary
+provenance: elaborated_summary
+sectionIds:
+  - unidad-1-fundamentos-digitalizacion-y-acceso
+  - unidad-2-ingenieria-de-capa-fisica
+  - unidad-3-modelos-capa-de-enlace-y-wan
+  - unidad-4-arquitecturas-modernas-y-centros-de-datos
+  - unidad-5-capa-de-red-e-internet-global
+  - unidad-6-capa-de-transporte-y-capas-superiores
+  - unidad-7-dimensionamiento-corporativo
+  - integracion-rapida-el-viaje-del-bit
+  - tabla-maestra-de-claves
+relatedResourceIds:
+  - redes-presentacion-01
+  - redes-presentacion-02
+  - redes-presentacion-03
+  - redes-presentacion-04
+  - redes-presentacion-05
+  - redes-presentacion-06
+  - redes-presentacion-07
+  - redes-presentacion-08
+  - redes-presentacion-09
+  - redes-presentacion-10
+  - redes-presentacion-11
+  - redes-presentacion-12
+---
+import AcademicBlock from "../../../components/platform/AcademicBlock";
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Redes (`TA048`) · **Cátedra:** Volpi · Giorgi · Llasat  
+> **Modalidad:** Repaso veloz y *Active Recall* para el **Primer Parcial (Clases 01 a 12)** — incluye fichas ultracompactas, alertas de trampa, preguntas de desarrollo y **35 preguntas Multiple Choice** con clave y justificación ocultable.
+
+<AcademicBlock kind="note" title="Cómo usar este resumen">
+  1. Leé primero la **Idea central** y la **tabla ultracompacta** de cada unidad (no más de 5 minutos por bloque).
+  2. Respondé en voz alta o en borrador las **Preguntas para explicar sin memorizar** antes de desplegar `Ver respuesta`.
+  3. Resolvé los **5 Multiple Choice rápidos** de la unidad y controlá tus errores recién al finalizar el bloque (o consultá la **Tabla Maestra de Claves** al final del documento).
+  4. Si fallás un concepto de fondo o una deducción, volvé a la sección correspondiente del **Apunte Teórico Completo**.
+</AcademicBlock>
+
+---
+
+## Unidad 1: Fundamentos, Digitalización y Acceso
+
+**Idea central:** Comunicar a escala global exige digitalizar señales analógicas respetando Nyquist, agruparlas en jerarquías de transporte (PDH/SDH), protegerlas contra errores (Hamming) y resolver económicamente la "última milla" de acceso.
+
+### Fórmulas y síntesis ultracompacta
+
+| Concepto | Fórmula / Valor exacto | Punto crítico de examen |
+| :--- | :--- | :--- |
+| **Nyquist** | $F_M \ge 2 F_S$ | Si $F_M < 2 F_S \implies$ **aliasing** irreversible. |
+| **Canal DS0** | $8000\text{ muestras/s} \times 8\text{ bits} = \mathbf{64\text{ kbps}}$ | Voz $4\text{ kHz}$ nominales; companding **A-Law** (Arg/Eur) y **$\mu$-Law** (EE.UU.). |
+| **PDH — E1 / T1** | **E1:** $32 \times 64\text{k} = \mathbf{2{,}048\text{ Mbps}}$ · **T1:** $193 \times 8000 = \mathbf{1{,}544\text{ Mbps}}$ | E1: TS0 = FAS (sincronismo), TS16 = CAS/CCS (señalización), 30 canales útiles. |
+| **SDH / SONET** | $\text{STM-1} = 9 \times 270 \times 8 \times 8000 = \mathbf{155{,}52\text{ Mbps}}$ (= **OC-3**) | STM-4 $\approx 622\text{M}$ (OC-12), STM-16 $\approx 2{,}5\text{G}$ (OC-48), STM-64 $\approx 10\text{G}$. |
+| **Hamming** | Detección: $d \ge n+1$ · Corrección: $d \ge 2n+1$ · $2^K \ge M + K + 1$ | Paridades en potencias de 2 ($1,2,4\dots$); síndrome binario señala el bit erróneo. |
+| **MUX 4 entradas** | $Y = I_0 \bar{S}_1 \bar{S}_0 + I_1 \bar{S}_1 S_0 + I_2 S_1 \bar{S}_0 + I_3 S_1 S_0$ | TDM sincrónica desperdicia silencios; FDM exige bandas de guarda; WDM usa $\lambda$. |
+| **Acceso ADSL / HFC** | **ADSL:** voz 300–3400 Hz, guarda 3,4–26 kHz, DMT 26 kHz–1,104 MHz | ADSL: Splitter + DSLAM. HFC: Headend + fibra + coaxial RG-6/59 + CMTS/DOCSIS. |
+| **Las Toninas** | Estación de amarre de cables submarinos en Argentina | 3 factores: lecho arenoso sin restingas, libre de fondeo/arrastre, lejos de dragado del Río de la Plata. |
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 1">
+  - **No confundir** detección ($d \ge n+1$) con corrección ($d \ge 2n+1$): para corregir 1 error se requiere $d \ge 3$ (no $d \ge 2$).
+  - En **E1**, la velocidad total es $2{,}048\text{ Mbps}$ ($32 \times 64\text{ kbps}$), aunque los canales útiles de usuario sean 30 ($1{,}92\text{ Mbps}$); TS0 y TS16 igualmente consumen ancho de banda de línea.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Por qué un enlace satelital no reemplaza a los cables submarinos que amarran en Las Toninas para el tráfico troncal internacional?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque la fibra óptica submarina con DWDM ofrece capacidades de decenas a cientos de Tbps con menor latencia y costo por bit que los satélites. Las Toninas concentra esos amarres por su fondo arenoso sin rocas, baja actividad de fondeo/pesca de arrastre y distancia respecto al dragado del Río de la Plata.
+
+   </details>
+
+2. **¿Cómo se deduce exactamente la tasa de 64 kbps de un canal DS0 a partir de la voz humana?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   La voz telefónica ($300\text{–}3400\text{ Hz}$) se limita a una banda nominal $F_S = 4\text{ kHz}$. Por Nyquist se muestrea a $F_M = 2 \times 4000 = 8000\text{ muestras/s}$ y cada muestra se codifica con $8\text{ bits}$ mediante companding no lineal (A-Law o $\mu$-Law): $8000 \times 8 = 64000\text{ bps} = 64\text{ kbps}$.
+
+   </details>
+
+3. **¿Cuál es la diferencia fundamental entre TDM sincrónica y TDM estadística?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   La TDM sincrónica asigna una ranura de tiempo fija a cada fuente sin importar si transmite o está en silencio (desperdicia capacidad). La TDM estadística asigna ranuras dinámicamente solo a las fuentes activas, optimizando el enlace a costa de requerir encabezados de identificación y *buffers*.
+
+   </details>
+
+4. **En ADSL, ¿para qué sirven la banda de guarda y el Splitter?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   La banda de guarda ($3{,}4\text{–}26\text{ kHz}$) separa espectralmente la voz analógica de las portadoras de datos DMT para evitar interferencia mutua. El Splitter es el filtro físico pasabajos/pasaaltos que deriva la voz al teléfono y las frecuencias altas al módem/DSLAM.
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 1 (Preguntas 1 a 5)
+
+**1.** Si una señal analógica tiene una frecuencia máxima de $5\text{ kHz}$ y se muestrea a $8\text{ kHz}$, ¿qué ocurre?
+- A) Se duplica la relación señal a ruido sin distorsión.
+- B) Se produce *aliasing* irreversible por incumplir $F_M \ge 2 F_S$.
+- C) Se corrige automáticamente mediante A-Law.
+- D) El canal pasa de modo TDM a FDM.
+
+**2.** En una trama PDH estándar europeo/argentino **E1**, los *timeslots* TS0 y TS16 se reservan respectivamente para:
+- A) Datos de usuario y control de flujo TCP.
+- B) Alineación de trama (FAS) y señalización (CAS/CCS).
+- C) Banda de guarda y portadora piloto DMT.
+- D) Paridad Hamming y checksum CRC-32.
+
+**3.** La tasa binaria exacta de una trama SDH **STM-1** (equivalente a SONET OC-3) es:
+- A) $2{,}048\text{ Mbps}$
+- B) $51{,}84\text{ Mbps}$
+- C) $155{,}52\text{ Mbps}$
+- D) $622{,}08\text{ Mbps}$
+
+**4.** Para proteger una palabra de $M = 4$ bits de datos con Código Hamming corrigiendo 1 bit erróneo, ¿cuántos bits de paridad $K$ son necesarios y en qué posiciones se ubican?
+- A) $K = 2$, posiciones 1 y 2.
+- B) $K = 3$, posiciones 1, 2 y 4.
+- C) $K = 3$, posiciones 5, 6 y 7.
+- D) $K = 4$, posiciones pares.
+
+**5.** En una red de acceso **HFC**, ¿qué equipo ubicado en el *Headend* gestiona los cablemódems bajo el estándar DOCSIS?
+- A) DSLAM
+- B) Splitter pasivo
+- C) CMTS
+- D) LSR MPLS
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 1 (1 a 5)</summary>
+
+1. **B** — Nyquist exige $F_M \ge 2 \times 5\text{ kHz} = 10\text{ kHz}$; muestrear a $8\text{ kHz}$ genera solapamiento espectral (*aliasing*).
+2. **B** — En E1 (32 ranuras), TS0 transporta sincronismo/alineación de trama (FAS) y TS16 la señalización (CAS/CCS), dejando 30 canales útiles.
+3. **C** — $\text{STM-1} = 9\text{ filas} \times 270\text{ columnas} \times 8\text{ bits} \times 8000\text{ tramas/s} = 155{,}52\text{ Mbps}$.
+4. **B** — $2^3 = 8 \ge 4 + 3 + 1 = 8$, y las paridades ocupan siempre las posiciones potencias de 2 ($1, 2, 4$).
+5. **C** — El CMTS (*Cable Modem Termination System*) concentra los abonados coaxiales DOCSIS desde el *Headend*.
+
+</details>
+
+---
+
+## Unidad 2: Ingeniería de Capa Física
+
+**Idea central:** La Capa 1 mueve bits físicos sobre cobre o fibra; elegir correctamente categoría, blindaje con tierra, PoE, tipo de fibra y pulido evita fallas físicas imposibles de reparar por software.
+
+### Tablas ultracompactas de referencia
+
+| Cobre Cat | Banda | Velocidad / Distancia | Nota clave |
+| :---: | :---: | :--- | :--- |
+| **5e** | $100\text{ MHz}$ | 1 Gbps / $100\text{ m}$ | Mínimo legado Gigabit. |
+| **6** | $250\text{ MHz}$ | 1 Gbps ($100\text{ m}$) · 10 Gbps ($55\text{ m}$) | Suma cruceta *spline* anti-NEXT. |
+| **6A** | $500\text{ MHz}$ | **10 Gbps / $100\text{ m}$** | Estándar corporativo moderno. |
+| **7** | $600\text{ MHz}$ | 10 Gbps / $100\text{ m}$ | S/FTP; conectores GG45/TERA. |
+| **8** | $2000\text{ MHz}$ | **25 / 40 Gbps / $30\text{ m}$** | Solo intra-rack en Datacenter. |
+
+| Estándar PoE | Tipo | Pares | PSE / PD |
+| :--- | :--- | :---: | :---: |
+| **802.3af** | PoE (T1) | 2 | $15{,}4\text{ W}$ / $12{,}95\text{ W}$ |
+| **802.3at** | PoE+ (T2) | 2 | $30\text{ W}$ / $25{,}5\text{ W}$ |
+| **802.3bt T3** | PoE++ | 4 | $60\text{ W}$ / $51\text{ W}$ |
+| **802.3bt T4** | PoE++ | 4 | $90\text{ W}$ / $71{,}3\text{ W}$ |
+
+- **TIA-568:** canal cobre máx. **$100\text{ m}$** = **$90\text{ m}$** enlace permanente sólido + **$10\text{ m}$** *patch cords* flexibles (MDF/IDF).
+- **Blindajes `XX/YTP`:** `U/UTP`, `F/UTP`, `U/FTP`, `S/FTP`, `SF/FTP`.
+- **Tecnologías extendidas:** Cobre extendido ($150\text{–}250\text{ m}$), **Digital Electricity Clase 4** (pulsos seguros hasta **$4{,}5\text{ km}$**), **AIM (ISO/IEC 18598)** (elimina el "punto ciego" de Capa 1), **PFCS** (híbrido fibra+cobre: $15\text{ W}$ a **$3\text{ km}$** / $60\text{ W}$ a **$650\text{ m}$**).
+- **Fibra óptica ($n_1 > n_2$, cladding universal $125\,\mu\text{m}$):**
+  - **OS2 Monomodo ($9\,\mu\text{m}$):** láser DFB/FP ($1310/1550\text{ nm}$), **sin dispersión modal**, decenas de km.
+  - **OM3/OM4/OM5 Multimodo ($50\,\mu\text{m}$):** láser VCSEL ($850\text{ nm}$), alcances cortos de datacenter. **OM5 (WBMMF)** usa **SWDM4** ($850/880/910/940\text{ nm}$) + **PAM4** (2 bits/símbolo, $50\text{ GBaud} = 100\text{G/lane}$ para 400G/800G).
+- **Cubiertas:** **Plenum (CMP)** cámaras de aire, **Riser (CMR)** montantes verticales, **LSZH** bajo humo y cero halógenos tóxicos.
+- **Conectores y pulidos:** LC ($1{,}25\text{ mm}$), SC ($2{,}5\text{ mm}$), MPO/MTP ($8\text{–}24$ fibras). **UPC** (azul, $0^\circ$, $-50\text{ a }-55\text{ dB}$) vs. **APC** (verde, $8^\circ$, $-60\text{ a }-65\text{ dB}$).
+- **Inspección IEC 61300-3-35:** microscopio + limpieza en seco; **prohibido alcohol isopropílico común**.
+
+<AcademicBlock kind="trap" title="Trampas frecuentes — Unidad 2">
+  - **Pantalla flotante:** un cable blindado (`F/UTP`, `S/FTP`) **sin puesta a tierra** actúa como antena receptora y rinde **peor que U/UTP**.
+  - **UPC vs. APC:** acoplar azul ($0^\circ$) con verde ($8^\circ$) provoca pérdidas superiores a **$30\text{ dB}$** y daño físico permanente en las férulas.
+  - **Capa 1 no entiende tramas ni IP/MAC:** si el enunciado menciona CRC, MAC o switches L2, ya estás en Capa 2.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Por qué un cable S/FTP sin conexión a tierra puede degradar la señal más que un cable U/UTP común?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Sin descarga a tierra, la pantalla metálica acumula y reirradia el ruido electromagnético inducido como una antena directamente acoplada a los pares internos, empeorando el desempeño frente a un U/UTP que al menos depende únicamente de la cancelación diferencial del trenzado.
+
+   </details>
+
+2. **¿Por qué la fibra monomodo OS2 alcanza decenas de kilómetros mientras la multimodo OM4 se limita a cientos de metros?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Por la **dispersión modal**. El núcleo ancho de la multimodo ($50\,\mu\text{m}$) permite que la luz viaje por múltiples trayectorias de distinta longitud que llegan desfasadas y ensanchan el pulso. El núcleo estrecho de OS2 ($9\,\mu\text{m}$) admite un único modo de propagación, eliminando la dispersión modal.
+
+   </details>
+
+3. **¿Qué problema concreto resuelve un sistema AIM (ISO/IEC 18598) que SNMP no puede cubrir?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Resuelve el "punto ciego" de Capa 1: SNMP solo monitorea equipos encendidos a nivel L2/L3, mientras AIM sensa físicamente cada *patch cord* y puerto del rack en tiempo real, documentando y alertando cambios físicos incluso cuando los equipos están apagados.
+
+   </details>
+
+4. **¿Por qué no debe limpiarse un conector de fibra óptica con alcohol isopropílico común de farmacia?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque contiene agua y aditivos que al evaporarse dejan películas residuales higroscópicas sobre el núcleo de $9\,\mu\text{m}$ que atenúan y reflejan el haz láser. IEC 61300-3-35 exige inspección con microscopio y limpieza en seco certificada.
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 2 (Preguntas 6 a 10)
+
+**6.** Según ANSI/TIA-568, la longitud máxima de un canal de cobre horizontal de $100\text{ m}$ se compone de:
+- A) $80\text{ m}$ de enlace permanente + $20\text{ m}$ de *patch cords*.
+- B) $90\text{ m}$ de enlace permanente (cable sólido) + $10\text{ m}$ de *patch cords* flexibles.
+- C) $100\text{ m}$ de enlace permanente + hasta $15\text{ m}$ de *patch cords*.
+- D) $55\text{ m}$ en Cat 6A y $100\text{ m}$ en Cat 8.
+
+**7.** Un Access Point Wi-Fi 6E corporativo requiere $45\text{ W}$ efectivos en el dispositivo alimentado (PD). ¿Qué estándar PoE mínimo debe soportar el switch (PSE)?
+- A) IEEE 802.3af (PoE)
+- B) IEEE 802.3at (PoE+)
+- C) IEEE 802.3bt Tipo 3 (PoE++ 4 pares: $60\text{ W}$ PSE / $51\text{ W}$ PD)
+- D) Ninguno; PoE no supera los $30\text{ W}$.
+
+**8.** En fibra óptica, ¿qué ocurre al conectar un *patch cord* LC/UPC (azul) en un adaptador acoplado a una fibra LC/APC (verde)?
+- A) Funciona normalmente con $1\text{ dB}$ extra de atenuación.
+- B) Mejora la pérdida de retorno a $-65\text{ dB}$.
+- C) Genera pérdidas superiores a $30\text{ dB}$ y daño físico en las férulas por el desajuste de $8^\circ$.
+- D) El transceptor negocia automáticamente el ángulo vía PAM4.
+
+**9.** ¿Qué combinación tecnológica habilita enlaces de 400G/800G sobre distancias cortas de datacenter usando 2 bits por símbolo?
+- A) OM1 + LED + NRZ
+- B) OM5 (WBMMF) + SWDM4 ($850\text{–}940\text{ nm}$) + modulación PAM4 ($50\text{ GBaud} = 100\text{G/lane}$)
+- C) Cat 6 + CSMA/CD + DMT
+- D) PFCS + Digital Electricity + HDLC
+
+**10.** ¿Qué tecnología permite llevar energía eléctrica segura sobre cableado de telecomunicaciones hasta $4{,}5\text{ km}$ cortando la emisión en milisegundos ante una falla?
+- A) PoE 802.3at
+- B) Digital Electricity (Clase 4)
+- C) Cruce *spline* Cat 6A
+- D) Fibra oscura OS2
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 2 (6 a 10)</summary>
+
+6. **B** — El límite de $100\text{ m}$ se reparte estrictamente en $90\text{ m}$ de cable sólido permanente más hasta $10\text{ m}$ de *patch cords*.
+7. **C** — 802.3at solo entrega $25{,}5\text{ W}$ al PD; se necesita 802.3bt Tipo 3 ($51\text{ W}$ garantizados en PD).
+8. **C** — UPC ($0^\circ$) y APC ($8^\circ$) son físicamente incompatibles; la brecha de aire provoca $>30\text{ dB}$ de pérdida y daño mecánico.
+9. **B** — OM5 con SWDM4 (4 longitudes de onda) y PAM4 (2 bits/símbolo) alcanza $100\text{ Gbps}$ por carril a $50\text{ GBaud}$.
+10. **B** — Digital Electricity (Clase 4) transmite paquetes/pulsos monitoreados de energía seguros hasta $4{,}5\text{ km}$.
+
+</details>
+
+---
+
+## Unidad 3: Modelos, Capa de Enlace y WAN
+
+**Idea central:** La Capa 2 resuelve la entrega salto a salto (MAC, CRC-32, CAM, STP y VLANs) y evolucionó desde redes WAN lentas (X.25, Frame Relay, ATM) hacia Metro Ethernet y MPLS (Capa 2.5).
+
+### Síntesis ultracompacta
+
+- **OSI (7) vs. TCP/IP (4):** Aplicación (7–5) · Transporte (4: Segmento/Datagrama) · Internet/Red (3: Paquete) · Acceso a la Red (2: Trama, 1: Bits).
+- **Trama Ethernet IEEE 802.3:** $64\text{ a }1518\text{ B}$ ($1522\text{ B}$ con **802.1Q**). MAC = $48\text{ bits}$ ($24\text{ OUI} + 24\text{ NIC}$). **FCS = CRC-32** (4 B). **EtherType:** `0x0800` IPv4, `0x86DD` IPv6, `0x0806` ARP, `0x8100` VLAN 802.1Q.
+- **Acceso al medio:** **CSMA/CD** (Ethernet *half-duplex*, obsoleto en Full-Duplex) vs. **CSMA/CA** (Wi-Fi, evita colisiones y mitiga nodo oculto con **RTS/CTS**).
+- **Switching L2:** Tabla **CAM** aprende por **MAC Origen**, reenvía selectivamente o hace *flooding*. **STP (802.1D)** usa **BPDUs** y elige **Root Bridge** para evitar tormentas de broadcast. **VLAN (802.1Q)** agrega etiqueta de 4 B con **VLAN ID de 12 bits (4094 VLANs)**; el tráfico inter-VLAN exige **Capa 3**.
+- **WAN punto a punto:** **HDLC** (bandera `0x7E`) y **PPP** (**LCP** + **NCP** + **PAP** texto plano / **CHAP** hash).
+- **Legacy vs. Moderno:**
+  - **X.25:** hasta $64\text{ kbps}$, corrección salto a salto (LAPB), muy lento.
+  - **TDM (Newbridge):** circuitos rígidos con ancho de banda ocioso desperdiciado.
+  - **Frame Relay:** DLCI local, tramas hasta $\sim 8000\text{ B}$, FECN/BECN, CIR/EIR.
+  - **ATM:** **celdas fijas de 53 B** ($5\text{ B}$ VPI/VCI + $48\text{ B}$ payload), CBR/VBR/UBR.
+  - **Metro Ethernet ("el caño") vs. MPLS ("el fluido", Capa 2.5):** etiqueta de 32 bits; **LER/PE** hace **Push/Pop**, **LSR/P** hace **Swap** consultando la **LFIB** por **FEC**.
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 3">
+  **Invariancia IP vs. Mutación MAC:** al cruzar un router, la IP origen y la IP destino **no cambian** (salvo NAT), pero la MAC origen y la MAC destino **se reescriben completamente en cada salto**. Además, un switch L2 puro **nunca puede enrutar entre dos VLANs distintas** sin un router o módulo L3.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Qué ocurre con las direcciones IP y MAC cuando un paquete atraviesa 3 routers entre origen y destino?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Las direcciones IP origen y destino permanecen constantes de extremo a extremo (salvo NAT). En cambio, en cada uno de los 3 routers la trama de Capa 2 se desencapsula y se vuelve a generar con nuevas direcciones MAC locales (MAC origen = interfaz de salida del router; MAC destino = siguiente salto).
+
+   </details>
+
+2. **¿Por qué dos switches conectados con dos cables en paralelo sin STP colapsan la LAN en segundos?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque Ethernet no tiene campo TTL. Cualquier trama broadcast (como un ARP) es replicada infinitamente por ambos enlaces creando una tormenta de broadcast que satura CPU y ancho de banda y desestabiliza continuamente la tabla CAM de ambos switches.
+
+   </details>
+
+3. **¿Por qué ATM eligió celdas fijas y diminutas de 53 bytes en vez de tramas variables largas?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Para minimizar el *jitter* (variación del retardo) y permitir que paquetes de voz en tiempo real no quedaran bloqueados esperando a que terminara de transmitirse una trama larga de datos, habilitando conmutación rápida por hardware con clases CBR/VBR/UBR.
+
+   </details>
+
+4. **Explicá la analogía de cátedra "el caño y el fluido" entre Metro Ethernet y MPLS.**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Metro Ethernet aporta "el caño": conectividad metropolitana de alta velocidad, simple y económica en Capa 2. MPLS aporta "el fluido inteligente": encaminamiento por etiquetas de 32 bits (Capa 2.5) que suma ingeniería de tráfico, VPNs aisladas y QoS garantizada sobre el núcleo del operador.
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 3 (Preguntas 11 a 15)
+
+**11.** ¿Cuál es el tamaño máximo estándar de una trama Ethernet IEEE 802.3 cuando incluye una etiqueta VLAN IEEE 802.1Q?
+- A) 1500 bytes
+- B) 1518 bytes
+- C) 1522 bytes
+- D) 8000 bytes
+
+**12.** Al recibir una trama por el puerto 4 con MAC origen `AA:BB` y MAC destino desconocida `CC:DD`, ¿qué acciones realiza un switch L2?
+- A) Aprende `CC:DD` en el puerto 4 y descarta la trama.
+- B) Aprende `AA:BB` en el puerto 4 y hace *flooding* por los demás puertos de la misma VLAN.
+- C) Consulta su tabla BGP y decrementa el TTL.
+- D) Envía un mensaje ICMP *Destination Unreachable*.
+
+**13.** ¿Cuántas VLANs utilizables permite el campo VLAN ID de 12 bits del estándar IEEE 802.1Q y qué se necesita para comunicarlas entre sí?
+- A) 256 VLANs; basta un hub en Capa 1.
+- B) 4094 VLANs; se requiere obligatoriamente un dispositivo de Capa 3 (router o switch L3).
+- C) 4096 VLANs; basta configurar STP en el Root Bridge.
+- D) 1024 VLANs; se requiere PPP con CHAP.
+
+**14.** ¿Qué protocolo WAN legacy eliminó la corrección de errores salto a salto de X.25 y conmuta tramas variables usando identificadores locales DLCI y bits FECN/BECN?
+- A) HDLC
+- B) ATM
+- C) Frame Relay
+- D) SONET
+
+**15.** En una red MPLS, ¿qué operación sobre la etiqueta de 32 bits ejecutan los routers de núcleo **LSR (P)** al consultar la tabla LFIB?
+- A) *Push* y *Pop* exclusivamente.
+- B) *Swap* (intercambio de etiqueta entrante por saliente).
+- C) Desencapsulado hasta Capa 4 para verificar puertos TCP.
+- D) Fragmentación en celdas de 53 bytes.
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 3 (11 a 15)</summary>
+
+11. **C** — La trama estándar máxima de $1518\text{ B}$ crece $4\text{ B}$ al insertar el tag 802.1Q (`0x8100` + TCI) = $1522\text{ B}$.
+12. **B** — El aprendizaje en tabla CAM siempre usa la **MAC origen**; al desconocer el destino, inunda (*flooding*) los demás puertos de esa VLAN.
+13. **B** — $2^{12} = 4096$ menos los valores reservados 0 y 4095 = $4094$ VLANs; el ruteo inter-VLAN requiere Capa 3.
+14. **C** — Frame Relay conmuta por DLCI, usa tramas de hasta $\sim 8000\text{ B}$ y notifica congestión con FECN/BECN.
+15. **B** — Los bordes LER/PE ejecutan *Push* (ingreso) y *Pop* (egreso); los núcleos LSR/P solo hacen *Swap* consultando la LFIB.
+
+</details>
+
+---
+
+## Unidad 4: Arquitecturas Modernas y Centros de Datos
+
+**Idea central:** Las redes modernas reemplazan cajas propietarias por software programable (NFV/SDN), despliegan cómputo del Cloud al Edge y diseñan datacenters resilientes (TIA-942, Tiers y Spine & Leaf) listos para tráfico Este-Oeste e IA.
+
+### Síntesis ultracompacta
+
+- **Purpose-Built vs. COTS x86 / NFV:** de equipos monolíticos propietarios a **VNFs** (software sobre servidores x86 estándar).
+- **Control Plane vs. Data Plane:** Control = CPU + tabla **RIB** (inteligencia); Datos = **ASICs / TCAM** + tabla **FIB** (reenvío a velocidad de línea).
+- **SDN:** Controlador centralizado; **Southbound** (**OpenFlow, NETCONF, P4**) hacia switches y **Northbound** (**APIs RESTful/JSON**) hacia aplicaciones.
+- **Cloud-to-Edge:** Device Edge → Customer Edge → Far Edge / **MEC** → Central Cloud Core.
+- **4 Pilares IT/OT:** Ancho de Banda · Resiliencia (**"cinco nueves" $99{,}999\% = 5{,}26\text{ min/año}$**) · Seguridad (**Zero Trust**) · Escalabilidad.
+- **ANSI/TIA-942:** **Cámara Cero** (doble acometida subterránea disjunta) → **ER → MDA → HDA → EDA**. Tipos: Enterprise, Hyperscale, Colocation/Telco, Edge/MEC.
+- **Tiers Uptime Institute:**
+
+| Tier | Disponibilidad | Caída máx./año | Rasgo definitorio |
+| :---: | :---: | :---: | :--- |
+| **I** | $99{,}671\%$ | $28{,}8\text{ h}$ | Capacidad básica $N$, sin redundancia. |
+| **II** | $99{,}741\%$ | $22{,}0\text{ h}$ | Componentes $N+1$, una sola ruta. |
+| **III** | **$99{,}982\%$** | **$1{,}6\text{ h}$** | **Mantenimiento Simultáneo** ($N+1$, $\ge 72\text{ h}$ combustible). |
+| **IV** | **$99{,}995\%$** | **$0{,}4\text{ h}$** | **Tolerante a Fallas** $2(N+1)$, dos rutas activas independientes. |
+
+- **3 Capas (Norte-Sur, STP) vs. Spine & Leaf Clos (Este-Oeste):** exactamente **2 saltos L3**, todos los enlaces activos con **ECMP**, sin STP.
+- **Redes para IA:** **Front-End** (Ethernet estándar) vs. **Back-End** GPU-a-GPU (*lossless* + **RDMA** con **InfiniBand** o **RoCEv2** — IBTA Annex A17).
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 4">
+  **Caso Argentina y Tier IV:** en AMBA el servicio eléctrico público opera bajo **monopolio zonal (Edenor o Edesur)**, impidiendo contratar dos distribuidoras públicas independientes en el mismo predio; por eso los grandes datacenters locales certifican habitualmente hasta **Tier III**. Además, en **Spine & Leaf**, los switches Leaf **nunca se conectan entre sí** ni los Spine entre sí: solo existe malla completa Leaf ↔ Spine.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Qué diferencia funcional y de hardware existe entre el Control Plane (RIB) y el Data Plane (FIB)?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   El Control Plane corre en CPU de propósito general, ejecuta protocolos de enrutamiento y construye la tabla lógica RIB. El Data Plane compila esa información en la FIB dentro de hardware dedicado (ASICs y memoria TCAM) para reenviar paquetes a velocidad de línea sin cargar a la CPU.
+
+   </details>
+
+2. **¿Por qué las arquitecturas de Datacenter migraron de 3 Capas a Spine & Leaf (Clos)?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque la virtualización y los microservicios dispararon el tráfico **Este-Oeste** (servidor a servidor). Spine & Leaf elimina el desperdicio de enlaces bloqueados por STP usando enrutamiento L3 con ECMP y garantiza latencia determinista de exactamente 2 saltos entre cualquier par de racks.
+
+   </details>
+
+3. **¿Por qué en un datacenter ANSI/TIA-942 se exige "Cámara Cero" con doble acometida físicamente disjunta?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Para eliminar el punto único de falla físico en el acceso: si dos fibras redundantes ingresaran por la misma zanja o calle, una sola excavación accidental cortaría simultáneamente el enlace primario y el de contingencia.
+
+   </details>
+
+4. **¿Qué exige la red Back-End de un clúster de entrenamiento de IA que no cubre una red Ethernet Best Effort convencional?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Exige transferencia directa memoria-a-memoria entre GPUs (**RDMA** sin intervención de CPU), latencia en microsegundos y comportamiento **sin pérdida (*lossless*)**, implementado mediante InfiniBand o RoCEv2 (IBTA Annex A17).
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 4 (Preguntas 16 a 20)
+
+**16.** En una arquitectura SDN, la comunicación entre el Controlador centralizado y los switches del plano de datos se realiza a través de la interfaz:
+- A) Northbound vía SNMP exclusivamente.
+- B) Southbound mediante protocolos como OpenFlow, NETCONF o P4.
+- C) Cámara Cero mediante DOCSIS.
+- D) ARP sobre Ethernet 802.1Q.
+
+**17.** ¿Cuál es el tiempo máximo de indisponibilidad anual permitido por un nivel de resiliencia de "cinco nueves" ($99{,}999\%$)?
+- A) $28{,}8\text{ horas}$
+- B) $1{,}6\text{ horas}$
+- C) $5{,}26\text{ minutos}$
+- D) $52{,}6\text{ segundos}$
+
+**18.** ¿Qué característica distingue específicamente a un Centro de Datos **Tier III** según el Uptime Institute?
+- A) Disponibilidad del $99{,}671\%$ sin redundancia de generadores.
+- B) Capacidad de **Mantenimiento Simultáneo** ($99{,}982\%$, $1{,}6\text{ h/año}$, $N+1$ y $\ge 72\text{ h}$ de combustible).
+- C) Dos distribuidoras eléctricas públicas independientes obligatorias en AMBA.
+- D) Uso obligatorio de topología bus coaxial.
+
+**19.** En una topología **Spine & Leaf (Clos)** de un datacenter, el tráfico entre dos servidores alojados en distintos racks atraviesa:
+- A) Un número variable de saltos determinado por Spanning Tree.
+- B) Exactamente 2 saltos de red (Leaf origen → Spine → Leaf destino) balanceados en L3 con ECMP.
+- C) Directamente un cable horizontal entre Leaf 1 y Leaf 2.
+- D) Un túnel X.25 hasta el núcleo WAN.
+
+**20.** En la infraestructura de un clúster de IA, la red **Back-End** GPU-a-GPU se caracteriza por emplear:
+- A) ADSL y Frame Relay para minimizar costos.
+- B) InfiniBand o RoCEv2 (IBTA Annex A17) con RDMA y comportamiento *lossless*.
+- C) STP 802.1D y tráfico estrictamente Norte-Sur.
+- D) Celdas ATM UBR con *cell tax* del 10 %.
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 4 (16 a 20)</summary>
+
+16. **B** — Southbound (OpenFlow, NETCONF, P4) programa el plano de datos; Northbound (REST/JSON) expone APIs a las aplicaciones.
+17. **C** — $0{,}001\% \times 525{,}600\text{ min/año} \approx 5{,}26\text{ minutos/año}$.
+18. **B** — Tier III garantiza mantenimiento concurrente sin interrupción de cargas ($99{,}982\%$, $1{,}6\text{ h/año}$, autonomía $\ge 72\text{ h}$).
+19. **B** — La malla bipartita Clos asegura exactamente 2 saltos deterministas y todos los enlaces activos vía ECMP L3.
+20. **B** — El Back-End de IA requiere RDMA y red *lossless* con InfiniBand o RoCEv2 (IBTA Annex A17).
+
+</details>
+
+---
+
+## Unidad 5: Capa de Red e Internet Global
+
+**Idea central:** IP provee direccionamiento lógico global y reenvío *Best Effort* (evolucionando de IPv4 a IPv6), mientras BGP-4 gobierna la interconexión comercial (Tránsito y Peering) entre Sistemas Autónomos.
+
+### Síntesis ultracompacta
+
+| Dimensión | IPv4 | IPv6 |
+| :--- | :--- | :--- |
+| **Direcciones** | 32 bits ($\sim 4{,}3 \times 10^9$) | **128 bits** ($3{,}4 \times 10^{38}$) |
+| **Cabecera** | 20–60 B (IHL mín. 5), con Checksum | **40 B fija**, **sin Checksum** |
+| **Fragmentación** | Routers intermedios (DF/MF, offset en bloques de 8 B) | **Solo el origen** tras **PMTUD** |
+| **Envíos** | Unicast, Multicast, **Broadcast** | Unicast, Multicast, **Anycast** (sin Broadcast) |
+
+- **Campos clave IPv4:** **TTL** (anti-bucles), **Protocol** (`6` TCP, `17` UDP, `1` ICMP), **DSCP/ECN** (QoS).
+- **ICMP / IGMP:** ICMP Tipo 8/0 (`ping`), Tipo 3 (*Unreachable*), Tipo 11 (*Time Exceeded* → `traceroute`). IGMP gestiona grupos multicast IPv4.
+- **IP sobre WAN:** **POS/SDH** (overhead menor al 3 %), **IP/ATM AAL5** ($\sim 10\%$ *cell tax*), **Fibra Oscura** (sin monitoreo físico del carrier).
+- **Internet Global:** **AS/ASN** asignados por RIRs (**LACNIC**, ARIN, RIPE NCC; ej. Telecom Italia **AS 3269**, Telecom Arg **AS 7303**, Telecentro **AS 27747**). **BGP-4** es **Path Vector** (**eBGP** inter-AS, **iBGP** intra-AS; evita bucles con `AS-Path`).
+- **Tránsito IP** (pago, tabla global, SLA) vs. **Peering** (gratuito *settlement-free*, prefijos propios/clientes, simetría $\le 2:1$; **Caso Clarín vs. Telecom**). **IXPs:** **CABASE** (Argentina) y **NAP de las Américas** (Miami).
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 5">
+  - **IPv6 NO tiene Checksum de cabecera ni Broadcast**, y sus routers **no fragmentan** paquetes en tránsito.
+  - **Peering NO da acceso a toda Internet:** solo intercambia rutas propias y de clientes directos; para llegar al resto del mundo siempre se necesita **Tránsito IP** (salvo operadores Tier 1 en malla completa).
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Por qué IPv6 eliminó el Checksum de cabecera y la fragmentación en routers intermedios?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Para acelerar el reenvío por hardware en routers de núcleo: en IPv4 cada salto debía recalcular el checksum al decrementar el TTL y podía verse forzado a fragmentar paquetes en CPU. IPv6 confía la verificación de integridad a L2 (CRC) y L4 (TCP/UDP) y delega la adaptación de tamaño al origen vía PMTUD.
+
+   </details>
+
+2. **¿Cómo utiliza la herramienta `traceroute` el campo TTL y el protocolo ICMP?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Envía sondas incrementando progresivamente el TTL ($1, 2, 3\dots$). Cada router del camino decrementa el TTL; cuando llega a $0$, descarta el paquete y devuelve un mensaje **ICMP Time Exceeded (Tipo 11)** con su propia IP, revelando la secuencia exacta de saltos.
+
+   </details>
+
+3. **¿Cómo evita BGP-4 los bucles de enrutamiento entre Sistemas Autónomos a escala global?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Como protocolo *Path Vector*, cada anuncio lleva la lista completa de ASNs atravesados en el atributo **`AS-Path`**. Si un router recibe una ruta que ya contiene su propio ASN, detecta el bucle y la descarta inmediatamente.
+
+   </details>
+
+4. **¿Qué enseñanza dejó el caso histórico Clarín vs. Telecom sobre Tránsito IP y Peering?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Mostró que el peering gratuito (*settlement-free*) se sostiene únicamente mientras existe reciprocidad de tráfico (ratio $\le 2:1$). Cuando el volumen multimedia vuelve muy asimétrico el intercambio, el peering gratuito pierde viabilidad comercial y deriva en disputas de pago de tránsito o interconexión vía IXP.
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 5 (Preguntas 21 a 25)
+
+**21.** En una cabecera IPv4, ¿qué valores del campo `Protocol` identifican respectivamente a ICMP, TCP y UDP?
+- A) 80, 443 y 53
+- B) 1, 6 y 17
+- C) 4, 6 y 8
+- D) `0x0800`, `0x0806` y `0x86DD`
+
+**22.** ¿Cuál de las siguientes afirmaciones sobre **IPv6** es verdadera?
+- A) Utiliza direcciones de 64 bits y mantiene el Broadcast local.
+- B) Tiene cabecera fija de 40 bytes, elimina el Checksum de cabecera y prohíbe la fragmentación en routers intermedios.
+- C) Recalcula el Header Checksum en cada salto al decrementar el Hop Limit.
+- D) Solo puede transportarse sobre ATM AAL5.
+
+**23.** Al encapsular paquetes IP sobre una red WAN **ATM (AAL5)**, el fenómeno conocido como *ATM cell tax* introduce un overhead aproximado del:
+- A) Menor al 1 %
+- B) Menor al 3 %
+- C) Alrededor del 10 %
+- D) Exactamente 50 %
+
+**24.** Si una organización contrata **Fibra Oscura (*Dark Fiber*)** a un operador, ¿cuál es una desventaja operativa clave respecto a un servicio gestionado?
+- A) No puede superar los $64\text{ kbps}$.
+- B) El operador no provee monitoreo físico/óptico activo del enlace del cliente.
+- C) Impide utilizar direcciones IPv6.
+- D) Obliga a emplear cabeceras HDLC propietarias.
+
+**25.** ¿Qué diferencia esencial separa al **Tránsito IP** del **Peering gratuito (*settlement-free*)**?
+- A) El Peering entrega la tabla global completa de Internet con SLA pago.
+- B) El Tránsito IP es pago, entrega la tabla global de Internet con SLA; el Peering intercambia solo prefijos propios/clientes bajo simetría ($\le 2:1$).
+- C) El Peering solo funciona dentro de un mismo AS mediante iBGP.
+- D) El Tránsito IP no requiere BGP ni direcciones IP públicas.
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 5 (21 a 25)</summary>
+
+21. **B** — En IPv4: `1` = ICMP, `6` = TCP, `17` = UDP.
+22. **B** — IPv6 fija su cabecera en 40 B, quita el Checksum de cabecera y usa PMTUD en origen en vez de fragmentación intermedia.
+23. **C** — La segmentación en celdas de 53 B (48 B útiles) más relleno AAL5 consume ~10 % de overhead (*cell tax*), frente a menos del 3 % en POS/SDH.
+24. **B** — Al alquilar solo el hilo pasivo sin electrónica del carrier, el cliente asume toda la iluminación y el monitoreo óptico.
+25. **B** — Tránsito = pago + tabla global + SLA; Peering *settlement-free* = intercambio mutuo de prefijos propios/clientes con simetría $\le 2:1$.
+
+</details>
+
+---
+
+## Unidad 6: Capa de Transporte y Capas Superiores
+
+**Idea central:** La Capa 4 entrega datos **proceso-a-proceso** mediante puertos (TCP confiable vs. UDP de baja latencia vs. QUIC moderno), sobre la cual operan Sesión (5), Presentación (6) y Aplicación (7).
+
+### Síntesis ultracompacta
+
+- **L3 vs. L4:** IP = Host-a-Host · Puertos = Proceso-a-Proceso (Socket = IP + Puerto).
+- **Puertos obligatorios:** FTP `20/21`, SSH `22`, Telnet `23`, SMTP `25`, DNS `53` (UDP/TCP), DHCP `67/68` (UDP), HTTP `80`, POP3 `110`, IMAP `143`, SNMP `161/162` (UDP), HTTPS/QUIC `443`.
+- **TCP (cabecera 20–60 B) vs. UDP (cabecera 8 B fijos):**
+  - **TCP:** orientado a conexión (**3-Way:** `SYN` → `SYN-ACK` → `ACK`; **4-Way:** `FIN`/`ACK` × 2 + **`TIME_WAIT` $2 \times \text{MSL}$**), entrega confiable y ordenada.
+  - **Control de Flujo:** protege al **receptor** (*Sliding Window* `rwnd`, **Zero Window** + **Window Probe**).
+  - **Control de Congestión:** protege a la **red** (`cwnd`: **Tahoe / Reno** por pérdida → **CUBIC** para alto BDP → **BBR** por ancho de banda y RTT mínimo).
+  - **UDP en tiempo real:** VoIP requiere latencia menor a **$150\text{ ms}$**; **G.729** genera payload de $\sim 20\text{ B}$ donde retransmitir empeora la voz.
+  - **QUIC / HTTP/3 (RFC 9000):** corre sobre **UDP**, incluye **TLS 1.3 nativo (0-RTT)**, elimina el **Head-of-Line Blocking** de transporte y permite movilidad Wi-Fi ↔ 4G/5G vía **Connection ID**.
+- **Capas 5, 6 y 7:** **Sesión (5)** = tokens y *checkpoints* · **Presentación (6)** = UTF-8/EBCDIC, ASN.1, compresión *lossless/lossy*, cifrado TLS/SSL · **Aplicación (7)** = HTTP/S, DNS, **DHCP (DORA)**, SNMP, SSH, FTP.
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 6">
+  - **Control de Flujo ≠ Control de Congestión:** el primero evita saturar el buffer del **host receptor** (`rwnd` / *Zero Window*), el segundo evita saturar los **routers intermedios** (`cwnd` / Tahoe, Reno, CUBIC, BBR).
+  - **QUIC (HTTP/3) es confiable y cifrado, pero corre sobre UDP** (no sobre TCP) precisamente para esquivar el *Head-of-Line Blocking* y la rigidez del kernel TCP.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Por qué TCP mantiene el socket en estado `TIME_WAIT` ($2 \times \text{MSL}$) tras enviar el último `ACK` del cierre?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Por dos motivos: (1) permitir retransmitir el último `ACK` si se perdió y el extremo remoto reenvía su `FIN`, y (2) garantizar que cualquier segmento rezagado en la red expire antes de que la misma tupla de puertos se reutilice en una nueva conexión.
+
+   </details>
+
+2. **¿Cómo evita TCP un bloqueo permanente (*deadlock*) cuando el receptor anuncia `Zero Window`?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   El emisor detiene el envío de datos pero dispara periódicamente pequeños segmentos **Window Probe** para consultar si el buffer del receptor volvió a liberar espacio, evitando quedar bloqueado si el `ACK` de reapertura de ventana se perdió en la red.
+
+   </details>
+
+3. **¿Por qué se utiliza UDP y no TCP para telefonía VoIP con códec G.729?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque VoIP exige latencia unidireccional menor a $150\text{ ms}$: retransmitir un paquete de voz perdido llega tarde y genera pausas audibles (además bloquea paquetes posteriores). Asimismo, G.729 produce cargas útiles de apenas $\sim 20\text{ B}$, por lo que los $20\text{ B}$ de cabecera TCP implican una sobrecarga excesiva frente a los $8\text{ B}$ de UDP.
+
+   </details>
+
+4. **¿Qué tres mejoras clave aporta QUIC (HTTP/3) frente a HTTP/2 sobre TCP+TLS?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   (1) Integra TLS 1.3 en el handshake reduciendo la apertura a 1-RTT/0-RTT; (2) multiplexa *streams* independientes eliminando el *Head-of-Line Blocking* a nivel de transporte; y (3) usa un *Connection ID* lógico que preserva la sesión al cambiar de IP (Wi-Fi ↔ celular).
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 6 (Preguntas 26 a 30)
+
+**26.** ¿Cuál es el tamaño fijo de la cabecera de un datagrama **UDP**?
+- A) 4 bytes
+- B) 8 bytes
+- C) 20 bytes
+- D) 40 bytes
+
+**27.** ¿Cuál de los siguientes algoritmos de control de congestión TCP evita esperar a que se llenen las colas hasta provocar pérdidas, estimando directamente el ancho de banda del cuello de botella y el RTT mínimo?
+- A) Tahoe
+- B) Reno
+- C) BBR
+- D) CHAP
+
+**28.** ¿Qué secuencia de mensajes corresponde al proceso completo de obtención de dirección IP dinámica mediante **DHCP**?
+- A) `SYN` → `SYN-ACK` → `ACK`
+- B) **DORA**: *Discover → Offer → Request → Acknowledge*
+- C) *Push → Swap → Pop*
+- D) `FIN` → `ACK` → `FIN` → `ACK`
+
+**29.** La conversión de codificación de caracteres (EBCDIC/UTF-8), la notación ASN.1, la compresión *lossless/lossy* y el cifrado TLS corresponden en el modelo OSI a la:
+- A) Capa 4 (Transporte)
+- B) Capa 5 (Sesión)
+- C) Capa 6 (Presentación)
+- D) Capa 7 (Aplicación)
+
+**30.** ¿Cómo permite **QUIC (RFC 9000)** que una videollamada o descarga continúe sin cortarse cuando un smartphone cambia de Wi-Fi a 5G?
+- A) Renegociando un nuevo 3-Way Handshake TCP en cada router.
+- B) Identificando la sesión mediante un **Connection ID** lógico independiente de la IP y el puerto.
+- C) Desactivando el cifrado TLS 1.3 durante el traspaso.
+- D) Usando direcciones MAC fijas de extremo a extremo.
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 6 (26 a 30)</summary>
+
+26. **B** — La cabecera UDP mide exactamente 8 bytes fijos (Puerto Origen, Puerto Destino, Longitud y Checksum).
+27. **C** — BBR (*Bottleneck Bandwidth and Round-trip propagation time*) modela el enlace activamente sin depender de la pérdida de paquetes como señal principal.
+28. **B** — DHCP opera sobre UDP (puertos 67/68) con el ciclo de 4 pasos **DORA**.
+29. **C** — Traducción/sintaxis, compresión y cifrado son las tres funciones clásicas de la Capa 6 (Presentación).
+30. **B** — El *Connection ID* desacopla la sesión de la tupla IP/puerto, habilitando migración de conexión transparente.
+
+</details>
+
+---
+
+## Unidad 7: Dimensionamiento Corporativo
+
+**Idea central:** Un dimensionamiento profesional traduce usuarios, concurrencia ($N_c = N_{\text{total}} \times C$), perfiles IT/OT/Tiempo Real y margen de crecimiento ($+30\%$ a $+50\%$) en capacidad cuantificada y dictamen de resiliencia/QoS.
+
+### Tabla de métricas FIUBA y resumen de los 4 casos
+
+| Perfil de tráfico | Métrica oficial |
+| :--- | :--- |
+| **IT Corporativo** (ERP, CRM, correo) | **$0{,}4\text{ Mbps}$ / usuario concurrente** |
+| **Internet / SaaS / Navegación** | **$1{,}5\text{ Mbps}$ / usuario concurrente** |
+| **Tiempo Real** (VoIP / Videoconferencia) | **$1{,}0\text{ Mbps}$ / usuario concurrente** |
+| **OT / SCADA / CCTV / PACS** | **$10\text{–}15\text{ Mbps}$** (o cálculo exacto por dispositivo 24/7) |
+| **Gestión y monitoreo** | **$2\text{–}5\text{ Mbps}$** (fijo por sede) |
+| **Margen de seguridad y crecimiento** | **$+30\%$ a $+50\%$** sobre $BW_{\text{base}}$ |
+
+| Caso práctico (Clase 12) | $N_{\text{total}} \times C = N_c$ | $BW_{\text{base}}$ | Margen | $BW_{\text{final}}$ | Dictamen comercial mínimo |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **1. Empresa de Salud (Central)** | $60 \times 40\% = 24$ | $72{,}0\text{ Mbps}$ | $+40\%$ | **$100{,}8\text{ Mbps}$** | Simétrico dedicado $150\text{ Mbps}$ + respaldo + QoS. |
+| **2. Red Agroindustrial SCADA** | $100 \times 50\% = 50$ | $160{,}0\text{ Mbps}$ | $+35\%$ | **$216{,}0\text{ Mbps}$** | Dedicado $250\text{–}300\text{ Mbps}$ + contingencia + segmentación IT/OT. |
+| **3. Sucursal Bancaria** | $40 \times 60\% = 24$ (+ 8 CCTV + ATMs) | $72{,}6\text{ Mbps}$ | $+50\%$ | **$108{,}9\text{ Mbps}$** | Doble enlace simétrico $150\text{ Mbps}$ (MPLS + respaldo disjunto). |
+| **4. Campus Hospitalario** | $120 \times 30\% = 36$ (+ PACS/IoMT) | $133{,}6\text{ Mbps}$ | $+40\%$ | **$187{,}04\text{ Mbps}$** | Dedicado simétrico $200\text{–}250\text{ Mbps}$ + VLAN clínica + QoS. |
+
+<AcademicBlock kind="trap" title="Trampas frecuentes — Unidad 7">
+  - **Orden de operaciones:** primero calculá $N_c = N_{\text{total}} \times C$, luego multiplicá perfiles de usuario por $N_c$, sumá los servicios continuos 24/7 (CCTV, SCADA, ATMs, Gestión —que **NO se multiplican por $C$** porque operan al 100 %—) y recién al total $BW_{\text{base}}$ aplicale el margen $(1 + m)$.
+  - **No contratar por debajo del cálculo:** en el Caso 1 ($100{,}8\text{ Mbps}$), un enlace de $100\text{ Mbps}$ es insuficiente; siempre se escala al plan comercial simétrico superior.
+</AcademicBlock>
+
+### Preguntas para explicar sin memorizar
+
+1. **¿Por qué las cámaras CCTV y la telemetría SCADA no se multiplican por el factor de concurrencia $C$ de los empleados?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque la concurrencia $C$ modela el uso intermitente de puestos humanos en hora pico, mientras que las cámaras de videovigilancia, sensores SCADA/IIoT y cajeros ATM transmiten de forma continua 24/7 (simultaneidad del 100 %).
+
+   </details>
+
+2. **¿Por qué una sede con tráfico convergente IT, VoIP, Internet y SCADA requiere QoS además de ancho de banda suficiente?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Porque una descarga masiva o actualización *Best Effort* puede generar micro-ráfagas que llenen las colas de salida del router, disparando la latencia y el *jitter* por encima de $150\text{ ms}$ en VoIP o retrasando alarmas críticas SCADA aunque el promedio horario del enlace sea bajo.
+
+   </details>
+
+3. **¿Qué implica diseñar una red corporativa tradicional (OSPF + VLAN + QoS) "preparada para evolucionar a SD-WAN"?**
+   <details>
+   <summary>Ver respuesta</summary>
+
+   Significa construir desde el inicio direccionamiento limpio, segmentación por VLANs, clasificación QoS y múltiples enlaces de proveedores diversos (MPLS + Internet dedicado/4G-5G), de modo que en una segunda etapa pueda agregarse el plano de control centralizado SD-WAN sin rediseñar la infraestructura base.
+
+   </details>
+
+### Multiple Choice rápidos — Unidad 7 (Preguntas 31 a 35)
+
+**31.** Una sede posee $N_{\text{total}} = 60$ usuarios y factor de concurrencia $C = 40\%$. ¿Cuál es el tráfico agregado únicamente de los usuarios si aplicamos los perfiles completos FIUBA ($0{,}4$ IT + $1{,}5$ Internet + $1{,}0$ Tiempo Real)?
+- A) $24{,}0\text{ Mbps}$
+- B) $69{,}6\text{ Mbps}$
+- C) $174{,}0\text{ Mbps}$
+- D) $100{,}8\text{ Mbps}$
+
+**32.** Si el tráfico base de una red agroindustrial resulta $BW_{\text{base}} = 160{,}0\text{ Mbps}$ y se exige un margen de seguridad y crecimiento del $+35\%$, el ancho de banda final requerido es:
+- A) $195{,}0\text{ Mbps}$
+- B) $216{,}0\text{ Mbps}$
+- C) $224{,}0\text{ Mbps}$
+- D) $240{,}0\text{ Mbps}$
+
+**33.** En el dimensionamiento de la **Sucursal Bancaria** ($BW_{\text{base}} = 72{,}6\text{ Mbps}$, margen $+50\%$), ¿cuál es el ancho de banda final y por qué se exige doble enlace disjunto?
+- A) $108{,}9\text{ Mbps}$; para garantizar continuidad operativa ante cortes de fibra o fallas del carrier primario.
+- B) $122{,}6\text{ Mbps}$; para reducir el costo de licencias SNMP.
+- C) $94{,}38\text{ Mbps}$; para habilitar broadcast entre sucursales.
+- D) $145{,}2\text{ Mbps}$; para eliminar el uso de VLANs.
+
+**34.** En una red corporativa convergente con tráfico SCADA (OT), VoIP, ERP (IT) e Internet, ¿qué prioridad QoS corresponde asignar al tráfico de navegación Web / SaaS general?
+- A) Prioridad estricta superior a VoIP.
+- B) *Best Effort* (idealmente con *Internet Breakout* local en las sucursales).
+- C) Exclusivamente sobre canales E1 TDM.
+- D) Sin segmentación junto a la VLAN de PLCs industriales.
+
+**35.** En el **Campus Hospitalario** ($N_{\text{total}} = 120$, $C = 30\%$, $BW_{\text{base}} = 133{,}6\text{ Mbps}$, margen $+40\%$), el requerimiento final es $187{,}04\text{ Mbps}$. ¿Cuál es la recomendación de ingeniería más adecuada?
+- A) Contratar un enlace asimétrico ADSL de $100\text{ Mbps}$ compartidos.
+- B) Contratar un enlace dedicado simétrico sobre fibra de $200\text{ a }250\text{ Mbps}$ con respaldo redundante, VLAN clínica aislada y QoS.
+- C) Contratar un enlace de $150\text{ Mbps}$ porque $133{,}6 < 150$.
+- D) Eliminar el margen del $40\%$ para ahorrar costos en telemetría crítica.
+
+<details>
+<summary>Ver claves y justificaciones — Unidad 7 (31 a 35)</summary>
+
+31. **B** — $N_c = 60 \times 0{,}40 = 24$; consumo unitario $= 0{,}4 + 1{,}5 + 1{,}0 = 2{,}9\text{ Mbps}$; $24 \times 2{,}9 = 69{,}6\text{ Mbps}$.
+32. **B** — $160{,}0 \times 1{,}35 = 216{,}0\text{ Mbps}$.
+33. **A** — $72{,}6 \times 1{,}50 = 108{,}9\text{ Mbps}$; en entidades financieras la alta disponibilidad exige redundancia por carrier y ruta física disjunta.
+34. **B** — Internet general se clasifica como *Best Effort* para que nunca degrade VoIP, ERP ni SCADA; el breakout local evita congestionar la WAN central.
+35. **B** — Siempre se contrata el circuito simétrico comercial superior al $BW_{\text{final}}$ ($187{,}04\text{ Mbps} \implies 200\text{–}250\text{ Mbps}$) con redundancia y aislamiento clínico.
+
+</details>
+
+---
+
+## Integración Rápida: El Viaje del Bit
+
+Cuando abrís `https://app.empresa.com` desde tu oficina hacia un servidor en un datacenter remoto, verificá si podés recitar las **10 fases de corrido** sin mirar:
+
+1. **L7 (Aplicación):** DNS (UDP/53) resuelve el dominio a IP y el navegador arma la petición HTTP.
+2. **L6–L5 (Presentación/Sesión):** TLS 1.3 cifra los datos y gestiona la sesión.
+3. **L4 (Transporte):** TCP realiza 3-Way Handshake (`SYN` / `SYN-ACK` / `ACK`) del puerto efímero al `443` y segmenta.
+4. **L3 (Red):** Encapsula en paquete IP (IP origen/destino **invariables E2E**, `TTL` inicial).
+5. **L2 (Enlace LAN):** ARP (`0x0806`) resuelve la MAC del *gateway*; trama Ethernet 802.3 (+ 802.1Q si hay VLAN) + CRC-32.
+6. **L1 (Física LAN):** Bits en señal diferencial sobre cobre Cat 6A ($100\text{ m}$ máx.) hacia el switch.
+7. **Switch + Router de borde:** Switch reenvía por Tabla CAM; Router quita L2, decrementa `TTL` y re-encapsula con nuevas MACs.
+8. **WAN (ISP / Carrier):** Fibra OS2 → BGP-4 selecciona `AS-Path` → núcleo MPLS (*Push / Swap / Pop*) sobre DWDM/SDH.
+9. **Datacenter destino:** Doble acometida por Cámara Cero (TIA-942) → ER/MDA → **Spine & Leaf** (2 saltos L3 ECMP) → servidor.
+10. **Ascenso inverso (L1 → L7):** Valida FCS, verifica IP, TCP ordena y confirma al puerto `443`, TLS descifra y la aplicación responde.
+
+---
+
+## Tabla Maestra de Claves
+
+<details>
+<summary>Desplegar las 35 claves del Simulacro Rápido (Unidades 1 a 7)</summary>
+
+| # | Clave | Unidad | # | Clave | Unidad | # | Clave | Unidad |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| **1** | **B** | U1 | **13** | **B** | U3 | **25** | **B** | U5 |
+| **2** | **B** | U1 | **14** | **C** | U3 | **26** | **B** | U6 |
+| **3** | **C** | U1 | **15** | **B** | U3 | **27** | **C** | U6 |
+| **4** | **B** | U1 | **16** | **B** | U4 | **28** | **B** | U6 |
+| **5** | **C** | U1 | **17** | **C** | U4 | **29** | **C** | U6 |
+| **6** | **B** | U2 | **18** | **B** | U4 | **30** | **B** | U6 |
+| **7** | **C** | U2 | **19** | **B** | U4 | **31** | **B** | U7 |
+| **8** | **C** | U2 | **20** | **B** | U4 | **32** | **B** | U7 |
+| **9** | **B** | U2 | **21** | **B** | U5 | **33** | **A** | U7 |
+| **10** | **B** | U2 | **22** | **B** | U5 | **34** | **B** | U7 |
+| **11** | **C** | U3 | **23** | **C** | U5 | **35** | **B** | U7 |
+| **12** | **B** | U3 | **24** | **B** | U5 | | | |
+
+</details>

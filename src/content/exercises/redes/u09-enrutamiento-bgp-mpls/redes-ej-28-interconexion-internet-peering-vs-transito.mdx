@@ -1,0 +1,66 @@
+---
+id: "redes-ej-28"
+courseId: "redes"
+number: 28
+title: "Interconexión en Internet: Acuerdos de Peering Bilateral vs Tránsito IP e IXP CABASE"
+unit: "u09-enrutamiento-bgp-mpls"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 8"
+isParcial: true
+examIds:
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-09"
+  - "redes-presentacion-13"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La topología de Internet se sustenta en acuerdos comerciales y técnicos de interconexión entre operadores:
+1. Compare detalladamente un contrato de **Tránsito IP** frente a un acuerdo de **Peering (Intercambio Bilateral)** en función de: tipo de relación contractual, destino de los paquetes (acceso a toda la tabla global vs destinos propios de clientes) y esquema de liquidación económica (*Settlement-Free*).
+2. Explique qué es un **Punto de Intercambio de Tráfico (IXP / NAP)** y cuál es su rol en la infraestructura argentina a través de **CABASE (Cámara Argentina de Internet)**.
+3. Analice el caso real de interconexión entre operadores en Argentina (ej. Grupo Clarín / Telecom y carriers mayoristas): ¿por qué es crítico el peering local para la distribución de contenido de alta demanda (video streaming, gaming)?
+
+**Qué está evaluando la cátedra**  
+Comprensión del ecosistema económico y físico de Internet, modelo de tránsito vs peering y análisis de la infraestructura de telecomunicaciones en Argentina.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-28">
+
+## 1. Cuadro Comparativo: Tránsito IP vs Peering
+
+| Criterio | Tránsito IP | Peering (Intercambio Bilateral) |
+| :--- | :--- | :--- |
+| **Relación Contractual** | **Cliente — Proveedor**. Un ISP menor contrata a un carrier Tier 1 o Tier 2 aguas arriba (*Upstream Provider*). | **Acuerdo Entre Iguales (Peer-to-Peer)**. Dos redes de tamaño o volumen comparable se interconectan. |
+| **Alcance de Rutas** | **Acceso Total a Internet**. El proveedor anuncia la tabla global completa ($>950.000$ prefijos) y transporta tráfico hacia cualquier destino. | **Restringido**. Solo intercambian tráfico destinado a **sus propios clientes y ASNs**, nunca tráfico de tránsito de terceros. |
+| **Liquidación Económica** | **Arancelado**. El cliente abona una tarifa mensual fija o medida por el percentil 95 ($95^{\text{th}}$ percentile) por megabit transmitido. | **Generalmente Libre de Pago (*Settlement-Free*)**. Ambas partes asumen sus propios costos de conexión física. |
+| **Equilibrio de Tráfico** | Asimétrico. El cliente suele recibir mucho más tráfico del que envía hacia el proveedor. | Exige **paridad de volumen de tráfico bilateral** para mantenerse gratuito. |
+
+---
+
+## 2. Rol de los Puntos de Intercambio de Tráfico (IXP) y CABASE en Argentina
+
+* **Definición de IXP (Internet Exchange Point):**  
+  Instalación física neutral dotada de conmutadores Ethernet L2 de alta capacidad donde múltiples proveedores de servicios (ISPs), CDNs (Google, Netflix, Akamai, Cloudflare), universidades y organismos estatales conectan sus routers de borde para intercambiar tráfico de manera local y directa.
+* **El Ecosistema CABASE en Argentina:**  
+  La Cámara Argentina de Internet (CABASE) administra más de 30 IXPs regionales distribuidos en las principales ciudades del país (CABA, Rosario, Córdoba, Mendoza, Neuquén, Bahía Blanca, etc.).
+* **Beneficios Técnicos y Económicos:**
+  1. **Ahorro Masivo de Divisas:** Si un usuario de un ISP barrial consulta un contenido alojado en la red de otro ISP local, el tráfico se conmuta localmente en el IXP CABA sin tener que viajar por los costosos cables submarinos internacionales de fibra óptica que van a Miami o San Pablo.
+  2. **Reducción Drástica de Latencia:** El retardo de ida y vuelta (RTT) entre usuarios locales cae de $120\text{ a }150\text{ ms}$ (si el tráfico fuera a Estados Unidos) a **menos de $2\text{ a }5\text{ ms}$** dentro del IXP metropolitano.
+
+---
+
+## 3. Análisis de Caso de Operadores y Distribución de Contenido
+
+* En el mercado argentino, los grandes operadores de telecomunicaciones (Telecom / Cablevisión / Flow, Telefónica / Movistar, Claro) concentran millones de usuarios residenciales, mientras que los grandes proveedores de contenido (Netflix, Google / YouTube, Facebook / Meta, servidores de juegos Riot/Valve) originan flujos gigantescos de video y datos.
+* Al establecer **enlaces de Peering directo** o ubicar servidores de caché (**CDN Edge Caches**) dentro de las salas de los operadores o en los conmutadores de CABASE:
+  - Los usuarios disfrutan de reproducción de video 4K sin pausas de búfer gracias a enlaces de fibra de bajísima latencia.
+  - Los operadores reducen la saturación de sus enlaces de tránsito troncales, manteniendo la estabilidad operativa de su red en los horarios de máxima audiencia (*Prime Time*).
+
+</SolutionDrawer>

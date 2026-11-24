@@ -1,0 +1,69 @@
+---
+id: "redes-ej-04"
+courseId: "redes"
+number: 4
+title: "Norma ANSI/TIA-568: Arquitectura de Cableado Estructurado y Límites de Distancia"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 4"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-05"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el diseño de una red corporativa para un edificio de oficinas conforme al estándar **ANSI/TIA-568-D**:
+1. Dibuje y explique los subsistemas que componen el cableado estructurado: Entrance Facility (EF), Main Distribution Frame (MDF / Sala Principal), Intermediate Distribution Frame (IDF / Sala de Telecomunicaciones), Backbone (Troncal) y Cableado Horizontal.
+2. Defina con precisión la diferencia técnica entre un **Enlace Permanente (Permanent Link)** y un **Canal (Channel)**.
+3. Indique los límites máximos de longitud estandarizados para el enlace permanente, los patch cords y el canal total en cobre de par trenzado. ¿Por qué razón física no se permite extender el canal más allá de 100 metros en redes Ethernet?
+
+**Qué está evaluando la cátedra**  
+Comprensión de la topología en estrella jerárquica de cableado estructurado, conocimiento de las restricciones normativas de instalación y la fundamentación física/temporal del límite de los 100 metros en Ethernet.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-04">
+
+## 1. Subsistemas del Cableado Estructurado (ANSI/TIA-568)
+
+El estándar define una topología en estrella jerárquica con los siguientes subsistemas interconectados:
+
+1. **Entrance Facility (EF — Acometida de Proveedores):** Punto de demarcación física donde ingresan los cables de los operadores públicos de telecomunicaciones (fibra óptica subterránea, cobre telefónico) e interfaces de protección contra sobretensiones transitorias.
+2. **Main Distribution Frame (MDF / Equipment Room — Sala Principal de Equipos):** Centro neurálgico del edificio. Aloja los switches centrales de Core, routers de borde, servidores corporativos y los distribuidores generales de cableado.
+3. **Backbone Cabling (Cableado Troncal o Vertical):** Interconexión de alta velocidad que vincula el MDF con los distintos IDFs distribuidos en cada piso. Típicamente implementado con fibra óptica monomodo (OS2) o multimodo (OM4/OM5) para soportar troncales de 10G/40G/100G.
+4. **Intermediate Distribution Frame (IDF / Telecom Enclosure — Sala de Piso):** Gabinete o sala técnica por planta que centraliza los paneles de parcheo (*patch panels*) y los conmutadores de acceso (Edge Switches).
+5. **Horizontal Cabling (Cableado Horizontal):** Tendido de cables que parte desde el patch panel del IDF hasta la roseta o toma RJ45 del puesto de trabajo (*Work Area Outlet*). Se distribuye por ductos o bandejas bajo piso técnico / cielorraso.
+6. **Work Area (Área de Trabajo):** Espacio donde el usuario final conecta su PC, teléfono IP o punto de acceso Wi-Fi mediante un latiguillo flexible (*patch cord*).
+
+---
+
+## 2. Enlace Permanente (Permanent Link) vs Canal (Channel)
+
+* **Enlace Permanente (Permanent Link):**
+  - **Alcance:** Es la porción física fija y permanente de la instalación. Comprende el conector hembra (Jack RJ45) del patch panel en el rack del IDF, el cable horizontal tendido en las bandejas y el conector hembra de la toma de pared (roseta) en el puesto de trabajo.
+  - **Propósito:** Es la infraestructura fija ensayada y certificada por el instalador mediante adaptadores de enlace permanente (*Permanent Link Adapters*) antes de la entrega de la obra.
+* **Canal (Channel):**
+  - **Alcance:** Es el circuito completo de transmisión extremo a extremo que incluye el enlace permanente **más** todos los cables de conexión flexibles (*patch cords*): el patch cord entre el switch de acceso y el patch panel en el rack, el patch cord del área de trabajo entre la toma de pared y la tarjeta de red (NIC) de la PC, y cualquier punto de consolidación intermedio.
+
+---
+
+## 3. Límites de Distancia y Fundamentación Física
+
+* **Límites Normativos ANSI/TIA-568-D:**
+  - **Enlace Permanente:** Longitud máxima de **90 metros**.
+  - **Patch Cords combinados:** Máximo **10 metros** en total (típicamente hasta 5 metros en el rack del IDF y hasta 5 metros en el puesto del usuario).
+  - **Canal Total:** Longitud máxima estricta de **100 metros** ($90\text{ m} + 10\text{ m}$).
+
+* **Fundamentación Física del Límite de 100 Metros:**
+  1. **Atenuación por Inserción (Insertion Loss):** La resistencia óhmica del conductor de cobre (AWG 23/24) combinada con el efecto piel a frecuencias altas (500 MHz en Cat 6A) degrada la amplitud de la señal eléctrica. A más de 100 metros, la señal llega al receptor con una potencia tan baja que queda por debajo del umbral de ruido térmico, disparando la tasa de error (BER).
+  2. **Presupuesto Temporal de Detección de Colisiones (Slot Time en CSMA/CD):** En la especificación original de Ethernet (IEEE 802.3), el tiempo de vuelo de la señal de ida y vuelta a lo largo del canal más el retardo interno de los circuitos PHY no podía superar los 51.2 microsegundos (512 bits a 10 Mbps). Si el canal superara los 100 metros, un emisor podría finalizar la transmisión de una trama mínima de 64 bytes antes de enterarse de que colisionó en el extremo opuesto (*Late Collision*), impidiendo la retransmisión automática. Aunque las redes modernas operan en conmutación Full-Duplex sin colisiones, el límite de 100 metros se mantuvo universalmente por razones de atenuación, distorsión por retardo (*Propagation Delay Skew* $\le 50\text{ ns}$) y estandarización de fabricación de transceptores PHY.
+
+</SolutionDrawer>

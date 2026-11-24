@@ -1,0 +1,61 @@
+---
+id: "redes-ej-05"
+courseId: "redes"
+number: 5
+title: "Fibra Óptica: Comparativa Monomodo (SMF) vs Multimodo (MMF) y Fenómenos de Dispersión"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 5"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-06"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La fibra óptica es el medio físico predominante en troncales de comunicaciones de alta velocidad.  
+1. Compare detalladamente la **Fibra Óptica Multimodo (MMF)** y la **Fibra Óptica Monomodo (SMF)** considerando: diámetro de núcleo/cladding, fuentes de luz utilizadas (LED, VCSEL, DFB Láser), longitudes de onda típicas de operación, atenuación promedio y distancias de alcance a 10 Gbps.  
+2. Explique conceptualmente los fenómenos de **Dispersión Modal** y **Dispersión Cromática**. ¿Por qué la dispersión modal está ausente en las fibras monomodo?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los principios ópticos de propagación de ondas guiadas, discriminación entre familias de fibra y conocimiento de las causas físicas de dispersión y ensanchamiento temporal de pulsos de luz.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-05">
+
+## 1. Cuadro Comparativo Estructural y Operativo
+
+| Parámetro de Diseño | Fibra Óptica Multimodo (MMF) | Fibra Óptica Monomodo (SMF) |
+| :--- | :--- | :--- |
+| **Dimensiones Núcleo / Cladding** | $50/125\,\mu\text{m}$ (OM2/OM3/OM4/OM5) o $62.5/125\,\mu\text{m}$ (OM1) | $9/125\,\mu\text{m}$ (OS1 / OS2 estándar ITU-T G.652.D) |
+| **Fuente de Luz Emisora** | LED (redes antiguas) o **VCSEL** (*Vertical Cavity Surface Emitting Laser*) | **Diodos Láser Fabry-Perot o DFB** (*Distributed Feedback Laser*) |
+| **Longitudes de Onda Típicas** | $850\text{ nm}$ (primera ventana) y $1300\text{ nm}$ (segunda ventana) | $1310\text{ nm}$ (segunda ventana) y $1550\text{ nm}$ (tercera ventana / banda C DWDM) |
+| **Atenuación Típica por km** | $2.5\text{ a }3.5\text{ dB/km}$ (@850 nm) | $0.35\text{ dB/km}$ (@1310 nm) / **$0.20\text{ dB/km}$** (@1550 nm) |
+| **Alcance Típico a 10 Gbps (10GBASE-SR / LR)** | Hasta 300 m (OM3) o 400 m (OM4) | **$10\text{ km}$** (10GBASE-LR), $40\text{ km}$ (ER), $80\text{ km}$ (ZR) hasta $>100\text{ km}$ amplificada |
+| **Costo Relativo del Enlace** | Cable más costoso por proceso de índice gradual, pero **transceptores ópticos muy económicos** | Cable de fibra muy económico por volumen global, pero **transceptores láser de alta precisión más costosos** |
+| **Ámbito de Aplicación Primario** | Redes de área local (LAN), backbones de edificios y cableado dentro del Centro de Datos (Top-of-Rack a Spine) | Redes de Campus extenso, enlaces MAN urbanos, Core de telecomunicaciones y cables submarinos |
+
+---
+
+## 2. Mecanismos de Dispersión Óptica
+
+* **Dispersión Modal (Intermodal Dispersion):**
+  - **Causa Física:** Se produce exclusivamente en fibras con núcleos anchos ($50\,\mu\text{m}$ o $62.5\,\mu\text{m}$) donde la luz viaja en múltiples modos electromagnéticos (diferentes trayectorias y ángulos de reflexión interna total).
+  - **Efecto:** El modo axial que viaja en línea recta por el centro recorre una distancia geométrica menor que los modos de alto orden que rebotan en zigzag contra el cladding. Como resultado, las componentes de un mismo pulso de luz arriban al receptor en instantes diferentes, provocando el ensanchamiento temporal del pulso. Al aumentar la tasa de transmisión o la distancia, los pulsos adyacentes se solapan produciendo **Interferencia Intersimbólica (ISI)**.
+  - **Por qué está ausente en la Fibra Monomodo:**  
+    En la fibra SMF, el diámetro del núcleo ($9\,\mu\text{m}$) es del mismo orden de magnitud que la longitud de onda de la luz incidente ($1.31\,\mu\text{m}$ a $1.55\,\mu\text{m}$). De acuerdo con las ecuaciones de Maxwell para guías de onda cilíndricas dieléctricas, cuando el número de modo normalizado (*V-number*) satisface $V < 2.405$, la fibra solo admite la propagación de un único modo espacial: el **modo fundamental transversal ($HE_{11}$)**. Al no existir múltiples caminos posibles para la luz, la dispersión modal queda **estrictamente eliminada por física ondulatoria**.
+
+* **Dispersión Cromática (Intramodal Dispersion):**
+  - **Causa Física:** La fuente emisora (incluso un diodo láser de alta precisión) no emite una radiación monocromática perfecta, sino un espectro con un ancho de línea espectral finito ($\Delta \lambda$). Dado que el índice de refracción del vidrio de sílice varía en función de la longitud de onda ($n(\lambda)$), cada componente espectral viaja a una velocidad de fase ligeramente diferente:
+    $$v(\lambda) = \frac{c}{n(\lambda)}$$
+  - **Efecto:** Provoca el ensanchamiento del pulso a medida que se propaga por decenas de kilómetros. Es el factor limitante dominante en fibras monomodo de larga distancia. Se compone de la **Dispersión del Material** (propiedad intrínseca del cuarzo dopado) y la **Dispersión de Guía de Onda** (distribución de energía entre el núcleo y el revestimiento).
+
+</SolutionDrawer>

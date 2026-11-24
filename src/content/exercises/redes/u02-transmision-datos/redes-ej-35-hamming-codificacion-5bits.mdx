@@ -1,0 +1,103 @@
+---
+id: "redes-ej-35"
+courseId: "redes"
+number: 35
+title: "Código de Hamming: Detección, Corrección y Codificación de 5 Bits Paso a Paso"
+unit: "u02-transmision-datos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2do Intento 21-11-2026 / Recuperatorios 2025 Cátedra Volpi"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-02"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El código de Hamming es un método fundamental de detección y corrección de errores en transmisiones digitales:
+1. Explique el principio del código de Hamming: ¿qué representa la **Distancia de Hamming ($d$)** y cuál es la condición matemática para detectar $e$ errores y corregir $t$ errores?
+2. Se desea transmitir la palabra de datos de 5 bits:
+   $$\mathbf{M = 00111}$$
+   - Determine mediante la fórmula de Hamming la cantidad de bits de paridad ($K$) a agregar.
+   - Ubique los bits de paridad y datos en las posiciones de la palabra resultante.
+   - Calcule los valores de los bits de paridad (asumiendo paridad par) y explicite la palabra de Hamming completa de $N$ bits que el equipo transmisor emitirá al canal.
+
+**Qué está evaluando la cátedra**  
+Aplicación estricta de la relación $2^K \ge M + K + 1$, comprensión de las potencias de 2 para la ubicación de paridades y cálculo de paridades pares/impares para codificación por hardware (memorias ECC y modems).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-35">
+
+## 1. Principio Teórico y Distancia de Hamming
+
+* **Definición de Distancia de Hamming ($d$):**  
+  Es la cantidad mínima de posiciones de bits en las que difieren dos palabras de código válidas cualesquiera del sistema.
+* **Condiciones Matemáticas de Detección y Corrección:**
+  - **Para detectar $e$ errores:** Se requiere una distancia mínima de:
+    $$d_{min} \ge e + 1$$
+    *(Para detectar 1 error simple se necesita $d_{min} \ge 2$, como en la paridad simple).*
+  - **Para corregir $t$ errores simples:** Se requiere una distancia mínima de:
+    $$d_{min} \ge 2t + 1$$
+    *(Para corregir 1 error simple de 1 bit se necesita una distancia mínima de $d_{min} \ge 3$, que es la base del código de Hamming estándar).*
+
+---
+
+## 2. Resolución Práctica Paso a Paso: Codificación de 5 bits (`00111`)
+
+* **Paso 1: Cálculo del Número de Bits de Redundancia ($K$):**  
+  La fórmula de Hamming exige que los bits de control $K$ puedan señalar cualquiera de los $M+K$ bits con error más el estado sin error:
+  $$2^K \ge M + K + 1$$
+  Dado que la palabra de datos tiene $M = 5$ bits:
+  - Para $K = 3 \implies 2^3 = 8 \ge 5 + 3 + 1 = 9$ (Falso, $8 < 9$).
+  - Para $K = 4 \implies 2^4 = 16 \ge 5 + 4 + 1 = 10$ (Verdadero, $16 \ge 10$).
+  **Por lo tanto, se deben agregar $K = 4$ bits de paridad.**
+  La longitud total de la palabra transmitida es $N = M + K = 5 + 4 = \mathbf{9\text{ bits}}$.
+
+* **Paso 2: Asignación de Posiciones (Potencias de 2):**  
+  Los bits de paridad $P_1, P_2, P_4, P_8$ ocupan las posiciones que son potencias de dos ($1, 2, 4, 8$). Los bits de datos $D_1$ a $D_5$ ocupan las restantes:
+  - Posición 1 ($2^0$): $P_1$
+  - Posición 2 ($2^1$): $P_2$
+  - Posición 3: $D_1 = 0$
+  - Posición 4 ($2^2$): $P_4$
+  - Posición 5: $D_2 = 0$
+  - Posición 6: $D_3 = 1$
+  - Posición 7: $D_4 = 1$
+  - Posición 8 ($2^3$): $P_8$
+  - Posición 9: $D_5 = 1$
+
+* **Paso 3: Cálculo de los Bits de Paridad (Convención Paridad Par):**
+  - **$P_1$ (cubre posiciones con bit 0 en binario: 1, 3, 5, 7, 9):**
+    Comprueba $P_1$, $D_1(0)$, $D_2(0)$, $D_4(1)$, $D_5(1)$.
+    Suma de 1s en datos: $0 + 0 + 1 + 1 = 2$ (ya es par) $\implies \mathbf{P_1 = 0}$.
+  - **$P_2$ (cubre posiciones con bit 1 en binario: 2, 3, 6, 7):**
+    Comprueba $P_2$, $D_1(0)$, $D_3(1)$, $D_4(1)$.
+    Suma de 1s en datos: $0 + 1 + 1 = 2$ (ya es par) $\implies \mathbf{P_2 = 0}$.
+  - **$P_4$ (cubre posiciones con bit 2 en binario: 4, 5, 6, 7):**
+    Comprueba $P_4$, $D_2(0)$, $D_3(1)$, $D_4(1)$.
+    Suma de 1s en datos: $0 + 1 + 1 = 2$ (ya es par) $\implies \mathbf{P_4 = 0}$.
+  - **$P_8$ (cubre posiciones con bit 3 en binario: 8, 9):**
+    Comprueba $P_8$, $D_5(1)$.
+    Suma de 1s en datos: $1$ (impar) $\implies$ para hacer el total par se requiere $\mathbf{P_8 = 1}$.
+
+---
+
+## 3. Palabra de Hamming Transmitida Resultante
+
+Reuniendo los bits en orden de posición del 1 al 9:
+
+| Posición | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Tipo de Bit** | $P_1$ | $P_2$ | $D_1$ | $P_4$ | $D_2$ | $D_3$ | $D_4$ | $P_8$ | $D_5$ |
+| **Valor** | **0** | **0** | **0** | **0** | **0** | **1** | **1** | **1** | **1** |
+
+**Palabra de Hamming emitida al canal:** **`0 0 0 0 0 1 1 1 1`**
+
+</SolutionDrawer>

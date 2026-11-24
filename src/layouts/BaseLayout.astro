@@ -70,9 +70,13 @@ const allCourses = (await getCollection("courses"))
           <span class="site-brand-sub">Plataforma Académica</span>
         </a>
 
-        <div class="site-header-nav">
-          <slot name="header-nav" />
-        </div>
+        {
+          Astro.slots.has("header-nav") ? (
+            <div class="site-header-nav">
+              <slot name="header-nav" />
+            </div>
+          ) : null
+        }
 
         <div class="site-header-actions">
           <GlobalSearch

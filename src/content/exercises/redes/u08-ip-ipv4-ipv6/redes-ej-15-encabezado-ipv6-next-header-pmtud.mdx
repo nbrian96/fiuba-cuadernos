@@ -1,0 +1,98 @@
+---
+id: "redes-ej-15"
+courseId: "redes"
+number: 15
+title: "Protocolo IPv6: Estructura Fija de 40 Bytes, Cabeceras de Extensión y Path MTU Discovery"
+unit: "u08-ip-ipv4-ipv6"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 15"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-09"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El diseño del protocolo **IPv6 (RFC 8200)** optimizó radicalmente la eficiencia de conmutación en los routers respecto a IPv4:
+1. Grafique y describa el encabezado base de IPv6 indicando el tamaño y función de sus campos: Version, Traffic Class, Flow Label, Payload Length, Next Header, Hop Limit, Source IP Address y Destination IP Address.
+2. Explique por qué se eliminaron los campos **Header Checksum**, **IHL** y los campos de **Fragmentación** del encabezado base de IPv6. ¿Qué beneficios aporta esta simplificación al rendimiento del plano de datos en los routers de Internet?
+3. ¿Cómo se implementa la fragmentación en IPv6 a través del campo **Next Header** en lista enlazada (*Daisy Chain*) y cómo opera el mecanismo de **Path MTU Discovery (PMTUD)** con asistencia de ICMPv6?
+
+**Qué está evaluando la cátedra**  
+Comprensión de la evolución arquitectónica de IP, optimización de hardware de conmutación y dominio de los protocolos de soporte para la transición a IPv6.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-15">
+
+## 1. Encabezado Base de IPv6 (Estructura Fija de 40 Bytes)
+
+```
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version| Traffic Class |           Flow Label                  |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Payload Length        |  Next Header  |   Hop Limit   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                         Source Address                        +
+|                           (128 bits)                          |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                      Destination Address                      +
+|                           (128 bits)                          |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+
+* **Version (4 bits):** Fijado en `6` (`0110`).
+* **Traffic Class (8 bits):** Equivalente funcional al campo DSCP/ECN de IPv4 para Calidad de Servicio (QoS).
+* **Flow Label (20 bits):** Permite etiquetar flujos de paquetes específicos que requieren tratamiento idéntico por parte de los conmutadores y routers para balanceo de carga (ECMP) sin tener que inspeccionar las cabeceras de Capa 4.
+* **Payload Length (16 bits):** Longitud en bytes de los datos que siguen al encabezado base de 40 bytes (incluyendo cualquier cabecera de extensión y la carga útil de la aplicación).
+* **Next Header (8 bits):** Especifica el tipo de encabezado que sigue inmediatamente al encabezado base de IPv6 (puede ser un protocolo de Capa 4 como TCP [6] o UDP [17], o una cabecera de extensión opcional).
+* **Hop Limit (8 bits):** Reemplazo directo del campo TTL de IPv4. Se decrementa en 1 en cada salto de enrutamiento; si llega a 0, se descarta el paquete y se devuelve un mensaje ICMPv6 *Time Exceeded*.
+* **Source Address (128 bits / 16 bytes):** Dirección IPv6 del nodo originador.
+* **Destination Address (128 bits / 16 bytes):** Dirección IPv6 del nodo receptor.
+
+---
+
+## 2. Justificación de los Campos Eliminados
+
+1. **Eliminación del Header Checksum:**  
+   En IPv4, cada router debía recalcular la suma de comprobación del encabezado en cada salto debido al decremento del TTL. Dado que los protocolos de Capa 2 (Ethernet CRC-32) y Capa 4 (Checksum de TCP y UDP) ya implementan detección de errores robusta, el checksum de Capa 3 resultaba redundante. Su eliminación acelera drásticamente el reenvío de paquetes en hardware a velocidad de línea (*wire-speed*).
+2. **Eliminación del campo IHL:**  
+   El encabezado base de IPv6 tiene una longitud **estrictamente fija de 40 bytes**. Los ASICs de los routers procesan estructuras de tamaño constante de manera mucho más eficiente en pipelines de hardware, sin tener que calcular punteros variables de desplazamiento.
+3. **Eliminación de la Fragmentación en Routers de Tránsito:**  
+   La fragmentación en routers intermedios era una de las operaciones más lentas y costosas de IPv4 (exigía copiar cabeceras, crear búferes y generar múltiples paquetes en software). IPv6 **prohíbe tajantemente la fragmentación en routers de tránsito**: la fragmentación es responsabilidad exclusiva del host de origen.
+
+---
+
+## 3. Cabeceras de Extensión (Daisy Chain) y Path MTU Discovery
+
+* **Encadenamiento de Cabeceras (Next Header en Lista Enlazada):**
+  Las opciones adicionales se implementan como cabeceras de extensión encadenadas secuencialmente entre el encabezado base y la carga útil:
+  $$\text{Base IPv6 (Next Header: 43)} \to \text{Routing Header (Next Header: 44)} \to \text{Fragment Header (Next Header: 6)} \to \text{TCP Payload}$$
+  Los routers de tránsito estándar solo leen el encabezado base y reenvían el paquete; únicamente el host receptor o los routers específicamente señalizados (*Hop-by-Hop Options Header*) analizan las cabeceras intermedias.
+
+* **Path MTU Discovery (PMTUD) en IPv6:**
+  1. El host emisor transmite paquetes IPv6 de tamaño igual a la MTU de su interfaz local (típicamente 1500 bytes en Ethernet).
+  2. Si un router intermedio debe reenviar el paquete hacia un enlace cuya MTU es menor (por ejemplo, un túnel VPN con MTU de 1420 bytes), el router **descarta el paquete** y envía de vuelta al emisor un mensaje **ICMPv6 Packet Too Big (Type 2, Code 0)**.
+  3. En dicho mensaje ICMPv6, el router informa el valor exacto de la MTU admisible en el enlace restrictivo ($1420\text{ bytes}$).
+  4. El host emisor recibe la notificación, reduce el tamaño de sus paquetes a ese valor y retransmite. El proceso se repite hasta descubrir la MTU mínima de todo el camino extremo a extremo, logrando una transmisión óptima sin ninguna fragmentación intermedia.
+
+</SolutionDrawer>

@@ -1,0 +1,85 @@
+---
+id: "redes-ej-01"
+courseId: "redes"
+number: 1
+title: "Límites Teóricos de Transmisión: Criterio de Nyquist vs Teorema de Shannon"
+unit: "u01-intro-telecom"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 1"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-01"
+  - "redes-presentacion-02"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Desarrolle conceptual y matemáticamente la diferencia entre el **Criterio de Nyquist** y el **Teorema de Shannon-Hartley** para la determinación de la capacidad máxima de un canal de comunicaciones.  
+1. Indique las hipótesis de partida de cada modelo (presencia de ruido, tipo de modulación).  
+2. Presente las fórmulas matemáticas correspondientes definiendo con precisión cada una de sus variables y unidades.  
+3. Calcule la capacidad máxima de un canal de telefonía clásico con un ancho de banda analógico $B = 3.1\text{ kHz}$ y una relación señal a ruido $SNR_{dB} = 30\text{ dB}$. Compare este límite físico con la tasa alcanzable si se empleara una modulación ideal de 16 estados sin ruido.
+
+**Qué está evaluando la cátedra**  
+Comprensión de los límites físicos absolutos impuestos por la teoría de la información, distinción entre canales ideales y canales reales afectados por ruido blanco gaussiano (AWGN), y destreza en la conversión logarítmica de decibelios a relaciones lineales.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-01">
+
+## 1. Fundamentos Teóricos e Hipótesis de Partida
+
+* **Criterio de Nyquist (1928):**
+  - **Hipótesis:** Aplica a un canal de comunicación ideal de ancho de banda limitado $B$ (en Hertz), en ausencia total de ruido térmico o interferencias externas.
+  - **Fenómeno modelado:** Establece la tasa máxima de señalización de pulsos independientes que puede transmitirse a través del medio antes de que la respuesta al impulso temporal del filtro ensanche los símbolos y genere **Interferencia Intersimbólica (ISI)** destructiva.
+  - **Dependencia:** La capacidad depende exclusivamente del ancho de banda $B$ y del número de niveles discretos de tensión o estados de modulación $M$ que el hardware de detección pueda distinguir.
+
+* **Teorema de Shannon-Hartley (1948):**
+  - **Hipótesis:** Modela un canal de transmisión físico real con ancho de banda $B$, perturbado por **ruido blanco aditivo gaussiano (AWGN)** de potencia media $N$.
+  - **Fenómeno modelado:** Demuestra que existe una cota superior absoluta a la tasa de información que puede transferirse con una probabilidad de error arbitrariamente cercana a cero, independientemente de la complejidad de la modulación o codificación de canal empleada.
+  - **Dependencia:** La capacidad está acotada por la potencia media de la señal recibida ($S$) en relación con la potencia del ruido térmico ($N$).
+
+---
+
+## 2. Formulación Matemática Rigurosa
+
+* **Fórmula de Nyquist:**
+  $$C_{Nyquist} = 2 \cdot B \cdot \log_2(M) \quad \text{[bps]}$$
+  - $B$: Ancho de banda analógico del canal en Hertz [Hz].
+  - $M$: Número de niveles discretos o símbolos de señalización ($M \ge 2$). Cada símbolo transporta $k = \log_2(M)$ bits.
+  - $C$: Capacidad máxima de transmisión en bits por segundo [bps].
+
+* **Fórmula de Shannon-Hartley:**
+  $$C_{Shannon} = B \cdot \log_2\left(1 + \frac{S}{N}\right) \quad \text{[bps]}$$
+  - $B$: Ancho de banda analógico en Hertz [Hz].
+  - $\frac{S}{N}$: Relación Señal a Ruido lineal (adimensional).
+  - Conversión desde decibelios:
+    $$SNR_{dB} = 10 \cdot \log_{10}\left(\frac{S}{N}\right) \implies \frac{S}{N} = 10^{\frac{SNR_{dB}}{10}}$$
+
+---
+
+## 3. Resolución Numérica del Caso Práctico
+
+1. **Conversión de la Relación Señal a Ruido:**
+   $$\frac{S}{N} = 10^{\frac{30}{10}} = 10^3 = 1000$$
+
+2. **Cálculo de la Capacidad Real con Ruido (Límite de Shannon):**
+   $$C_{Shannon} = 3100 \cdot \log_2(1 + 1000) = 3100 \cdot \log_2(1001)$$
+   $$\log_2(1001) = \frac{\ln(1001)}{\ln(2)} \approx \frac{6.908755}{0.693147} \approx 9.9672$$
+   $$C_{Shannon} \approx 3100 \times 9.9672 \approx 30.898\text{ bps} \approx 30.90\text{ kbps}$$
+
+3. **Cálculo de Nyquist para $M = 16$ (Modulación de 16 niveles sin ruido):**
+   $$C_{Nyquist} = 2 \cdot 3100 \cdot \log_2(16) = 6200 \cdot 4 = 24.800\text{ bps} = 24.80\text{ kbps}$$
+   *Si se utilizara $M = 32$ niveles:*
+   $$C_{Nyquist} = 2 \cdot 3100 \cdot 5 = 31.000\text{ bps} = 31.00\text{ kbps}$$
+
+4. **Conclusión Técnica:**  
+   El teorema de Shannon demuestra que en un canal real con $SNR = 30\text{ dB}$, es físicamente imposible superar los $\approx 30.9\text{ kbps}$ sin incurrir en una tasa intolerable de errores de bit (BER), aun cuando la modulación de Nyquist teóricamente permitiese tasas superiores incrementando los niveles $M$. En la práctica, incrementar $M$ reduce la distancia euclidiana entre puntos de la constelación, haciendo que el ruido térmico confunda los símbolos contiguos.
+
+</SolutionDrawer>

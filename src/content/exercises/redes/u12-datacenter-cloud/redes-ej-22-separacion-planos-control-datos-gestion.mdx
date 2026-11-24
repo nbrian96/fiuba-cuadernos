@@ -1,0 +1,62 @@
+---
+id: "redes-ej-22"
+courseId: "redes"
+number: 22
+title: "Arquitectura de Equipos de Red: Separación de Planos de Control, Datos y Gestión"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 2"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En la ingeniería de conmutación y enrutamiento, la arquitectura interna de un router o switch se divide en tres planos funcionales independientes:
+1. Defina y distinga el **Plano de Datos (Data Plane / Forwarding Plane)**, el **Plano de Control (Control Plane)** y el **Plano de Gestión (Management Plane)**, indicando la escala temporal característica de operación de cada uno (nanosegundos, milisegundos, segundos).
+2. Explique la diferencia estructural entre la **Base de Información de Enrutamiento (RIB)** y la **Base de Información de Reenvío (FIB)**: ¿dónde reside cada una, qué procesador la administra y cómo se sincronizan?
+
+**Qué está evaluando la cátedra**  
+Dominio de la arquitectura interna de conmutadores y enrutadores de telecomunicaciones y comprensión de los mecanismos de aceleración de búsqueda de rutas por hardware.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-22">
+
+## 1. Los Tres Planos Funcionales de un Equipo de Red
+
+1. **Plano de Datos o Reenvío (Data Plane / Forwarding Plane):**
+   - **Función:** Conmuta y reenvía cada paquete individual a través de la matriz de conmutación (*switch fabric*). Realiza la búsqueda de prefijo más largo (LPM), verificación de checksum, decremento del TTL y etiquetado VLAN/MPLS.
+   - **Hardware:** Implementado en ASICs dedicados y memorias asociativas ternarias (**TCAM**).
+   - **Escala Temporal:** **Nanosegundos a microsegundos** (procesamiento por paquete en tiempo real a velocidad de cable).
+2. **Plano de Control (Control Plane):**
+   - **Función:** Es el cerebro del equipo. Ejecuta los protocolos de enrutamiento dinámico (OSPF, BGP, IS-IS), señalización de etiquetas (LDP) y algoritmos de Spanning Tree para construir el mapa topológico de la red.
+   - **Hardware:** Ejecutado en la CPU de propósito general del procesador de ruta (*Route Processor / Supervisor Engine*).
+   - **Escala Temporal:** **Milisegundos a segundos** (convergencia de red ante cambios topológicos).
+3. **Plano de Gestión (Management Plane):**
+   - **Función:** Interfaz de administración humana y orquestación remota del equipo.
+   - **Protocolos:** SSH, CLI, SNMP, NETCONF/YANG, APIs RESTCONF/gRPC.
+   - **Escala Temporal:** **Segundos a minutos** (configuración y monitoreo de telemetría).
+
+---
+
+## 2. RIB (Routing Information Base) vs FIB (Forwarding Information Base)
+
+* **RIB (Routing Information Base — Tabla de Enrutamiento):**
+  - **Ubicación:** Reside en la memoria RAM principal del **Plano de Control**.
+  - **Contenido:** Almacena **todas** las rutas aprendidas por todos los protocolos de enrutamiento activos (rutas OSPF, BGP, estáticas y conectadas) junto con sus métricas administrativas y estados.
+  - **Gestión:** Mantenida por la CPU del router. Aplica el algoritmo de decisión para seleccionar la mejor ruta hacia cada prefijo de red.
+* **FIB (Forwarding Information Base — Tabla de Reenvío):**
+  - **Ubicación:** Reside en la memoria de alta velocidad (**TCAM**) de las tarjetas de línea del **Plano de Datos**.
+  - **Contenido:** Estructura de datos altamente comprimida y optimizada que contiene únicamente la mejor ruta activa para cada prefijo, resolviendo de antemano el siguiente salto (*Next-Hop*) y la dirección MAC de salida (gracias a Cisco Express Forwarding - CEF).
+  - **Sincronización:** Cuando el Plano de Control actualiza la RIB, programa y descarga inmediatamente los cambios en la FIB por hardware sin interrumpir el flujo de datos.
+
+</SolutionDrawer>

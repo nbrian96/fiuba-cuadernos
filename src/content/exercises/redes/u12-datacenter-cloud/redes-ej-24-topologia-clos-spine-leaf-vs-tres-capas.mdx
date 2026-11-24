@@ -1,0 +1,68 @@
+---
+id: "redes-ej-24"
+courseId: "redes"
+number: 24
+title: "Centros de Datos: Topología Clos Spine-Leaf vs Arquitectura Tradicional de Tres Capas"
+unit: "u12-datacenter-cloud"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Examen Final Cátedra Volpi — Sección 9, Ejercicio 4"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-07"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El auge de la computación en la nube y los microservicios forzó el abandono de la arquitectura de red de 3 capas en Centros de Datos:
+1. Explique por qué el diseño tradicional de 3 capas (*Core - Aggregation - Access*) sufría cuellos de botella severos ante el crecimiento del **tráfico Este-Oeste (East-West)** inter-servidor y el bloqueo de puertos de Spanning Tree.
+2. Describa las reglas topológicas de la arquitectura **Spine-Leaf** de dos niveles (red de Clos).
+3. ¿Por qué la topología Spine-Leaf ofrece latencia determinística constante de 3 saltos y cómo se utiliza **ECMP (Equal-Cost Multi-Path)** para aprovechar todo el ancho de banda disponible?
+
+**Qué está evaluando la cátedra**  
+Comprensión de los patrones de tráfico en Centros de Datos modernos, diseño de matrices de conmutación no bloqueantes y balanceo de carga L3 mediante ECMP.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-24">
+
+## 1. Limitaciones de la Arquitectura Tradicional de 3 Capas
+
+* **Diseño Orientado a Tráfico Norte-Sur (North-South):**  
+  La arquitectura de 3 capas fue concebida para el tráfico de usuarios externos que acceden a servidores centralizados.
+* **El Desafío del Tráfico Este-Oeste:**  
+  En los Data Centers modernos, más del $80\%$ del tráfico fluye entre servidores dentro del propio Centro de Datos (sincronización de bases de datos, microservicios, replicación de almacenamiento Ceph/VSAN). Para que dos servidores en diferentes conmutadores de acceso se comuniquen, el tráfico debía subir hasta la capa de agregación o core y volver a descender, saturando los enlaces verticales.
+* **El Freno de Spanning Tree (STP):**  
+  Para evitar bucles en Capa 2, STP bloqueaba hasta el $50\%$ de los enlaces redundantes, desperdiciando costoso ancho de banda de fibra óptica y provocando saturación en los enlaces activos.
+
+---
+
+## 2. Reglas Topológicas de la Arquitectura Spine-Leaf (Red de Clos)
+
+Es una topología de dos niveles estrictamente estructurada:
+1. **Conectividad Total Bipartita:** Todo conmutador **Leaf (Top-of-Rack)** se conecta mediante enlaces punto a punto de alta velocidad a **todos y cada uno de los conmutadores Spine**.
+2. **Prohibición de Conexiones Horizontales:**
+   - Los conmutadores Spine **nunca** se conectan entre sí.
+   - Los conmutadores Leaf **nunca** se conectan directamente entre sí.
+3. **Conexión de Hosts:** Todos los servidores, sistemas de almacenamiento y balanceadores se conectan exclusivamente a los switches Leaf.
+
+---
+
+## 3. Latencia Determinística y Balanceo ECMP
+
+* **Latencia Constante de Tres Saltos:**  
+  Cualquier servidor en el Data Center puede comunicarse con cualquier otro servidor en exactamente **3 saltos de conmutación**:
+  $$\text{Servidor A} \longrightarrow \text{Leaf Origen} \longrightarrow \text{Spine} \longrightarrow \text{Leaf Destino} \longrightarrow \text{Servidor B}$$
+  Esto elimina la dispersión aleatoria de retardos (*jitter*), indispensable para bases de datos transaccionales distribuidas.
+* **Balanceo de Carga con ECMP (Equal-Cost Multi-Path):**  
+  Todos los enlaces entre Leafs y Spines operan en **Capa 3** ejecutando protocolos de enrutamiento dinámico (BGP o OSPF). Al no haber STP, ningún enlace está bloqueado.
+  - Con 4 conmutadores Spine, un switch Leaf dispone de 4 caminos de igual costo métrico hacia cualquier otro Leaf.
+  - El hardware ejecuta una función hash sobre la tupla de 5 elementos del paquete IP para balancear los flujos de forma transparente a través de los 4 Spines en paralelo, multiplicando por 4 el ancho de banda efectivo.
+
+</SolutionDrawer>

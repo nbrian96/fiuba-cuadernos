@@ -1,0 +1,92 @@
+---
+id: "redes-ej-32"
+courseId: "redes"
+number: 32
+title: "Dimensionamiento de Red Corporativa: Campus Hospitalario y Policlínico Universitario (Caso 2)"
+unit: "u13-diseno-redes-campus"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Manual Maestro Unificado FIUBA — Clase 12, Caso 2"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-12"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un **Campus Hospitalario y Policlínico Universitario** necesita dimensionar su conectividad de red externa y troncal para soportar servicios asistenciales, imágenes diagnósticas y telemedicina de alta definición:
+
+- **Población del campus:** $N_{\text{total}} = 120$ usuarios (médicos de planta, residentes y personal administrativo).
+- **Factor de concurrencia en hora pico:** $C = 30\%$ ($0{,}30$).
+- **Perfil de consumo por usuario concurrente ($N_c$):**
+  - **IT Salud (HCE / PACS):** $0{,}6\text{ Mbps/usuario}$ (historia clínica electrónica y consulta de imágenes diagnósticas).
+  - **Internet clínico y académico:** $1{,}5\text{ Mbps/usuario}$.
+  - **Telemedicina HD y tiempo real:** $1{,}5\text{ Mbps/usuario}$ (interconsultas en video HD y voz clínica).
+- **Tráfico continuo de infraestructura (100% simultaneidad):**
+  - **Telemetría clínica y gestión de red:** $4{,}0\text{ Mbps}$ sostenidos.
+- **Criterio de ingeniería:** aplicar un **margen operativo y de seguridad del $+40\%$**.
+
+Se solicita:
+1. Calcular el número de usuarios concurrentes ($N_c$) y el ancho de banda base total ($BW_{\text{base}}$).
+2. Determinar el ancho de banda total requerido ($BW_{\text{total}}$) aplicando el margen del $+40\%$.
+3. Proponer el dictamen de conectividad WAN (enlace primario único vs arquitectura híbrida MPLS + Internet) y la segmentación lógica mínima requerida en el campus.
+
+**Qué está evaluando la cátedra**  
+Modelado de tráfico asistencial heterogéneo con alta sensibilidad a la latencia y pérdida de paquetes (HCE/PACS, telemedicina HD y telemetría), aplicación del margen de seguridad operativa y diseño de arquitectura WAN resiliente con segmentación por VLANs y QoS.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-32">
+
+## 1. Cálculo de Concurrencia y Tráfico Base
+
+1. **Usuarios concurrentes en hora pico ($N_c$):**
+   $$N_c = N_{\text{total}} \times C = 120 \times 0{,}30 = 36 \text{ usuarios concurrentes}$$
+
+2. **Desglose de demanda por servicio:**
+
+| Servicio / Categoría | Cálculo | Ancho de Banda |
+| :--- | :--- | :---: |
+| **IT Salud (HCE / PACS)** | $36 \times 0{,}6\text{ Mbps}$ | $21{,}6\text{ Mbps}$ |
+| **Internet Clínico / Académico** | $36 \times 1{,}5\text{ Mbps}$ | $54{,}0\text{ Mbps}$ |
+| **Telemedicina HD (Tiempo Real)** | $36 \times 1{,}5\text{ Mbps}$ | $54{,}0\text{ Mbps}$ |
+| **Telemetría y Gestión (fijo)** | Carga continua $100\%$ | $4{,}0\text{ Mbps}$ |
+| **Total Base ($BW_{\text{base}}$)** | $21{,}6 + 54{,}0 + 54{,}0 + 4{,}0$ | **$133{,}6\text{ Mbps}$** |
+
+$$BW_{\text{base}} = 21{,}6 + 54{,}0 + 54{,}0 + 4{,}0 = 133{,}6\text{ Mbps}$$
+
+---
+
+## 2. Ancho de Banda Total con Margen Operativo ($+40\%$)
+
+$$BW_{\text{total}} = BW_{\text{base}} \times (1 + 0{,}40) = 133{,}6\text{ Mbps} \times 1{,}40 = \mathbf{187{,}04\text{ Mbps}}$$
+
+---
+
+## 3. Dictamen de Ingeniería y Arquitectura de Red
+
+El requerimiento agregado con margen alcanza **$187{,}04\text{ Mbps}$**, por lo que un circuito de $150\text{ Mbps}$ quedaría subdimensionado y se debe escalar al menos al escalón de **$200\text{ Mbps}$** o desacoplar servicios:
+
+### Alternativa A — Enlace Primario Consolidado
+- **Enlace primario:** circuito simétrico dedicado de **$200\text{ Mbps}$** sobre fibra óptica monomodo (OS2) con SLA hospitalario ($\ge 99{,}9\%$), acompañado de un enlace secundario redundante por trazado físico disjunto.
+
+### Alternativa B — Arquitectura Híbrida MPLS + Internet (Recomendada)
+- **Tráfico asistencial privado (IT Salud HCE/PACS + Telemetría + parte crítica de Telemedicina):**
+  - Se asigna un circuito **MPLS de $100\text{ Mbps}$** con clases de servicio garantizadas (`EF` para voz/telemetría crítica, `AF41` para telemedicina HD y `AF31` para HCE/PACS), asegurando bajo *jitter* ($< 30\text{ ms}$) y pérdida cercana a cero.
+- **Tráfico Internet académico/clínico y desborde de videoconferencia:**
+  - Se contrata un enlace **Internet Dedicado de $150\text{–}200\text{ Mbps}$** que absorbe la navegación ($54{,}0 \times 1{,}40 = 75{,}6\text{ Mbps}$) y provee respaldo SD-WAN / IPsec ante fallas del circuito MPLS.
+
+### Segmentación de Campus (VLANs IEEE 802.1Q)
+- **`VLAN 10` — Telemetría Clínica y Monitores:** aislada de Internet, prioridad estricta en capa 2/3.
+- **`VLAN 20` — HCE y PACS/DICOM:** acceso controlado hacia el centro de datos clínico.
+- **`VLAN 30` — Telemedicina HD y VoIP:** cola prioritaria de baja latencia.
+- **`VLAN 99` — Wi-Fi Académico / Visitantes:** segregada en firewall perimetral con *rate-limiting* y *Client Isolation*.
+
+</SolutionDrawer>

@@ -1,0 +1,71 @@
+---
+id: "redes-ej-06"
+courseId: "redes"
+number: 6
+title: "Conectores Ópticos: Pulidos UPC vs APC y Pérdida de Retorno (ORL)"
+unit: "u06-cobre-fibra"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 6"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-06"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En la terminación de enlaces de fibra óptica se emplean conectores con diferentes geometrías de pulido en la férula cerámica:
+1. Explique la diferencia física, geométrica y cromática entre los conectores con pulido **UPC (Ultra Physical Contact)** y pulido **APC (Angled Physical Contact)**.
+2. Defina el concepto de **Pérdida de Retorno Óptica (Optical Return Loss - ORL)**. Compare los valores típicos obtenidos con ambos conectores e indique por qué en sistemas de video analógico / CATV, redes GPON y DWDM es mandatorio utilizar conectores APC.
+3. ¿Qué ocurre si un técnico conecta por error un patch cord con conector APC (verde) en un puerto o acoplador con pulido UPC (azul)? Justifique desde el punto de vista mecánico y óptico.
+
+**Qué está evaluando la cátedra**  
+Conocimiento de componentes de interconexión óptica, comprensión del fenómeno de reflexión en interfaces de medios con discontinuidad de índice de refracción, y prevención de fallas operativas críticas en laboratorios y centros de datos.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-06">
+
+## 1. Diferencias Físicas, Geométricas y Convención de Color
+
+* **UPC (Ultra Physical Contact):**
+  - **Geometría:** La férula de circonio posee un pulido con superficie ligeramente convexa pero **completamente perpendicular ($0^\circ$)** al eje longitudinal de la fibra. Al acoplarse con otro conector, los núcleos de vidrio entran en contacto físico directo bajo presión mecánica para minimizar el espacio de aire (*air gap*).
+  - **Color Normalizado:** **Azul** (en conectores LC, SC, FC).
+* **APC (Angled Physical Contact):**
+  - **Geometría:** La férula de circonio está mecanizada con un **corte biselado con un ángulo de $8^\circ$** respecto de la normal.
+  - **Mecanismo de Desviación:** Cualquier fracción de luz que no penetra en la fibra receptora e intenta reflejarse en la interfaz incide en el núcleo con un ángulo que excede el ángulo crítico de confinamiento, escapando hacia el revestimiento (*cladding*) donde es absorbida por el polímero atenuador.
+  - **Color Normalizado:** **Verde** (en conectores LC/APC, SC/APC).
+
+---
+
+## 2. Pérdida de Retorno Óptica (ORL) y Aplicaciones Críticas
+
+* **Definición de ORL (Optical Return Loss):**
+  - Es la relación logarítmica entre la potencia óptica incidente lanzada hacia el conector y la potencia óptica reflejada hacia atrás en dirección a la fuente láser:
+    $$\text{ORL [dB]} = 10 \cdot \log_{10}\left(\frac{P_{incidente}}{P_{reflejada}}\right)$$
+  - **Criterio:** Al ser una atenuación de la luz reflejada indeseada, **valores más altos en decibelios indican un mejor conector**.
+
+* **Comparativa de Valores:**
+  - **Conectores UPC:** $\text{ORL} \ge 50\text{ dB}$ (típicamente $50\text{ a }55\text{ dB}$).
+  - **Conectores APC:** $\text{ORL} \ge 65\text{ dB}$ (típicamente $65\text{ a }70\text{ dB}$).
+
+* **Por qué APC es Obligatorio en Video RF, GPON y DWDM:**
+  1. **Inestabilidad del Láser DFB:** Los láseres de realimentación distribuida (DFB) de alta coherencia utilizados en enlaces DWDM y GPON son extremadamente sensibles a la luz retrodispersada. La luz que regresa a la cavidad resonante altera la oscilación de fase del láser, produciendo ruido de intensidad relativa (*RIN - Relative Intensity Noise*) y variaciones espurias en la longitud de onda (*chirp*).
+  2. **Intermodulación en Video RF (CATV analógico sobre 1550 nm):** En la modulación analógica de televisión por cable, la mínima reflexión genera productos de intermodulación de orden compuesto (CSO/CTB) que degradan visiblemente la imagen con efecto "fantasma" o nieve en los canales de televisión. APC garantiza que la reflexión sea $15\text{ dB}$ inferior (unas 30 veces menor potencia reflejada) que con UPC.
+
+---
+
+## 3. Consecuencias del Emparejamiento Incorrecto (APC con UPC)
+
+Si se fuerza mecánicamente la conexión entre un conector APC (verde, ángulo $8^\circ$) y un conector UPC (azul, plano $0^\circ$):
+
+1. **Destrucción Mecánica Irreversible:** El extremo puntiagudo del ángulo de $8^\circ$ de la férula APC choca y concentra toda la fuerza de presión del resorte sobre un punto microscópico de la superficie plana UPC, fracturando o rayando permanentemente el núcleo de vidrio de ambos conectores.
+2. **Pérdida Óptica Masiva y Espacio de Aire (*Air Gap*):** Debido a la desalineación angular de $8^\circ$, las caras de los núcleos no hacen contacto físico. Queda una brecha de aire en forma de cuña que provoca una pérdida de inserción (*Insertion Loss*) inaceptable ($> 5\text{ a }10\text{ dB}$) y una pésima pérdida de retorno ($< 20\text{ dB}$), interrumpiendo por completo la transmisión de datos.
+
+</SolutionDrawer>

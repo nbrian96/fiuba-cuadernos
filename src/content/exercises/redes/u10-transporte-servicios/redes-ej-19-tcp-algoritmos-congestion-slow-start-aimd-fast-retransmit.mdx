@@ -1,0 +1,65 @@
+---
+id: "redes-ej-19"
+courseId: "redes"
+number: 19
+title: "Algoritmos de Congestión TCP: Slow Start, Régimen AIMD y Fast Retransmit"
+unit: "u10-transporte-servicios"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 19"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-10"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El control de congestión en TCP evita que el tráfico simultáneo sature los búferes de los routers de Internet:
+1. Explique cómo evoluciona la ventana de congestión ($cwnd$) durante la fase de **Slow Start (Arranque Lento)** y cuándo conmuta hacia **Congestion Avoidance (Prevención de Congestión)**.
+2. Defina el régimen matemático **AIMD (Additive Increase, Multiplicative Decrease)** y justifique por qué garantiza estabilidad en la red.
+3. Compare la reacción del emisor ante una pérdida detectada por **Triple ACK Duplicado (Fast Retransmit)** frente a una pérdida por **RTO Timeout (Expiración del Temporizador)**.
+
+**Qué está evaluando la cátedra**  
+Dominio de las fases del algoritmo de congestión de Jacobson, comprensión de la convergencia de AIMD y discriminación de severidad de pérdidas en TCP.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-19">
+
+## 1. Fases de Slow Start y Transición a Congestion Avoidance
+
+* **Slow Start (Crecimiento Exponencial):**
+  - Comienza con un valor pequeño de $cwnd$ (típicamente entre 1 y 10 MSS).
+  - Por cada segmento confirmado con éxito mediante un ACK, el emisor suma 1 MSS a su ventana:
+    $$\Delta cwnd = +1\text{ MSS por cada ACK}$$
+  - Como resultado, la ventana **se duplica en cada tiempo de ida y vuelta ($RTT$)**: evoluciona como $1, 2, 4, 8, 16\dots\text{ MSS}$.
+* **Transición:**  
+  El crecimiento exponencial se detiene cuando $cwnd \ge ssthresh$ (*Slow Start Threshold*). A partir de ese valor, conmuta a la fase de **Congestion Avoidance**.
+
+---
+
+## 2. Régimen AIMD (Additive Increase, Multiplicative Decrease)
+
+Durante la fase de prevención de congestión, TCP adopta una estrategia conservadora para tantear la capacidad de la red:
+* **Incremento Aditivo (AI):** Por cada RTT completo transcurrido sin pérdidas, el emisor incrementa la ventana en solo **$+1\text{ MSS}$** (crecimiento lineal).
+* **Decremento Multiplicativo (MD):** Ante el primer indicio de congestión en la red, el emisor reduce la ventana a la **mitad**:
+  $$ssthresh = \frac{cwnd}{2}, \quad cwnd = ssthresh$$
+* **Justificación de Estabilidad:** El régimen AIMD garantiza matemáticamente que múltiples conexiones TCP independientes que compiten por el mismo enlace converjan hacia un reparto equitativo del ancho de banda (*Fairness*) sin oscilaciones caóticas.
+
+---
+
+## 3. Triple ACK Duplicado (Fast Retransmit) vs RTO Timeout
+
+| Parámetro | Pérdida por Triple ACK Duplicado | Pérdida por RTO Timeout |
+| :--- | :--- | :--- |
+| **Diagnóstico de la Red** | Congestión **leve o localizada**. Los paquetes posteriores llegaron al receptor, generando los 3 ACKs repetidos. | Congestión **severa o colapso**. Ningún paquete ni ACK pudo atravesar la red. |
+| **Acción Inmediata** | Retransmite inmediatamente el segmento perdido **sin esperar al temporizador**. | Espera pasiva hasta la expiración del temporizador RTO (cientos de ms). |
+| **Ajuste de $cwnd$** | **Fast Recovery:** $ssthresh = cwnd/2$, $cwnd = ssthresh + 3\text{ MSS}$. Sigue en evasión lineal. | **Colapso Total:** $ssthresh = cwnd/2$, **$cwnd = 1\text{ MSS}$**. Reinicia en Slow Start desde cero. |
+
+</SolutionDrawer>

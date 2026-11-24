@@ -137,7 +137,12 @@ export function GlobalSearch({
     "all",
   );
   const [courseFilter, setCourseFilter] = useState<string>("all");
-  void currentCourseId;
+  const searchPlaceholder =
+    currentCourseId === "redes"
+      ? "Ej: TCP, IPv4, DNS, enrutamiento, subredes, parcial..."
+      : currentCourseId === "tda"
+        ? "Ej: complejidad, grafo, parcial, heap, programación dinámica..."
+        : "Ej: apuntes, ejercicios, parciales, algoritmos, TCP/IP...";
   const [results, setResults] = useState<RenderedResult[]>([]);
   const [totalMatches, setTotalMatches] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -177,6 +182,8 @@ export function GlobalSearch({
   useEffect(() => {
     if (isOpen) {
       wasOpenRef.current = true;
+      const prevBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
       const inertTargets: Array<{ el: Element; hadInert: boolean }> = [];
       for (const child of Array.from(document.body.children)) {
         if (child.hasAttribute("data-search-portal")) continue;
@@ -220,6 +227,7 @@ export function GlobalSearch({
       document.addEventListener("keydown", onKeyDown);
       return () => {
         document.removeEventListener("keydown", onKeyDown);
+        document.body.style.overflow = prevBodyOverflow;
         for (const target of inertTargets) {
           if (!target.hadInert) {
             target.el.removeAttribute("inert");
@@ -379,7 +387,7 @@ export function GlobalSearch({
                       type="search"
                       className="hud-input"
                       style={{ width: "100%" }}
-                      placeholder="Ej: complejidad, grafo, parcial, heap, programación dinámica..."
+                      placeholder={searchPlaceholder}
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       data-testid="global-search-input"
@@ -401,7 +409,7 @@ export function GlobalSearch({
                     ))}
 
                     {courses.length > 1 ? (
-                      <label style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                      <label className="search-filter-select">
                         <span className="sr-only">Materia</span>
                         <select
                           className="hud-select"
@@ -420,7 +428,7 @@ export function GlobalSearch({
                       </label>
                     ) : null}
 
-                    <label style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", marginLeft: "auto" }}>
+                    <label className="search-filter-select search-filter-select--end">
                       <span className="sr-only">Procedencia</span>
                       <select
                         className="hud-select"

@@ -4,6 +4,7 @@ import { load as loadYaml } from "js-yaml";
 import { describe, expect, it } from "vitest";
 import {
   AssessmentManifestSchema,
+  CheatsheetManifestSchema,
   CourseManifestSchema,
   DocFrontmatterSchema,
   ExerciseFrontmatterSchema,
@@ -253,24 +254,62 @@ describe("Etapa 4 full TDA migration parity", () => {
 });
 
 describe("Multi-course content integrity", () => {
-  it("validates every declared course, its resources, assessments, exercises, docs and physical files", () => {
+  it("validates every declared course, its resources, assessments, cheatsheets, quizzes, exercises, docs and cross-references", () => {
     const coursesDir = path.join(ROOT, "src/content/courses");
     const courseFiles = fs
       .readdirSync(coursesDir)
       .filter((f) => f.endsWith(".json"));
     expect(courseFiles.length).toBeGreaterThanOrEqual(1);
 
+    const quizFiles = fs
+      .readdirSync(path.join(ROOT, "src/content/quizzes"))
+      .filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"));
+    const quizzesByCourse = new Map<string, number>();
+
+    for (const qFile of quizFiles) {
+      const quiz = QuizManifestSchema.parse(
+        loadYaml(
+          fs.readFileSync(path.join(ROOT, "src/content/quizzes", qFile), "utf-8"),
+        ),
+      );
+      const optionKeys = new Set(quiz.options.map((o) => o.key));
+      const questionIds = new Set(quiz.questions.map((q) => q.id));
+      expect(questionIds.size, `[Quiz:${qFile}] IDs duplicados`).toBe(quiz.questions.length);
+      for (const q of quiz.questions) {
+        expect(optionKeys.has(q.answer), `[Quiz:${qFile}] Respuesta inválida '${q.answer}' en ${q.id}`).toBe(true);
+      }
+      quizzesByCourse.set(
+        quiz.courseId,
+        (quizzesByCourse.get(quiz.courseId) ?? 0) + quiz.questions.length,
+      );
+    }
+
     for (const file of courseFiles) {
       const course = CourseManifestSchema.parse(
         readJson(`src/content/courses/${file}`),
       );
       const unitSlugs = new Set(course.units.map((u) => u.slug));
+      const resourceIds = new Set<string>();
+
+      for (const unit of course.units) {
+        expect(
+          unit.name,
+          `[${course.id}] unit.name '${unit.name}' no debe prefijar el número de orden`,
+        ).not.toMatch(/^\d+\.\s/);
+      }
 
       const resRel = `src/content/resources/${course.id}-resources.json`;
       if (fs.existsSync(path.join(ROOT, resRel))) {
         const resManifest = ResourceManifestSchema.parse(readJson(resRel));
         expect(resManifest.courseId).toBe(course.id);
         for (const res of resManifest.resources) {
+          resourceIds.add(res.resourceId);
+          for (const slug of res.unitSlugs) {
+            expect(
+              slug === "general" || unitSlugs.has(slug),
+              `[${course.id}] Recurso '${res.resourceId}' referencia unitSlug inexistente '${slug}'`,
+            ).toBe(true);
+          }
           for (const f of res.files) {
             expect(
               fs.existsSync(path.join(ROOT, f.path)),
@@ -280,28 +319,106 @@ describe("Multi-course content integrity", () => {
         }
       }
 
-      const assessRel = `src/content/assessments/${course.id}.json`;
-      if (fs.existsSync(path.join(ROOT, assessRel))) {
-        const assess = AssessmentManifestSchema.parse(readJson(assessRel));
-        expect(assess.courseId).toBe(course.id);
+      const cheatsheetRel = `src/content/cheatsheets/${course.id}.json`;
+      if (fs.existsSync(path.join(ROOT, cheatsheetRel))) {
+        const cheatsheet = CheatsheetManifestSchema.parse(readJson(cheatsheetRel));
+        expect(cheatsheet.courseId).toBe(course.id);
       }
 
       const exDirRel = `src/content/exercises/${course.id}`;
+      const exercisesById = new Map<string, ReturnType<typeof ExerciseFrontmatterSchema.parse>>();
+      const catalogCountByUnit = new Map<string, number>();
+      let catalogCount = 0;
+      let parcialCount = 0;
       if (fs.existsSync(path.join(ROOT, exDirRel))) {
         for (const relPath of listMdxFiles(exDirRel)) {
           const fm = ExerciseFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
           expect(fm.courseId).toBe(course.id);
-          expect(unitSlugs.has(fm.unit)).toBe(true);
+          expect(unitSlugs.has(fm.unit), `[${course.id}] Unidad inexistente '${fm.unit}' en ${relPath}`).toBe(true);
+          expect(exercisesById.has(fm.id), `[${course.id}] ID de ejercicio duplicado '${fm.id}'`).toBe(false);
+          exercisesById.set(fm.id, fm);
+          for (const rid of fm.relatedResourceIds ?? []) {
+            expect(
+              resourceIds.has(rid),
+              `[${course.id}] Ejercicio '${fm.id}' referencia recurso inexistente '${rid}'`,
+            ).toBe(true);
+          }
+          if (fm.entityType === "CatalogExercise") {
+            catalogCount++;
+            catalogCountByUnit.set(fm.unit, (catalogCountByUnit.get(fm.unit) ?? 0) + 1);
+          }
+          if (fm.isParcial) {
+            parcialCount++;
+          }
+        }
+      }
+
+      for (const unit of course.units) {
+        if (unit.inCatalog) {
+          expect(
+            catalogCountByUnit.get(unit.slug) ?? 0,
+            `[${course.id}] exerciseCount desincronizado en unidad '${unit.slug}'`,
+          ).toBe(unit.exerciseCount);
+        }
+      }
+      expect(catalogCount, `[${course.id}] stats.catalogExercises desincronizado`).toBe(
+        course.stats.catalogExercises,
+      );
+      expect(parcialCount, `[${course.id}] stats.parcialExercises desincronizado`).toBe(
+        course.stats.parcialExercises,
+      );
+
+      const assessRel = `src/content/assessments/${course.id}.json`;
+      if (fs.existsSync(path.join(ROOT, assessRel))) {
+        const assess = AssessmentManifestSchema.parse(readJson(assessRel));
+        expect(assess.courseId).toBe(course.id);
+        for (const exam of assess.exams) {
+          if (exam.pdfResourceId) {
+            expect(
+              resourceIds.has(exam.pdfResourceId),
+              `[${course.id}] Examen '${exam.id}' referencia PDF inexistente '${exam.pdfResourceId}'`,
+            ).toBe(true);
+          }
+          for (const exId of exam.catalogExerciseIds) {
+            const ex = exercisesById.get(exId);
+            expect(ex, `[${course.id}] Examen '${exam.id}' referencia ejercicio inexistente '${exId}'`).toBeDefined();
+            expect(
+              (ex!.examIds ?? []).includes(exam.id),
+              `[${course.id}] Ejercicio '${exId}' no declara examId '${exam.id}'`,
+            ).toBe(true);
+          }
         }
       }
 
       const docDirRel = `src/content/docs/${course.id}`;
+      let notesCount = 0;
+      let summariesCount = 0;
       if (fs.existsSync(path.join(ROOT, docDirRel))) {
         for (const relPath of listMdxFiles(docDirRel)) {
           const fm = DocFrontmatterSchema.parse(parseMdxFrontmatter(relPath));
           expect(fm.courseId).toBe(course.id);
+          for (const rid of fm.relatedResourceIds ?? []) {
+            expect(
+              resourceIds.has(rid),
+              `[${course.id}] Doc '${fm.docId}' referencia recurso inexistente '${rid}'`,
+            ).toBe(true);
+          }
+          if (fm.entityType === "ElaboratedNote") notesCount++;
+          if (fm.entityType === "ElaboratedSummary") summariesCount++;
         }
       }
+      const expectedNotes = course.id === "tda" ? notesCount + 1 : notesCount;
+      expect(expectedNotes, `[${course.id}] stats.elaboratedNotes desincronizado`).toBe(
+        course.stats.elaboratedNotes,
+      );
+      const expectedSummaries = course.id === "tda" ? summariesCount + 1 : summariesCount;
+      expect(expectedSummaries, `[${course.id}] stats.elaboratedSummaries desincronizado`).toBe(
+        course.stats.elaboratedSummaries,
+      );
+      expect(
+        quizzesByCourse.get(course.id) ?? 0,
+        `[${course.id}] stats.trainerQuestions desincronizado`,
+      ).toBe(course.stats.trainerQuestions);
     }
   });
 });

@@ -1,0 +1,66 @@
+---
+id: "redes-ej-36"
+courseId: "redes"
+number: 36
+title: "Comparativa de Servicios de Capa 3: VPN-IP vs Tránsito IP"
+unit: "u09-enrutamiento-bgp-mpls"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Parcial 2do Intento 21-11-2026 / 1° Recuperatorio 2025 Cátedra Volpi"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-09"
+  - "redes-presentacion-13"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el portafolio de telecomunicaciones corporativas, los operadores ofrecen servicios basados en Capa 3 con propósitos radicalmente distintos:
+1. Explique el concepto de **VPN-IP (Red Privada Virtual IP)** y el concepto de **Tránsito IP (Internet Transit)**.
+2. Confeccione un cuadro comparativo detallando: objetivo principal, ámbito de conectividad (red cerrada vs red pública mundial), protocolo de enrutamiento utilizado, aislamiento de tráfico y perfil típico de cliente que lo contrata.
+3. Resuma en una única frase la conclusión técnica que distingue ambos servicios para responder en un parcial.
+
+**Qué está evaluando la cátedra**  
+Comprensión de los servicios de telecomunicaciones Layer 3, distinción entre conectividad corporativa privada y acceso a Internet global, y claridad en la argumentación de examen.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-36">
+
+## 1. Conceptos Fundamentales de Servicios Layer 3
+
+* **VPN-IP (Virtual Private Network IP):**
+  - Es un servicio de transporte que interconecta de forma privada sedes remotas, sucursales y centros de cómputos de una misma organización utilizando la red dorsal IP/MPLS compartida de un operador de telecomunicaciones.
+  - El tráfico viaja en un túnel lógico totalmente aislado (*Virtual Routing and Forwarding - VRF*) con direccionamiento privado (RFC 1918) y garantías contractuales de Calidad de Servicio (QoS para voz, video y datos).
+* **Tránsito IP (IP Transit):**
+  - Es el servicio comercial mediante el cual un operador de red (ISP o carrier) otorga a un cliente acceso completo e irrestricto a **toda la tabla de enrutamiento global de Internet**.
+  - Permite cursar paquetes hacia y desde cualquier dirección IP pública del planeta utilizando sesiones del protocolo BGP (Border Gateway Protocol).
+
+---
+
+## 2. Cuadro Comparativo de Examen
+
+| Parámetro | VPN-IP (L3VPN MPLS) | Tránsito IP |
+| :--- | :--- | :--- |
+| **Objetivo Principal** | Conectar sedes privadas de una empresa entre sí. | Conectar una red con toda la Internet global. |
+| **Ámbito de Tráfico** | **Red cerrada y privada**. No accesible desde Internet pública. | **Red pública mundial**. Accesible desde cualquier host de Internet. |
+| **Direccionamiento** | Direcciones IPv4 privadas (RFC 1918) o corporativas. | Direcciones IP públicas globales asignadas por RIRs (LACNIC). |
+| **Protocolo de Borde** | BGP, OSPF o rutas estáticas entre CE y PE (enrutamiento en VRF). | **BGP-4 (eBGP)** obligatorio con intercambio de prefijos mundiales. |
+| **Garantías de Servicio** | SLA estricto con priorización de tráfico (QoS DiffServ para VoIP/SAP). | *Best Effort* en el tránsito internacional (sin QoS garantizado). |
+| **Cliente Típico** | Empresas con múltiples sucursales (bancos, cadenas, gobierno). | ISPs locales, proveedores de hosting, CDNs y universidades. |
+
+---
+
+## 3. Conclusión Sintética de Examen
+
+> **Respuesta Rápida de Parcial:**  
+> *"La VPN-IP conecta redes privadas corporativas entre sí de forma aislada y con QoS; el Tránsito IP conecta una red con toda la Internet pública global a través de BGP."*
+
+</SolutionDrawer>

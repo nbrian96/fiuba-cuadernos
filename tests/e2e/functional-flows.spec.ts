@@ -89,7 +89,8 @@ test.describe("Etapa 5 — Flujos funcionales críticos y migración de localSto
     await expect(page.getByTestId("hud-visible-count")).toHaveText("27");
 
     // Atajo de teclado '/' enfoca el buscador del HUD
-    await page.locator("h1").click();
+    await expect(page.locator("main h1")).toHaveCount(1);
+    await page.locator("main h1").click();
     await page.keyboard.press("/");
     await expect(page.getByTestId("hud-search-input")).toBeFocused();
     await page.getByTestId("hud-search-input").fill("Ruta de Transporte");

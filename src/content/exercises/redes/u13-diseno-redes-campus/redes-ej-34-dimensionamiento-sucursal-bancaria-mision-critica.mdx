@@ -1,0 +1,91 @@
+---
+id: "redes-ej-34"
+courseId: "redes"
+number: 34
+title: "Dimensionamiento de Red Corporativa: Sucursal Bancaria de Misión Crítica (CCTV, ATMs) (Caso 4)"
+unit: "u13-diseno-redes-campus"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Manual Maestro Unificado FIUBA — Clase 12, Caso 4"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+  - "redes-examen-integrador"
+relatedResourceIds:
+  - "redes-presentacion-12"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una entidad financiera debe dimensionar la conectividad WAN de una **Sucursal Bancaria de Misión Crítica** con atención al público, cajeros automáticos y monitoreo continuo de seguridad física:
+
+- **Población de la sucursal:** $N_{\text{total}} = 40$ empleados (cajas, oficiales de cuenta y gerencia).
+- **Factor de concurrencia en hora pico:** $C = 60\%$ ($0{,}60$).
+- **Perfil de consumo por usuario concurrente ($N_c$):**
+  - **Core Bancario IT:** $0{,}4\text{ Mbps/usuario}$.
+  - **Internet regulado** (navegación filtrada por proxy/firewall corporativo): $1{,}0\text{ Mbps/usuario}$.
+  - **Tiempo Real** (telefonía VoIP corporativa y videoconferencia interna): $1{,}0\text{ Mbps/usuario}$.
+- **Servicios continuos de misión crítica (100% simultaneidad):**
+  - **Videovigilancia CCTV:** $8$ cámaras IP transmitiendo en forma continua a $1{,}5\text{ Mbps}$ cada una hacia el centro de monitoreo central.
+  - **Infraestructura transaccional y gestión:** $4$ cajeros automáticos (ATMs) + monitoreo y gestión de red por un total consolidado de $3{,}0\text{ Mbps}$.
+- **Criterio de ingeniería:** aplicar un **margen de alta disponibilidad y seguridad del $+50\%$**.
+
+Se solicita:
+1. Calcular la cantidad de usuarios concurrentes ($N_c$) y el ancho de banda base total ($BW_{\text{base}}$).
+2. Determinar el ancho de banda total con margen de alta disponibilidad ($BW_{\text{total}}$).
+3. Emitir el dictamen técnico de conectividad WAN (enlace primario MPLS y backup disjunto), redundancia y políticas de QoS DiffServ.
+
+**Qué está evaluando la cátedra**  
+Cálculo de demanda en sucursales financieras con alta concurrencia ($60\%$), integración de flujos continuos críticos (CCTV y ATMs), aplicación de margen de seguridad reforzado ($+50\%$) y diseño de conectividad redundante sin punto único de falla.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-34">
+
+## 1. Cálculo de Usuarios Concurrentes y Tráfico Base
+
+1. **Usuarios concurrentes en hora pico ($N_c$):**
+   $$N_c = N_{\text{total}} \times C = 40 \times 0{,}60 = 24 \text{ usuarios concurrentes}$$
+
+2. **Desglose de demanda por servicio:**
+
+| Servicio / Categoría | Cálculo | Ancho de Banda |
+| :--- | :--- | :---: |
+| **Core Bancario IT** | $24 \times 0{,}4\text{ Mbps}$ | $9{,}6\text{ Mbps}$ |
+| **Internet Regulado** | $24 \times 1{,}0\text{ Mbps}$ | $24{,}0\text{ Mbps}$ |
+| **Tiempo Real (VoIP / Video)** | $24 \times 1{,}0\text{ Mbps}$ | $24{,}0\text{ Mbps}$ |
+| **CCTV Continuo ($8$ cámaras)** | $8 \times 1{,}5\text{ Mbps}$ | $12{,}0\text{ Mbps}$ |
+| **$4$ ATMs + Gestión de Red** | Carga continua $100\%$ | $3{,}0\text{ Mbps}$ |
+| **Total Base ($BW_{\text{base}}$)** | $9{,}6 + 24{,}0 + 24{,}0 + 12{,}0 + 3{,}0$ | **$72{,}6\text{ Mbps}$** |
+
+$$BW_{\text{base}} = 9{,}6 + 24{,}0 + 24{,}0 + 12{,}0 + 3{,}0 = 72{,}6\text{ Mbps}$$
+
+---
+
+## 2. Ancho de Banda Total con Margen de Alta Disponibilidad ($+50\%$)
+
+Por tratarse de una operación financiera regulada de misión crítica donde la saturación o interrupción impacta directamente en la operatoria de cajas, ATMs y seguridad física, se aplica el margen reforzado del $+50\%$:
+
+$$BW_{\text{total}} = BW_{\text{base}} \times (1 + 0{,}50) = 72{,}6\text{ Mbps} \times 1{,}50 = \mathbf{108{,}9\text{ Mbps}}$$
+
+---
+
+## 3. Dictamen Técnico de Conectividad, Redundancia y QoS
+
+Dado que la capacidad dimensionada alcanza **$108{,}9\text{ Mbps}$** (superando el escalón de $100\text{ Mbps}$), se especifica una arquitectura redundante con diversidad de proveedor y medio físico:
+
+### Enlaces WAN Contratados
+- **Enlace Primario:** circuito simétrico dedicado **MPLS L3VPN de $150\text{ Mbps}$** sobre fibra óptica monomodo (OS2) con SLA bancario ($\ge 99{,}95\%$) y cifrado extremo a extremo hacia el Data Center central.
+- **Enlace de Contingencia (Backup Disjunto):** circuito independiente de **$100\text{–}150\text{ Mbps}$** contratado con un **segundo operador y acometida física diversa** (fibra óptica por distinta traza o radioenlace licenciado / 5G corporativo dedicado), administrado mediante **SD-WAN / BGP** con conmutación automática sub-segundo ante caída o degradación del primario.
+
+### Políticas de QoS (DiffServ) y Segmentación
+- **Cola `EF` (Expedited Forwarding — DSCP 46):** transacciones de los $4$ ATMs y telefonía VoIP con prioridad estricta y reserva garantizada.
+- **Cola `AF41` (Assured Forwarding — DSCP 34):** Core Bancario IT y videoconferencia operativa.
+- **Cola `AF21` / VLAN Dedicada de Seguridad Física:** las $8$ cámaras CCTV ($12{,}0\text{ Mbps}$ constantes) aisladas en su propia VLAN/VRF con límite de ráfaga para no interferir con transacciones financieras.
+- **Cola `Best Effort`:** Internet regulado con inspección en firewall/proxy corporativo.
+
+</SolutionDrawer>

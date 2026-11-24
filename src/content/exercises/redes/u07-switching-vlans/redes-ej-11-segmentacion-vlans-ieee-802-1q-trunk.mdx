@@ -1,0 +1,84 @@
+---
+id: "redes-ej-11"
+courseId: "redes"
+number: 11
+title: "Segmentación de Redes: VLANs (IEEE 802.1Q), Puertos de Acceso vs Trunk y VLAN Nativa"
+unit: "u07-switching-vlans"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Simulacro Primer Parcial Cátedra Volpi — Parte I, Ejercicio 11"
+isParcial: true
+examIds:
+  - "redes-primer-parcial"
+relatedResourceIds:
+  - "redes-presentacion-08"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Las Redes de Área Local Virtuales (**VLANs**) segmentan lógicamente los dominios de difusión dentro de conmutadores físicos:
+1. Explique los beneficios operativos, de seguridad y de administración de tráfico que aporta la implementación de VLANs en una red corporativa.
+2. Detalle la estructura del encabezado de etiquetado **IEEE 802.1Q (VLAN Tag)** de 4 bytes indicando sus campos (TPID, PCP, DEI, VID). ¿Cuántas VLANs pueden definirse teóricamente con el campo VID y cuáles son los rangos reservados?
+3. Compare el funcionamiento de un **Puerto de Acceso (Access Port)** frente a un **Puerto Troncal (Trunk Port)**. Defina el concepto de **VLAN Nativa** en un enlace troncal y analice qué riesgos de seguridad conlleva mantener la VLAN Nativa por defecto (VLAN 1).
+
+**Qué está evaluando la cátedra**  
+Comprensión de la segmentación lógica en Capa 2, especificación del protocolo IEEE 802.1Q y buenas prácticas de seguridad en enlaces troncales.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="redes-ej-11">
+
+## 1. Beneficios de la Implementación de VLANs
+
+1. **Aislamiento de Dominios de Broadcast:** Limita la propagación de tramas de difusión (mensajes ARP, DHCP, anuncios de servicios) al ámbito estricto de cada departamento o servicio, previniendo la degradación del rendimiento de la red y evitando que una tormenta de broadcast en un área colapse a toda la organización.
+2. **Seguridad Lógica Reforzada:** Los dispositivos pertenecientes a diferentes VLANs no pueden comunicarse entre sí en Capa 2, incluso estando conectados físicamente al mismo switch. La comunicación inter-VLAN requiere obligatoriamente atravesar un conmutador L3 o firewall perimetral, permitiendo aplicar listas de control de acceso (ACLs) e inspección de estado.
+3. **Flexibilidad Administrativa y Reducción de Costos:** Permite agrupar a los usuarios lógicamente por función de negocio (Finanzas, Recursos Humanos, Servidores, Wi-Fi Invitados) sin importar su ubicación física en el edificio ni requerir tendidos de cables dedicados.
+
+---
+
+## 2. Estructura del Encabezado IEEE 802.1Q (4 bytes)
+
+El estándar inserta un encabezado de 32 bits (4 bytes) entre los campos MAC Origen y EtherType original de la trama Ethernet:
+
+```
++-------------------+-------------------+-------------------+-------------------+
+|   TPID (2 bytes)  |   PCP (3 bits)    |    DEI (1 bit)    |   VID (12 bits)   |
+|      0x8100       | Prioridad CoS QoS |  Drop Eligible    |  Identificador ID |
++-------------------+-------------------+-------------------+-------------------+
+```
+
+- **TPID (Tag Protocol Identifier, 16 bits):** Fijado en el valor hexadecimal `0x8100`. Indica al receptor que la trama contiene un tag 802.1Q.
+- **TCI (Tag Control Information, 16 bits), compuesto por:**
+  - **PCP (Priority Code Point, 3 bits):** Provee 8 niveles de prioridad de clase de servicio (**CoS** IEEE 802.1p, de 0 a 7) para encolamiento preferencial de tráfico sensible (voz, video).
+  - **DEI (Drop Eligible Indicator, 1 bit):** Si está activo (`1`), indica que la trama puede ser descartada prioritariamente por los switches en caso de congestión en las colas de salida.
+  - **VLAN ID (VID, 12 bits):** Identificador unívoco de la red virtual.
+- **Espacio de Direccionamiento de VLANs:**
+  - Al disponer de 12 bits, admite $2^{12} = 4096$ identificadores posibles ($0$ a $4095$).
+  - **Valores Reservados:** El VID 0 se reserva para tramas de prioridad sin VLAN asignada; el VID 4095 está reservado para uso del sistema.
+  - **Rango Normal (Estándar):** 1 a 1005 (VLANs 1002-1005 reservadas históricamente para Token Ring/FDDI).
+  - **Rango Extendido:** 1006 a 4094 (utilizado ampliamente por operadores y Centros de Datos con soporte para almacenamiento local en el archivo de configuración del switch).
+
+---
+
+## 3. Puertos de Acceso vs Troncales y la VLAN Nativa
+
+* **Puerto de Acceso (Access Port):**
+  - Conecta a dispositivos finales (computadoras personales, impresoras, servidores estándar).
+  - Pertenece a una única VLAN. Las tramas que ingresan o egresan por este puerto son siempre **tramas Ethernet estándar sin etiquetar (*untagged*)**. El switch inserta internamente el tag 802.1Q en su matriz de conmutación y lo retira antes de entregárselo al dispositivo de destino.
+* **Puerto Troncal (Trunk Port):**
+  - Conecta switches entre sí o switches con routers / firewalls.
+  - Transporta tráfico simultáneo de múltiples VLANs conservando el encabezado 802.1Q (*tagged*) para que el switch remoto identifique a qué dominio corresponde cada paquete.
+* **VLAN Nativa:**
+  - Es la única VLAN configurada en un enlace troncal cuyas tramas se transmiten a través del cable **sin etiqueta 802.1Q (*untagged*)**.
+  - Si un puerto troncal recibe una trama sin etiquetar, asume automáticamente que pertenece a la VLAN Nativa.
+  - Fue introducida históricamente por razones de retrocompatibilidad con dispositivos antiguos que no reconocían etiquetas 802.1Q.
+* **Riesgo de Seguridad y Mitigación:**
+  - Por defecto de fábrica, en prácticamente todos los fabricantes (Cisco, HP, etc.) la **VLAN 1** está configurada como la VLAN Nativa y de administración en todos los puertos.
+  - Esto facilita ataques de salto de VLAN (**VLAN Hopping por doble etiquetado / Double Tagging**), donde un atacante genera una trama con dos etiquetas 802.1Q (la exterior con la VLAN nativa 1 y la interior con la VLAN víctima). Al atravesar el primer switch, este remueve la etiqueta exterior de la VLAN nativa y reenvía la trama al trunk; el segundo switch lee la etiqueta interna y entrega el paquete a la red víctima eludiendo el enrutador.
+  - **Buena Práctica Obligatoria:** Cambiar la VLAN Nativa en todos los troncales a un identificador no utilizado e inaccesible (por ejemplo, `VLAN 999`), deshabilitar el autonegociado DTP en puertos de acceso (`switchport nonegotiate`) y forzar el etiquetado explícito de la VLAN nativa (*Tag Native VLAN*).
+
+</SolutionDrawer>

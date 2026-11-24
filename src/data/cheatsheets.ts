@@ -2,6 +2,7 @@ import { renderBlockFormulaHtml, renderInlineMathTextToHtml } from "@/utils/kate
 
 export interface CheatsheetItem {
   lead?: string;
+  leadHtml?: string;
   bodyHtml: string;
 }
 
@@ -206,7 +207,14 @@ function buildTdaCheatsheetSections(): CheatsheetSection[] {
 }
 
 const COURSE_CHEATSHEETS: Record<string, () => CheatsheetSection[]> = {
-  tda: buildTdaCheatsheetSections,
+  tda: () =>
+    buildTdaCheatsheetSections().map((section) => ({
+      ...section,
+      items: section.items.map((item) => ({
+        ...item,
+        leadHtml: item.lead ? renderInlineMathTextToHtml(item.lead) : undefined,
+      })),
+    })),
 };
 
 export function getCheatsheetSections(courseId: string): CheatsheetSection[] {
@@ -234,6 +242,7 @@ export function compileCheatsheetSections(
     listType: sec.listType ?? "ul",
     items: sec.items.map((item) => ({
       lead: item.lead,
+      leadHtml: item.lead ? renderInlineMathTextToHtml(item.lead) : undefined,
       bodyHtml: renderInlineMathTextToHtml(item.body),
     })),
   }));
