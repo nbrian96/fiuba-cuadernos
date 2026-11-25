@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "gdsi",
+  "title": "Gestión del Desarrollo de Sistemas Informáticos",
+  "shortTitle": "GDSI FIUBA",
+  "codes": ["GDSI"],
+  "institution": "FIUBA",
+  "chair": "Cátedra Fontdevila (Diego Fontdevila y Juan Gabardini)",
+  "units": [
+    {
+      "slug": "u01-introduccion-modelos",
+      "name": "Introducción y Modelos de Gestión del Desarrollo",
+      "order": 1,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u02-descubrimiento-producto",
+      "name": "Descubrimiento de Producto",
+      "order": 2,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u03-metodos-empiricos",
+      "name": "Métodos Empíricos de Aprendizaje",
+      "order": 3,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u04-construccion-scrum",
+      "name": "Construcción con Scrum y BDD",
+      "order": 4,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u05-revision-scrum",
+      "name": "Revisión de Avance con Scrum",
+      "order": 5,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u06-planificacion-release",
+      "name": "Planificación y Release Planning",
+      "order": 6,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u07-gestion-riesgos",
+      "name": "Gestión de Riesgos",
+      "order": 7,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u08-equipos-comunicacion",
+      "name": "Equipos, Personas y Comunicación (Team Topologies)",
+      "order": 8,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u09-mejora-metricas",
+      "name": "Mejora Continua y Métricas (GQM y DORA)",
+      "order": 9,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u10-gestion-proyectos",
+      "name": "Gestión de Proyectos, Alcance y Stakeholders",
+      "order": 10,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u11-estimaciones-control",
+      "name": "Estimaciones, Seguimiento y Control",
+      "order": 11,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u12-gestion-flujo-kanban",
+      "name": "Gestión por Flujo y Kanban",
+      "order": 12,
+      "exerciseCount": 0,
+      "inCatalog": true
+    },
+    {
+      "slug": "u13-mejora-procesos-indicadores",
+      "name": "Mejora de Procesos II, Toyota Kata e Indicadores",
+      "order": 13,
+      "exerciseCount": 0,
+      "inCatalog": true
+    }
+  ],
+  "stats": {
+    "physicalFiles": 0,
+    "pdfs": 0,
+    "nonPdfs": 0,
+    "catalogExercises": 0,
+    "parcialExercises": 0,
+    "advancedExercises": 0,
+    "interactiveWidgets": 0,
+    "elaboratedNotes": 1,
+    "elaboratedSummaries": 0,
+    "checklistItems": 0,
+    "trainerQuestions": 0
+  }
+}

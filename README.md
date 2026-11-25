@@ -22,6 +22,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Teoría de Algoritmos (`tda`)** | `TB024` / `75.29` / `95.06` | Cátedra Echevarría (2024–2026) | 85 ejercicios oficiales (35 de parciales) + 2 avanzados + 5 simuladores + entrenador de 20 casos + 3 apuntes | 96 archivos (`materias/tda/`) |
 | **Redes (`redes`)** | `TA048` | Cátedra Volpi (Ing. Marcelo E. Volpi, Ing. Lucas Giorgi, Ing. Vanesa Llasat) | 38 ejercicios de parcial/integrador + entrenador rápido de 35 preguntas + Programa Analítico + Apunte Teórico Completo y Resumen Activo (Clases 01–12) | 18 presentaciones PDF (`materias/redes/`) |
+| **Gestión del Desarrollo de Sistemas Informáticos (`gdsi`)** | `GDSI` | Cátedra Fontdevila (Diego Fontdevila y Juan Gabardini) | Cronograma semanal (17/8–30/11) y alcance de Evaluación 1 (Producto) y Evaluación 2 (Proyectos y Procesos) | Sin archivos PDF fuente |
 
 ---
 
@@ -68,6 +69,13 @@
 
 ---
 
+### 3. Gestión del Desarrollo de Sistemas Informáticos (`gdsi/`)
+
+* 🏠 **Portal de la materia:** `gdsi/` (Unidades temáticas de la cursada y acceso directo al cronograma)
+* 📅 **Cronograma y Evaluaciones:** `gdsi/docs/cronograma-y-evaluaciones/` — Temas vistos semana a semana (2º cuatrimestre 2026) y alcance detallado de **Evaluación 1 — Producto** y **Evaluación 2 — Proyectos y Procesos**.
+
+---
+
 ## 🗂️ Estructura del Repositorio
 
 ```text
@@ -76,7 +84,7 @@ fiuba-cuadernos/
 │   └── deploy-pages.yml      # CI/CD: check, typecheck, Vitest, build Astro y deploy Pages
 ├── src/                      # Plataforma FIUBA Cuadernos (Astro + React + Zod)
 │   ├── components/           # Componentes académicos, simuladores y buscador Pagefind
-│   ├── content/              # Manifiestos JSON/YAML, 125 ejercicios y 6 documentos MDX (tda + redes)
+│   ├── content/              # Manifiestos JSON/YAML, 125 ejercicios y 7 documentos MDX (tda + redes + gdsi)
 │   ├── data/                 # Compiladores de cheatsheets y datos de plataforma
 │   ├── integrations/         # Publicación en dist/materials/ + Pagefind PDF + redirects legacy
 │   ├── layouts/              # Layouts unificados Base, Course y Doc (WCAG 2.1 AA)

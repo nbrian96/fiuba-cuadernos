@@ -1,0 +1,109 @@
+---
+docId: cronograma-y-evaluaciones
+courseId: gdsi
+title: "Cronograma Semanal y Alcance de Evaluaciones"
+order: 0
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - datos-materia
+  - alcance-evaluaciones
+  - cronograma-semanal
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Gestión del Desarrollo de Sistemas Informáticos (`GDSI`)  
+> **Cátedra:** Cátedra Fontdevila  
+> **Equipo Docente:** Diego Fontdevila y Juan Gabardini  
+> **Cursada:** 2º cuatrimestre 2026 · Clases los lunes a las 18:30 (alternando virtuales y presenciales)
+
+---
+
+## Alcance de Evaluaciones
+
+<div class="academic-block academic-block--important" style="margin: 1.5rem 0;">
+  <p class="academic-block-title">Temas incluidos en Evaluación 1 y Evaluación 2</p>
+  <p>
+    La cursada contempla <strong>2 evaluaciones presenciales</strong> que dividen el temario en dos grandes bloques (además de la base introductoria de Bienvenida y Clase 1):
+  </p>
+  <ul>
+    <li>
+      <strong>Evaluación 1 — Producto (lunes 26/10, presencial · Recuperatorio: lunes 16/11 a las 17:00):</strong><br />
+      Abarca el bloque de Producto (Clases 2 a 8 + semana feriado del 12/10, sobre la base introductoria de Bienvenida y Clase 1):
+      <ol>
+        <li><strong>Descubrimiento de producto:</strong> identificación de necesidades reales y validación de ideas manejando incertidumbre con experimentos; Product Vision Board, lista de riesgos, diseño de experimentos y prototipado rápido.</li>
+        <li><strong>Métodos empíricos:</strong> test de usabilidad, entrevista, fake door / smoke test y observación contextual; revisión de prototipos y aprendizajes.</li>
+        <li><strong>Construcción con Scrum:</strong> desarrollo iterativo, responsabilidades, eventos y artefactos (product backlog, sprint backlog, tablero); desarrollo guiado por comportamiento (BDD), slicing de funcionalidades y mapa de ejemplos.</li>
+        <li><strong>Revisión de avance con Scrum:</strong> contrastación de lo construido con lo esperado usando el mapa de ejemplos.</li>
+        <li><strong>Planificación y release planning:</strong> planificación y seguimiento en procesos iterativos, subdivisión del trabajo, calendarización, story map y release plan.</li>
+        <li><strong>Gestión de riesgos:</strong> gestión de riesgos explícita en desarrollo de software, planilla de riesgos, MoSCoW y buffering; cierre del release plan.</li>
+        <li><strong>Equipos, personas y comunicación:</strong> Team Topologies, perfiles en equipos, gestión de conflictos y diseño de la comunicación.</li>
+        <li><strong>Mejora y métricas:</strong> retrospectivas, mejora de prácticas y procesos, métricas e indicadores, GQM y DORA.</li>
+      </ol>
+    </li>
+    <li>
+      <strong>Evaluación 2 — Proyectos y Procesos (lunes 30/11, presencial · Recuperatorio: lunes 14/12):</strong><br />
+      Abarca el bloque de Proyectos, Estimaciones y Flujo (Clases 10 a 13 + semana feriado del 23/11):
+      <ol>
+        <li><strong>Gestión de proyectos:</strong> chartering, gestión de alcance y stakeholders, Project Charter, WBS, MoSCoW y buffering.</li>
+        <li><strong>Estimaciones, seguimiento y control:</strong> enfoques y métodos de estimación (estimación relativa, no estimates), seguimiento por producto, indicadores de gestión y de calidad.</li>
+        <li><strong>Gestión por flujo · Kanban:</strong> tablero Kanban, límites de WIP, diagrama de flujo acumulado (CFD) y límites de control.</li>
+        <li><strong>Mejora de procesos II e indicadores:</strong> Toyota Kata (improvement kata, condición objetivo y experimentos), indicadores y sistemas de gestión, control del flujo de fondos, auditoría, gestión de la integración y de las contrataciones.</li>
+        <li><strong>Cierre del bloque de flujo:</strong> Learning board, puesta en común de videos de equipos y retrospectiva de la cursada.</li>
+      </ol>
+    </li>
+  </ul>
+</div>
+
+<MermaidDiagram
+  client:load
+  caption="Distribución de bloques temáticos y evaluaciones en GDSI (2º cuatrimestre 2026)"
+  code={`flowchart TD
+    subgraph INTRO["Base Introductoria (17/8 - 24/8)"]
+      I1["Bienvenida y Clase 1: Proyecto, producto y proceso; modelos de gestión y control (alcance, tiempos, costos, calidad)"]
+    end
+
+    subgraph EV1["Evaluación 1 — Producto (26/10)"]
+      direction TB
+      P1["Clases 2-3: Descubrimiento de producto y Métodos empíricos"]
+      P2["Clases 4-5: Construcción y Revisión de avance con Scrum (BDD, slicing, mapa de ejemplos)"]
+      P3["Clases 6-7: Release planning, Story Map, Gestión de riesgos, MoSCoW y buffering"]
+      P4["Feriado 12/10 y Clase 8: Team Topologies, Mejora continua, Retrospectivas, Métricas (GQM, DORA)"]
+      P1 --> P2 --> P3 --> P4
+    end
+
+    subgraph EV2["Evaluación 2 — Proyectos y Procesos (30/11)"]
+      direction TB
+      F1["Clase 10: Gestión de proyectos (Chartering, WBS, stakeholders, MoSCoW, buffering)"]
+      F2["Clase 11: Estimaciones relativas, no estimates, seguimiento por producto e indicadores"]
+      F3["Clase 12: Gestión por flujo · Kanban (WIP, CFD, límites de control)"]
+      F4["Feriado 23/11 y Clase 13: Toyota Kata, indicadores, flujo de fondos, auditoría, integración, contrataciones y Learning board"]
+      F1 --> F2 --> F3 --> F4
+    end
+
+    INTRO --> EV1 --> EV2`}
+/>
+
+---
+
+## Cronograma Semanal (Temas por Semana)
+
+| Fecha | Instancia | Tema principal | Temas vistos en la semana | Bloque |
+| :--- | :--- | :--- | :--- | :--- |
+| **17/8** | Feriado (sin clase) | Bienvenida a la materia | Presentación de la cursada. Proyecto, producto y proceso: tres formas de gestionar el desarrollo. | Base |
+| **24/8** | Clase 1 (Presencial) | Introducción | Modelos de gestión del desarrollo de software: en etapas, iterativos, incrementales, ágiles y de flujo continuo. Administración y control de proyectos informáticos: alcance, tiempos, costos y calidad. | Base |
+| **31/8** | Clase 2 (Virtual) | Descubrimiento de producto | Cómo identificar necesidades reales y validar ideas de producto manejando la incertidumbre con experimentos. Product Vision Board, lista de riesgos, diseño de experimentos, prototipado rápido. | Evaluación 1 |
+| **7/9** | Clase 3 (Presencial) | Métodos empíricos | Cuatro formas de aprender del usuario: test de usabilidad, entrevista, fake door / smoke test y observación contextual. Revisión de prototipos y aprendizajes de cada equipo. | Evaluación 1 |
+| **14/9** | Clase 4 (Virtual) | Construcción con Scrum | Desarrollo iterativo: responsabilidades, eventos y artefactos (product backlog, sprint backlog, tablero). Desarrollo guiado por comportamiento (BDD), slicing de funcionalidades y mapa de ejemplos. | Evaluación 1 |
+| **21/9** | Clase 5 (Feriado) | Revisión de avance con Scrum | Contrastación de lo construido con lo esperado, usando el mapa de ejemplos de cada equipo. | Evaluación 1 |
+| **28/9** | Clase 6 (Virtual) | Planificación y release planning | Planificación y seguimiento en procesos iterativos. Subdivisión del trabajo, calendarización, story map y release plan. | Evaluación 1 |
+| **5/10** | Clase 7 (Presencial) | Gestión de riesgos | Gestión de riesgos explícita en el desarrollo de software. Planilla de riesgos, MoSCoW y buffering. Cierre del release plan de cada equipo. | Evaluación 1 |
+| **12/10** | Feriado (sin clase) | Equipos, personas y comunicación | Team Topologies. Perfiles en equipos, gestión de conflictos y diseño de la comunicación. | Evaluación 1 |
+| **19/10** | Clase 8 (Virtual) | Mejora y métricas | Retrospectivas. Mejora de prácticas y procesos. Métricas e indicadores, GQM y DORA. | Evaluación 1 |
+| **26/10** | Clase 9 (Presencial) | Integración de Producto | Consultas y práctica de aplicación sobre todo el bloque de Producto. **Evaluación 1 — Producto**. | Evaluación 1 |
+| **2/11** | Clase 10 (Virtual) | Gestión de proyectos | Chartering, gestión de alcance y stakeholders. Project charter, WBS, MoSCoW y buffering. | Evaluación 2 |
+| **9/11** | Clase 11 (Feriado) | Estimaciones, seguimiento y control | Enfoques y métodos de estimación: estimación relativa, no estimates, seguimiento por producto. Indicadores de gestión y de calidad. | Evaluación 2 |
+| **16/11** | Clase 12 (Presencial) | Gestión por flujo · Kanban | Tablero Kanban, límites de WIP, diagrama de flujo acumulado y límites de control. *(17:00 · Recuperatorio Evaluación 1)*. | Evaluación 2 |
+| **23/11** | Feriado (sin clase) | Mejora de procesos II e indicadores | Toyota Kata: improvement kata, condición objetivo y experimentos. Indicadores y sistemas de gestión, control del flujo de fondos, auditoría. Gestión de la integración y de las contrataciones. | Evaluación 2 |
+| **30/11** | Clase 13 (Presencial) | Cierre de la materia | Learning board y cierre del bloque de flujo. Puesta en común de videos de equipos. Retrospectiva de la cursada. **Evaluación 2 — Proyectos y Procesos**. | Evaluación 2 |

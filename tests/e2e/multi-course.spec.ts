@@ -3,8 +3,8 @@ import { expect, test } from "@playwright/test";
 
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
-test.describe("Extensibilidad Multi-Materia (redes + tda)", () => {
-  test("Hub muestra ambas materias y recorrido completo de redes (dashboard, cheatsheet, doc analítico con Mermaid y visor PDF)", async ({
+test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
+  test("Hub muestra las tres materias y recorrido completo de redes (dashboard, cheatsheet, doc analítico con Mermaid y visor PDF)", async ({
     page,
   }) => {
     const errors: string[] = [];
@@ -13,11 +13,12 @@ test.describe("Extensibilidad Multi-Materia (redes + tda)", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/", { waitUntil: "networkidle" });
     await expect(page.locator("main h1")).toHaveCount(1);
+    await expect(page.getByText("Gestión del Desarrollo de Sistemas Informáticos")).toBeVisible();
     await expect(page.getByText("Teoría de Algoritmos")).toBeVisible();
     await expect(page.getByText("Redes", { exact: true })).toBeVisible();
     await expect(page.getByText("Núcleo Astro + Islas React activo")).toHaveCount(0);
 
-    // Verificar alineación y altura simétrica de cards del Hub + footer pegado al pie del viewport
+    // Verificar alineación y altura simétrica por fila de cards del Hub + footer pegado al pie del viewport
     const hubGeometry = await page.evaluate(() => {
       const cards = Array.from(document.querySelectorAll("section.card-grid > article"));
       const footer = document.querySelector("footer.site-footer");
@@ -31,12 +32,22 @@ test.describe("Extensibilidad Multi-Materia (redes + tda)", () => {
         innerHeight: window.innerHeight,
       };
     });
-    expect(hubGeometry.cardRects).toHaveLength(2);
-    expect(Math.abs(hubGeometry.cardRects[0].top - hubGeometry.cardRects[1].top)).toBeLessThanOrEqual(1);
-    expect(Math.abs(hubGeometry.cardRects[0].height - hubGeometry.cardRects[1].height)).toBeLessThanOrEqual(1);
-    expect(
-      Math.abs((hubGeometry.cardRects[0].btnTop ?? 0) - (hubGeometry.cardRects[1].btnTop ?? 0)),
-    ).toBeLessThanOrEqual(1);
+    expect(hubGeometry.cardRects).toHaveLength(3);
+    const rows = new Map<number, typeof hubGeometry.cardRects>();
+    for (const card of hubGeometry.cardRects) {
+      const existingKey = Array.from(rows.keys()).find((k) => Math.abs(k - card.top) <= 2);
+      const key = existingKey ?? card.top;
+      const list = rows.get(key) ?? [];
+      list.push(card);
+      rows.set(key, list);
+    }
+    for (const rowCards of rows.values()) {
+      for (const card of rowCards.slice(1)) {
+        expect(Math.abs(rowCards[0].top - card.top)).toBeLessThanOrEqual(1);
+        expect(Math.abs(rowCards[0].height - card.height)).toBeLessThanOrEqual(1);
+        expect(Math.abs((rowCards[0].btnTop ?? 0) - (card.btnTop ?? 0))).toBeLessThanOrEqual(1);
+      }
+    }
     expect(hubGeometry.footerBottom).toBeGreaterThanOrEqual(hubGeometry.innerHeight - 2);
 
     await page.goto("/redes/", { waitUntil: "networkidle" });
@@ -192,5 +203,61 @@ test.describe("Extensibilidad Multi-Materia (redes + tda)", () => {
       );
       expect(overflow, `Overflow horizontal en /redes/ (${vp.width}x${vp.height})`).toBe(false);
     }
+  });
+
+  test("gdsi muestra portal, cronograma semanal, alcance de evaluaciones con Mermaid, WCAG 2.1 AA y 0 overflow", async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (err) => errors.push(err.message));
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/gdsi/", { waitUntil: "networkidle" });
+    await expect(page.locator("main h1")).toHaveCount(1);
+    await expect(page.locator("main h1")).toContainText(
+      "Gestión del Desarrollo de Sistemas Informáticos",
+    );
+
+    await page.goto("/gdsi/docs/cronograma-y-evaluaciones/", { waitUntil: "networkidle" });
+    await expect(page.locator("main h1")).toHaveCount(1);
+    await expect(page.locator("main h1")).toContainText("Cronograma Semanal");
+    await expect(page.locator("main")).toContainText("Evaluación 1 — Producto");
+    await expect(page.locator("main")).toContainText("Evaluación 2 — Proyectos y Procesos");
+    await expect(
+      page.getByTestId("mermaid-diagram").locator(".mermaid-svg-host svg").first(),
+    ).toBeVisible({
+      timeout: 15_000,
+    });
+
+    const gdsiRoutes = ["/gdsi/", "/gdsi/docs/cronograma-y-evaluaciones/"] as const;
+    for (const theme of ["light", "dark"] as const) {
+      await page.goto("/gdsi/");
+      await page.evaluate((t) => {
+        localStorage.setItem("mc:v1:global:theme", t);
+        document.documentElement.setAttribute("data-theme", t);
+      }, theme);
+
+      for (const route of gdsiRoutes) {
+        await page.goto(route, { waitUntil: "networkidle" });
+        await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+        const results = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
+        expect(results.violations, `WCAG en ${route} (${theme})`).toEqual([]);
+      }
+    }
+
+    for (const vp of [
+      { width: 1440, height: 900 },
+      { width: 390, height: 844 },
+      { width: 844, height: 390 },
+    ]) {
+      await page.setViewportSize(vp);
+      await page.goto("/gdsi/docs/cronograma-y-evaluaciones/", { waitUntil: "networkidle" });
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > window.innerWidth,
+      );
+      expect(overflow, `Overflow horizontal en /gdsi/ (${vp.width}x${vp.height})`).toBe(false);
+    }
+
+    expect(errors).toEqual([]);
   });
 });

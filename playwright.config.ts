@@ -60,15 +60,22 @@ function resolveLocalBrowserChannel(): "chrome" | "msedge" | undefined {
 const channel = resolveLocalBrowserChannel();
 const previewPort = process.env.PLAYWRIGHT_PORT ?? "4323";
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${previewPort}`;
+const managedServer =
+  Boolean(process.env.PLAYWRIGHT_MANAGED_SERVER) ||
+  Boolean(process.env.PLAYWRIGHT_BASE_URL);
+const envWorkers = process.env.PLAYWRIGHT_WORKERS
+  ? Number(process.env.PLAYWRIGHT_WORKERS)
+  : undefined;
 
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : process.platform === "win32" ? 1 : 3,
+  workers: envWorkers ?? (process.env.CI ? 2 : process.platform === "win32" ? 2 : 3),
   reporter: "list",
   timeout: 90_000,
+  globalTimeout: 5 * 60 * 1000,
   use: {
     baseURL,
     trace: "retain-on-failure",
@@ -82,11 +89,13 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: `node ./node_modules/astro/bin/astro.mjs preview --port ${previewPort}`,
-    port: Number(previewPort),
-    reuseExistingServer: !process.env.CI && Boolean(process.env.PLAYWRIGHT_BASE_URL),
-    timeout: 60_000,
-    env: { ASTRO_TELEMETRY_DISABLED: "1" },
-  },
+  webServer: managedServer
+    ? undefined
+    : {
+        command: `node ./node_modules/astro/bin/astro.mjs preview --port ${previewPort}`,
+        port: Number(previewPort),
+        reuseExistingServer: !process.env.CI && Boolean(process.env.PLAYWRIGHT_BASE_URL),
+        timeout: 60_000,
+        env: { ASTRO_TELEMETRY_DISABLED: "1" },
+      },
 });

@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "node scripts/run-e2e.mjs",
     "verify:build": "node scripts/verify-astro-build.mjs",
     "test:all": "npm run check && npm run typecheck && npm test && npm run build && npm run verify:build && npm run test:e2e"
   },
