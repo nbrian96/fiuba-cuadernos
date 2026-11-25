@@ -1,0 +1,1124 @@
+---
+docId: preparacion-evaluacion-2
+courseId: gdsi
+title: "Resumen Activo y Preparación Integral — Evaluación 2"
+order: 9
+entityType: ElaboratedSummary
+provenance: elaborated_summary
+sectionIds:
+  - unidad-1-paradigmas-de-gestion-proyectos-y-procesos
+  - unidad-2-iniciacion-gobernanza-de-interesados-y-estructura-del-alcance-charter-stakeholders-y-wbs
+  - unidad-3-gestion-de-la-integracion-y-contrataciones-en-proyectos
+  - unidad-4-gestion-de-riesgos-en-el-desarrollo-de-software
+  - unidad-5-construccion-de-software-agil-y-practicas-de-ingenieria
+  - unidad-6-diseno-socio-tecnico-y-team-topologies
+  - unidad-7-metricas-enfoque-lean-y-gestion-de-la-mejora-continua
+  - unidad-8-toyota-kata-improvement-kata-y-coaching-kata
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import ActiveRecallCards from "@/components/platform/ActiveRecallCards";
+import ExamPrepControlBar from "@/components/platform/ExamPrepControlBar";
+import InteractiveMcqDeck from "@/components/platform/InteractiveMcqDeck";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import { getCompiledGdsiExamUnit, getCompiledGdsiExamUnits } from "@/data/gdsiExamPrep";
+
+export const allExamUnits = getCompiledGdsiExamUnits();
+export const examUnitsMeta = allExamUnits.map((u) => ({
+  id: u.id,
+  number: u.number,
+  shortTitle: u.shortTitle,
+  title: u.title,
+  correctKeys: Object.fromEntries(u.mcqItems.map((q) => [q.id, q.correctKey])),
+}));
+export const unit1 = getCompiledGdsiExamUnit("u1");
+export const unit2 = getCompiledGdsiExamUnit("u2");
+export const unit3 = getCompiledGdsiExamUnit("u3");
+export const unit4 = getCompiledGdsiExamUnit("u4");
+export const unit5 = getCompiledGdsiExamUnit("u5");
+export const unit6 = getCompiledGdsiExamUnit("u6");
+export const unit7 = getCompiledGdsiExamUnit("u7");
+export const unit8 = getCompiledGdsiExamUnit("u8");
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Gestión del Desarrollo de Sistemas Informáticos (`GDSI`) · **Cátedra Fontdevila**  
+> **Modalidad:** Guía interactiva de repaso para la **Evaluación 2 — Proyectos y Procesos**: 8 unidades con diagramas síntesis, alertas de trampa, **48 tarjetas de Active Recall** (*La sé / Repasar*) y **48 Multiple Choice** con corrección al instante.
+
+<AcademicBlock kind="note" title="Cómo usar esta guía interactiva">
+  1. Usá el **Panel de Estudio** para enfocarte en una unidad puntual (`U1`–`U8`) o filtrar por modo (*Teoría y Matrices*, *Autoevaluación* o *Multiple Choice*).
+  2. Respondé las **48 preguntas de autoevaluación** y marcá cada una como **La sé** o **Repasar**; tu avance queda guardado automáticamente en este navegador.
+  3. Practicá con los **48 Multiple Choice** clicables para validar tu criterio con feedback inmediato y justificación teórica.
+</AcademicBlock>
+
+<div data-exam-prep-root data-study-view="all" data-study-unit="all">
+
+<ExamPrepControlBar client:load courseId="gdsi" units={examUnitsMeta} totalRecall={48} totalMcq={48} />
+
+<section className="exam-unit-section" data-exam-unit="u1">
+
+## Unidad 1: Paradigmas de Gestión, Proyectos y Procesos
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Los Tres Enfoques de Gestión en Sistemas de Información
+La gestión del desarrollo y mantenimiento de sistemas informáticos se articula en torno a tres grandes paradigmas, definidos por sus supuestos sobre la predictibilidad del entorno, los requisitos y la tecnología:
+
+1. **Enfoque Predictivo (Plan-driven / Cascada / PMI):**
+   - **Supuesto ontológico:** El entorno es estable, los requisitos pueden conocerse y congelarse con precisión de manera temprana, y la tecnología involucrada presenta bajo riesgo de variabilidad.
+   - **Mecanismo rector:** Planificación determinística exhaustiva por adelantado (*up-front*). Se define la línea base (*baseline*) de alcance, tiempo y costo; el éxito se mide por la adherencia al plan original y la minimización de desvíos mediante procesos formales de control de cambios.
+   - **Contexto de idoneidad:** Proyectos con requisitos contractuales rígidos, normativas estrictas, interfaces físicas inmutables o dominios donde el costo del cambio en fases tardías es prohibitivo.
+
+2. **Enfoque Adaptativo (Ágil / Empírico):**
+   - **Supuesto ontológico:** Los requisitos son intrínsecamente emergentes, el mercado cambia rápidamente y la comprensión del problema evoluciona a medida que se construye la solución.
+   - **Mecanismo rector:** Ciclos iterativos e incrementales cortos (sprints o iteraciones de 1 a 4 semanas). Priorización dinámica del backlog en función del valor de negocio y riesgo; validación continua mediante incrementos de software potencialmente desplegables (*working software*).
+   - **Contexto de idoneidad:** Desarrollo de nuevos productos de software, entornos innovadores y proyectos donde la experimentación y el feedback temprano reducen la incertidumbre.
+
+3. **Enfoque por Proceso / Orientado a Flujo (Lean / Kanban):**
+   - **Supuesto ontológico:** El trabajo consiste en una demanda continua, heterogénea e imprevisible de tareas (mantenimiento evolutivo, correctivo, soporte técnico, operaciones), donde no existe una "fecha de fin de proyecto" única ni un alcance cerrado.
+   - **Mecanismo rector:** Optimización del flujo continuo de valor desde la solicitud hasta la entrega en producción. Se visualiza el flujo en tableros, se limita el trabajo en progreso (*Work In Progress* - WIP) mediante un sistema *Pull*, y se maximiza la velocidad de flujo eliminando bloqueos y cuellos de botella.
+   - **Contexto de idoneidad:** Mantenimiento de aplicaciones en producción, mesas de ayuda, operaciones DevOps y servicios continuos.
+
+#### 2. Gestión por Proyecto frente a Gestión por Proceso
+- **Proyecto:** Esfuerzo temporal (con fecha de inicio y finalización definidas) que se emprende para crear un producto, servicio o resultado único. Opera con restricciones de triple limitación (alcance, cronograma y presupuesto).
+- **Proceso:** Conjunto continuo y repetitivo de actividades interrelacionadas que transforman entradas en salidas de valor recurrente para la organización. No concluye con un entregable único, sino que busca la estabilidad, la reducción de variabilidad y la mejora continua del flujo operativo.
+
+#### 3. Técnicas de Estimación y Planificación Predictiva
+- **Diferenciación conceptual básica:**
+  - **Esfuerzo:** Cantidad de unidades de trabajo (horas-hombre, días-hombre) requeridas para completar una actividad, independientemente del calendario.
+  - **Duración:** Tiempo calendario transcurrido (días, semanas, meses) entre el inicio y el fin de la actividad, condicionado por la disponibilidad de recursos y dependencias.
+  - **Costo:** Valorización económica del esfuerzo, infraestructura, licencias y contingencias.
+- **Técnicas de Estimación:**
+  - *Estimación Análoga:* Utiliza valores históricos de proyectos similares pasados. Rápida y de bajo costo, pero de baja precisión.
+  - *Estimación Paramétrica:* Utiliza relaciones estadísticas entre datos históricos y variables del proyecto (ej. horas por punto de función o por pantalla estándar).
+  - *Juicio de Expertos:* Opinión valorativa de especialistas con experiencia previa en el dominio.
+  - *Estimación por Tres Valores (PERT / Beta):* Modela la incertidumbre considerando tres escenarios: Optimista ($O$), Más Probable ($M$) y Pesimista ($P$).
+    - Esperanza matemática de duración:
+
+      $$\mu = \frac{O + 4M + P}{6}$$
+
+    - Varianza y desviación estándar del tiempo:
+
+      $$\sigma = \frac{P - O}{6}, \quad \sigma^2 = \left(\frac{P - O}{6}\right)^2$$
+
+- **Cronograma y Método de la Ruta Crítica (CPM):**
+  - **Ruta Crítica (*Critical Path*):** Secuencia de actividades dependientes que determina la duración total mínima del proyecto. Es el camino con holgura total igual a cero ($HT = 0$). Cualquier retraso en una actividad de la ruta crítica retrasa directamente la fecha de finalización del proyecto.
+  - **Holgura Total (*Total Float*):** Tiempo que una actividad puede retrasarse desde su inicio temprano sin retrasar la fecha de finalización del proyecto.
+  - **Técnicas de Compresión:**
+    - *Crashing (Intensificación):* Agregar recursos a actividades críticas para reducir su duración al menor costo incremental posible (incrementa el costo).
+    - *Fast Tracking (Ejecución Rápida):* Ejecutar en paralelo actividades críticas que originalmente estaban planificadas en secuencia (incrementa el riesgo de retrabajo).
+
+#### 4. Gestión de Flujo en Sistemas Kanban
+- **Principios Operativos de Kanban:** Visualizar el flujo de trabajo en tableros físicos o virtuales; limitar el trabajo en curso (WIP Limits); gestionar el flujo; explicitar las políticas de proceso; e implementar ciclos de retroalimentación.
+- **Sistema Pull vs. Push:** En un sistema *Push*, el trabajo se asigna o empuja a los operarios en función de un plan predeterminado, saturando las capacidades y acumulando inventario. En un sistema *Pull*, los miembros del equipo "tiran" o toman nuevo trabajo solo cuando tienen capacidad disponible (es decir, cuando liberan una tarea previa bajo el límite de WIP).
+- **Límites de WIP (*Work In Progress Limits*):** Restricciones cuantitativas impuestas sobre columnas o etapas específicas del tablero. Forzan la colaboración para resolver bloqueos antes de iniciar nuevas tareas ("Parar de empezar, empezar a terminar").
+- **La Ley de Little aplicada al Software:**
+  En un sistema de colas estable y continuo, la relación matemática fundamental entre el inventario en proceso, el rendimiento y el tiempo de ciclo es:
+
+  $$WIP = Throughput \times Cycle\ Time \iff Cycle\ Time = \frac{WIP}{Throughput}$$
+
+  - **Implicancia analítica:** Para reducir el tiempo de ciclo (*Cycle Time*) y entregar más rápido, la palanca más efectiva y directa no es aumentar la cantidad de personas o presionar por más horas, sino reducir el trabajo en progreso (*WIP*).
+- **Métricas Fundamentales de Flujo:**
+  - **Lead Time (Tiempo de Entrega):** Tiempo total calendario transcurrido desde que el usuario o cliente formula la solicitud hasta que esta queda en producción generando valor.
+  - **Cycle Time (Tiempo de Ciclo):** Tiempo transcurrido desde que el equipo comienza a trabajar activamente en el ítem hasta que está completado.
+  - **Throughput (Rendimiento):** Cantidad de ítems de trabajo completados y desplegados por unidad de tiempo (ej. 8 incidentes por semana).
+  - **Diagrama de Flujo Acumulado (CFD):** Gráfico de área apilada que muestra el total acumulado de ítems en cada estado a lo largo del tiempo.
+    - La distancia vertical entre curvas representa el WIP en ese momento.
+    - La distancia horizontal entre la curva de entrada y la de salida representa el Lead Time aproximado.
+    - La pendiente de la curva de terminados refleja el Throughput.
+    - Bandas que divergen o se ensanchan indican acumulación patológica de WIP y estrangulamiento del flujo.
+- **Movimiento #NoEstimates y Previsibilidad Empírica:**
+  En entornos de flujo continuo con alta variabilidad, la estimación del esfuerzo en horas genera desperdicio y falsas certezas. El enfoque #NoEstimates propone descomponer el trabajo en ítems de tamaño pequeño y similar (granulometría homogénea), utilizando el *Throughput* histórico y simulaciones estadísticas (Monte Carlo) para proyectar fechas de entrega con mayor confiabilidad empírica.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 1 — Los 3 enfoques de gestión y la Ley de Little en flujo Kanban"
+  code={`flowchart LR
+    P["Predictivo (PMI): Alcance fijo, línea base, CCB"] --> E{"Contexto"}
+    A["Adaptativo (Scrum): Sprints, valor emergente"] --> E
+    F["Flujo (Kanban): WIP limitado, Pull, Ley de Little"] --> E
+    F --> L["Cycle Time = WIP / Throughput"]`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 1">
+  <span dangerouslySetInnerHTML={{ __html: unit1.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Paradigmas de Gestión en Sistemas de Información
+
+| Dimensión | Enfoque Predictivo (PMI / Cascada) | Enfoque Adaptativo (Ágil / Scrum) | Enfoque de Flujo (Lean / Kanban) |
+| :--- | :--- | :--- | :--- |
+| **Premisa sobre Requisitos** | Claros, estables y congelables al inicio. | Emergentes, cambiantes y basados en valor. | Demanda continua, diversa y no estructurada. |
+| **Unidad de Planificación** | Proyecto completo con entregables finales. | Iteraciones de tiempo fijo (Sprints de 1 a 4 semanas). | Flujo continuo ítem por ítem sin timeboxes rígidos. |
+| **Mecanismo de Control** | Adherencia a la línea base y gestión formal de cambios. | Demostraciones frecuentes e inspección de incrementos. | Límites de WIP, monitoreo de cuellos de botella y Throughput. |
+| **Gestión del Alcance** | Fijo por contrato; tiempo y costo estimados. | Variable/negociable; tiempo y costo fijos por sprint. | Dinámico; priorización continua en cola de entrada. |
+| **Métrica Principal de Éxito** | Cumplimiento del plan (alcance, plazo y costo original). | Valor de negocio entregado y satisfacción del cliente. | Tiempo de ciclo reducido, flujo predecible y Lead Time estable. |
+| **Ventaja Principal** | Alta previsibilidad contractual en entornos estables. | Capacidad de adaptación temprana ante desvíos o cambios. | Reducción drástica de inventario en proceso y tiempos muertos. |
+| **Principal Vulnerabilidad** | Rigidez ante cambios y alto costo de errores tardíos. | Requiere alta disponibilidad y compromiso del cliente/PO. | Sensible a ítems con extrema disparidad de tamaño o bloqueos. |
+
+#### Matriz 2: Métricas de Flujo en Procesos de Software
+
+| Métrica | Definición Operativa | Punto de Inicio | Punto de Finalización | Objetivo de Gestión |
+| :--- | :--- | :--- | :--- | :--- |
+| **Lead Time** | Tiempo total de respuesta al usuario. | Creación o compromiso de la solicitud. | Puesta a disposición del cliente en producción. | Reducir el tiempo de espera percibido por el negocio. |
+| **Cycle Time** | Tiempo de procesamiento técnico activo. | Inicio del trabajo activo en la tarea. | Tarea lista para despliegue o terminada. | Optimizar la eficiencia operativa del equipo técnico. |
+| **WIP** | Cantidad de ítems en estado no terminado. | Tareas tomadas en desarrollo. | Tareas antes de la columna "Terminado". | Limitar la multitarea y evitar la saturación del sistema. |
+| **Throughput** | Cadencia o tasa de entrega efectiva. | Intervalo de tiempo fijado (semana/mes). | Recuento de ítems completados en el intervalo. | Estabilizar la capacidad de entrega y alimentar pronósticos. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u1" items={unit1.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u1" questions={unit1.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u2">
+
+## Unidad 2: Iniciación, Gobernanza de Interesados y Estructura del Alcance (Charter, Stakeholders y WBS)
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Iniciación del Proyecto y el Acta de Constitución (Project Charter)
+- **Definición y Naturaleza Normativa:** Documento formal de nivel estratégico, emitido durante la fase de iniciación, que autoriza formalmente la existencia de un proyecto y confiere al Director del Proyecto (Project Manager) la autoridad formal para aplicar recursos de la organización a las actividades del proyecto.
+- **Roles y Gobernanza:**
+  - *Patrocinador (Sponsor):* Autoridad ejecutiva o cliente que financia la iniciativa. Es el emisor y aprobador formal del Charter; posee la potestad de aprobar cambios de alcance mayor o cancelar el proyecto.
+  - *Director del Proyecto (Project Manager):* Participa activamente en su redacción, pero no se auto-asigna la autoridad; debe ser formalmente nombrado en el documento antes de iniciar la planificación detallada.
+- **Frontera Documental Crítica:**
+  - *Caso de Negocio (Business Case):* Justificación económica y estratégica previa. Responde al *por qué* invertir (análisis costo-beneficio, retorno de inversión, alineación estratégica).
+  - *Acta de Constitución (Project Charter):* Autorización formal y marco de alto nivel. Responde al *qué* se va a realizar, *quién* lidera y *cuáles* son las restricciones macro.
+  - *Plan para la Dirección del Proyecto (Project Plan):* Documento exhaustivo y operativo desarrollado en la fase de planificación. Responde al *cómo*, *cuándo*, *cuánto* y *con quién* se ejecutará y controlará el trabajo detallado.
+- **Los Catorce Componentes Esenciales del Project Charter:**
+  1. *Propósito y Justificación del Proyecto:* Antecedentes del negocio y problema u oportunidad a resolver.
+  2. *Objetivos Medibles y Criterios de Éxito:* Indicadores concretos vinculados a metas organizacionales.
+  3. *Requisitos de Alto Nivel:* Capacidades mínimas esenciales que el producto/servicio debe satisfacer.
+  4. *Descripción General y Límites del Alcance:* Qué se incluye formalmente y qué queda explícitamente excluido (*out of scope*).
+  5. *Riesgos de Alto Nivel:* Principales amenazas e incertidumbres identificadas preliminarmente.
+  6. *Resumen de Hitos del Cronograma:* Fechas clave y entregables mayores comprometidos.
+  7. *Presupuesto Preliminar Estimado:* Orden de magnitud de los fondos asignados y fuentes de financiación.
+  8. *Lista de Interesados Clave:* Identificación preliminar de actores con alto poder o influencia.
+  9. *Requisitos de Aprobación del Proyecto:* Quién define el éxito y qué firmas formales se requieren.
+  10. *Director del Proyecto Asignado:* Nombre, responsabilidad y nivel explícito de autoridad técnica y presupuestaria.
+  11. *Nombre y Nivel de Autoridad del Patrocinador:* Quién emite el documento y respalda institucionalmente los fondos.
+  12. *Supuestos Principales:* Factores considerados verdaderos, reales o ciertos sin prueba documental en la iniciación.
+  13. *Restricciones Principales:* Limitaciones impuestas al equipo (fechas inamovibles, topes de presupuesto, normativas).
+  14. *Criterios de Cancelación / Salida Temprana:* Condiciones bajo las cuales el patrocinador suspenderá formalmente el proyecto.
+- **Estructura de Objetivos: Metas (*Goals*) frente a Objetivos SMART (*Objectives*):**
+  - *Metas (Goals):* Declaraciones cualitativas amplias de aspiración a largo plazo (ej. "Mejorar la satisfacción en la asignación de turnos médicos").
+  - *Objetivos SMART (Objectives):* Metas traducidas operativamente bajo 5 criterios indispensables:
+    - **S (Specific):** Específicos y unívocos en su alcance.
+    - **M (Measurable):** Cuantificables mediante métricas claras (ej. "reducir el tiempo de espera en 40%").
+    - **A (Achievable):** Realistas y alcanzables con los recursos disponibles.
+    - **R (Relevant):** Alineados con la estrategia del negocio o institución.
+    - **T (Time-bound):** Con fecha límite o marco temporal perentorio (ej. "en los primeros 6 meses de operación").
+
+#### 2. Identificación y Gobernanza de Interesados (Stakeholders)
+- **Definición Normativa:** Individuo, grupo u organización que puede afectar, verse afectado o percibirse como potencialmente afectado por una decisión, actividad o resultado del proyecto.
+- **Momento y Frecuencia de Gestión:** Inicia de forma inmediata al comenzar la elaboración del Project Charter y debe ejecutarse de manera continua e iterativa a lo largo de todo el ciclo de vida del proyecto.
+- **Taxonomía de Interesados:**
+  - *Internos vs. Externos:* Internos forman parte de la estructura organizativa ejecutante (desarrolladores, directores de área, soporte); externos operan fuera de la organización (usuarios finales, clientes, organismos regulatorios, proveedores).
+  - *Primarios vs. Secundarios:* Primarios tienen un vínculo contractual directo o participación activa indispensable; secundarios no tienen relación contractual formal pero poseen impacto o interés significativo (comunidad, sindicatos, prensa).
+- **El Registro de Interesados (*Stakeholder Register*):**
+  Artefacto central donde se documenta:
+  - *Información de Identificación:* Nombre, cargo, ubicación, rol en el proyecto y datos de contacto.
+  - *Información de Evaluación:* Requisitos principales, expectativas no formalizadas, influencia potencial y fase del ciclo de vida de mayor impacto.
+  - *Clasificación Estratégica:* Posición de partida (partidario, neutral, reticente) y cuadrante asignado en matrices analíticas.
+- **Modelos de Análisis y Priorización:**
+  - **Modelo de Prominencia (*Salience Model* de Mitchell, Agle y Wood):** Clasifica a los interesados evaluando la intersección de tres atributos dinámicos:
+    - *Poder:* Capacidad de imponer su voluntad o restringir recursos.
+    - *Legitimidad:* Derecho moral, legal o normativo de participar en el proyecto.
+    - *Urgencia:* Grado en que sus reclamos demandan atención inmediata y crítica.
+    - Tipologías resultantes: *Latentes* (poseen 1 solo atributo), *Expectantes* (poseen 2 atributos) y *Definitivos* (poseen los 3 atributos simultáneamente; requieren máxima prioridad directiva).
+  - **Matriz Poder / Interés:** Herramienta bidimensional canónica para determinar la estrategia de involucramiento:
+    - *Alto Poder / Alto Interés:* **Gestionar de cerca (*Manage Closely*)**. Comunicación bidireccional frecuente, involucramiento activo en decisiones clave y validación temprana.
+    - *Alto Poder / Bajo Interés:* **Mantener satisfecho (*Keep Satisfied*)**. Atender sus requerimientos específicos y mantenerlos informados del progreso macro para evitar que usen su poder de bloqueo, sin abrumarlos con detalles técnicos.
+    - *Bajo Poder / Alto Interés:* **Mantener informado (*Keep Informed*)**. Comunicación regular mediante boletines, reportes y demos; suelen ser aliados valiosos y fuentes de feedback operativo.
+    - *Bajo Poder / Bajo Interés:* **Monitorear con esfuerzo mínimo (*Monitor*)**. Seguimiento periódico para detectar variaciones en su posición o nivel de interés sin incurrir en costos de gestión innecesarios.
+
+#### 3. Estructura de Desglose del Trabajo (WBS / EDT)
+- **Definición Rigurosa:** Descomposición jerárquica y orientada a entregables (*deliverable-oriented*) del alcance total de trabajo a ser ejecutado por el equipo para lograr los objetivos del proyecto y generar los entregables requeridos.
+- **Fronteras Conceptuales: Qué ES y qué NO ES la WBS:**
+  - **ES:** La representación total y exclusiva del producto y los entregables del proyecto. Cada elemento describe un resultado tangible y verificable expresado en sustantivos o frases nominales.
+  - **NO ES:** Un cronograma (no tiene fechas, duraciones ni secuencias lógicas de precedencia); no es un presupuesto; no es una lista de actividades o tareas secuenciales; no es un organigrama jerárquico del personal.
+- **La Regla del 100%:**
+  - Principio cardinal de la WBS: La WBS incluye el 100% del trabajo definido en el alcance del proyecto y **nada más**.
+  - Propiedad de conservación matemática: La suma del trabajo en los niveles inferiores de descomposición debe ser exactamente igual al 100% del trabajo representado por el elemento padre de nivel superior, sin omisiones ni superposiciones.
+- **Nivel Inferior: El Paquete de Trabajo (*Work Package*):**
+  - Es el nivel más bajo de descomposición en una WBS.
+  - Criterio de delimitación: Debe ser un entregable delimitado, asignable a un único responsable, cuyo costo y duración puedan estimarse confiablemente y cuyo avance pueda medirse objetivamente (criterio empírico común: regla de las 8 a 80 horas de esfuerzo neto).
+- **El Diccionario de la WBS (*WBS Dictionary*):**
+  Documento subsidiario que acompaña y detalla cada elemento de la WBS para evitar ambigüedades. Contiene obligatoriamente:
+  - Código identificador único (ej. WBS 1.3.2).
+  - Nombre del entregable y descripción técnica detallada del trabajo incluido.
+  - Criterios de aceptación objetivos y medibles.
+  - Entregables asociados y límites explícitos de exclusión.
+  - Responsable asignado, recursos estimados y supuestos/restricciones vinculados.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 2 — Cadena documental de proyectos (Business Case, Charter y WBS)"
+  code={`flowchart LR
+    BC["Business Case (Por qué invertir / ROI)"] --> PC["Project Charter (Autoriza y empodera al PM)"]
+    PC --> ST["Registro y Matriz Poder/Interés de Stakeholders"]
+    PC --> WBS["WBS orientada a entregables (Regla del 100%)"]
+    WBS --> PLAN["Project Plan (Cronograma, Costos y Riesgos)"]`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 2">
+  <span dangerouslySetInnerHTML={{ __html: unit2.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Instrumentos Documentales de Gestión del Proyecto
+
+| Dimensión | Caso de Negocio (Business Case) | Acta de Constitución (Project Charter) | Plan para la Dirección del Proyecto |
+| :--- | :--- | :--- | :--- |
+| **Fase del Ciclo de Vida** | Previa a la iniciación (evaluación estratégica). | Fase de Iniciación. | Fase de Planificación. |
+| **Interrogante Central** | ¿Por qué debe la organización invertir? | ¿Qué se autoriza a construir y quién lidera? | ¿Cómo se ejecutará, monitoreará y controlará el trabajo? |
+| **Emisor / Aprobador** | Comité Ejecutivo / Dirección Estratégica. | Patrocinador (Sponsor) o Cliente. | Director del Proyecto y Patrocinador. |
+| **Nivel de Detalle** | Financiero, estratégico y de rentabilidad. | Macro, sintético y con límites de alto nivel. | Micro, operativo y detallado por áreas de conocimiento. |
+| **Efecto Administrativo** | Justifica la viabilidad económica y el ROI. | Da existencia formal al proyecto y confiere autoridad. | Establece las líneas base de alcance, cronograma y costo. |
+
+#### Matriz 2: Matriz Poder / Interés y Estrategias de Gobernanza de Interesados
+
+| Nivel de Interés | Alto Poder (Capacidad de Impacto / Decisión) | Bajo Poder (Influencia Restringida) |
+| :--- | :--- | :--- |
+| **Alto Interés** | **Gestionar de Cerca (*Manage Closely*)**<br />- Participación activa en comités.<br />- Comunicación bidireccional frecuente.<br />- Negociación y alineación constante de expectativas. | **Mantener Informado (*Keep Informed*)**<br />- Reportes de estado y demostraciones regulares.<br />- Canales de consulta abiertos.<br />- Actúan como defensores o sensores tempranos de problemas. |
+| **Bajo Interés** | **Mantener Satisfecho (*Keep Satisfied*)**<br />- Informar hitos clave sin sobrecargar con detalles técnicos.<br />- Monitorear que sus restricciones no sean violadas.<br />- Prevenir que ejerzan vetos inesperados. | **Monitorear (*Monitor*)**<br />- Esfuerzo de comunicación mínimo.<br />- Monitoreo periódico por si incrementan su poder o interés.<br />- Disponibilidad pasiva de información pública del proyecto. |
+
+#### Matriz 3: WBS Orientada a Entregables frente a Lista de Tareas del Cronograma
+
+| Dimensión Analítica | WBS / EDT (Estructura de Desglose del Trabajo) | Lista de Tareas / Actividades del Cronograma |
+| :--- | :--- | :--- |
+| **Enfoque Primario** | El **QUÉ** se produce (resultados y entregables tangibles). | El **CÓMO** y **CUÁNDO** se produce (acciones operativas). |
+| **Sintaxis Gramatical** | Sustantivos o frases nominales (*ej. "Módulo de Facturación Validado"*). | Verbos en infinitivo o frases de acción (*ej. "Codificar algoritmo", "Ejecutar pruebas"*). |
+| **Dimensión Temporal** | No posee fechas, duraciones ni dependencias secuenciales. | Posee fechas de inicio, duraciones estimadas y precedencias. |
+| **Principio Rector** | Regla del 100% de conservación del alcance total. | Secuenciamiento lógico hacia la ruta crítica. |
+| **Nivel Inferior** | Paquete de Trabajo (*Work Package*). | Actividad o Tarea individual indivisible. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u2" items={unit2.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u2" questions={unit2.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u3">
+
+## Unidad 3: Gestión de la Integración y Contrataciones en Proyectos
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Gestión de la Integración en Proyectos
+- **Definición y Propósito Sistémico:** Área de conocimiento rectora que coordina, unifica y articula de forma holística todos los procesos, fases, planes subsidiarios y entregables del proyecto. Su misión fundamental es equilibrar objetivos y restricciones en competencia (alcance, tiempo, costo, calidad, recursos y riesgos) para asegurar el éxito integral de la iniciativa.
+- **La Integración en el Enfoque Planificado (PMBOK):**
+  - *Plan para la Dirección del Proyecto:* Documento integrador maestro compuesto por las tres líneas base (*baselines*: alcance, cronograma y costo) y los planes subsidiarios de gestión (calidad, recursos, comunicaciones, riesgos, adquisiciones e interesados).
+  - *Control Integrado de Cambios:* Proceso formal obligatorio mediante el cual se evalúan todas las solicitudes de cambio formuladas durante el proyecto.
+  - *Comité de Control de Cambios (CCB - Change Control Board):* Cuerpo colegiado formalmente constituido responsable de revisar, evaluar el impacto multidimensional, aprobar, rechazar o postergar las solicitudes de cambio sobre las líneas base.
+  - *Flujo Protocolar de Gestión de Cambios:*
+    1. Registro formal de la Solicitud de Cambio (*Change Request* - RFC).
+    2. Evaluación de impacto sistémico sobre la triple restricción (alcance, tiempo, costo) y riesgos asociados.
+    3. Análisis y dictamen por parte del CCB.
+    4. Si se aprueba: actualización formal de las líneas base del plan y notificación a los interesados. Si se rechaza: registro de la causa en el log de cambios.
+- **La Integración en Enfoques Ágiles y de Producto:**
+  - Enfoque descentralizado y orgánico: No depende de un plan maestro congelado, sino de la sincronización continua orientada al valor de negocio.
+  - *Product Owner como Integrador Funcional:* Prioriza continuamente el Product Backlog en función del retorno de inversión, retroalimentación del mercado y riesgos técnicos.
+  - *Rituales Ágiles como Sincronizadores:* Sprint Planning (alineación del objetivo del sprint), Daily Scrum (detección diaria de desvíos y dependencias cruzadas), Sprint Review/Demo (validación de integración del incremento de software con interesados) y Retrospectiva (inspección y adaptación del proceso).
+  - *Definición de Terminado (Definition of Done - DoD):* Criterio explícito de calidad que asegura que cada incremento de software esté codificado, probado, integrado y potencialmente desplegable en producción.
+- **Dimensión Técnica de la Integración de Sistemas:**
+  - Coordinación de interfaces, servicios, bases de datos y componentes ciberfísicos distribuidos.
+  - *Prácticas de Integración Continua (CI):* Fusión frecuente del código en una rama compartida con ejecución automática de suites de pruebas unitarias y de integración para detectar inconsistencias de arquitectura en minutos, no en meses.
+
+#### 2. Gestión de Contrataciones y Adquisiciones
+- **Decisión de Fabricar o Comprar (*Make-or-Buy Decision*):**
+  - Análisis estratégico que determina si un componente, servicio o software debe desarrollarse internamente (*Make*) o adquirirse a un proveedor externo (*Buy*).
+  - *Criterios para Fabricar (*Make*):* Proteger el núcleo del negocio (*core business*) o propiedad intelectual sensible; disponibilidad de capacidad y competencias internas; necesidad de control directo y personalización total.
+  - *Criterios para Comprar (*Buy*):* Existencia de soluciones estándar maduras en el mercado (reducción de costo marginal); falta de capacidad técnica interna; necesidad de transferir el riesgo operativo o acelerar el *time-to-market*.
+- **Tipología de Contratos Tradicionales y Asignación de Riesgo Financiero:**
+  1. **Contratos de Precio Fijo (*Fixed Price* - FP / Firm Fixed Price - FFP / Fixed Price Incentive Fee - FPIF):**
+     - *Mecanismo:* Se acuerda un precio total invariable por un alcance de trabajo completamente especificado.
+     - *Asignación de riesgo:* **Riesgo financiero máximo asumido por el Vendedor/Proveedor**. Si los costos reales superan lo presupuestado, el vendedor absorbe la pérdida.
+     - *Condición de aplicación:* Requisitos perfectamente definidos, estables y sin ambigüedad.
+     - *Peligros inherentes:* Ofertas con contingencias de sobrecosto infladas; incentivo del proveedor a reducir la calidad para proteger su margen; extrema litigiosidad y resistencia ante cualquier solicitud de cambio.
+  2. **Contratos de Costos Reembolsables (*Cost Reimbursable* - CR / Cost Plus Fixed Fee - CPFF / Cost Plus Incentive Fee - CPIF):**
+     - *Mecanismo:* El comprador reembolsa al proveedor todos los costos reales legítimamente incurridos, más una tarifa o comisión pactada (fija o porcentual).
+     - *Asignación de riesgo:* **Riesgo financiero máximo asumido por el Comprador/Cliente**. Si el proyecto demanda el doble de tiempo o recursos, el comprador paga todo el sobrecosto.
+     - *Condición de aplicación:* Proyectos de investigación, desarrollo e innovación donde el alcance es incierto y no puede cerrarse por adelantado.
+     - *Exigencia operativa:* Requiere que el comprador audite rigurosamente las facturas y el uso de recursos del proveedor.
+  3. **Contratos por Tiempo y Materiales (*Time and Materials* - T&M):**
+     - *Mecanismo:* Modelo híbrido donde se fijan tarifas unitarias por hora de trabajo o recurso, pagándose en función del tiempo real invertido y los insumos utilizados.
+     - *Asignación de riesgo:* Riesgo compartido entre comprador y vendedor.
+     - *Condición de aplicación:* Asignaciones de personal (*staff augmentation*), servicios de consultoría o trabajos exploratorios de corta duración donde el alcance es indefinido pero el volumen es acotado.
+
+#### 3. Contratación en Contextos Ágiles (Preprint Páez et al.)
+- **La Fricción Estructural de los Contratos Tradicionales:**
+  - Los contratos de precio fijo tradicionales intentan congelar el alcance, el costo y el cronograma bajo la ficción de que la ingeniería de software es predecible. Esto incentiva un juego de suma cero: el cliente busca exprimir el alcance y el proveedor resiste los cambios, destruyendo la confianza y la agilidad.
+- **Modelos Contractuales Ágiles Colaborativos:**
+  1. **Target Cost (Costo Objetivo):**
+     - Cliente y proveedor establecen conjuntamente un costo y plazo meta estimado.
+     - Mecanismo de *Pain-Share / Gain-Share*: Si el proyecto se entrega por debajo del costo objetivo, el ahorro se divide entre ambas partes en proporciones pactadas; si hay sobrecostos no atribuibles a negligencia, ambas partes comparten las pérdidas financieras.
+  2. **Money for Nothing and Changes for Free (Jeff Sutherland):**
+     - **Changes for Free (Cambios Gratuitos):** El cliente tiene derecho a incorporar nuevos requerimientos o cambios en el Product Backlog en cualquier momento del proyecto sin costo adicional, bajo una condición simétrica: debe remover del backlog historias no iniciadas de igual tamaño (medidas en Story Points) para mantener la capacidad total comprometida constante.
+     - **Money for Nothing (Dinero por Nada):** Si el proyecto alcanza un punto donde el cliente considera que el software ya entrega el valor comercial deseado (ROI logrado) antes de agotar el cronograma previsto, puede rescindir el contrato unilateralmente pagando al proveedor un porcentaje de bonificación (ej. 20%) sobre el valor de las historias restantes no desarrolladas, ahorrándose la organización el 80% del remanente presupuestario.
+  3. **Capped T&M (Tiempo y Materiales con Tope Máximo / Not-to-Exceed):**
+     - El cliente abona por iteración o por horas trabajadas efectivas, pero con una cláusula de techo presupuestario máximo garantizado. Combina la flexibilidad de priorización sprint a sprint con la seguridad financiera del cliente.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 3 — Integración y espectro contractual (Tradicional vs. Ágil)"
+  code={`flowchart LR
+    C1["Precio Fijo (Riesgo en Vendedor)"] --> C2["Tiempo y Materiales (Riesgo Compartido)"]
+    C2 --> C3["Costos Reembolsables (Riesgo en Comprador)"]
+    AG["Acuerdos Ágiles: Target Cost · Changes for Free · Money for Nothing · Capped T&M"] -.->|"Alinean incentivos Win-Win"| C2`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 3">
+  <span dangerouslySetInnerHTML={{ __html: unit3.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Enfoques de Gestión de la Integración
+
+| Dimensión Analítica | Integración Predictiva (PMBOK) | Integración Ágil / Orientada a Producto |
+| :--- | :--- | :--- |
+| **Documento Rector** | Plan para la Dirección del Proyecto integral. | Product Backlog priorizado y Hoja de Ruta (*Roadmap*). |
+| **Mecanismo de Cambio** | Formal, mediado por el CCB y solicitud escrita (RFC). | Empírico, continuo y gestionado por el Product Owner. |
+| **Frecuencia de Integración** | Al cierre de fases mayores o hitos del cronograma. | Continua, diaria o al final de cada iteración (Sprint). |
+| **Criterio de Aceptación** | Conformidad con las especificaciones de la línea base. | Definición de Terminado (DoD) y valor de negocio validado. |
+| **Postura ante el Cambio** | El cambio es una amenaza potencial a la línea base; debe restringirse. | El cambio es una ventaja competitiva y una fuente de aprendizaje. |
+
+#### Matriz 2: Tipología de Contratos Tradicionales y Distribución de Riesgo
+
+| Tipo de Contrato | Riesgo Financiero Comprador | Riesgo Financiero Vendedor | Claridad Necesaria del Alcance | Peligro Principal |
+| :--- | :--- | :--- | :--- | :--- |
+| **Precio Fijo (FP / FFP)** | Mínimo (paga precio acordado). | **Máximo** (absorbe sobrecostos). | Completa, detallada y madura. | Litigios por cambios y riesgo de recorte de calidad. |
+| **Costos Reembolsables (CR / CPFF)** | **Máximo** (paga costos reales ilimitados). | Mínimo (tiene margen o tarifa asegurada). | Baja o en exploración abierta. | Falta de incentivo del vendedor a la eficiencia económica. |
+| **Tiempo y Materiales (T&M)** | Medio (paga por horas consumidas). | Medio (tarifa por hora fijada). | Media o de asignación temporal. | Descontrol de horas si no se fija un techo (*Cap*). |
+
+#### Matriz 3: Contratos Tradicionales vs. Acuerdos Ágiles
+
+| Variable de Análisis | Contrato Tradicional de Precio Fijo | Acuerdo Ágil (*Changes for Free / Money for Nothing*) |
+| :--- | :--- | :--- |
+| **Definición de Alcance** | Congelado al inicio mediante pliegos extensos. | Dinámico; se fija la capacidad y el alcance evoluciona. |
+| **Gestión de Modificaciones** | Proceso burocrático de adendas y cobro extra por cambio. | Intercambio simétrico de historias de igual tamaño (*Story Points*). |
+| **Finalización Temprana** | Penalidades por rescisión anticipada de contrato. | Finalización temprana premiada con ahorro para ambas partes. |
+| **Relación Comercial** | Adversaria y de confrontación legal (*Win-Lose*). | Colaborativa y de responsabilidad compartida (*Win-Win*). |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u3" items={unit3.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u3" questions={unit3.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u4">
+
+## Unidad 4: Gestión de Riesgos en el Desarrollo de Software
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Fundamentos y Naturaleza del Riesgo en Software
+- **Definición Rigurosa:** Evento o condición incierta que, en caso de materializarse, produce un impacto directo (positivo o negativo) sobre al menos un objetivo del proyecto (alcance, tiempo, costo, calidad o valor de negocio). En la gestión de software, el foco primario recae sobre las amenazas o riesgos negativos.
+- **Las Tres Dimensiones de Afectación del Éxito del Producto:**
+  1. *Factibilidad Técnica:* Riesgos asociados a la arquitectura del sistema, madurez de los frameworks, escalabilidad, rendimiento, interoperabilidad con componentes heredados (*legacy*) y obsolescencia tecnológica.
+  2. *Viabilidad de Negocio:* Riesgos vinculados a la alineación estratégica, el retorno de inversión (ROI), adopción de los usuarios, costo de oportunidad, cambios regulatorios del mercado y modelos de monetización.
+  3. *Calidad del Producto:* Riesgos vinculados a atributos no funcionales críticos, como seguridad de datos, fiabilidad, mantenibilidad, deuda técnica latente y usabilidad de interfaces.
+
+#### 2. Modelo Cuantitativo de Evaluación del Riesgo
+- **Variables del Modelo:**
+  - **Probabilidad ($P$):** Verosimilitud de que el evento incierto ocurra durante el ciclo de vida del proyecto. Se cuantifica habitualmente en una escala ordinal (ej. 1 a 5, donde 1 es muy baja y 5 es muy alta) o en términos porcentuales ($0 < P < 1$).
+  - **Impacto ($I$):** Severidad del efecto adverso sobre el proyecto si el riesgo se materializa. Se mide en escalas ordinales (1 a 5) o monetarias/temporales concretas.
+- **Formulación Matemática de la Exposición al Riesgo ($E$):**
+  La exposición (o valor monetario esperado del riesgo) cuantifica el peso global de la amenaza:
+
+  $$E = P \times I$$
+
+  - Si se utilizan escalas discretas de 1 a 5:
+
+    $$E \in [1, 25]$$
+
+- **Matriz de Probabilidad e Impacto y Umbrales de Tolerancia:**
+  - La matriz clasifica los riesgos en cuadrantes de severidad: Zona Baja (Verde), Zona Media (Amarilla) y Zona Alta (Roja).
+  - *Umbral de Exposición (*Threshold*):* Nivel cuantitativo predefinido por la gobernanza del proyecto por encima del cual un riesgo no puede ser aceptado pasivamente. Todo riesgo con $E \ge \text{Umbral}$ exige obligatoriamente la formulación y ejecución de un plan de respuesta formal.
+
+#### 3. Estrategias de Respuesta a Amenazas (Riesgos Negativos)
+1. **Mitigación (*Mitigation*):**
+   - Acción preventiva proactiva orientada a reducir la probabilidad de ocurrencia ($P$), el impacto potencial ($I$) o ambos, **antes** de que el evento se materialice.
+   - *Ejemplos en software:* Desarrollar pruebas automatizadas de regresión, realizar un pico de investigación técnica (*spike*), capacitar al equipo en una nueva tecnología o incorporar redundancia de hardware.
+2. **Transferencia (*Transference*):**
+   - Trasladar el impacto financiero o la responsabilidad de gestión a un tercero mediante un instrumento contractual o institucional. No elimina el riesgo; solo reasigna las consecuencias económicas.
+   - *Ejemplos en software:* Contratar pólizas de ciberseguro, tercerizar un módulo de alta complejidad bajo un contrato de precio fijo a un proveedor especializado con penalidades por incumplimiento de SLAs.
+3. **Evasión / Evitación (*Avoidance*):**
+   - Modificación deliberada del plan del proyecto, la arquitectura o el alcance para eliminar por completo la amenaza o aislar la condición causal.
+   - *Ejemplos en software:* Descartar el uso de una base de datos experimental no probada y utilizar un motor relacional maduro; eliminar un requisito secundario complejo que comprometía la estabilidad del núcleo del sistema.
+4. **Aceptación (*Acceptance*):**
+   - Decisión consciente de no alterar el plan previo frente a riesgos de baja exposición o donde el costo de mitigar supera el impacto del riesgo mismo.
+   - *Aceptación Pasiva:* No realizar acción preventiva alguna; el equipo resolverá el problema si ocurre.
+   - *Aceptación Activa:* Establecer una reserva de contingencia (en tiempo de cronograma o presupuesto financiero) para amortiguar el impacto si el riesgo se concreta.
+- **Distinción Crítica: Plan de Mitigación frente a Plan de Contingencia:**
+  - *Plan de Mitigación:* Acciones de ejecución preventiva **ex ante** para disminuir $P$ o $I$.
+  - *Plan de Contingencia:* Protocolo de acción predefinido que se ejecuta **ex post**, únicamente si el riesgo se materializa, activado automáticamente por un disparador (*risk trigger*).
+
+#### 4. Articulación con Enfoques Ágiles y Prácticas Técnicas
+- **El MVP como Mitigador Funcional del Riesgo de Negocio:**
+  El Producto Mínimo Viable (MVP) es la versión más temprana que permite validar hipótesis de negocio reales con usuarios finales en producción. Mitiga de raíz el mayor riesgo de un proyecto de software: construir un producto perfecto que nadie desea utilizar (*building the wrong thing*).
+- **Spikes Técnicos en Story Maps:**
+  Historias de usuario de exploración acotadas en tiempo (*timeboxed*) que el equipo programa en iteraciones tempranas para probar integraciones, evaluar rendimiento o validar frameworks, despejando la incertidumbre de factibilidad técnica antes de comprometer el desarrollo masivo.
+- **La Deuda Técnica como Riesgo Compuesto Latente:**
+  La deuda técnica (diseño apresurado, falta de pruebas automatizadas, código acoplado) constituye un riesgo silencioso. A corto plazo parece acelerar la entrega, pero a mediano plazo genera un pasivo técnico que incrementa exponencialmente la probabilidad de defectos en producción y el costo del cambio, erosionando la calidad del producto.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 4 — Evaluación cuantitativa y respuesta a riesgos"
+  code={`flowchart TD
+    R["Riesgo identificado"] --> EX["Exposición E = P × I"]
+    EX -->|"E mayor al umbral"| RESP{"Estrategia"}
+    EX -->|"E menor o igual al umbral"| MON["Aceptación / Monitoreo"]
+    RESP --> M["Mitigar (ex ante: baja P o I)"]
+    RESP --> T["Transferir (seguro / contrato)"]
+    RESP --> EV["Evitar (cambiar alcance/tecnología)"]
+    RESP --> AC["Aceptación Activa (reserva + contingencia)"]`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 4">
+  <span dangerouslySetInnerHTML={{ __html: unit4.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Estrategias de Respuesta a Amenazas
+
+| Estrategia | Momento de Acción | Objetivo Operativo | Efecto sobre $P$ e $I$ | Costo Asociado |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mitigación** | *Ex ante* (preventivo). | Disminuir la probabilidad o la severidad del impacto. | Reduce $P$, reduce $I$ o ambos. | Inversión directa en horas de trabajo, pruebas o refactorización. |
+| **Transferencia** | Contractual / Previo. | Desplazar el impacto financiero a un tercero. | No altera $P$; traslada el costo financiero de $I$. | Pago de primas de seguro o sobrecosto en contratos a proveedores. |
+| **Evasión** | Planificación / Diseño. | Erradicar la causa raíz cambiando el alcance o tecnología. | Elimina la probabilidad ($P = 0$). | Renuncia a ciertas funciones o adopción de arquitecturas más convencionales. |
+| **Aceptación Activa** | Posterior (si ocurre). | Amortiguar el impacto materializado mediante reservas. | No altera $P$ ni $I$; contiene el daño colateral. | Asignación contable de reservas de contingencia (fondos o colchón de tiempo). |
+
+#### Matriz 2: Plan de Mitigación vs. Plan de Contingencia
+
+| Dimensión Analítica | Plan de Mitigación | Plan de Contingencia |
+| :--- | :--- | :--- |
+| **Horizonte Temporal** | Previo al evento (preventivo / anticipatorio). | Posterior a la materialización del evento (reactivo estructurado). |
+| **Condición de Disparo** | Se ejecuta inmediatamente como parte del trabajo planificado. | Se ejecuta **únicamente** si se activa un disparador (*trigger*) de riesgo. |
+| **Objetivo Matemático** | Bajar el valor de la exposición: $E = P \times I \downarrow$. | Contener los daños del impacto: $I \text{ contenido}$. |
+| **Ejemplo Concreto** | Diseñar un clúster de servidores redundante y pruebas de carga. | Protocolo de recuperación ante desastres (*Disaster Recovery Plan*) si el datacenter colapsa. |
+
+#### Matriz 3: Gestión de Riesgos Predictiva vs. Gestión de Riesgos Ágil
+
+| Variable | Enfoque Predictivo (PMBOK / Tradicional) | Enfoque Ágil / Lean |
+| :--- | :--- | :--- |
+| **Mecanismo Central** | Matriz y Registro de Riesgos formal y detallado al inicio. | Releases frecuentes, MVP, Spikes técnicos y retrospectivas continuas. |
+| **Frecuencia de Evaluación** | Hitos de fase o auditorías periódicas de riesgo. | Continua en cada Sprint Planning, Daily y Sprint Review. |
+| **Tratamiento del Riesgo de Negocio** | Asume que la especificación de requisitos inicial es correcta. | Valida empíricamente con incrementos funcionales desplegados a usuarios. |
+| **Gestión de la Incertidumbre** | Planificación exhaustiva para evitar la variabilidad. | Experimentación rápida para descubrir el conocimiento faltante. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u4" items={unit4.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u4" questions={unit4.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u5">
+
+## Unidad 5: Construcción de Software Ágil y Prácticas de Ingeniería
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Epistemología Ágil y Naturaleza del Software
+- **La Falacia de la "Fábrica de Software":** La ingeniería tradicional intentó modelar el desarrollo de software a partir de la manufactura industrial repetitiva, asumiendo que diseñar y codificar equivalen a fabricar piezas en serie. Esto es un error ontológico fundamental: el software es 100% diseño conceptual, modelado y creación de conocimiento. Copiar un ejecutable o binario tiene costo marginal cero; la complejidad reside enteramente en el proceso intelectual de descubrir la solución y formalizarla.
+- **La Curva del Costo del Cambio:**
+  - *Modelo Tradicional (Barry Boehm):* El costo de modificar un requerimiento o subsanar un defecto crece de forma exponencial a lo largo del tiempo (Requisitos: $1\times$, Diseño: $5\times$, Codificación: $10\times$, Pruebas: $50\times$, Producción: $100\times$ a $1000\times$). Este modelo justificaba el esfuerzo por congelar las especificaciones tempranamente.
+  - *Modelo Ágil Aplanado (Kent Beck / XP):* Al aplicar de forma disciplinada prácticas de ingeniería (pruebas automatizadas, diseño simple, refactorización continua e integración frecuente), el costo del cambio se mantiene prácticamente constante y asintótico a lo largo del tiempo, haciendo viable y rentable aceptar modificaciones tardías en el ciclo de vida.
+- **El Modelo de *Artful Making* (Austin & Devin):**
+  - Propone sustituir la metáfora fabril por la del **Teatro de Ensamble**, donde el valor emerge de la colaboración en tiempo real y la experimentación deliberada.
+  - *Cuatro cualidades esenciales:*
+    1. **Juego Libre (*Free Play*):** Exploración abierta sin soluciones predefinidas para fomentar la creatividad y la innovación.
+    2. **Enmarcado Deliberado (*Deliberate Framing*):** Reglas, límites, estándares de calidad y restricciones temporales que canalizan el juego libre y evitan la dispersión caótica.
+    3. **Tiempo de Parada (*Stopping Time*):** Momento acordado y preestablecido para detener la experimentación y consolidar el resultado en un entregable funcional y tangible.
+    4. **Colaboración en Tiempo Real:** Interacción directa y confianza mutua entre especialistas multidisciplinarios para resolver problemas complejos de forma sincronizada.
+- **El Manifiesto Ágil (2001):**
+  - *Los Cuatro Valores Fundamentales:*
+    1. Individuos e interacciones sobre procesos y herramientas.
+    2. Software funcionando sobre documentación extensiva.
+    3. Colaboración con el cliente sobre negociación contractual.
+    4. Respuesta ante el cambio sobre seguir un plan.
+  - *Principios Rectores Clave:* Satisfacer al cliente mediante entregas tempranas y continuas de software con valor; aceptar requisitos cambiantes incluso en etapas avanzadas; entregas en intervalos de semanas; ritmo sostenible de desarrollo; excelencia técnica y buen diseño; simplicidad entendida como el arte de maximizar la cantidad de trabajo no realizado.
+
+#### 2. Gestión Adaptativa del Alcance y Requisitos
+- **Product Backlog frente a WBS:**
+  - El Product Backlog es un inventario dinámico, vivo y ordenado por valor y riesgo de todo lo que podría requerir el producto. A diferencia de la WBS fija, es emergente: se refina continuamente a medida que el equipo y los usuarios aprenden.
+  - *Atributos DEEP del Backlog:* **D**etailed appropriately (detallado según prioridad), **E**stimated (estimado por el equipo), **E**mergent (en constante evolución) y **P**rioritized (ordenado por valor).
+- **Historias de Usuario (*User Stories*):**
+  - Unidades atómicas de requerimiento expresadas desde la perspectiva del usuario final:
+
+    $$\text{"Como [rol/usuario], quiero [acción/funcionalidad], para [beneficio/valor de negocio]"}$$
+
+  - *Las 3 C de Ron Jeffries:*
+    - **Card (Tarjeta):** Recordatorio sintético físico o digital que representa el requerimiento.
+    - **Conversation (Conversación):** Diálogo continuo entre el equipo técnico y el Product Owner para refinar detalles y despejar dudas.
+    - **Confirmation (Confirmación):** Criterios de aceptación objetivos que verifican formalmente que la historia cumple su propósito.
+  - *Criterios INVEST (Bill Wake):*
+    - **I (Independent):** Independiente de otras historias para permitir su libre reordenamiento en el backlog.
+    - **N (Negotiable):** Negociable; no es una cláusula cerrada, sino una base de discusión.
+    - **V (Valuable):** Aporta valor perceptible y directo al cliente o usuario.
+    - **E (Estimable):** El equipo posee la información necesaria para dimensionar su tamaño relativo.
+    - **S (Small):** Suficientemente pequeña para completarse dentro de una única iteración o sprint.
+    - **T (Testable):** Comprobable mediante pruebas objetivas que validen su funcionamiento.
+- **User Story Mapping (Jeff Patton):**
+  - Mapeo bidimensional de historias que contextualiza el flujo de valor del usuario:
+    - *Eje Horizontal (Backbone / Columna Vertebral):* Pasos y actividades ordenados temporalmente a lo largo del recorrido del usuario (*User Journey*).
+    - *Eje Vertical:* Historias ordenadas por prioridad de arriba hacia abajo (de lo indispensable a lo accesorio).
+    - *Walking Skeleton (Esqueleto Andante):* La rebanada horizontal más delgada fin-a-fin que conecta todos los componentes de la arquitectura del sistema y valida su viabilidad técnica funcional.
+    - *Releases:* Cortes horizontales que delimitan entregas sucesivas de valor (Release 1 = MVP, Release 2 = Versión enriquecida).
+- **Estimación Relativa y Técnicas de Cátedra:**
+  - *Estimación Relativa vs. Absoluta:* No se estiman horas directas de trabajo, sino el tamaño y complejidad relativa comparando las historias contra una historia de referencia o línea base (*baseline story*).
+  - *Story Points (Puntos de Historia):* Medida abstracta que sintetiza esfuerzo, complejidad algorítmica y riesgo técnico.
+  - *Secuencia de Fibonacci Modificada ($1, 2, 3, 5, 8, 13, 20, 40, 100$):* Refleja que la incertidumbre crece de manera no lineal con el tamaño de la tarea.
+  - *Planning Poker:* Técnica de estimación grupal consensuada basada en cartas reveladas simultáneamente, diseñada para neutralizar el sesgo de anclaje (*anchoring bias*) y forzar la discusión sobre supuestos divergentes entre los extremos.
+  - *Velocidad del Equipo:* Promedio de Story Points completados de acuerdo con la Definición de Terminado (DoD) en cada sprint. Métrica empírica de capacidad que permite proyectar fechas de lanzamiento.
+
+#### 3. Prácticas Técnicas de Ingeniería (Extreme Programming - XP)
+- **Desarrollo Guiado por Pruebas (Test-Driven Development - TDD):**
+  - Disciplina de diseño y codificación basada en el ciclo **Red-Green-Refactor**:
+    1. *Rojo (Red):* Escribir una prueba unitaria automatizada que describe el comportamiento deseado y verificar que falle (porque la funcionalidad aún no existe).
+    2. *Verde (Green):* Escribir la cantidad mínima indispensable de código de producción para que la prueba pase exitosamente.
+    3. *Refactorizar (Refactor):* Limpiar y reestructurar el código eliminando duplicaciones y mejorando el diseño, asegurando que todas las pruebas sigan pasando.
+- **Refactorización (*Refactoring*):**
+  - Técnica que altera la estructura interna del software para mejorar su legibilidad, mantenibilidad y reducir la deuda técnica, **sin modificar en absoluto su comportamiento observable externo**, respaldada por una red de seguridad de pruebas automatizadas.
+- **Las Cuatro Reglas del Diseño Simple (Kent Beck):**
+  1. Pasa todas las pruebas automatizadas.
+  2. Revela la intención del programador (nombres claros y estructura expresiva).
+  3. No contiene duplicación de lógica ni de datos (principio DRY: *Don't Repeat Yourself*).
+  4. Contiene el menor número posible de elementos (clases, funciones y métodos).
+- **Integración Continua (CI):** Práctica donde los desarrolladores integran su código en el repositorio principal varias veces al día, ejecutando una compilación automatizada y la suite de pruebas para detectar conflictos de forma temprana.
+- **Programación en Parejas (*Pair Programming*):** Dos desarrolladores colaboran en una única estación de trabajo: el *Piloto* escribe el código táctico y el *Copiloto* revisa estratégicamente la arquitectura, anticipa problemas y sugiere pruebas, difundiendo el conocimiento tácito y eliminando silos técnicos.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 5 — Flujo de construcción ágil (Story Mapping, INVEST y ciclo TDD)"
+  code={`flowchart LR
+    VSM["Story Map + Walking Skeleton (MVP)"] --> US["User Stories (INVEST + CCC)"]
+    US --> PP["Planning Poker (consenso sin promedios)"]
+    PP --> TDD["Ciclo TDD: Red (falla) → Green (pasa) → Refactor"]`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 5">
+  <span dangerouslySetInnerHTML={{ __html: unit5.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: La Curva del Costo del Cambio: Tradicional vs. Ágil
+
+| Dimensión Analítica | Curva Tradicional (Boehm) | Curva Aplanada (Beck / XP) |
+| :--- | :--- | :--- |
+| **Comportamiento del Costo** | Crecimiento exponencial a medida que avanza el tiempo. | Prácticamente plano y asintótico a lo largo del tiempo. |
+| **Premisa Subyacente** | Los errores tardíos exigen rehacer análisis, diseño y código manualmente. | Las pruebas automatizadas y el diseño simple minimizan el impacto del retrabajo. |
+| **Estrategia Derivada** | Congelar especificaciones al inicio y resistir los cambios. | Aceptar el cambio continuo como ventaja competitiva. |
+| **Prácticas Habilitadoras** | Firmas de aprobación formal y control estricto de alcance. | TDD, Refactoring continuo, CI/CD y Diseño Simple. |
+
+#### Matriz 2: Fábrica Industrial vs. Ensamble Teatral (*Artful Making*)
+
+| Criterio | Paradigma Fabril Industrial | Paradigma del Teatro (*Artful Making*) |
+| :--- | :--- | :--- |
+| **Objeto de Producción** | Réplicas idénticas de un producto físico terminado. | Creación única de software mediante diseño conceptual. |
+| **Mecanismo Operativo** | Ejecución mecánica de procesos repetitivos estandarizados. | Juego libre regulado por un enmarcado deliberado. |
+| **Gestión del Error** | Defecto que debe eliminarse mediante inspección final. | Fuente de aprendizaje y descubrimiento iterativo. |
+| **Cierre del Trabajo** | Cumplimiento del plan de producción prefijado. | Tiempo de parada (*Stopping Time*) consensuado. |
+
+#### Matriz 3: Product Backlog vs. WBS / EDT
+
+| Dimensión | Product Backlog Ágil | WBS / EDT Tradicional |
+| :--- | :--- | :--- |
+| **Naturaleza del Alcance** | Dinámico, emergente y evolutivo (DEEP). | Estático, cerrado y exhaustivo (Regla del 100%). |
+| **Criterio de Ordenamiento** | Priorizado estrictamente por valor de negocio y riesgo. | Estructurado jerárquicamente por componentes de producto. |
+| **Unidad Elemental** | Historias de Usuario con Criterios de Aceptación. | Paquetes de Trabajo con Diccionario de WBS. |
+| **Estimación Asociada** | Relativa (Story Points / Fibonacci). | Absoluta (horas, días y costos directos). |
+| **Momento de Cierre** | Nunca se cierra; evoluciona hasta el retiro del producto. | Se congela al aprobar la línea base de alcance. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u5" items={unit5.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u5" questions={unit5.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u6">
+
+## Unidad 6: Diseño Socio-Técnico y Team Topologies
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Fundamentos Socio-Técnicos y la Ley de Conway
+- **El Enfoque Socio-Técnico y el Punto Ciego de la Agilidad:** Los métodos ágiles tradicionales concentraron su atención en optimizar la dinámica interna del equipo aislado (sprints, stand-ups, tableros locales). Sin embargo, el principal estrangulamiento en organizaciones modernas no reside dentro del equipo, sino en las dependencias desalineadas, la fricción comunicacional y las interfaces defectuosas entre equipos. El software y la estructura organizativa forman un sistema socio-técnico indisociable.
+- **La Ley de Conway (Melvin Conway, 1968):**
+  > "Las organizaciones que diseñan sistemas están limitadas a producir diseños que son copias de las estructuras de comunicación de estas organizaciones."
+  - *Efecto Espejo Socio-Técnico:* Si una empresa organiza sus equipos en silos funcionales estancos (un equipo de frontend, un equipo de backend, un equipo de administradores de bases de datos), la arquitectura de software resultante será inevitablemente un sistema monolítico fuertemente acoplado en tres capas, con alta fricción y bloqueos en cada despliegue.
+- **La Maniobra Inversa de Conway (*Reverse Conway Maneuver*):**
+  - Estrategia que consiste en diseñar intencionalmente la organización humana y los canales de comunicación de los equipos para inducir la arquitectura técnica de software que se desea obtener (ej. estructurar equipos multidisciplinarios autónomos organizados por dominios de negocio para propiciar una arquitectura desacoplada de microservicios).
+
+#### 2. Tamaño de Equipos, Límites de Comunicación y Números de Dunbar
+- **La Ley de Brooks y los Canales de Comunicación:**
+  > "Agregar personal a un proyecto de software atrasado lo atrasa más."
+  - La justificación matemática radica en el crecimiento combinatorio cuadrático de las vías de comunicación interpersonal:
+
+    $$\text{Canales} = \frac{N(N - 1)}{2}$$
+
+    Para un equipo de 5 personas existen 10 canales; para uno de 12 personas existen 66 canales; para 30 personas hay 435 canales. El costo de coordinación supera rápidamente el aporte productivo.
+- **Los Números de Dunbar en la Dinámica Organizacional:**
+  - **5 personas:** Límite biológico para relaciones de confianza íntima, empatía profunda y toma de decisiones a máxima velocidad.
+  - **15 personas:** Límite para una confianza profunda compartida. Define el tamaño máximo de un equipo de desarrollo ágil de alto rendimiento (rango óptimo de 7 a 9 personas; la "regla de las dos pizzas" de Bezos).
+  - **50 personas:** Límite de cohesión tribal directa sin requerir estructuras burocráticas formalizadas.
+  - **150 personas:** Límite Dunbar superior de personas con las cuales un individuo puede mantener vínculos sociales estables y entendimiento de roles compartidos. Superar este umbral fragmenta la organización en subculturas.
+
+#### 3. Teoría y Gestión de la Carga Cognitiva (*Team Cognitive Load*)
+- **Definición Rigurosa:** Cantidad total de esfuerzo mental y capacidad de procesamiento de memoria de trabajo requerida para que un equipo pueda operar, mantener, evolucionar y responder por los servicios asignados.
+- **La Analogía del Tetris (Manuel Pais):**
+  - Las tareas, tecnologías y requerimientos caen continuamente como piezas de Tetris. Si caen demasiado rápido, sin orden o con formas incompatibles, el equipo no tiene tiempo mental para procesarlas; la pantalla se satura, los bloques se acumulan desordenadamente y el sistema colapsa en agotamiento (*burnout*) y defectos masivos.
+- **Taxonomía Tripartita de la Carga Cognitiva (John Sweller):**
+  1. **Carga Intrínseca:** El esfuerzo mental asociado a los conocimientos fundamentales y habilidades básicas de la disciplina técnica (ej. saber cómo funciona la sintaxis del lenguaje, estructuras de datos o cómo escribir una consulta SQL).
+  2. **Carga Extraña (*Extraneous*):** Fricción mental accidental provocada por factores ajenos al problema de negocio: entornos de desarrollo inestables, pipelines de integración rotos, despliegues manuales, configuraciones complejas de servidores o procesos burocráticos de aprobación.
+  3. **Carga Germana (*Germane*):** La energía mental productiva dedicada a comprender la lógica del negocio, resolver los requerimientos del usuario, modelar el dominio y diseñar soluciones de valor.
+- **Regla Cardinal de Diseño Socio-Técnico:**
+
+  $$\text{Minimizar la Carga Extraña} \quad \longrightarrow \quad \text{Regular la Carga Intrínseca} \quad \longrightarrow \quad \text{Maximizar la Carga Germana}$$
+
+- **Software Dimensionado para el Equipo (*Team-Sized Software*):**
+  - Principio que dicta que ningún componente, servicio o repositorio debe ser más grande que la capacidad cognitiva de un único equipo. Si un sistema supera esa capacidad, debe dividirse en subsistemas más pequeños delimitados por contextos del dominio (*Bounded Contexts*).
+
+#### 4. Las Cuatro Topologías Fundamentales de Equipos
+1. **Stream-Aligned Team (Alineado al Flujo de Valor):**
+   - *Propósito:* Es la unidad celular primaria de la organización. Equipo multidisciplinario enfocado en la entrega continua y autónoma de valor para un único flujo de trabajo (un producto, un conjunto de funcionalidades, un segmento de usuarios o un trayecto de cliente).
+   - *Características:* Posee todas las habilidades requeridas (desarrollo, pruebas, operaciones, UX) para llevar el software desde la concepción hasta producción sin depender de traspasos (*handoffs*).
+2. **Enabling Team (Equipo Habilitador):**
+   - *Propósito:* Equipo de especialistas técnicos con capacidad de investigación que busca nuevas herramientas, patrones o prácticas para transferir esas competencias a los Stream-Aligned teams.
+   - *Modo operativo:* Trabajan como consultores internos de forma temporal. No desarrollan funcionalidades de negocio ni asumen el trabajo del equipo cliente; enseñan, facilitan y se retiran para evitar crear dependencias permanentes.
+3. **Complicated-Subsystem Team (Equipo de Subsistema Complicado):**
+   - *Propósito:* Diseñado para encapsular una parte del sistema que demanda un conocimiento matemático, algorítmico o de ingeniería extremadamente especializado y profundo (ej. motor de renderizado 3D, modelos de optimización lineal, motores criptográficos).
+   - *Justificación:* Evita que esa complejidad técnica aplastante sobrecargue cognitivamente a los Stream-Aligned teams.
+4. **Platform Team (Equipo de Plataforma):**
+   - *Propósito:* Provee una plataforma subyacente de infraestructura, despliegue, observabilidad y herramientas que permite a los Stream-Aligned teams entregar valor con total autonomía.
+   - *Filosofía:* Su misión es reducir a la mínima expresión la carga extraña de los equipos de flujo. Se rige por el principio de la **Plataforma Mínima Viable (*Thinnest Viable Platform* - TVP)**, ofreciendo servicios internos consumibles como autoservicio (*Self-Service*).
+
+#### 5. Los Tres Modos de Interacción entre Equipos
+1. **Colaboración (*Collaboration*):**
+   - Dos equipos trabajan juntos de manera estrecha, simétrica y en tiempo real durante un período delimitado para co-crear un nuevo estándar, servicio o interfaz compartida.
+   - *Costo:* Muy alta carga comunicativa y pérdida transitoria de autonomía; debe ser temporal (semanas).
+2. **X-as-a-Service (Servicio):**
+   - Un equipo provee un componente o servicio y otro equipo lo consume a través de una API o interfaz limpia y documentada, con mínimas interacciones interpersonales directas.
+   - *Ventaja:* Máxima autonomía y muy baja carga comunicacional; exige que el servicio esté maduro y bien documentado.
+3. **Facilitación (*Facilitating*):**
+   - Un equipo con mayor pericia (típicamente Enabling Team) asiste, entrena y ayuda a otro a superar un obstáculo técnico o adoptar una nueva práctica.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 6 — Las 4 topologías de equipos y los 3 modos de interacción"
+  code={`flowchart TD
+    SAT["Stream-Aligned Team (Flujo de valor continuo)"]
+    ET["Enabling Team (Facilitación temporal)"] -->|"Facilitación"| SAT
+    PT["Platform Team (Plataforma autoservicio TVP)"] -->|"X-as-a-Service"| SAT
+    CST["Complicated-Subsystem Team (Complejidad extrema)"] -->|"X-as-a-Service / Colaboración"| SAT`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 6">
+  <span dangerouslySetInnerHTML={{ __html: unit6.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Tipos de Carga Cognitiva en Equipos de Software
+
+| Tipo de Carga | Origen de la Demanda Mental | Ejemplo Típico en el Día a Día | Estrategia de Gestión Organizacional |
+| :--- | :--- | :--- | :--- |
+| **Intrínseca** | Conocimiento básico del lenguaje y tecnologías. | Recordar la sintaxis de TypeScript o cómo declarar un índice en PostgreSQL. | Regular mediante capacitación continua, estandarización y buenas prácticas. |
+| **Extraña (*Extraneous*)** | Fricción accidental, herramientas rotas y burocracia. | Luchar contra un script de CI fallido o configurar manualmente certificados SSL. | **Minimizar drásticamente** mediante automatización y el uso de un Platform Team. |
+| **Germana (*Germane*)** | Modelado del dominio y resolución del problema del cliente. | Diseñar la lógica de cálculo de una póliza de seguros según las regulaciones. | **Maximizar**, liberando espacio mental al erradicar la carga extraña. |
+
+#### Matriz 2: Las Cuatro Topologías Fundamentales de Equipos
+
+| Topología de Equipo | Misión Principal | Duración / Ciclo de Vida | Criterio de Éxito Primario |
+| :--- | :--- | :--- | :--- |
+| **Stream-Aligned** | Entrega continua de valor de negocio fin-a-fin. | Permanente (asociada al ciclo de vida del flujo). | Flujo constante y rápido de valor en producción (Lead Time bajo). |
+| **Enabling** | Investigar, capacitar y transferir capacidades técnicas. | Variable (intervenciones temporales con equipos). | Que el equipo cliente adquiera la capacidad y pueda operar de forma autónoma. |
+| **Complicated-Subsystem** | Encapsular complejidad algorítmica/matemática extrema. | Permanente mientras el subsistema exista. | Calidad técnica, precisión del algoritmo y facilidad de integración. |
+| **Platform** | Proveer servicios de infraestructura como autoservicio. | Permanente (evolución continua de la plataforma). | Adopción voluntaria por parte de los Stream-Aligned teams y reducción de su carga extraña. |
+
+#### Matriz 3: Los Tres Modos de Interacción entre Equipos
+
+| Modo de Interacción | Nivel de Acoplamiento y Comunicación | Duración Recomendada | Cuándo Utilizarlo |
+| :--- | :--- | :--- | :--- |
+| **Colaboración** | Muy alto; trabajo diario conjunto y co-diseño. | Temporal y acotado (2 a 6 semanas). | Descubrimiento temprano de interfaces o solución de problemas no estructurados. |
+| **X-as-a-Service** | Muy bajo; mediado por APIs, código y documentación. | Permanente (mientras el servicio esté maduro). | Consumo predecible de componentes estables y plataformas consolidadas. |
+| **Facilitación** | Medio; asesoramiento pedagógico y mentoría técnica. | Temporal (horas por semana durante unas semanas). | Adopción de nuevas prácticas de desarrollo (TDD, seguridad) o destrabe de bloqueos. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u6" items={unit6.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u6" questions={unit6.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u7">
+
+## Unidad 7: Métricas, Enfoque Lean y Gestión de la Mejora Continua
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Filosofía Lean y Enfoque de Mejora en Software
+- **La Perspectiva Sistémica:** El pensamiento Lean en el desarrollo de software (difundido por Mary y Tom Poppendieck a partir del Sistema de Producción Toyota) se basa en la optimización del sistema completo frente a la búsqueda miope de eficiencias locales.
+  - *La Falacia de la Utilización al 100%:* En la teoría de colas, intentar mantener a todos los desarrolladores asignados al 100% de su capacidad en tareas activas genera colas de trabajo infinitas, bloqueos sistémicos y una explosión en los tiempos de espera (*Lead Time*). La agilidad requiere capacidad disponible (*slack*) para absorber la variabilidad.
+- **Modelos de Ciclos de Mejora:**
+  - *Ciclo PDCA (Shewhart / Deming):* Patrón iterativo de 4 fases para la mejora continua basada en el método científico:
+    1. **Plan (Planificar):** Identificar la oportunidad de mejora, diagnosticar la causa raíz y formular una hipótesis de intervención con métricas objetivo.
+    2. **Do (Hacer):** Ejecutar la intervención a pequeña escala o de forma experimental controlada.
+    3. **Check (Verificar / Estudiar):** Medir los resultados obtenidos y contrastarlos objetivamente contra la hipótesis esperada.
+    4. **Act (Actuar / Ajustar):** Estandarizar la práctica si fue exitosa o ajustar la hipótesis y reiniciar el ciclo si no se lograron los resultados.
+  - *Heart of Agile (Alistair Cockburn):* Simplificación del paradigma ágil en 4 imperativos de acción continua: **Colaborar (*Collaborate*)**, **Entregar (*Deliver*)**, **Reflexionar (*Reflect*)** y **Mejorar (*Improve*)**.
+- **Estrategias de Transformación: Kaizen frente a Kaikaku:**
+  - *Kaizen (Mejora Continua):* Filosofía de pequeños cambios incrementales, diarios y acumulativos liderados por el propio equipo en el lugar de trabajo (*Gemba*). Bajo costo, bajo riesgo de disrupción y alta sostenibilidad cultural.
+  - *Kaikaku (Revolución / Disrupción):* Transformación radical o rediseño estructural de procesos impulsado por la dirección ejecutiva ante obsolescencia severa. Alto costo, alto riesgo y necesidad de estabilización posterior.
+- **Los 7 Desperdicios en el Desarrollo de Software (*Muda*):**
+  1. **Trabajo Parcialmente Terminado (*Partially Done Work*):** Código no desplegado, historias sin probar, especificaciones sin validar. Es inventario inmovilizado que consume recursos, se desactualiza y no genera valor económico real.
+  2. **Características Adicionales (*Extra Features / Gold Plating*):** Funcionalidades desarrolladas por especulación que el usuario final jamás utiliza (añaden complejidad arquitectónica, deuda técnica y costos de mantenimiento sin retorno).
+  3. **Re-aprendizaje (*Relearning*):** Pérdida de conocimiento que obliga al equipo a resolver problemas o investigar soluciones que ya habían sido descubiertas previamente, debido a falta de documentación viva o alta rotación.
+  4. **Traspasos (*Handoffs*):** Transferencia del trabajo entre silos o personas (de analistas a desarrolladores, de desarrolladores a testers). Cada traspaso provoca una pérdida severa de contexto tácito y diluye la responsabilidad compartida.
+  5. **Retrasos / Esperas (*Delays*):** Tiempos muertos donde el flujo se detiene esperando aprobaciones, decisiones del cliente, configuración de entornos de prueba o revisiones de código.
+  6. **Cambio de Contexto (*Task Switching*):** Pérdida de foco y energía mental por alternar entre múltiples proyectos o tareas simultáneas. El costo cognitivo de re-enfoque consume entre el 20% y el 40% del tiempo útil.
+  7. **Defectos (*Defects*):** Errores no detectados tempranamente que se propagan en el sistema, exigiendo costosas tareas de retrabajo y resolución de emergencias.
+
+#### 2. Epistemología de la Medición e Ingeniería de Métricas
+- **Taxonomía Conceptual Canónica:**
+  - **Métrica:** Regla abstracta, algoritmo o formulación matemática que define cómo se cuantifica una propiedad o atributo del sistema (ej. tiempo promedio transcurrido entre el *commit* y el despliegue en producción).
+  - **Medición:** El acto empírico de registrar datos o el valor cuantitativo numérico resultante en un instante dado (ej. 3.2 horas).
+  - **Indicador:** Interpretación cualitativa y contextualizada de la medición frente a un umbral o meta predeterminada para orientar la toma de decisiones (ej. 3.2 horas supera el umbral tolerable de 2 horas; indicador en color Rojo, requiere intervención técnica).
+- **Error Epistemológico y la Ley de Goodhart:**
+  - Medir para juzgar o premiar corrompe la medición.
+  - *Formulación de Goodhart:* "Cuando una medida se convierte en un objetivo, deja de ser una buena medida."
+  - *Manifestación en software:* Si se evalúa a los programadores por la cantidad de líneas de código escritas, producirán código verboso e ineficiente; si se los premia por cantidad de bugs resueltos, crearán código defectuoso para luego corregirlo rápidamente.
+- **La Metodología GQM (Goal - Question - Metric de Victor Basili):**
+  - Marco estructurado descendente (*top-down*) para garantizar que ninguna métrica se recolecte sin un propósito explícito de negocio o mejora:
+    1. **Nivel Conceptual (Meta / *Goal*):** Define el objetivo rector bajo una plantilla rigurosa de 5 dimensiones:
+
+       $$\text{Objeto} + \text{Propósito} + \text{Foco de Calidad} + \text{Punto de Vista} + \text{Contexto}$$
+
+       *Ejemplo formal:* "Analizar el proceso de integración continua [Objeto] con el fin de evaluar y mejorar [Propósito] la velocidad de retroalimentación técnica [Foco de Calidad] desde el punto de vista del equipo de desarrollo [Punto de Vista] en el proyecto Turnos Médicos [Contexto]".
+    2. **Nivel Operacional (Preguntas / *Questions*):** Conjunto de interrogantes operativas que desglosan la meta y caracterizan qué aspectos del proceso deben examinarse (ej. "¿Cuál es el tiempo medio de ejecución de las pruebas automáticas?").
+    3. **Nivel Cuantitativo (Métricas / *Metrics*):** Mediciones específicas y fórmulas concretas que responden numéricamente a las preguntas formuladas (ej. Duración en minutos del pipeline de CI).
+
+#### 3. Métricas de Flujo y Eficiencia del Proceso
+- **Las Cuatro Métricas Centrales de Flujo:**
+  - *Lead Time:* Tiempo total calendario desde la solicitud del cliente hasta la entrega en producción.
+  - *Cycle Time:* Tiempo de procesamiento activo desde que el equipo inicia la tarea hasta que está terminada.
+  - *Work In Progress (WIP):* Volumen de trabajo en curso dentro del sistema.
+  - *Throughput:* Tasa de entrega efectiva (ítems completados por unidad de tiempo).
+- **La Ley de Little y la Estabilidad del Flujo:**
+
+  $$WIP = Throughput \times Cycle\ Time \iff Cycle\ Time = \frac{WIP}{Throughput}$$
+
+- **Eficiencia de Flujo (*Flow Efficiency*):**
+  - Relación porcentual entre el tiempo en que se realiza trabajo activo sobre el ítem (*Touch Time*) y el tiempo total que el ítem permanece dentro del sistema (*Lead Time*):
+
+    $$\text{Eficiencia de Flujo} = \frac{\text{Tiempo de Trabajo Activo (Touch Time)}}{\text{Lead Time Total}} \times 100$$
+
+  - En la industria del software, la eficiencia de flujo típicamente ronda entre el **5% y el 15%**. La mayor parte del retraso no proviene de la lentitud técnica de los desarrolladores para programar, sino de los tiempos muertos en que los ítems esperan inactivos en colas de aprobación o traspaso.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 7 — Mejora continua (PDCA), Lean (7 Mudas) y diseño GQM"
+  code={`flowchart LR
+    G["Goal (Objeto · Propósito · Foco · Vista · Contexto)"] --> Q["Questions (Operacionales)"]
+    Q --> M["Metrics (Cuantitativas)"]
+    M --> PDCA["Ciclo PDCA + Eliminación de 7 Mudas Lean"]`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 7">
+  <span dangerouslySetInnerHTML={{ __html: unit7.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Enfoques de Transformación: Kaizen vs. Kaikaku
+
+| Variable de Comparación | Kaizen (Mejora Continua) | Kaikaku (Innovación Radical) |
+| :--- | :--- | :--- |
+| **Escala del Cambio** | Pequeño, incremental y continuo (*baby steps*). | Grande, disruptivo y puntual (*big bang*). |
+| **Origen de la Iniciativa** | El propio equipo de desarrollo en el *Gemba*. | Dirección ejecutiva o comités estratégicos. |
+| **Inversión Financiera** | Muy baja o nula; aprovecha recursos existentes. | Alta; requiere presupuesto de transformación o nuevas tecnologías. |
+| **Riesgo Operativo** | Mínimo; fácil de revertir ante fallos. | Muy alto; puede desestabilizar la operación si falla. |
+| **Impacto Cultural** | Crea hábitos compartidos y pensamiento científico diario. | Provoca resistencia al cambio y exige gestión de choque. |
+
+#### Matriz 2: Métrica vs. Medición vs. Indicador
+
+| Concepto | Nivel de Abstracción | Naturaleza | Ejemplo Concreto |
+| :--- | :--- | :--- | :--- |
+| **Métrica** | Conceptual / Definicional. | Algoritmo o formulación matemática de cálculo. | $\text{Densidad de Defectos} = \frac{\text{Defectos Detectados}}{\text{KLOC}}$ |
+| **Medición** | Empírico / Fáctico. | Dato cuantitativo obtenido en un instante específico. | $1.8 \text{ defectos / KLOC}$ en el módulo de facturación. |
+| **Indicador** | Semántico / Decisional. | Interpretación del valor contra un umbral normativo. | $1.8 > 1.0$ (Umbral máximo tolerado); **Alerta Roja**. |
+
+#### Matriz 3: Los 7 Desperdicios Lean en Software (*Muda*)
+
+| Desperdicio Lean | Manifestación Típica en Desarrollo de Software | Impacto Sistémico Negativo |
+| :--- | :--- | :--- |
+| **Trabajo Parcialmente Terminado** | Ramas de código no fusionadas, historias sin desplegar. | Capital inmovilizado que no genera valor y genera conflictos al integrar. |
+| **Características Adicionales** | Funciones accesorias añadidas por iniciativa no solicitada. | Complejidad arquitectónica superflua y aumento de deuda técnica. |
+| **Re-aprendizaje** | Equipos investigando cómo resolver bugs que otros ya arreglaron. | Pérdida de horas productivas y duplicación ineficiente de esfuerzo. |
+| **Traspasos (*Handoffs*)** | Pase de documentos formales de analistas a programadores y a testers. | Pérdida de conocimiento tácito, demoras y deslinde de responsabilidades. |
+| **Retrasos / Esperas** | Bloqueo esperando la aprobación de un cambio o ambientes de QA. | Explosión del Lead Time y enfriamiento del feedback del usuario. |
+| **Cambio de Contexto** | Desarrolladores atendiendo 3 proyectos simultáneos a la vez. | Sobrecarga cognitiva extrema, agotamiento y proliferación de errores. |
+| **Defectos** | Bugs descubiertos en producción por usuarios finales. | Retrabajo costoso, descrédito de marca y pérdida de tracción de negocio. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u7" items={unit7.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u7" questions={unit7.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u8">
+
+## Unidad 8: Toyota Kata (Improvement Kata y Coaching Kata)
+
+<div data-study-block="theory">
+
+### A. Resumen Conceptual
+
+#### 1. Fundamentos y Origen de Toyota Kata (Mike Rother)
+- **Naturaleza de la Práctica Deliberada:** Toyota Kata investiga los patrones de comportamiento y hábitos mentales invisibles que sustentan la capacidad de Toyota para mejorar y adaptarse continuamente. En situaciones de incertidumbre o complejidad, el cerebro humano tiende por defecto a saltar impulsivamente a conclusiones y soluciones superficiales sin comprender a fondo los hechos. Toyota Kata proporciona rutinas de práctica deliberada (*Katas*) para recablear la mente e internalizar el método científico como una segunda naturaleza.
+- **Doble Patrón Interdependiente:** El ecosistema se compone de dos rutinas complementarias: el **Improvement Kata** (el patrón de pensamiento científico del Aprendiz para resolver problemas) y el **Coaching Kata** (el patrón del líder o facilitador para enseñar y sostener dicho hábito mental en el equipo).
+
+#### 2. El Patrón del Improvement Kata (IK - Kata de Mejora)
+- **Los Cuatro Pasos Estructurados del IK:**
+  1. **Comprender la Dirección o el Desafío (*Understand the Direction / Challenge*):**
+     - Visión estratégica general u objetivo de largo plazo (horizonte de 1 a 3 años) fijado por el liderazgo de la organización. Marca el "norte verdadero" (*True North*).
+  2. **Comprender la Condición Actual (*Grasp the Current Condition*):**
+     - Diagnóstico fáctico y objetivo realizado directamente en el lugar donde ocurre el trabajo (*Gemba*). Implica medir con datos duros los tiempos reales de ciclo, la variabilidad del proceso, los cuellos de botella y los patrones de operación, evitando juicios de valor u opiniones subjetivas.
+  3. **Establecer la Próxima Condición Objetivo (*Establish the Next Target Condition*):**
+     - Definición de un estado intermedio deseado y concreto con una fecha límite fija (horizonte temporal de 2 semanas a 2 meses).
+     - *Doble componente obligatorio:* Debe describir operativamente **cómo debería funcionar el proceso** en detalle (patrón de trabajo deseado) y cuáles son las **métricas objetivo** cuantificables que evidenciarán su logro.
+  4. **Experimentar hacia la Condición Objetivo (*Experiment Toward the Target Condition*):**
+     - Avance iterativo paso a paso mediante ciclos PDCA rápidos diarios, identificando los obstáculos que se interponen en el camino y atacándolos de a uno por vez mediante experimentos controlados.
+- **La Realidad de la Ejecución y el Umbral de Conocimiento (*Knowledge Threshold*):**
+  - El Umbral de Conocimiento es la frontera epistemológica que separa lo que sabemos con certeza empírica verificada de lo que desconocemos o suponemos.
+  - *Principio Rector:* Es imposible trazar un plan detallado y determinístico más allá del umbral de conocimiento. Pretender hacerlo engendra planes ilusorios. El equipo debe avanzar hasta el límite de lo que conoce y ejecutar allí un experimento para aprender, cruzar el umbral y descubrir el siguiente paso.
+- **Estructura Formal del Experimento:**
+  - Cada experimento en el paso 4 del IK requiere una hipótesis científica explícita:
+
+    $$\text{"Si aplicamos [cambio específico], esperamos [resultado observable y medible] porque [fundamento causal]"}$$
+
+  - Al completar la prueba, el aprendizaje surge de contrastar rigurosamente la diferencia entre lo que se esperaba que sucediera y lo que ocurrió en la realidad fáctica.
+
+#### 3. El Patrón del Coaching Kata (CK - Kata de Coaching)
+- **Propósito Formativo y Pedagógico:**
+  - El Coaching Kata no es una reunión de reporte de estado ni una auditoría de rendimiento. Su objetivo exclusivo es desarrollar la competencia y la agilidad de pensamiento científico del Aprendiz (*Learner*) mediante sesiones diarias estructuradas de 15 a 20 minutos frente al tablero de Kata en el *Gemba*.
+- **La Dialéctica Pedagógica entre Coach y Aprendiz:**
+  - **El Coach es dueño del CÓMO:** Garantiza el rigor metodológico, la secuencia de preguntas, la disciplina del método científico y la calidad del razonamiento del Aprendiz.
+  - **El Aprendiz es dueño del QUÉ:** Define los problemas técnicos específicos, investiga los obstáculos y propone los experimentos a ejecutar.
+  - *Regla de Oro del Coach:* El Coach **jamás** proporciona las respuestas, no dice qué hacer, no aprueba ni desaprueba técnicamente la solución; guía mediante preguntas para que el Aprendiz descubra el camino por sí mismo.
+- **El Ciclo Mental del Kata Coach:**
+  1. **Ver (*See*):** Observar con atención al Aprendiz, su postura, sus expresiones y los datos objetivos volcados en el tablero de Kata en el Gemba.
+  2. **Comparar (*Compare*):** Contrastar mentalmente las respuestas del Aprendiz con el patrón ideal de los 4 pasos del Improvement Kata.
+  3. **Instruir (*Direct / Question*):** Formular la pregunta de la tarjeta adecuada o dar una instrucción de procedimiento para corregir desviaciones del método científico.
+- **La Tarjeta de las 5 Preguntas Fundamentales:**
+  - **Pregunta 1:** ¿Cuál es la Condición Objetivo?
+  - **Pregunta 2:** ¿Cuál es la Condición Actual ahora?
+  - **Pregunta 3 (Al dorso de la tarjeta - Reflexión Retrospectiva sobre el paso previo):**
+    - ¿Qué obstáculos crees que te están impidiendo alcanzar la Condición Objetivo?
+    - ¿En cuál obstáculo estás trabajando ahora?
+    - ¿Cuál fue tu último paso / experimento?
+    - ¿Qué esperabas que pasara?
+    - ¿Qué pasó realmente?
+    - ¿Qué aprendiste?
+  - **Pregunta 4:** ¿Cuál es tu próximo paso o experimento? ¿Qué esperas que pase?
+  - **Pregunta 5:** ¿Cuándo podemos ir a ver lo que aprendiste de ese paso?
+- **El Rol del Segundo Kata Coach (*2nd Coach*):**
+  - Figura que acompaña en silencio la sesión de coaching situada a corta distancia.
+  - *Misión:* Evaluar el desempeño pedagógico del Coach (si interrumpió al Aprendiz, si dio respuestas en lugar de formular preguntas, si respetó la tarjeta). Al finalizar la sesión con el Aprendiz, el 2do Coach se reúne en privado con el Coach para brindarle retroalimentación protocolar, asegurando la calidad del entrenamiento institucional.
+
+---
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 8 — Improvement Kata (4 pasos) y Coaching Kata"
+  code={`flowchart LR
+    P1["1. Dirección / Desafío"] --> P2["2. Condición Actual (Genba)"]
+    P2 --> P3["3. Siguiente Condición Objetivo"]
+    P3 --> P4["4. PDCA en el Umbral de Conocimiento"]
+    CK["Coaching Kata: Ver · Comparar · Instruir (5 Preguntas)"] -.->|"Guía el CÓMO"| P4`}
+/>
+
+<AcademicBlock kind="trap" title="Trampa frecuente — Unidad 8">
+  <span dangerouslySetInnerHTML={{ __html: unit8.trapHtml }} />
+</AcademicBlock>
+
+### B. Matrices Comparativas
+
+#### Matriz 1: Improvement Kata vs. Coaching Kata
+
+| Dimensión Analítica | Improvement Kata (IK) | Coaching Kata (CK) |
+| :--- | :--- | :--- |
+| **Actor Principal** | El Aprendiz (*Learner*) y su equipo de trabajo. | El Kata Coach (Líder / Facilitador / Mentor). |
+| **Foco de Atención** | El problema operativo, el proceso y la Condición Objetivo. | La estructura mental y la disciplina científica del Aprendiz. |
+| **Responsabilidad** | Responsable del **QUÉ** (contenido técnico y experimentos). | Responsable del **CÓMO** (rigor del método y preguntas). |
+| **Herramienta Central** | Tablero de Kata en el *Gemba* y registro de experimentos. | Tarjeta de las 5 Preguntas del Coach. |
+| **Frecuencia** | Trabajo y experimentación continua cotidiana. | Sesión diaria estructurada de 15 a 20 minutos. |
+
+#### Matriz 2: Cuadro de Roles en el Ecosistema Toyota Kata
+
+| Rol | Ubicación Física | Responsabilidad Central | Lo que NUNCA debe hacer |
+| :--- | :--- | :--- | :--- |
+| **Aprendiz (*Learner*)** | Frente al tablero en el *Gemba*. | Diagnosticar la condición actual, elegir el obstáculo y formular hipótesis. | Diseñar experimentos sin fundamentar la hipótesis esperada. |
+| **Kata Coach** | Al lado del Aprendiz frente al tablero. | Aplicar el ciclo mental (Ver-Comparar-Instruir) y formular las 5 preguntas. | Dar la solución técnica, opinar sobre el problema o saltar pasos. |
+| **Segundo Coach** | Un paso atrás, en silencio. | Observar la interacción pedagógica y brindar feedback privado al Coach. | Intervenir durante el diálogo entre Coach y Aprendiz. |
+
+#### Matriz 3: Auditoría Tradicional de Proyectos vs. Sesión de Coaching Kata
+
+| Criterio | Auditoría Tradicional de Proyectos | Sesión Diaria de Coaching Kata |
+| :--- | :--- | :--- |
+| **Propósito** | Fiscalizar la adherencia a un plan y juzgar el desempeño. | Entrenar hábitos de pensamiento científico y aprendizaje continuo. |
+| **Tratamiento del Error** | Desvío que debe sancionarse o corregirse administrativamente. | Discrepancia empírica que genera el mayor conocimiento nuevo. |
+| **Dinámica de Interacción** | Interrogatorio inquisitivo unidireccional y punitivo. | Diálogo socrático estructurado basado en la tarjeta de preguntas. |
+| **Frecuencia** | Esporádica (mensual, trimestral o por hitos de fase). | Diaria, breve (15 a 20 minutos) y consistente. |
+
+</div>
+
+<div data-study-block="recall">
+
+### C. Preguntas y Respuestas de Autoevaluación
+
+<ActiveRecallCards client:load courseId="gdsi" unitId="u8" items={unit8.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### D. Multiple Choice
+
+<InteractiveMcqDeck client:load courseId="gdsi" unitId="u8" questions={unit8.mcqItems} />
+
+</div>
+
+</section>
+
+</div>

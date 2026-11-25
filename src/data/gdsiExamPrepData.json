@@ -1,0 +1,1588 @@
+{
+  "units": [
+    {
+      "id": "u1",
+      "number": 1,
+      "title": "Paradigmas de Gestión, Proyectos y Procesos",
+      "shortTitle": "U1 · Proyectos y Flujo",
+      "trapTitle": "Trampa frecuente — Unidad 1",
+      "trapBody": "No confundir **Esfuerzo** (horas-persona) con **Duración** (tiempo calendario), ni **Lead Time** (solicitud → producción) con **Cycle Time** (trabajo activo). En Kanban, la Ley de Little ($CT = WIP / Throughput$) implica que reducir el WIP acorta el tiempo de ciclo más rápido que sumar gente.",
+      "recallItems": [
+        {
+          "id": "u1-p1",
+          "code": "P1",
+          "question": "¿Cuál es el supuesto ontológico fundamental que diferencia al enfoque predictivo del enfoque adaptativo?",
+          "answer": "El enfoque predictivo asume que el problema y los requisitos son estables, predecibles y pueden especificarse exhaustivamente antes de comenzar la ejecución técnica. El enfoque adaptativo asume que los requisitos son emergentes e intrínsecamente inciertos, por lo que la solución debe descubrirse y refinarse progresivamente a través de la retroalimentación generada por entregas continuas de software funcional."
+        },
+        {
+          "id": "u1-p2",
+          "code": "P2",
+          "question": "¿Por qué una actividad con Holgura Total igual a cero es crítica en un cronograma predictivo?",
+          "answer": "Porque la holgura total mide el margen temporal que una tarea puede retrasarse sin desplazar la fecha final del proyecto. Si una actividad tiene holgura cero ($HT = 0$), cualquier demora en su inicio o duración consumirá inmediatamente el tiempo de reserva y postergará la fecha de entrega comprometida del proyecto completo; por ende, forma parte obligatoria de la ruta crítica."
+        },
+        {
+          "id": "u1-p3",
+          "code": "P3",
+          "question": "¿Cuál es la diferencia práctica entre esfuerzo y duración al estimar un desarrollo de software?",
+          "answer": "El esfuerzo cuantifica el volumen neto de trabajo requerido (ej. 40 horas-hombre de desarrollo). La duración es el tiempo calendario que transcurre para completar dicho trabajo (ej. 5 días hábiles si lo hace una persona a tiempo completo, o 10 días si trabaja a medio tiempo o si existen dependencias externas que imponen esperas). Agregar más recursos puede reducir la duración, pero a menudo incrementa el esfuerzo total debido a la sobrecarga de coordinación."
+        },
+        {
+          "id": "u1-p4",
+          "code": "P4",
+          "question": "Según la Ley de Little, ¿qué efecto directo produce triplicar el WIP en un equipo cuyo Throughput permanece constante?",
+          "answer": "Dado que $Cycle\\ Time = \\frac{WIP}{Throughput}$, si el WIP se triplica mientras la tasa de rendimiento (Throughput) no varía, el tiempo de ciclo promedio se triplica automáticamente. Los ítems tardarán el triple de tiempo en completarse, generándose retrasos generalizados, sobrecarga cognitiva y mayor costo de cambio."
+        },
+        {
+          "id": "u1-p5",
+          "code": "P5",
+          "question": "¿En qué se diferencia fundamentalmente un sistema de trabajo Push de uno Pull?",
+          "answer": "En un sistema Push, las tareas son empujadas o asignadas a los desarrolladores en función de un cronograma o plan previo, sin considerar la saturación o capacidad real del momento. En un sistema Pull, ningún miembro del equipo toma una nueva tarea hasta que haya finalizado una anterior y exista capacidad disponible bajo el límite de WIP configurado."
+        },
+        {
+          "id": "u1-p6",
+          "code": "P6",
+          "question": "¿Cómo se identifica en un Diagrama de Flujo Acumulado (CFD) que un equipo está acumulando trabajo en progreso de forma descontrolada?",
+          "answer": "Se identifica observando la distancia vertical entre la línea de ítems en progreso y la línea de ítems terminados. Si la distancia vertical entre ambas curvas crece progresivamente a lo largo del tiempo (las líneas divergen en lugar de mantenerse paralelas), el WIP se está expandiendo sin que aumente la tasa de entrega, lo que evidencia un cuello de botella y un incremento del Lead Time."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u1-mc-1",
+          "number": 1,
+          "prompt": "Un proyecto de modernización tecnológica presenta requerimientos contractuales con multas severas por fecha de entrega, arquitectura de hardware cerrada y normativas inmutables. ¿Qué enfoque de gestión resulta metodológicamente más adecuado?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Enfoque puramente adaptativo basado en Sprints de 1 semana con alcance libremente negociable."
+            },
+            {
+              "key": "B",
+              "text": "Enfoque predictivo con definición formal de la línea base y control riguroso de cambios."
+            },
+            {
+              "key": "C",
+              "text": "Enfoque de flujo continuo sin estimación (#NoEstimates) y sin alcance delimitado."
+            },
+            {
+              "key": "D",
+              "text": "Enfoque Kaikaku disruptivo sin planificación previa."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Cuando el dominio presenta requerimientos cerrados, normativas fijas y penalidades contractuales, el enfoque predictivo es el indicado para establecer una línea base y gestionar formalmente el cumplimiento del alcance acordado."
+        },
+        {
+          "id": "u1-mc-2",
+          "number": 2,
+          "prompt": "Al aplicar la técnica PERT para estimar un módulo de autenticación, el equipo define una duración optimista de 4 días, una más probable de 7 días y una pesimista de 16 días. ¿Cuál es la duración estimada esperada ($\\mu$) y la desviación estándar ($\\sigma$)?",
+          "options": [
+            {
+              "key": "A",
+              "text": "$\\mu = 8$ días; $\\sigma = 2$ días."
+            },
+            {
+              "key": "B",
+              "text": "$\\mu = 9$ días; $\\sigma = 3$ días."
+            },
+            {
+              "key": "C",
+              "text": "$\\mu = 7$ días; $\\sigma = 1.5$ días."
+            },
+            {
+              "key": "D",
+              "text": "$\\mu = 8.5$ días; $\\sigma = 2.5$ días."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Aplicando las fórmulas de la distribución Beta/PERT:\n     $$\\mu = \\frac{O + 4M + P}{6} = \\frac{4 + 4(7) + 16}{6} = \\frac{4 + 28 + 16}{6} = \\frac{48}{6} = 8\\text{ días}$$\n     $$\\sigma = \\frac{P - O}{6} = \\frac{16 - 4}{6} = \\frac{12}{6} = 2\\text{ días}$$"
+        },
+        {
+          "id": "u1-mc-3",
+          "number": 3,
+          "prompt": "El Director de Proyecto necesita acortar la duración total del cronograma sin modificar el alcance. Decide superponer dos actividades críticas que estaban planificadas en estricta secuencia. Esta técnica se denomina:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Crashing (Intensificación) y aumenta el costo financiero directo."
+            },
+            {
+              "key": "B",
+              "text": "Fast Tracking (Ejecución Rápida) y aumenta el nivel de riesgo de retrabajo."
+            },
+            {
+              "key": "C",
+              "text": "Nivelación de recursos y alarga la ruta crítica."
+            },
+            {
+              "key": "D",
+              "text": "Descomposición analítica en la WBS."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Ejecutar actividades en paralelo que originalmente estaban secuenciadas se define formalmente como *Fast Tracking*. No agrega costo directo inmediato (a diferencia del Crashing), pero eleva el riesgo de retrabajo si la actividad precedente sufre alteraciones."
+        },
+        {
+          "id": "u1-mc-4",
+          "number": 4,
+          "prompt": "En un tablero Kanban, un equipo observa que la columna \"Pruebas de Integración\" tiene un límite de WIP de 3, pero actualmente aloja 3 ítems y los desarrolladores ya terminaron dos tareas previas. ¿Qué acción prescribe rigurosamente el principio Pull?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Aumentar transitoriamente el límite de WIP a 5 para no frenar a los programadores."
+            },
+            {
+              "key": "B",
+              "text": "Empujar las dos nuevas tareas a Pruebas y exigir a los testers que hagan horas extras."
+            },
+            {
+              "key": "C",
+              "text": "Los desarrolladores no deben iniciar nuevas tareas; deben colaborar con los testers para ayudar a destrabar los ítems de prueba y restablecer el flujo."
+            },
+            {
+              "key": "D",
+              "text": "Crear una columna paralela de \"Tareas en Espera de Prueba\" sin límite de WIP."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El sistema Pull y el límite de WIP impiden que se ingrese más trabajo a una etapa saturada. La regla de oro del pensamiento Lean es \"parar de empezar para empezar a terminar\", obligando al equipo a abocarse a la resolución del cuello de botella."
+        },
+        {
+          "id": "u1-mc-5",
+          "number": 5,
+          "prompt": "Un cliente solicita una funcionalidad el día 1 de marzo. El equipo toma la tarea para su codificación activa el 10 de marzo y la despliega exitosamente en producción el 15 de marzo. ¿Cuáles son el Lead Time y el Cycle Time de esta tarea?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Lead Time: 15 días; Cycle Time: 5 días."
+            },
+            {
+              "key": "B",
+              "text": "Lead Time: 5 días; Cycle Time: 15 días."
+            },
+            {
+              "key": "C",
+              "text": "Lead Time: 10 días; Cycle Time: 5 días."
+            },
+            {
+              "key": "D",
+              "text": "Lead Time: 15 días; Cycle Time: 10 días."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "El Lead Time abarca el tiempo total desde el registro de la solicitud (1 de marzo) hasta la entrega en producción (15 de marzo), totalizando 15 días. El Cycle Time mide el tiempo de trabajo activo (del 10 al 15 de marzo), totalizando 5 días."
+        },
+        {
+          "id": "u1-mc-6",
+          "number": 6,
+          "prompt": "Según la Ley de Little, si un equipo de mantenimiento mantiene un Throughput estable de 4 incidentes resueltos por día y reduce su WIP promedio de 20 incidentes a 8 incidentes, ¿qué ocurrirá con el Cycle Time?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Se incrementará de 2 días a 5 días."
+            },
+            {
+              "key": "B",
+              "text": "Se reducirá de 5 días a 2 días."
+            },
+            {
+              "key": "C",
+              "text": "Permanecerá constante en 4 días."
+            },
+            {
+              "key": "D",
+              "text": "Se reducirá a cero."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Por la Ley de Little: $CT = \\frac{WIP}{TH}$. En la condición inicial: $CT_1 = \\frac{20}{4} = 5$ días. Al reducir el WIP a 8 ítems: $CT_2 = \\frac{8}{4} = 2$ días. El tiempo de ciclo se reduce de 5 a 2 días."
+        }
+      ]
+    },
+    {
+      "id": "u2",
+      "number": 2,
+      "title": "Iniciación, Gobernanza de Interesados y Estructura del Alcance (Charter, Stakeholders y WBS)",
+      "shortTitle": "U2 · Charter, Stakeholders, WBS",
+      "trapTitle": "Trampa frecuente — Unidad 2",
+      "trapBody": "El **Business Case** justifica la rentabilidad (ROI), pero **NO autoriza el proyecto ni nombra al PM**: esa función es exclusiva del **Project Charter** firmado por el Sponsor. Además, la **WBS** se expresa en **sustantivos** (entregables), nunca en verbos ni incluyendo mantenimiento post-proyecto.",
+      "recallItems": [
+        {
+          "id": "u2-p1",
+          "code": "P1",
+          "question": "¿Por qué el Director del Proyecto no puede firmar y aprobar su propio Project Charter?",
+          "answer": "Porque el Project Charter es un instrumento de gobernanza mediante el cual la organización delega autoridad formal. Para que esa autoridad sea legal y legítima, debe emanar de una instancia jerárquica con capacidad de asignación de capital y recursos (el Patrocinador o Comité Ejecutivo). Si el PM firmara el Charter, se auto-conferiría autoridad sobre recursos que no posee, invalidando el propósito de control institucional."
+        },
+        {
+          "id": "u2-p2",
+          "code": "P2",
+          "question": "¿Cuál es la diferencia fundamental entre una Meta (*Goal*) y un Objetivo SMART (*Objective*) en el inicio del proyecto?",
+          "answer": "La Meta define una aspiración cualitativa y broad de mejora organizacional a largo plazo (ej. \"Digitalizar la gestión clínica\"), mientras que el Objetivo SMART descompone esa aspiración en una declaración operativa cuantitativa, específica, alcanzable, relevante y delimitada en el tiempo (ej. \"Implementar un sistema web que reduzca los tiempos de espera de 45 a 15 minutos en el Centro de Salud Norte para el 30 de noviembre\")."
+        },
+        {
+          "id": "u2-p3",
+          "code": "P3",
+          "question": "¿Qué caracteriza a un interesado clasificado como \"Definitivo\" según el Modelo de Prominencia de Mitchell, Agle y Wood?",
+          "answer": "Un interesado definitivo posee simultáneamente los tres atributos del modelo: Poder (capacidad de forzar decisiones), Legitimidad (derecho reconocido a participar) y Urgencia (reclamos inmediatos y críticos). Al reunir los tres atributos, demanda la máxima atención y prioridad de la dirección del proyecto, pues posee tanto el motivo como el mecanismo institucional para detener o alterar la iniciativa."
+        },
+        {
+          "id": "u2-p4",
+          "code": "P4",
+          "question": "Si una WBS describe el trabajo mediante la frase: \"Diseñar, programar y probar la base de datos\", ¿qué error metodológico fundamental se está cometiendo?",
+          "answer": "Se está confundiendo la WBS orientada a entregables con una lista secuencial de actividades. La WBS debe estructurarse mediante sustantivos o frases nominales que representen el producto terminado o entregable tangible (ej. \"Base de Datos de Historias Clínicas Desplegada y Verificada\"), delegando las acciones operativas (\"diseñar\", \"programar\", \"probar\") a la lista de actividades del cronograma."
+        },
+        {
+          "id": "u2-p5",
+          "code": "P5",
+          "question": "¿Qué implicancia operativa tiene la Regla del 100% al auditar una WBS?",
+          "answer": "Implica que todo trabajo no incluido en la WBS queda formalmente fuera del alcance del proyecto, y que ningún paquete de trabajo puede duplicar trabajo de otro componente. Al sumar el trabajo de todos los elementos hijos de un nivel, el resultado debe ser exactamente el 100% del elemento padre, asegurando que no existan omisiones en el alcance ni costos ocultos no autorizados."
+        },
+        {
+          "id": "u2-p6",
+          "code": "P6",
+          "question": "¿Para qué sirve el Diccionario de la WBS y por qué no es suficiente con presentar el gráfico jerárquico?",
+          "answer": "El gráfico jerárquico de la WBS solo exhibe títulos o etiquetas breves, lo cual resulta insuficiente para prevenir la ambigüedad en la ejecución. El Diccionario de la WBS establece los límites precisos, la descripción técnica del trabajo, los criterios formales de aceptación y los responsables de cada paquete de trabajo, evitando que el equipo desarrolle funcionalidad de más (*gold plating*) o entregables con calidad deficiente."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u2-mc-1",
+          "number": 1,
+          "prompt": "En una reunión de directorio, el Patrocinador afirma que el Project Charter \"no hace falta porque ya tenemos un Business Case aprobado\". Desde la perspectiva de la gestión profesional de proyectos, esta afirmación es incorrecta porque:",
+          "options": [
+            {
+              "key": "A",
+              "text": "El Business Case define el cronograma detallado de actividades y el Charter solo el presupuesto."
+            },
+            {
+              "key": "B",
+              "text": "El Business Case justifica la viabilidad económica preliminar, pero solo el Project Charter autoriza formalmente el proyecto y confiere autoridad formal al Director del Proyecto."
+            },
+            {
+              "key": "C",
+              "text": "El Project Charter es un documento exclusivo para el cliente externo, mientras que el Business Case es interno."
+            },
+            {
+              "key": "D",
+              "text": "El Business Case se redacta después de la WBS y el Project Charter antes de la WBS."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El Business Case es un análisis previo de justificación económica (costo/beneficio), pero carece del valor administrativo de conferir autoridad institucional al Project Manager y autorizar el uso de fondos; dicha función es privativa del Project Charter."
+        },
+        {
+          "id": "u2-mc-2",
+          "number": 2,
+          "prompt": "Un hospital público emprende la informatización de su sistema de farmacia. El Colegio de Farmacéuticos local no financia el proyecto ni tiene contrato con el hospital, pero cuenta con capacidad legal para paralizar la puesta en marcha si no se cumplen normas de dispensa médica. Según la Matriz Poder/Interés, ¿en qué cuadrante se ubica este interesado y qué estrategia corresponde?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Bajo Poder / Alto Interés -> Mantener informado."
+            },
+            {
+              "key": "B",
+              "text": "Alto Poder / Alto Interés -> Gestionar de cerca (*Manage Closely*)."
+            },
+            {
+              "key": "C",
+              "text": "Bajo Poder / Bajo Interés -> Monitorear con esfuerzo mínimo."
+            },
+            {
+              "key": "D",
+              "text": "Alto Poder / Bajo Interés -> Mantener satisfecho (*Keep Satisfied*)."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El Colegio de Farmacéuticos posee Alto Poder (capacidad regulatoria o legal de vetar la puesta en marcha) y Alto Interés (las normativas de dispensa impactan directamente en su gremio y profesión). Corresponde al cuadrante Alto Poder / Alto Interés y debe ser Gestionado de Cerca (*Manage Closely*)."
+        },
+        {
+          "id": "u2-mc-3",
+          "number": 3,
+          "prompt": "Al auditar la WBS de un proyecto de software, un evaluador detecta que el nodo 1.3 (\"Módulo de Pagos Electrónicos\") contiene los hijos: 1.3.1 \"Pasarela de Cobro Integrada\", 1.3.2 \"Módulo de Conciliación Bancaria\" y 1.3.3 \"Mantenimiento del Servidor por 5 Años Posteriores a la Entrega\". ¿Qué principio fundamental se está violando flagrantemente?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El principio de estimación análoga."
+            },
+            {
+              "key": "B",
+              "text": "La Regla del 100%, al incorporar trabajo operativo recurrente ajeno al alcance temporal del proyecto."
+            },
+            {
+              "key": "C",
+              "text": "El criterio SMART de los objetivos."
+            },
+            {
+              "key": "D",
+              "text": "La jerarquía del organigrama institucional."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Un proyecto es por definición un esfuerzo temporal. Incluir \"mantenimiento operativo por 5 años posteriores\" dentro de la WBS del proyecto viola la Regla del 100%, ya que introduce operaciones continuas de mantenimiento post-proyecto dentro del alcance del proyecto de desarrollo."
+        },
+        {
+          "id": "u2-mc-4",
+          "number": 4,
+          "prompt": "Un objetivo formal de proyecto dice: \"Mejorar sensiblemente la infraestructura tecnológica de la empresa durante el año en curso\". ¿Qué deficiencia SMART presenta de manera más evidente?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Carece de relevancia estratégica para la organización."
+            },
+            {
+              "key": "B",
+              "text": "No es temporal (*Time-bound*) porque no menciona el año."
+            },
+            {
+              "key": "C",
+              "text": "Carece de especificidad (*Specific*) y de métricas cuantificables (*Measurable*) que definan qué significa \"mejorar sensiblemente\"."
+            },
+            {
+              "key": "D",
+              "text": "Es inalcanzable (*Achievable*) por definición presupuestaria."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "La frase \"mejorar sensiblemente\" es ambigua y subjetiva. No define el qué exacto (falta de especificidad) ni establece umbrales numéricos o indicadores verificables (falta de mensurabilidad)."
+        },
+        {
+          "id": "u2-mc-5",
+          "number": 5,
+          "prompt": "Según el Modelo de Prominencia de Mitchell, Agle y Wood, un grupo vecinal cercano a una obra de centros de datos que presenta quejas urgentes en la prensa sin tener legitimidad contractual ni poder real para suspender la obra, califica como interesado:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Definitivo."
+            },
+            {
+              "key": "B",
+              "text": "Latente con atributo de Urgencia (Reclamante o Demandante)."
+            },
+            {
+              "key": "C",
+              "text": "Peligroso con atributo de Poder y Legitimidad."
+            },
+            {
+              "key": "D",
+              "text": "Dominante con atributo de Poder institucional."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Al poseer un único atributo (Urgencia) sin Poder ni Legitimidad formal, el actor se clasifica dentro de la categoría de interesados Latentes, específicamente como \"Interesado Demandante / Reclamante\" (*Demanding Stakeholder*)."
+        },
+        {
+          "id": "u2-mc-6",
+          "number": 6,
+          "prompt": "¿Qué componente del Diccionario de la WBS permite verificar objetivamente que el entregable cumple con los estándares exigidos antes de solicitar la firma del cliente?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El código de cuenta contable."
+            },
+            {
+              "key": "B",
+              "text": "Los Criterios de Aceptación (*Acceptance Criteria*)."
+            },
+            {
+              "key": "C",
+              "text": "El nombre de fantasía del paquete de trabajo."
+            },
+            {
+              "key": "D",
+              "text": "La lista de precedencias en el diagrama de Gantt."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Los criterios de aceptación determinan las condiciones medibles y específicas que el producto o entregable debe satisfacer de forma verificable para que el cliente o patrocinador emita la aceptación formal del paquete de trabajo."
+        }
+      ]
+    },
+    {
+      "id": "u3",
+      "number": 3,
+      "title": "Gestión de la Integración y Contrataciones en Proyectos",
+      "shortTitle": "U3 · Integración y Contratos",
+      "trapTitle": "Trampa frecuente — Unidad 3",
+      "trapBody": "En un proyecto predictivo, incluso un cambio de 15 minutos requiere **Solicitud de Cambio (RFC)** y aprobación del **CCB**. En contratos, **Precio Fijo** carga el riesgo al vendedor; **Costos Reembolsables** al comprador; y en **Changes for Free** se intercambian historias de igual cantidad de *Story Points*.",
+      "recallItems": [
+        {
+          "id": "u3-p1",
+          "code": "P1",
+          "question": "¿Cuál es la función principal del Comité de Control de Cambios (CCB) en un proyecto predictivo?",
+          "answer": "La función del CCB es evaluar formalmente y de manera interdisciplinaria las solicitudes de cambio sobre la línea base del proyecto, analizando su impacto sistémico sobre el alcance, el cronograma, el costo, la calidad y los riesgos, para luego decidir formalmente si se aprueban, rechazan o postergan."
+        },
+        {
+          "id": "u3-p2",
+          "code": "P2",
+          "question": "En la decisión de Fabricar o Comprar (*Make-or-Buy*), ¿cuándo es estratégico optar por el desarrollo interno (*Make*) aun si comprar resulta inicialmente más económico?",
+          "answer": "Cuando el desarrollo involucra el núcleo del negocio (*core business*), procesos propietarios diferenciadores o propiedad intelectual crítica que otorga una ventaja competitiva en el mercado, o cuando depender de un proveedor externo genera un riesgo inaceptable de soberanía técnica y confidencialidad."
+        },
+        {
+          "id": "u3-p3",
+          "code": "P3",
+          "question": "¿Por qué un contrato de Precio Fijo cerrado (FFP) genera incentivos perversos cuando se aplica a proyectos de software con alta incertidumbre?",
+          "answer": "Porque transfiere todo el riesgo financiero al proveedor. Frente a desvíos no previstos o requerimientos ambiguos, el proveedor se ve forzado a recortar la calidad interna de la arquitectura (generando deuda técnica), resistir rígidamente cualquier pedido de cambio del cliente o cobrar montos exorbitantes por cada pequeña modificación para proteger su margen de ganancia."
+        },
+        {
+          "id": "u3-p4",
+          "code": "P4",
+          "question": "¿Cómo opera la regla de \"Changes for Free\" en el modelo contractual ágil propuesto por Jeff Sutherland?",
+          "answer": "Permite que el cliente introduzca nuevos requerimientos en el backlog durante el proyecto sin incurrir en costos de adenda, siempre que retire del backlog historias no iniciadas de similar tamaño en Story Points, manteniendo la carga de trabajo total acordada constante y sin comprometer el presupuesto inicial."
+        },
+        {
+          "id": "u3-p5",
+          "code": "P5",
+          "question": "¿Qué beneficio mutuo genera la cláusula de \"Money for Nothing\" ante una finalización anticipada del proyecto?",
+          "answer": "El cliente se beneficia ahorrándose la gran mayoría del presupuesto remanente (ej. el 80%) al dar por concluido el proyecto cuando ya obtuvo el valor comercial suficiente; el proveedor se beneficia cobrando una bonificación neta (ej. el 20% de lo no ejecutado) como margen puro sin incurrir en costos de horas-hombre, pudiendo liberar a su equipo de inmediato para otros proyectos rentables."
+        },
+        {
+          "id": "u3-p6",
+          "code": "P6",
+          "question": "¿Cuál es el rol de la Definición de Terminado (*Definition of Done*) en la gestión de la integración técnica de un equipo ágil?",
+          "answer": "La DoD actúa como el contrato de calidad interno del equipo. Garantiza que cada incremento de software cumpla con todos los estándares técnicos (pruebas automatizadas pasadas, código refactorizado, documentación de API actualizada, integración en la rama principal) antes de considerarse terminado, previniendo la acumulación de problemas de integración oculta y deuda técnica."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u3-mc-1",
+          "number": 1,
+          "prompt": "Un desarrollador de software recibe una solicitud verbal del cliente para modificar un campo en la base de datos de un proyecto gestionado bajo PMBOK. El desarrollador sabe que el cambio solo le tomará 15 minutos. Desde la disciplina de la Gestión de la Integración, ¿qué debe hacer?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Implementar el cambio de inmediato para mantener la satisfacción del cliente."
+            },
+            {
+              "key": "B",
+              "text": "Rechazar terminantemente la solicitud e ignorar al cliente."
+            },
+            {
+              "key": "C",
+              "text": "Indicar al cliente que formalice la Solicitud de Cambio (RFC) para registrarla en el log y evaluar su impacto en la línea base antes de intervenir."
+            },
+            {
+              "key": "D",
+              "text": "Implementar el cambio y no documentarlo para no generar burocracia."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "En el enfoque predictivo, ningún cambio sobre la línea base puede implementarse sin cumplir el proceso formal de Control Integrado de Cambios, independientemente del tiempo que insuma, para prevenir la corrupción del alcance (*scope creep*)."
+        },
+        {
+          "id": "u3-mc-2",
+          "number": 2,
+          "prompt": "Una empresa bancaria necesita construir una plataforma innovadora de billetera virtual utilizando algoritmos experimentales de blockchain donde el alcance y las tecnologías aún no están probados en el mercado. ¿Qué tipo de contrato tradicional distribuye el riesgo de forma coherente con esta incertidumbre?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Precio Fijo Firme (FFP), para obligar al proveedor a cumplir el presupuesto."
+            },
+            {
+              "key": "B",
+              "text": "Costos Reembolsables (Cost Reimbursable), asumiendo el cliente el riesgo financiero de la exploración."
+            },
+            {
+              "key": "C",
+              "text": "Contrato por precio unitario con penalidades por día de atraso."
+            },
+            {
+              "key": "D",
+              "text": "Contrato de arrendamiento operativo sin entregables."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Cuando la incertidumbre tecnológica y de alcance es extrema (como en desarrollos experimentales de I+D), los contratos de Precio Fijo son inviables. Los contratos de Costos Reembolsables permiten la exploración asumiendo el comprador el riesgo financiero."
+        },
+        {
+          "id": "u3-mc-3",
+          "number": 3,
+          "prompt": "En un contrato ágil bajo la modalidad \"Changes for Free\", el cliente solicita incorporar una nueva épica estimada en 40 Story Points. Para que aplique la regla de gratuidad del cambio, ¿qué condición debe cumplirse?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El cliente debe pagar el 50% del valor de los Story Points solicitados."
+            },
+            {
+              "key": "B",
+              "text": "El cliente debe remover del Product Backlog ítems no desarrollados que sumen al menos 40 Story Points."
+            },
+            {
+              "key": "C",
+              "text": "El equipo debe hacer horas extras no remuneradas para absorber los 40 puntos."
+            },
+            {
+              "key": "D",
+              "text": "La nueva épica debe asignarse a un nuevo equipo externo."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La regla \"Changes for Free\" exige una equivalencia simétrica: para ingresar trabajo nuevo sin costo adicional, deben descartarse del backlog historias pendientes por una cantidad idéntica de Story Points, manteniendo la capacidad fija."
+        },
+        {
+          "id": "u3-mc-4",
+          "number": 4,
+          "prompt": "La principal ventaja de un contrato \"Capped T&M\" (Tiempo y Materiales con Tope) para el comprador radica en que:",
+          "options": [
+            {
+              "key": "A",
+              "text": "El proveedor asume todos los costos sin importar el tiempo transcurrido."
+            },
+            {
+              "key": "B",
+              "text": "El comprador paga por el esfuerzo real iterativo consumido, pero tiene garantizado que el gasto no superará un límite presupuestario máximo pactado."
+            },
+            {
+              "key": "C",
+              "text": "Elimina la necesidad de definir historias de usuario o criterios de aceptación."
+            },
+            {
+              "key": "D",
+              "text": "Permite al comprador congelar los requisitos de forma irreversible."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El Capped T&M combina lo mejor de dos mundos: permite la flexibilidad ágil de abonar por iteraciones de trabajo efectivo (*T&M*), pero protege al comprador fijando un techo presupuestario máximo (*Not-to-Exceed*)."
+        },
+        {
+          "id": "u3-mc-5",
+          "number": 5,
+          "prompt": "Según Paez et al., la principal causa por la cual los contratos tradicionales de software a precio fijo colapsan en proyectos modernos es:",
+          "options": [
+            {
+              "key": "A",
+              "text": "La incapacidad técnica de los programadores contemporáneos."
+            },
+            {
+              "key": "B",
+              "text": "El desinterés del cliente en auditar los gastos de hardware."
+            },
+            {
+              "key": "C",
+              "text": "La falacia de asumir que el alcance del software puede especificarse de forma completa y estática al inicio, ignorando el carácter empírico y evolutivo del software."
+            },
+            {
+              "key": "D",
+              "text": "La falta de herramientas informáticas para redactar documentos legales."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Paez et al. argumentan que el software es un proceso de aprendizaje y diseño intensivo; obligar contractualmente a congelar el alcance al inicio genera una brecha insalvable entre las cláusulas legales y la realidad cambiante del desarrollo."
+        },
+        {
+          "id": "u3-mc-6",
+          "number": 6,
+          "prompt": "¿Qué rol formal tiene la autoridad final para aprobar la rescisión anticipada de un proyecto en un marco predictivo institucional?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El Director del Proyecto (Project Manager)."
+            },
+            {
+              "key": "B",
+              "text": "El equipo de desarrollo técnico."
+            },
+            {
+              "key": "C",
+              "text": "El Patrocinador (Sponsor) o Comité Ejecutivo institucional."
+            },
+            {
+              "key": "D",
+              "text": "El Administrador de la base de datos."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "La autoridad de cancelar, autorizar o rescindir formalmente un proyecto es privativa del Patrocinador (*Sponsor*) o de la máxima gobernanza institucional que financia la iniciativa."
+        }
+      ]
+    },
+    {
+      "id": "u4",
+      "number": 4,
+      "title": "Gestión de Riesgos en el Desarrollo de Software",
+      "shortTitle": "U4 · Gestión de Riesgos",
+      "trapTitle": "Trampa frecuente — Unidad 4",
+      "trapBody": "Distinguir **Plan de Mitigación** (acción preventiva *ex ante* para reducir $P$ o $I$) de **Plan de Contingencia** (acción reactiva *ex post* activada por un *trigger* usando reservas). La **Transferencia** traslada el impacto económico a un tercero, pero **no elimina** la probabilidad del riesgo.",
+      "recallItems": [
+        {
+          "id": "u4-p1",
+          "code": "P1",
+          "question": "¿Cuál es la fórmula para calcular la Exposición al Riesgo ($E$) y qué utilidad tiene para el Director de Proyecto?",
+          "answer": "La fórmula es $E = P \\times I$ (Exposición = Probabilidad $\\times$ Impacto). Su utilidad radica en que permite ponderar y ordenar objetivamente todos los riesgos identificados en una escala homogénea, facilitando la priorización del esfuerzo y los recursos de gestión sobre aquellas amenazas que superen el umbral de tolerancia del proyecto."
+        },
+        {
+          "id": "u4-p2",
+          "code": "P2",
+          "question": "¿En qué se diferencia sustancialmente un Plan de Mitigación de un Plan de Contingencia?",
+          "answer": "El plan de mitigación consiste en acciones preventivas que se ejecutan proactivamente antes de que ocurra el evento para reducir su probabilidad o su impacto potencial. El plan de contingencia es un conjunto de procedimientos predefinidos que solo se activan y ejecutan si el evento de riesgo efectivamente llega a ocurrir (ante un disparador o *trigger*), utilizando las reservas de contingencia."
+        },
+        {
+          "id": "u4-p3",
+          "code": "P3",
+          "question": "¿Por qué la estrategia de Transferencia de Riesgo no elimina la amenaza del proyecto?",
+          "answer": "Porque la transferencia no modifica la probabilidad de ocurrencia del evento adverso ni erradica la falla técnica; únicamente traslada las consecuencias financieras o la responsabilidad legal a una entidad tercera (como una aseguradora o un subcontratista), la cual cobrará un sobreprecio por absorber dicho impacto."
+        },
+        {
+          "id": "u4-p4",
+          "code": "P4",
+          "question": "¿Cómo actúa el Producto Mínimo Viable (MVP) como herramienta de reducción de riesgos de negocio en software?",
+          "answer": "El MVP mitiga el riesgo de crear un sistema que no tenga tracción ni utilidad en el mercado (riesgo de falta de adopción). Al liberar de forma temprana la versión más simple que aporta valor, permite obtener retroalimentación directa y empírica de los usuarios reales, validando o descartando supuestos de negocio antes de invertir recursos masivos en el producto completo."
+        },
+        {
+          "id": "u4-p5",
+          "code": "P5",
+          "question": "¿Qué es un Spike Técnico en un marco ágil y qué dimensión de riesgo mitiga?",
+          "answer": "Un Spike es una historia de usuario de duración acotada (*timebox*) dedicada exclusivamente a la investigación, prototipado o experimentación técnica. Mitiga la dimensión de Factibilidad Técnica al resolver dudas sobre la viabilidad de una librería, arquitectura o integración antes de planificar las historias de usuario definitivas en el backlog."
+        },
+        {
+          "id": "u4-p6",
+          "code": "P6",
+          "question": "¿Por qué la Deuda Técnica no gestionada se considera un factor de riesgo multiplicativo?",
+          "answer": "Porque la deuda técnica degrada la calidad interna del código y su arquitectura, volviendo al sistema frágil y rígido. Esto incrementa exponencialmente la probabilidad de que surjan nuevos defectos ante cualquier cambio y multiplica el impacto económico y temporal de las modificaciones futuras."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u4-mc-1",
+          "number": 1,
+          "prompt": "Un equipo evalúa un riesgo de seguridad en la nube: la probabilidad de una brecha se califica con 4 (sobre 5) y el impacto económico se estima en 5 (sobre 5). El umbral de tolerancia fijado para el proyecto es $E = 12$. ¿Qué valor tiene la exposición y qué decisión corresponde tomar?",
+          "options": [
+            {
+              "key": "A",
+              "text": "$E = 9$; se acepta pasivamente por encontrarse en zona de bajo riesgo."
+            },
+            {
+              "key": "B",
+              "text": "$E = 20$; supera el umbral y exige obligatoriamente un plan de respuesta formal (mitigación o evasión)."
+            },
+            {
+              "key": "C",
+              "text": "$E = 0.8$; se transfiere a un seguro sin más trámite."
+            },
+            {
+              "key": "D",
+              "text": "$E = 15$; se pospone la decisión hasta el cierre del proyecto."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La exposición se calcula como $E = P \\times I = 4 \\times 5 = 20$. Dado que 20 es estrictamente mayor que el umbral de tolerancia fijado ($12$), el riesgo se ubica en la Zona Roja de alta prioridad y requiere obligatoriamente una respuesta activa y planificada."
+        },
+        {
+          "id": "u4-mc-2",
+          "number": 2,
+          "prompt": "Durante la arquitectura de un software de e-commerce, el equipo detecta que utilizar un motor criptográfico propio representa una amenaza crítica de vulnerabilidad. Deciden abandonar el desarrollo propio e integrar una biblioteca comercial certificada y auditada internacionalmente. ¿Qué estrategia de respuesta al riesgo se aplicó?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Aceptación pasiva."
+            },
+            {
+              "key": "B",
+              "text": "Evasión / Evitación (*Avoidance*), al erradicar la causa raíz cambiando la tecnología."
+            },
+            {
+              "key": "C",
+              "text": "Explotación de oportunidades."
+            },
+            {
+              "key": "D",
+              "text": "Retención de contingencias."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Al descartar por completo el desarrollo del motor criptográfico propio y sustituirlo por una solución certificada, el equipo elimina la condición causal que originaba la amenaza, aplicando una estrategia de Evasión (*Avoidance*)."
+        },
+        {
+          "id": "u4-mc-3",
+          "number": 3,
+          "prompt": "Un Director de Proyecto contrata una póliza de ciberseguro que indemniza a la empresa en caso de robo de bases de datos por un ataque externo. Esta acción clasifica formalmente como:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Mitigación técnica preventiva."
+            },
+            {
+              "key": "B",
+              "text": "Transferencia de riesgo."
+            },
+            {
+              "key": "C",
+              "text": "Eliminación de la probabilidad de ataque."
+            },
+            {
+              "key": "D",
+              "text": "Plan de contingencia operacional."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La póliza de seguro traslada las consecuencias financieras del siniestro a la entidad aseguradora sin alterar la probabilidad material de que el ataque cibernético ocurra, lo que constituye una Transferencia de Riesgo."
+        },
+        {
+          "id": "u4-mc-4",
+          "number": 4,
+          "prompt": "¿Cuál de los siguientes escenarios representa un \"Disparador de Riesgo\" (*Risk Trigger*)?",
+          "options": [
+            {
+              "key": "A",
+              "text": "La fórmula $E = P \\times I$."
+            },
+            {
+              "key": "B",
+              "text": "Un indicador de uso de CPU que supera el 90% sostenido durante 10 minutos, activando el protocolo de escalabilidad automática del servidor."
+            },
+            {
+              "key": "C",
+              "text": "La firma del Project Charter por parte del Sponsor."
+            },
+            {
+              "key": "D",
+              "text": "La reunión de retrospectiva al finalizar el sprint."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Un disparador o *trigger* es un síntoma, señal o métrica de advertencia temprana observable que indica que un evento de riesgo se ha materializado o está a punto de hacerlo, detonando la ejecución del plan de contingencia."
+        },
+        {
+          "id": "u4-mc-5",
+          "number": 5,
+          "prompt": "En un proyecto ágil, el equipo no sabe si la base de datos NoSQL elegida soportará la concurrencia de 50.000 transacciones simultáneas requeridas. ¿Qué práctica técnica o metodológica ágil es la recomendada para mitigar este riesgo de factibilidad en el primer sprint?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Redactar un pliego contractual de precio fijo con el fabricante de la base de datos."
+            },
+            {
+              "key": "B",
+              "text": "Desarrollar un Spike técnico de prueba de carga con un prototipo descartable para medir la concurrencia real."
+            },
+            {
+              "key": "C",
+              "text": "Ignorar la concurrencia y programar las interfaces de usuario."
+            },
+            {
+              "key": "D",
+              "text": "Aceptar pasivamente el riesgo y esperar a las pruebas en producción."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Un Spike técnico es una investigación empírica acotada temporalmente diseñada específicamente para generar conocimiento y despejar la incertidumbre sobre la viabilidad técnica antes del desarrollo definitivo."
+        },
+        {
+          "id": "u4-mc-6",
+          "number": 6,
+          "prompt": "La diferencia central entre una reserva de contingencia y una reserva de gestión radica en que:",
+          "options": [
+            {
+              "key": "A",
+              "text": "La reserva de contingencia se destina a \"incertidumbres conocidas\" (*known-unknowns*) identificadas en el registro de riesgos, mientras que la reserva de gestión cubre \"incertidumbres desconocidas\" (*unknown-unknowns*)."
+            },
+            {
+              "key": "B",
+              "text": "La reserva de contingencia solo cubre horas extras y la de gestión cubre licencias."
+            },
+            {
+              "key": "C",
+              "text": "La reserva de contingencia la administra el cliente y la de gestión el programador."
+            },
+            {
+              "key": "D",
+              "text": "No existe diferencia conceptual entre ambas reservas."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "En la teoría normativa de proyectos, la reserva de contingencia forma parte de la línea base de costo y atiende riesgos identificados en el registro (*known-unknowns*), mientras que la reserva de gestión atiende imprevistos no contemplados (*unknown-unknowns*) y requiere autorización del Sponsor para su uso."
+        }
+      ]
+    },
+    {
+      "id": "u5",
+      "number": 5,
+      "title": "Construcción de Software Ágil y Prácticas de Ingeniería",
+      "shortTitle": "U5 · Construcción Ágil",
+      "trapTitle": "Trampa frecuente — Unidad 5",
+      "trapBody": "En **TDD**, una prueba unitaria que pasa en verde antes de escribir código de producción indica una **falla metodológica** (debe fallar primero en fase Roja). En **Planning Poker**, jamás se promedian los votos ni manda la jerarquía: los extremos argumentan sus supuestos.",
+      "recallItems": [
+        {
+          "id": "u5-p1",
+          "code": "P1",
+          "question": "¿Por qué la metáfora de la fábrica de software es conceptualmente errónea según la epistemología ágil?",
+          "answer": "Porque en una fábrica tradicional el costo principal radica en la manufactura repetitiva de copias físicas siguiendo un diseño preestablecido. En el desarrollo de software, la producción de copias digitales tiene un costo marginal cero; el 100% del trabajo consiste en el diseño conceptual, la resolución de problemas y la creación de conocimiento, disciplinas que requieren adaptación iterativa y no procesos mecánicos repetitivos."
+        },
+        {
+          "id": "u5-p2",
+          "code": "P2",
+          "question": "¿Cuáles son las prácticas técnicas esenciales que permiten aplanar la curva del costo del cambio de Kent Beck?",
+          "answer": "Las prácticas técnicas rectoras son el Desarrollo Guiado por Pruebas (TDD), la refactorización continua (*Refactoring*), el diseño simple, la integración continua (CI) y las pruebas de regresión automatizadas. Estas prácticas proporcionan una red de seguridad que permite modificar el código en etapas avanzadas del proyecto con mínimo riesgo de introducir defectos colaterales."
+        },
+        {
+          "id": "u5-p3",
+          "code": "P3",
+          "question": "¿Cómo interactúan el \"Juego Libre\", el \"Enmarcado Deliberado\" y el \"Tiempo de Parada\" en el modelo de *Artful Making*?",
+          "answer": "El Juego Libre aporta la creatividad y exploración necesaria para descubrir soluciones innovadoras; el Enmarcado Deliberado establece las fronteras, objetivos y restricciones técnicas que canalizan esa creatividad para que no degenere en caos; y el Tiempo de Parada determina el límite temporal estricto en el cual se suspende la experimentación para consolidar y entregar un incremento de software utilizable."
+        },
+        {
+          "id": "u5-p4",
+          "code": "P4",
+          "question": "¿Por qué las 3 C de una Historia de Usuario (Card, Conversation, Confirmation) superan a las especificaciones tradicionales de requisitos?",
+          "answer": "Porque evitan el aislamiento y la ambigüedad documental. La Tarjeta actúa como un simple recordatorio del requerimiento; la Conversación promueve la interacción cara a cara y el entendimiento compartido entre desarrolladores y el Product Owner; y la Confirmación establece criterios de aceptación verificables que eliminan la subjetividad sobre si la funcionalidad está terminada."
+        },
+        {
+          "id": "u5-p5",
+          "code": "P5",
+          "question": "¿Qué problema cognitivo neutraliza la dinámica de revelación simultánea en el Planning Poker?",
+          "answer": "Neutraliza el **sesgo de anclaje (*anchoring bias*)**. Si los miembros del equipo manifestaran sus estimaciones de forma secuencial o verbal, la primera estimación expresada (especialmente por un líder técnico o referente senior) condicionaría indebidamente las opiniones de los demás. La revelación simultánea fuerza a cada desarrollador a reflexionar de manera independiente y hace visibles las discrepancias de criterio."
+        },
+        {
+          "id": "u5-p6",
+          "code": "P6",
+          "question": "¿Cuál es el objetivo de la fase de \"Refactorización\" en el ciclo TDD y bajo qué condición estricta debe realizarse?",
+          "answer": "El objetivo es mejorar la calidad interna del diseño del software (eliminar código duplicado, simplificar estructuras y aumentar la expresividad) para evitar la acumulación de deuda técnica. Debe realizarse bajo la condición estricta de que todas las pruebas automatizadas existentes sigan pasando (fase verde), garantizando que no se ha alterado el comportamiento observable externo del sistema."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u5-mc-1",
+          "number": 1,
+          "prompt": "Un consultor afirma que \"incorporar un cambio en los requisitos durante la fase de producción siempre costará 100 veces más que en la fase de análisis\". ¿Qué perspectiva teórica respalda esta afirmación y qué enfoque la refuta?",
+          "options": [
+            {
+              "key": "A",
+              "text": "La curva aplanada de Kent Beck la respalda; el Manifiesto Ágil la refuta."
+            },
+            {
+              "key": "B",
+              "text": "El modelo exponencial tradicional de Barry Boehm la respalda; el enfoque de Extreme Programming (XP) de Kent Beck la refuta mediante prácticas técnicas de ingeniería."
+            },
+            {
+              "key": "C",
+              "text": "La Ley de Little la respalda; el modelo GQM la refuta."
+            },
+            {
+              "key": "D",
+              "text": "El modelo de Austin & Devin la respalda; la WBS la refuta."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Barry Boehm documentó históricamente el crecimiento exponencial del costo del cambio en modelos en cascada. Kent Beck demostró que ese crecimiento no es una ley inmutable de la física, sino una consecuencia de la falta de prácticas de ingeniería ágil como pruebas automatizadas y refactorización."
+        },
+        {
+          "id": "u5-mc-2",
+          "number": 2,
+          "prompt": "Al analizar una Historia de Usuario, el equipo advierte que la historia dice: \"El sistema debe registrar pagos, emitir facturas contables, generar reportes de morosidad y sincronizar el inventario general\". Desde la perspectiva de los criterios INVEST, ¿qué violación es la más crítica?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Viola el criterio \"Valuable\", porque no aporta valor."
+            },
+            {
+              "key": "B",
+              "text": "Viola el criterio \"Small\", al tratarse de una épica sobredimensionada que agrupa múltiples funcionalidades no atómicas que impiden completarla en un sprint."
+            },
+            {
+              "key": "C",
+              "text": "Viola el criterio \"Negotiable\", porque incluye la palabra sistema."
+            },
+            {
+              "key": "D",
+              "text": "Viola el principio de la fábrica de software."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La historia describe un conjunto masivo de procesos dispares (pagos, facturación, morosidad e inventario). Al no ser pequeña (*Small*), constituye una épica que no puede completarse en un único sprint ni permite un flujo continuo."
+        },
+        {
+          "id": "u5-mc-3",
+          "number": 3,
+          "prompt": "En la dinámica de User Story Mapping creada por Jeff Patton, el concepto de \"Walking Skeleton\" se define operativamente como:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Un documento PDF con la arquitectura del sistema firmado por el cliente."
+            },
+            {
+              "key": "B",
+              "text": "La rebanada horizontal más delgada de funcionalidad fin-a-fin que atraviesa todos los componentes arquitectónicos del sistema y valida su viabilidad técnica."
+            },
+            {
+              "key": "C",
+              "text": "La lista completa de tareas de refactorización pendientes."
+            },
+            {
+              "key": "D",
+              "text": "El conjunto de historias descartadas del backlog."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Jeff Patton define el Walking Skeleton como la implementación más pequeña y delgada posible que conecta todos los eslabones tecnológicos de extremo a extremo, demostrando que la solución funciona en conjunto antes de engrosarla con lógica de negocio."
+        },
+        {
+          "id": "u5-mc-4",
+          "number": 4,
+          "prompt": "Un equipo de desarrollo practica TDD. Un programador escribe una prueba unitaria y observa que compila y pasa exitosamente antes de haber escrito una sola línea del código de producción correspondiente. ¿Qué diagnóstico corresponde formular según el método TDD?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El programador ha logrado el ciclo verde de forma brillante."
+            },
+            {
+              "key": "B",
+              "text": "Existe una falla metodológica severa: la prueba no está evaluando un nuevo comportamiento o es una tautología trivial; la prueba debe fallar primero (fase roja) para validar su poder de detección."
+            },
+            {
+              "key": "C",
+              "text": "Debe procederse de inmediato a la refactorización."
+            },
+            {
+              "key": "D",
+              "text": "Se ha completado el incremento de software."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El ciclo fundamental de TDD exige que la prueba falle primero (*Fase Roja*). Si la prueba pasa antes de escribir el código de producción, no está probando nada nuevo, ya estaba cubierta o está defectuosamente implementada."
+        },
+        {
+          "id": "u5-mc-5",
+          "number": 5,
+          "prompt": "Según las Cuatro Reglas del Diseño Simple formuladas por Kent Beck, una vez que el código pasa todas las pruebas automatizadas, la máxima prioridad de diseño es:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Utilizar la mayor cantidad posible de patrones de diseño de la banda de los cuatro (GoF)."
+            },
+            {
+              "key": "B",
+              "text": "Revelar con máxima claridad la intención del desarrollador mediante nombres expresivos y estructuras transparentes."
+            },
+            {
+              "key": "C",
+              "text": "Asegurar que el código no tenga comentarios."
+            },
+            {
+              "key": "D",
+              "text": "Incrementar el número de capas jerárquicas de clases."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "En la jerarquía de diseño simple de Beck, la primera regla es que el sistema pase todas las pruebas; la segunda es que exprese con claridad la intención del autor; la tercera es eliminar duplicación (DRY); y la cuarta es minimizar la cantidad de elementos."
+        },
+        {
+          "id": "u5-mc-6",
+          "number": 6,
+          "prompt": "En el Planning Poker, un programador junior vota 2 Story Points para una historia y un desarrollador senior vota 13 Story Points. ¿Cuál es el procedimiento normativo que prescribe la técnica?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Adoptar el valor del senior (13) por su mayor experiencia."
+            },
+            {
+              "key": "B",
+              "text": "Promediar matemáticamente ambos valores: $\\frac{2 + 13}{2} = 7.5 \\approx 8$."
+            },
+            {
+              "key": "C",
+              "text": "Pedir a ambos que fundamenten sus supuestos (el porqué del 2 y el porqué del 13), debatir las incertidumbres detectadas y volver a votar hasta converger en consenso."
+            },
+            {
+              "key": "D",
+              "text": "Descartar la historia de usuario del sprint."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El Planning Poker no se basa en jerarquías ni en promedios matemáticos que ocultan la incertidumbre. El valor del método reside en forzar a los extremos a explicar sus supuestos divergentes para revelar complejidades o soluciones simples no percibidas por los demás."
+        }
+      ]
+    },
+    {
+      "id": "u6",
+      "number": 6,
+      "title": "Diseño Socio-Técnico y Team Topologies",
+      "shortTitle": "U6 · Team Topologies",
+      "trapTitle": "Trampa frecuente — Unidad 6",
+      "trapBody": "Un **Enabling Team** es estrictamente temporal (modo *Facilitación*): si se queda permanente, se convierte en un silo dependiente. Al fusionar equipos, los canales crecen cuadráticamente ($C = N(N-1)/2$), disparando la **Ley de Brooks**.",
+      "recallItems": [
+        {
+          "id": "u6-p1",
+          "code": "P1",
+          "question": "¿Qué postula la Ley de Conway y qué es la Maniobra Inversa de Conway?",
+          "answer": "La Ley de Conway postula que la arquitectura técnica de un sistema de software reproduce inexorablemente la estructura de comunicación de la organización que lo diseñó. La Maniobra Inversa de Conway consiste en aplicar esta ley de manera deliberada: estructurar intencionalmente los equipos y sus límites de comunicación según el modelo arquitectónico deseado (ej. equipos desacoplados por dominio de negocio), induciendo así la emergencia de una arquitectura limpia y modular de microservicios."
+        },
+        {
+          "id": "u6-p2",
+          "code": "P2",
+          "question": "¿Por qué agregar desarrolladores a un proyecto atrasado tiende a retrasarlo más según la Ley de Brooks?",
+          "answer": "Porque el número de canales de comunicación entre $N$ personas crece cuadráticamente según $\\frac{N(N-1)}{2}$. La incorporación de nuevos miembros consume tiempo valioso de los desarrolladores experimentados para capacitarlos y genera una sobrecarga exponencial de reuniones, sincronizaciones y acuerdos que supera con creces el aporte individual inicial de los ingresantes."
+        },
+        {
+          "id": "u6-p3",
+          "code": "P3",
+          "question": "¿Cómo se define la Carga Cognitiva Extraña y cuál es la estrategia organizacional para tratarla?",
+          "answer": "Es el esfuerzo mental desperdiciado en tareas accidentales y mecánicas no vinculadas a la resolución del problema de negocio (ej. lidiar con despliegues manuales, configuraciones complejas de servidores o entornos de prueba rotos). La estrategia organizacional es minimizarla drásticamente mediante la automatización, la estandarización y la creación de un Equipo de Plataforma que provea servicios de infraestructura como autoservicio (*Self-Service*)."
+        },
+        {
+          "id": "u6-p4",
+          "code": "P4",
+          "question": "¿Cuál es el riesgo de que un Equipo Habilitador (*Enabling Team*) permanezca trabajando indefinidamente dentro de un Stream-Aligned Team?",
+          "answer": "El riesgo es que se convierta en un silo dependiente o en una muleta permanente, asumiendo las tareas difíciles del equipo cliente en lugar de transferir la capacidad. El Enabling Team debe tener una misión estrictamente temporal de capacitación y facilitación, retirándose tan pronto el Stream-Aligned Team adquiere la autonomía requerida."
+        },
+        {
+          "id": "u6-p5",
+          "code": "P5",
+          "question": "¿Qué define a una \"Plataforma Mínima Viable\" (*Thinnest Viable Platform* - TVP)?",
+          "answer": "Es el conjunto más pequeño y simple de servicios, herramientas y documentación que un Platform Team puede ofrecer para que los Stream-Aligned teams operen con autonomía sin reinventar la rueda, evitando construir plataformas monumentales sobrediseñadas que nadie utiliza y que aumentan la complejidad en lugar de reducirla."
+        },
+        {
+          "id": "u6-p6",
+          "code": "P6",
+          "question": "¿Por qué el modo de interacción de Colaboración debe mantenerse estrictamente acotado en el tiempo?",
+          "answer": "Porque la colaboración estrecha exige una intensa comunicación bilateral continua, difumina los límites de responsabilidad del código y reduce temporalmente la velocidad de entrega de ambos equipos. Si se prolonga indefinidamente, frena el flujo de valor y genera un acoplamiento socio-técnico perjudicial entre los equipos involucrados."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u6-mc-1",
+          "number": 1,
+          "prompt": "Una organización cuenta con un equipo exclusivo de administradores de bases de datos (DBAs), un equipo exclusivo de maquetadores HTML/CSS y un equipo de programadores backend. Los despliegues son trimestrales y requieren constantes reuniones de coordinación de interfaces. Este fenómeno es una manifestación directa de:",
+          "options": [
+            {
+              "key": "A",
+              "text": "El principio INVEST de historias de usuario."
+            },
+            {
+              "key": "B",
+              "text": "La Ley de Conway, que replica la fragmentación en silos organizativos en una arquitectura acoplada en tres capas."
+            },
+            {
+              "key": "C",
+              "text": "La aplicación exitosa de la Maniobra Inversa de Conway."
+            },
+            {
+              "key": "D",
+              "text": "Un modo de interacción X-as-a-Service bien maduro."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Melvin Conway demostró que la separación de los equipos por especialidad técnica (silos de DB, Frontend y Backend) fuerza a que el sistema de software se diseñe con las mismas divisiones y dependencias, originando un monolito acoplado."
+        },
+        {
+          "id": "u6-mc-2",
+          "number": 2,
+          "prompt": "Un equipo de desarrollo pasa 15 horas a la semana configurando servidores virtuales, parchando certificados de seguridad vencidos y resolviendo fallas en scripts de bash para poder compilar. Según la teoría de Team Topologies, este esfuerzo corresponde a:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Carga cognitiva germana de alto valor de negocio."
+            },
+            {
+              "key": "B",
+              "text": "Carga cognitiva extraña (*extraneous*), que debe ser minimizada mediante servicios provistos por un Platform Team."
+            },
+            {
+              "key": "C",
+              "text": "Carga cognitiva intrínseca indispensable."
+            },
+            {
+              "key": "D",
+              "text": "Práctica deliberada de Improvement Kata."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La carga mental generada por scripts caídos, configuración manual de infraestructura y parches no aporta valor al cliente final. Constituye carga cognitiva extraña que debe ser absorbida y automatizada por una plataforma como autoservicio."
+        },
+        {
+          "id": "u6-mc-3",
+          "number": 3,
+          "prompt": "Un equipo de 8 personas trabaja de forma permanente desarrollando y evolucionando el flujo de compra y checkout de una aplicación de retail digital, abarcando desde la interfaz de usuario hasta la integración con la pasarela de pagos. Este equipo clasifica como:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Complicated-Subsystem Team."
+            },
+            {
+              "key": "B",
+              "text": "Enabling Team."
+            },
+            {
+              "key": "C",
+              "text": "Stream-Aligned Team (Equipo Alineado al Flujo de Valor)."
+            },
+            {
+              "key": "D",
+              "text": "Platform Team."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Los Stream-Aligned teams son equipos multifuncionales continuos dedicados al flujo de entrega de una capacidad de negocio completa (en este caso, el checkout del retail) con autonomía fin-a-fin."
+        },
+        {
+          "id": "u6-mc-4",
+          "number": 4,
+          "prompt": "Para implementar un nuevo algoritmo de cifrado homomórfico cuántico que requiere doctores en matemáticas puras y conocimientos profundos de álgebra abstracta, la organización decide formar un equipo transitorio dedicado a desarrollar la librería. Esta topología se denomina:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Complicated-Subsystem Team (Equipo de Subsistema Complicado)."
+            },
+            {
+              "key": "B",
+              "text": "Stream-Aligned Team."
+            },
+            {
+              "key": "C",
+              "text": "Equipo de soporte nivel 1."
+            },
+            {
+              "key": "D",
+              "text": "Comité de Control de Cambios."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Un Complicated-Subsystem Team se crea exclusivamente para aislar y encapsular un dominio que demanda una especialización matemática o técnica tan extrema que desbordaría la capacidad cognitiva de un equipo generalista de flujo."
+        },
+        {
+          "id": "u6-mc-5",
+          "number": 5,
+          "prompt": "Un equipo de especialistas en accesibilidad web (a11y) se incorpora durante 3 semanas a dos equipos de desarrollo para enseñarles a estructurar código HTML semántico y utilizar lectores de pantalla, tras lo cual se desvinculan para asistir a otros equipos. ¿Qué topología de equipo y modo de interacción se evidencian?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Platform Team en modo Colaboración permanente."
+            },
+            {
+              "key": "B",
+              "text": "Enabling Team en modo Facilitación."
+            },
+            {
+              "key": "C",
+              "text": "Stream-Aligned Team en modo X-as-a-Service."
+            },
+            {
+              "key": "D",
+              "text": "Complicated-Subsystem Team en modo Auditoría."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Un Enabling Team actúa como consultor pedagógico interno que transfiere habilidades y se retira; el modo en que opera asistiendo y educando al equipo cliente es formalmente el modo de Facilitación (*Facilitating*)."
+        },
+        {
+          "id": "u6-mc-6",
+          "number": 6,
+          "prompt": "Según la formulación de canales de comunicación $\\frac{N(N-1)}{2}$, ¿cuántos canales de comunicación activos se generan si un director decide fusionar dos equipos ágiles de 6 personas en un único gran equipo de 12 personas?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Se incrementan de 15 a 30 canales."
+            },
+            {
+              "key": "B",
+              "text": "Se incrementan de 30 canales sumados ($15 + 15$) a 66 canales en el equipo unificado."
+            },
+            {
+              "key": "C",
+              "text": "Se reducen a la mitad debido a la economía de escala."
+            },
+            {
+              "key": "D",
+              "text": "Permanecen estables en 12 canales."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Para $N=6$, cada equipo tiene $\\frac{6(5)}{2} = 15$ canales (30 canales en total separados). Al consolidar un único grupo de $N=12$, los canales se disparan a $\\frac{12(11)}{2} = \\frac{132}{2} = 66$ canales, más que duplicando la sobrecarga comunicativa y ralentizando la toma de decisiones."
+        }
+      ]
+    },
+    {
+      "id": "u7",
+      "number": 7,
+      "title": "Métricas, Enfoque Lean y Gestión de la Mejora Continua",
+      "shortTitle": "U7 · Lean, Métricas y GQM",
+      "trapTitle": "Trampa frecuente — Unidad 7",
+      "trapBody": "Según la **Ley de Goodhart**, cuando una métrica se usa como meta de premio o castigo deja de ser fiable. Recordar la **Eficiencia de Flujo** $= (\\text{Touch Time} / \\text{Lead Time}) \\times 100$ (típicamente $5\\%\\text{–}15\\%$ en software por tiempos muertos en colas).",
+      "recallItems": [
+        {
+          "id": "u7-p1",
+          "code": "P1",
+          "question": "¿Por qué mantener a los integrantes de un equipo de software asignados al 100% de ocupación degrada el rendimiento del sistema?",
+          "answer": "Porque según la teoría de colas, a medida que la utilización de un recurso se acerca al 100%, cualquier variación aleatoria en la demanda o en la duración de las tareas genera colas de espera infinitas. Sin capacidad disponible (*slack*), los miembros del equipo no pueden colaborar para destrabar bloqueos ajenos, responder a incidentes urgentes ni implementar mejoras, disparando el Lead Time de todo el sistema."
+        },
+        {
+          "id": "u7-p2",
+          "code": "P2",
+          "question": "¿Cuáles son las cuatro etapas del ciclo PDCA y qué función metodológica cumple la fase de \"Check\"?",
+          "answer": "Las etapas son Plan (Planificar), Do (Hacer), Check (Verificar / Estudiar) y Act (Actuar / Ajustar). La fase de \"Check\" cumple la función metodológica de contrastar objetivamente los datos empíricos obtenidos de la prueba piloto contra la hipótesis inicial formulada en la fase de planificación, validando si el cambio introducido produjo una mejora real antes de decidir su estandarización."
+        },
+        {
+          "id": "u7-p3",
+          "code": "P3",
+          "question": "¿Cómo enuncia la Ley de Goodhart el riesgo de utilizar métricas cuantitativas como objetivos de rendimiento en software?",
+          "answer": "Postula que \"cuando una medida se convierte en un objetivo, deja de ser una buena medida\". Si un indicador cuantitativo (como la cantidad de bugs cerrados o el número de líneas de código) se utiliza para premiar o penalizar, las personas alteran su comportamiento para optimizar el número numérico superficial a expensas de la calidad del producto, distorsionando la realidad y perjudicando los objetivos del negocio."
+        },
+        {
+          "id": "u7-p4",
+          "code": "P4",
+          "question": "¿Cuáles son los cinco componentes estructurales obligatorios para definir una Meta según la metodología GQM?",
+          "answer": "Los cinco componentes formales son:\n1. Objeto de estudio (qué proceso, artefacto o producto se analiza).\n2. Propósito (para qué se analiza: evaluar, mejorar, monitorear, predecir).\n3. Foco de calidad (qué atributo se mide: fiabilidad, costo, tiempo, usabilidad).\n4. Punto de vista (desde la perspectiva de qué interesado: desarrollador, cliente, gerente).\n5. Contexto (en qué entorno, proyecto u organización específica se desarrolla la medición)."
+        },
+        {
+          "id": "u7-p5",
+          "code": "P5",
+          "question": "Si una empresa registra que una historia de usuario demanda 8 horas netas de codificación (*Touch Time*) pero tarda 80 horas de tiempo calendario (*Lead Time*) en llegar a producción, ¿cuál es su Eficiencia de Flujo?",
+          "answer": "Aplicando la fórmula:\n$$\\text{Eficiencia de Flujo} = \\frac{\\text{Touch Time}}{\\text{Lead Time}} \\times 100 = \\frac{8}{80} \\times 100 = 10\\%$$\nEsto indica que el 90% del tiempo la historia de usuario estuvo inerte en colas de espera (aguardando revisión de código, disponibilidad del servidor o aprobación de despliegue)."
+        },
+        {
+          "id": "u7-p6",
+          "code": "P6",
+          "question": "¿Por qué el \"Trabajo Parcialmente Terminado\" se considera el desperdicio Lean más perjudicial en software?",
+          "answer": "Porque representa una inversión económica ya realizada que no produce ningún retorno económico hasta tanto esté funcionando en producción. Además, el código almacenado fuera de la rama principal se devalúa rápidamente, sufre conflictos de integración con los cambios diarios de otros desarrolladores y oculta defectos que solo se revelarán al fusionarse."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u7-mc-1",
+          "number": 1,
+          "prompt": "Un Gerente de Desarrollo decide implementar una métrica: a fin de mes, el programador que haya registrado mayor cantidad de \"commits\" recibirá un bono financiero. Al mes siguiente, los commits se triplicaron pero el software tiene más errores y el código está atomizado en fragmentos insignificantes. Este fenómeno ejemplifica:",
+          "options": [
+            {
+              "key": "A",
+              "text": "La aplicación rigurosa de la metodología GQM."
+            },
+            {
+              "key": "B",
+              "text": "La Ley de Goodhart, que distorsiona el comportamiento cuando una medida se convierte en objetivo de evaluación."
+            },
+            {
+              "key": "C",
+              "text": "La Regla del 100% de la WBS."
+            },
+            {
+              "key": "D",
+              "text": "Una transformación Kaikaku exitosa."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Al convertir la métrica técnica (cantidad de commits) en una meta vinculada a un bono económico, los programadores aprendieron a burlar el sistema dividiendo su trabajo en micro-commits sin valor, verificando la Ley de Goodhart."
+        },
+        {
+          "id": "u7-mc-2",
+          "number": 2,
+          "prompt": "En una fábrica de software, los analistas funcionales redactan documentos extensos de casos de uso y se los entregan a los programadores. Luego, los programadores entregan el código compilado a un equipo separado de testers para que ejecuten las pruebas. Según la taxonomía Lean, ¿qué desperdicio (*Muda*) predomina estructuralmente en este esquema?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Trabajo parcialmente terminado exclusivamente."
+            },
+            {
+              "key": "B",
+              "text": "Traspasos (*Handoffs*), que diluyen el contexto tácito y la responsabilidad compartida."
+            },
+            {
+              "key": "C",
+              "text": "Retrospectivas excesivas."
+            },
+            {
+              "key": "D",
+              "text": "Carga cognitiva intrínseca."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La transferencia secuencial de artefactos entre analistas, programadores y testers encarna el desperdicio de Traspasos (*Handoffs*), donde se pierde el conocimiento tácito y se incrementan exponencialmente los tiempos muertos."
+        },
+        {
+          "id": "u7-mc-3",
+          "number": 3,
+          "prompt": "Un equipo mide que su Lead Time promedio es de 30 días, pero al auditar las horas efectivas en que los desarrolladores y testers trabajaron activamente sobre los requerimientos, la suma da 3 días. La Eficiencia de Flujo es:",
+          "options": [
+            {
+              "key": "A",
+              "text": "$90\\%$."
+            },
+            {
+              "key": "B",
+              "text": "$10\\%$."
+            },
+            {
+              "key": "C",
+              "text": "$30\\%$."
+            },
+            {
+              "key": "D",
+              "text": "$3.33\\%$."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Aplicando la fórmula de Eficiencia de Flujo:\n     $$\\text{Eficiencia} = \\frac{\\text{Touch Time}}{\\text{Lead Time}} \\times 100 = \\frac{3\\text{ días}}{30\\text{ días}} \\times 100 = 10\\%$$"
+        },
+        {
+          "id": "u7-mc-4",
+          "number": 4,
+          "prompt": "Se formula la siguiente meta de medición: \"Analizar el módulo de pasarela de pagos con el propósito de evaluar la mantenibilidad del código desde el punto de vista del equipo de arquitectura en la versión 2.0\". Según la metodología GQM de Basili, ¿a qué nivel estructural corresponde esta declaración?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Nivel Operacional (Pregunta)."
+            },
+            {
+              "key": "B",
+              "text": "Nivel Conceptual (Meta / Goal)."
+            },
+            {
+              "key": "C",
+              "text": "Nivel Cuantitativo (Métrica)."
+            },
+            {
+              "key": "D",
+              "text": "Nivel de Indicador de Alerta."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La formulación incluye las cinco dimensiones normativas de Basili: Objeto (pasarela de pagos), Propósito (evaluar), Foco de calidad (mantenibilidad), Punto de vista (arquitectura) y Contexto (versión 2.0). Corresponde al Nivel Conceptual (Meta)."
+        },
+        {
+          "id": "u7-mc-5",
+          "number": 5,
+          "prompt": "Un equipo ágil decide que todos los días viernes dedicarán una hora a analizar pequeños ajustes en sus pipelines de despliegue para reducir fricciones menores observadas en la semana. Esta práctica clasifica como:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Kaikaku (transformación radical por disrupción)."
+            },
+            {
+              "key": "B",
+              "text": "Kaizen (mejora continua incremental y participativa)."
+            },
+            {
+              "key": "C",
+              "text": "Auditoría formal de adquisiciones predictivas."
+            },
+            {
+              "key": "D",
+              "text": "Negociación de contratos a precio fijo."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Las intervenciones pequeñas, continuas, cotidianas y lideradas por el propio equipo en su contexto operativo constituyen la esencia pura de la filosofía Kaizen."
+        },
+        {
+          "id": "u7-mc-6",
+          "number": 6,
+          "prompt": "La diferencia rigurosa entre una Métrica y un Indicador en la ingeniería de software radica en que:",
+          "options": [
+            {
+              "key": "A",
+              "text": "La métrica la calcula un software y el indicador un ser humano."
+            },
+            {
+              "key": "B",
+              "text": "La métrica define la fórmula abstracta de cálculo, mientras que el indicador evalúa la medición empírica frente a un umbral u objetivo para respaldar una decisión."
+            },
+            {
+              "key": "C",
+              "text": "Las métricas solo miden tiempo y los indicadores solo miden dinero."
+            },
+            {
+              "key": "D",
+              "text": "No existe ninguna distinción teórica entre ambos términos."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La métrica es la formulación algorítmica matemática; la medición es el dato obtenido; y el indicador es la interpretación cualitativa de ese dato en relación a un criterio o meta operativa que orienta la acción directiva."
+        }
+      ]
+    },
+    {
+      "id": "u8",
+      "number": 8,
+      "title": "Toyota Kata (Improvement Kata y Coaching Kata)",
+      "shortTitle": "U8 · Toyota Kata",
+      "trapTitle": "Trampa frecuente — Unidad 8",
+      "trapBody": "En **Coaching Kata**, el Coach nunca dicta la solución técnica (el **QUÉ** pertenece al Aprendiz); el Coach guía el **CÓMO** (procedimiento científico) mediante las **5 Preguntas** y el ciclo **Ver → Comparar → Instruir**.",
+      "recallItems": [
+        {
+          "id": "u8-p1",
+          "code": "P1",
+          "question": "¿Por qué Mike Rother sostiene que la práctica deliberada mediante Katas es necesaria para la mejora continua?",
+          "answer": "Porque el cerebro humano responde por defecto mediante atajos cognitivos inconscientes, buscando soluciones rápidas basadas en suposiciones previas en lugar de datos objetivos. La práctica deliberada de Katas crea nuevas conexiones neuronales y patrones de comportamiento estandarizados que transforman el método científico en una rutina automática e intuitiva ante problemas complejos e inciertos."
+        },
+        {
+          "id": "u8-p2",
+          "code": "P2",
+          "question": "¿Cuáles son los dos componentes obligatorios que deben definirse al establecer una Condición Objetivo (Paso 3 del IK)?",
+          "answer": "Debe definirse de forma complementaria:\n1. Una descripción operativa y detallada de **cómo debería funcionar el proceso** en ese estado (patrón de trabajo deseado, flujo de tareas, roles).\n2. Un conjunto de **métricas objetivo** cuantificables (de proceso y resultado) vinculadas a una fecha límite fija de cumplimiento."
+        },
+        {
+          "id": "u8-p3",
+          "code": "P3",
+          "question": "¿Qué representa el Umbral de Conocimiento (*Knowledge Threshold*) y qué error metodológico previene en la gestión de proyectos?",
+          "answer": "Representa la frontera precisa entre los hechos fácticos comprobados empíricamente por el equipo y las suposiciones no verificadas. Previene el error metodológico de elaborar planes determinísticos exhaustivos a largo plazo en zonas de alta incertidumbre, obligando al equipo a detenerse en el umbral y ejecutar experimentos concretos para iluminar el terreno desconocido paso a paso."
+        },
+        {
+          "id": "u8-p4",
+          "code": "P4",
+          "question": "¿Por qué en el Coaching Kata el Coach es responsable del CÓMO y el Aprendiz es dueño del QUÉ?",
+          "answer": "Para preservar la autonomía, el aprendizaje y la responsabilidad del Aprendiz. Si el Coach dictara el qué (las soluciones técnicas o los experimentos a realizar), el Aprendiz se limitaría a acatar órdenes sin desarrollar capacidad analítica propia. Al responsabilizarse del cómo, el Coach custodia el rigor del pensamiento científico mientras el Aprendiz desarrolla maestría sobre su propio proceso."
+        },
+        {
+          "id": "u8-p5",
+          "code": "P5",
+          "question": "¿Cuál es la función del dorso de la tarjeta de las 5 preguntas del Coaching Kata?",
+          "answer": "Su función es forzar una **reflexión retrospectiva y científica sobre el último experimento realizado**. Permite analizar la discrepancia fáctica entre lo que el Aprendiz esperaba que ocurriera (la hipótesis) y lo que ocurrió en la realidad del *Gemba*, extrayendo el aprendizaje antes de autorizar la planificación de un nuevo paso."
+        },
+        {
+          "id": "u8-p6",
+          "code": "P6",
+          "question": "¿Cuál es el rol exclusivo del Segundo Kata Coach (*2nd Coach*) durante y después de la sesión diaria?",
+          "answer": "Durante la sesión, su rol es observar en estricto silencio la dinámica pedagógica entre el Coach y el Aprendiz sin intervenir jamás. Después de que el Aprendiz se retira, su rol es reunirse en privado con el Coach para proporcionarle retroalimentación estructurada sobre su desempeño en la aplicación de las preguntas y del ciclo mental, garantizando que el Coach continúe mejorando sus habilidades de mentoría."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "u8-mc-1",
+          "number": 1,
+          "prompt": "En el Paso 2 del Improvement Kata (\"Comprender la Condición Actual\"), el equipo de mantenimiento de software comete un error si:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Mide el tiempo de ciclo fáctico de los últimos 50 incidentes en el Gemba."
+            },
+            {
+              "key": "B",
+              "text": "Lista las herramientas de monitoreo actualmente operativas."
+            },
+            {
+              "key": "C",
+              "text": "Comienza a proponer de inmediato soluciones y cambios en el software sin haber analizado los hechos y métricas del proceso actual."
+            },
+            {
+              "key": "D",
+              "text": "Revisa las quejas documentadas de los usuarios."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El error arquetípico que combate el Improvement Kata es saltar a las soluciones prematuras antes de haber comprendido a fondo y con datos objetivos la Condición Actual del proceso en el *Gemba*."
+        },
+        {
+          "id": "u8-mc-2",
+          "number": 2,
+          "prompt": "Durante una sesión de Coaching Kata, un Aprendiz propone un próximo experimento. El Coach sabe por su experiencia técnica que ese experimento fallará. Desde la perspectiva metodológica del Coaching Kata, ¿cómo debe actuar el Coach?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Ordenarle al Aprendiz que descarte ese experimento y haga lo que él le indique."
+            },
+            {
+              "key": "B",
+              "text": "Burlarse del Aprendiz por su falta de experiencia."
+            },
+            {
+              "key": "C",
+              "text": "Si el experimento es seguro y no genera riesgos catastróficos para la operación, debe permitir que el Aprendiz lo ejecute tal como lo diseñó, pues el fracaso de la hipótesis generará un valioso aprendizaje reflexivo frente al Umbral de Conocimiento."
+            },
+            {
+              "key": "D",
+              "text": "Suspender las sesiones de Kata de forma definitiva."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El Coaching Kata prioriza el desarrollo mental del Aprendiz sobre la velocidad de implementación. Mientras no haya peligro operacional severo, permitir la prueba de la hipótesis fallida es la forma más potente de expandir el Umbral de Conocimiento."
+        },
+        {
+          "id": "u8-mc-3",
+          "number": 3,
+          "prompt": "¿En qué lugar físico debe llevarse a cabo estrictamente la sesión diaria de Coaching Kata de 15 a 20 minutos?",
+          "options": [
+            {
+              "key": "A",
+              "text": "En un auditorio cerrado con presentaciones de diapositivas."
+            },
+            {
+              "key": "B",
+              "text": "En el *Gemba* (el lugar real donde ocurre el trabajo), directamente frente al tablero de visualización de Kata del Aprendiz."
+            },
+            {
+              "key": "C",
+              "text": "En la oficina privada de la gerencia general."
+            },
+            {
+              "key": "D",
+              "text": "A través de un intercambio asincrónico de correos electrónicos."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El principio del *Gemba* exige que la conversación ocurra donde está el trabajo y la información real, frente al tablero físico o visual que exhibe la Condición Actual, el obstáculo y el registro de experimentos."
+        },
+        {
+          "id": "u8-mc-4",
+          "number": 4,
+          "prompt": "En el ciclo mental del Kata Coach (Ver - Comparar - Instruir), la fase de \"Comparar\" consiste en:",
+          "options": [
+            {
+              "key": "A",
+              "text": "Comparar el salario del Aprendiz con el del mercado."
+            },
+            {
+              "key": "B",
+              "text": "Contrastar el razonamiento y respuestas del Aprendiz con el patrón ideal estructurado de los 4 pasos del Improvement Kata para identificar desvíos cognitivos."
+            },
+            {
+              "key": "C",
+              "text": "Comparar el desempeño del equipo con el de empresas competidoras."
+            },
+            {
+              "key": "D",
+              "text": "Evaluar si el código cumple con las reglas del diseño simple de Beck."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "En el paso \"Comparar\", el Coach evalúa silenciosamente si las palabras del Aprendiz reflejan datos objetivos, si tiene clara la Condición Objetivo y si su próximo paso ataca el obstáculo seleccionado siguiendo el patrón del IK."
+        },
+        {
+          "id": "u8-mc-5",
+          "number": 5,
+          "prompt": "¿Qué pregunta de la tarjeta del Coaching Kata obliga al Aprendiz a delimitar con precisión la causalidad de su experimento antes de ejecutarlo?",
+          "options": [
+            {
+              "key": "A",
+              "text": "\"¿Cuál es la Condición Objetivo?\""
+            },
+            {
+              "key": "B",
+              "text": "\"¿Qué esperas que pase?\" (como parte del próximo experimento)."
+            },
+            {
+              "key": "C",
+              "text": "\"¿Cuál es tu nombre y cargo?\""
+            },
+            {
+              "key": "D",
+              "text": "\"¿Cuánto presupuesto vas a solicitar?\""
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Preguntar \"¿Qué esperas que pase?\" obliga al Aprendiz a formalizar una hipótesis con un resultado cuantitativo esperado antes de actuar, evitando que justifique cualquier desenlace a posteriori (*post-hoc*)."
+        },
+        {
+          "id": "u8-mc-6",
+          "number": 6,
+          "prompt": "Un observador asiste a una sesión de Coaching Kata y nota que el Coach interrumpe constantemente al Aprendiz para decirle qué librerías de software utilizar y cómo configurar los servidores. ¿Qué antipatrón se está cometiendo flagrantemente?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El antipatrón de auditoría inquisitiva."
+            },
+            {
+              "key": "B",
+              "text": "La invasión del \"QUÉ\" por parte del Coach, transformando la mentoría socrática en dirección técnica autoritaria y anulando el desarrollo del pensamiento científico del Aprendiz."
+            },
+            {
+              "key": "C",
+              "text": "La correcta aplicación de la Maniobra Inversa de Conway."
+            },
+            {
+              "key": "D",
+              "text": "Un ciclo TDD incompleto."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El Coach es custodio del proceso de pensamiento (el CÓMO), nunca del contenido técnico (el QUÉ). Si el Coach impone las soluciones técnicas, destruye la esencia formativa del Coaching Kata y genera dependencia."
+        }
+      ]
+    }
+  ]
+}

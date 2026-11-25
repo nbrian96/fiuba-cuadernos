@@ -1,0 +1,786 @@
+---
+docId: gestion-de-proyectos
+courseId: gdsi
+title: "Iniciación, Gobernanza de Interesados y WBS"
+order: 2
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - unidad-1-iniciacion-del-proyecto-y-acta-de-constitucion-project-charter
+  - unidad-2-identificacion-y-gestion-de-interesados-stakeholders
+  - unidad-3-estructura-de-desglose-del-trabajo-work-breakdown-structure---wbs
+  - unidad-4-integracion-sistemica-gobernanza-y-trazabilidad-metodologica
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+Este documento de estudio aborda de forma integral y sistemática tres procesos fundamentales de la dirección de proyectos: la formalización de la iniciativa mediante el Acta de Constitución (*Project Charter*), la identificación estratégica de los interesados (*Stakeholders*) y la descomposición estructurada del alcance a través de la Estructura de Desglose del Trabajo (*Work Breakdown Structure* - WBS). El contenido está desarrollado a partir del análisis riguroso de la literatura técnica de referencia, integrando marcos teóricos, modelos operativos, directrices de construcción, ejemplos de aplicación y herramientas de preparación para evaluación universitaria.
+
+---
+
+## Unidad 1: Iniciación del Proyecto y Acta de Constitución (Project Charter)
+
+### 1.1 Naturaleza, Propósito y Función Estratégica del Project Charter
+En la gestión profesional de proyectos, una iniciativa no puede ejecutarse legítimamente sin una autorización formal previa. El **Project Charter** (o Acta de Constitución del Proyecto) es el documento formal de iniciación que define el alcance inicial, los objetivos estratégicos y las partes involucradas en el proyecto. Su emisión marca el comienzo oficial de la iniciativa dentro de la organización ejecutora y establece los cimientos para el posterior desarrollo del plan de dirección del proyecto.
+
+Desde una perspectiva operativa, el Project Charter no busca descender al detalle técnico exhaustivo de las tareas, sino proporcionar una visión panorámica de alto nivel (*high-level overview*) de unas pocas páginas de extensión. Esta visión condensada cumple tres propósitos o usos cardinales:
+
+1. **Instrumento de Autorización y Venta Inicial:** Actúa como el argumento de venta principal (*elevator pitch*) que demuestra a los patrocinadores y a la alta gerencia la viabilidad de la iniciativa y su retorno esperado sobre la inversión (ROI). Sin la aprobación explícita de este documento, no se concede la "luz verde" ni se asignan fondos organizacionales.
+2. **Documento Comercial y de Comunicación Ejecutiva:** Proporciona a los patrocinadores y directivos un resumen formal y transferible. Este resumen les permite justificar frente a comités de selección de proyectos por qué se asignan recursos críticos a esta iniciativa en lugar de a otras alternativas en competencia.
+3. **Hoja de Ruta y Referencia Continua a lo Largo del Ciclo de Vida:** A diferencia de documentos preliminares que se archivan tras el arranque, el Project Charter acompaña al equipo durante todo el ciclo de vida del proyecto. Se consulta de manera constante en reuniones de control y actúa como salvaguarda en la gestión del alcance, recordando los límites y la visión fundacional sin la distracción de las minucias operativas.
+
+El Project Charter responde de manera categórica a tres preguntas axiales para la gobernanza del proyecto:
+* *¿Cuál es la esencia del proyecto?* Define cuáles son las metas y objetivos, y de qué forma general se planea alcanzarlos.
+* *¿Por qué existe este proyecto?* Establece una comprensión compartida respecto al valor que aportará y justifica su razón de ser para todas las partes (patrocinadores, interesados, gerencia y equipo).
+* *¿Existe un acuerdo formal entre las partes?* Funciona como un contrato moral y operativo entre el patrocinador, los interesados clave y el equipo del proyecto, delimitando deberes, expectativas y compromisos mutuos.
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 1"
+  code={`flowchart LR
+    subgraph Fase de Iniciación
+        A["Necesidad / Oportunidad de Negocio"] --> B["Caso de Negocio / ROI"]
+        B --> C[Elaboración del Project Charter]
+        C --> D{Aprobación del Patrocinador}
+    end
+    subgraph Transición a Planificación
+        D -->|Autorización Oficial| E[Nombramiento del Project Manager]
+        D -->|Asignación de Recursos| F[Alineación de Interesados Clave]
+        E --> G[Desarrollo del Plan de Proyecto y WBS]
+        F --> G
+    end`}
+/>
+
+
+### 1.2 Momento de Elaboración y Roles de Gobernanza
+El Project Charter se redacta al inicio del proyecto, durante la **fase de iniciación**, y antes de que sea necesaria una alineación granular de todos los interesados secundarios. En este instante crítico, el proyecto queda formalmente constituido.
+
+La gobernanza en torno al Project Charter involucra cuatro roles institucionales claramente diferenciados:
+* **Patrocinador del Proyecto (Project Sponsor) / Autoridad Autorizadora:** Suele ser un directivo o ejecutivo de nivel sénior que posee la autoridad delegada para aprobar el proyecto y supervisar la distribución del presupuesto y los recursos. Cumple la función de proporcionar la dirección estratégica, garantizar la financiación, actuar de enlace diplomático ante otros interesados clave y resolver bloqueos institucionales que desbordan la autoridad del director del proyecto. Asimismo, asegura que la iniciativa responda a los objetivos estratégicos globales de la organización.
+* **Director del Proyecto (Project Manager):** Lidera activamente la redacción del acta de constitución para asegurar su claridad, coherencia y realismo. Si bien el Project Manager interviene durante la formulación para velar por la consistencia técnica, su nombramiento formal y el otorgamiento de su autoridad sobre los recursos se perfeccionan en el momento exacto en que el Project Charter es firmado y aprobado por el patrocinador.
+* **Oficina de Gestión de Proyectos (PMO):** Ejerce el control normativo y metodológico, asegurando que el Project Charter adopte una estructura estandarizada y adecuada, verificando que los objetivos propuestos se alineen armónicamente con la estrategia corporativa.
+* **Interesados Clave (Project Stakeholders):** Aportan perspectivas, requerimientos esenciales y expectativas iniciales para garantizar que el alcance delimitado contemple las restricciones y necesidades del negocio.
+
+### 1.3 Los Catorce Componentes Esenciales del Project Charter
+Para que el Project Charter constituya una base rigurosa que guíe la planificación subsecuente sin requerir reescrituras estructurales, debe integrar catorce elementos de contenido de alto nivel:
+
+1. **Información General del Proyecto:** Metadatos rectores que incluyen el nombre formal de la iniciativa, una descripción sintética y la identificación nominal del patrocinador, el director del proyecto, los miembros centrales del equipo y los interesados conocidos.
+2. **Identificación del Patrocinador y Parte Autorizadora:** Explicitación formal del ejecutivo que emite el documento, sus credenciales y el alcance de su autoridad para comprometer recursos organizacionales.
+3. **Propósito del Proyecto:** Articulación en lenguaje claro y accesible de la razón de ser de la iniciativa: el problema que se busca mitigar o la oportunidad de mercado que se desea capitalizar, vinculándolo con los beneficios organizacionales esperados.
+4. **Metas del Proyecto frente a Objetivos del Proyecto:** Distinción crítica entre fines globales e hitos concretos:
+   * **Metas (Project Goals):** Beneficios globales y de alto nivel que el proyecto debe generar para la organización.
+   * **Objetivos (Project Objectives):** Pasos concretos, verificables e intermedios que deben cumplirse para materializar dichas metas.
+5. **Roles y Responsabilidades del Equipo:** Definición preliminar de funciones, líneas de reporte y alcance decisional entre el patrocinador, el director del proyecto, los líderes técnicos y las unidades de apoyo.
+6. **Caso de Negocio (Business Case):** Exposición de las razones financieras y operativas para emprender la iniciativa, cuantificando los beneficios tangibles e intangibles esperados y el retorno sobre la inversión (ROI).
+7. **Límites del Alcance (Scope Boundaries):** Delimitación nítida de los elementos que se encuentran **dentro del alcance** (*in-scope*) y aquellos que quedan taxativamente **fuera del alcance** (*out-of-scope*), estableciendo hitos mayores y entregables macro.
+8. **Cronograma Resumido / Línea de Tiempo (Project Timeline):** Versión simplificada del calendario que sitúa temporalmente las fases clave, etapas de desarrollo y los grandes hitos de entrega.
+9. **Estimación Preliminar de Recursos:** Identificación agregada de los requerimientos de personal calificado, insumos, infraestructura, equipamiento y herramientas, estructurados tentativamente por fases operativas.
+10. **Presupuesto Estimado y Autoridad de Gasto:** Cifra de orden de magnitud (*ballpark figure*) basada en los recursos identificados. Es indispensable explicitar quién tiene la potestad de aprobar gastos y establecer que los requerimientos emergentes demandarán ajustes presupuestarios formales.
+11. **Análisis de Costo-Beneficio:** Evaluación de las implicancias financieras globales mediante la comparación entre costos directos e indirectos frente a los beneficios proyectados tangibles e intangibles.
+12. **Supuestos y Restricciones Clave:**
+    * **Supuestos (Assumptions):** Factores que, a efectos de la planificación inicial, se consideran verdaderos, reales o seguros sin necesidad de prueba inmediata.
+    * **Restricciones (Constraints):** Limitaciones o condiciones predeterminadas impuestas al proyecto (como plazos perentorios, presupuestos máximos fijos o normas de calidad obligatorias).
+13. **Registro de Riesgos Iniciales (Key Project Risks):** Identificación temprana de eventos inciertos de alta probabilidad o severo impacto negativo que podrían desviar el curso del proyecto, sentando las bases para el posterior plan de gestión de riesgos.
+14. **Requisitos del Proyecto y Criterios de Éxito:** Estándares acordados contra los cuales se medirá el éxito de la iniciativa. Estos criterios se apoyan centralmente en la **triple restricción** (*tiempo, costo y alcance*), complementándose con normativas de seguridad, calidad técnica y tolerancia institucional al riesgo.
+
+### 1.4 Diferenciación Conceptual: Project Charter vs. Plan de Proyecto vs. Caso de Negocio
+
+Uno de los errores más frecuentes en los exámenes de gestión de proyectos radica en confundir el alcance, momento y función de estos tres artefactos cardinales. La literatura establece delimitaciones funcionales categóricas:
+
+* **El Caso de Negocio (Business Case):** Es un documento analítico de justificación económica y estratégica. Su propósito exclusivo es investigar y probar la viabilidad comercial de la inversión de tiempo, esfuerzo y fondos antes de emprender el proyecto. Se centra en el problema u oportunidad de mercado, evaluando beneficios tangibles (aumento de margen de ganancias) o intangibles (posicionamiento de marca), soportados por modelos de retorno de inversión. *El Business Case investiga y justifica; no autoriza la ejecución técnica.*
+* **El Acta de Constitución (Project Charter):** Es un documento de iniciación de alto nivel (apenas unas pocas páginas) que toma el Caso de Negocio y lo transforma en un mandato formal. Autoriza formalmente la existencia del proyecto, nombra al director con autoridad ejecutiva sobre los recursos, delinea la visión fundacional y establece los límites generales del alcance, el presupuesto preliminar y las expectativas de los interesados. *El Project Charter autoriza e inaugura la gobernanza; no detalla cómo se ejecutarán las actividades.*
+* **El Plan de Proyecto (Project Plan):** Es la guía operativa exhaustiva y detallada desarrollada durante la **fase de planificación**, una vez que el Project Charter ha sido aprobado formalmente por los interesados y patrocinadores. Desglosa los lineamientos del acta en elementos granulares y accionables: establece el cronograma analítico con duraciones, dependencias y ruta crítica; asigna recursos nominales específicos a tareas concretas; elabora la Estructura de Desglose del Trabajo (WBS) para mapear todos los entregables; y formula los planes auxiliares de costos, calidad, riesgos y comunicaciones. *El Project Plan especifica cómo se ejecutará, monitoreará y cerrará el trabajo.*
+
+| Dimensión Analítica | Caso de Negocio (*Business Case*) | Acta de Constitución (*Project Charter*) | Plan de Dirección del Proyecto (*Project Plan*) |
+| :--- | :--- | :--- | :--- |
+| **Fase en que se origina** | Previa al proyecto / Iniciación temprana | Iniciación del proyecto | Planificación formal |
+| **Objetivo Central** | Justificar la viabilidad económica y estratégica del esfuerzo | Autorizar formalmente la iniciativa y empoderar al Project Manager | Servir de guía práctica y detallada para la ejecución y control |
+| **Nivel de Detalle** | Enfocado exclusivamente en ROI, mercado y beneficios | Alto nivel (*High-level overview*), sintético (pocas páginas) | Granular, exhaustivo, multidimensional y operativo |
+| **Contenido Característico** | Análisis de mercado, proyección financiera, costos vs. retorno | Propósito, límites de alcance, hitos macro, presupuesto orden de magnitud, riesgos clave | Cronograma detallado con dependencias, asignación de tareas, WBS, presupuesto analítico |
+| **Efecto de su Aprobación** | Habilita la redacción del Project Charter | Habilita el inicio de la planificación y la identificación de interesados | Habilita el paso a la fase de ejecución y la medición de desempeño |
+
+### 1.5 La Estructura de Objetivos: Metas (*Goals*) vs. Objetivos SMART (*Objectives*)
+La formulación deficiente de los objetivos constituye una causa primaria de fracaso en proyectos. Dentro del Project Charter, la cátedra exige separar tajantemente dos niveles teleológicos:
+
+* **Metas del Proyecto (Project Goals):** Representan los beneficios globales, estratégicos y cualitativos que el proyecto debe rendir a la organización a largo plazo (por ejemplo, "modernizar la plataforma tecnológica para capitalizar el incremento estacional de demanda comercial").
+* **Objetivos del Proyecto (Project Objectives):** Son los escalones, entregables o hitos concretos y verificables que deben completarse rigurosamente para alcanzar las metas. Los objetivos deben satisfacer taxativamente el estándar **SMART**:
+  * **S (Specific - Específicos):** Deben formularse sin ambigüedad, delimitando qué aspecto concreto se alterará o creará.
+  * **M (Measurable - Medibles):** Deben contener métricas cuantitativas o cualitativas inequívocas que permitan constatar su grado de completitud.
+  * **A (Achievable - Alcanzables):** Deben ser viables y realistas a la luz de las capacidades del equipo y el contexto operativo.
+  * **R (Realistic - Realistas / Relevantes):** Deben guardar coherencia con los recursos presupuestarios, temporales y estratégicos disponibles.
+  * **T (Time-bound - Con Límite Temporal):** Deben poseer una fecha de caducidad o un marco temporal de entrega explícito y perentorio.
+
+### 1.6 Casos Prácticos de Aplicación Analizados en las Fuentes
+Para ilustrar la aplicación tangible de los 14 componentes del Project Charter, la literatura de la cátedra examina dos proyectos arquetípicos de naturalezas disímiles:
+
+#### Caso A: Proyecto Físico de Construcción ("Luxury Apartments at York")
+* **Organización:** *Acme Construction Co.*
+* **Descripción del Proyecto:** Construcción integral de un complejo de departamentos de lujo, con tres tipologías de unidades residenciales cuyas superficies oscilan entre $800$ y $1.350$ pies cuadrados.
+* **Roles y Responsabilidades Asignados:**
+  * Arquitecta Principal (*Lead Architect*): Helena Johnson.
+  * Ingeniero Principal (*Lead Engineer*): Samuel Weiss.
+  * Director de Proyecto de Construcción (*Construction Project Manager*): Frederick Terry.
+  * Estimadora de Costos (*Cost Estimator*): Danielle DuPont.
+  * Administrador del Proyecto (*Project Administrator*): Luke Robinson.
+  * Supervisor de Obra (*Site Supervisor*): David Rosenthal.
+* **Visión y Objetivos SMART:**
+  * *Visión:* Conclusión a tiempo y dentro del presupuesto para explotar la demanda residencial en el área.
+  * *Objetivos:* 1. Contratar cuadrillas de construcción según necesidad; 2. Adquirir materiales y maquinaria requeridos; 3. Transportar equipos e insumos al obrador bajo supervisión; 4. Completar reportes diarios de obra para monitorear el desempeño del equipo.
+* **Caso de Negocio:** El distrito presenta un auge comercial con gastronomía y tiendas minoristas, pero carece de vivienda de lujo para sectores de altos ingresos. La inversión capitaliza esta vacancia urbana.
+* **Límites de Alcance:** Edificación ejecutada estrictamente bajo los planos arquitectónicos, especificaciones técnicas y esquemas CAD aprobados.
+* **Cronograma Estimado:** Inicio en el cuarto trimestre del año, con una duración estimada de 12 a 16 meses.
+* **Presupuesto y Restricciones:** Presupuesto de USD 15.000.000 (derivado del cómputo métrico por unidad y superficie). Incluye fondo de contingencia. La restricción temporal máxima es de 18 meses innegociables; si hay atrasos, se autoriza contratar subcontratistas adicionales sin exceder el techo de USD 15M.
+* **Supuestos Clave:** No ocurrencia de eventos de fuerza mayor o catástrofes naturales (terremotos, tornados); óptimo estado operativo de la maquinaria; disponibilidad suficiente de operarios; cumplimiento temporal estricto de los subcontratistas.
+* **Riesgos Principales:** Escalamiento imprevisto en los costos de materias primas; escasez de mano de obra y maquinaria por factores externos; daño o robo de maquinaria; desastres climáticos.
+
+#### Caso B: Proyecto Digital e Intangible ("Widgets.com")
+* **Organización:** *Widgets Manufacturing.*
+* **Descripción del Proyecto:** Creación de un sitio web dinámico para consolidar la marca, atraer clientes y habilitar la venta de productos en línea.
+* **Roles y Responsabilidades Asignados:**
+  * Director del Proyecto (*Project Manager*): Tony Richardson.
+  * Diseñadora Principal (*Lead Designer*): Stacy Keach.
+  * Director de Contenidos (*Content Director*): William Macy.
+  * Desarrollador Backend (*Backend Developer*): Ron Stable.
+  * Desarrolladora Frontend (*Frontend Developer*): Lucy Kennedy.
+  * Diseñadora de Experiencia de Usuario (*UX Designer*): Kate Fallon.
+  * Analista de Calidad (*Quality Tester*): Joan Anderson.
+* **Visión y Objetivos SMART:**
+  * *Visión:* Entrega en tiempo de una plataforma robusta que capture prospectos comerciales mediante un SEO sólido y concrete ventas en línea de forma fluida.
+  * *Objetivos:* 1. Contratar equipo de diseño y contenidos; 2. Crear mapa del sitio (*sitemap*); 3. Adquirir software y hardware base; 4. Emitir reportes periódicos para informar el avance a los interesados.
+* **Caso de Negocio:** La empresa distribuye con éxito en locales minoristas físicos; el canal digital amplía el alcance internacional a bajo costo operativo, acelerando el crecimiento y margen de rentabilidad.
+* **Límites de Alcance:** Ajustado a las expectativas del público objetivo. Entregables: bocetos de diseño, elementos gráficos, textos, desarrollo backend, interfaz frontend y pruebas funcionales.
+* **Cronograma y Presupuesto:** Duración de 6 meses; presupuesto estimado en USD 1.000.000.
+* **Restricciones Mandatorias:** Lanzamiento operativo antes de fin de año para capturar el pico estacional de compras. Presupuesto rígido con colchón financiero incorporado.
+* **Supuestos Clave:** Realización de pruebas funcionales durante un lanzamiento suave (*soft launch*); el sitio operará sin fallas estructurales; estabilidad del alcance una vez formalizada la firma de los interesados.
+* **Riesgos Principales:** Exceso de decisores jerárquicos que ralenticen aprobaciones; rotación de personal técnico especializado; corrupción o deslizamiento del alcance (*scope creep*); demoras en la calibración de diseño y contenidos.
+
+### 1.7 Metodología de Redacción: Visión, Organización e Implementación
+Para estructurar un Project Charter sin omitir componentes, la literatura propone un proceso secuencial dividido en tres etapas estructuradas:
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 2"
+  code={`flowchart TD
+    subgraph 1. Fase de Visión
+        V1[Declaración de Visión] --> V2["Objetivos SMART: 3 a 5"]
+        V2 --> V3["Límites del Alcance: In-Scope vs Out-of-Scope"]
+        V3 --> V4[Identificación Macro de Entregables vía WBS inicial]
+    end
+    subgraph 2. Fase de Organización
+        O1[Clientes y Usuarios Finales] --> O2[Mapeo de Interesados y Focos]
+        O2 --> O3[Asignación de Roles y Responsabilidades]
+        O3 --> O4[Estructura y Organigrama de Reporte]
+    end
+    subgraph 3. Fase de Implementación
+        I1["Plan de Implementación: Fases y Tiempos"] --> I2[Definición de Hitos Mayores]
+        I2 --> I3[Identificación de Dependencias Clave]
+        I3 --> I4["Plan y Asignación de Recursos: Trabajo, Equipos, Materiales"]
+    end
+    V4 --> O1
+    O4 --> I1`}
+/>
+
+
+* **Etapa de Visión:**
+  * *Objetivo:* Definir de 3 a 5 objetivos SMART.
+  * *Alcance:* Establecer las fronteras formales del negocio que se verán impactadas, determinando qué queda dentro del alcance y qué queda expresamente excluido.
+  * *Entregables:* Describir los productos mayores que el proyecto debe originar, recurriendo si es necesario a una plantilla preliminar de WBS.
+* **Etapa de Organización:**
+  * *Clientes / Usuarios Finales:* Individualizar quién aceptará los entregables del proyecto y cuál es su perfil funcional.
+  * *Interesados:* Identificar las partes internas o externas con intereses clave (desde el director financiero hasta el director ejecutivo).
+  * *Roles:* Detallar las responsabilidades operativas asociadas al patrocinador, el comité de dirección (*project board*) y el director del proyecto.
+  * *Estructura:* Diseñar el organigrama del proyecto (*Project Organization Chart*) para fijar formalmente los canales y jerarquías de comunicación y reporte.
+* **Etapa de Implementación:**
+  * *Plan:* Configurar el plan general con sus fases macro, actividades y horizontes temporales para consolidar la confianza de los interesados.
+  * *Hitos (Milestones):* Fijar un número reducido de puntos de control mayores que agrupen tareas y constaten la culminación de entregables esenciales.
+  * *Dependencias:* Identificar relaciones secuenciales críticas entre bloques de actividades.
+  * *Plan de Recursos:* Desglosar la demanda en personal, infraestructura y materiales, garantizando una base para la presupuestación realista.
+
+---
+
+### 1.8 Preparación para el Examen: Unidad 1
+
+#### Conceptos Fundamentales Indispensables para Aprobar
+1. El Project Charter es un artefacto de iniciación de alto nivel que **autoriza formalmente** el proyecto y **empodera al Project Manager**; no reemplaza al Plan de Proyecto ni al Caso de Negocio.
+2. El Project Manager suele colaborar en la redacción del acta, pero su autoridad oficial sobre los recursos nace con la firma del Patrocinador (*Sponsor*).
+3. Las Metas (*Goals*) son declaraciones cualitativas de beneficios estratégicos globales; los Objetivos (*Objectives*) deben ser taxativamente **SMART**.
+4. Las restricciones del proyecto se anclan en la **Triple Restricción** (tiempo, costo y alcance), complementada por la calidad, los riesgos y la seguridad.
+5. El Project Charter actúa a lo largo del ciclo de vida como una salvaguarda permanente contra la corrupción del alcance (*scope creep*).
+
+#### Tabla Comparativa de Conceptos Frecuentemente Confundidos
+| Criterio | Meta (*Goal*) | Objetivo SMART (*Objective*) | Restricción (*Constraint*) | Supuesto (*Assumption*) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Definición** | Beneficio estratégico global esperado | Hito específico intermedio medible | Límite formal o condición impuesta no negociable | Factor que se toma como verdadero sin verificación formal |
+| **Temporalidad** | Horizonte temporal amplio / ciclo de vida | Fecha límite estricta (*Time-bound*) | Aplica durante todo el proyecto | Condición de partida sujeta a riesgo si no se cumple |
+| **Ejemplo (Construcción)** | Satisfacer la demanda residencial de lujo | Levantar la estructura según CAD en 12-16 meses | Presupuesto máximo no excedible de USD 15M | No ocurrencia de terremotos o desastres climáticos |
+| **Ejemplo (Software)** | Expandir la marca globalmente y ganar mercado | Poner en línea el sitio antes de fin de año | Lanzamiento mandatorio antes de la temporada festiva | Disponibilidad de usuarios reales para el *soft launch* |
+
+#### Cuestionario de Autoevaluación Universitaria
+
+**Pregunta 1 (Conceptual):** *¿Por qué se afirma en la literatura técnica que el Project Charter actúa simultáneamente como una herramienta de venta, un contrato moral y una hoja de ruta?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Actúa como herramienta de venta durante la iniciación porque condensa la viabilidad económica y el ROI frente a comités de dirección que evalúan múltiples iniciativas. Funciona como un contrato moral entre el patrocinador, el director del proyecto y los interesados clave al explicitar y acordar recíprocamente las expectativas, responsabilidades, criterios de éxito y límites de alcance. Finalmente, sirve de hoja de ruta a lo largo del ciclo de vida porque suministra un marco estratégico estable de referencia que previene el desvío del alcance frente a presiones operativas, sin abrumar con detalles tácticos.
+
+</details>
+
+**Pregunta 2 (Razonamiento):** *Si el Project Manager suele liderar la redacción del Project Charter, ¿por qué no puede autorizarlo él mismo?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La gobernanza organizacional exige la separación entre la administración del proyecto y la potestad financiera/institucional. El director del proyecto es un ejecutor delegado de la estrategia; carece de autoridad estatutaria para comprometer fondos de la organización o transferir recursos departamentales de forma unilateral. El Patrocinador (*Sponsor*) es un ejecutivo de nivel sénior con capacidad de gobernanza interdepartamental y control presupuestario. Solo la firma del patrocinador confiere mandato institucional y legal al director del proyecto frente a la organización.
+
+</details>
+
+**Pregunta 3 (Aplicación Práctica):** *En el caso de Widgets.com, suponga que el equipo de diseño solicita a mitad del proyecto agregar un submódulo de realidad aumentada para que los clientes prueben virtualmente los productos. ¿Cómo debe proceder el Project Manager utilizando el Project Charter?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El Project Manager debe remitirse a los límites del alcance (*in-scope* vs *out-of-scope*) y a las restricciones consolidadas en el Project Charter. Dado que el Project Charter de Widgets.com fijó un presupuesto rígido de USD 1.000.000 y una fecha innegociable previa a fin de año para capturar las ventas estacionales, la realidad aumentada representaría una corrupción del alcance (*scope creep*) y un riesgo severo de atraso. El Project Manager debe contrastar la solicitud contra el acta de constitución, rechazar su inclusión informal y exigir que, de considerarse estratégica, se tramite como una solicitud formal de cambio que evalúe su impacto en la triple restricción o se posponga para una fase post-lanzamiento.
+
+</details>
+
+---
+
+## Unidad 2: Identificación y Gestión de Interesados (Stakeholders)
+
+### 2.1 Definición Normativa y Alcance Conceptual del Interesado
+La satisfacción de los interesados constituye la medida determinante del éxito de cualquier iniciativa: *"Tu proyecto no es exitoso si tus interesados no están satisfechos"*. La identificación de interesados es un proceso central de la dirección de proyectos, reconocido de forma unánime por los estándares internacionales.
+
+El estándar PMBOK formaliza la definición de **Stakeholder** (o Interesado) de la siguiente manera:
+> Un interesado es un individuo, grupo u organización que puede verse afectado, o percibir que podría verse afectado, por una decisión, actividad o resultado de un proyecto (sea de manera directa o indirecta).
+
+En términos eminentemente prácticos, si una entidad tiene interés en el proyecto o experimenta un impacto a causa de él, clasifica taxativamente como interesado. Esta noción engloba un espectro diverso de actores:
+* El Director del Proyecto (*Project Manager*).
+* El Patrocinador (*Project Sponsor*).
+* La Alta Gerencia (*Higher Management*).
+* Los miembros del equipo de trabajo (*Team Members*).
+* Clientes y usuarios finales (*Customers and End Users*).
+* Proveedores y contratistas (*Suppliers and Vendors*).
+* Organismos reguladores y entidades gubernamentales (*Regulatory Bodies*).
+* Unidades funcionales internas (por ejemplo, aseguramiento de la calidad o finanzas).
+
+### 2.2 Momento de Inicio y Relevancia Estratégica de la Identificación Temprana
+El Instituto de Gestión de Proyectos (PMI) prescribe taxativamente que la identificación de los interesados debe iniciarse **tan pronto como se firma el Project Charter y se nombra formalmente al Project Manager**.
+
+La justificación de esta perentoriedad descansa en cuatro pilares de gobernanza estratégica:
+1. **Registro y Priorización Estructurada:** Permite crear tempranamente un inventario documentado de todas las partes con influencia o interés. Con esta base, es posible agruparlos según su nivel de poder, priorizar su atención y formular estrategias personalizadas de comunicación y compromiso.
+2. **Gestión Proactiva de Riesgos y Conflictos:** Los mayores riesgos de un proyecto suelen emanar de desacuerdos, expectativas no gestionadas u objeciones de partes afectadas. La detección temprana permite entablar un diálogo preventivo con los interesados críticos, abordando sus preocupaciones antes de que cristalicen en conflictos destructivos, cultivando su confianza y respaldo.
+3. **Optimización y Asignación Eficiente de Recursos:** Reconocer tempranamente a los actores clave permite canalizar el tiempo del Project Manager y los recursos institucionales allí donde resultan indispensables para satisfacer expectativas críticas en tiempo y forma.
+4. **Construcción de Apoyo y Mitigación de Interrupciones:** Los interesados que son consultados e involucrados tempranamente tienden a comprometerse con el éxito del proyecto. Esta adhesión minimiza interferencias operativas y allana el camino hacia la consecución de los objetivos.
+
+### 2.3 Taxonomía y Delimitaciones Críticas: Distinciones que la Cátedra Exige Dominar
+
+En evaluaciones universitarias suelen presentarse confusiones terminológicas en torno a la tipificación de los interesados. La literatura analizada fija tres distinciones conceptuales rigurosas:
+
+#### A. Interesados Internos frente a Interesados Externos
+* **Interesados Internos:** Pertenecen a la estructura formal de la organización ejecutora del proyecto. Incluyen a empleados, líderes de equipo, gerentes funcionales, patrocinadores y departamentos internos (como auditoría interna, legal o control de calidad).
+* **Interesados Externos:** Operan por fuera de la frontera organizacional ejecutora. Comprenden a clientes, usuarios finales, proveedores, socios comerciales, entidades financieras, organismos reguladores estatales y comunidades barriales o vecinales.
+
+#### B. Interesado (*Stakeholder*) frente a Cliente (*Customer*)
+* **Todo cliente es un interesado, pero no todo interesado es un cliente.**
+* **Cliente (*Customer*):** Es la persona o entidad específica que **utilizará o consumirá el producto, servicio o proceso resultante**, o que formalmente lo acepta y financia como destinatario final. No participa en la construcción directa del resultado.
+* **Unidad Funcional Interna (Ejemplo: Control de Calidad):** Un área de aseguramiento de la calidad que audita el cumplimiento de estándares técnicos es un interesado interno fundamental (su trabajo contribuye al producto), pero **no es el cliente** del proyecto.
+
+#### C. Interesados Negativos frente a Competidores (Distinción Clave)
+Esta diferenciación es uno de los puntos más agudos y examinados en la disciplina:
+* **Interesado Negativo (*Negative Stakeholder*):** Es un actor que no desea que el proyecto tenga éxito o cuyos intereses se ven perjudicados por el resultado de la iniciativa. No obstante, **forma parte de la red de interesados del proyecto**. La obligación profesional del Project Manager es involucrarlo activamente, escucharlo, entender sus objeciones, satisfacer sus inquietudes normativas o de negocio en la medida de lo posible y gestionar sus expectativas para neutralizar su oposición. *Al interesado negativo se lo gestiona obligatoriamente.*
+* **Competidor (*Competitor*):** Es una entidad externa que disputa el mercado o los recursos. Si bien el competidor tampoco desea que el proyecto prospere, **NO clasifica como un interesado gestionable del proyecto**. El Project Manager no tiene la misión de satisfacer las necesidades del competidor, ni de involucrarlo en mesas de trabajo, ni de cumplir sus requisitos. *Al competidor nunca se lo gestiona dentro del plan de interesados.*
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 3"
+  code={`flowchart TD
+    A[Universo de Actores del Entorno] --> B[¿Afectado o con Interés en el Proyecto?]
+    B -- No --> C[Actores Ajenos]
+    B -- Sí --> D["STAKEHOLDERS / INTERESADOS"]
+    
+    D --> E[Interesados Internos]
+    D --> F[Interesados Externos]
+    
+    E --> E1["Empleados, PM, Sponsor, QA, Gerentes"]
+    F --> F1["Clientes, Proveedores, Reguladores, Vecinos"]
+    
+    D --> G{"¿Postura frente al Éxito?"}
+    G -- Favorable --> H["Interesados Positivos: Aliados"]
+    G -- Desfavorable --> I[INTERESADOS NEGATIVOS]
+    
+    I --> I1["Deben gestionarse, involucrarse y satisfacer sus inquietudes"]
+    
+    C --> J[COMPETIDORES]
+    J --> J1["Tienen interés de mercado pero NO se gestionan ni se satisfacen sus necesidades"]`}
+/>
+
+
+### 2.4 El Proceso Metodológico de Identificación en Cinco Pasos
+La literatura técnica sistematiza la identificación de interesados a través de una secuencia lógica y ordenada de cinco pasos:
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 4"
+  code={`flowchart LR
+    P1[1. Definir Alcance y Objetivos] --> P2[2. Determinar Herramientas]
+    P2 --> P3[3. Identificar Potenciales Interesados]
+    P3 --> P4[4. Analizar Interés e Influencia]
+    P4 --> P5[5. Priorizar Interesados]
+    P5 -.->|Retroalimentación Continua| P3`}
+/>
+
+
+1. **Definir el Alcance y los Objetivos del Proyecto:** Delinear con absoluta precisión las metas, los entregables macro y las fronteras de la iniciativa. Comprender con exactitud *qué* se va a producir permite determinar *quiénes* se verán afectados por dichos resultados o quiénes tendrán interés en ellos.
+2. **Determinar las Herramientas a Utilizar:** Seleccionar el instrumental técnico más apropiado (entrevistas, lluvias de ideas, análisis documental) en función del tamaño, la complejidad institucional y los requerimientos específicos de la iniciativa.
+3. **Identificar a los Potenciales Interesados:** Confeccionar una nómina exhaustiva de todos los individuos, grupos y organizaciones que puedan intervenir o experimentar un impacto (equipo interno, clientes, proveedores, agencias gubernamentales, entidades normativas).
+4. **Analizar los Intereses y la Influencia de los Interesados:** Evaluar rigurosamente el nivel de interés, el grado de poder/influencia y el impacto potencial de cada interesado. Implica comprender a fondo sus necesidades, expectativas subyacentes y su capacidad de bloquear o acelerar el proyecto.
+5. **Priorizar a los Interesados:** Clasificar y jerarquizar a los interesados según su cruce de poder e interés. Aquellos que ostentan un impacto significativo y un alto interés demandan una atención prioritaria y estrategias de comunicación estrechas.
+
+### 2.5 Documentación de Entrada, Herramientas y Técnicas de Indagación
+
+#### Documentos de Entrada Requeridos
+Para que la búsqueda de interesados no dependa de la mera intuición, el equipo debe apoyarse en cuatro cuerpos documentales:
+* **Project Charter:** Al contener el nombramiento del Project Manager y la mención explícita del patrocinador, clientes y partes influyentes de alto nivel, constituye el punto de partida mandatario.
+* **Documentos Contractuales (*Contract Documents*):** Si el proyecto surge a partir de una contratación o licitación formal, los contratos firmados aportan de forma fehaciente los nombres de proveedores adjudicados, agentes locales, intermediarios y contrapartes técnicas del cliente.
+* **Documentos de Adquisición (*Procurement Documents*):** Especificaciones de compras, licitaciones y Solicitudes de Cotización (*Request for Quotation - RFQ*), que revelan la red de contratistas y proveedores involucrados.
+* **Activos de los Procesos de la Organización (OPA) y Factores Ambientales de la Empresa (EEF):**
+  * *OPA:* Registros de interesados y repositorios de lecciones aprendidas de proyectos previos similares, que alertan sobre interesados no evidentes.
+  * *EEF:* Normativas gubernamentales, regulaciones laborales, códigos de edificación y estándares de la industria que imponen la consideración obligatoria de organismos de control.
+
+#### Herramientas y Técnicas Principales
+* **Entrevistas a Expertos (*Expert Interviews*):** Técnica aplicada exclusivamente ante individuos con conocimiento especializado o trayectoria comprobada. Se recomienda formular preguntas abiertas (*open-ended questions*) y estar acompañado por un integrante del equipo que registre meticulosamente las declaraciones.
+* **Sesiones de Lluvia de Ideas (*Brainstorming Sessions*):** Dinámica grupal colaborativa entre el equipo del proyecto y expertos cuyo fin es "exprimir" la mayor cantidad posible de nombres y roles. Para guiar esta sesión, la cátedra estructura un catálogo taxativo de **once preguntas esenciales**:
+
+1. *¿Quién está involucrado directa o indirectamente con el proyecto?*
+2. *¿Quién puede verse afectado por el proyecto?*
+3. *¿Quién tiene algo que ganar o perder con el proyecto?*
+4. *¿Quién tiene interés en que el proyecto se complete exitosamente?*
+5. *¿Quiénes son los proveedores?*
+6. *¿Quién utilizará los entregables del proyecto?*
+7. *¿Quiénes son los competidores? (Para evaluar el entorno, recordando que no se gestionan).*
+8. *¿Quiénes son los accionistas (*shareholders*)?*
+9. *¿Quién tiene autoridad formal sobre el proyecto y su resultado?*
+10. *¿Quién tiene la autoridad para proveer soporte y recursos?*
+11. *¿Quién tiene la capacidad de hacer que el proyecto fracase?*
+
+### 2.6 Registro de Interesados (*Stakeholder Register*) y Naturaleza Iterativa
+Toda la información recabada debe compilarse formalmente en un documento central denominado **Registro de Interesados** (*Stakeholder Register*). La literatura técnica establece que, como contenido mínimo, el registro debe contener seis campos obligatorios:
+
+$$\text{Campos Mínimos} = \{\text{Nombre}, \text{Título / Rol}, \text{Nivel de Interés}, \text{Nivel de Poder}, \text{Requerimientos}, \text{Expectativas}\}$$
+
+* **Nombre:** Identificación individual o colectiva del interesado.
+* **Título / Rol:** Cargo formal en la organización o posición frente al proyecto.
+* **Interés:** Grado de preocupación o atención que dedica al proyecto (Alto / Medio / Bajo).
+* **Poder / Influencia:** Capacidad real de alterar decisiones, presupuestos o alcances (Alto / Medio / Bajo).
+* **Requerimientos:** Demandas explícitas, normativas, contractuales o técnicas que el interesado impone al proyecto.
+* **Expectativas:** Supuestos o aspiraciones implícitas sobre cómo debe ejecutarse el trabajo o qué beneficios debe reportar.
+
+#### El Principio de Iteración Continua
+Un postulado esencial de la cátedra es que **la identificación de interesados NO es un evento puntual ni una actividad aislada de la fase de iniciación; es un proceso continuo e iterativo a lo largo de todo el ciclo de vida del proyecto**. A medida que la iniciativa progresa:
+* Emergen nuevos interesados que no existían o que no eran visibles al inicio.
+* Actores preexistentes pierden interés o cambian de prioridades.
+* La correlación de poder e influencia se transforma (por ejemplo, un regulador gubernamental adquiere un poder determinante en la fase de inspección final).
+Por ende, el Project Manager tiene el deber de monitorear y actualizar continuamente el Registro de Interesados.
+
+---
+
+### 2.7 Preparación para el Examen: Unidad 2
+
+#### Conceptos Fundamentales Indispensables para Aprobar
+1. La identificación formal inicia inmediatamente tras la firma del Project Charter y la designación del Project Manager.
+2. Definición PMBOK: interesado es quien afecta o se percibe afectado por cualquier decisión, actividad o resultado del proyecto.
+3. El cliente es un consumidor o receptor final del producto (siempre es interesado); un área interna de calidad o desarrollo es interesada pero no cliente.
+4. **Al interesado negativo se lo gestiona e involucra obligatoriamente; al competidor se lo monitorea como factor externo pero jamás se lo gestiona dentro del proyecto.**
+5. El Registro de Interesados es un documento dinámico e iterativo que debe mantenerse actualizado durante todo el ciclo de vida.
+
+#### Tabla Comparativa de Diferenciación de Actores
+| Tipo de Actor | ¿Es Stakeholder? | ¿Es Interno o Externo? | Postura frente al Proyecto | ¿Debe Gestionarse en el Registro? | Objetivo de Gestión |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Patrocinador (Sponsor)** | Sí | Típicamente Interno | Altamente Favorable | Sí | Mantenerlo alineado, informado y como canal de escalamiento |
+| **Cliente / Usuario Final** | Sí | Típicamente Externo (o Interno) | Favorable / Exigente | Sí | Cumplir sus requerimientos y expectativas de uso del producto |
+| **Unidad Interna de QA** | Sí | Interno | Neutra / Técnica | Sí | Asegurar cumplimiento de estándares de calidad antes de entrega |
+| **Interesado Negativo** | Sí | Interno o Externo | Desfavorable / Contraria | **Sí (Obligatorio)** | Atender objeciones, mitigar riesgos y neutralizar oposición |
+| **Competidor de Mercado** | **No** | Externo | Hostil / Competitiva | **No** | Diseñar estrategia de negocio; no se gestiona como interesado |
+
+#### Cuestionario de Autoevaluación Universitaria
+
+**Pregunta 1 (Conceptual):** *¿Qué campos mínimos debe contener el Registro de Interesados según Mohammad Usmani y cuál es la utilidad analítica de registrar por separado los "Requerimientos" de las "Expectativas"?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Los campos mínimos son: Nombre, Título/Rol, Interés, Poder, Requerimientos y Expectativas. Es crítico diferenciarlos porque los **Requerimientos** son condiciones formales, explícitas y objetivamente auditables (por ejemplo, cumplimiento de una norma de seguridad o un estándar técnico), mientras que las **Expectativas** son presunciones implícitas o aspiraciones subjetivas (por ejemplo, la creencia de que el software acelerará sus tareas diarias o que no alterará sus hábitos de trabajo). Los requerimientos se gestionan en la línea base del alcance; las expectativas se gestionan a través de la comunicación y el relacionamiento.
+
+</details>
+
+**Pregunta 2 (Razonamiento):** *Si durante la fase de planificación de un proyecto, el Patrocinador llama al Project Manager y le indica que debe incorporar a un nuevo interesado con autoridad de aprobación, ¿cuál de las siguientes acciones debe realizarse en primer lugar y por qué?: A) Reunirse con él y discutir la línea base del alcance; B) Reunirse con él para entender sus necesidades y expectativas; C) Actualizar el plan de gestión del alcance; D) Actualizar el registro de interesados.*
+* **Respuesta Correcta:** La acción inmediata que corresponde realizar es **B) Reunirse con el interesado para comprender sus necesidades y expectativas** (o según el debate de aplicación en la literatura de Usmani, comprender primero al interesado como parte de las técnicas de análisis antes de definir impactos). Comprender las necesidades y expectativas es el prerrequisito analítico para saber qué poder e interés ostenta. Inmediatamente después, esta información se documenta formalmente actualizando el Registro de Interesados (D), y recién si se comprueban desvíos o impactos en lo pactado, se evaluará la línea base (A) o el plan de alcance (C).
+
+**Pregunta 3 (Aplicación Práctica):** *En un proyecto de instalación de un parque eólico, una comunidad de vecinos manifiesta su rotundo rechazo por el impacto visual de las torres. Simultáneamente, una empresa competidora lanza una campaña publicitaria desacreditando la energía eólica. Como Director del Proyecto, ¿cómo debe clasificar y tratar a ambos actores dentro de su estrategia de interesados?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La comunidad vecinal debe ser clasificada como un **Interesado Externo Negativo**. Al ser un interesado legítimo según la definición del PMBOK (se percibe afectada por los resultados del proyecto), el Project Manager tiene la obligación ineludible de incorporarla en el Registro de Interesados, identificar a sus referentes, escuchar sus objeciones en mesas de diálogo y buscar mitigar el impacto (por ejemplo, acordando barreras forestales o distancias de retiro). En cambio, la empresa competidora es un **Competidor de Mercado**; no es un interesado del proyecto. El Project Manager no debe llamarla a dialogar, ni intentar satisfacer sus intereses, ni incorporarla en el Registro de Interesados; las acciones del competidor se analizan como riesgos de mercado o amenazas externas, pero jamás se gestionan como parte de la estrategia de interesados.
+
+</details>
+
+---
+
+## Unidad 3: Estructura de Desglose del Trabajo (Work Breakdown Structure - WBS)
+
+### 3.1 Definición Normativa y Propósito Fundamental según el Estándar PMI
+La Estructura de Desglose del Trabajo (EDT en español, o **WBS** por sus siglas en inglés, *Work Breakdown Structure*) representa el artefacto nuclear para la definición y gobernanza del alcance en cualquier disciplina de gestión de proyectos. A pesar de su adopción masiva, suele ser uno de los instrumentos más incomprendidos en la práctica profesional.
+
+Paul Burek toma la definición normativa consolidada en el estándar *A Guide to the Project Management Body of Knowledge (PMBOK Guide)* - Quinta Edición (PMI, 2013, p. 126):
+> La WBS es una descomposición jerárquica del alcance total del trabajo a ser llevado a cabo por el equipo del proyecto para cumplir con los objetivos del proyecto y crear los entregables requeridos.
+
+En términos directos, la WBS responde de manera incontrovertible a la pregunta fundacional del proyecto:
+
+$$\text{Pregunta Axial:} \quad \text{¿Qué vamos a producir como resultado del proyecto?}$$
+
+$$\text{Respuesta:} \quad \text{Los Entregables de la WBS.}$$
+
+La WBS representa **la totalidad de los entregables que componen la solución del proyecto**. Una vez formalizada y aprobada por los interesados, la WBS se convierte en la **línea base del alcance** (*scope baseline*), estableciendo el acuerdo vinculante sobre lo que se construirá y sirviendo de justificación técnica y foco primario para el proceso subsiguiente de **Definir las Actividades** (Proceso 6.2 del PMBOK).
+
+### 3.2 Desmitificación de la WBS: Lo que la WBS NO es
+El aporte pedagógico central de Paul Burek reside en confrontar los conceptos erróneos más arraigados que expresan los equipos de proyecto cuando se les consulta sobre el propósito de la WBS.
+
+#### Respuestas Erróneas Típicas de los Equipos:
+* *"Es un cronograma que estoy obligado a confeccionar al inicio del proyecto (y que difícilmente cumpliré sin múltiples ajustes)".*
+* *"Sirve para mostrar las estimaciones de tiempo de todas las actividades que ejecutará el equipo".*
+* *"Es el entregable que usamos para rastrear el progreso de las asignaciones de trabajo del personal".*
+* *"Debe crearse para tener las estimaciones de tiempo y costos del proyecto".*
+
+#### Corrección Rigurosa de la Cátedra:
+Burek enfatiza categóricamente: **La WBS NO es un cronograma ni es un presupuesto.**
+* La WBS **NO contiene actividades ni tareas**.
+* La WBS **NO contiene estimaciones de tiempo ni duraciones**.
+* La WBS **NO contiene asignaciones nominales de recursos**.
+* La WBS **NO contiene relaciones de precedencia ni dependencias de sincronización temporal**.
+* La WBS **NO contiene costos asociados**.
+
+La WBS es un **artefacto de nivel superior** que precede y sustenta la creación del cronograma y del presupuesto. Es **agnóstica respecto al tiempo, al esfuerzo y a los costos monetarios**. Su misión exclusiva es estructurar el "QUÉ" se va a construir, sirviendo como el plano (*blueprint*) que valida y justifica racionalmente cualquier asignación posterior de tiempo y presupuesto.
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 5"
+  code={`flowchart TD
+    subgraph LÍNEA BASE DEL ALCANCE
+        WBS["WBS / EDT: Entregables - Solo SUSTANTIVOS"]
+    end
+    WBS -->|Insumo Directo para Proceso 6.2 PMBOK| DA["Definir Actividades: Tareas - Solo VERBOS"]
+    subgraph LÍNEA BASE DE TIEMPO
+        DA --> CRON["Cronograma: Secuencias, Dependencias, Duraciones, Recursos"]
+    end
+    subgraph LÍNEA BASE DE COSTO
+        DA --> PRES["Presupuesto: Costeo de Actividades, Flujo de Fondos"]
+    end`}
+/>
+
+
+### 3.3 Principios Rectores: La Regla Lingüística y la Regla del 100%
+
+#### A. La Regla Lingüística de Construcción (Sustantivos vs. Verbos)
+Para garantizar que el equipo no caiga en el error de poblar la WBS con tareas o pasos procesales, Burek postula una regla nemotécnica fundamental:
+
+$$\mathbf{WBS = Sustantivos \quad (\text{Frases Nominales})}$$
+
+$$\mathbf{Actividades\ del\ Cronograma = Verbos \quad (\text{Frases Verbales})}$$
+
+* Cada elemento que figure en la WBS debe formularse taxativamente como un **sustantivo** que denote un producto, componente o entregable tangible (por ejemplo, *"Cuadro de bicicleta"*, *"Contenido del curso"*, *"Manual de usuario"*).
+* Si durante la descomposición de la WBS el equipo advierte que el siguiente nivel de detalle solo puede expresarse razonablemente mediante una **frase verbal** que comunica *cómo* se producirá el elemento (por ejemplo, *"Diseñar cuadro"*, *"Pintar cuadro"*, *"Redactar contenido"*), significa que **la WBS ha alcanzado su nivel más bajo de descomposición**. A partir de allí, se abandona la WBS y se ingresa formalmente en el dominio del cronograma de actividades.
+
+#### B. La Regla del 100% (The 100% Rule)
+La regla del 100% es el postulado axiomático sobre el cual descansa la integridad estructural de la WBS:
+> La Regla del 100% establece que cada nivel de descomposición en la WBS debe contener todos los elementos de entregables que representen exactamente el 100% del entregable padre situado en el nivel superior.
+
+Formalización matemática del principio de conservación del alcance:
+
+$$\text{Nivel 1 (Proyecto Completo)} = 100\% \text{ del Alcance Total}$$
+
+$$\forall \text{ Entregable Padre } P, \quad \sum_{i=1}^{k} \text{Entregable Hijo}_{i} = 100\% \text{ del Entregable } P$$
+
+Implicancias operativas de la Regla del 100%:
+* **Ni más:** La suma de los componentes hijos no puede abarcar nada que exceda la definición estricta del padre. Si se agrega un elemento no contemplado en el padre, se está introduciendo trabajo fuera del alcance (*out-of-scope*).
+* **Ni menos:** Los componentes hijos no pueden omitir ninguna parte indispensable para materializar el entregable padre. Si falta un elemento, la solución quedará incompleta.
+* **Corolario de Inclusión Total:** Si algo no está contenido en la WBS, **no existe en el proyecto** y no se destinarán horas ni dinero a construirlo. Jamás debe asumirse que un cliente o equipo "sobreentenderá" que algo está incluido si fue omitido en la jerarquía.
+
+### 3.4 Directrices de Construcción y Prueba de Completitud Jerárquica
+
+#### Las Seis Directrices de Burek para una WBS Efectiva
+Aun reconociendo que no existe una única "forma correcta" de diagramar las ramas de una WBS, Burek subraya que existen innumerables formas defectuosas de construirla. Para asegurar la excelencia, deben seguirse seis pautas metodológicas:
+1. **Utilizar exclusivamente sustantivos, no verbos:** Garantiza que la atención permanezca enfocada en los entregables y no en las actividades requeridas para crearlos.
+2. **Estructura estrictamente jerárquica:** Organizar las relaciones padre-hijo para clarificar cómo los componentes menores se ensamblan en bloques de alcance superior.
+3. **Construcción colaborativa:** La WBS debe ser elaborada en equipo junto a las personas que efectivamente producirán los entregables técnicos.
+4. **Exclusividad y unicidad de componentes:** Cada rama de la WBS debe contener entregables singulares y disjuntos; no se debe repetir un mismo entregable en columnas o ramas distintas.
+5. **No formular supuestos de alcance tácito:** Nunca asumir que los interesados saben de antemano que un componente forma parte del proyecto si no está explícitamente dibujado en la WBS.
+6. **Cumplimiento estricto de la Regla del 100%:** Verificar en cada paso descendente que la suma de las partes hijas complete al padre en su totalidad.
+
+#### Profundidad de Descomposición y Prueba de Completitud
+* **Profundidad Habitual:** La mayoría de los proyectos requiere descomponer la WBS hasta **al menos tres niveles** de profundidad. Descomponer a un cuarto nivel o superior solo se justifica en entregables sumamente complejos que requieren mayor clarificación (por ejemplo, si el equipo ensambla internamente un equipamiento en lugar de adquirirlo como paquete cerrado en el mercado).
+* **La Prueba de Completitud (*Completeness Test*):** Consiste en someter la WBS a una doble pregunta de control ante los interesados:
+  1. *¿Existe algún concepto, necesidad o componente de la solución del proyecto que no pueda asociarse lógicamente con ninguno de los entregables exhibidos en la WBS?* Si la respuesta es afirmativa, significa que la WBS está incompleta y que debe incorporarse un nuevo entregable padre de nivel superior.
+  2. *¿Existe algún elemento actualmente dibujado en la WBS que no forme parte de la solución final pactada?* Si la respuesta es sí (como las rueditas de entrenamiento en una bicicleta de montaña para adultos, según el ejemplo de Burek), dicho elemento debe eliminarse de inmediato por estar fuera del alcance.
+
+### 3.5 La WBS como Hilo Común: Análisis de los Tres Arquetipos de Proyectos
+El principio unificador postulado por Paul Burek es que **todo proyecto, sin importar su industria o naturaleza, produce entregables tangibles**. "Tangible" no se restringe a objetos materiales que se pueden tocar, sino que abarca aquello que el cliente puede **ver, tocar, sentir o experimentar**.
+
+Por lo tanto, los resultados de un proyecto pueden clasificarse en tres naturalezas ontológicas, y para cada una la WBS aplica con idéntico rigor:
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 6"
+  code={`classDiagram
+    class Entregables_del_Proyecto {
+        <<Abstract>>
+        +Regla del 100%
+        +Formulados con Sustantivos
+    }
+    class Producto_Fisico {
+        +Componentes de hardware
+        +Estructuras materiales
+        +Ejemplo: Bicicleta de Montaña, Curso
+    }
+    class Servicio {
+        +Experiencias configurables
+        +Incluye personas operativas
+        +Ejemplo: Servicio de Bodas
+    }
+    class Proceso {
+        +Metodologías repetibles
+        +Entregables de gestión
+        +Ejemplo: Relocalización de Oficinas
+    }
+    Entregables_del_Proyecto <|-- Producto_Fisico
+    Entregables_del_Proyecto <|-- Servicio
+    Entregables_del_Proyecto <|-- Proceso`}
+/>
+
+
+#### Arquetipo 1: WBS de Producto (Ejemplo: Curso de Capacitación / Mountain Bike)
+* En un producto, la WBS documenta los ensambles, piezas, subsistemas y materiales constitutivos.
+* En el caso del **Curso de Capacitación** (*Training Course*):
+  * **Nivel 1 (Ramas Principales):** Materiales de Capacitación (*Training Materials*), Recursos (*Resources*), Publicidad (*Advertising*), Logística (*Logistics*) y Administración de la Capacitación (*Training Administration*).
+  * **Nivel 2 (Descomposición):** Por ejemplo, *Training Materials* se descompone en Cuadernos de Trabajo (*Work Books*) y Contenido (*Content*). *Logistics* se subdivide en Salas de Capacitación (*Course Location Rooms*), Estacionamiento (*Parking logistics*) y Equipamiento Informático (*Computer Equipment*).
+  * **Nivel 3 (Granularidad):** Solo se llega al Nivel 3 si se requiere clarificar el equipamiento (por ejemplo, servidores virtuales para una clase remota). Si los equipos se alquilan o compran terminados, es un error descender al nivel de cables, chips o memoria RAM.
+
+#### Arquetipo 2: WBS de Servicio (Ejemplo: Planificación de Bodas y el Rol del Recurso/Persona)
+* En un servicio, la WBS estructura los componentes del servicio que el cliente experimenta. Funciona operativamente como una **lista de verificación (*checklist*) para configurar el servicio**.
+* En el caso del **Servicio de Planificación de Bodas** (*Wedding Planning Service*):
+  * **Nivel 1 (Siete Ramas):** Atuendo del Cortejo (*Attire*), Ceremonia (*Ceremony*), Recepción (*Reception*), Cena de Ensayo (*Rehearsal Dinner*), Almuerzo Nupcial (*Bridal Lunch*), Alojamiento (*Accommodations*) y Transporte (*Transportation*).
+  * *Configuración Dinámica del Alcance:* Si el cliente decide prescindir del Almuerzo Nupcial y del Transporte, esas ramas completas se eliminan de la WBS. En consecuencia, desaparecen automáticamente del cronograma y del presupuesto del proyecto.
+  * *El Caso Especial de las Personas como Entregable:* La rama *Ceremony* incluye un entregable llamado **Ministro Religioso / Oficiante (*Minister*)**. En proyectos de servicio, **las personas pueden formar parte legítima de la WBS cuando su presencia constituye parte indisociable de la solución técnica entregada al cliente**. Burek advierte: si se omite el entregable "Ministro" de la WBS, las actividades para seleccionarlo, contratarlo y coordinarlo se olvidarán durante la planificación, forzando solicitudes de cambio de último momento con sobrecostos y crisis de cronograma.
+
+#### Arquetipo 3: WBS de Proceso (Ejemplo: Relocalización del Espacio de Trabajo)
+* En un proceso o metodología repetible, el resultado final no es un objeto físico estático, sino una condición operativa transformada (por ejemplo, personal reubicado trabajando en un nuevo edificio).
+* La WBS de Proceso actúa como un **plano estandarizado (*blueprint*)** que abarca todos los entregables posibles que la metodología contempla. Para cada proyecto puntual, el equipo personaliza el modelo marcando qué entregables aplican y cuáles están fuera de alcance.
+* En la **Relocalización de Oficinas** (*Workplace Relocation*):
+  * **Nivel 1:** Ubicación Actual (*Current Location*), Ubicación Destino (*Target Site Location*), Personal de Relocalización (*Relocation Staff*), Plan de Transición (*Transition Plan*) y Entregables de Financiamiento (*Funding deliverables*).
+  * *Entregables de Gestión de Proyectos en la WBS:* La rama *Funding deliverables* desglosa artefactos puramente metodológicos de dirección: **Presupuesto (*Budget*)** y **Cronograma de Liberación de Fondos (*Budget Release Schedule*)**. Burek demuestra que la WBS puede integrar entregables metodológicos de gestión cuando son vitales para la rendición de cuentas del proyecto.
+
+### 3.6 Transición Sistemática de la WBS al Cronograma y Control de Cambios
+
+#### El Mecanismo de Pasaje del "Qué" al "Cómo"
+La transición de la WBS al Cronograma no es una ruptura metodológica, sino una continuación lógica del proceso de descomposición:
+1. El equipo descompone la WBS rama por rama, utilizando exclusivamente sustantivos y aplicando la Regla del 100%.
+2. Se alcanza el nivel en que el entregable no puede subdividirse en más sustantivos sin caer en la redundancia.
+3. El equipo formula la pregunta: *¿Cómo construimos este entregable?*
+4. La respuesta emerge de forma natural como un conjunto de **frases verbales (actividades)**.
+5. Esas actividades se transfieren como insumo obligatorio al **Proceso 6.2 de Definir las Actividades (PMBOK)**.
+
+*Ejemplo de Transición (Caso Bicicleta de Montaña de Burek):*
+
+$$\text{Entregable WBS (Nivel 3 - Sustantivo):} \quad \mathbf{Cuadro\ (Frame)}$$
+
+$$\Downarrow \quad \text{Transición al Cronograma (Actividades - Verbos):}$$
+
+$$
+\begin{cases}
+1. \text{ Diseñar el cuadro } (\text{Design Frame}) \\
+2. \text{ Crear prototipo } (\text{Create Prototype}) \\
+3. \text{ Finalizar diseño } (\text{Finalize Design}) \\
+4. \text{ Construir cuadro } (\text{Build Frame}) \\
+5. \text{ Pintar cuadro } (\text{Paint Frame})
+\end{cases}
+$$
+
+Una vez definidas, a estas actividades se les asignan predecesoras y sucesoras en diagramas de red (*network diagrams*), duraciones temporales, recursos humanos y costos analíticos.
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 7"
+  code={`sequenceDiagram
+    autonumber
+    actor Interesados as Interesados y Equipo
+    participant WBS as WBS (Línea Base Alcance)
+    participant Proceso as Proceso 6.2 Definir Actividades
+    participant Crono as Cronograma y Presupuesto
+    
+    Interesados->>WBS: Descomposición Jerárquica en SUSTANTIVOS
+    Note over WBS: Aplicación Regla 100% (Qué se va a construir)
+    WBS->>Proceso: Entrega de Entregables Terminales (Hojas)
+    Proceso->>Proceso: Conversión a Frases VERBALES (Cómo construirlo)
+    Proceso->>Crono: Transferencia de Actividades de Trabajo
+    Note over Crono: Asignación de dependencias, duraciones, recursos y costos`}
+/>
+
+
+#### Dinámica de Control Integrado de Cambios
+La subordinación del cronograma y del presupuesto respecto a la WBS rige también en el control de cambios:
+* Si se aprueba una solicitud de cambio (*Change Request*) que amplía o reduce el alcance, **la WBS debe ser modificada en primera instancia**, agregando o eliminando formalmente los entregables impactados.
+* La alteración de los entregables en la WBS desencadena de forma inmediata la incorporación o baja de las actividades asociadas en el cronograma.
+* La adición o eliminación de actividades recalcula la ruta crítica, mueve las fechas de los hitos y reajusta la línea base de costos en el presupuesto.
+* Si un entregable de la WBS no puede asociarse con ninguna actividad para construirlo, existen solo dos explicaciones técnicas: o el entregable está mal formulado, o **no pertenece al alcance del proyecto y debe ser suprimido de la WBS**.
+
+---
+
+### 3.7 Preparación para el Examen: Unidad 3
+
+#### Conceptos Fundamentales Indispensables para Aprobar
+1. Definición formal de la WBS (PMBOK 5ta Ed., p. 126): descomposición jerárquica del alcance total basada en entregables orientada a los resultados.
+2. **La WBS es agnóstica al tiempo, esfuerzo y costo.** No contiene actividades, tareas, duraciones, fechas, predecesoras, dependencias ni recursos asignados.
+3. Regla Lingüística Innegociable: **WBS = Sustantivos / Cronograma = Verbos**.
+4. **Regla del 100%:** el nivel hijo suma exactamente el 100% del alcance de su padre; ni un elemento más, ni un elemento menos.
+5. Aplicabilidad universal: todo proyecto genera entregables (productos físicos, servicios configurables o procesos/metodologías repetibles).
+6. En servicios, las personas que constituyen la solución misma (como el "Ministro" en una boda) son entregables legítimos de la WBS.
+
+#### Tabla Comparativa: WBS vs. Cronograma del Proyecto
+| Variable Metodológica | Estructura de Desglose del Trabajo (WBS) | Cronograma del Proyecto (*Project Schedule*) |
+| :--- | :--- | :--- |
+| **Pregunta Central** | *¿Qué* se va a producir en el proyecto? | *¿Cómo*, *cuándo* y *quién* ejecutará el trabajo? |
+| **Unidad de Elemento** | Entregables / Componentes / Productos | Actividades / Tareas / Hitos temporales |
+| **Formulación Gramatical** | **Sustantivos** (Frases Nominales) | **Verbos** (Frases Verbales) |
+| **Regla de Integridad** | Regla del 100% de conservación de alcance | Redes de precedencia lógica y Ruta Crítica |
+| **Variables Temporales** | Ninguna (Agnóstica al tiempo y fechas) | Duraciones, fechas de inicio y fin, holguras |
+| **Variables Financieras** | Ninguna (Agnóstica a costos específicos) | Costeo de actividades, curvas de desembolso |
+| **Asignación de Recursos** | No tiene asignaciones de personal | Asignación nominal de miembros del equipo y equipos |
+| **Estatus en el PMBOK** | Salida de Crear la WBS; Línea Base del Alcance | Insumo de Desarrollar el Cronograma; Línea de Tiempo |
+
+#### Cuestionario de Autoevaluación Universitaria
+
+**Pregunta 1 (Conceptual):** *Explique el fundamento y la formulación matemática de la Regla del 100% en la WBS. ¿Qué consecuencias genera violar esta regla por exceso o por defecto?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La Regla del 100% establece que cada nivel de descomposición subordinado debe contener todos los elementos necesarios que sumen exactamente el 100% del alcance del entregable padre: $\sum \text{Hijos} = 100\% \text{ del Padre}$. Violar esta regla por **defecto** (suma menor al 100%) implica omitir entregables críticos, lo que provocará que el producto final esté incompleto o que deban emitirse órdenes de cambio tardías y costosas durante la ejecución. Violarla por **exceso** (suma mayor al 100%) implica incorporar entregables que no pertenecen al alcance autorizado, consumiendo presupuesto y tiempo en características innecesarias (*gold plating* o corrupción del alcance).
+
+</details>
+
+**Pregunta 2 (Razonamiento):** *Un director de proyecto novato incluye en el Nivel 3 de su WBS los siguientes elementos: "1.2.1 Cuadro de Bicicleta", "1.2.2 Diseñar Cuadro", "1.2.3 Soldar Cuadro" y "1.2.4 Cuadro Pintado". Desde la teoría de Paul Burek, ¿qué error metodológico se ha cometido y cómo debe resolverse?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Se ha violado flagrantemente la **Regla Lingüística** ("WBS = Sustantivos / Cronograma = Verbos") y la separación ontológica entre entregables y actividades. Los elementos "Diseñar Cuadro" y "Soldar Cuadro" son actividades (expresadas con verbos) que describen *cómo* se produce el trabajo, mientras que "Cuadro Pintado" o "Cuadro de Bicicleta" representan el entregable mismo (*qué*). La resolución metodológica consiste en mantener en la WBS únicamente el sustantivo unificado (por ejemplo, "1.2.1 Cuadro"). Luego, los verbos ("Diseñar", "Soldar", "Pintar") deben retirarse de la WBS y transferirse como la lista de actividades del Cronograma dentro del proceso 6.2 del PMBOK (*Definir las Actividades*).
+
+</details>
+
+**Pregunta 3 (Aplicación Práctica):** *En un proyecto de servicio de consultoría, el cliente exige eliminar uno de los módulos de capacitación previstos. Explique el flujo de control de cambios entre la WBS, el Cronograma y el Presupuesto según la dinámica explicada por Burek.*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El flujo es estrictamente descendente y estructurado:
+  1. La aprobación de la solicitud de cambio impacta en primer lugar a la **WBS**, donde se suprime la rama del entregable correspondiente al módulo de capacitación eliminado, preservando la Regla del 100% sobre el nuevo alcance pactado.
+  2. Al eliminarse dicho entregable de la WBS, quedan automáticamente desprovistas de justificación técnica todas las **actividades** asociadas a él en el proceso de Definir Actividades, por lo que se suprimen del **Cronograma**.
+  3. La salida de esas actividades del cronograma elimina sus duraciones de la red de precedencias, liberando recursos asignados y recalculando la ruta crítica.
+  4. Finalmente, se descuentan los costos directos de esas tareas del **Presupuesto**, ajustando a la baja la línea base de costo del proyecto.
+
+</details>
+
+---
+
+## Unidad 4: Integración Sistémica, Gobernanza y Trazabilidad Metodológica
+
+### 4.1 Articulación Funcional de las Tres Fuentes: Del Mandato a la Ejecución
+Las tres fuentes que fundamentan este apunte (William Malsam, Mohammad Usmani y Paul Burek) no abordan materias fragmentadas ni aisladas, sino que describen de forma concatenada la espina dorsal del inicio y la planificación estructurada de cualquier proyecto bajo estándares internacionales.
+
+El ciclo de gobernanza fluye a través de una rigurosa secuencia causal:
+1. **El Project Charter como Punto de Partida Institucional (Malsam):** Todo proyecto nace formalmente a partir de la firma del Project Charter por parte del Patrocinador. Este documento condensa la justificación económica del Caso de Negocio, establece la visión fundacional, fija la triple restricción y otorga autoridad al Project Manager.
+2. **La Convocatoria Inmediata de los Interesados (Usmani):** La primera obligación normativa del Project Manager, en el minuto exacto en que se firma el Project Charter, es ejecutar el proceso de Identificación de Interesados. Utilizando el Project Charter, contratos y lecciones aprendidas (OPA/EEF), convoca entrevistas y sesiones de lluvia de ideas guiadas por las 11 preguntas clave. Construye el Registro de Interesados y clasifica actores por poder e interés para involucrarlos en la definición de la solución.
+3. **La Descomposición Estructurada del Alcance en la WBS (Burek):** Con los interesados clave formalizados y las expectativas alineadas, el Project Manager lidera la construcción colaborativa de la WBS. Tomando los entregables macro del Charter, desglosa el 100% del alcance en capas de sustantivos hasta alcanzar el nivel terminal de entregable.
+4. **La Transición al Cronograma y Presupuesto Operativos (Burek & Malsam):** Con la WBS congelada como línea base del alcance, el equipo da el salto al "Cómo", convirtiendo los sustantivos en verbos (actividades). Dichas actividades se programan temporalmente con dependencias y recursos en el Cronograma y se valorizan financieramente en el Presupuesto Analítico.
+
+
+<MermaidDiagram
+  client:load
+  caption="Iniciación, Gobernanza de Interesados y WBS — Diagrama 8"
+  code={`flowchart TD
+    subgraph INICIACIÓN DEL PROYECTO
+        BC["Caso de Negocio: Justificación y ROI"] --> PC["PROJECT CHARTER: Autorización y Mandato"]
+        PC --> PM[Nombramiento y Autoridad del Project Manager]
+    end
+    
+    subgraph GOBERNANZA DE INTERESADOS
+        PM --> SI["Identificación de Interesados: 5 Pasos"]
+        PC -.->|Entrada Documental| SI
+        SI --> SR["REGISTRO DE INTERESADOS: Poder, Interés, Requerimientos"]
+    end
+    
+    subgraph LÍNEA BASE DEL ALCANCE
+        SR --> WBS[ESTRUCTURA DE DESGLOSE DEL TRABAJO - WBS]
+        PC -.->|Límites de Alcance / Entregables Macro| WBS
+        Note over WBS: Regla del 100% / Solo Sustantivos
+    end
+    
+    subgraph PLANIFICACIÓN ANALÍTICA
+        WBS --> DA["Proceso 6.2 PMBOK: Definir Actividades"]
+        Note over DA: Transición a Verbos (Cómo construir)
+        DA --> SCHED["Cronograma: Duraciones, Redes, Hitos"]
+        DA --> BUD["Presupuesto: Costos de Actividades y Recursos"]
+    end`}
+/>
+
+
+### 4.2 Matriz Global de Trazabilidad Metodológica
+Para estudiar de forma unificada para el examen, la siguiente matriz sintetiza los atributos esenciales de los tres artefactos vertebrales de la cátedra:
+
+| Atributo / Dimensión | Acta de Constitución (*Project Charter*) | Registro de Interesados (*Stakeholder Register*) | Estructura de Desglose del Trabajo (*WBS*) |
+| :--- | :--- | :--- | :--- |
+| **Autor de Referencia** | William Malsam (*ProjectManager.com*) | Mohammad Usmani (*PM Study Circle*) | Paul Burek (*PMI Global Congress 2013*) |
+| **Fase del Ciclo de Vida** | Iniciación formal | Iniciación (con iteración en todo el ciclo) | Planificación (definición de alcance) |
+| **Propósito Cardinal** | Autorizar formalmente el proyecto y al PM | Documentar y clasificar a los afectados para gestionarlos | Descomponer jerárquicamente el 100% de los entregables |
+| **Entradas Principales** | Caso de Negocio, Contratos, Acuerdos | Project Charter, Contratos, OPA, EEF | Project Charter, Enunciado del Alcance |
+| **Regla Lingüística** | Redacción formal ejecutiva (pocas páginas) | Atributos cualitativos / cuantitativos tabulados | **Estrictamente Sustantivos (Frases Nominales)** |
+| **Herramientas de Creación** | Negociación con Patrocinador, Análisis Costo-Beneficio | Entrevistas a Expertos, Brainstorming (11 preguntas) | Descomposición jerárquica en equipo, Prueba de Completitud |
+| **Regla de Integridad** | Validación contra objetivos estratégicos organizacionales | Actualización continua ante dinámicas de poder e interés | **Regla del 100% de conservación de alcance** |
+| **Salida Posterior que Habilita** | Identificación de Interesados y Plan de Proyecto | Estrategia de Involucramiento y Comunicación | Proceso 6.2 PMBOK (Definir Actividades) y Cronograma |
+
+### 4.3 Gestión Integral de Cambios y Gobernanza Ecosistémica
+La integración conceptual de las tres fuentes se pone a prueba de manera definitiva ante una **solicitud de cambio de alcance**:
+* Si un interesado formula un cambio, dicho interesado debe ser evaluado primero en el **Registro de Interesados** para ponderar su legitimidad, su nivel de poder y el impacto de su expectativa.
+* Si el cambio altera las fronteras del proyecto definidas en el **Project Charter** (afectando la triple restricción o los objetivos SMART), se requiere una escalada formal hacia el **Patrocinador** para su aprobación estatutaria.
+* Una vez aprobado, el cambio se plasma primero en la **WBS**, incorporando o retirando sustantivos bajo la Regla del 100%.
+* Inmediatamente, la mutación de la WBS propaga sus efectos hacia el **Cronograma** (altas o bajas de actividades formuladas con verbos) y hacia el **Presupuesto** (reestimación de costos), cerrando el circuito de control de proyectos.
+
+---
+
+### 4.4 Preguntas de Integración Transversal para Examen Universitario
+
+**Pregunta 1 (Integración Metodológica Charter-Interesados-WBS):** *Demuestre cómo una formulación defectuosa del Project Charter puede sabotear directamente la construcción de la WBS y provocar la insatisfacción de los interesados clave.*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Si el Project Charter omite delimitar con precisión las fronteras del alcance (*in-scope* vs *out-of-scope*) o no identifica adecuadamente a los clientes y sus requerimientos SMART, el equipo carecerá del marco de referencia necesario para aplicar la **Prueba de Completitud** de la WBS. En consecuencia, el equipo de diseño construirá una WBS basada en supuestos no validados, omitiendo entregables que los interesados daban por sentados o incorporando elementos innecesarios. Al violarse la Regla del 100% en la WBS, el cronograma y el presupuesto nacerán distorsionados. Cuando los interesados reciban los entregables finales en la fase de cierre, constatarán que sus expectativas no fueron satisfechas, determinando el fracaso del proyecto a pesar de haber cumplido tareas aisladas.
+
+</details>
+
+**Pregunta 2 (Razonamiento de Gobernanza):** *¿Por qué Paul Burek insiste en que las personas pueden ser entregables en la WBS de un servicio (como el Ministro en una boda), mientras que en un proyecto de producto las personas solo aparecen asignadas a actividades en el cronograma?*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Porque en un producto físico, el cliente paga y evalúa un objeto material inerte (un cuadro de bicicleta o un manual impreso); las personas son únicamente recursos que realizan el trabajo de diseño o manufactura (asignadas a verbos en el cronograma). En cambio, en un proyecto de servicio, **la solución consumida por el cliente es una experiencia que involucra directamente la prestación personal del recurso**. El cliente contrata un paquete de ceremonia donde la presencia del oficiante/ministro es parte intrínseca de lo prometido. Si se lo concibe únicamente como un recurso interno de cronograma y no como un entregable de servicio en la WBS, se corre el riesgo de omitir su contratación dentro del alcance formal, comprometiendo la totalidad del servicio.
+
+</details>
+
+**Pregunta 3 (Criterios de Aprobación de la Cátedra):** *Sintetice en tres directrices inviolables qué debe responder un estudiante para aprobar una pregunta sobre el alcance y la planificación en el examen final.*
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** 
+  1. *El Project Charter es un mandato formal de alto nivel que autoriza el proyecto y empodera al Project Manager; no contiene el cronograma analítico ni reemplaza la planificación.*
+  2. *La identificación de interesados debe ser inmediata e iterativa; al interesado negativo se lo gestiona e involucra obligatoriamente, mientras que al competidor jamás se lo incorpora al Registro de Interesados.*
+  3. *La WBS es la descomposición del 100% del alcance expresada exclusivamente en SUSTANTIVOS y es agnóstica al tiempo y costos; las actividades expresadas con VERBOS pertenecen de forma exclusiva al Cronograma.*
+
+</details>

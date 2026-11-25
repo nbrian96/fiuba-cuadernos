@@ -1,0 +1,500 @@
+---
+docId: mejora-y-metricas
+courseId: gdsi
+title: "Gestión de la Mejora Continua y Métricas"
+order: 7
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - unidad-1-fundamentos-de-la-mejora-continua-y-enfoque-lean-en-software
+  - unidad-2-medicion-e-ingenieria-de-metricas-en-software
+  - unidad-3-dispositivos-de-mejora-en-equipo-y-pensamiento-cientifico
+  - unidad-4-marco-conceptual-integrador-y-bibliografia-de-catedra
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+La gestión del desarrollo de sistemas de información requiere concebir la ingeniería de software no como una serie de tareas mecánicas, sino como una disciplina socio-técnica que opera en entornos complejos donde la adaptación continua es una condición indispensable de supervivencia y eficacia. En este contexto, la mejora continua y la medición objetiva constituyen dos pilares inseparables: la medición proporciona visibilidad sobre la realidad empírica del proceso y del producto, mientras que los marcos de mejora permiten traducir dicha visibilidad en intervenciones sistemáticas y sostenibles.
+
+Este documento articula de forma exhaustiva los conceptos, modelos, dinámicas y marcos metodológicos presentados por la cátedra para el estudio de la mejora continua y las métricas en organizaciones de software.
+
+---
+
+## Unidad 1: Fundamentos de la Mejora Continua y Enfoque Lean en Software
+
+### 1.1 Necesidad Sistémica de la Mejora
+En el ámbito organizacional y del desarrollo de software, la mejora no es una actividad accesoria ni optativa. Tal como postulaba Tom Peters en *The Circle of Innovation*: "Si no estás mejorando cómo hacés tu trabajo, no estás haciendo tu trabajo". Esta máxima establece que la reflexión sobre el propio método productivo y su perfeccionamiento sistemático forman parte indivisible del rol profesional.
+
+La cátedra identifica cinco razones fundamentales por las cuales los equipos deben incorporar la mejora continua como una práctica estructural:
+
+1. **Entropía natural de los sistemas**: De manera espontánea, los procesos, la arquitectura del software y las dinámicas de equipo tienden al desorden y a la degradación si no se invierte energía deliberada en mantenerlos y optimizarlos.
+2. **Lo óptimo no surge naturalmente**: El comportamiento humano y los hábitos organizacionales consolidados no tienden de forma innata hacia la máxima eficacia; requieren diseño deliberado, práctica y disciplina.
+3. **Brecha entre valores y práctica**: Con frecuencia, los valores declarados por una organización o equipo (tales como la calidad técnica, la transparencia o la colaboración) se encuentran por encima de su práctica real cotidiana. La mejora continua busca cerrar dicha brecha.
+4. **Complejidad del entorno y pérdida de eficacia**: El desarrollo de software opera en contextos dinámicos y no lineales. Si el equipo no adapta continuamente sus prácticas y arquitectura a los cambios del contexto, pierde inevitablemente su eficacia.
+5. **Carácter inagotable del aprendizaje**: Siempre existen técnicas, herramientas, habilidades o modelos conceptuales por aprender e incorporar para elevar el desempeño individual y colectivo.
+
+### 1.2 Modelos de Ciclos de Mejora
+
+La mejora estructurada se diferencia de las intervenciones aisladas mediante el uso de ciclos iterativos de retroalimentación. La cátedra profundiza en dos modelos centrales de la industria:
+
+#### El Ciclo PDCA (Shewhart / Deming)
+El ciclo PDCA constituye el fundamento clásico de la calidad y la mejora empírica en la industria manufacturera y de software:
+- **Planificar (Plan)**: Identificar el problema u oportunidad, recolectar datos basales y definir la hipótesis de intervención junto con las metas esperadas.
+- **Realizar (Do)**: Implementar la intervención a escala experimental o controlada.
+- **Revisar / Verificar (Check)**: Medir los resultados obtenidos tras el cambio y compararlos contra los parámetros esperados para evaluar el impacto real.
+- **Actuar (Act)**: Estandarizar la práctica si la hipótesis fue validada, o ajustar y reiniciar el ciclo si los resultados discreparon de lo proyectado.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 1"
+  code={`graph TD
+    P["Planificar / Plan"] --> D["Realizar / Do"]
+    D --> C["Revisar / Check"]
+    C --> A["Actuar / Act"]
+    A --> P`}
+/>
+
+
+#### Heart of Agile (Alistair Cockburn)
+Frente a la proliferación de marcos de trabajo complejos y burocráticos, Alistair Cockburn propuso el "Corazón de la Agilidad" (*Heart of Agile*), sintetizando la práctica ágil en cuatro acciones nucleares e interdependientes:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 2"
+  code={`graph LR
+    subgraph Heart of Agile
+        C["Colaborar / Collaborate"]
+        D["Entregar / Deliver"]
+        R["Reflexionar / Reflect"]
+        I["Mejorar / Improve"]
+    end
+    C --- D
+    D --- R
+    R --- I
+    I --- C`}
+/>
+
+
+Cada uno de estos cuatro cuadrantes se desagrega en dimensiones operativas específicas:
+- **Colaborar (Collaborate)**: Sostenido por la **Confianza (Trust)** y la **Cultura (Culture)**. Implica la comunicación fluida y la cooperación estrecha intra e inter-equipos.
+- **Entregar (Deliver)**: Orientado a mantener un **Flujo Interno (Internal Flow)** sostenido, así como a ejecutar entregas con dos propósitos complementarios: **Entregar para Aprender (Deliver for Learning)** —validando hipótesis de mercado y técnicas— y **Entregar por Ingresos (Deliver for Income)** —generando sustentabilidad económica.
+- **Reflexionar (Reflect)**: Implica pausar periódicamente para analizar el estado de las cosas a través de dos mecanismos: la **Introspección (Introspect)** del equipo sobre sus relaciones y dinámicas humanas, y el **Examen de Datos (Examine Data)** mediante métricas objetivas.
+- **Mejorar (Improve)**: Es la materialización de los aprendizajes derivados de la reflexión, ejecutada mediante el **Cambio (Change)** en los procesos y la capacidad de **Experimentar (Experiment)** nuevas prácticas.
+
+### 1.3 Objetos de Mejora: ¿Qué se puede transformar?
+Una intervención de mejora no debe restringirse únicamente al código fuente. En el marco de GDSI, el espectro de transformación abarca múltiples niveles organizacionales:
+- **Procesos y prácticas**: La metodología de trabajo, ceremonias, convenciones de codificación, integración continua y gestión de ramas.
+- **Equipo**: Mecanismos de comunicación, seguridad psicológica, distribución de roles y dinámicas interpersonales.
+- **Herramientas**: Plataformas de soporte, entornos de desarrollo, pipelines de despliegue, herramientas de telemetría y monitoreo.
+- **Producto**: Calidad intrínseca del software, deuda técnica, modularidad, usabilidad y rendimiento.
+- **Dirección (¿A dónde vamos?)**: Claridad de la visión de producto, priorización estratégica y alineación de objetivos.
+- **Organización**: Estructura de áreas, políticas de contratación, flujos de gobernanza y dependencias operativas.
+- **Consciencia**: El nivel de alerta y comprensión reflexiva que el equipo posee sobre sus propios sesgos, limitaciones y hábitos cotidianos.
+
+### 1.4 Estrategias de Transformación: Kaizen vs. Kaikaku
+Provenientes del pensamiento Lean y el Sistema de Producción Toyota, la cátedra distingue dos modalidades de cambio según su escala y velocidad:
+
+| Dimensión | Kaizen (改善) | Kaikaku (改革) |
+| :--- | :--- | :--- |
+| **Etimología** | *Kai* (cambio) + *Zen* (bueno). Cambio para mejorar. | *Kai* (cambio) + *Kaku* (revolucionario). Transformación radical. |
+| **Naturaleza del cambio** | Incremental, continuo, de bajo riesgo por iteración. | Radical, disruptivo, de alto impacto estructural. |
+| **Alcance** | Ajustes sobre la práctica cotidiana existente. | Rediseño completo de un proceso, tecnología o flujo. |
+| **Ejemplo de cátedra** | Eliminar el requisito de revisión cruzada de código cuando se realiza *pair programming*. | Implementar *Continuous Deployment* (cada commit validado va directamente a producción). |
+
+Ambos enfoques son complementarios: Kaikaku establece saltos de nivel en las capacidades del sistema, mientras que Kaizen optimiza y estabiliza continuamente el nuevo estado operativo alcanzado.
+
+### 1.5 Los 7 Desperdicios en el Desarrollo de Software (Lean Thinking)
+Mary y Tom Poppendieck adaptaron los principios del Sistema de Producción Toyota a la ingeniería de software en *Lean Software Development: An Agile Toolkit*. En este enfoque, la mejora se concibe fundamentalmente como la eliminación deliberada de **desperdicio** (*muda*), definido como cualquier actividad o recurso que no aporta valor directo al usuario final:
+
+1. **Trabajo en progreso (Work in Progress - WIP)**: Requerimientos iniciados, código no desplegado, ramas pendientes de merge o funcionalidades a medio desarrollar. Genera costos de inventario, riesgo de obsolescencia y retrasa el feedback.
+2. **Funcionalidades extras (Extra Features)**: Desarrollo de características no requeridas o de valor marginal ("gold plating"). Aumenta la complejidad del sistema y el costo de mantenimiento futuro sin brindar beneficio real.
+3. **Reaprendizaje (Relearning)**: Pérdida de conocimiento técnico o funcional que obliga al equipo a resolver problemas ya superados o redescubrir especificaciones por falta de documentación viva, automatización o rotación desordenada.
+4. **Traspasos (Handoffs)**: Transferencia de información e intermediaciones entre silos (e.g., de analistas a desarrolladores, de desarrolladores a testers, de testers a operaciones). Cada traspaso degrada el contexto original y fragmenta la responsabilidad.
+5. **Cambio de contexto (Context Switching)**: Asignación simultánea de personas a múltiples tareas o proyectos. Cada interrupción genera una sobrecarga cognitiva severa y demoras en recuperar la concentración.
+6. **Demoras (Delays)**: Tiempos de espera innecesarios en aprobaciones, respuesta de dependencias externas, ejecución de pruebas lentas o bloqueos en pipelines de CI/CD.
+7. **Defectos (Defects)**: Fallas en el software, regresiones o inconsistencias de diseño. No solo impactan al usuario, sino que demandan un esfuerzo masivo de diagnóstico, corrección y re-pruebas.
+
+### 1.6 Catálogo de Intervenciones Concretas de Mejora
+Para materializar la mejora en el día a día de un equipo de desarrollo, la cátedra propone un conjunto de intervenciones pragmáticas:
+- **Ajustar criterios de aceptación**: Refinar las definiciones de "Hecho" (*Definition of Done*) y criterios específicos de historias de usuario para evitar ambigüedades.
+- **Acciones preventivas tempranas**: Eliminar warnings en la compilación, solventar vulnerabilidades estáticas y reducir la acumulación de deuda técnica antes de que impacte en producción.
+- **Adopción de nuevas prácticas y procesos**: Incorporar desarrollo guiado por pruebas (TDD), refactorización continua o integración continua.
+- **Aprender y pulir técnicas de desarrollo**: Capacitación continua en patrones de diseño, arquitectura modular y técnicas avanzadas de depuración.
+- **Cambio de secuencias de acciones**: Alterar el orden de ejecución de etapas para optimizar el flujo (e.g., automatizar pruebas antes de iniciar fases de estabilización).
+- **Creación de redundancias de conocimiento**: Compartir responsabilidades críticas (e.g., que múltiples personas del equipo dominen y ejecuten los despliegues a producción) para mitigar el factor de riesgo por personas clave (*bus factor*).
+- **Unificación de flujos**: Centralizar el ingreso de requerimientos a través de un único canal formal para evitar canales laterales informales que desvíen la atención del equipo.
+- **Visibilización de problemas**: Utilizar tableros visuales, radiadores de información y alertas automáticas para exponer bloqueos y anomalías operativas de forma inmediata.
+- **Estudio y profundización de conocimiento**: Reservar espacios formales para el análisis conceptual y técnico de nuevas tecnologías.
+- **Reemplazo de herramientas**: Sustituir utilitarios obsoletos por herramientas modernas que reduzcan la fricción operativa.
+
+---
+
+### Preparación para el Examen: Unidad 1
+
+#### Conceptos Clave para Dominar
+- Los fundamentos de la necesidad de mejora (entropía, complejidad, aprendizaje).
+- Las fases del ciclo PDCA y su aplicación concreta en ingeniería de software.
+- Los cuatro cuadrantes de Heart of Agile y sus dimensiones internas.
+- Diferencias operativas y estratégicas entre Kaizen y Kaikaku.
+- La equivalencia e impacto de los 7 desperdicios de Lean en proyectos de software.
+
+#### Preguntas y Respuestas de Autoevaluación
+
+**1. ¿Por qué se afirma que la entropía es una justificación para la mejora continua en proyectos de software?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La entropía establece que los sistemas cerrados tienden espontáneamente al desorden. En el software, el código, la arquitectura y las dinámicas de equipo se degradan progresivamente debido a parches rápidos, acumulación de deuda técnica, obsolescencia de dependencias y cambios en los miembros del equipo. Si no se introduce energía deliberada mediante refactorización, revisión de prácticas y mejora continua, el sistema pierde estabilidad y mantenibilidad.
+
+</details>
+
+**2. Compare Kaizen y Kaikaku a partir de un ejemplo de desarrollo de software.**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Kaizen representa una mejora incremental de bajo riesgo sobre la operatoria habitual, como eliminar la revisión cruzada de pull requests cuando dos desarrolladores hacen *pair programming* (optimizando una práctica existente). Kaikaku representa una transformación estructural y radical, como pasar de despliegues manuales mensuales a *Continuous Deployment*, donde cada commit validado se publica automáticamente en producción, alterando completamente la arquitectura, las pruebas y la cultura operativa.
+
+</details>
+
+**3. ¿Cómo impacta el desperdicio de "Traspasos" (Handoffs) en la eficiencia de un equipo y qué práctica ayuda a mitigarlo?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El traspaso entre silos (por ejemplo, entre analista funcional, desarrollador y tester) fragmenta el conocimiento tácito, genera pérdidas de contexto en cada paso y diluye la responsabilidad compartida. Se mitiga mediante equipos multidisciplinarios (*cross-functional*), flujo unificado y prácticas como pair programming o refinamientos colaborativos donde todo el equipo comprende y modela la solución en conjunto.
+
+</details>
+
+---
+
+## Unidad 2: Medición e Ingeniería de Métricas en Software
+
+### 2.1 Epistemología de la Métrica: Realidad vs. Éxito/Fracaso
+Uno de los riesgos más graves en la gestión de proyectos de software es la perversión de los sistemas de medición. Siguiendo el planteo de Tobias Mayer en *Simple Scrum*:
+
+> *"Las métricas no deben ser medidas de éxito o fracaso, sino de realidad (verdad). Solamente si no son medidas de éxito o fracaso podemos esperar que las personas no actúen buscando soluciones fáciles."*
+
+Cuando una métrica se asocia a castigos, bonificaciones o juicios binarios de éxito/fracaso, se activa la denominada Ley de Goodhart: "Cuando una medida se convierte en un objetivo, deja de ser una buena medida". Las personas adaptan su comportamiento para optimizar el número (e.g., cerrar bugs triviales para inflar la tasa de resolución, o escribir tests vacíos para elevar la cobertura), sacrificando la calidad real. Una métrica debe concebirse como un instrumento diagnóstico que refleja fielmente el estado del sistema para habilitar la toma de decisiones informada.
+
+### 2.2 Propósitos Operativos de las Métricas
+La cátedra establece cinco finalidades concretas para la utilización de métricas en el desarrollo de software:
+1. **Caracterizar un recorte de la realidad**: Describir numéricamente atributos de procesos, productos o recursos (e.g., conocer el tamaño de una base de código o el tiempo de ciclo).
+2. **Mejorar procesos, prácticas y servicios**: Identificar cuellos de botella e inconsistencias para orientar las iniciativas de optimización.
+3. **Cuantificar y comparar con parámetros esperados**: Evaluar la desviación entre el comportamiento observado y los estándares de referencia o acuerdos de nivel de servicio (SLA).
+4. **Controlar y decidir acciones**: Proveer umbrales objetivos que disparen intervenciones correctivas cuando una variable crítica sale de su rango de tolerancia.
+5. **Analizar la calidad del proceso o producto**: Determinar el nivel de confiabilidad, mantenibilidad y satisfacción del cliente final.
+
+### 2.3 Taxonomía Conceptual: Métrica, Medición e Indicador
+Existe una confusión recurrente entre estos tres términos. La cátedra exige distinguir con precisión formal cada concepto:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 3"
+  code={`graph LR
+    Métrica["Métrica: Definición Formal"] -->|Acto de Registrar| Medición["Medición: Toma de Valores"]
+    Medición -->|Procesamiento y Visualización| Indicador["Indicador: Representación Visual"]`}
+/>
+
+
+- **Métrica**: La definición formal, teórica y abstracta de una variable que se desea medir (e.g., *Lead Time* de un commit a producción; porcentaje de cobertura de código).
+- **Medición**: El acto empírico y operativo de recolectar valores concretos para una métrica en un instante o período dado (e.g., registrar que el commit `#a3f1` demoró 45 minutos en llegar a producción).
+- **Indicador**: La representación visual, gráfica o sintética de una métrica procesada, diseñada para facilitar la interpretación y toma de decisiones (e.g., un velocímetro en un tablero de control, una gráfica de dispersión o un semáforo de estado).
+
+| Concepto | Definición de Cátedra | Ejemplo Ilustrativo |
+| :--- | :--- | :--- |
+| **Métrica** | Definición formal de la variable que vamos a medir. | Tiempo transcurrido desde el *commit* en el repositorio hasta su despliegue efectivo en producción. |
+| **Medición** | El acto de tomar valores para una métrica. | Registro de 12 horas y 30 minutos para el despliegue del día martes a las 14:00 hs. |
+| **Indicador** | La representación visual de una métrica. | Gráfico de líneas temporales con banda de control que muestra la tendencia semanal del tiempo de despliegue. |
+
+### 2.4 Anatomía y Diseño Formal de una Métrica
+Para que una métrica esté rigurosamente construida y no se preste a ambigüedades, debe especificarse conforme al modelo formal de cinco elementos de la cátedra:
+
+1. **Nombre**: Denominación unívoca y clara de la variable (e.g., *Porcentaje de Cobertura de Pruebas sobre Condicionales*).
+2. **Escala**: Tipo y rango de valores posibles que puede asumir la variable:
+   - Nominal (categorías sin orden, ej. Sí/No).
+   - Ordinal (categorías con jerarquía, ej. Bajo, Medio, Alto; o escala Likert 1 a 5).
+   - De intervalo o de razón (numérica continua o discreta, ej. minutos, porcentaje $0\%-100\%$, cantidad de defectos).
+3. **Valor más positivo**: Sentido de optimización de la métrica. Debe explicitarse si "más alto es mejor" (e.g., cobertura de tests, NPS) o si "más bajo es mejor" (e.g., cantidad de defectos en producción, tiempo de build).
+4. **Forma de medición**: Procedimiento operativo utilizado para recolectar el dato:
+   - *Manual*: Registro mediante planillas o encuestas.
+   - *Con herramientas (automatizada)*: Recolección directa desde scripts de CI/CD, logs o sonares de calidad.
+   - *Híbrida*: Combinación de captura automatizada con validación o enriquecimiento humano.
+   - Requiere garantizar consistencia a lo largo del tiempo.
+5. **Estadístico de agregación**: Función matemática empleada para resumir y componer múltiples mediciones individuales en un valor representativo del período (e.g., media aritmética, mediana, percentil 95, moda o suma total).
+
+#### Ejemplos de Métricas y sus Objetivos Asociados
+- **Métrica**: Cantidad de ítems del backlog terminados sobre planificados ($\frac{\text{Ítems Terminados}}{\text{Ítems Planificados}}$).
+  - *Objetivo asociado*: Desplegar una versión de producto que pueda ser utilizada en una fecha comprometida.
+- **Métrica**: Cantidad de defectos hallados post-entrega por iteración.
+  - *Objetivo asociado*: Lograr 0 defectos por iteración (excelencia operativa).
+- **Métrica**: Porcentaje de cobertura de pruebas sobre condicionales (Alto es mejor):
+
+  $$\text{Cobertura} = \left(\frac{\text{Condicionales Evaluados en Pruebas}}{\text{Total de Condicionales en el Código}}\right) \times 100$$
+
+  - *Objetivo asociado*: Alcanzar el $80\%$ de cobertura sobre condicionales.
+- **Métrica**: Net Promoter Score (NPS) (Alto es mejor): Medición basada en la probabilidad de que los usuarios recomienden el producto o servicio en una escala estandarizada.
+
+### 2.5 Metodología GQM (Goal - Question - Metric)
+Desarrollada originalmente por Victor Basili y colaboradores, la metodología GQM es un enfoque estructurado de arriba hacia abajo (*top-down*) que garantiza que ninguna métrica se recolecte sin un propósito explícito de negocio o ingeniería:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 4"
+  code={`graph TD
+    Goal["Nivel Conceptual: OBJETIVO / Goal"] --> Q1["Nivel Operacional: Pregunta 1"]
+    Goal --> Q2["Nivel Operacional: Pregunta 2"]
+    Q1 --> M1["Nivel Cuantitativo: Métrica 1.1"]
+    Q1 --> M2["Nivel Cuantitativo: Métrica 1.2"]
+    Q2 --> M2
+    Q2 --> M3["Nivel Cuantitativo: Métrica 2.1"]`}
+/>
+
+
+1. **Nivel Conceptual (Objetivo / Goal)**: Define qué se desea lograr, qué objeto se analiza, con qué propósito, desde qué perspectiva y en qué contexto.
+2. **Nivel Operacional (Pregunta / Question)**: Formula interrogantes específicos que caracterizan la evaluación del objetivo y evalúan si se está alcanzando.
+3. **Nivel Cuantitativo (Métrica / Metric)**: Asocia datos numéricos o cualitativos medibles para responder de forma objetiva a cada una de las preguntas planteadas. Una misma métrica puede reutilizarse para responder diferentes preguntas.
+
+#### Ejemplo Desarrollado de Cátedra:
+- **Objetivo 1**: Entregar Producto orgánico Periódicamente.
+  - **Pregunta 1.1**: *¿Entregamos producto a nuestro usuario en cada sprint?*
+    - *Métrica 1.1.1*: Equipo entrega producto frecuentemente (Escala nominal: Sí / No).
+    - *Métrica 1.1.2*: Cantidad de incrementos del sprint entregados (Escala: Entero $\ge 0$).
+  - **Pregunta 1.2**: *¿Los incrementos de producto generan valor al usuario?*
+    - *Métrica 1.2.1*: Equipo entrega valor perceptible (Escala nominal: Sí / No).
+    - *Métrica 1.2.2*: Nivel de satisfacción de usuarios (Escala ordinal: 1 al 5).
+    - *Métrica 1.1.2 (Reutilizada)*: Cantidad de incrementos del sprint entregados.
+
+### 2.6 Catálogo de Buenas Métricas en Desarrollo de Software
+La cátedra destaca un conjunto de métricas representativas con alto valor diagnóstico para la entrega continua y la calidad:
+- **Satisfacción de clientes y empleados**: Indicador de sustentabilidad humana y comercial del proyecto.
+- **Defectos en la Scrum Review vs. Defectos en Producción**: Permite evaluar la efectividad de los filtros de calidad previos al release.
+- **Porcentaje de pruebas automatizadas sobre el total de pruebas**:
+
+  $$\% \text{ Automatización} = \left(\frac{\text{Pruebas Automatizadas}}{\text{Pruebas Totales}}\right) \times 100$$
+
+- **Porcentaje de pruebas especificadas sobre pruebas totales**: Evalúa el grado de formalización de la suite de validación.
+- **Duración del build y de las pruebas automatizadas**: Tiempo que insume el pipeline de integración continua; valores elevados desincentivan la integración frecuente.
+- **Demora del despliegue de un commit (*Lead Time*)**: Tiempo transcurrido desde que un cambio de código es confirmado hasta su ejecución productiva.
+- **Porcentaje de avance para un release**: Relación entre el alcance completado y el planificado para la versión.
+
+---
+
+### Preparación para el Examen: Unidad 2
+
+#### Conceptos Clave para Dominar
+- La postura de Tobias Mayer sobre la métrica como reflejo de realidad versus medida de éxito o fracaso.
+- Distinción taxonómica estricta: Métrica, Medición e Indicador.
+- Los cinco elementos indispensables para diseñar formalmente una métrica.
+- La estructura jerárquica de GQM (Objetivo, Pregunta, Métrica) y su fundamentación metodológica.
+
+#### Preguntas y Respuestas de Autoevaluación
+
+**1. ¿Qué consecuencia organizacional ocurre si una métrica de cobertura de código se utiliza como criterio de evaluación de desempeño individual?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Se pervierte el propósito de la métrica por la Ley de Goodhart. Como la métrica pasa a ser una medida de éxito/fracaso y no de realidad, los desarrolladores buscarán la solución más fácil para maximizar el número: escribirán tests automatizados sin aserciones reales (*assertions*) o probarán código trivial únicamente para elevar el porcentaje. Se distorsiona la realidad y se pierde la visibilidad sobre la verdadera calidad del sistema.
+
+</details>
+
+**2. Defina los 5 elementos de diseño formal para la métrica "Demora de despliegue de un commit".**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:**
+- *Nombre*: Demora de despliegue de un commit (*Lead Time to Production*).
+- *Escala*: Razón / Continua (minutos u horas $\ge 0$).
+- *Valor más positivo*: Más bajo es mejor (minimizar el tiempo de ciclo).
+- *Forma de medición*: Automatizada, calculada por la herramienta de CI/CD tomando la diferencia entre la marca de tiempo (*timestamp*) del commit y la confirmación de despliegue en producción.
+- *Estadístico de agregación*: Mediana o Percentil 90 (para evitar que valores atípicos extremos distorsionen la tendencia central).
+
+</details>
+
+**3. ¿Cuál es la principal ventaja de utilizar el enfoque GQM en lugar de comenzar directamente eligiendo métricas disponibles en las herramientas?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** GQM evita la recolección indiscriminada de datos irrelevantes (*vanity metrics*). Al partir de un Objetivo conceptual claro de negocio o de proceso, define primero qué preguntas operacionales se necesitan contestar para evaluar dicho objetivo, y solo entonces selecciona las métricas requeridas. Esto garantiza que cada medición tenga un propósito directo y justificado.
+
+</details>
+
+---
+
+## Unidad 3: Dispositivos de Mejora en Equipo y Pensamiento Científico
+
+### 3.1 La Retrospectiva Ágil: Propósito y Ocasiones de Uso
+La retrospectiva es el dispositivo fundamental de la agilidad para institucionalizar la mejora continua en los equipos de trabajo.
+- **Propósito central**: Analizar una situación pasada, detectar causas raíz subyacentes y establecer compromisos concretos de mejora asumidos por el equipo.
+
+#### Oportunidades para Realizar Retrospectivas
+Aunque la práctica común en marcos como Scrum es ejecutarlas al cierre de cada sprint o iteración, la cátedra remarca que deben realizarse en diversas circunstancias:
+1. **Al final de cada iteración**: Para evaluar la cadencia regular de entrega y trabajo en equipo.
+2. **Para analizar incidentes productivos**: Retrospectivas de post-mortem tras fallas en servidores, caídas de servicio o brechas de seguridad.
+3. **Cuando surge un conflicto particular**: Espacio formal para destrabar fricciones interpersonales o de comunicación.
+4. **Luego de un hito importante**: Al finalizar un release mayor, una migración arquitectónica o el cierre de una fase de proyecto.
+5. **Cuando sea necesaria**: Cualquier momento en que el equipo detecte una degradación en su flujo o una anomalía que requiera intervención inmediata.
+
+### 3.2 Estructura Protocolar de la Retrospectiva
+Para que una retrospectiva sea efectiva y no derive en quejas improductivas, debe seguir una estructura de cinco fases sucesivas:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 5"
+  code={`graph TD
+    F1["1. Ingreso: Conectarse con la Mejora"] --> F2[2. Recolección de Datos]
+    F2 --> F3[3. Priorización y Análisis de Causas]
+    F3 --> F4[4. Propuestas de Mejora > Compromisos]
+    F4 --> F5["5. Salida: Conectarse con el Compromiso"]`}
+/>
+
+
+1. **Ingreso (Set the Stage)**: Crear seguridad psicológica, alinear el foco de la sesión y conectar a los participantes con la actitud constructiva de mejora.
+2. **Recolección de datos (Gather Data)**: Reunir hechos objetivos (eventos, métricas, entregables) y percepciones subjetivas (emociones, sensaciones) del período analizado.
+3. **Priorización y Análisis (Generate Insights)**: Analizar la información para encontrar patrones y profundizar en las causas raíz de los problemas observados.
+4. **Propuestas de mejora > Compromisos (Decide What to Do)**: Idear alternativas de solución y convertirlas en compromisos viables y accionables.
+5. **Salida (Close the Retrospective)**: Evaluar la dinámica de la reunión, agradecer la participación y reforzar el compromiso asumido por el equipo.
+
+### 3.3 Diseños y Dinámicas por Fase
+
+| Fase de la Retrospectiva | Dinámicas y Herramientas Específicas de Cátedra | Descripción Operativa |
+| :--- | :--- | :--- |
+| **1. Recolección de Datos** | **Bien / Mal - Cambiar / Mantener** | Matriz de cuadrantes para clasificar qué prácticas funcionaron, cuáles fallaron y qué debe modificarse o preservarse. |
+| | **Línea de tiempo (Timeline)** | Reconstrucción cronológica colectiva de los hitos y eventos ocurridos durante la iteración. |
+| | **Errores / Aciertos / Agradecimientos / Ideas** | Categorización en cuatro ejes que balancea aspectos técnicos, relacionales y nuevas propuestas. |
+| | **Métricas objetivas** | Incorporación de datos duros (e.g., defectos, velocidad, tiempo de build, incidentes) para contrastar con las percepciones. |
+| **2. Análisis** | **5 Por qués (5 Whys)** | Técnica de interrogación iterativa para explorar las relaciones de causa-efecto hasta dar con la causa raíz de un problema (e.g., indagar: *¿Por qué no inició la aplicación luego del último despliegue?*). |
+| | **Agrupamiento temático** | Consolidación de observaciones dispersas mediante diagramas de afinidad para identificar temas comunes. |
+| **3. Compromisos** | **Seleccionar 1** | Elegir un único compromiso de alto impacto para garantizar foco y evitar la dispersión de esfuerzos. |
+| | **Sacrificio rotativo** | Asignación secuencial de un miembro del equipo que lidera o destina tiempo protegido para ejecutar la mejora. |
+| | **Alguien siempre hace progreso** | Regla operativa que asegura que al menos una persona del equipo está avanzando en el compromiso de mejora en todo momento. |
+
+### 3.4 Toyota Kata: El Pensamiento Científico en la Gestión
+Desarrollada por Mike Rother tras años de investigación sobre las rutinas de gestión de Toyota, la **Toyota Kata** se fundamenta en estructurar el **pensamiento científico** como un hábito cotidiano en todos los niveles de la organización.
+Una "kata" es un patrón o rutina practicada deliberadamente una y otra vez hasta convertirse en una segunda naturaleza.
+
+En este modelo, los gerentes, líderes técnicos y supervisores no actúan como directores que imponen soluciones, sino como **coaches de mejora** que desarrollan la capacidad de resolución de problemas en sus equipos. El sistema opera mediante la interacción sincronizada de dos patrones fundamentales:
+1. **Improvement Kata (Kata de Mejora)**: Practicada por el equipo (*learner*).
+2. **Coaching Kata (Kata de Coaching)**: Practicada por el líder/coach para guiar el aprendizaje.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Mejora Continua y Métricas — Diagrama 6"
+  code={`graph TD
+    subgraph Improvement Kata
+        D["1. Dirección o Desafío / North Star"] --> CA[2. Condición Actual]
+        CA --> CO[3. Siguiente Condición Objetivo]
+        CO --> EXP[4. Experimentos hacia el Objetivo]
+    end
+    subgraph Coaching Kata
+        Coach["Líder / Coach"] -.->|Sostiene disciplina y guía con preguntas| EXP
+    end`}
+/>
+
+
+### 3.5 Improvement Kata: Las 4 Etapas y las 5 Preguntas de Planificación
+La Kata de Mejora guía al equipo a través de un proceso iterativo de cuatro pasos para navegar en condiciones de incertidumbre:
+1. **Comprender la Dirección o Desafío (North Star)**: Visión a largo plazo de hacia dónde debe evolucionar el sistema.
+2. **Captar la Condición Actual**: Diagnóstico riguroso basado en hechos, métricas y observación directa, no en suposiciones.
+3. **Definir la Siguiente Condición Objetivo**: Un estado intermedio concreto, acotado en el tiempo (e.g., 2 a 4 semanas), medible y en línea directa con el desafío general.
+4. **Experimentar hacia la Condición Objetivo**: Ejecutar pequeños experimentos iterativos mediante ciclos rápidos (PDCA) para superar los obstáculos que impiden alcanzar dicha condición.
+
+#### Conversación de Planificación: Las 5 Preguntas (con seguimiento temporal)
+Durante la sesión de planificación del experimento (habitualmente de 5 minutos de duración), el coach formula las siguientes preguntas estructuradas:
+1. *¿Cuál es el desafío?*
+2. *¿Cuál es la siguiente condición objetivo?*
+3. *¿Cuál es la condición actual?*
+4. *¿Qué nos impide llegar? (Obstáculos priorizados)*
+5. *¿Cuál es nuestro siguiente experimento? ¿Qué esperamos que ocurra?*
+6. *¿Cuándo podemos evaluar los resultados obtenidos?*
+
+### 3.6 Coaching Kata: Rol del Facilitador y Preguntas de Revisión
+El rol del coach no consiste en dar respuestas ni proponer la solución técnica, sino en:
+- Brindar **soporte** continuo al aprendiz.
+- Ayudar a **profundizar** en la comprensión causal de los problemas.
+- **Sostener la disciplina** y periodicidad de la rutina de mejora.
+- **Promover la visibilidad** de los aprendizajes, datos y experimentos del equipo.
+
+#### Conversación de Revisión: Las 4 Preguntas del Coaching Kata
+Al evaluar el resultado de un experimento ejecutado, el coach guía la reflexión mediante cuatro preguntas estandarizadas:
+1. *¿Cuál fue el último experimento?*
+2. *¿Qué esperabas que ocurriera? (Hipótesis previa)*
+3. *¿Qué ocurrió realmente? (Hechos y datos observados)*
+4. *¿Qué aprendiste de la diferencia entre lo esperado y lo ocurrido?*
+
+Esta dinámica garantiza que un experimento que no logró el resultado previsto no sea considerado un fracaso, sino una fuente empírica de aprendizaje sobre el comportamiento real del sistema.
+
+---
+
+### Preparación para el Examen: Unidad 3
+
+#### Conceptos Clave para Dominar
+- Las cinco etapas estructuradas de una retrospectiva ágil y su justificación.
+- Las distintas oportunidades organizacionales para convocar una retrospectiva más allá del cierre de sprint.
+- Estrategias de compromisos: seleccionar uno, sacrificio rotativo y progreso continuo.
+- La distinción y complementariedad entre Improvement Kata y Coaching Kata.
+- Las preguntas protocolares de planificación (5 preguntas) y de revisión (4 preguntas) en Toyota Kata.
+
+#### Preguntas y Respuestas de Autoevaluación
+
+**1. ¿Por qué es fundamental que la fase de "Recolección de Datos" en una retrospectiva incluya tanto métricas objetivas como percepciones del equipo?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Las percepciones individuales revelan el clima emocional, frustraciones y fricciones humanas que no siempre se reflejan en números. Sin embargo, basarse únicamente en percepciones puede inducir sesgos de memoria o impresiones subjetivas distorsionadas. La combinación de percepciones con métricas objetivas (e.g., tiempos de build, cantidad de incidentes) permite contrastar las sensaciones con la realidad tangible, habilitando un análisis causal mucho más riguroso y fundamentado.
+
+</details>
+
+**2. ¿Qué diferencia sustancial existe entre establecer un plan de mejora tradicional y utilizar la Improvement Kata de Toyota?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El plan tradicional suele asumir un entorno predecible, definiendo una secuencia lineal de actividades directas hacia una meta lejana. La Improvement Kata reconoce la incertidumbre inherente a los sistemas complejos: establece una dirección general (desafío), analiza la condición actual objetiva, fija una condición objetivo cercana y avanza mediante pequeños experimentos empíricos sucesivos. Esto permite aprender paso a paso a medida que se descubren y superan los obstáculos reales.
+
+</details>
+
+**3. ¿Cuál es el propósito pedagógico de la cuarta pregunta de la Coaching Kata ("¿Qué aprendiste?") frente a un resultado negativo en un experimento?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Su propósito es instaurar el pensamiento científico y desestigmatizar el error. Si el experimento no arrojó el resultado esperado, no se evalúa como una falla del equipo sino como un descubrimiento empírico sobre las restricciones del sistema. La pregunta obliga al equipo a formular explícitamente el nuevo conocimiento adquirido, ajustando el modelo mental antes de diseñar el siguiente experimento.
+
+</details>
+
+---
+
+## Unidad 4: Marco Conceptual Integrador y Bibliografía de Cátedra
+
+### 4.1 Corrientes Teóricas y Referencias Fundacionales
+La propuesta de la cátedra integra aportes de autores y obras clave de la ingeniería de software y la teoría organizacional:
+
+- **Lean Software Development** (*Mary & Tom Poppendieck*): Adaptación del Sistema Toyota al flujo de desarrollo de software, estableciendo la eliminación de los 7 desperdicios desde el concepto hasta el cobro (*concept to cash*).
+- **Accelerate** (*Nicole Forsgren, Jez Humble, Gene Kim*): Investigación empírica sobre el impacto de las capacidades de entrega continua, telemetría y cultura de equipo en el desempeño organizacional del software.
+- **Extreme Programming Explained** (*Kent Beck & Cynthia Andres*): Prácticas técnicas rigurosas (TDD, pair programming, integración continua) que operan como mecanismos intrínsecos de calidad y retroalimentación inmediata.
+- **Software Estimation: Demystifying the Black Art** (*Steve McConnell*): Fundamentos sobre la variabilidad, el cono de incertidumbre y la medición realista en proyectos de software.
+- **Software Metrics** (*Norman Fenton*): Rigor formal en la formulación de métricas, escalas y aplicación de GQM.
+- **Site Reliability Engineering (SRE)** (*Google*): Gestión cuantitativa de la confiabilidad, definición de indicadores de nivel de servicio (SLI) y objetivos de nivel de servicio (SLO), y aprendizaje sistemático a partir de incidentes productivos mediante autopsias sin culpa (*blameless post-mortems*).
+- **Toyota Kata** (*Mike Rother*): Metodología de pensamiento científico, Improvement Kata y Coaching Kata para la mejora adaptativa continua.
+- **Agile Retrospectives: A Practical Guide for Catalyzing Team Learning** (*Esther Derby & Diana Larsen*): Diseño protocolar de las fases de retrospectiva orientadas al aprendizaje colectivo del equipo.
+- **La agilidad como práctica infinita y en comunidad** (*Diego Fontdevila & Lina Prato*): Comprensión de la agilidad no como un conjunto cerrado de ceremonias o recetas, sino como una práctica reflexiva sostenida en el tiempo.
+- **Comunidades de Práctica** (*Etienne Wenger*): Aprendizaje social donde grupos con intereses compartidos profundizan su maestría interactuando con regularidad.
+- **Aprender en el hacer, en la práctica** (*John Seely Brown & Paul Duguid - The Social Life of Information*): La adquisición real de conocimiento técnico ocurre en la práctica contextualizada y la acción concreta, superando la mera teoría formal desvinculada del trabajo cotidiano.
+
+### 4.2 Matriz Sintética de Conceptos Críticos para el Examen
+
+| Eje Temático | Concepto Fundamental | Distinción Crítica / Regla de Oro |
+| :--- | :--- | :--- |
+| **Filosofía de la Mejora** | Razones para mejorar | La entropía degrada los procesos si no se interviene activamente; la mejora continua compensa la complejidad del entorno. |
+| **Modelos de Ciclo** | PDCA vs. Heart of Agile | PDCA es el ciclo empírico universal (Plan-Do-Check-Act); Heart of Agile sintetiza el marco en Colaborar, Entregar, Reflexionar y Mejorar. |
+| **Estrategia de Cambio** | Kaizen vs. Kaikaku | Kaizen es incremental y continuo (e.g., eliminar revisiones en pair programming); Kaikaku es radical y disruptivo (e.g., continuous deployment). |
+| **Lean en Software** | 7 Desperdicios | WIP, funcionalidades extras, reaprendizaje, traspasos, cambio de contexto, demoras y defectos. |
+| **Epistemología de Métricas** | Realidad vs. Éxito/Fracaso | Las métricas miden la verdad/realidad; tratarlas como éxito o fracaso distorsiona los comportamientos (Ley de Goodhart). |
+| **Taxonomía de Medición** | Métrica vs. Medición vs. Indicador | Métrica = definición formal de la variable; Medición = acto de tomar el valor; Indicador = representación visual. |
+| **Diseño de Métricas** | 5 Elementos Formales | Nombre, Escala, Valor más positivo, Forma de medición y Estadístico de agregación. |
+| **Alineación Estratégica** | GQM (Basili) | Estructura jerárquica: Objetivo conceptual $\rightarrow$ Preguntas operacionales $\rightarrow$ Métricas cuantitativas. |
+| **Dinámica de Equipos** | Fases de la Retrospectiva | 1. Ingreso $\rightarrow$ 2. Recolección $\rightarrow$ 3. Priorización/Análisis $\rightarrow$ 4. Compromisos $\rightarrow$ 5. Salida. |
+| **Técnicas de Retrospectiva** | Análisis y Compromisos | 5 Por qués y agrupamiento para análisis; Seleccionar 1, sacrificio rotativo y progreso continuo para compromisos. |
+| **Pensamiento Científico** | Toyota Kata | Improvement Kata (4 pasos: Desafío $\rightarrow$ Actual $\rightarrow$ Próximo Objetivo $\rightarrow$ Experimentos) guiado por Coaching Kata (preguntas de revisión). |

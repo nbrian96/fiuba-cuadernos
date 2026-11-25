@@ -1,0 +1,925 @@
+---
+docId: construccion-de-software-agil
+courseId: gdsi
+title: "Construcción de Software: Una Mirada Ágil"
+order: 5
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - unidad-1-fundamentos-epistemologicos-del-paradigma-agil-y-naturaleza-del-software
+  - unidad-2-gestion-del-alcance-estimacion-y-planificacion-adaptativa
+  - unidad-3-ingenieria-de-pruebas-especificacion-ejecutable-y-calidad
+  - unidad-4-arquitectura-diseno-emergente-y-entrega-continua
+  - unidad-5-dinamica-de-equipos-liderazgo-gestion-visual-y-mejora-continua
+  - unidad-6-panorama-comparativo-de-metodos-agiles-y-marco-metodologico
+  - matriz-integradora-de-conceptos-criticos-para-el-examen-final
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+El desarrollo de software moderno ha experimentado una profunda transformación epistemológica y metodológica. Lejos de constituir un proceso fabril o una línea de ensamblaje industrial, la construcción de software es una disciplina eminentemente socio-técnica, creativa y adaptativa, donde los requerimientos, el diseño y los equipos evolucionan en forma simultánea y coordinada.
+
+Este apunte de estudio constituye un tratado integral diseñado para la preparación de exámenes universitarios en ingeniería y gestión de software. Sistematiza, fundamenta y profundiza los conceptos de la obra de cátedra *Construcción de software: una mirada ágil* (Nicolás Paez, Diego Fontdevila, Pablo Suárez, Carlos Fontela, Marcio Degiovannini y Alejandro Molinari, EDUNTREF, 2014), articulando desde los fundamentos teóricos hasta las técnicas más avanzadas de gestión, arquitectura, pruebas y entrega continua.
+
+---
+
+## Unidad 1: Fundamentos Epistemológicos del Paradigma Ágil y Naturaleza del Software
+
+### 1.1 Crisis Histórica e Inmadurez de la Disciplina: El Error de la Fábrica de Software
+Durante las décadas de 1960 y 1970, la incipiente ingeniería de software intentó resolver sus problemas de gestión importando acríticamente modelos de las ingenierías civil, mecánica y de la producción manufacturera. Se consolidó una visión tayloriana que concebía el desarrollo como una fábrica de software compuesta por recursos intercambiables dentro de una línea de montaje:
+- **División extrema del trabajo**: Se establecieron roles disjuntos e impermeables. Por un lado, los "pensadores" (analistas funcionales y arquitectos) que definían exhaustivamente qué hacer y cómo hacerlo; por el otro, los "obreros" (programadores y testers) a quienes no se les pedía pensar, sino ejecutar mecánicamente especificaciones sin cuestionarlas.
+- **La falacia de la separación entre diseño y construcción**: En las ingenierías tradicionales, diseñar un puente o un automóvil es una tarea única, costosa y creativa, mientras que construirlo o fabricarlo es un proceso físico, repetitivo y estandarizado. En el software, la codificación es en sí misma una actividad de diseño continuo; la única etapa verdaderamente reproducible a costo marginal nulo es la compilación o copia de los binarios. Intentar congelar el diseño en planos abstractos antes de la codificación fracturó la comprensión técnica de los sistemas.
+- **Burocratización y comunicación vía documentos**: El intercambio cara a cara fue reemplazado por volúmenes masivos de especificaciones que nadie mantenía actualizados. Cuando el software se modificaba, los documentos quedaban obsoletos, convirtiendo al desarrollo en un ejercicio de "teléfono descompuesto".
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 1"
+  code={`graph TD
+    subgraph Paradigma Tradicional / Cascada
+        A[Requerimientos Completos] --> B["Diseño Preliminar / BDUF"]
+        B --> C[Codificación Aislada]
+        C --> D[Pruebas Tardías]
+        D --> E[Integración y Despliegue Masivo]
+    end`}
+/>
+
+
+#### El Dogma del Costo del Cambio
+La literatura tradicional (notablemente Barry Boehm en 1981) postuló que el costo de introducir un cambio en el software crecía de forma exponencial a medida que el proyecto avanzaba a través de sus fases. Este postulado justificaba congelar los requerimientos desde el inicio y tratar cualquier modificación como una amenaza que debía evitarse a través de comités burocráticos de control de cambios.
+
+El agilismo cuestiona este enfoque: la respuesta a la variabilidad del contexto no consiste en blindarse contra el cliente, sino en adoptar prácticas de ingeniería (diseño simple, refactorización, automatización de pruebas e integración continua) que aplanen sustancialmente la curva del costo del cambio, permitiendo que la evolución del producto sea viable y económica a lo largo de todo el ciclo de vida.
+
+### 1.2 La Naturaleza del Software al Rescate
+Frente a los intentos de encajar el software en matrices industriales rígidas, los autores sostienen que la solución radica en aprovechar las características intrínsecas del material software:
+1. **Maleabilidad**: El software carece de inercia física; es inherentemente adaptable antes, durante y después de su puesta en producción.
+2. **Naturaleza particionable**: Puede descomponerse en pequeñas porciones funcionales que brinden valor temprano al usuario final, posibilitando una visibilidad real y continua del avance.
+3. **Materialización de conocimiento**: El código fuente no es más que conocimiento humano formalizado en un lenguaje ejecutable. Por ende, los proyectos son procesos de aprendizaje colectivo e intercambio social.
+4. **Indivisibilidad de diseño y construcción**: Cada línea de código representa una decisión de diseño de bajo nivel; separar ambas etapas es una imposibilidad teórica en la computación.
+5. **Copia e integridad perfecta**: El software puede duplicarse y desplegarse idénticamente sin degradación física, lo que facilita esquemas de prueba y despliegue automatizados.
+6. **Invisibilidad y complejidad diferencial**: El software es un producto invisible. No podemos inspeccionarlo a simple vista para saber cuánto se ha construido. Asimismo, mientras que una máquina física compleja de 50.000 piezas posee componentes estandarizados repetidos (tornillos, engranajes), un sistema de 50.000 clases posee 50.000 tipos de piezas conceptualmente distintas, interactuando entre sí de formas no lineales.
+
+### 1.3 El Modelo de *Artful Making* (Austin & Devin)
+El desarrollo de software comparte muchas más propiedades con las artes colaborativas (como el teatro o la creación musical) y el trabajo innovador que con la manufactura seriada. Rob Austin y Lee Devin caracterizan las tres condiciones de aplicabilidad bajo las cuales el trabajo colaborativo debe estructurarse de forma iterativa:
+
+| Condición | Fundamentación en Software |
+| :--- | :--- |
+| **Necesidad de innovación** | El producto o el contexto es original. Los problemas de software no se resuelven copiando soluciones prefabricadas; requieren adaptación constante a la realidad específica de cada negocio. |
+| **Repetición confiable** | El equipo cuenta con la madurez, capacidad metodológica y disciplina para trabajar iterativamente a intervalos regulares y predecibles (cadencia). |
+| **Bajo costo de iteración** | La suma del **costo de reconfiguración** (modificar lo realizado previamente) y el **costo de exploración** (descartar alternativas no viables) se mantiene baja gracias a la intangibilidad del software y la automatización técnica. |
+
+### 1.4 El Manifiesto Ágil (2001) y la Filosofía del Cambio
+En febrero de 2001, diecisiete referentes de metodologías livianas (Kent Beck, Ward Cunningham, Martin Fowler, Alistair Cockburn, Ken Schwaber, Jeff Sutherland, entre otros) redactaron el Manifiesto Ágil, estableciendo cuatro postulados de valor fundamentales:
+
+$$
+\begin{array}{rcl}
+\textbf{Individuos e interacciones} & \text{sobre} & \text{procesos y herramientas} \\
+\textbf{Software funcionando} & \text{sobre} & \text{documentación extensiva} \\
+\textbf{Colaboración con el cliente} & \text{sobre} & \text{negociación contractual} \\
+\textbf{Respuesta ante el cambio} & \text{sobre} & \text{seguir un plan}
+\end{array}
+$$
+
+*Principio rector*: Aunque se reconoce el valor de los elementos de la derecha, se valoran más los elementos de la izquierda.
+
+#### La Fantasía de Evitar los Cambios
+El enfoque tradicional concibe el cambio como una falla de relevamiento o una indisciplina del cliente. La agilidad asume el cambio como una realidad cotidiana inevitable e inherente a la naturaleza de los sistemas complejos. La tasa de cambio tecnológica y del mercado exige que los planes de desarrollo sean artefactos vivos que se adapten mediante:
+- **Backlog vivo**: Un inventario priorizado y estimado que permite intercambiar funcionalidades sin generar fricción contractual.
+- **Iteraciones cortas**: Ciclos de 1 a 3 semanas que permiten reajustar el rumbo a intervalos regulares.
+- **Decisiones en el último momento prudente**: Posponer decisiones arquitectónicas o funcionales de alto impacto hasta contar con la mayor cantidad de información empírica posible, evitando costos de retrabajo.
+
+---
+
+### Preparación para el Examen: Unidad 1
+
+#### Conceptos Fundamentales
+- La crítica al modelo tayloriano y la falacia de separar diseño de construcción en software.
+- El aplanamiento de la curva del costo del cambio de Boehm.
+- Las condiciones de *Artful Making* de Austin y Devin.
+- Los 4 valores del Manifiesto Ágil y la justificación de su asimetría.
+- La noción de software como conocimiento materializado y complejidad diferencial (tipos de piezas).
+
+#### Preguntas de Autoevaluación
+
+**1. ¿Por qué se afirma que la analogía entre la fábrica de software y el montaje industrial es conceptualmente errónea?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** En la industria tradicional existe una separación física y temporal entre el diseño (creación de planos, prototipos y especificaciones) y la construcción (la fabricación repetitiva de piezas idénticas mediante maquinaria). En el software, la única actividad análoga a la fabricación física es la compilación, enlace o copia de archivos binarios, la cual se ejecuta automáticamente por la computadora a costo cero. Todo el proceso previo —desde la captura del requerimiento hasta la escritura de código y pruebas— es una actividad intelectual pura de diseño. Tratar a los programadores como obreros de montaje que solo transcriben especificaciones ignora que la codificación implica resolver problemas de diseño de forma continua.
+
+</details>
+
+**2. Explique cómo el concepto de "bajo costo de iteración" de *Artful Making* se relaciona con las prácticas técnicas ágiles.**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Austin y Devin definen el costo de iteración como la sumatoria del costo de reconfiguración (modificar lo construido antes) y el costo de exploración (probar ideas y descartarlas). Para que un proceso iterativo sea viable, este costo debe ser mínimo. En el desarrollo de software, la maleabilidad del medio facilita teóricamente esta condición, pero solo se materializa en la práctica si el equipo implementa disciplinas como integración continua, pruebas unitarias automatizadas y refactorización. Sin estas prácticas, el código se vuelve rígido y el costo de reconfiguración se dispara, haciendo prohibitivo el avance por iteraciones.
+
+</details>
+
+**3. ¿Qué significa que el software tiene una "complejidad diferencial" en comparación con los artefactos de la ingeniería clásica?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Significa que el crecimiento del software no es simplemente escalar piezas repetitivas, sino coordinar entidades lógicas únicas. Un sistema de 50.000 clases no equivale a una máquina de 50.000 tornillos o engranajes estándar, sino a un dispositivo con 50.000 componentes cualitativamente distintos entre sí, cada uno con su propio estado, lógica y dependencias. Esta escala de diversidad conceptual hace imposible anticipar analíticamente todas las interacciones de antemano, justificando la necesidad de aproximaciones sucesivas e iterativas.
+
+</details>
+
+---
+
+## Unidad 2: Gestión del Alcance, Estimación y Planificación Adaptativa
+
+### 2.1 Definición de Alcance: Delimitación Basada en Valor
+
+#### Product Backlog vs. WBS Tradicional
+En los métodos tradicionales, la estructura de desglose del trabajo (WBS) suele estar compuesta por una jerarquía analítica de todas las tareas y actividades técnicas requeridas. En contraposición, el **Product Backlog** en los métodos ágiles es un inventario dinámico y priorizado de requerimientos que representan exclusivamente **valor de negocio** para el cliente.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 2"
+  code={`graph TD
+    subgraph WBS Tradicional
+        W1[Proyecto] --> W2["Fase Análisis: Tareas Técnicas"]
+        W1 --> W3["Fase BD: Crear Tablas"]
+        W1 --> W4["Fase Backend: Codificar APIs"]
+    end
+    subgraph Product Backlog Ágil
+        PB[Visión de Producto] --> US1["User Story 1: Valor de Negocio A"]
+        PB --> US2["User Story 2: Valor de Negocio B"]
+        PB --> US3["User Story 3: Valor de Negocio C"]
+    end`}
+/>
+
+
+#### Visual Story Mapping (Jeff Patton)
+El Visual Story Mapping (VSM) es una técnica colaborativa que estructura el alcance a partir del viaje del usuario en el sistema. Modela una jerarquía funcional de cuatro niveles:
+
+$$\text{Objetivo / Proceso de Negocio} \longrightarrow \text{Usuarios} \longrightarrow \text{Actividades} \longrightarrow \text{Funcionalidades (User Stories)}$$
+
+El resultado es una matriz bidimensional:
+- **Eje horizontal (Secuencia temporal)**: Narra el flujo secuencial de izquierda a derecha de las actividades que realiza el usuario para completar su proceso.
+- **Eje vertical (Prioridad y profundidad)**: Las funcionalidades más críticas e indispensables se sitúan arriba, mientras que las variaciones, detalles o mejoras de conveniencia se ubican debajo.
+- **Cortes de versión (Releases)**: El primer corte horizontal superior define el conjunto mínimo de funcionalidades operativas de punta a punta, denominado **MMF (Minimum Marketable Feature)** o MVP, asegurando que la primera entrega provea valor real.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 3"
+  code={`graph LR
+    subgraph Flujo Horizontal: Actividades del Usuario
+        Act1[Actividad 1] --> Act2[Actividad 2] --> Act3[Actividad 3]
+    end
+    subgraph Prioridad Vertical
+        Act1 --> US1[Story Crítica]
+        Act1 --> US2[Story Secundaria]
+        Act2 --> US3[Story Crítica]
+        Act3 --> US4[Story Crítica]
+    end`}
+/>
+
+
+Otras técnicas afines incluyen el **Impact Mapping** de Gojko Adzic (orientado a alinear metas de negocio con comportamientos de actores y entregables) y el **Product Canvas** de Roman Pichler.
+
+### 2.2 User Stories: Anatomía, Propiedades y Ciclo CCC
+Una **User Story** no es una especificación formal de requerimientos ni un caso de uso condensado. Su definición formal de cátedra es: *un recordatorio de algo relevante que debe hablarse con el usuario*. Su objetivo fundamental es promover el diálogo directo entre desarrolladores y usuarios en lugar de sustituirlo por texto escrito.
+
+#### User Stories vs. Casos de Uso
+
+| Dimensión | Casos de Uso (Proceso Unificado) | User Stories (Métodos Ágiles) |
+| :--- | :--- | :--- |
+| **Propósito** | Especificación detallada y contractual de requerimientos funcionales y flujos del sistema. | Promover la conversación continua y la negociación empírica entre roles. |
+| **Detalle inicial** | Exhaustivo: incluye flujo principal, caminos alternativos y excepciones desde el diseño. | Intencionalmente sucinto y vago al inicio; el detalle se elabora justo a tiempo (*just-in-time*). |
+| **Ciclo de vida** | Documento estático que requiere control formal de cambios si se altera. | Ficha viva que evoluciona junto con el entendimiento del negocio. |
+
+#### Las Propiedades INVEST
+Para garantizar la viabilidad operativa de una historia de usuario, debe cumplir el acrónimo INVEST:
+- **Independent (Independiente)**: Debe tener la menor dependencia posible de otras historias, facilitando la priorización flexible y la estimación sin ambigüedades.
+- **Negotiable (Negociable)**: No es un contrato rígido; los detalles de implementación y alcance exacto se acuerdan durante el desarrollo.
+- **Valuable (Valiosa)**: Debe entregar valor perceptible y justificado para el negocio o el usuario. Si no aporta valor, debe descartarse.
+- **Estimable (Estimable)**: El equipo técnico debe comprender el requerimiento con suficiente claridad como para emitir una estimación de tamaño o esfuerzo.
+- **Small (Pequeña)**: Debe poder completarse holgadamente dentro de una sola iteración. Las historias grandes se denominan **Épicas** y deben dividirse.
+- **Testable (Probable)**: Debe ser posible definir criterios objetivos y verificables de aceptación para validar cuándo está concluida.
+
+#### El Modelo CCC (Card, Conversation, Confirmation)
+- **Card (Tarjeta)**: El soporte físico (ficha bibliográfica) que contiene el enunciado canónico:
+
+  $$\text{Como } \langle\text{rol}\rangle \text{ quiero } \langle\text{necesidad}\rangle \text{ para } \langle\text{beneficio}\rangle$$
+
+- **Conversation (Conversación)**: La interacción continua cara a cara entre el cliente/Product Owner y los desarrolladores para refinar detalles y aclarar dudas.
+- **Confirmation (Confirmación)**: Los criterios de aceptación documentados al dorso de la tarjeta que determinan inequívocamente cuándo la historia está terminada y validada.
+
+### 2.3 Epistemología de la Estimación: Estimar no es Predecir
+Una estimación es una proyección probabilística de tamaño o esfuerzo basada en el conocimiento disponible; bajo ninguna circunstancia constituye una promesa formal ni un compromiso de calendario.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 4"
+  code={`graph LR
+    Incertidumbre["Incertidumbre Alta: Inicio"] -->|Aprendizaje y Avance| Certeza["Incertidumbre Cero: Final"]`}
+/>
+
+
+#### El Cono de Incertidumbre (Barry Boehm / Steve McConnell)
+Al inicio de un proyecto, la incertidumbre oscila típicamente en un factor de $4\times$ (las estimaciones pueden errar por un factor de 4 hacia arriba o hacia abajo). A medida que transcurren las iteraciones, el equipo aprende sobre el negocio, la arquitectura y su propia dinámica, reduciendo el error progresivamente hasta converger en la precisión final ($1\times$).
+
+Por ende, existen dos momentos diferenciados de estimación:
+1. **Estimación inicial o de orden de magnitud**: Realizada al inicio del proyecto (preventa o concepción) con fines estratégicos, utilizando escalas gruesas para dimensionar si el proyecto requiere meses o años.
+2. **Estimación de iteración**: Realizada periódicamente al comienzo de cada ciclo sobre las historias inmediatas, con un conocimiento maduro de la tecnología y el negocio, destinada a que el equipo asuma compromisos viables.
+
+#### Quién Estima y Qué se Estima
+- **Quién estima**: Exclusivamente las personas que van a desarrollar el trabajo. Es una aberración metodológica que un comercial o gerente estime y traslade la obligación de cumplimiento al equipo.
+- **Qué se estima**: Se estima **tamaño** relativo del software. El tiempo y el costo no se estiman directamente; se derivan combinando el tamaño con la velocidad empírica del equipo.
+
+#### Unidades y Escalas de Estimación
+Para evitar la falsa ilusión de precisión de las horas reloj, se utilizan medidas abstractas:
+- **Story Points (Puntos de Historia)**: Medida adimensional de tamaño relativo. Si la historia A mide 1 SP y la historia B mide 2 SP, B es el doble de grande que A en complejidad y esfuerzo. Se toma una historia pequeña y conocida como unidad de referencia.
+- **Días Ideales**: Tiempo que tomaría realizar una tarea si el desarrollador no sufriera ninguna interrupción, reunión, bloqueo o soporte externo.
+- **Escalas**: Talles de remera (XS, S, M, L, XL) para orden de magnitud temprano; y la **Serie de Fibonacci** ($1, 2, 3, 5, 8, 13, 21, \dots$), cuyos saltos reflejan que a mayor tamaño, mayor es la incertidumbre intrínseca.
+
+#### Planning Poker
+Técnica basada en consenso y opiniones que neutraliza los sesgos de anclaje e influencia jerárquica:
+1. El responsable de producto lee la tarjeta y explica la funcionalidad.
+2. Los desarrolladores formulan preguntas y definen criterios de aceptación.
+3. Cada estimador elige una carta de su mazo boca abajo.
+4. Todos muestran sus cartas en simultáneo.
+5. Si hay discrepancias notorias, los valores extremos (más alto y más bajo) exponen sus argumentos técnicos.
+6. Se repite la votación hasta converger en un consenso razonable.
+
+#### Spikes
+Cuando una tarea involucra una tecnología, librería o integración desconocida que impide realizar una estimación fundamentada, se formula un **Spike**: una tarea de investigación técnica con tiempo acotado (*time-boxed*) cuyo único objetivo es adquirir el conocimiento necesario para poder estimar la historia de usuario original.
+
+### 2.4 Planificación Constante: Versiones e Iteraciones
+
+#### La Velocidad del Equipo
+La **velocidad** es la cantidad de trabajo terminado (en Story Points o Días Ideales) que un equipo específico es capaz de completar en una iteración de duración fija:
+
+$$\text{Velocidad} = \sum \text{Story Points de Historias Completadas al 100\%}$$
+
+*Regla crítica*: Las historias a medio terminar suman 0 puntos para la velocidad. La velocidad es una propiedad intrínseca de cada equipo; si cambian sus miembros, el equipo es nuevo y la velocidad histórica deja de ser válida.
+
+#### Planificación de Versiones (Release Planning)
+Permite proyectar el horizonte macro del producto. Dado el tamaño total del backlog estimado ($S_{\text{total}}$) y la velocidad empírica del equipo ($V$), la cantidad aproximada de iteraciones necesarias ($N_{\text{iter}}$) se calcula como:
+
+$$N_{\text{iter}} = \left\lceil \frac{S_{\text{total}}}{V} \right\rceil$$
+
+Las versiones agrupan historias que configuran MMFs (*Minimum Marketable Features*) y se planifican para liberarse a producción con intervalos frecuentes (típicamente cada 3 a 6 iteraciones).
+
+#### Planificación de Iteración y Manejo del *Slack*
+En la reunión de planificación de iteración, el Product Owner presenta las historias priorizadas del backlog. El equipo toma historias hasta que la sumatoria de puntos iguala su velocidad esperada.
+
+*Concepto de Slack (Holgura Activa)*:
+Si la velocidad del equipo es 20 SP y las historias seleccionadas suman 18 SP, los 2 puntos remanentes no se dejan libres al azar (evitando el síndrome del estudiante). Se asignan deliberadamente a actividades concretas de ingeniería: pagar deuda técnica (e.g., "refactorizar el módulo de facturación"), investigación tecnológica o infraestructura de pruebas.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 5"
+  code={`graph TD
+    PB[Backlog Priorizado] --> Sel[Selección de Historias hasta alcanzar la Velocidad]
+    Sel --> Split[Desglose en Tareas de Ingeniería]
+    Split --> Slack[Asignación de Puntos Sobrantes a Slack Técnico]
+    Slack --> Tablerolteracion["Carga en Tablero: Pendiente, Desarrollo, Prueba, Listo"]`}
+/>
+
+
+### 2.5 Formalización de Compromisos: Modelos Contractuales
+La gestión de proyectos debe articularse con la estructura jurídica y financiera de los contratos:
+
+| Tipo de Contrato | Naturaleza Operativa | Compatibilidad Ágil y Mitigación de Riesgos |
+| :--- | :--- | :--- |
+| **Tiempo y Materiales (T&M)** | Se abona el equipo por hora o período dedicado. Alcance totalmente flexible. | **Alta compatibilidad natural**. Riesgo: el cliente puede sentir incertidumbre presupuestaria si no ve avances concretos. Mitigación: máxima transparencia, demos frecuentes y visibilidad de velocidad. |
+| **Precio y Alcance Fijo** | Se fijan alcance, precio y fecha antes de iniciar. Trata el cambio como desviación. | **Antagónico con la agilidad pura**. Mitigación: estimaciones hiperrealistas del equipo, subdividir el proyecto en fases contractuales consecutivas y camuflar cambios livianos mediante intercambio de requerimientos de igual tamaño. |
+| **T&M con Tope (Capped T&M)** | Se factura por horas pero con un límite monetario máximo y alcance rígido. | **La opción más riesgosa para el proveedor**. Si se agotan los fondos, se debe entregar el software asumiendo el costo. Requiere negociar alcances variables en los requerimientos secundarios. |
+
+---
+
+### Preparación para el Examen: Unidad 2
+
+#### Conceptos Fundamentales
+- Diferencias estructurales y filosóficas entre Product Backlog y WBS.
+- Estructura y niveles de Visual Story Mapping.
+- Criterios INVEST y el modelo CCC en User Stories.
+- Principios del Cono de Incertidumbre y la separación entre estimación y compromiso.
+- Mecánica y objetivos del Planning Poker y los Spikes.
+- Cálculo de velocidad, planificación de versiones y gestión formal del Slack.
+
+#### Preguntas de Autoevaluación
+
+**1. Si un proyecto de software tiene un tamaño total estimado de 150 Story Points y el equipo registra una velocidad promedio histórica de 18 Story Points por iteración de 2 semanas, ¿cómo se planifica el lanzamiento de una primera versión orientada a MMF?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Primero, se calcula la duración global aproximada:
+
+$$N = \left\lceil \frac{150}{18} \right\rceil = 9 \text{ iteraciones (18 semanas)}.$$
+
+Para una versión orientada a MMF (*Minimum Marketable Feature*), no se espera al final del proyecto. Utilizando Visual Story Mapping, se identifica el corte horizontal superior que contemple el flujo de negocio mínimo viable para el usuario (por ejemplo, 54 Story Points). La primera versión requerirá:
+
+$$\frac{54}{18} = 3 \text{ iteraciones (6 semanas)}.$$
+
+Al cabo de la iteración 3 se realiza el primer despliegue productivo para obtener retorno temprano de inversión y feedback del mercado.
+
+</details>
+
+**2. ¿Por qué en un equipo ágil las horas de "colchón" tradicionales se reemplazan por el concepto de "Slack"?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El "colchón" tradicional es un margen de tiempo oculto o vago que con frecuencia dilata la entrega debido a la Ley de Parkinson o al síndrome del estudiante (postergar el trabajo hasta el límite del plazo). El *Slack*, en cambio, es explícito y productivo: si el equipo se compromete por 18 puntos sobre una capacidad de 20, los 2 puntos de diferencia se planifican en tareas concretas y auditables de ingeniería (como refactorización de deuda técnica, optimización de pipelines o pruebas de concepto). Si surgen imprevistos en las historias comprometidas, se absorbe el tiempo del Slack sin poner en riesgo el compromiso con el cliente.
+
+</details>
+
+**3. ¿Por qué es un error metodológico grave que un director comercial reduzca la estimación realizada por los desarrolladores para ganar una licitación?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La estimación técnica es una medición de la complejidad inherente al trabajo, ejecutada por quienes poseen el conocimiento técnico para realizarla; por definición, no es negociable. Si un área comercial reduce unilateralmente la estimación de 100 a 60 días para abaratar la oferta, no reduce la complejidad del problema, sino que condena al equipo al trabajo extra insostenible, la acumulación masiva de defectos y la frustración. El costo comercial puede ajustarse modificando el margen de ganancia de la empresa o reduciendo el alcance funcional acordado, pero jamás adulterando la estimación técnica del equipo.
+
+</details>
+
+---
+
+## Unidad 3: Ingeniería de Pruebas, Especificación Ejecutable y Calidad
+
+### 3.1 La Patología del "A Mí Me Funciona" y la Definición de Hecho (DoD)
+Uno de los problemas más costosos en la gestión tradicional es la indefinición de cuándo una tarea está verdaderamente terminada. El clásico reclamo de los desarrolladores *"en mi máquina compila y funciona"* genera entregas inestables que rebotan entre testing y desarrollo.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 6"
+  code={`graph TD
+    subgraph Patología Tradicional
+        Dev["Desarrollador: A mí me funciona"] -->|Entrega sin pruebas unitarias| Test["Tester: Lleno de defectos obvios"]
+        Test -->|Rechazo e idas y vueltas| Dev
+    end
+    subgraph Enfoque Ágil
+        DoD["Definición de Hecho: DoD"] --> Val[Compila + Tests Unitarios + Tests Integración + Validaciones]
+        Val --> Done[Software Realmente Terminado]
+    end`}
+/>
+
+
+#### Definición de Hecho (Definition of Done - DoD)
+Es un acuerdo formal y consensuado por todo el equipo que establece las condiciones técnicas y de calidad mínimas e indispensables que debe cumplir cualquier requerimiento para considerarse completado:
+- El código compila limpiamente en el repositorio central.
+- Cuenta con pruebas unitarias y de integración automatizadas.
+- Todas las pruebas de la suite de regresión se ejecutan exitosamente.
+- Cumple con los estándares de diseño y codificación del equipo.
+- Las pantallas cuentan con validación de entradas y manejo de excepciones.
+- Se encuentra desplegado en el ambiente de pruebas o integración continua.
+
+#### DoD vs. Criterios de Aceptación
+- **Definición de Hecho (DoD)**: Es **transversal y global**. Aplica a todos los ítems del backlog por igual (garantiza la calidad interna y estructural del sistema).
+- **Criterios de Aceptación**: Son **específicos y particulares** de cada historia de usuario. Definen las reglas de negocio, límites y condiciones operativas necesarias para que el cliente valide esa funcionalidad concreta (garantizan la calidad externa).
+
+### 3.2 Especificación Mediante Ejemplos y Pruebas de Aceptación
+Los requerimientos expresados en lenguaje natural son ambiguos por naturaleza. Para resolver esta brecha, el agilismo propone la **Especificación Mediante Ejemplos** (*Specification by Example* / Gojko Adzic): discutir y formular ejemplos concretos de uso del sistema durante talleres colaborativos con el cliente, analistas, desarrolladores y testers.
+
+Estos ejemplos cumplen una triple función:
+1. Son la **especificación viva** del requerimiento.
+2. Sirven como **guía de diseño y construcción** para los desarrolladores.
+3. Se automatizan como **pruebas de aceptación ejecutables**, eliminando el riesgo de *gold-plating* (construir funcionalidad superflua no requerida).
+
+### 3.3 El Espectro del Desarrollo Guiado por Pruebas (TDD)
+Creado formalmente por Kent Beck en Extreme Programming, el **Test-Driven Development (TDD)** es una técnica de diseño de software y no una mera actividad de control de calidad posterior.
+
+#### El Ciclo Clásico de TDD (Red - Green - Refactor)
+1. **Escribir una prueba que falle (Rojo)**: Se escribe una prueba automatizada antes de implementar el código. La prueba debe fallar demostrando que el comportamiento aún no existe.
+2. **Escribir el código mínimo para que pase (Verde)**: Se implementa la solución más simple posible que logre que la prueba sea exitosa.
+3. **Refactorizar (Refactor)**: Se emprolija y mejora la estructura interna del código (eliminando duplicaciones y mejorando nombres) garantizando que las pruebas sigan pasando.
+4. **Repetir**: Avanzar al siguiente caso mediante pasos pequeños e incrementales.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 7"
+  code={`graph LR
+    Red["1. Escribir prueba que falle: ROJO"] --> Green["2. Código mínimo para pasar: VERDE"]
+    Green --> Refactor["3. Mejorar diseño sin alterar comportamiento: REFACTOR"]
+    Refactor --> Red`}
+/>
+
+
+#### Taxonomía de Enfoques TDD
+
+| Metodología | Foco de Granularidad | Pregunta Operativa que Responde | Perspectiva de Calidad |
+| :--- | :--- | :--- | :--- |
+| **UTDD (Unit TDD)** | Clases, métodos y funciones unitarias aisladas. | ¿El componente hace lo que debe hacer y está bien diseñado? | **Calidad Interna**: Estructura, bajo acoplamiento, alta cohesión. |
+| **ATDD (Acceptance TDD)** | Requerimientos y criterios de aceptación del cliente. | ¿El sistema satisface las reglas del negocio acordadas? | **Calidad Externa**: Valor y comportamiento esperado por el cliente. |
+| **BDD (Behavior-Driven Development)** | Comportamiento del sistema expresado en lenguaje de dominio. | ¿Cómo se comporta el sistema ante un escenario determinado? | **Calidad Externa y Ubicua**: Alineada con el lenguaje del negocio (*Given-When-Then*). |
+| **STDD (Storytest-Driven Development)** | Pruebas funcionales a nivel de historias de usuario. | ¿La historia de usuario cumple integralmente sus flujos? | **Calidad Externa**: Validación de condiciones de satisfacción. |
+
+### 3.4 Clasificación de Pruebas de Gerard Meszaros y Dobles de Prueba
+Meszaros categoriza las pruebas según sus propósitos funcionales y arquitectónicos:
+- **Pruebas de cliente**: Validan criterios de aceptación y requerimientos funcionales.
+- **Pruebas de componentes / integración técnica**: Validan la interacción entre módulos y servicios.
+- **Pruebas de unidad**: Validan clases individuales y decisiones de código del programador.
+- **Pruebas de propiedades**: Validan atributos no funcionales (rendimiento, seguridad, escalabilidad).
+- **Pruebas de usabilidad y exploratorias**: Inspección humana sobre la experiencia y navegación.
+
+#### Dobles de Prueba (Test Doubles)
+Para probar componentes unitarios de forma rápida y determinística sin depender de bases de datos, redes o sistemas externos lentos, se utilizan **dobles de prueba**:
+- **Stubs**: Objetos que proporcionan respuestas prefijadas a llamadas de métodos durante la prueba.
+- **Mocks**: Objetos configurados con expectativas sobre las llamadas que deberían recibir; verifican el comportamiento de interacción entre objetos.
+- **Fakes**: Implementaciones funcionales pero simplificadas (e.g., una base de datos simulada en memoria).
+
+### 3.5 Automatización de Pruebas y Fragilidad de Interfaz de Usuario
+La pirámide de automatización exige que la base contenga miles de pruebas unitarias rápidas y económicas, un nivel medio de pruebas de aceptación de servicios, y una cúpula acotada de pruebas de interfaz de usuario (UI).
+
+*El problema de las pruebas de UI*:
+Las pruebas automatizadas a través de navegadores (e.g., con Selenium) presentan severos desafíos: son lentas de ejecutar y altamente **frágiles** frente a cambios cosméticos de diseño (un cambio menor en el DOM o en un estilo CSS genera falsos negativos). Por ello, herramientas como **Cucumber, JBehave, Fit y FitNesse** promueven desacoplar la prueba de aceptación de la capa gráfica, validando la lógica de negocio a nivel de controladores o servicios.
+
+---
+
+### Preparación para el Examen: Unidad 3
+
+#### Conceptos Fundamentales
+- Diferencia técnica y funcional entre DoD (*Definition of Done*) y Criterios de Aceptación.
+- La técnica de especificación mediante ejemplos y prevención del *gold plating*.
+- El ciclo iterativo de TDD y su justificación como técnica de diseño.
+- Clasificación comparada: UTDD, ATDD, BDD y STDD.
+- Tipos de dobles de prueba y resolución de dependencias externas.
+- Razones de fragilidad en la automatización sobre la interfaz gráfica.
+
+#### Preguntas de Autoevaluación
+
+**1. ¿Por qué se afirma que TDD es primordialmente una técnica de diseño y no de aseguramiento de la calidad (QA)?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Aunque TDD produce como efecto secundario una excelente suite de regresión automatizada, su objetivo esencial es guiar las decisiones de diseño del software. Al escribir la prueba antes que el código, el desarrollador se sitúa en la perspectiva del consumidor del módulo, viéndose forzado a definir interfaces claras, contratos mínimos y nombres coherentes con el dominio. Además, para que una clase sea fácil de probar unitariamente, debe estar necesariamente desacoplada y poseer alta cohesión; si el diseño es malo (acoplamiento excesivo), la prueba se vuelve engorrosa de escribir, alertando tempranamente sobre la degradación arquitectónica.
+
+</details>
+
+**2. ¿Qué diferencia práctica y de redacción existe entre un enfoque UTDD y un escenario BDD?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** UTDD opera en el nivel de código técnico del desarrollador; utiliza aserciones en código (como `assertEquals(0, cuenta.saldo())` en JUnit) para verificar el estado o comportamiento de un método orientado a objetos. BDD eleva el nivel de abstracción utilizando una plantilla estructurada en lenguaje natural de dominio (*Given, When, Then* / *Dado, Cuando, Entonces*):
+- *Dado* que el cliente posee una cuenta bancaria con saldo USD 1000,
+- *Cuando* solicita una extracción de USD 400 en un cajero automático,
+- *Entonces* el sistema le entrega los USD 400 y el saldo de la cuenta se actualiza a USD 600.
+Esto permite que el escenario sea legible, comprensible y validable tanto por usuarios de negocio como por analistas, programadores y herramientas automáticas de prueba (Cucumber, JBehave).
+
+</details>
+
+**3. En una entrega a producción, un cliente rechaza un módulo argumentando que en su ambiente corporativo el software falla porque las impresoras utilizan un dialecto de comandos no estándar. ¿Qué herramienta de gestión falló en este escenario?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Falló la especificación rigurosa de los **Criterios de Aceptación y la definición del ambiente de prueba**. Los criterios de aceptación no deben restringirse a la lógica funcional pura; deben explicitar inequívocamente las condiciones de contorno y el ambiente técnico donde se verificará el producto (marcas de dispositivos, versiones de firmware, sistemas operativos y juegos de caracteres compatibles). Si esto no se acordó y documentó previamente en los criterios de aceptación, se generan falsas expectativas y desacuerdos contractuales sobre si la adaptación constituye un defecto o un nuevo requerimiento.
+
+</details>
+
+---
+
+## Unidad 4: Arquitectura, Diseño Emergente y Entrega Continua
+
+### 4.1 Arquitectura en el Ciclo de Vida Ágil: Desmitificando el BDUF
+Históricamente, la arquitectura de software se asociaba al enfoque **BDUF (Big Design Up-Front)**: un proceso analítico preliminar donde los arquitectos diseñaban exhaustivamente todas las capas y componentes del sistema antes de autorizar la codificación.
+
+En el ciclo ágil, la arquitectura no es un conjunto de planos rígidos ni se reduce a la primera fase del proyecto. Se define como:
+> *"La visión técnica compartida por los involucrados sobre el diseño del sistema, y el conjunto de decisiones estratégicas que son difíciles de cambiar o muy importantes de tomar correctamente."*
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 8"
+  code={`graph TD
+    subgraph Niveles de Validación Arquitectónica
+        N1[Visión Técnica y Atributos de Calidad] -->|Validado por| V1[Métricas de ciclo de vida]
+        N2[Módulos y Subsistemas] -->|Validado por| V2[Pruebas de aceptación y carga]
+        N3[Capas y Servicios] -->|Validado por| V3[Validación de dependencias]
+        N4[Componentes] -->|Validado por| V4[Pruebas de integración]
+        N5[Clases y Funciones] -->|Validado por| V5[Pruebas unitarias y análisis estático]
+    end`}
+/>
+
+
+#### Atributos de un Buen Diseño de Software
+1. **Simple**: Resuelve el problema actual con la mínima cantidad de elementos necesarios (principio YAGNI: *You Aren't Gonna Need It*).
+2. **Elegante**: Su estructura produce una resonancia positiva en quien lo analiza; es intuitivo y legible.
+3. **Preciso**: No incorpora capacidades especulativas que no respondan a una necesidad concreta del negocio.
+4. **Robusto**: Es tolerante a fallas y resiste cambios menores en el contexto del problema.
+5. **Suave (Continuo)**: Pequeñas modificaciones en las reglas de negocio implican pequeños cambios proporcionados en el código.
+
+### 4.2 Diseño Emergente, Deuda Técnica y Refactorización
+El **Diseño Emergente** sostiene que la estructura óptima del software no se anticipa puramente por deducción teórica, sino que emerge empíricamente a medida que se desarrolla el sistema y se descubren nuevas restricciones.
+
+#### Condiciones para el Diseño Emergente
+- **Diferir decisiones hasta el último momento prudente**: Tomar una decisión arquitectónica recién cuando posponerla implique perder alternativas viables o bloquear el desarrollo.
+- **Generalización por inducción**: No construir jerarquías complejas de herencia o patrones abstractos hasta no tener al menos dos o tres casos particulares concretos que lo justifiquen.
+- **Desapego intelectual**: Capacidad del equipo y del arquitecto de descartar sus propios diseños iniciales cuando la evidencia empírica demuestra que una alternativa más simple es superior.
+
+#### Deuda Técnica (Ward Cunningham)
+Metáfora acuñada por Ward Cunningham que equipara las decisiones de diseño apresuradas con un préstamo financiero:
+- **Capital**: El tiempo ahorrado inicialmente al implementar una solución rápida, atajo o código mal estructurado.
+- **Intereses**: El costo y esfuerzo adicional que debe pagarse en cada iteración futura cada vez que se deba mantener o modificar ese código deficiente.
+- **Quiebra técnica**: Si la deuda técnica no se amortiza mediante refactorizaciones periódicas, los intereses crecen hasta que el sistema se vuelve inmantenible y debe ser completamente descartado y reescrito.
+
+#### Olores de Código (*Code Smells*) y Refactorización
+Martin Fowler y Kent Beck denominaron **olores** a los síntomas visuales en el código que alertan sobre degradación de diseño: métodos excesivamente largos, clases sobredimensionadas (*God Objects*), duplicación de lógica o listas interminables de parámetros.
+
+La **Refactorización** es la práctica disciplinada de transformar la estructura interna del código sin alterar en absoluto su comportamiento observable externo, con el fin de mejorar su legibilidad, modularidad y reducir su complejidad. Ejemplos clásicos de catálogo formal incluyen:
+- *Extraer Método (Extract Method)*: Modularizar un bloque de sentencias en una función independiente con un nombre descriptivo.
+- *Extraer Clase Madre (Extract Superclass)*: Crear una clase base compartida a partir de dos clases que exhiben comportamientos redundantes.
+
+#### Esqueleto Caminante (*Walking Skeleton*)
+Propuesto por Alistair Cockburn, consiste en implementar una versión embrionaria pero funcional de punta a punta del sistema en las primeras iteraciones (conectar interfaz de usuario, lógica de negocio y persistencia con datos mockeados o mínimos). Permite validar la infraestructura técnica, el despliegue y la integración desde el primer día, mitigando los riesgos catastróficos de una integración tardía.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 9"
+  code={`graph LR
+    UI["Interfaz de Usuario: Mínima"] --> Business["Lógica de Negocio: Básica"]
+    Business --> Data["Persistencia: Inicial"]`}
+/>
+
+
+### 4.3 Integración Continua (CI) y Entrega Continua (CD)
+
+#### El Ciclo de Integración Continua
+Desarrollada para erradicar las dolorosas etapas tradicionales de integración al final del proyecto, la **Integración Continua** establece como disciplina que cada desarrollador integra sus cambios en el repositorio central compartido al menos una vez al día:
+1. Tomar una tarea de trabajo pequeña (que pueda resolverse en un día o menos).
+2. Actualizar la copia local con la última versión del repositorio central.
+3. Desarrollar la lógica junto con sus pruebas automatizadas correspondientes.
+4. Ejecutar todas las pruebas localmente y verificar que pasen.
+5. Enviar los cambios (*commit & push*) al repositorio común.
+6. El **Servidor de CI** (e.g., Jenkins, Travis, TeamCity) detecta el cambio y ejecuta automáticamente el **Script de Build**: compila los fuentes, ejecuta pruebas unitarias y realiza análisis estático de código.
+7. Si el build falla, el equipo detiene sus tareas habituales para resolver el error de inmediato; la integración en verde es prioridad absoluta.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 10"
+  code={`graph TD
+    T[Tomar Tarea Pequeña] --> Up[Actualizar Copia Local]
+    Up --> Code[Codificar + Tests Unitarios]
+    Code --> RunLoc[Ejecutar Tests Localmente]
+    RunLoc --> Push[Enviar Cambios al Repositorio]
+    Push --> CISrv["Servidor CI: Descarga, Compila y Ejecuta Tests"]
+    CISrv -->|Build Exitoso| OK[Integración Continua OK]
+    CISrv -->|Build Fallido| Broken["Alerta al Equipo: Corregir de Inmediato"]
+    Broken --> Up`}
+/>
+
+
+#### Entrega Continua (*Continuous Delivery* / Humble & Farley)
+Extiende la integración continua a toda la cadena de valor hasta llegar al ambiente productivo. Implementa una **tubería de despliegue (Deployment Pipeline)** donde cada cambio genera un artefacto binario candidato a release que avanza a través de sucesivos ambientes automatizados de validación:
+
+$$\text{Commit} \longrightarrow \text{Integración (CI)} \longrightarrow \text{Testing Funcional} \longrightarrow \text{Aceptación (UAT)} \longrightarrow \text{Producción}$$
+
+#### Principios Clave de Humble y Farley
+- El proceso de despliegue debe ser repetible, confiable y automatizado.
+- **Todo bajo control de versiones**: No solo el código fuente, sino también scripts de despliegue, archivos de configuración, esquemas de bases de datos y scripts de entorno.
+- **Si algo duele, hacelo más seguido**: Desplegar pequeños cambios frecuentemente (*fallar rápido*) aísla los errores y reduce el impacto de regresión.
+- **Separación entre Despliegue y Entrega**: El *despliegue* es una acción técnica que ubica el binario en producción; la *entrega (release)* es una decisión comercial que habilita la visibilidad de la funcionalidad a los usuarios finales (gestionada mediante *feature toggles* o banderas de configuración).
+- **Mecanismos de Rollback**: Todo despliegue debe contar con una estrategia automatizada de reversión inmediata a la versión previa estable si se detectan anomalías tras la instalación.
+
+---
+
+### Preparación para el Examen: Unidad 4
+
+#### Conceptos Fundamentales
+- Definición de arquitectura ágil y crítica al BDUF.
+- Atributos del diseño simple y condiciones del diseño emergente.
+- La metáfora de Deuda Técnica (capital, intereses, riesgo de quiebra) y Olores de código.
+- Refactorización: definición formal y operaciones típicas.
+- Concepto y propósito del *Walking Skeleton*.
+- Mecánica estricta de la Integración Continua (pasos del desarrollador y del servidor).
+- La tubería de despliegue (*Pipeline*) de Entrega Continua y distinción entre despliegue y entrega.
+
+#### Preguntas de Autoevaluación
+
+**1. ¿Cuál es la diferencia fundamental entre "Despliegue" (Deployment) y "Entrega" (Release) en el marco de la Entrega Continua?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El despliegue es un procedimiento puramente técnico y de infraestructura mediante el cual un artefacto de software se instala y se ejecuta en un ambiente objetivo (incluido producción). La entrega (o release), por el contrario, es un hito de negocio y comercial, en el cual una funcionalidad terminada se pone a disposición activa de los usuarios finales. En la entrega continua moderna ambas actividades se desacoplan: un equipo puede desplegar nuevo código en producción diez veces al día manteniéndolo inactivo mediante configuraciones o *feature flags*, y el área de negocio decide habilitarlo operativamente en la fecha comercialmente estratégica.
+
+</details>
+
+**2. ¿Cómo interactúan la Deuda Técnica y la Refactorización a lo largo de un proyecto ágil?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La deuda técnica se origina cuando se toman atajos de diseño o no se limpia el código para cumplir con una urgencia de entrega. Cada atajo genera "intereses": futuras modificaciones serán más lentas, difíciles y propensas a errores. La refactorización es el mecanismo explícito de ingeniería para amortizar ese "capital": consiste en rediseñar y sanear internamente el código sin alterar sus funciones observables externas, preservando el comportamiento mediante las pruebas automatizadas. En la planificación ágil, se reserva capacidad de *Slack* técnico para ejecutar refactorizaciones y mantener la deuda en niveles sostenibles.
+
+</details>
+
+**3. ¿Qué rol cumple la práctica del "Walking Skeleton" (Esqueleto Caminante) para mitigar riesgos de arquitectura?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El *Walking Skeleton* mitiga el riesgo de incompatibilidad o falla en la integración tardía. Al construir en la primera o segunda iteración un hilo delgado de funcionalidad que conecte físicamente todas las capas arquitectónicas del sistema (desde la interfaz de usuario hasta la base de datos y los servidores de integración), el equipo valida de manera empírica la viabilidad de la tecnología, los protocolos de red, la configuración de despliegue y los supuestos de diseño antes de masificar el desarrollo de historias de usuario.
+
+</details>
+
+---
+
+## Unidad 5: Dinámica de Equipos, Liderazgo, Gestión Visual y Mejora Continua
+
+### 5.1 El Equipo Ágil Ideal y su Entorno de Trabajo
+Los sistemas de información modernos son demasiado complejos para ser construidos por individuos aislados. Los autores señalan que el resultado de un proyecto es dual: se construye el producto de software y simultáneamente se construye el equipo que lo hizo posible.
+
+#### Características Centrales del Equipo
+- **Autoorganizado**: No existe un jefe de proyecto que asigne tareas individuales a cada miembro. El equipo analiza los compromisos asumidos, identifica colectivamente las tareas necesarias y sus integrantes se las autoasignan (*pull* de trabajo).
+- **Responsabilidad solidaria**: El éxito o fracaso del proyecto pertenece al equipo en su totalidad. No se aceptan excusas basadas en silos (e.g., "los desarrolladores terminamos, el retraso es culpa de los testers"). Si el software no está probado y listo para producción, la funcionalidad no está terminada.
+- **Multidisciplinario y multifuncional**: Integra en el mismo núcleo a todas las disciplinas necesarias para entregar valor: analistas, desarrolladores, diseñadores de experiencia de usuario y testers.
+- **Colaboración auténtica**: Definida por Austin y Devin como *la capacidad de reconcebir las propias ideas a la luz de las ideas de los demás*, lo que exige soltura intelectual y desapego del ego.
+- **Control dejando hacer (*Control by Release*)**: La gerencia no impone directivas mecánicas de mando y control, sino que establece límites de contexto, provee el soporte necesario y libera al equipo para que encuentre la mejor solución técnica.
+
+#### El Espacio Físico y Ritmo Sustentable
+- **Comunicación osmótica y cercanía física**: El equipo debe compartir una misma sala abierta sin divisiones jerárquicas, permitiendo que la información fluya naturalmente por el ambiente.
+- **Ritmo sustentable (Semana de 40 horas)**: El trabajo bajo presión continua y horas extras prolongadas destruye la creatividad, induce errores cognitivos severos y acelera la rotación del personal (*burnout*). Si un equipo requiere horas extras durante dos semanas seguidas, el problema no es técnico sino de gestión y debe resolverse renegociando compromisos.
+
+### 5.2 Liderazgo Compartido y Roles Ágiles
+El liderazgo tradicional concentrado en un único gerente de proyecto se distribuye funcionalmente en tres pilares:
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 11"
+  code={`graph TD
+    subgraph Liderazgo Compartido Ágil
+        PO["Responsable de Producto / Product Owner"] ---|Liderazgo de QUÉ y de VALOR| Team[Equipo de Desarrollo Multifuncional]
+        SM["Facilitador / Scrum Master"] ---|Liderazgo de CÓMO y del EQUIPO| Team
+        PO --- SM
+    end`}
+/>
+
+
+- **Responsable de Producto (Product Owner / Customer)**: Detenta el liderazgo sobre el **producto y el valor de negocio**. Define la visión, prioriza el backlog, aclara requerimientos y aprueba o rechaza los incrementos construidos.
+- **Facilitador (Scrum Master / Agile Coach)**: Detenta el liderazgo sobre el **proceso y el equipo**. Vela por la disciplina metodológica, protege al equipo de interferencias externas, remueve impedimentos y fomenta la mejora continua sin tener autoridad jerárquica sobre las personas.
+- **Equipo de Desarrollo**: Detenta el liderazgo sobre las **decisiones técnicas y la ingeniería**. Asume la responsabilidad de diseñar, construir y probar el producto, estimando el tamaño del trabajo y comprometiéndose con los incrementos.
+
+*Pautas de Feedback Constructivo del Facilitador*:
+1. Describir la situación objetiva sin adjetivar.
+2. Identificar el comportamiento específico observado.
+3. Explicar las consecuencias e impactos reales en el proyecto.
+4. Proponer alternativas o compromisos de acción concretos.
+
+### 5.3 Ceremonias Ágiles y Gestión del Tiempo (*Time-Boxing*)
+Todas las reuniones en los métodos ágiles se encuentran estrictamente acotadas en tiempo (*time-boxed*) para forzar la concentración y evitar la dispersión:
+- **Reunión Diaria (*Daily Standup Meeting*)**: Encuentro matutino de máximo 15 minutos, de pie frente al tablero visual. Cada integrante responde tres preguntas de sincronización:
+  1. *¿Qué hice ayer para contribuir al objetivo de la iteración?*
+  2. *¿Qué haré hoy para contribuir al objetivo?*
+  3. *¿Qué impedimentos u obstáculos bloquean mi avance?*
+- **Reunión de Revisión (*Review / Demo*)**: Reunión formal al cierre de la iteración donde el equipo muestra el incremento de software funcionando en un ambiente de pruebas real al Product Owner y a los interesados (*stakeholders*). No se exponen diapositivas ni documentos abstractos; se opera el producto para obtener feedback.
+- **Reunión de Retrospectiva**: Espacio exclusivo del equipo tras la revisión para analizar cómo mejorar sus procesos, dinámicas y herramientas.
+
+### 5.4 Gestión Visual e Irradiadores de Información (Alistair Cockburn)
+Un **irradiador de información** es un elemento visual de gran escala ubicado en las paredes del espacio de trabajo que transmite información crítica del proyecto a simple vista, sin requerir esfuerzo activo ni navegación en herramientas informáticas.
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 12"
+  code={`graph LR
+    Tablero[Tablero Físico en Pared] -->|Visibilidad Inmediata| Transp[Transparencia y Confianza]
+    Tablero -->|Muestra Bloqueos| Colab[Colaboración Inmediata]
+    Tablero -->|Fomenta Sistema Pull| Autoorg[Autoorganización]`}
+/>
+
+
+#### Tipos de Irradiadores
+1. **Gráfico de Burndown**: Representa el trabajo remanente a lo largo del tiempo.
+   - *Burndown de Iteración*: Muestra el consumo diario de tareas o puntos dentro del sprint, contrastando la línea real contra la línea ideal.
+   - *Burndown de Proyecto*: Muestra el avance iteración tras iteración sobre el total de puntos del backlog, evidenciando tendencias de entrega para proyecciones de lanzamiento.
+2. **Tableros de Tareas (Taskboards)**:
+   - *Sistemas Pull vs. Push*: En lugar de que un gerente "empuje" (*push*) asignaciones a las personas, cada desarrollador "tira" (*pull*) una tarea disponible de la columna de pendientes cuando tiene capacidad.
+   - *Límites de Trabajo en Progreso (WIP Limits)*: Restricción numérica sobre la cantidad de ítems permitidos simultáneamente en una columna (e.g., Desarrollo: máximo 4). Evita la sobrecarga multitarea y expone inmediatamente los cuellos de botella en el flujo.
+   - *Pizarra de Detective (Single Piece Flow / James Shore)*: Tablero enfocado en que el equipo complete un único MMF a la vez mediante disciplinas simultáneas de XP, minimizando el tiempo total de ciclo (*cycle time*).
+
+### 5.5 Retrospectivas Ágiles: El Motor de la Mejora Continua
+La retrospectiva es la ceremonia fundamental donde se operativiza el último principio del Manifiesto Ágil: *a intervalos regulares el equipo reflexiona sobre cómo ser más efectivo para perfeccionar su comportamiento*.
+
+#### La Primera Directiva de Norman Kerth
+Para garantizar la seguridad psicológica y evitar que la reunión se degrade en un tribunal de acusaciones personales, se adopta como axioma:
+> *"Independientemente de lo que descubramos, entendemos y realmente creemos que todos trabajaron de la mejor forma que pudieron, dado lo que sabía cada uno en ese momento, sus habilidades y capacidades, los recursos disponibles y la situación en cuestión."*
+
+#### Las 5 Fases Estructuradas de Esther Derby y Diana Larsen
+1. **Establecer el escenario (Set the Stage)**: Crear foco y seguridad. Repasar la agenda, las reglas de convivencia y realizar una dinámica rompehielos (e.g., *Check-in* en una o dos palabras sobre el estado emocional de cada miembro).
+2. **Reunir datos (Gather Data)**: Reconstruir los hechos del ciclo combinando eventos duros (métricas de build, bugs, velocidad) y subjetivos (sentimientos). Dinámicas típicas: *Línea de tiempo (Timeline)*, *Radar de competencias o prácticas*, y *Bien / Mal*.
+3. **Generar entendimiento (Generate Insights)**: Analizar la información para identificar patrones causales profundos. Dinámicas: los **5 Por qués** (interrogación iterativa para hallar la causa raíz de un problema) y los diagramas de Ishikawa (espina de pescado).
+4. **Decidir qué hacer (Decide What to Do)**: Formular compromisos concretos. Para evitar frustraciones, se seleccionan pocas acciones de alto impacto redactadas bajo el criterio **SMART**:
+   - **S**pecific (Específico).
+   - **M**easurable (Medible).
+   - **A**ttainable (Alcanzable).
+   - **R**elevant (Relevante).
+   - **T**imely (Oportuno / Acotado en el tiempo).
+   Estas acciones se ingresan formalmente al backlog de la siguiente iteración.
+5. **Cierre de la retrospectiva (Close)**: Breve evaluación de la dinámica de la reunión (*retro de la retro*), agradecimiento por la franqueza de los participantes y toma de fotografía de las pizarras para preservar el registro histórico.
+
+---
+
+### Preparación para el Examen: Unidad 5
+
+#### Conceptos Fundamentales
+- Principios de autoorganización, responsabilidad solidaria y colaboración auténtica.
+- Liderazgo compartido: responsabilidades y límites de PO, SM y Equipo Técnico.
+- Dinámica estricta de la reunión diaria (3 preguntas, 15 minutos, de pie).
+- Características de los irradiadores de información y lectura de gráficos de Burndown.
+- Funcionamiento de sistemas *Pull* y justificación matemática/operativa de los límites de WIP.
+- La Primera Directiva de Kerth y las 5 fases protocolares de Derby y Larsen en retrospectivas.
+
+#### Preguntas de Autoevaluación
+
+**1. ¿Por qué la limitación del Trabajo en Progreso (WIP Limits) mejora el rendimiento de un equipo de desarrollo de software?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Basado en la Ley de Little del pensamiento Lean, el tiempo medio de ciclo (*Lead Time*) es directamente proporcional a la cantidad de trabajo en progreso. Cuando los miembros del equipo inician múltiples tareas simultáneamente sin terminar las anteriores, se produce una severa sobrecarga por cambio de contexto (*context switching*), las tareas acumulan tiempos muertos en colas de espera invisibles y se retrasa el feedback. Al limitar el WIP en las columnas del tablero, se fuerza al equipo a terminar tareas antes de iniciar nuevas (*"dejar de empezar y empezar a terminar"*), visibilizando inmediatamente los cuellos de botella (como la acumulación en testing) y fomentando la colaboración para destrabarlos.
+
+</details>
+
+**2. ¿Cómo se aplica la técnica de los "5 Por qués" durante la fase de "Generar Entendimiento" en una retrospectiva? Dé un ejemplo basado en la fuente.**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La técnica busca profundizar sistemáticamente a través de las capas superficiales de un síntoma hasta dar con la causa raíz que puede intervenirse. El ejemplo de cátedra aborda las quejas de clientes en la interfaz de usuario:
+1. *¿Por qué el cliente pide tantos cambios en la demo?* Porque recién ve los controles y pantallas al finalizar la iteración.
+2. *¿Por qué no valida las pantallas antes del desarrollo?* Porque las historias de usuario y criterios de aceptación eran solo texto y no tenía prototipos visuales para evaluar.
+3. *¿Por qué no tenía prototipos?* Porque no se planificaron ni diseñaron maquetas de pantalla en las tareas de ingeniería.
+4. *¿Por qué no se planificaron?* Porque el equipo no contempló el diseño de interfaces como una tarea específica en la reunión de planificación de iteración.
+*Solución raíz*: Incorporar la confección de prototipos rápidos de pantalla como tarea obligatoria en la planificación de iteraciones futuras.
+
+</details>
+
+**3. ¿Por qué es fundamental que la reunión de Retrospectiva se realice estrictamente al final de cada iteración y no únicamente al finalizar todo el proyecto?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** La reunión de "lecciones aprendidas" tradicional al cierre de un proyecto de 6 o 12 meses es un análisis *post-mortem*: el aprendizaje no puede beneficiar al proyecto analizado porque este ya terminó, y muchas veces el equipo se disuelve inmediatamente después, perdiendo el capital social acumulado. En el desarrollo ágil, realizar retrospectivas cada dos semanas permite que las correcciones de procesos, herramientas o dinámicas humanas se apliquen de forma inmediata en la iteración siguiente, optimizando el desempeño del equipo mientras el proyecto está vivo y generando una cultura de mejora empírica continua.
+
+</details>
+
+---
+
+## Unidad 6: Panorama Comparativo de Métodos Ágiles y Marco Metodológico
+
+### 6.1 El Espectro de Métodos Ágiles
+Dentro de la agilidad existe un espectro continuo que abarca desde métodos orientados predominantemente a la **gestión organizacional** (aplicables a proyectos fuera del software) hasta métodos centrados intensamente en la **ingeniería técnica y la programación**:
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 13"
+  code={`graph LR
+    Gestion[Gestión Pura] --- Scrum["Scrum / Crystal"]
+    Scrum --- MSF["MSF / DSDM / FDD"]
+    MSF --- XP[Extreme Programming - XP]
+    XP --- Tecnica["Programación Técnica Pura: TDD, CI, Refactoring"]`}
+/>
+
+
+### 6.2 Scrum: El Marco de Gestión Empírica
+Formalizado por Ken Schwaber y Jeff Sutherland, Scrum es un marco de trabajo liviano estructurado sobre tres pilares del control de procesos empírico: **Transparencia, Inspección y Adaptación**.
+
+- **3 Roles**: Product Owner (Dueño de Producto), Scrum Master (Facilitador) y Developers (Equipo de Desarrollo).
+- **3 Artefactos**:
+  1. *Product Backlog*: Lista priorizada y estimada de requerimientos funcionales y técnicos.
+  2. *Sprint Backlog*: Subconjunto de ítems del backlog seleccionados para el Sprint actual junto con sus tareas técnicas de ingeniería desglosadas.
+  3. *Incremento de Producto*: La suma de todos los ítems completados durante el Sprint que satisfacen la Definición de Hecho (DoD) y están en condiciones operativas de ser liberados.
+- **4 Eventos Formales (dentro del Sprint)**:
+  1. *Sprint Planning*: Planificación colaborativa de lo que se entregará y cómo se construirá.
+  2. *Daily Scrum*: Sincronización diaria de 15 minutos frente al tablero.
+  3. *Sprint Review*: Demostración del incremento al cliente e interesados para adaptar el Product Backlog.
+  4. *Sprint Retrospective*: Inspección del equipo sobre personas, relaciones, procesos y herramientas.
+
+### 6.3 Extreme Programming (XP): La Disciplina Técnica
+Formalizada por Kent Beck en 1999, XP es la metodología ágil por excelencia enfocada en la excelencia de ingeniería para proyectos de software con requisitos cambiantes.
+
+#### Los 4 Valores de XP
+- **Simplicidad**: Desarrollar solo lo necesario para el problema actual.
+- **Comunicación**: Privilegiar la interacción humana directa y el código compartido.
+- **Respeto**: Confianza mutua en la capacidad y profesionalismo de los compañeros.
+- **Coraje**: Valentía para refactorizar código crítico, decir la verdad sobre estimaciones y descartar soluciones defectuosas.
+
+#### Las 12 Prácticas Fundamentales de XP
+
+
+<MermaidDiagram
+  client:load
+  caption="Construcción de Software: Una Mirada Ágil — Diagrama 14"
+  code={`graph TD
+    subgraph Prácticas de XP Integradas
+        PG[Juego de Planificación] --- SC[Versiones Cortas]
+        SC --- SM[Metáfora del Sistema]
+        SM --- SD[Diseño Simple]
+        SD --- CT["Pruebas Continuas / TDD"]
+        CT --- Ref[Refactorización]
+        Ref --- PP[Programación de a Pares]
+        PP --- CO[Propiedad Colectiva del Código]
+        CO --- CI[Integración Continua]
+        CI --- W40[Semana de 40 Horas]
+        W40 --- OSC["Cliente Presente / On-site Customer"]
+        OSC --- CS[Estándares de Codificación]
+        CS --- PG
+    end`}
+/>
+
+
+1. **El juego de la planificación (*The Planning Game*)**: Interacción estrecha donde el cliente prioriza en base al valor y los programadores estiman el esfuerzo.
+2. **Versiones pequeñas (*Small Releases*)**: Poner en producción incrementos funcionales con ciclos cortos de semanas.
+3. **Metáfora del sistema**: Visión compartida de alto nivel que describe cómo funciona el sistema utilizando analogías accesibles para todos.
+4. **Diseño simple**: Apostar siempre a la solución más simple que pase todas las pruebas actuales.
+5. **Prueba continua (*Continuous Testing*)**: Desarrollo guiado por pruebas unitarias (TDD) y automatización de pruebas de aceptación del cliente.
+6. **Refactorización (*Refactoring*)**: Mejora constante del diseño interno sin alterar la funcionalidad.
+7. **Programación de a pares (*Pair Programming*)**: Dos desarrolladores trabajan juntos en una sola estación de trabajo; uno escribe (*driver*) y el otro revisa estratégicamente (*navigator*). Barry Boehm reporta que esta práctica elimina hasta un 60% de los defectos en etapas tempranas.
+8. **Propiedad colectiva del código (*Collective Code Ownership*)**: Cualquier programador tiene la potestad y responsabilidad de modificar cualquier archivo del sistema para mejorar el diseño o corregir errores.
+9. **Integración continua (*Continuous Integration*)**: El código se compila, integra y prueba varias veces al día en el repositorio común.
+10. **Semana de 40 horas (*Sustainable Pace*)**: Mantener un ritmo laboral sostenible evitando horas extras crónicas para preservar la lucidez mental del equipo.
+11. **Cliente en el sitio (*On-site Customer*)**: Un representante del negocio trabaja físicamente junto al equipo a tiempo completo para evacuar dudas de forma instantánea.
+12. **Estándares de codificación (*Coding Standards*)**: Convenciones uniformes de nombrado y estilo acordadas por el equipo para que todo el código parezca escrito por una sola persona.
+
+*Regla de Interdependencia de XP*: Estas doce prácticas no son piezas aisladas que pueden adoptarse selectivamente; forman una red sinérgica donde cada una compensa y sostiene a las demás (e.g., la propiedad colectiva del código es inviable sin pruebas continuas que prevengan regresiones y sin estándares de codificación).
+
+### 6.4 Lean Software Development y Kanban
+Basado en el Sistema de Producción Toyota (TPS) y formalizado para software por Mary y Tom Poppendieck en 2003, Lean se fundamenta en siete principios directores:
+
+$$
+\begin{array}{ll}
+\text{1. Eliminar los desperdicios (\textit{muda})} & \text{5. Potenciar al equipo} \\
+\text{2. Ampliar el aprendizaje} & \text{6. Construir integridad conceptual} \\
+\text{3. Decidir lo más tarde posible} & \text{7. Ver todo el conjunto (\textit{systems thinking})} \\
+\text{4. Entregar lo más rápido posible} &
+\end{array}
+$$
+
+#### El Método Kanban (David Anderson)
+- Se enfoca en la gestión del flujo continuo de trabajo.
+- **No utiliza iteraciones fijas (*time-boxed*) ni estimaciones formales por defecto**: El software fluye continuamente a producción a medida que se completan las tareas.
+- **Gestión visual y límites estrictos de WIP**: Explicita las políticas de proceso y controla la saturación del sistema.
+
+#### Criterio de Selección: ¿Iteraciones o Kanban? (James Shore)
+- **Utilizar Iteraciones (Scrum / XP)**:
+  - Cuando el equipo es nuevo en la agilidad y necesita la disciplina del *time-boxing* y el cumplimiento del DoD para estabilizar su ritmo.
+  - Cuando se desarrolla un nuevo producto o release mayor que requiere una visión estratégica, coordinación de fechas de lanzamiento y una alta involucración planificada con el cliente.
+- **Utilizar Kanban**:
+  - En entornos maduros de mantenimiento evolutivo, soporte o servicios de infraestructura donde las tareas ingresan de manera errática, urgente e impredecible día a día, haciendo imposible sostener el compromiso de un sprint cerrado.
+
+### 6.5 Métodos Ágiles Alternativos de la Literatura
+- **DSDM / Atern (Dynamic Systems Development Method)**: Marco británico estructurado enfocado en sistemas corporativos con restricciones estrictas de tiempo y presupuesto, asumiendo el alcance como variable de ajuste. Define 7 fases y una arquitectura formal de roles (roles de proyecto y roles de desarrollo de la solución).
+- **Feature Driven Development (FDD)**: Propuesto por Jeff De Luca en 1997 para proyectos grandes (e.g., 50 personas durante 15 meses). Organiza el desarrollo alrededor de una lista de funcionalidades pequeñas (*features*) y asigna propietarios individuales de clases coordinados por programadores jefe (*Chief Programmers*).
+- **Crystal Clear (Alistair Cockburn)**: Familia de metodologías adaptables según la cantidad de personas y la criticidad del sistema (desde Crystal Clear para equipos de 2 a 8 personas hasta Crystal Red o Magenta). Prioriza la seguridad personal, la comunicación osmótica y la entrega frecuente.
+- **Microsoft Solutions Framework (MSF v4)**: Modelo que combina gobernanza por hitos de sincronización con prácticas ágiles iterativas y un modelo de equipo compuesto por pares interdisciplinarios.
+
+---
+
+### Preparación para el Examen: Unidad 6
+
+#### Conceptos Fundamentales
+- Ubicación de Scrum y XP en el espectro metodológico.
+- Los 3 pilares, 3 roles, 3 artefactos y 4 eventos de Scrum.
+- Los 4 valores y las 12 prácticas sinérgicas de Extreme Programming (XP).
+- Los 7 principios del Lean Software Development.
+- Diferencias operativas fundamentales entre Scrum (iterativo) y Kanban (flujo continuo).
+- Criterios de James Shore para seleccionar entre Scrum y Kanban.
+
+#### Preguntas de Autoevaluación
+
+**1. ¿Por qué se afirma que la combinación "Scrum + XP" es la fórmula más común y sólida para proyectos ágiles de desarrollo de software?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Scrum es primordialmente un marco de **gestión y organización**: provee estructura de roles (Product Owner, Scrum Master), ceremonias ordenadas (planificación, diarias, revisión, retrospectiva) y artefactos de seguimiento de valor (Product y Sprint Backlog), pero no dice nada sobre cómo se debe programar, probar o diseñar el software. XP, por el contrario, es una metodología orientada a la **excelencia de ingeniería**: prescribe prácticas técnicas estrictas (TDD, refactorización, integración continua, programación de a pares, estándares de código). Adoptar Scrum sin prácticas técnicas degenera en un "Scrum flácido" (equipos que gestionan sprints pero entregan código inestable con deuda técnica creciente); incorporar XP aporta el rigor técnico necesario para que el incremento de producto al final de cada sprint esté verdaderamente en condiciones de producción.
+
+</details>
+
+**2. ¿Cómo se justifican las prácticas de "Programación de a Pares" y "Propiedad Colectiva del Código" frente al prejuicio tradicional de que dos programadores en una máquina reducen la productividad a la mitad?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** El prejuicio asume erróneamente que la productividad en software se mide por la cantidad de líneas de código escritas por hora (visión fabril). La programación de a pares introduce una revisión continua del 100% del código en tiempo real: mientras un programador codifica los detalles tácticos, el otro analiza la visión estratégica, detecta errores de diseño, casos de borde y simplifica la estructura. Estudios formales (como los de Barry Boehm) demuestran que esto reduce los defectos hasta en un 60%, evitando semanas de depuración tardía posterior. A su vez, garantiza la transferencia inmediata de conocimiento entre miembros del equipo, habilitando la **Propiedad Colectiva del Código**: cualquiera puede corregir o extender cualquier parte del sistema sin depender de personas clave ni generar silos de conocimiento (*bus factor*).
+
+</details>
+
+**3. Bajo qué condiciones operativas concretas resulta más conveniente aplicar un sistema Kanban por sobre un esquema iterativo de Scrum según James Shore?**
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta:** Según James Shore, un sistema Kanban es superior en entornos de mantenimiento evolutivo, soporte técnico o mesas de ayuda de sistemas maduros, donde el trabajo se compone de incidentes, parches y mejoras menores que ingresan de manera constante y con prioridades volátiles día a día. En este contexto, frenar cada dos semanas para planificar o estimar un sprint cerrado carece de sentido porque la realidad desborda el plan de inmediato. Kanban elimina la sobrecarga de planificaciones fijas y se enfoca en maximizar la fluidez de las tareas limitando el trabajo en progreso (WIP). Por el contrario, para el desarrollo de un nuevo producto o versión mayor donde se necesita construir visión, coordinar fechas de lanzamiento y validar grandes conjuntos de requerimientos con el cliente, el esquema iterativo de Scrum proporciona la previsibilidad y la disciplina indispensables.
+
+</details>
+
+---
+
+## Matriz Integradora de Conceptos Críticos para el Examen Final
+
+| Área Temática | Concepto Clave | Regla de Oro / Definición de Cátedra |
+| :--- | :--- | :--- |
+| **Epistemología** | Falacia fabril | El desarrollo de software es 100% diseño creativo intelectual; la única fase reproducible a costo cero es la compilación automática. |
+| **Alcance** | User Story vs Caso de Uso | La User Story es un *recordatorio de conversación*; promueve el diálogo mediante el modelo CCC (Card, Conversation, Confirmation) y cumple INVEST. |
+| **Estimación** | Cono de Incertidumbre | Estimar no es comprometerse; es una proyección de tamaño (Story Points con Fibonacci) hecha por los propios desarrolladores. |
+| **Planificación** | Velocidad y Slack | La velocidad es empírica ($\sum \text{SP terminados}$). El sobrante se destina a *Slack* planificado (deuda técnica y refactorización), nunca a margen oculto. |
+| **Calidad** | DoD vs Aceptación | La DoD es transversal y de calidad interna (compilación, unit tests, linters); los Criterios de Aceptación son específicos del negocio para cada historia. |
+| **Ingeniería TDD** | Red - Green - Refactor | Escribir primero la prueba que falle $\rightarrow$ escribir el código mínimo $\rightarrow$ refactorizar sin alterar comportamiento observable. |
+| **Arquitectura** | Diseño Emergente | La arquitectura es una visión estratégica compartida; se evitan decisiones prematuras postergándolas hasta el último momento prudente. |
+| **Entrega** | CI vs CD | Integración Continua = fusionar código diariamente validado por build automático. Entrega Continua = pipeline que lleva el binario a producción de forma automatizada y desacopla despliegue técnico de lanzamiento de negocio. |
+| **Equipos** | Autoorganización | El equipo técnico asume la responsabilidad solidaria de autoasignarse tareas mediante sistemas *Pull*; la gerencia ejerce control dejando hacer (*Control by Release*). |
+| **Mejora** | Retrospectiva | Instancia de mejora formal iterativa guiada por la Primera Directiva de Kerth y estructurada en 5 fases: Escenario $\rightarrow$ Datos $\rightarrow$ Entendimiento $\rightarrow$ Decisiones (SMART) $\rightarrow$ Cierre. |
+| **Metodología** | Scrum + XP | Scrum provee el marco de gestión empírico y colaborativo; XP aporta las 12 prácticas técnicas indispensables de excelencia de ingeniería. |

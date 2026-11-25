@@ -1,0 +1,607 @@
+---
+docId: gestion-de-riesgos
+courseId: gdsi
+title: "Gestión de Riesgos en el Desarrollo de Software"
+order: 4
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - unidad-1-fundamentos-y-ciclo-de-vida-de-la-gestion-de-riesgos-en-software
+  - unidad-2-modelo-cuantitativo-de-evaluacion-matriz-de-probabilidad-impacto-y-exposicion
+  - unidad-3-taxonomia-de-estrategias-y-mecanismos-de-tratamiento-del-riesgo
+  - unidad-4-operacionalizacion-metodologica-herramientas-y-dinamicas-de-planificacion
+  - sintesis-integradora-para-examen-final
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+**Asignatura:** Gestión del Desarrollo de Sistemas Informáticos (GDSI) / Gestión de Proyectos  
+**Marco Conceptual:** Ciclo de Vida de Software, Evaluación Cuantitativa de Riesgos y Gobernanza de Releases  
+**Nivel Académico:** Grado Universitario / Examen Final  
+
+---
+
+## Unidad 1: Fundamentos y Ciclo de Vida de la Gestión de Riesgos en Software
+
+### 1.1 Naturaleza, Definición y Dimensiones de Afectación del Producto
+En el desarrollo de software y productos informáticos, la **gestión de riesgos** se define formalmente como el proceso sistemático y deliberado de identificar, evaluar, priorizar y controlar aquellas amenazas que podrían afectar negativamente el éxito del producto. Lejos de concebirse como un evento burocrático aislado o un trámite administrativo previo al inicio de las operaciones, constituye una disciplina de gestión continua orientada a reducir de manera progresiva la incertidumbre inherente a los sistemas sociotécnicos.
+
+Toda amenaza no gobernada impacta sobre una o más de las cuatro dimensiones cardinales que determinan la viabilidad y supervivencia de un producto informático:
+
+1. **Factibilidad Técnica:** Representa la viabilidad operativa y arquitectónica de construir la solución dentro de los límites de la tecnología disponible, los componentes existentes y las capacidades de ingeniería del equipo.
+2. **Atractivo para los Usuarios (*User Desirability*):** Evalúa si el producto satisface verdaderas necesidades, dolores o flujos de trabajo de los usuarios destinatarios, garantizando que el sistema sea adoptado y aporte valor real.
+3. **Sostenibilidad del Negocio (*Business Viability*):** Determina la capacidad del producto para alinearse con los objetivos estratégicos de la organización, mantener un modelo económico viable y justificar los costos de desarrollo frente al retorno generado.
+4. **Calidad del Producto:** Abarca el correcto funcionamiento operativo, la estabilidad técnica y la ausencia o minimización de fallos (defectos o *bugs*) que degraden la experiencia del usuario o interrumpan procesos críticos.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 1"
+  code={`flowchart TD
+    AM[Amenazas e Incertidumbres] --> GR[Gestión Sistemática de Riesgos]
+    GR --> FT[1. Factibilidad Técnica]
+    GR --> AU[2. Atractivo a los Usuarios]
+    GR --> SN[3. Sostenibilidad de Negocio]
+    GR --> CP["4. Calidad del Producto / Libre de Fallos"]
+    FT & AU & SN & CP --> EX[Éxito Sustentable del Producto]`}
+/>
+
+
+---
+
+### 1.2 Integración Formal en el Ciclo de Vida: Enfoques Ágiles y Predictivos
+La cátedra establece un postulado metodológico fundamental: **siempre se realiza gestión de riesgos, pero con diferente nivel de detalle**. La distinción crítica entre una gestión empírica reactiva y una práctica profesional madura radica en su carácter **explícito**.
+
+La gestión de riesgos se torna explícita cuando se integra formalmente a lo largo de todo el ciclo de vida del producto informático, abarcando desde las etapas iniciales de descubrimiento (*discovery*) hasta las fases finales de despliegue operativo (*deployment*). Esta integración continua reduce sistemáticamente las incertidumbres tanto en equipos que operan bajo marcos ágiles como en aquellos que siguen modelos predictivos tradicionales:
+
+* **Enfoques Predictivos:** La gestión del riesgo se plasma en matrices formales de planificación anticipada, estableciendo líneas base de contingencia presupuestaria y controles de cambios estructurados antes de comprometer los recursos de desarrollo.
+* **Enfoques Ágiles:** La gestión del riesgo se embebe en las ceremonias iterativas, en la priorización dinámica del backlog, en el refinamiento continuo de historias de usuario y en la cadencia de entregas frecuentes.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 2"
+  code={`flowchart LR
+    DISC[Fase de Discovery] --> DESIGN[Diseño y Arquitectura]
+    DESIGN --> DEV[Desarrollo e Integración]
+    DEV --> TEST[Pruebas y Validación]
+    TEST --> DEPLOY[Fase de Deployment]
+    
+    subgraph Gestión Explícita de Riesgos
+        R1[Validación de Atractivo y Negocio] -.-> DISC
+        R2[Validación de Factibilidad Técnica] -.-> DESIGN
+        R3[Mitigación de Bugs y Pruebas Automatizadas] -.-> DEV
+        R4[Control de Calidad e Integración] -.-> TEST
+        R5[Planes de Rollback y Despliegue Controlado] -.-> DEPLOY
+    end`}
+/>
+
+
+---
+
+### 1.3 Articulación con Story Maps y Prevención de Deuda Técnica
+La herramienta central de diseño funcional donde emergen los riesgos de forma orgánica es el **Story Map** (mapa de historias). El story map es una técnica visual que modela bidimensionalmente las necesidades del cliente y el flujo secuencial de actividades e interacciones del usuario con el sistema.
+
+Cuando el equipo de producto analiza el story map para priorizar qué funcionalidades (*features*) deben construirse y en qué orden secuencial, emergen inmediatamente las principales amenazas técnicas y funcionales. La gestión de riesgos en este nivel cumple dos funciones esenciales de gobernanza:
+
+* **Alineación con Objetivos Reales:** Garantiza que las funcionalidades seleccionadas respondan a prioridades auténticas del negocio y del usuario, evitando desviar esfuerzos de ingeniería hacia características secundarias o de bajo impacto.
+* **Prevención de Deuda Técnica y Fallo de Releases:** Impide la postergación sistemática de decisiones arquitectónicas complejas. Si los riesgos de integración, rendimiento o seguridad se ignoran durante la priorización de las historias de usuario, se acumula una degradación estructural del código y de la arquitectura (*deuda técnica*) que termina provocando el incumplimiento o fracaso directo de los objetivos comprometidos para los *releases*.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 3"
+  code={`flowchart TD
+    SM["Story Map: Flujos y Necesidades de Usuario"] --> PF[Priorización de Features]
+    PF --> ER{Emergencia de Riesgos}
+    ER -->|Riesgo Técnico / Negocio / Usuario| GR[Gestión y Evaluación de Riesgos]
+    GR --> AL[Alineación con Objetivos Reales]
+    GR --> PDT[Prevención de Deuda Técnica]
+    GR --> OR[Aseguramiento de Objetivos de Releases]`}
+/>
+
+
+---
+
+### 1.4 La Gestión de Releases como Mecanismo Natural de Reducción de Incertidumbre
+La cátedra conceptualiza la **gestión de releases** —definida como el proceso sistemático de planificar, probar y desplegar versiones iterativas del software— como una **forma natural de gestión de riesgos**.
+
+El despliegue incremental e iterativo no es únicamente una decisión logística de entrega; es un amortiguador metodológico contra la incertidumbre debido a tres propiedades inherentes:
+1. **Entregas Controladas:** Permiten acotar el radio de impacto de cualquier defecto o desviación a un conjunto reducido y conocido de funcionalidades.
+2. **Feedback Temprano:** Expone el software a condiciones reales de operación y a usuarios auténticos en plazos breves, transformando suposiciones abstractas en datos fácticos.
+3. **Ajustes Oportunos:** Otorga al equipo la flexibilidad operativa necesaria para aplicar correcciones tácticas minimizando costos e impactos negativos globales.
+
+#### El Release Mínimo Viable (MVP) como Mitigador Funcional
+Un ejemplo arquetípico de esta integración entre story mapping y gestión de riesgos es el **Release Mínimo Viable (MVP)**. En el marco de un story map, recortar horizontalmente la primera franja operativa para constituir un MVP reduce sustancialmente el riesgo de invertir tiempo, capital y capacidad de desarrollo en *features* que no han sido debidamente validadas por los usuarios en el mercado real.
+
+---
+
+### 1.5 Preguntas de Examen de la Unidad 1
+
+#### Pregunta Conceptual 1: Definición y Dimensiones de Afectación del Éxito
+**Consigna de Examen:** Defina el concepto de gestión de riesgos en el desarrollo de software según la cátedra y detalle las cuatro dimensiones del éxito del producto sobre las cuales actúan las amenazas.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** La gestión de riesgos en el desarrollo de software es el proceso sistemático de identificar, evaluar, priorizar y controlar amenazas que podrían comprometer el éxito del producto informático. Se considera explícita cuando se formaliza dentro de todo el ciclo de vida (desde *discovery* hasta *deployment*). Las cuatro dimensiones afectadas son:
+1. *Factibilidad técnica:* Viabilidad de construir la solución con la tecnología y capacidades disponibles.
+2. *Atractivo a los usuarios:* Capacidad de la solución para satisfacer necesidades y flujos de uso reales.
+3. *Sostenibilidad de negocio:* Viabilidad económica y alineación con los objetivos estratégicos corporativos.
+4. *Calidad:* Ausencia o control de fallos en el producto (*bugs*) y adecuada estabilidad operativa.
+
+</details>
+
+#### Pregunta de Razonamiento 2: Articulación entre Story Maps, Deuda Técnica y Releases
+**Consigna de Examen:** Explique analíticamente en qué momento y mediante qué artefacto emergen los riesgos en la planificación de producto, y cómo su tratamiento temprano evita la acumulación de deuda técnica.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** Los riesgos emergen de manera orgánica a partir del *story map* (que estructura las necesidades y los flujos del usuario) en el momento exacto en que el equipo procede a la priorización de *features*. Si durante esta priorización se omiten los riesgos técnicos (como complejidades de arquitectura o integraciones críticas), el equipo tiende a desarrollar funcionalidad superficial acumulando atajos y desatenciones estructurales (*deuda técnica*). La gestión explícita del riesgo evalúa estas amenazas para ordenar el backlog de forma que los componentes de mayor incertidumbre se resuelvan progresivamente, asegurando el cumplimiento de los objetivos de cada *release* y evitando fallos sistémicos en el software.
+
+</details>
+
+#### Pregunta de Aplicación Práctica 3: El MVP como Instrumento de Gestión de Riesgo
+**Consigna de Examen:** Una empresa de software planea desarrollar una plataforma completa durante doce meses antes de realizar su primer lanzamiento al mercado. Desde la perspectiva metodológica de la cátedra, critique este enfoque y justifique una alternativa basada en la gestión de releases y MVP.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** El enfoque de un único lanzamiento anual acumula un nivel desproporcionado de incertidumbre y riesgo respecto al atractivo a los usuarios y la viabilidad del negocio. La cátedra establece que la gestión de releases iterativos actúa como un mitigador natural de riesgos. La alternativa metodológicamente correcta consiste en trazar un *story map* y definir un *Release Mínimo Viable (MVP)* que recorte el conjunto mínimo de funcionalidades esenciales. Este MVP permite realizar entregas controladas, obtener *feedback* temprano de usuarios reales y validar hipótesis de valor antes de comprometer inversiones masivas en *features* no probadas, habilitando ajustes oportunos con mínimo impacto negativo.
+
+</details>
+
+#### Conceptos Fundamentales para Aprobar la Unidad 1
+* La gestión de riesgos siempre se ejecuta; la diferencia radica en si se realiza de forma implícita o formalmente explícita desde *discovery* hasta *deployment*.
+* Las cuatro dimensiones de impacto: Factibilidad técnica, Atractivo a usuarios, Sostenibilidad de negocio y Calidad.
+* El *Story Map* como generador de visibilidad de riesgos durante la priorización de requerimientos.
+* La gestión de *releases* iterativos y el MVP como mecanismos naturales de control y mitigación de incertidumbre.
+
+---
+
+## Unidad 2: Modelo Cuantitativo de Evaluación: Matriz de Probabilidad, Impacto y Exposición
+
+### 2.1 Variables del Modelo de Evaluación
+Para evitar que la gestión de riesgos quede sujeta a apreciaciones meramente subjetivas, la cátedra introduce un modelo de cuantificación que permite ordenar y jerarquizar racionalmente las amenazas identificadas. Este modelo evalúa cada riesgo a partir de dos variables independientes:
+
+1. **Probabilidad ($P$):** Representa la verosimilitud o expectativa de ocurrencia del evento de riesgo durante el ciclo de vida del producto (*likelihood*). Puede categorizarse mediante escalas cualitativas (Baja, Media, Alta) o escalas cuantitativas discretas parametrizadas (por ejemplo, en un rango numérico de $1$ a $5$).
+2. **Impacto ($I$):** Representa el grado de severidad o magnitud de las consecuencias adversas en caso de que la amenaza llegue efectivamente a materializarse. La cátedra define cuatro ejes operativos sobre los cuales se mide el impacto:
+   * **Tiempo:** Retrasos en el cronograma, demoras en sprints o aplazamientos de fechas de entrega de releases.
+   * **Costo:** Desvíos presupuestarios, necesidad de horas hombre adicionales o sobrecostos en infraestructura y servicios.
+   * **Calidad:** Incremento en la tasa de defectos, degradación del rendimiento de la aplicación o fallas en componentes críticos.
+   * **Usuarios:** Afectación directa de la experiencia de usuario, pérdida de clientes o daño a la reputación operativa del producto.
+
+Al igual que la probabilidad, el impacto se parametriza en escalas cualitativas (Bajo, Medio, Alto) o cuantitativas (escala de $1$ a $5$).
+
+---
+
+### 2.2 Formulación Matemática de la Exposición y Criterios de Umbral
+El concepto rector de la cuantificación de riesgos es la **Exposición ($E$)**, también denominada *riesgo total*. La exposición sintetiza en una única métrica escalar la gravedad combinada de la probabilidad de ocurrencia y la severidad del impacto.
+
+La relación se calcula mediante la fórmula matemática de producto directo:
+
+$$\text{Exposición} = \text{Probabilidad} \times \text{Impacto}$$
+
+Utilizando la notación formal algebraica:
+
+$$E = P \times I$$
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 4"
+  code={`flowchart LR
+    P["Probabilidad 'P': Likelihood de Ocurrencia"] --> MULT(("×"))
+    I["Impacto 'I': Severidad en Tiempo, Costo, Calidad o Usuarios"] --> MULT
+    MULT --> E["Exposición 'E': Medida del Riesgo Total"]
+    E --> DEC{Criterio de Exposición}
+    DEC -->|E > 20 en escala 1-25| CRIT["Zona de Exposición Alta / Crítica"]
+    DEC -->|E > 10| PRIO[Priorización Obligatoria de Tratamiento]
+    DEC -->|E ≤ 10| MON["Riesgo Menor / Monitoreo o Aceptación"]`}
+/>
+
+
+#### Reglas de Decisión y Umbrales Cuantitativos de la Cátedra
+En un espacio muestral discretizado en una escala cuantitativa de $1$ a $25$ (donde tanto $P$ como $I$ toman valores enteros en el intervalo $[1, 5]$):
+* **Umbral de Exposición Crítica:** Un riesgo se categoriza en el cuadrante de **Exposición Alta** cuando el producto resultante es estrictamente mayor a veinte:
+
+  $$\text{Exposición Alta} \iff E > 20$$
+
+* **Criterio de Priorización Operativa:** La regla de corte establecida por la cátedra para decidir la intervención y asignación inmediata de recursos determina que deben **priorizarse sistemáticamente aquellos riesgos con exposición estrictamente mayor a diez**:
+
+  $$\text{Criterio de Priorización} \iff E > 10$$
+
+Aquellos riesgos cuyo producto $P \times I \le 10$ se consideran de criticidad menor o baja, permitiendo estrategias de seguimiento pasivo o aceptación justificada.
+
+---
+
+### 2.3 Construcción y Análisis de la Matriz de Riesgo
+La herramienta operativa para plasmar esta evaluación es la **Matriz de Riesgo**, diseñada estructuralmente como una grilla bidimensional donde el eje vertical (filas) mapea la **Probabilidad** y el eje horizontal (columnas) mapea el **Impacto**. 
+
+La cátedra contempla tanto matrices generales de $5 \times 5$ como matrices simplificadas de $3 \times 3$ discretizadas en niveles bajo ($1$), medio ($3$) y alto ($5$). Para facilitar la interpretación visual rápida, las celdas de la matriz se codifican convencionalmente mediante una semaforización tricolor:
+* **Verde:** Nivel Bajo de exposición ($E \le 5$).
+* **Amarillo:** Nivel Medio de exposición ($9 \le E \le 15$).
+* **Rojo:** Nivel Alto de exposición ($E \ge 20$).
+
+#### Estructura de la Matriz de la Cátedra
+
+| Probabilidad ($P$) \ Impacto ($I$) | Bajo ($1$) | Medio ($3$) | Alto ($5$) |
+| :--- | :---: | :---: | :---: |
+| **Alta ($5$)** | $5$ (Bajo) | **$15$ (Medio)** | **$25$ (Alto)** |
+| **Media ($3$)** | $3$ (Bajo) | $9$ (Medio) | **$15$ (Medio)** |
+| **Baja ($1$)** | $1$ (Bajo) | $3$ (Bajo) | $5$ (Bajo) |
+
+#### Análisis de Casillas y Comportamiento Asimétrico
+* **Cuadrante de Exposición Alta ($E = 25$):** Concurrencia de $P = 5$ e $I = 5$. Representa una amenaza crítica que debe ser tratada de manera obligatoria e inmediata.
+* **Cuadrantes de Priorización Media-Alta ($E = 15$):** Se observan dos escenarios simétricos en producto pero metodológicamente disímiles:
+  * Probabilidad Alta ($5$) con Impacto Medio ($3$): Amenaza de ocurrencia casi segura pero de severidad contenida.
+  * Probabilidad Media ($3$) con Impacto Alto ($5$): Amenaza de probabilidad moderada pero con potencial de ocasionar daños severos al producto o a la organización.
+  Ambos casos arrojan $E = 15$. Al satisfacer la condición $E > 10$, **ambos exigen priorización activa**.
+* **Cuadrante Central ($E = 9$):** $P = 3$ e $I = 3$. Clasificado como riesgo medio, pero al no superar el umbral de $10$, se ubica en el límite inferior de atención inmediata.
+* **Cuadrantes de Exposición Baja ($E \in \{1, 3, 5\}$):** Incluyen combinaciones donde una de las variables es mínima ($1$), mitigando el riesgo total independientemente de que la otra variable se ubique en su cota superior (ej. $P=5, I=1 \rightarrow E=5$ o $P=1, I=5 \rightarrow E=5$).
+
+---
+
+### 2.4 Aplicación Práctica en Software y Gobernanza de Releases
+La cuantificación mediante la matriz no es un fin en sí mismo, sino un mecanismo de toma de decisiones operativas. En el desarrollo de software, la matriz se utiliza para evaluar riesgos concretos de arquitectura, integración y recursos.
+
+#### Caso Paradigmático: Dependencia de un Proveedor Externo
+Un caso clásico analizado por la cátedra es la **dependencia de un proveedor externo** (por ejemplo, una API externa, un servicio de pasarela de pago o un proveedor de infraestructura en la nube):
+* **Evaluación de Probabilidad:** Se determina una probabilidad **Media** ($P = 3$), dado que el proveedor posee cierta estabilidad pero escapa al control directo del equipo interno.
+* **Evaluación de Impacto:** Se asigna un impacto **Alto** ($I = 5$), puesto que una falla, cambio de versión imprevisto o caída del servicio detendría la funcionalidad central del sistema, afectando severamente a los usuarios y al cronograma.
+* **Cálculo de Exposición:**
+
+  $$E = P \times I = 3 \times 5 = 15$$
+
+* **Determinación:** Dado que $15 > 10$, este riesgo ingresa directamente en la lista de amenazas **prioritarias**, exigiendo mecanismos formales de mitigación o contingencia.
+
+#### Enlace con la Gestión de Releases
+La evaluación del riesgo total alimenta de forma directa la planificación de cada versión del software. Al cuantificar las amenazas asociadas a los distintos requerimientos técnicos y de negocio por cada *release*, el equipo directivo adquiere criterios objetivos para la gobernanza del alcance:
+* **Posponer Features:** Si una funcionalidad introduce una exposición inaceptable para la cual aún no se cuenta con mitigaciones eficaces, se pospone para un release posterior.
+* **Adelantar Features:** Si una funcionalidad implica una alta incertidumbre arquitectónica que condiciona todo el sistema futuro, puede adelantarse deliberadamente a los primeros releases para forzar la resolución temprana del riesgo y validar hipótesis críticas.
+
+---
+
+### 2.5 Preguntas de Examen de la Unidad 2
+
+#### Pregunta Conceptual 1: Formulación de la Exposición y Ejes del Impacto
+**Consigna de Examen:** Exponga la fórmula matemática empleada para calcular la exposición al riesgo según la cátedra, defina sus componentes y enumere los cuatro ejes sobre los cuales debe medirse la severidad del impacto.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** La exposición al riesgo ($E$) mide el riesgo total y se calcula mediante el producto:
+
+$$E = P \times I$$
+
+Donde:
+* $P$ (Probabilidad): Es el *likelihood* o grado de verosimilitud de ocurrencia del riesgo (en escala baja/media/alta o de $1$ a $5$).
+* $I$ (Impacto): Es la severidad del daño en caso de que el riesgo se materialice.
+Los cuatro ejes sobre los cuales se mide el impacto son:
+1. *Tiempo* (desvíos y retrasos en cronogramas y entregas).
+2. *Costo* (sobrecostos de desarrollo e infraestructura).
+3. *Calidad* (fallas, defectos o degradación del software).
+4. *Usuarios* (impacto en la experiencia, pérdida de clientes o afectación del servicio).
+
+</details>
+
+#### Pregunta de Razonamiento 2: Criterios de Corte y Umbrales en la Matriz 5x5
+**Consigna de Examen:** En una evaluación de riesgos sobre una escala numérica de 1 a 25, explique cuáles son los dos umbrales cuantitativos que delimitan la atención de la cátedra y analice la diferencia entre un riesgo de Exposición Alta y un riesgo Prioritario.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** La cátedra establece dos umbrales cuantitativos bien diferenciados:
+1. *Umbral de Exposición Alta ($E > 20$):* Corresponde al cuadrante crítico de la matriz (típicamente celdas rojas de $5 \times 5 = 25$), donde la probabilidad y el impacto concurren en niveles extremos.
+2. *Umbral de Priorización ($E > 10$):* Es la regla de corte operativa para la acción inmediata.
+Todo riesgo con exposición estrictamente superior a $10$ debe ser prioritario para el equipo. Esto implica que los riesgos de Exposición Media cuyos valores arrojen $15$ (como $P=5, I=3$ o $P=3, I=5$) son plenamente **prioritarios**, debiendo formularse planes de acción para ellos antes que para riesgos con $E \le 10$, aunque no alcancen la categoría de exposición crítica roja ($>20$).
+
+</details>
+
+#### Pregunta de Aplicación Práctica 3: Cuantificación de un Riesgo de Proveedor Externo y Decisión de Release
+**Consigna de Examen:** Un equipo de desarrollo identifica que una funcionalidad depende críticamente de una API externa provista por un tercero. El equipo estima que la probabilidad de que la API presente demoras de integración es Media (valor 3 en la escala de la cátedra) y que el impacto sobre el lanzamiento del release sería Alto (valor 5). Calcule la exposición, clasifique el riesgo según los parámetros de la cátedra e indique qué decisiones de release habilita este análisis.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:**
+* *Cálculo de Exposición:*
+
+  $$E = P \times I = 3 \times 5 = 15$$
+
+* *Clasificación:* En la escala matricial de la cátedra, $15$ corresponde a un nivel de riesgo Medio, pero dado que $15 > 10$, clasifica de forma obligatoria como un riesgo de **priorización activa**.
+* *Decisión de Release:* La evaluación permite gobernar objetivamente el alcance del release. El equipo puede decidir **posponer** la feature dependiente de la API si no existen mecanismos de contingencia adecuados para salvaguardar la fecha de entrega, o alternativamente, **adelantar** la integración técnica a una versión preliminar para validar tempranamente la estabilidad del servicio antes de comprometer el despliegue general a los usuarios.
+
+</details>
+
+#### Conceptos Fundamentales para Aprobar la Unidad 2
+* Fórmula algebraica de exposición: $E = P \times I$.
+* Los cuatro ejes de medición del impacto: Tiempo, Costo, Calidad y Usuarios.
+* Umbral de priorización operativa de la cátedra: $E > 10$.
+* Umbral de riesgo de exposición alta: $E > 20$.
+* Matriz de $3 \times 3$ y $5 \times 5$ con semaforización tricolor (verde, amarillo y rojo).
+* La evaluación de riesgos como criterio para adelantar o posponer funcionalidades entre releases.
+
+---
+
+## Unidad 3: Taxonomía de Estrategias y Mecanismos de Tratamiento del Riesgo
+
+### 3.1 Estrategias Principales de Tratamiento de Riesgos
+Una vez identificadas y priorizadas las amenazas ($E > 10$), el equipo de proyecto debe seleccionar e instrumentar una estrategia formal de respuesta. La cátedra categoriza los mecanismos de gestión en cinco estrategias bien delimitadas:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 5"
+  code={`flowchart TD
+    TR[Estrategias de Tratamiento del Riesgo] --> MIT["Mitigación: Reducir P o I ex-ante"]
+    TR --> TRA["Transferencia: Desplazar riesgo a terceros"]
+    TR --> CONT["Contingencia: Plan de respuesta ex-post"]
+    TR --> EVI["Evitar: Eliminar la causa raíz"]
+    TR --> ACE["Aceptación: Monitoreo sin acción activa"]`}
+/>
+
+
+1. **Mitigación:** Consiste en actuar de manera proactiva **antes de que el riesgo se materialice** con el propósito de reducir su probabilidad de ocurrencia, amortiguar su severidad de impacto, o ambas cosas simultáneamente.
+   * *Ejemplo en desarrollo de software:* Implementar una suite rigurosa de **pruebas automatizadas** (*automated testing*) continuas para mitigar de forma preventiva la introducción y propagación de errores o *bugs* críticos en los releases.
+2. **Transferencia:** Consiste en traspasar total o parcialmente la carga, la responsabilidad operativa o las consecuencias económicas del riesgo hacia un tercero ajeno al equipo interno de desarrollo.
+   * *Ejemplo en desarrollo de software:* La suscripción de **pólizas de seguro** o la contratación bajo modalidad de **outsourcing** de componentes críticos y especializados del sistema, transfiriendo a un proveedor experto el riesgo técnico inherente.
+3. **Contingencia:** Consiste en diseñar y documentar formalmente un **plan de respuesta que se activará única y exclusivamente si el evento de riesgo llega a concretarse** en la realidad operativa.
+   * *Ejemplo en desarrollo de software:* Establecer una **reserva de presupuesto** específica para absorber sobrecostos de emergencia o contar con un **equipo técnico de respaldo (*backup*)** preparado para intervenir ante retrasos severos en la fecha de despliegue de un release.
+4. **Evitar (Eliminación):** Implica erradicar completamente la exposición al riesgo suprimiendo la actividad, requerimiento o elemento técnico que da origen a la amenaza.
+   * *Ejemplo en desarrollo de software:* Tomar la decisión arquitectónica de **no utilizar una tecnología o librería inestable** en el núcleo de la aplicación, cancelando la fuente del riesgo desde el diseño.
+5. **Aceptación:** Consiste en reconocer la existencia del riesgo pero tomar la decisión consciente de no ejecutar acciones preventivas activas, limitándose a realizar un monitoreo de su comportamiento.
+   * *Criterio de aplicación:* Esta estrategia es metodológicamente válida exclusivamente cuando la **exposición del riesgo es baja** ($E \le 10$), donde el costo económico y operativo de formular planes de mitigación superaría con creces el impacto potencial de la amenaza.
+
+---
+
+### 3.2 Tabla Comparativa de Estrategias de Tratamiento
+
+| Mecanismo de Gestión | Momento de Acción | Objetivo Operativo Primario | Acción Metodológica Central | Ejemplo Práctico de Cátedra |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mitigación** | Preventivo (*ex-ante*) | Reducir la Probabilidad ($P$) o el Impacto ($I$) | Intervenir sobre el proceso de desarrollo antes de la falla. | Implementación de pruebas automatizadas contra bugs en releases. |
+| **Transferencia** | Transversal contractual | Desplazar la responsabilidad o impacto | Tercerizar la incertidumbre o cubrir pérdidas financieras con terceros. | Contratación de seguros o outsourcing de componentes críticos. |
+| **Contingencia** | Reactivo preparado (*ex-post*) | Contener las consecuencias ante la materialización efectiva | Activar un plan de respuesta preestablecido con recursos de reserva. | Reserva de presupuesto o equipo backup para mitigar retrasos de release. |
+| **Evitar** | Preventivo radical (*ex-ante*) | Reducir la Probabilidad a cero ($P = 0$) | Suprimir de raíz la condición o tecnología que introduce la amenaza. | Descartar el empleo de una tecnología o framework inestable. |
+| **Aceptación** | Pasivo / Monitoreo | Optimizar la economía de recursos de gestión | Registrar el riesgo y vigilarlo sin comprometer acciones correctivas. | Tolerar riesgos con baja exposición sin asignar partidas presupuestarias. |
+
+---
+
+### 3.3 La Cadencia de Releases Frecuentes como Mitigador Estructural
+Más allá de las herramientas puntuales, la cátedra asigna un rol protagónico a la arquitectura temporal de las entregas de software: **la integración con releases frecuentes actúa como un mitigador estructural de riesgos**.
+
+En las metodologías ágiles, la adopción de una cadencia de entregas cortas (por ejemplo, mediante un esquema de **releases semanales**) reduce drásticamente la exposición acumulada del producto. Al validar hipótesis técnicas y de valor con usuarios y sistemas reales en intervalos mínimos, se evita que las discrepancias e incompatibilidades se amplifiquen de manera oculta a lo largo del tiempo.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 6"
+  code={`flowchart TD
+    subgraph Modelo Tradicional Anual
+        LA[Gran Lanzamiento Anual] --> INC_ACUM[Alta Acumulación de Incertidumbre y Exposición]
+        INC_ACUM --> FALLO[Riesgo Sistémico de Desvío Crítico en Costo y Tiempo]
+    end
+    
+    subgraph Modelo Ágil de Releases Frecuentes
+        RS["Releases Semanales / Frecuentes"] --> VAL_TEMP[Validación Continua y Feedback Temprano]
+        VAL_TEMP --> EXP_RED[Reducción Constante de Exposición Acumulada]
+        EXP_RED --> CONT_RAP[Habilitación de Contingencias Inmediatas y Ajustes Ágiles]
+    end`}
+/>
+
+
+#### Contraste Metodológico: Release Semanal vs. Lanzamiento Anual
+* **Gran Lanzamiento Anual:** Acumula meses de desarrollo sin confrontación con el entorno real de producción. Si surgen fallas graves de integración o desajustes de mercado, los costos de reparación son masivos y la formulación de contingencias resulta extraordinariamente traumática.
+* **Release Semanal:** Permite desplegar contingencias rápidas y de bajo costo. Si una versión semanal presenta una desviación, el tamaño del cambio es tan pequeño que su diagnóstico y corrección pueden ejecutarse de inmediato sin paralizar a la organización.
+
+---
+
+### 3.4 Caso de Estudio Empresarial Integral: Integración entre Aplicaciones
+Para comprender cómo se combinan de forma simultánea múltiples mecanismos frente a un mismo problema complejo, la cátedra expone el caso de un producto en un entorno corporativo enfrentado al **riesgo de integración con otras aplicaciones empresariales preexistentes**.
+
+* **Diagnóstico Inicial del Riesgo:** La complejidad intrínseca de los sistemas corporativos heredados (*legacy systems*) y sus interfaces suele determinar una **Probabilidad Alta** de que ocurran conflictos o demoras, con un **Impacto Medio** sobre los servicios involucrados. Al superar el umbral de priorización, no basta con una única acción aislada.
+* **Despliegue Multi-Estrategia Articulado por la Cátedra:**
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 7"
+  code={`flowchart LR
+    RI[Riesgo de Integración con Aplicaciones Corporativas] --> MIT_CASO["Mitigación: Releases Modulares"]
+    RI --> TRA_CASO["Transferencia: Soporte de Experto en la Herramienta"]
+    RI --> CONT_CASO["Contingencia: Plan de Rollback / Vuelta Atrás"]`}
+/>
+
+
+1. **Mitigación (Reducción de Complejidad ex-ante):** Diseñar e instrumentar **releases modulares** que permitan gobernar y desplegar pocas integraciones de forma simultánea, acotando el riesgo técnico por paquete de entrega.
+2. **Transferencia (Soporte Especializado):** Contratar o involucrar el **soporte técnico especializado de un experto** en la herramienta o aplicación a integrar, trasladando a dicho especialista la resolución de las complejidades arquitectónicas de la interfaz.
+3. **Contingencia (Plan de Vuelta Atrás):** Diseñar, probar y dejar listo para su ejecución inmediata un procedimiento formal de **rollback (marcha atrás)**, garantizando que si la integración falla catastróficamente en el ambiente productivo, el sistema pueda retornar al estado anterior en minutos sin pérdida de datos.
+
+---
+
+### 3.5 Preguntas de Examen de la Unidad 3
+
+#### Pregunta Conceptual 1: Diferenciación entre Mitigación y Contingencia
+**Consigna de Examen:** Distinga analíticamente los conceptos de *Mitigación* y *Contingencia* en la gestión de riesgos de software, precisando el momento temporal en que opera cada una e ilustrando con los ejemplos provistos por la cátedra.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** La diferencia fundamental radica en el momento temporal y el carácter preventivo o reactivo de la acción:
+* *Mitigación:* Es una estrategia estrictamente preventiva (*ex-ante*) que interviene sobre el sistema o proceso **antes** de que el riesgo se materialice, buscando reducir su probabilidad de ocurrencia o su nivel de impacto. Ejemplo de cátedra: Implementar suites de pruebas automatizadas continuas para prevenir la introducción de *bugs* en los releases.
+* *Contingencia:* Es una estrategia reactiva estructurada (*ex-post*) consistente en formular de antemano un plan de acción que se mantendrá latente y **se activará únicamente si el riesgo se materializa**. Ejemplo de cátedra: Disponer de una reserva presupuestaria específica o de un equipo de ingenieros de soporte técnico de *backup* para absorber los desvíos si se produce un retraso en la fecha del release.
+
+</details>
+
+#### Pregunta de Razonamiento 2: Dinámica de Releases Frecuentes frente a Grandes Lanzamientos
+**Consigna de Examen:** Fundamente teóricamente por qué una política de releases frecuentes actúa como mitigador de riesgos frente a la estrategia tradicional de grandes lanzamientos anuales.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** Los releases frecuentes (por ejemplo, con cadencia semanal) mitigan estructuralmente el riesgo debido a que exponen incrementos pequeños y controlados de software a validaciones tempranas de hipótesis técnicas y operativas. Esto evita que la incertidumbre y las fallas de integración se acumulen silenciosamente a lo largo de meses (exposición acumulada reducida). En caso de surgir un defecto o incompatibilidad, la entrega semanal facilita la aplicación de contingencias inmediatas, rápidas y económicas, a diferencia de un gran lanzamiento anual donde el volumen masivo de cambios dificulta el aislamiento de errores y puede desencadenar fallos catastróficos para el producto.
+
+</details>
+
+#### Pregunta de Aplicación Práctica 3: Diseño de Respuestas para Integración Empresarial
+**Consigna de Examen:** Una entidad financiera desarrolla un nuevo módulo informático que debe integrarse con el núcleo contable corporativo. Se diagnostica una probabilidad alta de fallas de comunicación y un impacto medio en las operaciones. Describa cómo deben articularse conjuntamente las estrategias de mitigación, transferencia y contingencia conforme al caso práctico de la cátedra.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** De acuerdo con la doctrina de la cátedra, el equipo debe articular una respuesta coordinada en tres niveles:
+1. *Mitigación:* Desarrollar e implementar la integración mediante **releases modulares**, habilitando y testeando pocas interfaces a la vez en lugar de conectar todos los servicios en un único despliegue.
+2. *Transferencia:* Involucrar y contratar el **soporte técnico directo de un experto en la herramienta** o sistema contable corporativo, derivando en este perfil especializado la responsabilidad de velar por la correcta configuración técnica de la interfaz.
+3. *Contingencia:* Formular y documentar un protocolo estricto de **rollback (plan de marcha atrás)** para que, ante cualquier indisponibilidad o fallo crítico durante el despliegue de la integración, el sistema pueda revertirse inmediatamente a la versión estable previa sin comprometer los datos de la organización.
+
+</details>
+
+#### Conceptos Fundamentales para Aprobar la Unidad 3
+* Distinción temporal y causal entre Mitigación (prevención ex-ante) y Contingencia (plan ex-post ante materialización).
+* Definición y aplicación de Transferencia, Evitar y Aceptación (válida solo para baja exposición).
+* Los releases frecuentes como instrumento arquitectónico de mitigación de incertidumbre.
+* La articulación sinérgica de Mitigación (modularidad), Transferencia (soporte experto) y Contingencia (rollback) en escenarios de integración de software.
+
+---
+
+## Unidad 4: Operacionalización Metodológica, Herramientas y Dinámicas de Planificación
+
+### 4.1 Principio de Foco y Economía de Gestión
+La gestión de riesgos profesional debe evitar dos desvíos metodológicos opuestos: la parálisis por análisis (intentar documentar y gestionar exhaustivamente cientos de riesgos insignificantes) y la negligencia operativa (ignorar las amenazas sistémicas).
+
+Para mantener la eficacia, la cátedra formula la recomendación de **foco**: **prestar atención prioritaria y concentrar los recursos del equipo exclusivamente en los riesgos más importantes**. Este foco se deriva de forma disciplinada de la matriz de evaluación: el esfuerzo analítico debe dirigirse a aquellos riesgos situados por encima del umbral de corte de exposición ($E > 10$).
+
+---
+
+### 4.2 Instrumental de Soporte y Visibilidad Visual
+La cátedra desaconseja el empleo de herramientas informáticas sobrecargadas o burocráticas que desincentiven la colaboración del equipo de desarrollo. Por el contrario, recomienda la adopción de **herramientas simples y visuales**:
+* **Hojas de Cálculo Colaborativas (ej. Microsoft Excel / Google Sheets):** Para parametrizar de manera inmediata la matriz de evaluación cuantitativa, automatizar la fórmula de exposición ($E = P \times I$) y ordenar dinámicamente las amenazas en función de su severidad numérica.
+* **Tableros Visuales Interactivos (ej. Miro):** Para construir radiadores de información visuales donde la matriz de probabilidad e impacto se mantenga visible y accesible para todos los integrantes del equipo durante las dinámicas grupales.
+* **Integración Directa en Story Maps:** Incorporar los riesgos identificados como anotaciones visuales o tarjetas de atención directamente sobre las historias de usuario del *story map*, gobernando la priorización del backlog con plena conciencia del riesgo asociado a cada incremento.
+
+---
+
+### 4.3 Institucionalización en los Rituales de Planificación (Sprint / Release Planning)
+Un principio axial transmitido por la cátedra es que la gestión de riesgos no debe constituir una reunión aislada o desvinculada de la operativa diaria. Por el contrario, **debe integrarse de forma explícita al proceso de planificación recurrente**.
+
+En las ceremonias de planificación de sprint (*sprint planning*) o de lanzamiento (*release planning*), el facilitador o líder de proyecto debe institucionalizar una **pregunta disparadora obligatoria**:
+
+> *¿Qué riesgos ven en este release / sprint?*
+
+Esta simple rutina cognitiva obliga a los desarrolladores, arquitectos y evaluadores a salir del sesgo de optimismo habitual y explicitar de forma colegiada las amenazas técnicas y dependencias operativas que condicionan la meta del ciclo.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 8"
+  code={`flowchart TD
+    PLAN["Ceremonia de Planificación: Sprint / Release Planning"] --> PD["Pregunta Disparadora: ¿Qué riesgos ven en este release / sprint?"]
+    PD --> ID[Identificación Colegiada de Amenazas y Dependencias]
+    ID --> SIM["Ejercicio Rápido de Simulación: ¿Qué pasaría si falla X?"]
+    SIM --> AJUSTE["Ajuste Inmediato de Backlog, Pruebas y Contingencias de Release"]`}
+/>
+
+
+---
+
+### 4.4 Ejercicios Rápidos de Simulación de Escenarios de Falla
+Como complemento dinámico de la pregunta disparadora, la cátedra recomienda la realización de **ejercicios rápidos de simulación mental de fallas catastróficas** (*stress-testing* conceptual).
+
+El ejemplo representativo presentado por la cátedra formula el siguiente disparador ante el equipo:
+
+> *¿Qué pasaría si la integración con tarjetas nos falla?*
+
+Este tipo de ejercicio rápido confronta inmediatamente al equipo con la realidad operativa, forzando la formulación instantánea de respuestas:
+* ¿Existe un mensaje claro de contingencia para el usuario?
+* ¿Se puede habilitar un método de pago alternativo?
+* ¿Poseemos mecanismos de reintento o desacoplamiento asincrónico?
+* ¿Está definido el plan de vuelta atrás (*rollback*)?
+
+Al simular el fallo antes de escribir la primera línea de código o desplegar el paquete a producción, el equipo transforma un riesgo de impacto crítico en una condición operativa debidamente prevista y amortiguada.
+
+---
+
+### 4.5 Preguntas de Examen de la Unidad 4
+
+#### Pregunta Conceptual 1: Principio de Foco y Herramientas Recomendadas
+**Consigna de Examen:** Explique qué entiende la cátedra por el principio de foco en la gestión de riesgos y enumere las herramientas recomendadas para su implementación operativa.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** El principio de foco establece que el equipo no debe dispersar esfuerzos en la gestión exhaustiva de riesgos triviales, sino concentrar rigurosamente su atención y recursos en las amenazas más importantes (aquellas que superan el umbral cuantitativo de exposición $E > 10$). Las herramientas recomendadas por la cátedra se caracterizan por su simplicidad operativa y naturaleza visual:
+* *Hojas de cálculo en Excel:* Para parametrizar cálculos rápidos y matrices de probabilidad e impacto.
+* *Tableros visuales en Miro:* Para mantener matrices compartidas de forma colaborativa.
+* *Integración en Story Maps:* Para vincular visualmente las amenazas detectadas con la priorización de historias de usuario y requerimientos funcionales.
+
+</details>
+
+#### Pregunta de Razonamiento y Aplicación 2: La Pregunta Disparadora en la Planificación
+**Consigna de Examen:** Describa de qué manera debe institucionalizarse la gestión de riesgos en las reuniones de planificación según la cátedra, y explique la utilidad práctica de realizar ejercicios rápidos como el planteado ante la falla de integración con tarjetas.  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+**Respuesta Modelo de Cátedra:** La gestión de riesgos debe integrarse formalmente en las ceremonias de planificación de *release* o *sprint*, incorporando como práctica obligatoria la formulación de la pregunta disparadora: *¿Qué riesgos ven en este release / sprint?*. Su utilidad radica en derribar presunciones complacientes e identificar dependencias operativas ocultas. La realización complementaria de ejercicios rápidos de simulación de fallas —como preguntarse *¿qué pasaría si la integración con tarjetas nos falla?*— permite al equipo evaluar la solidez del sistema ante contingencias críticas reales, posibilitando diseñar mecanismos preventivos (como desacoplamiento arquitectónico, pasarelas de respaldo o planes de *rollback*) de forma previa a la ejecución, reduciendo la probabilidad de interrupciones graves en el entorno productivo.
+
+</details>
+
+#### Conceptos Fundamentales para Aprobar la Unidad 4
+* Principio de foco: asignación de recursos centrada exclusivamente en los riesgos prioritarios ($E > 10$).
+* Instrumental simple y visual: Excel, Miro y articulación directa con el *Story Map*.
+* Integración rutinaria en las ceremonias de planificación de sprints y releases.
+* La pregunta disparadora de riesgo y las simulaciones rápidas de falla operativa como mecanismos de diseño resiliente.
+
+---
+
+## Síntesis Integradora para Examen Final
+
+### Matriz de Relaciones Conceptuales de la Cátedra
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de Riesgos en el Desarrollo de Software — Diagrama 9"
+  code={`flowchart TD
+    SM[1. Story Map] -->|Mapeo de necesidades y flujos| PF[2. Priorización de Features]
+    PF -->|Genera visibilidad| ER[3. Emergencia de Riesgos]
+    
+    ER --> MAT[4. Evaluación Cuantitativa]
+    subgraph Evaluación en Matriz
+        MAT --> CALC["Exposición = Probabilidad x Impacto (E = P x I)"]
+        CALC --> UMB{"¿E > 10?"}
+    end
+    
+    UMB -->|No: Exposición Baja| ACEP[5. Aceptación y Monitoreo]
+    UMB -->|Sí: Priorización Activa| ESTR[6. Mecanismos de Tratamiento]
+    
+    subgraph Tratamiento y Acción
+        ESTR --> MIT["Mitigación: Tests automatizados, modularidad"]
+        ESTR --> TRA["Transferencia: Outsourcing, expertos"]
+        ESTR --> CONT["Contingencia: Presupuesto, backup, rollback"]
+        ESTR --> EVI["Evitar: Descartar tecnologías inestables"]
+    end
+    
+    ESTR --> REL[7. Gobernanza de Releases]
+    REL -->|Cadencia frecuente semanal| MVP["Releases Modulares / MVP"]
+    MVP -->|Feedback temprano y validación| DEUDA[Alineación con Objetivos y Cero Deuda Técnica]`}
+/>
+
+
+### Tabla Comparativa Integral de Términos Clave de Examen
+
+| Concepto de Cátedra | Naturaleza / Fórmula | Propósito Metodológico Principal | Regla de Decisión / Criterio Clave |
+| :--- | :--- | :--- | :--- |
+| **Gestión de Riesgos** | Proceso sistemático explícito | Identificar, evaluar, priorizar y controlar amenazas a lo largo de todo el ciclo de vida. | Abarca desde *discovery* hasta *deployment* en entornos predictivos y ágiles. |
+| **Story Mapping** | Artefacto visual bidimensional | Mapear necesidades y flujos de usuario para priorizar funcionalidades. | Espacio metodológico donde emergen naturalmente los riesgos técnicos y de producto. |
+| **Probabilidad ($P$)** | Escala cualitativa / cuantitativa ($1-5$) | Medir el *likelihood* de ocurrencia de un evento de riesgo. | Eje vertical de filas en la matriz de evaluación. |
+| **Impacto ($I$)** | Escala cualitativa / cuantitativa ($1-5$) | Medir la severidad del daño en caso de materialización. | Evaluado en cuatro ejes: **Tiempo, Costo, Calidad y Usuarios**. |
+| **Exposición ($E$)** | $$E = P \times I$$ | Cuantificar el riesgo total combinado para permitir jerarquización objetiva. | **$E > 10$:** Priorización obligatoria de tratamiento.<br />**$E > 20$:** Cuadrante de Exposición Alta (rojo). |
+| **Mitigación** | Estrategia preventiva (*ex-ante*) | Reducir la probabilidad o el impacto antes de que ocurra la falla. | Ejemplos: Pruebas automatizadas continuas; releases modulares. |
+| **Transferencia** | Estrategia contractual | Desplazar la responsabilidad o impacto hacia terceras partes. | Ejemplos: Contratación de seguros; soporte de expertos externos. |
+| **Contingencia** | Estrategia reactiva (*ex-post*) | Activar un plan de respuesta preestablecido al materializarse la amenaza. | Ejemplos: Reserva presupuestaria; equipo de backup; plan de *rollback*. |
+| **Evitar** | Estrategia preventiva radical | Eliminar la causa raíz del riesgo suprimiendo la actividad generadora. | Ejemplo: Descartar tecnologías o librerías inestables. |
+| **Aceptación** | Estrategia pasiva | Reconocer el riesgo y monitorearlo sin ejecutar acciones inmediatas. | Permitida estrictamente cuando la exposición es baja ($E \le 10$). |
+| **Gestión de Releases** | Mecanismo mitigador natural | Entregas iterativas controladas con feedback temprano y capacidad de ajuste. | Releases frecuentes (semanales) vs. riesgo acumulado de lanzamiento anual. |
+| **Release Mínimo Viable (MVP)** | Incremento funcional básico | Validar hipótesis de valor y reducir incertidumbre de mercado. | Evita invertir capital y esfuerzo en *features* no validadas en el story map. |
+
+---
+
+### Síntesis de Conceptos Indispensables para Aprobar el Examen Final
+1. **Definición y Cobertura:** La gestión de riesgos es explícita y cubre todo el ciclo de vida (desde *discovery* hasta *deployment*). Impacta sobre Factibilidad técnica, Atractivo a usuarios, Sostenibilidad de negocio y Calidad.
+2. **Emergencia en Story Maps:** Los riesgos emergen al priorizar *features* sobre los flujos de usuario, protegiendo al equipo contra la acumulación de deuda técnica.
+3. **Cálculo de Exposición:** Dominar la fórmula $E = P \times I$ y los cuatro ejes del impacto (Tiempo, Costo, Calidad, Usuarios).
+4. **Criterios de Corte Numérico:** Conocer la matriz de evaluación, la semaforización tricolor y los umbrales críticos ($E > 10$ para priorización inmediata; $E > 20$ para exposición alta).
+5. **Diferenciación de Estrategias:** Distinguir con precisión quirúrgica entre Mitigación (*ex-ante*), Transferencia (terceros), Contingencia (*ex-post* con planes de *rollback* o reservas), Evitar (cancelar tecnología inestable) y Aceptación (baja exposición).
+6. **Releases como Amortiguador:** Comprender por qué los releases frecuentes y el MVP reducen la exposición acumulada y permiten contingencias rápidas frente al modelo de lanzamiento anual.
+7. **Caso de Integración Empresarial:** Conocer el despliegue combinado de releases modulares (mitigación), soporte experto (transferencia) y *rollback* (contingencia).
+8. **Dinámica de Planificación:** Institucionalizar la pregunta *¿qué riesgos ven en este release / sprint?* y simulaciones rápidas (*¿qué pasa si falla la integración con tarjetas?*) bajo el principio de foco.

@@ -205,7 +205,7 @@ test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
     }
   });
 
-  test("gdsi muestra portal, cronograma semanal, alcance de evaluaciones con Mermaid, WCAG 2.1 AA y 0 overflow", async ({
+  test("gdsi muestra portal, cheatsheet, entrenador, apuntes con Mermaid y KaTeX, WCAG 2.1 AA y 0 overflow", async ({
     page,
   }) => {
     const errors: string[] = [];
@@ -217,6 +217,17 @@ test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
     await expect(page.locator("main h1")).toContainText(
       "Gestión del Desarrollo de Sistemas Informáticos",
     );
+    await expect(page.getByText("Entrenador Rápido de GDSI")).toBeVisible();
+
+    // CheatsheetDrawer de GDSI desde src/content/cheatsheets/gdsi.json
+    await page.getByTestId("cheatsheet-trigger").click();
+    const drawer = page.locator("#cheatsheet-drawer");
+    await expect(drawer).toBeVisible();
+    await expect(drawer).toContainText("Estimación PERT y Cronograma");
+    await expect(drawer.locator(".katex").first()).toBeVisible();
+    await expect(drawer).not.toContainText("$P$");
+    await page.keyboard.press("Escape");
+    await expect(drawer).toHaveCount(0);
 
     await page.goto("/gdsi/docs/cronograma-y-evaluaciones/", { waitUntil: "networkidle" });
     await expect(page.locator("main h1")).toHaveCount(1);
@@ -228,8 +239,63 @@ test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
     ).toBeVisible({
       timeout: 15_000,
     });
+    await expect(page.getByText("Aviso al renderizar diagrama")).toHaveCount(0);
 
-    const gdsiRoutes = ["/gdsi/", "/gdsi/docs/cronograma-y-evaluaciones/"] as const;
+    // Verificar vistas con fórmulas KaTeX, gráficos Mermaid y Active Recall
+    for (const docRoute of [
+      "/gdsi/docs/preparacion-evaluacion-2/",
+      "/gdsi/docs/gestion-de-riesgos/",
+      "/gdsi/docs/proyecto-y-proceso/",
+      "/gdsi/docs/team-topologies/",
+    ]) {
+      await page.goto(docRoute, { waitUntil: "networkidle" });
+      await expect(page.locator("main h1")).toHaveCount(1);
+      await expect(page.locator('[mathcolor="#cc0000"]')).toHaveCount(0);
+      await expect(page.locator(".katex").first()).toBeVisible();
+      await expect(
+        page.getByTestId("mermaid-diagram").locator(".mermaid-svg-host svg").first(),
+      ).toBeVisible({
+        timeout: 15_000,
+      });
+      await expect(page.getByText("Aviso al renderizar diagrama")).toHaveCount(0);
+    }
+
+    // Probar despliegue de Active Recall, filtros de unidad/modo y Multiple Choice interactivo en preparacion-evaluacion-2
+    await page.goto("/gdsi/docs/preparacion-evaluacion-2/", { waitUntil: "networkidle" });
+    await expect(page.getByTestId("exam-prep-control-bar")).toBeVisible();
+    await expect(page.getByTestId("global-recall-count")).toContainText("0 / 48 dominadas");
+    await expect(page.getByTestId("global-mcq-count")).toContainText("0 / 48 correctas");
+
+    // Filtrar por Unidad 1 y modo Multiple Choice
+    await page.getByTestId("study-unit-u1").click();
+    await expect(page.locator('[data-exam-unit="u2"]')).toBeHidden();
+    await page.getByTestId("study-view-mcq").click();
+    await expect(page.locator('[data-exam-unit="u1"] [data-study-block="theory"]')).toBeHidden();
+
+    // Responder pregunta MC 1 de Unidad 1 (correcta: B)
+    await page.getByTestId("mcq-opt-u1-mc-1-B").click();
+    await expect(page.getByTestId("mcq-feedback-u1-mc-1")).toBeVisible();
+    await expect(page.getByTestId("global-mcq-count")).toContainText("1 / 48 correctas");
+
+    // Volver a Vista completa, abrir respuesta P1 y marcar "La sé"
+    await page.getByTestId("study-view-all").click();
+    await page.getByTestId("recall-toggle-u1-p1").click();
+    await expect(page.getByTestId("recall-answer-u1-p1")).toBeVisible();
+    await page.getByTestId("recall-master-u1-p1").click();
+    await expect(page.getByTestId("global-recall-count")).toContainText("1 / 48 dominadas");
+
+    // Recargar y verificar persistencia en localStorage (mc:v1:gdsi:*)
+    await page.reload({ waitUntil: "networkidle" });
+    await expect(page.getByTestId("global-recall-count")).toContainText("1 / 48 dominadas");
+    await expect(page.getByTestId("global-mcq-count")).toContainText("1 / 48 correctas");
+    await expect(page.getByTestId("mcq-feedback-u1-mc-1")).toBeVisible();
+
+    const gdsiRoutes = [
+      "/gdsi/",
+      "/gdsi/docs/cronograma-y-evaluaciones/",
+      "/gdsi/docs/preparacion-evaluacion-2/",
+      "/gdsi/docs/gestion-de-riesgos/",
+    ] as const;
     for (const theme of ["light", "dark"] as const) {
       await page.goto("/gdsi/");
       await page.evaluate((t) => {
@@ -251,7 +317,7 @@ test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
       { width: 844, height: 390 },
     ]) {
       await page.setViewportSize(vp);
-      await page.goto("/gdsi/docs/cronograma-y-evaluaciones/", { waitUntil: "networkidle" });
+      await page.goto("/gdsi/docs/preparacion-evaluacion-2/", { waitUntil: "networkidle" });
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > window.innerWidth,
       );

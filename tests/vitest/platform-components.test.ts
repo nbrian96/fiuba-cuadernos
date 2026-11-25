@@ -18,6 +18,10 @@ import {
   compileCheatsheetSections,
   getCheatsheetSections,
 } from "@/data/cheatsheets";
+import { getCompiledGdsiExamUnits } from "@/data/gdsiExamPrep";
+import { ExamPrepControlBar } from "@/components/platform/ExamPrepControlBar";
+import { ActiveRecallCards } from "@/components/platform/ActiveRecallCards";
+import { InteractiveMcqDeck } from "@/components/platform/InteractiveMcqDeck";
 import {
   CheatsheetManifestSchema,
   InteractiveAndNotesManifestSchema,
@@ -437,5 +441,75 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
     );
     expect(multiFileViewerHtml).toContain('href="/materials/tda/TP0/cuartetos.py"');
     expect(multiFileViewerHtml).toContain('href="/materials/tda/TP0/grafico_tiempos.png"');
+  });
+
+  it("compiles all 8 GDSI exam prep units (48 recall + 48 MCQ) with KaTeX and SSR-safe interactive decks", () => {
+    const units = getCompiledGdsiExamUnits();
+    expect(units).toHaveLength(8);
+
+    let totalRecall = 0;
+    let totalMcq = 0;
+    let katexCount = 0;
+
+    for (const unit of units) {
+      expect(unit.recallItems).toHaveLength(6);
+      expect(unit.mcqItems).toHaveLength(6);
+      totalRecall += unit.recallItems.length;
+      totalMcq += unit.mcqItems.length;
+
+      for (const item of unit.recallItems) {
+        const combined = `${item.questionHtml} ${item.answerHtml}`;
+        expect(combined).not.toContain("katex-error");
+        expect(combined).not.toContain("$");
+        if (combined.includes('class="katex"')) katexCount++;
+      }
+
+      for (const q of unit.mcqItems) {
+        expect(q.options).toHaveLength(4);
+        const combined = `${q.promptHtml} ${q.justificationHtml} ${q.options.map((o) => o.html).join(" ")}`;
+        expect(combined).not.toContain("katex-error");
+        expect(combined).not.toContain("$");
+        if (combined.includes('class="katex"')) katexCount++;
+      }
+    }
+
+    expect(totalRecall).toBe(48);
+    expect(totalMcq).toBe(48);
+    expect(katexCount).toBeGreaterThan(10);
+
+    const barHtml = renderToStaticMarkup(
+      createElement(ExamPrepControlBar, {
+        courseId: "gdsi",
+        totalRecall: 48,
+        totalMcq: 48,
+        units: units.map((u) => ({
+          id: u.id,
+          number: u.number,
+          shortTitle: u.shortTitle,
+          title: u.title,
+          correctKeys: Object.fromEntries(u.mcqItems.map((q) => [q.id, q.correctKey])),
+        })),
+      }),
+    );
+    expect(barHtml).toContain("0 / 48 dominadas");
+    expect(barHtml).toContain("0 / 48 correctas");
+
+    const recallHtml = renderToStaticMarkup(
+      createElement(ActiveRecallCards, {
+        courseId: "gdsi",
+        unitId: "u1",
+        items: units[0].recallItems,
+      }),
+    );
+    expect(recallHtml).toContain("0 / 6 dominadas");
+
+    const mcqHtml = renderToStaticMarkup(
+      createElement(InteractiveMcqDeck, {
+        courseId: "gdsi",
+        unitId: "u1",
+        questions: units[0].mcqItems,
+      }),
+    );
+    expect(mcqHtml).toContain("Aciertos: 0 / 6");
   });
 });

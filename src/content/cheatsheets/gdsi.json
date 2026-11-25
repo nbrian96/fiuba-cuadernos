@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "gdsi",
+  "sections": [
+    {
+      "id": "pert-y-cronograma",
+      "title": "1. Estimación PERT y Cronograma (CPM)",
+      "formula": "\\mu = \\frac{O + 4M + P}{6}, \\quad \\sigma = \\frac{P - O}{6}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Varianza y desviación estándar PERT:",
+          "body": "La incertidumbre de una actividad se cuantifica con $\\sigma = \\frac{P - O}{6}$ y varianza $\\sigma^2 = \\left(\\frac{P - O}{6}\\right)^2$, ponderando escenarios optimista ($O$), más probable ($M$) y pesimista ($P$)."
+        },
+        {
+          "lead": "Ruta Crítica (CPM):",
+          "body": "Secuencia de actividades dependientes con holgura total nula ($HT = 0$). Cualquier retraso en una tarea crítica desplaza la fecha final del proyecto."
+        },
+        {
+          "lead": "Compresión de cronograma:",
+          "body": "Crashing agrega recursos a tareas críticas (aumenta el costo); Fast Tracking ejecuta en paralelo tareas secuenciales (aumenta el riesgo de retrabajo)."
+        }
+      ]
+    },
+    {
+      "id": "flujo-kanban-little",
+      "title": "2. Flujo Kanban y Ley de Little",
+      "formula": "WIP = \\text{Throughput} \\times \\text{Cycle Time}, \\quad \\text{Eficiencia} = \\frac{\\text{Touch Time}}{\\text{Lead Time}} \\times 100",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Ley de Little:",
+          "body": "En un sistema estable, $\\text{Cycle Time} = \\frac{WIP}{\\text{Throughput}}$. Reducir el límite de $WIP$ disminuye directamente el tiempo de ciclo."
+        },
+        {
+          "lead": "Lead Time vs. Cycle Time:",
+          "body": "Lead Time mide desde la solicitud del cliente hasta la entrega en producción; Cycle Time mide únicamente el tiempo de trabajo activo."
+        },
+        {
+          "lead": "Diagrama de Flujo Acumulado (CFD):",
+          "body": "La distancia vertical entre curvas representa el $WIP$; la distancia horizontal el $\\text{Lead Time}$ aproximado; la pendiente de terminados el $\\text{Throughput}$."
+        }
+      ]
+    },
+    {
+      "id": "gestion-riesgos",
+      "title": "3. Gestión de Riesgos Cuantitativa",
+      "formula": "E = P \\times I",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Exposición y escala de cátedra:",
+          "body": "Con $P, I \\in [1, 5]$, la exposición toma valores en $[1, 25]$. Se priorizan obligatoriamente riesgos con $E > 10$; valores $E > 20$ definen exposición alta."
+        },
+        {
+          "lead": "Estrategias de respuesta:",
+          "body": "Mitigar (ex ante: reduce $P$ o $I$), Transferir (seguro o contrato a terceros), Evitar ($P = 0$ cambiando alcance o tecnología) y Aceptar (pasiva o activa con reservas)."
+        },
+        {
+          "lead": "Mitigación vs. Contingencia:",
+          "body": "La mitigación es preventiva (antes del evento); la contingencia es reactiva y se ejecuta solo ante un disparador (trigger)."
+        }
+      ]
+    },
+    {
+      "id": "team-topologies-brooks",
+      "title": "4. Team Topologies, Brooks y Carga Cognitiva",
+      "formula": "C = \\frac{n(n - 1)}{2}, \\quad CL_{\\text{total}} = CL_{\\text{intrínseca}} + CL_{\\text{extraña}} + CL_{\\text{relevante}} \\le C_{\\text{equipo}}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Ley de Brooks y canales:",
+          "body": "Al pasar de $n = 8$ a $n = 15$ integrantes, los canales de comunicación crecen de $28$ a $105$. Sumar gente a un proyecto atrasado lo atrasa más."
+        },
+        {
+          "lead": "Números de Dunbar:",
+          "body": "$5$ (confianza íntima), $15$ (confianza profunda; óptimo ágil de $7\\text{–}9$), $50$ (cohesión tribal) y $150$ (límite de vínculos estables)."
+        },
+        {
+          "lead": "4 Topologías y 3 Modos:",
+          "body": "Topologías: Stream-Aligned, Enabling, Complicated-Subsystem y Platform (TVP). Modos: Colaboración (temporal), X-as-a-Service y Facilitación."
+        }
+      ]
+    },
+    {
+      "id": "metricas-integracion-contratos",
+      "title": "5. Métricas, GQM, Integración y Contratos",
+      "formula": "\\text{Costo de Corrección} \\propto e^{\\Delta t_{\\text{integración}}}, \\quad \\text{Cobertura} = \\frac{\\text{Condicionales Evaluados}}{\\text{Total Condicionales}} \\times 100",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Ley de Goodhart:",
+          "body": "Cuando una medida se convierte en objetivo de premio o castigo deja de ser una buena medida; las métricas deben reflejar realidad, no éxito/fracaso."
+        },
+        {
+          "lead": "Plantilla GQM (Basili):",
+          "body": "Meta = Objeto + Propósito + Foco de Calidad + Punto de Vista + Contexto, derivada luego en Preguntas y Métricas."
+        },
+        {
+          "lead": "Contratos tradicionales vs. ágiles:",
+          "body": "Precio Fijo (riesgo en vendedor), Costos Reembolsables (riesgo en comprador), T&M (compartido); ágiles: Target Cost, Changes for Free / Money for Nothing y Capped T&M."
+        }
+      ]
+    },
+    {
+      "id": "toyota-kata",
+      "title": "6. Mejora Continua con Toyota Kata",
+      "formula": "\\text{Desafío} \\to \\text{Situación Actual (Genba)} \\to \\text{Next Target Condition} \\to \\text{PDCA}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "3 tipos de experimentos (IK):",
+          "body": "1) Ir y ver (observación sin alterar), 2) Experimento exploratorio (cambio controlado para observar el sistema) y 3) Probar una hipótesis (factor causal con predicción explícita)."
+        },
+        {
+          "lead": "Coaching Kata (CÓMO vs. QUÉ):",
+          "body": "El Coach guía el CÓMO (procedimiento mediante ciclo Ver → Comparar → Instruir); el Aprendiz es dueño del QUÉ (contenido y experimentos)."
+        },
+        {
+          "lead": "Tarjeta de las 5 Preguntas:",
+          "body": "1) Condición Objetivo, 2) Condición Actual (+ dorso de 4 preguntas sobre el último paso), 3) Obstáculos, 4) Siguiente Paso y expectativa, 5) Cuándo ir y ver."
+        }
+      ]
+    }
+  ]
+}

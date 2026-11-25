@@ -1,0 +1,607 @@
+---
+docId: integracion-y-contrataciones
+courseId: gdsi
+title: "Gestión de la Integración y de las Contrataciones"
+order: 3
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - unidad-1-fundamentos-y-gestion-de-la-integracion-en-proyectos
+  - unidad-2-el-acta-de-constitucion-del-proyecto-project-charter
+  - unidad-3-gestion-de-las-contrataciones-y-adquisiciones-en-proyectos
+  - unidad-4-formalizacion-de-compromisos-y-contratacion-en-software-agil
+  - unidad-5-sintesis-integradora-y-relaciones-cruzadas
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+**Cátedra:** Gestión del Desarrollo de Sistemas Informáticos (GDSI) / Proyectos y Procesos  
+**Enfoque Curricular:** Integración de Marcos Predictivos (PMBOK) y Enfoques Ágiles y de Producto  
+**Material de Referencia:** Lectura GDSI FIUBA; Malsam (ProjectManager); Páez et al. ("Construcción de software: una mirada ágil")
+
+---
+
+## Unidad 1: Fundamentos y Gestión de la Integración en Proyectos
+
+### 1.1 Naturaleza, Propósito y Concepto de la Integración
+La gestión de la integración constituye la disciplina central de la dirección de proyectos cuya función primordial es articular, coordinar y unificar todas las demás áreas de conocimiento y procesos a lo largo del ciclo de vida del trabajo. En cualquier iniciativa compleja, los diferentes parámetros operativos no evolucionan de forma aislada: el alcance, el cronograma de tiempos, los costos financieros, la calidad esperada y los riesgos inherentes ejercen fuerzas simultáneas y a menudo contradictorias. Cuando estos factores tiran en direcciones divergentes, la gestión de la integración provee el marco decisional para resolver las tensiones y salvaguardar la coherencia global del sistema.
+
+Desde el punto de vista conceptual, la gestión de la integración responde a la pregunta de cómo se balancean los compromisos. Si el cliente o el negocio exige reducir los tiempos de entrega sin modificar el presupuesto, la integración determina qué variables deben ajustarse (por ejemplo, reducir el alcance o aceptar mayores niveles de riesgo) para que el proyecto continúe siendo viable. La integración es, en esencia, la salvaguarda de la visión de conjunto frente a la optimización local o fragmentada de áreas particulares.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Integración y de las Contrataciones — Diagrama 1"
+  code={`flowchart TD
+    subgraph Restricciones en Conflicto
+        A[Alcance] <--> B["Cronograma / Tiempos"]
+        B <--> C["Costos / Presupuesto"]
+        C <--> D[Riesgos]
+        D <--> E[Calidad]
+        E <--> A
+    end
+    Restricciones en Conflicto -->|Tensiones y Trade-offs| INT[Gestión de la Integración]
+    INT -->|Decisiones de Balanceo| ENT[Entrega Coherente y Alineada]`}
+/>
+
+
+---
+
+### 1.2 La Integración en el Enfoque Planificado (PMBOK)
+En las metodologías predictivas estructuradas bajo el estándar de áreas de conocimiento del PMBOK, la integración se despliega de manera formal y secuencial en las cinco fases del ciclo de vida del proyecto:
+
+1. **Fase de Inicio — Acta de Constitución del Proyecto (Project Charter):**
+   Es el instrumento formal que autoriza oficialmente el inicio del proyecto. Su función integradora radica en delimitar desde el primer momento el objetivo estratégico, el alcance de alto nivel, los interesados principales, los supuestos de partida y las restricciones inamovibles, asignando formalmente al líder del proyecto la autoridad para emplear recursos organizacionales.
+
+2. **Fase de Planificación — Plan Integrado para la Dirección del Proyecto:**
+   Consiste en consolidar en un documento maestro unificado los planes de gestión subsidiarios correspondientes a cada área técnica (plan de alcance, cronograma detallado, presupuesto y costos, matriz de riesgos, plan de comunicaciones, adquisiciones y calidad). La labor crítica de integración en esta etapa consiste en verificar la compatibilidad mutua: un cronograma agresivo debe contar con un plan de recursos y costos que lo respalde, y los riesgos identificados deben poseer planes de contingencia presupuestaria coherentes.
+
+3. **Fase de Ejecución — Dirigir y Monitorear el Trabajo del Proyecto:**
+   Durante la ejecución, la integración se materializa en la confrontación constante entre el avance real y la línea base del plan integrado. El líder de proyecto recopila datos de desempeño, analiza desvíos multidimensionales (por ejemplo, un atraso que impacta en sobrecostos laborales) y adopta decisiones correctivas y preventivas orientadas a mantener el rumbo general.
+
+4. **Fase de Seguimiento y Control — Control Integrado de Cambios:**
+   Representa uno de los pilares más rigurosos del enfoque planificado. Establece que ninguna modificación sobre las líneas base puede realizarse de forma unilateral o aislada. Todo cambio propuesto, incluso una variación aparentemente menor en los requerimientos funcionales del alcance, debe ser sometido a un análisis formal de impacto cruzado (evaluando su repercusión en cronograma, costos, riesgos y calidad) y aprobado por una autoridad formalmente facultada (el Comité de Control de Cambios o CCB).
+
+5. **Fase de Cierre — Cierre de Proyecto o Fase:**
+   Abarca la culminación formal y ordenada del trabajo: aceptación administrativa de los entregables por parte del cliente o patrocinador, liquidación y cierre formal de los contratos de adquisiciones, liberación ordenada de recursos y archivo sistemático de lecciones aprendidas para futuros ciclos.
+
+---
+
+### 1.3 La Integración en los Enfoques Ágiles y de Producto
+En los entornos ágiles y orientados al desarrollo continuo de producto, la gestión de la integración no desaparece ni se diluye, sino que sufre una transformación estructural: cambia de lugar, de herramientas y de responsables.
+
+* **El Backlog Priorizado como Instrumento de Integración:**
+  En lugar de un plan maestro estático y predefinido, el *product backlog* (o pila de producto) priorizado opera como el mecanismo integrador dinámico. Cada vez que el backlog es refinado y reordenado, se están balanceando activamente las tensiones entre valor aportado al negocio, costo de implementación, riesgo técnico y urgencia temporal. El backlog integra todas las demandas emergentes en una única lista secuencial de ejecución.
+
+* **El Rol Central del Product Owner (PO):**
+  La potestad de decisión integradora, que en los esquemas tradicionales recae en el Project Manager y los comités burocráticos, es asumida primordialmente por el Product Owner. El PO es la figura responsable de maximizar el valor del producto, decidiendo qué características entran, cuáles se postergan y qué compromisos de alcance se ajustan frente a las limitaciones de capacidad del equipo.
+
+* **Control de Cambios Continuo y Económico:**
+  A diferencia del enfoque tradicional, donde el cambio es costoso debido a la burocracia de los comités de aprobación, en la agilidad el control de cambios se vuelve continuo, adaptativo y económico. Las variaciones del entorno o las nuevas necesidades del usuario no requieren formularios de cambio sobre un plan prefijado; simplemente se incorporan, evalúan y priorizan para la siguiente iteración. Lo que se protege de forma innegociable es el **objetivo de negocio**, no el plan original.
+
+* **Cierre Distribuido:**
+  El cierre deja de ser un acontecimiento masivo que ocurre exclusivamente al final de meses o años de trabajo. En la agilidad, el cierre se distribuye en cada iteración o sprint: cada incremento de producto potencialmente entregable debe satisfacer rigurosamente su Criterio de Terminado (*Definition of Done* o DoD) y ser sometido a revisión y validación directa con los interesados en la reunión de revisión (*Sprint Review*).
+
+---
+
+### 1.4 La Dimensión Técnica: Integración de Sistemas y Componentes Ciberfísicos
+Más allá de la integración administrativa o de procesos, las fuentes destacan la **integración del sistema en su sentido técnico**, particularmente relevante en sistemas informáticos de gran envergadura o en sistemas ciberfísicos (que articulan software, hardware e interfaces físicas).
+
+Cuando diferentes componentes o módulos son desarrollados por equipos distribuidos o proveedores externos independientes, surge el riesgo crítico de desajuste arquitectónico. La regla fundamental de gestión técnica establece que:
+
+$$\text{Costo de Corrección} \propto e^{\Delta t_{\text{integración}}}$$
+
+Cuanto más tarde se realiza el ensamblado y prueba de los componentes, exponencialmente más costoso y traumático resulta descubrir que las partes no encajan o presentan incompatibilidades en sus interfaces. Por esta razón, la decisión de **integrar seguido y probar integrado de manera continua** (mediante prácticas de integración continua, pruebas automatizadas conjuntas y simuladores de hardware) deja de ser un simple detalle técnico operativo y se convierte en una **decisión estratégica de gestión del riesgo del proyecto**.
+
+---
+
+### 1.5 Comparativa Estructurada: Integración Predictiva vs. Integración Ágil
+
+| Dimensión de Integración | Enfoque Planificado / Predictivo (PMBOK) | Enfoque Ágil y de Producto |
+| :--- | :--- | :--- |
+| **Instrumento Principal** | Plan Integrado para la Dirección del Proyecto (líneas base de alcance, costo y tiempo). | Backlog de Producto Priorizado (*Product Backlog*). |
+| **Autoridad Decisoria** | Project Manager (Líder de Proyecto) y Comité de Control de Cambios (CCB). | Product Owner (PO) en constante diálogo con el equipo y los usuarios. |
+| **Manejo del Cambio** | Formal, restrictivo y costoso: análisis de impacto en todas las áreas y aprobación documental. | Continuo, adaptativo y económico: incorporación natural en la planificación del siguiente sprint. |
+| **Objeto de Protección** | Se protege el cumplimiento del **Plan** y las líneas base contractuales. | Se protege el cumplimiento del **Objetivo de Negocio** y la entrega de valor. |
+| **Mecanismo de Cierre** | Fase única al final del proyecto (aceptación formal de entregables y cierre de contratos). | Distribuido por iteración (inspección del incremento mediante la *Definition of Done*). |
+| **Integración Técnica** | Tradicionalmente concentrada en fases tardías de pruebas de integración global. | Integración continua y pruebas integradas tempranas y recurrentes. |
+
+---
+
+### 1.6 Autoevaluación y Preparación para el Examen: Unidad 1
+
+#### Preguntas Conceptuales y de Razonamiento
+1. **¿Cuál es la función esencial de la gestión de la integración y por qué se afirma que ninguna área de conocimiento puede gestionarse de forma aislada?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* La integración es el mecanismo coordinador que mantiene la coherencia sistémica cuando las restricciones del proyecto (alcance, tiempo, costo, riesgo, calidad) entran en tensión. No puede gestionarse un área de forma aislada porque cualquier alteración en una de ellas repercute inevitablemente en las demás: modificar el alcance impacta en el cronograma, en el presupuesto requerido y en la exposición a riesgos.
+
+</details>
+
+2. **¿Cómo se transforma el control de cambios entre el enfoque PMBOK y el enfoque ágil?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* En el enfoque PMBOK el control de cambios es formal y "caro": exige documentar solicitudes, analizar cuantitativamente el impacto cruzado en todas las áreas y obtener la aprobación del Comité de Cambios para proteger las líneas base. En la agilidad, el control de cambios es continuo y "barato": las modificaciones se ingresan al backlog y se priorizan para la siguiente iteración; no se protege el plan estático, sino la consecución del objetivo de valor.
+
+</details>
+
+3. **¿Por qué la integración técnica frecuente de componentes de software o hardware es una decisión de gestión y no solo un asunto técnico?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Porque el retraso en la integración oculta incompatibilidades que elevan drásticamente el costo de corrección a medida que avanza el cronograma. Decidir integrar y probar temprano mitiga el riesgo financiero y operativo del proyecto, garantizando visibilidad real del progreso.
+
+</details>
+
+#### Conceptos Clave que Debes Dominar para Aprobar
+* La definición de integración como arbitraje y balance de restricciones en conflicto.
+* Las 5 instancias de integración en el ciclo predictivo tradicional.
+* La equivalencia funcional del backlog priorizado y el rol del Product Owner frente al plan integrado tradicional.
+* La justificación de costo/beneficio detrás de los controles de cambio formales frente a los adaptativos.
+
+---
+
+## Unidad 2: El Acta de Constitución del Proyecto (Project Charter)
+
+### 2.1 Definición, Naturaleza y Ubicación Temporal
+El Acta de Constitución del Proyecto (conocida internacionalmente como *Project Charter*) es el documento formal fundamental desarrollado durante la **fase de inicio** del ciclo de vida del proyecto. Su emisión formal confiere la autorización legal y corporativa para que el proyecto exista, marcando la transición formal entre una mera idea de negocio y una iniciativa oficialmente respaldada por la organización.
+
+El Project Charter delimita el marco general del trabajo, define el propósito estratégico, esboza los objetivos globales y establece la estructura preliminar de participantes. Un aspecto neurálgico de su naturaleza es que **confiere formalmente al Director o Gerente de Proyecto la autoridad necesaria** para asignar y utilizar los recursos de la organización en pos de los objetivos del proyecto. Se redacta antes de comenzar la planificación detallada y antes de comprometer esfuerzos masivos de diseño o ejecución técnica.
+
+---
+
+### 2.2 Los Tres Propósitos Fundamentales del Project Charter
+De acuerdo con las fuentes de la cátedra, el Acta de Constitución cumple tres roles indispensables dentro del ecosistema de gestión:
+
+1. **Autorizar Formalmente el Proyecto (Herramienta de Venta Inicial):**  
+   El charter actúa como el documento inicial de venta que demuestra a los patrocinadores e interesados clave la viabilidad del esfuerzo y el retorno de inversión esperado. Funciona de manera análoga a un "elevator pitch" ejecutivo: condensa los argumentos esenciales para convencer a la alta dirección de otorgar la "luz verde" y asignar financiamiento.
+
+2. **Servir como Documento Resumen de Distribución Organizacional:**  
+   Al constituir una síntesis de alto nivel aprobada formalmente, los patrocinadores y directivos pueden utilizar el charter para distribuirlo ante otros sectores de la organización, facilitando la toma de decisiones sobre asignación de recursos y priorización frente a otros proyectos competidores.
+
+3. **Actuar como Hoja de Ruta Viva (Roadmap) sin Minucias:**  
+   Acompaña al equipo a lo largo de todo el ciclo de vida. Sirve como brújula de referencia en reuniones de seguimiento y como guía maestra para la gestión del alcance, recordando las fronteras originales del proyecto sin la distracción de los detalles y microtareas que caracterizan al cronograma detallado.
+
+---
+
+### 2.3 Distinciones Críticas: Project Charter vs. Business Case vs. Project Plan
+
+Es sumamente común en instancias de examen confundir el Acta de Constitución con el Caso de Negocio o el Plan de Proyecto. Las fuentes clarifican minuciosamente estas diferencias:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Integración y de las Contrataciones — Diagrama 2"
+  code={`flowchart LR
+    BC[Business Case — Investigación y justificación económica de viabilidad] -->|Justifica y fundamenta| PC["Project Charter — Autorización formal, objetivos globales y gobernanza"]
+    PC -->|Guía y delimita| PP["Project Plan — Plan operativo granular: WBS, tareas, recursos y cronograma"]`}
+/>
+
+
+* **Project Charter vs. Business Case (Caso de Negocio):**  
+  El *Business Case* es un documento de análisis e investigación económica cuyo único propósito es evaluar si el proyecto es financieramente viable y rentable para la empresa (análisis pormenorizado de retorno de inversión, beneficios tangibles e intangibles y alternativas de mercado). El *Project Charter*, en cambio, no realiza la investigación primaria de viabilidad; más bien **presenta de forma sintética las conclusiones del Business Case para autorizar formalmente la iniciativa**, definiendo la estructura humana, los roles, el alcance de alto nivel y la gobernanza. El Business Case justifica; el Charter autoriza.
+
+* **Project Charter vs. Project Plan (Plan para la Dirección del Proyecto):**  
+  El *Project Charter* es un documento breve y sintético (típicamente de unas pocas páginas) originado en el inicio, que define *qué* se va a lograr y *por qué*. El *Project Plan* es la guía práctica y granular de ejecución que se elabora en la fase de planificación detallada (con posterioridad a la aprobación del charter). El plan desglosa el trabajo en una Estructura de Desglose del Trabajo (EDT/WBS), define la duración y dependencia de cada tarea, elabora el cronograma de Gantt, asigna recursos humanos específicos por actividad y consolida los costos y matrices de riesgos pormenorizadas.
+
+| Criterio Comparativo | Business Case | Project Charter (Acta de Constitución) | Project Plan (Plan de Proyecto) |
+| :--- | :--- | :--- | :--- |
+| **Fase en que se origina** | Pre-proyecto / Evaluación de viabilidad. | Fase de Inicio. | Fase de Planificación detallada. |
+| **Objetivo Central** | Justificar el valor comercial y el ROI. | Autorizar formalmente el proyecto y al PM. | Detallar cómo se ejecutará y controlará el trabajo. |
+| **Nivel de Detalle** | Financiero y analítico sobre el negocio. | Alto nivel, sintético y libre de minucias. | Granular (WBS, cronograma, tareas individuales). |
+| **Extensión Típica** | Variable, según el estudio de mercado. | Corta (unas pocas páginas). | Extensa (conjunto de planes subsidiarios). |
+| **Aprobación Clave** | Comité de inversiones / Finanzas. | Patrocinador (*Project Sponsor*) / Alta Gerencia. | Patrocinador, PM e interesados clave. |
+
+---
+
+### 2.4 Anatomía Detallada: Los 14 Componentes Esenciales del Charter
+Un Project Charter riguroso y completo debe articular los catorce elementos estructurados identificados en las fuentes:
+
+1. **Información General del Proyecto:** Nombre formal, descripción sintética y registro de figuras clave (sponsor, PM, integrantes preliminares, interesados).
+2. **Identificación del Patrocinador (*Project Sponsor*):** Ejecutivo o directivo con autoridad corporativa para aprobar fondos, liberar recursos, alinear el proyecto con los objetivos institucionales y arbitrar conflictos interdepartamentales.
+3. **Propósito del Proyecto:** Justificación concisa de por qué se emprende la iniciativa, articulando el problema detectado o la oportunidad que se busca capturar.
+4. **Metas vs. Objetivos del Proyecto:**  
+   * *Metas (Project Goals):* Beneficios globales y de alto nivel que el proyecto pretende generar para la organización (ej. explotar una necesidad habitacional o ampliar la presencia global de marca).  
+   * *Objetivos (Project Objectives):* Metas intermedias específicas y cuantificables diseñadas bajo el marco SMART (Específicos, Medibles, Alcanzables, Realistas y Acotados en el tiempo) que sirven de hitos para alcanzar las metas.
+5. **Roles y Responsabilidades del Equipo e Interesados:** Mapeo de responsabilidades de actores neurálgicos:
+   * *Project Manager:* Lidera la redacción del charter y la gestión integral.
+   * *Project Sponsor:* Provee dirección ejecutiva, financiamiento y validación estratégica.
+   * *Oficina de Gestión de Proyectos (PMO):* Garantiza consistencia estructural, estándares metodológicos y alineamiento estratégico.
+   * *Interesados (Stakeholders):* Aportan requisitos funcionales y expectativas que deberán ser gestionadas.
+6. **Caso de Negocio (Presentación Sintética):** Resumen de las necesidades comerciales a satisfacer y de los retornos financieros o estratégicos previstos.
+7. **Alcance del Proyecto (*Scope Boundaries*):** Delimitación clara entre lo que está dentro del alcance (*in-scope*) y lo que queda formalmente excluido (*out-of-scope*), junto con los principales entregables macro.
+8. **Cronograma Resumido / Línea de Tiempo (*Timeline*):** Cronograma de alto nivel que expone las fases centrales y los hitos clave de entrega.
+9. **Estimación Preliminar de Recursos:** Requerimientos estimados de personal, equipamiento, materiales y herramientas tecnológicas desagregados por fases de ejecución.
+10. **Presupuesto Estimado del Proyecto (*Ballpark Budget*):** Cifra de orden de magnitud basada en el análisis preliminar de recursos, especificando quién posee la autoridad de gasto (*spending authority*) y contemplando reservas de contingencia.
+11. **Análisis Costo-Beneficio:** Exposición de costos directos e indirectos contrapuestos a beneficios tangibles e intangibles, estableciendo el retorno estimado de la inversión (ROI).
+12. **Supuestos y Restricciones:**
+    * *Supuestos (Assumptions):* Factores que para fines de la planificación se consideran verdaderos o ciertos sin prueba fáctica (ej. disponibilidad ininterrumpida de mano de obra o ausencia de desastres naturales).
+    * *Restricciones (Constraints):* Factores limitantes que restringen las opciones del equipo (ej. una fecha de finalización impostergable o un tope financiero estricto).
+13. **Riesgos Clave del Proyecto:** Identificación preliminar de amenazas u oportunidades de alto impacto que podrían desviar los objetivos (base para el posterior registro de riesgos o *Risk Register*).
+14. **Requisitos y Criterios de Éxito:** Definición explícita de qué condiciones dictaminarán si el proyecto fue exitoso, basadas en la triple restricción (alcance, tiempo y costo), junto con estándares de calidad, seguridad y normativas aplicables.
+
+---
+
+### 2.5 Metodología de Elaboración Práctica y Casos de la Cátedra
+El proceso formal de redacción del charter sigue una secuencia estructurada en tres etapas metodológicas:
+
+1. **Definir la Visión:** Delimitar el propósito central y traducirlo en objetivos SMART, límites de alcance y entregables macro mediante plantillas de EDT/WBS.
+2. **Organizar el Entorno:** Mapear clientes/usuarios finales (quién acepta el entregable), interesados clave, asignación de roles y diagrama de estructura organizacional (líneas de reporte).
+3. **Planificar la Implementación Preliminar:** Definir fases del ciclo de vida, hitos críticos, dependencias de alto nivel y el plan macro de recursos (mano de obra, equipos, materiales).
+
+#### Análisis Comparativo de los Ejemplos de Cátedra: Construcción vs. Software Web
+
+| Componente | Caso Construcción: Complejo Residencial York | Caso Software: Plataforma Widgets.com |
+| :--- | :--- | :--- |
+| **Entidad y Proyecto** | Acme Construction Co. / Apartamentos de Lujo York. | Widgets Manufacturing / Widgets.com. |
+| **Propósito / Caso de Negocio** | Explotar demanda habitacional de clase alta en distrito con desarrollo comercial. | Expandir la marca a escala global y habilitar ventas directas de comercio electrónico. |
+| **Presupuesto Estimado** | USD 15 Millones (con contingencia incluida para sobrecostos). | USD 1 Millón (presupuesto firme con colchón para imprevistos). |
+| **Cronograma / Plazos** | 12 a 16 meses de ejecución (Restricción: no exceder 18 meses). | 6 meses de ejecución (Restricción: operativo antes de fin de año por pico estacional). |
+| **Roles Identificados** | Arquitecto líder, Ingeniero líder, PM de construcción, Estimador de costos, Administrador, Supervisor de sitio. | Project Manager, Diseñador líder, Director de contenido, Desarrollador Backend, Desarrollador Frontend, Diseñador UX, Tester de calidad. |
+| **Supuestos Notables** | Equipos en estado óptimo; disponibilidad de mano de obra; subcontratistas cumplen plazos; sin eventos de fuerza mayor. | Usuarios finales participan de lanzamiento suave (*soft launch*); el sitio funciona según diseño; alcance inalterado post-aprobación. |
+| **Restricciones Críticas** | Presupuesto tope USD 15M inamovible; plazo máximo estricto de 18 meses. | Lanzamiento obligado antes de temporada de ventas de fin de año; presupuesto firme. |
+| **Riesgos Principales** | Suba inesperada de materiales; escasez externa de insumos; robo/daño de equipos; desastres climáticos. | Exceso de decisores demorando acuerdos; rotación de personal técnico (*staff turnover*); corrupción de alcance (*scope creep*); demoras en gráficos. |
+
+---
+
+### 2.6 Autoevaluación y Preparación para el Examen: Unidad 2
+
+#### Preguntas Conceptuales y de Razonamiento
+1. **¿Por qué el Project Charter debe firmarse antes de iniciar la planificación detallada del proyecto?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Porque el charter otorga la legitimidad formal y legal al proyecto, asignando los fondos preliminares y la autoridad formal al Project Manager para requerir recursos humanos y materiales. Iniciar una planificación detallada sin un charter aprobado implica consumir horas y presupuesto en un esfuerzo que no cuenta con el respaldo oficial ni el compromiso de los patrocinadores.
+
+</details>
+
+2. **Distinga conceptualmente entre un supuesto y una restricción dentro del Project Charter, ejemplificando con el caso de Widgets.com.**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Un supuesto es una premisa que se toma como verdadera a efectos del plan sin certeza absoluta (en Widgets.com: suponer que los usuarios finales realizarán pruebas en el lanzamiento suave y que el alcance no se modificará tras la firma). Una restricción es una condición limitante obligatoria impuesta externamente que no puede violarse (en Widgets.com: estar obligatoriamente en línea antes de fin de año para capturar el pico comercial y no sobrepasar el presupuesto de USD 1M).
+
+</details>
+
+3. **¿Cuál es la diferencia fundamental entre metas (*goals*) y objetivos (*objectives*) en la formulación de proyectos?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Las metas representan los beneficios globales y estratégicos que la organización espera obtener (el resultado de alto nivel, ej. rentabilidad o posicionamiento de marca), mientras que los objetivos son las metas cuantificables, específicas y acotadas en el tiempo (SMART) necesarias para materializar esas metas (los hitos y entregas concretas).
+
+</details>
+
+#### Conceptos Clave que Debes Dominar para Aprobar
+* Los 3 propósitos fundamentales del charter (autorización, venta/resumen, hoja de ruta).
+* La diferencia estructural entre Business Case, Project Charter y Project Plan.
+* La atribución de autoridad formal al Project Manager.
+* El manejo y definición rigurosa de Supuestos, Restricciones y Criterios de Éxito de la triple restricción.
+
+---
+
+## Unidad 3: Gestión de las Contrataciones y Adquisiciones en Proyectos
+
+### 3.1 Fundamentos y el Alcance de las Adquisiciones
+La gestión de las contrataciones (o adquisiciones) abarca la totalidad de procesos requeridos para adquirir bienes, productos, servicios o resultados que el equipo del proyecto no elabora por sí mismo. Esto incluye desde la subcontratación de un proveedor externo para desarrollar un módulo de software especializado, la adquisición de paquetes cerrados de software, el licenciamiento de infraestructura y servicios en la nube, hasta la contratación temporal de personal calificado.
+
+Las fuentes de la cátedra remarcan que esta disciplina opera en una **perspectiva bidireccional**: las mismas reglas y dinámicas aplican tanto cuando el equipo asume el rol de cliente que adquiere suministros externos, como cuando actúa en calidad de proveedor contratado para prestar servicios a una organización comitente.
+
+---
+
+### 3.2 La Decisión Estratégica de "Hacer o Comprar" (*Make or Buy*)
+La primera decisión formal que debe adoptarse en el marco de las adquisiciones es determinar si un componente específico debe construirse internamente o contratarse externamente. Esta evaluación se basa en el balance de cuatro variables críticas:
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Integración y de las Contrataciones — Diagrama 3"
+  code={`flowchart TD
+    MOB{"Decisión: — ¿Hacer o Comprar?"}
+    MOB -->|Variables a Comparar| VARS["Costo, Tiempo, Riesgo, Control"]
+    VARS --> HACER["Hacer Internamente: — Mayor control de calidad y cambios — Costo en curva de aprendizaje y plazos"]
+    VARS --> COMPRAR["Comprar Externamente: — Acelera el time-to-market — Agrega dependencia y menor control"]`}
+/>
+
+
+* **Costo:** Se contrastan los costos de desarrollo interno (incluyendo costos de infraestructura, salarios y curva de aprendizaje) contra el precio de adquisición del proveedor.
+* **Tiempo:** Comprar acelera significativamente los tiempos de disponibilidad (*time-to-market*), mientras que fabricar demanda tiempo de concepción y construcción.
+* **Riesgo:** Subcontratar puede transferir riesgos técnicos de ejecución al proveedor, pero introduce riesgos operativos de abastecimiento e incumplimiento.
+* **Control:** Es la contrapartida crítica: comprar agrega una dependencia inevitable respecto a un tercero y reduce el control directo del equipo sobre los estándares de calidad, las decisiones arquitectónicas y la agilidad para introducir cambios futuros.
+
+---
+
+### 3.3 Taxonomía de Contratos y Asignación del Riesgo Financiero
+Una vez resuelta favorablemente la decisión de comprar, la segunda decisión estratégica radica en **seleccionar el tipo de contrato adecuado**. El tipo de contrato no es una mera formalidad legal; es el mecanismo que define formalmente **quién asume el riesgo financiero de que la estimación inicial falle**.
+
+Las fuentes de la cátedra clasifican los modelos contractuales en cuatro categorías fundamentales:
+
+1. **Contratos de Precio Fijo (*Fixed Price* / Llave en Mano):**
+   * *Mecanismo de Pago:* Se estipula un monto total cerrado e inamovible por un paquete de alcance estrictamente especificado y delimitado.
+   * *Distribución del Riesgo:* **El riesgo recae casi exclusivamente sobre el proveedor**. Si la estimación de esfuerzo o costos fue insuficiente, el contratista debe absorber las pérdidas para completar el trabajo pactado. Por esta razón, el proveedor introduce un margen de contingencia elevado en su cotización para amortiguar desvíos.
+   * *Condición de Aplicabilidad:* Resulta conveniente únicamente cuando los requerimientos son sumamente claros, detallados y estables en el tiempo, sin expectativa de cambios sobre la marcha.
+
+2. **Contratos de Tiempo y Materiales (*Time & Materials* - T&M):**
+   * *Mecanismo de Pago:* El cliente abona de forma periódica en función de las horas de trabajo, recursos humanos o materiales efectivamente consumidos en el período.
+   * *Distribución del Riesgo:* **El riesgo financiero recae predominantemente sobre el cliente**. Si la estimación falla o el desarrollo se complejiza, el cliente continuará pagando por el tiempo adicional necesario para alcanzar la solución.
+   * *Condición de Aplicabilidad:* Recomendado en proyectos con alcance altamente incierto, tecnologías emergentes o necesidades rápidamente cambiantes donde no es posible definir un alcance cerrado a priori.
+
+3. **Contratos de Costo Más Honorario (*Cost Plus* / Costos Reembolsables):**
+   * *Mecanismo de Pago:* El cliente reembolsa al proveedor todos los costos operativos reales y directos incurridos en el proyecto, agregando un honorario acordado (*fee*) o un esquema de incentivos monetarios por cumplimiento.
+   * *Distribución del Riesgo:* **Riesgo compartido**. El cliente asume la variabilidad de los costos operativos, pero el proveedor no asume el riesgo de quiebra técnica por estimaciones erróneas.
+   * *Condición de Aplicabilidad:* Apropiado para trabajos pioneros, investigación aplicada o desarrollos de altísima incertidumbre técnica donde ninguna de las partes puede calcular racionalmente el esfuerzo final.
+
+4. **Contratos de Alcance Variable / Por Iteración:**
+   * *Mecanismo de Pago:* Se fija una tarifa por iteración temporal (ej. por sprint quincenal) o por equipo dedicado asignado. El alcance nunca se cierra legalmente de antemano; se define y prioriza dinámicamente en el backlog al inicio de cada iteración.
+   * *Distribución del Riesgo:* **Riesgo compartido y mitigado progresivamente**. El cliente mantiene la potestad de rescindir o suspender el contrato cuando juzga que el producto alcanzó el valor de negocio suficiente, sin quedar atado a pagos por funcionalidades no deseadas.
+   * *Condición de Aplicabilidad:* Marco por excelencia para el desarrollo ágil de software y la gestión de productos evolutivos.
+
+---
+
+### 3.4 Matriz Comparativa Exhaustiva de Modelos Contractuales
+
+| Tipo de Contrato | Modalidad de Pago | Asignación del Riesgo | Ventaja Principal | Desventaja / Riesgo Crítico | Escenario Idóneo de Aplicación |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Precio Fijo (Llave en mano)** | Monto cerrado global contra un alcance fijo. | **Proveedor** (asume sobrecostos y margen). | Certeza presupuestaria inicial para el cliente. | Fomenta rigidez, fricción comercial y sobreprecios por cobertura de riesgo. | Proyectos tradicionales con alcance exhaustivo y estable. |
+| **Tiempo y Materiales (T&M)** | Tarifa horaria o por persona/recurso utilizado. | **Cliente** (costo final abierto según consumo). | Flexibilidad inmediata para iniciar y alterar tareas. | Sensación de "cheque en blanco" y falta de incentivo del proveedor en ser eficiente. | Proyectos con requisitos iniciales difusos o urgencias. |
+| **Costo Más Honorario** | Costos reales demostrables + honorario fijo/incentivo. | **Compartido** (costos al cliente; honorario fijado). | Viabilidad para proyectos con incertidumbre técnica extrema. | Exige auditorías contables rigurosas sobre los gastos del proveedor. | Trabajos de investigación, desarrollo e innovación no repetitiva. |
+| **Alcance Variable / Iteración** | Tarifa por ciclo temporal (sprint) o capacidad de equipo. | **Compartido** (inversión por incremento de valor). | Adaptación continua; el cliente interrumpe cuando obtiene el valor deseado. | Exige alta madurez y colaboración continua entre las partes. | Desarrollo ágil de software y evolución de productos digitales. |
+
+---
+
+### 3.5 La Gestión Post-Firma: Seguimiento, Criterios de Aceptación y Cierre
+La gestión de contrataciones no concluye con la rúbrica formal del acuerdo. Las fuentes subrayan que la etapa posterior a la firma demanda tres actividades de rigurosa supervisión:
+
+1. **Seguimiento Continuo del Proveedor:** Monitorización periódica del cumplimiento de plazos, calidad técnica del código o producto entregado, consumo de horas y estado financiero.
+2. **Criterios de Aceptación Formalizados *Ex Ante*:** Constituye la principal salvaguarda operativa del proyecto. Un criterio de aceptación claro, medible y acordado explícitamente antes de que el proveedor inicie la construcción **evita la abrumadora mayoría de los litigios y disputas contractuales** al momento de la entrega.
+3. **Cierre Administrativo y Contractual:** Verificación de que todos los entregables fueron formalmente recibidos a conformidad, liquidación de facturas pendientes, liberación de retenciones de garantía y documentación formal de las lecciones aprendidas en la relación con el tercero.
+
+---
+
+### 3.6 Autoevaluación y Preparación para el Examen: Unidad 3
+
+#### Preguntas Conceptuales y de Razonamiento
+1. **Analice las ventajas y desventajas de la decisión de comprar (*buy*) frente a fabricar (*make*).**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* La ventaja de comprar radica en acelerar la entrega de valor aprovechando soluciones ya probadas y disponibles en el mercado, optimizando tiempos y costos inmediatos. La desventaja crítica es que introduce una dependencia operativa respecto a un proveedor externo y disminuye el control sobre la calidad intrínseca del sistema, encareciendo y dificultando las modificaciones técnicas futuras.
+
+</details>
+
+2. **Si un proyecto enfrenta una incertidumbre técnica radical donde nadie conoce cómo se resolverá la arquitectura, ¿por qué un contrato de precio fijo resulta nocivo para ambas partes?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Resulta nocivo porque para cotizar a precio fijo el proveedor deberá calcular un margen de contingencia exorbitante (encareciendo el proyecto artificialmente) o, si subestima el esfuerzo para ganar el negocio, enfrentará pérdidas severas que lo llevarán a recortar calidad o litigar. Para el cliente es perjudicial porque cualquier descubrimiento técnico que exija variar el diseño implicará una costosa renegociación contractual. El modelo adecuado es costo reembolsable o alcance variable por iteración.
+
+</details>
+
+3. **¿Cuál es el rol que cumplen los criterios de aceptación en la gestión post-firma de adquisiciones?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Proveen la pauta objetiva e incontrovertible para determinar si el entregable satisface los requerimientos pactados. Su definición previa formaliza el estándar de conformidad, desterrando interpretaciones subjetivas y previniendo los habituales conflictos comerciales y legales en la recepción de trabajos.
+
+</details>
+
+#### Conceptos Clave que Debes Dominar para Aprobar
+* Las 4 dimensiones de evaluación de la decisión Make or Buy.
+* La correspondencia entre el tipo de contrato y la parte que asume el riesgo financiero.
+* Las causas por las cuales el precio fijo requiere alcance estable y T&M admite variabilidad.
+* La importancia preventiva de formalizar criterios de aceptación con antelación a la construcción.
+
+---
+
+## Unidad 4: Formalización de Compromisos y Contratación en Software Ágil
+
+### 4.1 La Fricción Estructural: Métodos Ágiles frente al Paradigma Contractual Tradicional
+El extracto de Páez et al. (*Formalizando compromisos - Contratando un proyecto ágil*) desentraña una de las paradojas más severas de la industria del software moderna: la colisión cultural y operativa entre los valores ágiles y los esquemas jurídicos tradicionales.
+
+Esta disonancia queda tipificada en la escena inicial expuesta en la obra: en una reunión de inicio (*kick-off*), la gerencia proclama que el equipo trabajará bajo una metodología ágil para "maximizar el valor entregado", pero acto seguido advierte que el contrato suscrito fija de manera rígida el alcance, el costo y la fecha de entrega, exigiendo evitar estrictamente cualquier cambio bajo amenaza de penalidades financieras. Ante la lógica perplejidad del equipo ("*¿No es que éste sería un proyecto ágil?*"), queda al descubierto la trampa cotidiana de la industria: pretender agilidad operativa en los equipos de desarrollo mientras las relaciones contractuales y comerciales permanecen atadas al paradigma predictivo tradicional.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Integración y de las Contrataciones — Diagrama 4"
+  code={`flowchart TD
+    subgraph Choque Paradigmático
+        AG["Valores Ágiles: — Adaptabilidad, colaboración, — inspección y respuesta al cambio"]
+        TRAD["Contratos Tradicionales: — Alcance fijo, costo fijo, fecha fija, — desconfianza y aversión al cambio"]
+    end
+    AG <-->|Fricción Estructural| TRAD
+    TRAD -->|Consecuencia Patológica| NEG["Burocracia, litigios y desgaste"]`}
+/>
+
+
+La premisa tradicional de contratación parte de la desconfianza mutua y concibe al contrato como un mecanismo defensivo para transferir riesgos y penalizar desvíos. En contraste, el desarrollo ágil asume la incertidumbre intrínseca del software, concibiendo el proyecto como un proceso de aprendizaje conjunto donde el alcance se descubre y refina de manera continua.
+
+---
+
+### 4.2 Desmitificando los Contratos Tradicionales en Entornos Ágiles
+
+#### El Contrato de Tiempo y Materiales (T&M) y la "Trampa del Cheque en Blanco"
+A primera vista, el contrato de tiempo y materiales parecería el aliado natural de la agilidad debido a su apertura al cambio. No obstante, encierra una patología comercial recurrente: genera una severa ansiedad en el cliente, quien siente que está **"firmando un cheque en blanco"** sin garantías de cuándo se concluirá el desarrollo ni cuánto dinero terminará invirtiendo.
+
+Páez et al. desarticulan esta patología argumentando que **una virtud esencial del desarrollo ágil es precisamente que es predecible**. La solución para desarmar la trampa de T&M no radica en cerrar el contrato, sino en instaurar una comunicación rigurosa de avance:
+* Al finalizar cada sesión de planificación o iteración, el equipo debe mostrarle al cliente y a los interesados **la distancia temporal concreta hacia los hitos que son significativos para el negocio**.
+* Estos hitos pueden ser prototipos de demostración (para capturar inversiones), versiones beta funcionales, o el primer producto mínimo entregable (*release*).
+* En aplicaciones existentes bajo mantenimiento evolutivo, deben proyectarse las fechas estimadas para la disponibilidad de nuevas funcionalidades críticas o resolución de defectos. Esta predictibilidad demostrada desarma la desconfianza del cliente y legitima el pago continuo por tiempo.
+
+#### El Contrato de Precio Fijo: Anatomía de una Ilusión Peligrosa
+El contrato de precio fijo pretende encadenar simultáneamente las tres variables de la triple restricción: alcance total, tiempo total y recursos/costos totales. En el desarrollo de software, donde los requerimientos son dinámicos e incompletos por naturaleza, esto genera dinámicas nocivas:
+
+1. **La Disyuntiva Inicial de Estimación:**
+   * Si la estimación técnica es **demasiado conservadora (alta)**, la cotización resulta abultada y muy probablemente la empresa pierda la adjudicación del negocio.
+   * Si la estimación es **demasiado audaz (baja)**, se gana el contrato pero la empresa pierde dinero de manera casi asegurada.
+
+2. **La Presión Comercial para "Afinar" la Estimación (El Error Crítico):**
+   Es habitual que los equipos comerciales intervengan en la preventa solicitando a los ingenieros "bajar o afinar la estimación" para lograr un número competitivo. Páez et al. establecen un principio doctrinario categórico:
+
+   > **Las estimaciones técnicas, por su propia naturaleza y definición, son datos objetivos de la realidad y NO son negociables.**
+
+   Bajar artificialmente los días o puntos de esfuerzo estimados no modifica el trabajo real requerido; únicamente destruye el contacto con la realidad técnica. Si la dirección de la empresa decide reducir la oferta económica para ganar el cliente, **debe reducir explícitamente su margen de beneficio comercial**, asumiendo el riesgo como una decisión corporativa transparente:
+
+$$\text{Precio Comercial} = \text{Costo Técnico Real (No Negociable)} + \text{Margen de Beneficio (Ajustable)}$$
+
+   Ceder a la presión comercial de reducir la estimación técnica empuja al proyecto a un escenario de **"perder o perder"**: la empresa pierde dinero y el equipo de desarrollo se ve sometido a jornadas insostenibles de sobreexplotación, desembocando en agotamiento extremo, pérdida de calidad y deserción de profesionales.
+
+3. **Estrategias de Mitigación en Proyectos de Precio Fijo:**
+   Cuando la organización se ve forzada a operar bajo precio fijo, deben aplicarse tres prácticas de contención:
+   * **Partir en porciones más pequeñas:** Subdividir el proyecto global en contratos de precio fijo sucesivos y acotados, negociando cada tramo al finalizar el precedente. Esto fragmenta la incertidumbre y habilita ciclos de aprendizaje.
+   * **Aislar al equipo de las tensiones contractuales:** Blindar a los desarrolladores de las disputas comerciales y de la burocracia de los contratos para que concentren su energía en la calidad técnica.
+   * **Foco y Alerta Temprana en la Planificación:** Realizar un seguimiento exhaustivo del alcance para detectar desvíos en el momento exacto en que ocurren. Se debe resistir activamente la cultura tóxica de gerencias superiores que recurren al voluntarismo de *"ponerse el proyecto al hombro"*; la única respuesta profesional es la **alerta temprana y transparente** sobre los desvíos.
+
+---
+
+### 4.3 Zonas Grises y Trampas Contractuales de la Industria
+
+* **Tiempo y Materiales con Tope (*Capped Time & Materials*):**  
+  Consiste en un contrato de T&M al que se le impone un techo presupuestario máximo a solicitud del cliente. Sin embargo, en el mercado suele agregarse una cláusula letal: **se fija también el alcance a entregar**.  
+  Páez et al. califican esta combinación como **"la peor opción posible para quien desarrolla el servicio"**. El contratista asume una trampa perfecta: si los recursos se consumen antes de terminar las funcionalidades pactadas, está legalmente obligado a continuar trabajando y entregar el software a su propio costo, eliminando cualquier beneficio de T&M y absorbiendo la totalidad del riesgo.
+
+* **Dinámicas de Licitación:**  
+  Los procesos licitatorios exacerban la competencia entre proveedores, empujando los precios hacia la baja. En licitaciones de precio fijo, las presiones internas para falsear las estimaciones técnicas se multiplican. La postura profesional innegociable debe ser mantener el análisis técnico inalterado: reducir el precio es una potestad comercial válida, pero adulterar la estimación es un autoengaño que garantiza el colapso operativo.
+
+---
+
+### 4.4 Características y Cláusulas para un "Contrato Ágil"
+Páez et al. señalan que no existe un formato único o plantilla dogmática de contrato ágil, pero sí un conjunto de características y cláusulas esenciales que vuelven a un acuerdo compatible con los principios de agilidad:
+
+1. **Cláusula de Alcance Compartido y Colaborativo:**  
+   En vez de una lista cerrada de requisitos inmutables, el contrato fija un objetivo macro compartido respecto al producto a construir. Se incorpora formalmente al cliente dentro de la dinámica diaria del equipo, sustituyendo el antagonismo comitente-proveedor por una relación de corresponsabilidad.
+
+2. **Compromisos Recíprocos y Protección del Equipo:**  
+   El contrato define compromisos en términos de capacidades del equipo (dedicación exclusiva, perfiles técnicos acordados, cadencia de entregas), pero **estipula en idéntico sentido las obligaciones del cliente** (disponibilidad de usuarios clave para validaciones, tiempos de respuesta a dudas de negocio, provisión oportuna de accesos y entornos).  
+   Si el cliente incumple sus compromisos, el equipo debe **alertarlo formalmente en el marco del control del proyecto (no como un reclamo agresivo, sino como un dato objetivo de gestión)**. Esta práctica protege al equipo frente a reclamos ulteriores de demoras y predispone al cliente a aceptar desvíos de manera razonable.
+
+3. **Las Estimaciones como Marcos de Trabajo, No como Compromisos:**  
+   El contrato debe asentar con claridad que las estimaciones de tiempo y alcance iniciales son lineamientos generales de referencia y no promesas contractuales inquebrantables. Se fundamenta en el principio ontológico de que **"pronosticar no es predecir"**: en la ingeniería de software existen factores desconocidos al inicio y el cambio constante de requerimientos invalida la noción de certeza previa.
+
+4. **Alineamiento Cultural del Equipo de Ventas:**  
+   Resulta inviable ejecutar proyectos ágiles si la fuerza comercial de la organización continúa vendiendo bajo el paradigma de precio y alcance fijos para cerrar operaciones rápidamente. Es imperativo capacitar al equipo de ventas en los beneficios que la agilidad reporta al propio cliente (entregas tempranas de valor real, capacidad de pivotar el producto y reducción de desperdicio), erradicando cláusulas contractuales hostiles a la agilidad desde la preventa.
+
+---
+
+### 4.5 Autoevaluación y Preparación para el Examen: Unidad 4
+
+#### Preguntas Conceptuales y de Razonamiento
+1. **¿Por qué ceder ante la presión de "afinar" o reducir una estimación técnica en una preventa constituye un error estratégico grave según Páez et al.?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Porque las estimaciones técnicas no son variables de ajuste ni objetos de negociación; son mediciones profesionales de esfuerzo e incertidumbre. Bajar la estimación no reduce el trabajo real: provoca que la empresa pierda dinero y somete al equipo a un esfuerzo insostenible para compensar una promesa ficticia, promoviendo el agotamiento y la deserción en una dinámica de "perder o perder".
+
+</details>
+
+2. **Explique por qué el contrato de "Tiempo y Materiales con Tope" (*Capped T&M*) es catalogado como la peor opción para un proveedor si se acompaña de un alcance fijo.**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Porque despoja al proveedor de las ventajas de ambos modelos y le transfiere la totalidad del riesgo: cobra por horas hasta un límite monetario máximo, pero si los fondos se agotan antes de completar el alcance comprometido, está legalmente obligado a continuar trabajando gratis hasta finalizar la entrega.
+
+</details>
+
+3. **¿Cómo puede un equipo de desarrollo ágil gestionar la relación contractual para protegerse de acusaciones de demoras imputables al cliente?**  
+<details>
+<summary>Ver respuesta modelo</summary>
+
+   *Respuesta modelo:* Redactando compromisos recíprocos en el contrato ágil y emitiendo alertas tempranas y objetivas cada vez que el cliente demore aprobaciones, feedback o entrega de recursos. Registrar formalmente estos incumplimientos dentro del seguimiento del proyecto desarma reclamos legales posteriores y fomenta la aceptación colaborativa de los desajustes del cronograma.
+
+</details>
+
+#### Conceptos Clave que Debes Dominar para Aprobar
+* La incompatibilidad teórica y práctica entre precio fijo tradicional y desarrollo ágil puro.
+* El principio de no negociabilidad de la estimación técnica frente a la decisión comercial del margen de ganancia.
+* La forma en que la predictibilidad de hitos resuelve la desconfianza del cliente en Tiempo y Materiales.
+* Las cláusulas distintivas del contrato ágil (compromisos espejo del cliente, estimaciones como marco de trabajo, alcance colaborativo).
+
+---
+
+## Unidad 5: Síntesis Integradora y Relaciones Cruzadas
+
+### 5.1 Articulación Integral: Del Project Charter a la Contratación y el Control de Cambios
+Las tres fuentes del programa convergen en un único hilo conductor de gobernanza de proyectos: la gestión de compromisos y restricciones bajo diferentes niveles de incertidumbre.
+
+
+<MermaidDiagram
+  client:load
+  caption="Gestión de la Integración y de las Contrataciones — Diagrama 5"
+  code={`flowchart TD
+    subgraph 1. Fase de Inicio
+        PC["Project Charter: — Autorización formal, alcance macro, supuestos, restricciones y presupuesto ballpark"]
+    end
+    subgraph 2. Decisiones de Adquisición
+        MOB{Make or Buy}
+        PC --> MOB
+        MOB -->|Buy| CONT["Selección del Tipo de Contrato: — Precio Fijo, T&M, Cost Plus o Alcance Variable"]
+    end
+    subgraph 3. Mecanismo de Integración Operativa
+        CONT -->|Si es Precio Fijo / Predictivo| CCB["Control Integrado de Cambios: — Formal, caro, comités y protección de líneas base"]
+        CONT -->|Si es Alcance Variable / Ágil| BACKLOG["Backlog Priorizado y PO: — Control continuo, barato, dinámico y por valor"]
+    end`}
+/>
+
+
+1. **El Project Charter como Raíz Contractual:**  
+   En la fase de inicio, el Acta de Constitución establece las restricciones madre (presupuesto estimado, fechas límite innegociables y supuestos operativos). Si el charter define una restricción presupuestaria taxativa (como los USD 15M de la constructora Acme), condiciona de forma directa las opciones de contratación disponibles, forzando contratos de precio fijo o subcontrataciones con techos estrictos.
+
+2. **La Relación Directa entre el Tipo de Contrato y el Control Integrado de Cambios:**  
+   Existe una relación de causalidad directa entre el modelo de contratación elegido y la naturaleza del control de cambios:
+   * **Contrato de Precio Fijo $\rightarrow$ Control de Cambios Burocrático y "Caro":**  
+     Al estar el precio y el alcance legalmente atados, cualquier modificación implica una alteración del equilibrio económico del contrato. Se requiere inevitablemente un control formal, con formularios, comités y auditorías para evaluar el impacto en costos y plazos antes de autorizarlo.
+   * **Contrato de Alcance Variable / Ágil $\rightarrow$ Control de Cambios Continuo y "Barato":**  
+     Dado que el contrato admite la variabilidad del alcance dentro de un marco temporal o por capacidad, el control de cambios se absorbe de forma orgánica a través de la repriorización del backlog por parte del Product Owner. Modificar un requerimiento no cuesta desgaste legal ni horas de negociación corporativa: simplemente se reordena la pila de trabajo para el próximo sprint.
+
+---
+
+### 5.2 Cuadro Maestro de Articulación Conceptual de la Asignatura
+
+| Parámetro de Gestión | Enfoque Predictivo Tradicional (PMBOK / Malsam) | Enfoque Ágil y de Producto (Páez et al. / GDSI) |
+| :--- | :--- | :--- |
+| **Documento Inicial** | **Project Charter**: Formal, autoriza recursos, fija alcance macro, presupuesto de orden de magnitud y triple restricción. | **Charter Ágil / Visión de Producto**: Fija objetivos de valor compartidos, marcos de trabajo y acuerdos de colaboración. |
+| **Gobernanza del Alcance** | Delimitado estrictamente *in-scope* vs *out-of-scope*; volcado en una EDT/WBS granular. | Dinámico, emergente y gobernado a través de la priorización del Backlog de Producto. |
+| **Liderazgo de Integración** | **Project Manager**: Monitorea el plan integrado y centraliza los desvíos entre las áreas. | **Product Owner**: Arbitra entre valor, tiempo, costo y riesgo al repriorizar el backlog. |
+| **Modelo Contractual Predilecto** | **Precio Fijo / Llave en mano**: El proveedor asume el riesgo; alcance y monto cerrados. | **Alcance Variable / Por Iteración**: Riesgo compartido; pago por capacidad y alcance flexible. |
+| **Manejo de la Incertidumbre** | Planificación exhaustiva previa; colchones de contingencia financiera en presupuesto. | Adaptación empírica iterativa; entregas tempranas y validaciones funcionales frecuentes. |
+| **Resolución de Cambios** | Comité de Control de Cambios (CCB); costoso y defensivo. | Repriorización inmediata en el siguiente ciclo; económico y enfocado en el objetivo. |
+| **Criterio de Finalización** | Cierre formal único con aceptación administrativa total. | Cierres continuos por iteración gobernados por la *Definition of Done* (DoD). |
+
+---
+
+### 5.3 Resolución Modelo de las Preguntas de Cátedra (Para Examen Final)
+Las fuentes de la cátedra de GDSI plantean cuatro dilemas sustantivos que sintetizan los nudos conceptuales de la materia. A continuación se brinda su resolución analítica para instancias evaluativas:
+
+#### 1. Dilema: Un cliente solicita un sistema a precio fijo, pero todavía no tiene claridad sobre lo que realmente necesita. ¿Qué riesgos asume cada parte y qué alternativa contractual debe proponerse?
+* **Riesgos para el Proveedor:**  
+  Si acepta un precio fijo con requerimientos difusos, cualquier estimación carecerá de base técnica sólida. Durante la ejecución emergerán funcionalidades imprevistas que el cliente asumirá como "incluidas", provocando sobrecostos masivos, pérdidas financieras directas y sobreexplotación del equipo técnico.
+* **Riesgos para el Cliente:**  
+  El proveedor, para protegerse de la incertidumbre, sobrecargará la cotización con un margen de contingencia exorbitante (pagando un sobreprecio injustificado). Alternativamente, si el proveedor cotiza bajo y entra en pérdidas, recortará calidad, asignará personal con menor experiencia o se escudará en disputas burocráticas para cobrar cada mínimo cambio como un adicional costoso.
+* **Solución Contractual Propuesta:**  
+  Debe rechazarse el precio fijo cerrado global. Se recomienda proponer:
+  1. Un esquema inicial de **Tiempo y Materiales o Costo Reembolsable acotado a una fase de descubrimiento/definición**, con entregas visuales e hitos de demostración rápidos.
+  2. Alternativamente, un **contrato de alcance variable por iteraciones (sprints)**, donde se fija la tarifa por equipo/período y el cliente prioriza quincenalmente el backlog, teniendo la libertad de rescindir el contrato cuando juzgue que ha maximizado su valor de retorno.
+  3. Si la organización del cliente exige precio fijo por regulaciones institucionales, aplicar la técnica de **partir en porciones más pequeñas**: cotizar a precio fijo únicamente la primera iteración o prototipo inicial, renegociando las siguientes de forma incremental.
+
+#### 2. Dilema: ¿Por qué un control de cambios "caro" (comités, formularios, análisis formal de impacto) tiene sentido en ciertos proyectos y carece por completo de lógica en otros?
+* **Dónde tiene sentido:**  
+  En proyectos con alcance estable, alta interdependencia física o contractual rígida (ej. el proyecto de construcción de apartamentos York de USD 15M). En estos contextos, alterar una pared o mover una instalación hidroeléctrica repercute de manera crítica e irreversible en costos, seguridad estructural y cronograma de subcontratistas. Un error no planificado cuesta millones; por ende, un proceso burocrático que ralentice y filtre rigurosamente los cambios es económicamente racional y necesario.
+* **Dónde carece de lógica:**  
+  En proyectos de software y productos digitales donde el costo de modificar el diseño o el código es intrínsecamente bajo frente al costo de oportunidad de no adaptarse. En estos entornos, someter cada sugerencia de usuario o mejora de pantalla a un comité formal de cambios genera cuellos de botella artificiales, demora la entrega de valor y destruye la ventaja competitiva. El cambio debe gestionarse de forma económica y continua en el backlog.
+
+#### 3. Dilema: En un equipo de proyecto, ¿en qué momentos surge la necesidad de resignar alcance para cumplir una fecha comprometida y quién adopta esa decisión?
+* **Momento y Causa:**  
+  Surge cuando el avance real del trabajo denota desvíos respecto al cronograma comprometido y la fecha de finalización constituye una **restricción inamovible** (como el lanzamiento de Widgets.com antes de fin de año). Si los costos no pueden incrementarse o añadir personas retrasaría aún más el proyecto (por la ley de Brooks), la única variable de ajuste factible para salvaguardar la calidad y el tiempo es resignar alcance.
+* **Quién decide:**  
+  * En un marco predictivo: Es una decisión que el Project Manager somete formalmente a consideración del Project Sponsor y del Comité de Cambios.
+  * En un marco ágil: Es potestad directa y soberana del **Product Owner**, quien desprioriza las historias de usuario de menor valor estratégico para asegurar que el incremento central esté listo en la fecha límite pactada.
+
+#### 4. Dilema: Si tu equipo depende de una API que desarrolla otro proveedor externo, ¿qué cláusulas deben acordarse en el contrato y qué acciones de gestión deben ejecutarse para integrar tempranamente?
+* **Acuerdos Contractuales Indispensables:**  
+  1. Definición formal de la especificación técnica de la API y de sus **Criterios de Aceptación** objetivos (formatos de datos, códigos de error, latencia máxima, disponibilidad).
+  2. Compromisos recíprocos de entrega de versiones preliminares (*mock servers*, documentación OpenAPI y entornos de *staging* funcionales) con fechas intermedias vinculantes.
+  3. Cláusula de soporte técnico y penalidades o ajustes de pago por demoras en la resolución de bloqueos que afecten al equipo consumidor.
+* **Acciones de Gestión para Integración Temprana:**  
+  1. No esperar a que el proveedor finalice la API completa: acordar el contrato de interfaz e implementar inmediatamente simuladores locales (*mocks/stubs*) para desarrollar y probar en paralelo.
+  2. Exigir integración continua cruzada y pruebas automatizadas de integración contra entornos de prueba del proveedor de forma recurrente desde las fases iniciales.
+  3. Emitir alertas tempranas formales y objetivas en cuanto se detecte cualquier incompatibilidad en las llamadas, evitando que la falla de integración se descubra en las vísperas del lanzamiento a producción.

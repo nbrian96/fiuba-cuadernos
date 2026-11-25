@@ -106,10 +106,10 @@
     "catalogExercises": 0,
     "parcialExercises": 0,
     "advancedExercises": 0,
-    "interactiveWidgets": 0,
-    "elaboratedNotes": 1,
-    "elaboratedSummaries": 0,
+    "interactiveWidgets": 1,
+    "elaboratedNotes": 9,
+    "elaboratedSummaries": 1,
     "checklistItems": 0,
-    "trainerQuestions": 0
+    "trainerQuestions": 24
   }
 }

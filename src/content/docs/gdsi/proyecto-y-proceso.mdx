@@ -1,0 +1,550 @@
+---
+docId: proyecto-y-proceso
+courseId: gdsi
+title: "Enfoques por Proyecto y por Proceso (PMI y Kanban)"
+order: 1
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - 1-encuadre-metodologico-los-tres-enfoques-de-la-materia
+  - 2-enfoque-por-proyecto-predictivo-pmi
+  - 3-enfoque-por-proceso-gestion-de-flujo-kanban
+  - 4-sintesis-comparativa-final-para-examen
+---
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+
+Este apunte de estudio constituye el material académico integral para dominar los enfoques de gestión **por proyecto** y **por proceso** en el desarrollo y mantenimiento de software. Su propósito formativo es estructurar los modelos teóricos, las herramientas de gestión y los criterios de decisión profesional requeridos para comprender cómo gobernar iniciativas de sistemas en función de sus niveles de incertidumbre, estabilidad del alcance y costos de cambio.
+
+---
+
+## 1. Encuadre Metodológico: Los Tres Enfoques de la Materia
+
+La gestión del desarrollo de software no responde a un enfoque único y universal, sino a la adecuación contextual del modelo de gestión frente a la naturaleza del trabajo y su grado de previsibilidad. En el marco de la materia se distinguen tres enfoques fundamentales:
+
+1. **Enfoque por Producto:** Centrado en el descubrimiento y entrega continua de valor hacia el usuario o cliente mediante ciclos iterativos e incrementales. Es el de mayor dedicación conceptual en la asignatura, se evalúa primordialmente en la primera etapa del curso y se apoya en marcos ágiles como Scrum.
+2. **Enfoque por Proyecto:** Basado en la gestión tradicional de proyectos bajo el estándar del Project Management Institute (PMI). Es de carácter esencialmente **predictivo**, orientado a compromisos fijados al inicio sobre alcance, cronograma y costos.
+3. **Enfoque por Proceso:** Centrado en la optimización y sustentabilidad del **flujo continuo de trabajo** a través de un sistema de entrega. Asume que el trabajo ingresa de forma constante e impredecible, apoyándose en métodos visuales y evolutivos como Kanban.
+
+
+<MermaidDiagram
+  client:load
+  caption="Enfoques por Proyecto y por Proceso (PMI y Kanban) — Diagrama 1"
+  code={`graph TD
+    A[Enfoques de Gestión en GDSI] --> B[Por Producto]
+    A --> C[Por Proyecto]
+    A --> D[Por Proceso]
+    
+    B --> B1["Marcos adaptativos / Scrum"]
+    B --> B2["Foco: Descubrimiento y valor de producto"]
+    
+    C --> C1["Gestión tradicional / PMI"]
+    C --> C2["Foco: Predictibilidad, alcance cerrado y fecha fija"]
+    
+    D --> D1["Gestión de flujo / Kanban"]
+    D --> D2["Foco: Eficiencia del flujo, WIP y mejora continua"]`}
+/>
+
+
+### 1.1 Supuestos Fundamentales del Enfoque Predictivo
+El enfoque predictivo descansa sobre dos hipótesis estructurales que condicionan su aplicabilidad:
+* **El alcance se puede definir y estabilizar por adelantado:** Se asume que las necesidades de los usuarios e interesados pueden relevarse, comprenderse y documentarse de forma completa y exhaustiva antes de comenzar las fases de diseño y construcción.
+* **Planificar tempranamente agrega valor y reduce la incertidumbre:** Se asume que el costo y esfuerzo invertidos en planificar al inicio generan un modelo de ejecución confiable, donde las desviaciones operativas serán mínimas y podrán controlarse respecto a una línea base fija.
+
+### 1.2 Contextos de Idoneidad y Límites del Enfoque Predictivo
+El enfoque predictivo resulta apropiado cuando se presentan las siguientes condiciones operativas:
+* **Alcance estable y conocible:** El dominio del problema está claramente delimitado y las soluciones técnicas son probadas y familiares para la organización.
+* **Baja incertidumbre:** Existen pocos factores desconocidos respecto a la tecnología, los requisitos o la conducta de los usuarios finales.
+* **Contratos cerrados y compromisos formales:** Situaciones contractuales o comerciales que exigen precio fijo y fecha de entrega comprometida con penalidades económicas.
+* **Cumplimiento normativo y regulatorio:** Entornos donde entes gubernamentales o de auditoría exigen especificaciones formales previas y validaciones documentales estrictas.
+
+**Límites y riesgos de forzar el enfoque predictivo:** Cuando se intenta aplicar una gestión predictiva (exigiendo precio cerrado y fecha fija) en contextos donde los requerimientos aún no están definidos o son inciertos, se vulneran los supuestos básicos. La consecuencia directa es la aparición de riesgos críticos:
+* **Falsa ilusión de control:** Se comprometen plazos y presupuestos sobre supuestos débiles que irremediablemente colapsarán durante la construcción.
+* **Costo de cambio prohibitivo:** En los modelos predictivos, incorporar modificaciones a mitad de camino requiere procedimientos burocráticos de control de cambios, generando fricción política y sobrecostos.
+* **Construcción de software no utilizado:** Se corre el riesgo de entregar exactamente lo contratado en lugar de lo que el negocio realmente necesita.
+
+### 1.3 Tabla Comparativa de los Tres Enfoques
+
+| Dimensión | Enfoque por Producto | Enfoque por Proyecto | Enfoque por Proceso |
+| :--- | :--- | :--- | :--- |
+| **Paradigma Principal** | Adaptativo / Empírico | Predictivo / Planificado | Evolutivo / Flujo continuo |
+| **Referente Teórico** | Scrum / Agile | PMI / PMBOK | Kanban / Lean |
+| **Naturaleza del Trabajo** | Descubrimiento e innovación | Construcción acotada con inicio y fin | Mantenimiento, operaciones y soporte continuo |
+| **Definición del Alcance** | Emergente y priorizado por valor | Fijo y detallado al inicio | Ítems atómicos que ingresan bajo demanda |
+| **Gestión del Tiempo** | Timeboxes (Sprints fijos) | Cronograma cerrado e hitos | Flujo continuo sin iteraciones fijas |
+| **Métrica Central** | Valor de negocio entregado | Desviación respecto a línea base (costo/plazo) | Lead time, throughput y estabilidad del flujo |
+
+---
+
+## 2. Enfoque por Proyecto (Predictivo / PMI)
+
+El enfoque por proyecto aborda iniciativas temporales destinadas a crear un producto, servicio o resultado único. Su objetivo metodológico en la cátedra es comprender la función analítica y el momento de aplicación de cada instrumento de gestión, priorizando el criterio profesional sobre el cálculo mecánico.
+
+---
+
+### 2.1 Project Charter (Acta de Constitución del Proyecto)
+
+#### Propósito Institucional y Autoridad
+El **Charter** es el documento formal emitido por el patrocinador o la alta dirección que autoriza formalmente la existencia de un proyecto. Cumple tres propósitos centrales:
+1. **Autorizar formalmente el proyecto:** Da nacimiento legal y organizativo a la iniciativa dentro de la institución.
+2. **Designar formalmente al Project Manager (PM):** Identifica a la persona responsable de liderar la ejecución.
+3. **Otorgar autoridad al PM:** Confiere al líder del proyecto la facultad explícita de aplicar recursos organizacionales (financieros, humanos y tecnológicos) a las actividades del proyecto.
+
+#### Componentes Mínimos del Charter
+Un acta de constitución rigurosa debe contener ocho componentes esenciales:
+1. **Justificación / Caso de Negocio (Business Case):** Argumentación del problema u oportunidad que motiva la inversión y el beneficio esperado.
+2. **Objetivos medibles y criterios de éxito:** Metas cuantitativas y cualitativas que definirán si el proyecto alcanzó sus fines.
+3. **Alcance de alto nivel:** Delimitación general de las fronteras del proyecto (qué abarca y qué queda explícitamente excluido).
+4. **Interesados clave (Stakeholders):** Identificación de actores directos e indirectos cuyos intereses influyen en el proyecto.
+5. **Riesgos de alto nivel:** Amenazas y oportunidades macro identificadas preliminarmente.
+6. **Hitos principales (Milestones):** Eventos o fechas de control temporal de alto nivel que marcan etapas críticas.
+7. **Presupuesto asignado / Límites financieros:** Recursos monetarios globales autorizados para el desarrollo.
+8. **Criterios de éxito y requisitos de aprobación:** Condiciones bajo las cuales el patrocinador aceptará el entregable final.
+
+#### Aplicación Práctica: Caso "Turnos del Centro de Salud Norte"
+El Centro de Salud Norte atiende de forma ambulatoria y gestiona turnos manualmente (teléfono y planilla en papel), generando sobreturnos, demoras y ausentismo. Requiere un sistema digital de turnos operativo antes de la campaña de vacunación (~5 meses).
+
+Aterrizando los 8 componentes al caso:
+* **Justificación:** Disminuir demoras en recepción, eliminar sobreturnos y reducir el ausentismo de pacientes mediante canales digitales y recordatorios automáticos.
+* **Objetivos medibles:** Reducir el ausentismo en un 30% en los primeros 3 meses de operación y absorber el 60% de los turnos vía web.
+* **Alcance de alto nivel:** Portal web de autogestión de turnos (alta y cancelación) para pacientes, administración de agendas para recepción, consulta de agendas diarias para profesionales, motor de recordatorios automáticos e integración con el padrón de pacientes existente. Excluye explícitamente en esta fase módulos de teleconsulta o historias clínicas electrónicas.
+* **Interesados clave:** Dirección médica, personal de recepción, profesionales de la salud, pacientes ambulatorios y equipo de TI a cargo del padrón existente.
+* **Riesgos de alto nivel:** Resistencia al cambio del personal de recepción, incompatibilidad técnica con el padrón existente y demoras que comprometan la fecha límite de la campaña de vacunación.
+* **Hitos de alto nivel:** Aprobación del diseño general (mes 1), prototipo funcional integrado al padrón (mes 3), pruebas integrales concluidas (mes 4) y puesta en marcha antes de la campaña de vacunación (mes 5).
+* **Presupuesto asignado:** Presupuesto institucional cerrado y acotado asignado previamente por la dirección.
+* **Criterios de éxito:** Sistema operativo y estable en producción con personal capacitado previo al inicio de la campaña de vacunación, cumpliendo la normativa de protección de datos de salud.
+
+#### Frontera Documental: Qué Decide el Charter y Qué No
+* **Lo que sí decide el Charter:** Define el *por qué*, el *para qué*, el *quién* y las restricciones globales (*cuánto* y *para cuándo* a nivel macro). Otorga mandato formal al PM.
+* **Lo que NO decide el Charter:** No contiene la lista detallada de tareas, no asigna horas individuales por tarea a miembros del equipo, no define la arquitectura técnica detallada ni presenta un cronograma operativo día por día. Esos elementos se elaboran con posterioridad durante la fase de planificación detallada, una vez que el PM fue formalmente empoderado.
+
+---
+
+### 2.2 WBS / EDT (Estructura de Desglose del Trabajo)
+
+#### Definición y Propósito
+La **WBS (Work Breakdown Structure)** o **EDT (Estructura de Desglose del Trabajo)** es la descomposición jerárquica del alcance total del trabajo a ser realizado por el equipo del proyecto para cumplir con los objetivos y crear los entregables requeridos.
+
+La WBS constituye la columna vertebral de la gestión predictiva:
+* Es la **base para la estimación:** Permite desagregar el trabajo global en paquetes de trabajo manejables y costeables.
+* Es la **base para la planificación:** Los paquetes de trabajo de la WBS se descomponen en actividades que luego se secuencian en el cronograma.
+* Es la **base para el control:** Permite verificar objetivamente el avance del proyecto en función de entregables tangibles completados, evitando la subjetividad de porcentajes de avance abstractos.
+
+#### La Regla del 100%
+La regla del 100% es el principio rector de la construcción de la WBS:
+> La WBS debe abarcar el 100% del trabajo definido por el alcance del proyecto y nada más. Cada nivel descendente debe representar exactamente el 100% del trabajo que compone al nodo padre superior.
+
+Cualquier trabajo que no esté reflejado en la WBS queda formalmente fuera del proyecto. De igual modo, no debe incluirse ningún trabajo que exceda el alcance pactado (evitando el fenómeno de *gold plating*).
+
+#### WBS Orientada a Entregables vs. Lista de Tareas Secuenciales
+Un error conceptual recurrente consiste en confundir la WBS con un cronograma o un listado de tareas operativas ordenadas en el tiempo.
+* **Una lista de tareas secuenciales:** Descompone el trabajo por fases temporales o disciplinas técnicas (ej.: "1. Relevar requerimientos, 2. Diseñar base de datos, 3. Programar interfaz, 4. Probar sistema, 5. Poner en producción"). Esto representa *procesos* o *actividades*, no entregables finales.
+* **Una WBS auténtica:** Se orienta estrictamente a **entregables (productos, componentes físicos o lógicos concretos)**. No refleja secuencia temporal ni dependencias de precedencia. Sus elementos son sustantivos que representan resultados tangibles y verificables.
+
+#### WBS de 3 Niveles para el Sistema de Turnos del Centro de Salud Norte
+
+<MermaidDiagram
+  client:load
+  caption="WBS de 3 niveles — Sistema de Turnos del Centro de Salud Norte"
+  code={`flowchart LR
+    ROOT["1. Sistema de Turnos Centro de Salud Norte"]
+    ROOT --> G["1.1 Gestión del Proyecto"]
+    ROOT --> P["1.2 Módulo de Pacientes"]
+    ROOT --> C["1.3 Gestión Clínica y Recepción"]
+    ROOT --> T["1.4 Integración y Datos"]
+    ROOT --> N["1.5 Notificaciones y Reportes"]
+    ROOT --> D["1.6 Despliegue y Capacitación"]
+
+    G --> G1["1.1.1 Charter y Plan"]
+    G --> G2["1.1.2 Adquisiciones e Integraciones"]
+    G --> G3["1.1.3 Cierre Formal"]
+
+    P --> P1["1.2.1 Portal Autogestión"]
+    P --> P2["1.2.2 Cancelación de Turnos"]
+
+    C --> C1["1.3.1 Panel Agendas (Recepción)"]
+    C --> C2["1.3.2 Vista Diaria Profesionales"]
+
+    T --> T1["1.4.1 Conector Padrón"]
+    T --> T2["1.4.2 Seguridad Datos de Salud"]
+
+    N --> N1["1.5.1 Recordatorios Automáticos"]
+    N --> N2["1.5.2 Reportes de Ocupación"]
+
+    D --> D1["1.6.1 Producción Configurada"]
+    D --> D2["1.6.2 Capacitación a Personal"]`}
+/>
+
+---
+
+### 2.3 Estimación en Proyectos
+
+#### Distinción Fundamental: Esfuerzo, Duración y Costo
+* **Esfuerzo:** Cantidad de unidades de trabajo humano necesarias para completar una actividad o paquete de trabajo (expresado comúnmente en horas-persona o días-persona).
+* **Duración:** Cantidad total de períodos de calendario requeridos para finalizar el trabajo, considerando disponibilidad de recursos, dedicación efectiva y dependencias temporales (expresado en días hábiles, semanas o meses).
+* **Costo:** Monto económico total derivado del esfuerzo de los recursos humanos, licencias, infraestructura, insumos y contingencias financieras.
+
+*Relación crítica:* Dos tareas pueden demandar el mismo esfuerzo (ej.: 40 horas-persona). Si la tarea A la realiza una persona a tiempo completo, su duración será de 1 semana. Si la tarea B la realiza un especialista disponible solo 10 horas semanales, su duración será de 4 semanas. La duración no equivale al esfuerzo.
+
+#### Técnicas de Estimación según la Cátedra
+
+| Técnica | Enfoque Metodológico | Nivel de Precisión | Nivel de Esfuerzo Requerido | Contexto de Aplicación Óptimo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Análoga** | Histórico (Top-Down) | Baja | Bajo | Etapas tempranas, propuesta inicial, escasez de datos o componentes idénticos a proyectos previos. |
+| **Paramétrica** | Estadístico / Algorítmico | Media - Alta | Medio | Trabajo estandarizado con métricas históricas cuantificables (ej.: horas por pantalla o por punto de función). |
+| **PERT (3 Puntos)** | Probabilístico | Alta | Alto | Incertidumbre en actividades individuales; pondera escenarios optimista ($O$), más probable ($M$) y pesimista ($P$). |
+| **Delphi** | Consenso de Expertos | Media | Alto | Problemas novedosos o complejos sin datos previos, buscando neutralizar sesgos individuales mediante rondas anónimas. |
+| **Monte Carlo** | Simulación Computacional | Muy Alta | Muy Alto | Proyectos de alta criticidad; genera miles de escenarios combinando distribuciones de probabilidad de tareas. |
+| **Story Points** | Relativo | Media | Medio | Entornos ágiles; estima complejidad, esfuerzo y riesgo comparativo respecto a una historia pivote. |
+| **#NoEstimates** | Empírico / Métricas de flujo | Variable | Bajo | Mantenimiento o flujo continuo con ítems pequeños y estandarizados, guiado por throughput y lead time. |
+
+#### Estimación Probabilística PERT
+Cuando se aplica la técnica PERT para modelar la duración de una actividad bajo incertidumbre, se utiliza la distribución Beta aproximada mediante el promedio ponderado:
+
+$$t_e = \frac{O + 4M + P}{6}$$
+
+Donde:
+* $t_e$: Tiempo esperado o duración estimada.
+* $O$: Estimación optimista (el mejor de los casos).
+* $M$: Estimación más probable (las condiciones habituales).
+* $P$: Estimación pesimista (el peor escenario plausible).
+
+#### Criterio de Selección según Situaciones del Proyecto
+1. **Arranque con poca información sobre el sistema completo (Propuesta inicial):** Se busca evaluar la viabilidad global del proyecto para decidir si conviene encararlo. No se justifica el alto costo de técnicas probabilísticas complejas. Se utiliza **estimación análoga** (top-down), estimando el **costo** y **duración** globales con bajo esfuerzo analítico.
+2. **Módulo de recordatorios muy similar a uno que el equipo ya realizó en otro centro:** Se cuenta con datos históricos directos de un trabajo análogo idéntico. Se utiliza **estimación análoga** específica para derivar con rapidez el **esfuerzo** y la **duración**.
+3. **Paquete de trabajo bien definido (ej.: "alta de turno por el paciente"):** Con requerimientos claros y diseño cerrado, se aplica **estimación bottom-up** combinada con técnica **paramétrica** para calcular con precisión el **esfuerzo** en horas y luego su **duración** según el recurso asignado.
+
+---
+
+### 2.4 Planificación y Cronograma
+
+#### Derivación del Cronograma desde la WBS
+El cronograma no se crea de forma aislada; se deriva sistemáticamente de la WBS mediante cuatro pasos secuenciales:
+1. **Descomposición de paquetes de trabajo en actividades:** Identificar las acciones operativas necesarias para producir cada entregable terminal.
+2. **Secuenciamiento de actividades:** Establecer el orden lógico y las restricciones tecnológicas mediante relaciones de precedencia.
+3. **Estimación de recursos y duraciones:** Asignar los tiempos de calendario a cada actividad.
+4. **Desarrollo del cronograma:** Modelar la red lógica para identificar el camino crítico, las holguras y los hitos de control.
+
+#### Caso Práctico: Cronograma y Ruta Crítica del Sistema de Turnos
+Se dispone de la siguiente estructura estimada de paquetes de trabajo para el Centro de Salud Norte:
+
+| ID | Paquete de Trabajo / Actividad | Duración ($t$) en semanas | Dependencias (Predecesoras) |
+| :---: | :--- | :---: | :---: |
+| **A** | Relevamiento y diseño general | 2 | — |
+| **B** | Base de datos y modelo de datos | 1 | A |
+| **C** | Módulo de turnos (alta y cancelación) | 3 | B |
+| **D** | Integración con el padrón de pacientes | 2 | B |
+| **E** | Recordatorios automáticos | 2 | C |
+| **F** | Reportes de ocupación | 1 | C, D |
+| **G** | Pruebas integrales | 2 | E, F |
+| **H** | Capacitación y puesta en marcha | 1 | G |
+
+#### Modelado de la Red de Dependencias (Diagrama de Precedencias)
+
+
+<MermaidDiagram
+  client:load
+  caption="Enfoques por Proyecto y por Proceso (PMI y Kanban) — Diagrama 2"
+  code={`graph LR
+    A["A: Relevamiento y diseño — 2 sem"] --> B["B: Base de datos — 1 sem"]
+    B --> C["C: Módulo de turnos — 3 sem"]
+    B --> D["D: Integración padrón — 2 sem"]
+    C --> E["E: Recordatorios automáticos — 2 sem"]
+    C --> F["F: Reportes ocupación — 1 sem"]
+    D --> F
+    E --> G["G: Pruebas integrales — 2 sem"]
+    F --> G
+    G --> H["H: Capacitación y puesta en marcha — 1 sem"]`}
+/>
+
+
+#### Análisis de Caminos y Determinación del Camino Crítico
+Para determinar la duración total mínima del proyecto y las holguras, se calculan las longitudes de todos los caminos posibles desde el inicio hasta el fin:
+
+1. **Camino 1:** $A \rightarrow B \rightarrow C \rightarrow E \rightarrow G \rightarrow H$
+
+   $$\text{Duración}_1 = 2 + 1 + 3 + 2 + 2 + 1 = 11 \text{ semanas}$$
+
+2. **Camino 2:** $A \rightarrow B \rightarrow C \rightarrow F \rightarrow G \rightarrow H$
+
+   $$\text{Duración}_2 = 2 + 1 + 3 + 1 + 2 + 1 = 10 \text{ semanas}$$
+
+3. **Camino 3:** $A \rightarrow B \rightarrow D \rightarrow F \rightarrow G \rightarrow H$
+
+   $$\text{Duración}_3 = 2 + 1 + 2 + 1 + 2 + 1 = 9 \text{ semanas}$$
+
+**Diagnóstico del Cronograma:**
+* **Camino Crítico:** Es la secuencia más extensa de actividades dependientes que determina la duración total del proyecto. En este caso es el **Camino 1 ($A-B-C-E-G-H$)**, con una duración total de **11 semanas**.
+* **Holguras:**
+  * Las actividades sobre el camino crítico tienen holgura cero; cualquier demora en $A, B, C, E, G$ o $H$ retrasará directamente la puesta en marcha.
+  * La actividad $D$ (Integración con el padrón) posee una holgura de 2 semanas respecto al camino crítico.
+  * La actividad $F$ (Reportes de ocupación) posee una holgura de 1 semana respecto al nodo $G$.
+* **Cumplimiento del Hito Estratégico:** La restricción directiva exige estar operativo antes del período de vacunación (~5 meses $\approx 20\text{ a }22$ semanas). El proyecto insume 11 semanas de ruta crítica, lo que brinda un margen de seguridad temporal (colchón de contingencia) de aproximadamente 9 a 11 semanas frente a imprevistos.
+
+---
+
+### 2.5 Gestión del Cambio en el Enfoque Predictivo
+
+#### El Procedimiento Formal de Control de Cambios
+En la gestión predictiva, un cambio no se incorpora de manera informal o directa a solicitud de un interesado. Si a mitad del proyecto la dirección solicita incorporar **teleconsulta**, se debe activar el procedimiento formal de **Control Integrado de Cambios**:
+1. **Registro formal de la solicitud de cambio:** Documentar la propuesta de teleconsulta con su justificación técnica y funcional.
+2. **Análisis de impacto multidimensional:** El PM evalúa el impacto en la triple restricción y variables asociadas:
+   * **Alcance:** Incremento de requerimientos funcionales, nuevos módulos y pruebas.
+   * **Tiempo (Cronograma):** Nuevas actividades que pueden alterar el camino crítico o consumir el colchón temporal.
+   * **Costo (Presupuesto):** Necesidad de mayor esfuerzo de desarrollo, licencias de streaming de video o infraestructura en la nube.
+   * **Calidad y Riesgos:** Exposición de datos médicos sensibles en videollamadas, cumplimiento normativo estricto.
+3. **Decisión del Comité de Control de Cambios (CCB / Sponsor):** Presentar las opciones (aprobar con extensión de plazo y presupuesto, posponer para una fase posterior, o rechazar).
+4. **Actualización de la Línea Base:** Si se aprueba, se redefinen formalmente las líneas base de alcance, tiempo y costo, comunicando el nuevo plan al equipo.
+
+#### Limitación Estructural Evidenciada
+Esta situación pone de manifiesto la principal limitación del plan predictivo: **su resistencia al cambio y su alto costo de adaptación**. Al basarse en la premisa de que el alcance estaba cerrado, cualquier variación sustancial tensiona la relación contractual, genera burocracia de renegociación y demuestra que, en desarrollo de software, los requerimientos evolucionan inevitablemente a medida que los usuarios interactúan con el sistema.
+
+---
+
+### 2.6 Autoevaluación — Unidad 2
+
+#### Preguntas Conceptuales
+1. **¿Cuáles son los tres propósitos institucionales del Project Charter según las directrices de gestión?**
+   * *Respuesta de Cátedra:* Autorizar formalmente la existencia del proyecto en la organización, designar formalmente al Project Manager asignándole nombre y rol, y conferirle nivel de autoridad explícito para utilizar recursos de la empresa en la ejecución de las actividades del proyecto.
+2. **¿En qué consiste la regla del 100% en la WBS y qué consecuencia tiene ignorarla?**
+   * *Respuesta de Cátedra:* Establece que la WBS debe abarcar la totalidad del trabajo definido por el alcance del proyecto (100%) y nada más. La suma del trabajo en los niveles inferiores debe equivaler con exactitud al trabajo del nivel superior inmediato. Si se ignora, pueden omitirse entregables críticos para el éxito del proyecto o incorporarse tareas fuera de alcance que generen sobrecostos (*gold plating*).
+
+#### Preguntas de Razonamiento y Análisis
+3. **Un integrante del equipo propone una WBS ordenada con los ítems: "Relevar requerimientos, Diseñar BD, Programar, Probar". ¿Por qué es un error conceptual inadmisible?**
+   * *Respuesta de Cátedra:* Porque esa estructura descompone el trabajo por etapas cronológicas o actividades del ciclo de vida, constituyendo un plan de tareas temporal y no una WBS. La WBS debe estructurarse obligatoriamente orientada a **entregables** (productos o componentes tangibles del sistema), sin representar secuencia temporal ni fechas.
+4. **¿Por qué la duración de una actividad no equivale a su esfuerzo? Ejemplifique.**
+   * *Respuesta de Cátedra:* El esfuerzo mide las horas de trabajo humano efectivas requeridas para completar una tarea (ej.: 80 horas de programación). La duración mide el tiempo de calendario necesario para completarla. Si disponemos de dos desarrolladores dedicados a tiempo completo (40 h/semana cada uno), el esfuerzo de 80 horas se completará en una duración de 1 semana. Si solo disponemos de un analista a media jornada (20 h/semana), la misma tarea demandará una duración de 4 semanas.
+
+#### Preguntas de Aplicación Práctica
+5. **En el proyecto del Centro de Salud Norte, ¿qué ocurre con la fecha final del proyecto si la actividad D (Integración con el padrón) sufre una demora imprevista de 1 semana? ¿Y si se demora 3 semanas?**
+   * *Respuesta de Cátedra:* La actividad D tiene una duración de 2 semanas y forma parte del Camino 3, cuya duración total es de 9 semanas, frente a las 11 semanas del camino crítico (Camino 1). Posee una holgura total de $11 - 9 = 2$ semanas. Si se demora 1 semana, no altera la fecha final del proyecto, pues consume solo parte de su holgura. Si se demora 3 semanas, supera su holgura disponible en 1 semana, convirtiéndose en parte de un nuevo camino crítico y retrasando la fecha final del proyecto de 11 a 12 semanas.
+
+#### Conceptos Fundamentales para Aprobar la Unidad
+* Dominar la definición y los 8 componentes mínimos del Project Charter, reconociendo qué decisiones le competen y cuáles pertenecen a etapas posteriores.
+* Explicar el principio de diseño de la WBS orientada a entregables y la regla del 100%, diferenciándola taxativamente de cronogramas y listas de tareas.
+* Distinguir conceptualmente Esfuerzo, Duración y Costo, y saber justificar la selección de técnicas de estimación según el momento del proyecto.
+* Calcular e interpretar un diagrama de precedencias, identificando el camino crítico y las consecuencias de las holguras.
+* Explicar el funcionamiento y justificación del control integrado de cambios frente a solicitudes imprevistas.
+
+---
+
+## 3. Enfoque por Proceso (Gestión de Flujo / Kanban)
+
+El enfoque por proceso resulta esencial cuando el software ya ha sido puesto en marcha y pasa a una etapa de mantenimiento, evolución operativa y soporte continuo. El objetivo formativo de la cátedra es diseñar e **interpretar** el sistema de entrega, entender las decisiones del flujo y analizar el impacto de las métricas en la conducta del equipo, excluyendo el cálculo mecánico.
+
+---
+
+### 3.1 Fundamentos de Kanban: Tablero, Límites de WIP y Sistema Pull
+
+#### Caso Contextual: Equipo de Mantenimiento del Sistema de Turnos
+El sistema de turnos del Centro de Salud Norte ya está en producción. Un equipo continuo se encarga de corregir bugs, implementar pedidos de recepción y dirección, y programar mejoras evolutivas. El trabajo llega de manera impredecible y continua. Actualmente el proceso es caótico: acumulación de tareas, cuellos de botella invisibles, retrabajo y falta de visibilidad.
+
+#### Diseño del Tablero Kanban Orientado a Estados Reales
+Un tablero Kanban auténtico modela el flujo de valor a través de los estados reales por los que transita un ítem de trabajo, desde su compromiso hasta su entrega en producción.
+
+*Regla crítica de diseño:* Las columnas del tablero deben representar **estados del trabajo**, nunca roles ni nombres de personas (ej.: no debe existir una columna "Analista", "Programador" o "Tester", sino estados como "En Análisis", "En Desarrollo", "En Pruebas").
+
+A continuación se diseña el tablero para el equipo de mantenimiento, incorporando estados, límites de WIP y cuatro ítems de ejemplo:
+
+
+<MermaidDiagram
+  client:load
+  caption="Enfoques por Proyecto y por Proceso (PMI y Kanban) — Diagrama 3"
+  code={`graph LR
+    subgraph Tablero Kanban de Mantenimiento
+    A["Backlog / Seleccionado — WIP: Sin límite"] --> B["En Análisis / Refinado — WIP: 2"]
+    B --> C["En Desarrollo — WIP: 3"]
+    C --> D["En Pruebas Integrales — WIP: 2"]
+    D --> E["Listo para Despliegue — WIP: 2"]
+    E --> F["En Producción / Hecho — WIP: Sin límite"]
+    end`}
+/>
+
+
+*Distribución de ítems de ejemplo en el tablero:*
+1. **En Análisis / Refinado [WIP = 1/2]:** *Mejora: Exportar reporte de ocupación a formato planilla.*
+2. **En Desarrollo [WIP = 3/3 - LÍMITE ALCANZADO]:**
+   * *Pedido de recepción: Filtrar agenda diaria por especialidad médica.*
+   * *Mejora: Enviar confirmación por correo electrónico al sacar turno.*
+   * *Bug menor: Error visual de alineación en pantalla de profesionales.*
+3. **En Pruebas Integrales [WIP = 1/2]:** *Bug: Recordatorios automáticos duplicados en horas pico.*
+4. **En Producción / Hecho:** *Implementación inicial de agenda de vacunación.*
+
+#### Límites de WIP (Work In Progress) y su Justificación
+El límite de WIP es la cantidad máxima de ítems de trabajo autorizados a coexistir simultáneamente en un estado determinado.
+* **Justificación técnica:** Reducir el WIP minimiza el multitratamiento (*context switching*), reduce el tiempo de ciclo total y expone las restricciones del sistema.
+* **Principio rector:** *"Dejar de empezar y empezar a terminar"* (*Stop starting, start finishing*).
+* **Función de alarma:** Cuando una columna alcanza su límite de WIP, el sistema bloquea el ingreso de nuevo trabajo, forzando al equipo a colaborar en resolver y destrabar los ítems en curso antes de absorber nuevas tareas. De esta forma, los cuellos de botella quedan inmediatamente visibles.
+
+#### Sistema Pull y Gestión de Urgencias Críticas
+El sistema *pull* es un modelo de tracción gobernado por una pregunta operativa central: **"¿Tenemos capacidad disponible en el sistema para empezar algo nuevo?"**. La respuesta viene dada exclusivamente por el estado del tablero y los límites de WIP. Ningún integrante "empuja" (*push*) trabajo a una fase siguiente si esta no tiene cupo en su límite de WIP.
+
+*Escenario de decisión crítica:*
+La columna "En desarrollo" tiene un límite de WIP = 3 y ya cuenta con 3 ítems activos. Ingresa un **bug urgente**: *el sistema no permite cancelar turnos desde la mañana, bloqueando la atención*. Un miembro del equipo sugiere: *"Lo tomo ya mismo y lo pongo en desarrollo, total es una emergencia"*.
+
+*Respuesta y criterio metodológico:*
+El equipo **no debe ignorar el límite de WIP de forma arbitraria**, pues violar las reglas del sistema ante cada imprevisto destruye la predictibilidad y oculta la falta de capacidad. El sistema pull ofrece dos alternativas disciplinadas:
+
+1. **Enfoque de colaboración interna (*Swarming*):** El desarrollador disponible no inicia un cuarto ítem en desarrollo; en su lugar, se suma a colaborar con alguno de los 3 ítems ya abiertos en desarrollo o en pruebas para completarlo rápidamente, liberando el slot de WIP de manera legítima para ingresar la urgencia.
+2. **Clase de Servicio de Urgencia (*Expedite Lane*):** Si la gravedad operativa del bug exige atención inmediata sin esperar liberación, se utiliza una política explícita de **clase de servicio urgente**. Esta clase de servicio cuenta con una regla estricta:
+   * Solo puede existir **un único ítem urgente en todo el sistema** a la vez.
+   * El ítem urgente tiene prioridad absoluta de atención y puede superar transitoriamente el límite local, pero **congela el inicio de cualquier otro trabajo ordinario**.
+   * El equipo entero asiste a remover cualquier obstáculo vinculado a la urgencia.
+
+---
+
+### 3.2 Métricas de Gestión y Calidad en Flujo
+
+#### Distinción Teórica: Métricas de Gestión vs. Métricas de Calidad
+La cátedra enfatiza que las métricas deben comprenderse e interpretarse analíticamente en relación con los incentivos que generan, no mediante cálculo ciego.
+* **Métricas de Gestión / Flujo:** Monitorean el comportamiento, la velocidad, el ritmo y la capacidad de entrega del sistema de trabajo. Indican cómo fluye el proceso.
+* **Métricas de Calidad:** Evalúan la estabilidad técnica, la robustez funcional y el valor intrínseco del producto generado. Indican qué tan bien construido está lo que fluye.
+
+#### Las Cuatro Métricas Centrales de la Cátedra
+
+| Métrica | Clasificación | Definición Operativa | Lectura sobre el Proceso |
+| :--- | :--- | :--- | :--- |
+| **Lead Time** | Gestión / Flujo | Tiempo total transcurrido desde que un pedido es formalmente aceptado en el tablero hasta que se despliega en producción. | Mide la capacidad de respuesta percibida por el usuario/cliente. A menor lead time, mayor agilidad y menor costo de retraso. |
+| **Throughput** | Gestión / Flujo | Cantidad de ítems o pedidos completados y puestos en producción por unidad de tiempo (ej.: pedidos/semana). | Mide la cadencia y productividad real del sistema de entrega sin necesidad de estimar horas. |
+| **Frecuencia de Despliegue** | Gestión / Flujo | Intervalo temporal con el que el equipo libera cambios verificados al entorno productivo (ej.: diaria, semanal). | Indica el nivel de automatización, agilidad en integración y tamaño de los lotes de entrega. |
+| **Tasa de Fallos en el Cambio** | Calidad | Porcentaje de despliegues en producción que causan degradación del servicio, incidentes críticos o requieren rollback/hotfix. | Evalúa la solidez de las prácticas de desarrollo, cobertura de pruebas y estabilidad del pipeline de entrega. |
+
+#### Criterios de una Buena Métrica
+Una métrica de gestión profesional debe cumplir tres criterios obligatorios:
+1. **Asociada a un objetivo de negocio real:** Debe medir un resultado relevante (reducir demoras, elevar estabilidad) y no una actividad burocrática aislada.
+2. **Difícil de "gamear" (manipular):** No debe poder ser alterada artificialmente por las personas medidas sin haber mejorado verdaderamente el proceso.
+3. **Que invite a conversar y no a castigar:** Debe ser una herramienta de diagnóstico colectivo para que el equipo reflexione en retrospectiva sobre sus restricciones, no un instrumento de vigilancia, persecución o premiación individual.
+
+#### Análisis Crítico de Efectos Perversos: Ley de Goodhart
+La dirección propone la siguiente métrica: *"Cantidad de tickets cerrados por persona y por semana, con un piso obligatorio de 8 tickets"*.
+
+*Evaluación de la métrica:*
+* **Clasificación:** Pretende ser una métrica de gestión/productividad, pero es individual, local y descontextualizada.
+* **Calificación:** Es una **pésima métrica**.
+* **Efectos perversos inducidos (Ley de Goodhart):**
+  > "Cuando una medida se convierte en un objetivo, deja de ser una buena medida."
+  * **Fraccionamiento artificial:** El personal comenzará a dividir tareas triviales en múltiples sub-tickets artificiales para alcanzar la cuota numérica de 8 semanales.
+  * **Evasión de tareas complejas:** Nadie querrá tomar refactorizaciones estructurales, bugs complejos o mejoras arquitectónicas porque demandan varios días y comprometen su cuota personal.
+  * **Destrucción de la colaboración:** Si un compañero necesita ayuda para resolver un problema crítico, los demás no colaborarán para no perder tiempo en sus propios tickets individuales.
+  * **Cierre prematuro de tickets:** Se tenderá a cerrar incidentes de forma incompleta ("ticket cerrado") aunque la causa raíz persista, forzando a que el cliente reabra otro ticket posterior.
+
+#### Diagnóstico de Escenarios Cruzados
+*Escenario:* Un equipo presenta una **Frecuencia de Despliegue muy alta** combinada con una **Tasa de Fallos en el Cambio muy alta**.
+
+*Interpretación Diagnóstica:*
+Si se evaluara al equipo analizando exclusivamente la frecuencia de despliegue, la dirección concluiría erróneamente que el equipo es altamente eficiente y ágil ("despliegan varias veces por semana"). Sin embargo, al cruzar el dato con la alta tasa de fallos, el diagnóstico real es de **fricción operativa crítica e inestabilidad estructural**:
+* El equipo está liberando cambios en lotes apresurados sin pruebas automatizadas suficientes ni validaciones exhaustivas.
+* Cada despliegue rompe funcionalidades existentes en el Centro de Salud Norte, generando retrabajo constante, urgencias operativas y pérdida de confianza de los profesionales y pacientes.
+* *Conclusión metodológica:* Una métrica aislada es engañosa. Las métricas de flujo (velocidad) deben equilibrarse obligatoriamente con métricas de calidad (estabilidad).
+
+---
+
+### 3.3 Estimación Adaptativa y #NoEstimates
+
+#### Interacción entre Incertidumbre y Costo de Cambio
+La conveniencia de estimar en detalle por adelantado responde a una relación económica directa:
+
+$$\text{Valor de Estimar} = f(\text{Costo de Cambio}, \text{Incertidumbre})$$
+
+* **En proyectos con alto costo de cambio:** Si modificar una decisión técnica una vez construida es carísimo (ej.: cambiar la base de datos de salud en plena producción), planificar y estimar exhaustivamente al inicio tiene sentido económico.
+* **En mantenimiento continuo con bajo costo de cambio y alta incertidumbre:** Los pedidos son pequeños, diversos y continuos (bugs imprevistos, ajustes de interfaz). Estimar cuántas horas insumirá cada ticket antes de iniciarlo tiene un costo burocrático altísimo y un valor predictivo casi nulo.
+
+#### Previsibilidad con Métricas de Flujo (#NoEstimates)
+En lugar de forzar a los desarrolladores a predecir horas para cada ticket de mantenimiento, el enfoque **#NoEstimates / Adaptativo** fundamenta la previsibilidad en el comportamiento estadístico real del flujo:
+* A partir del **Throughput histórico** (ej.: el equipo entrega consistentemente entre 5 y 7 pedidos por semana) y del **Lead Time histórico** (ej.: el 85% de los tickets clasificados como estándar se resuelven en menos de 4 días desde que entran al tablero), se le puede brindar a la dirección previsibilidad probabilística sólida sin incurrir en el desperdicio de estimar ítem por ítem.
+* Se reemplaza la promesa fija y frágil ("te lo entrego en exactamente 14 horas de desarrollo") por un compromiso basado en datos empíricos del sistema ("históricamente, pedidos de esta naturaleza se entregan en producción en un lapso de 3 a 5 días con un 90% de confianza").
+
+#### Límites del Enfoque #NoEstimates
+El enfoque de métricas de flujo resulta insuficiente en contextos donde:
+1. Se requiere aprobar un **presupuesto de inversión cerrado previo** ante un directorio que exige un número monetario global antes de autorizar fondos.
+2. Existen **dependencias contractuales o regulatorias rígidas** con proveedores externos que penalizan el retraso más allá de una fecha fija inamovible.
+3. Se trata de iniciativas de gran envergadura técnica (*greenfield*) donde el equipo carece de datos históricos de flujo para ese dominio tecnológico. En tales casos, se requerirá estimación análoga, paramétrica o PERT.
+
+---
+
+### 3.4 Mejora de Prácticas y Procesos
+
+#### El Ciclo Empírico de Mejora Continua
+La mejora de procesos no es un acontecimiento aislado o una decisión directiva que se decreta una única vez, sino un ciclo empírico disciplinado de experimentación continua:
+
+
+<MermaidDiagram
+  client:load
+  caption="Enfoques por Proyecto y por Proceso (PMI y Kanban) — Diagrama 4"
+  code={`graph TD
+    A[1. Observar el Flujo y las Métricas] --> B[2. Formular Hipótesis de Mejora]
+    B --> C[3. Ejecutar Experimento Acotado]
+    C --> D[4. Evaluar Resultados sobre el Tablero]
+    D --> A`}
+/>
+
+
+*Pasos del ciclo:*
+1. **Observar:** Detectar anomalías en el sistema mediante el tablero y las métricas (ej.: acumulación de ítems en pruebas, aumento del lead time, reingreso de bugs).
+2. **Formular hipótesis:** Plantear una intervención concreta orientada a causas raíz: *"Si incorporamos criterios de aceptación claros en el refinamiento, entonces la tasa de pedidos rechazados en pruebas disminuirá un 50%"*.
+3. **Probar (Experimento):** Implementar la acción de mejora de forma acotada durante un período determinado (ej.: durante dos semanas).
+4. **Evaluar:** Contrastar los nuevos datos de flujo con el estado anterior para confirmar o refutar la hipótesis, estandarizando la práctica o descartándola.
+
+#### El Refinamiento del Trabajo Entrante
+El **refinamiento** es la actividad sistemática mediante la cual el equipo analiza los pedidos antes de comprometerlos en el tablero para asegurar que los requerimientos estén:
+* **Entendidos:** Claridad absoluta sobre la necesidad funcional y el problema a resolver.
+* **Divididos:** Fraccionados en ítems atómicos de tamaño pequeño y manejable.
+* **Listos (*Definition of Ready*):** Cuentan con criterios de aceptación explícitos y sin dependencias bloqueantes externas.
+
+*Riesgos de omitir el refinamiento:*
+Si el equipo toma pedidos directamente de recepción o dirección sin refinamiento previo:
+* Los ítems se estancarán indefinidamente en "En Desarrollo" o "En Pruebas" por falta de definiciones.
+* Se producirán constantes regresiones (*rebotes hacia atrás* en el tablero), obligando a reprogramar funciones mal comprendidas.
+* Aumentará desmedidamente el Lead Time global del sistema.
+
+#### La Retrospectiva como Motor del Proceso
+La **retrospectiva** es el evento formal de inspección y adaptación donde el equipo examina colectivamente la salud de su proceso.
+
+*Cómo operarla a partir de datos objetivos:*
+* No debe ser una sesión de quejas subjetivas o catarsis emocional. Debe sustentarse en la **evidencia empírica del tablero y las métricas** del período (ej.: lead time creciente, acumulación sostenida en pruebas, bugs reabiertos).
+* **Derivación de acciones concretas:** El equipo identifica la causa sistémica y acuerda acciones de mejora que deben cumplir con ser:
+  * **Pocas (1 o 2 acciones clave):** Concentrar la energía del equipo en lugar de redactar una lista inalcanzable de deseos.
+  * **Accionables:** Con responsables claros y pasos concretos de ejecución inmediata.
+  * **Revisables:** Se evalúan con datos en la siguiente retrospectiva para comprobar si lograron el impacto previsto.
+
+---
+
+### 3.5 Autoevaluación — Unidad 3
+
+#### Preguntas Conceptuales
+1. **¿Por qué las columnas de un tablero Kanban deben modelar estados del trabajo y no roles o personas?**
+   * *Respuesta de Cátedra:* Porque el foco de Kanban es gestionar y optimizar el flujo del trabajo a través del sistema, no controlar las actividades individuales de las personas. Diseñar columnas por roles (ej.: "Programador", "Tester") fragmenta la responsabilidad colectiva, fomenta silos operativos y oculta los verdaderos estados por los que atraviesa el ítem de valor.
+2. **¿Qué relación existe entre el costo de cambio, la incertidumbre y la conveniencia de estimar en horas?**
+   * *Respuesta de Cátedra:* A menor costo de cambiar un ítem y mayor incertidumbre en la demanda (como ocurre en mantenimiento evolutivo), menor justificación económica existe para estimar en detalle por adelantado. El costo del tiempo invertido en predecir horas supera el valor que la estimación aporta, siendo más conveniente operar bajo un enfoque adaptativo o #NoEstimates.
+
+#### Preguntas de Razonamiento y Análisis
+3. **Un equipo tiene un límite de WIP = 3 en desarrollo y las 3 tarjetas están en curso. Entra un bug urgente que paraliza un sector. ¿Por qué es un error metodológico simplemente "abrir una cuarta tarjeta y ponerse a programar"?**
+   * *Respuesta de Cátedra:* Porque ignorar el límite de WIP destruye el principio de tracción del sistema pull, fomenta el multitratamiento, satura la capacidad del equipo y encubre los problemas de flujo. El equipo debe recurrir a colaborar para destrabar una tarea en curso y liberar WIP de manera natural, o aplicar una clase de servicio urgente (*expedite*) con reglas explícitas de suspensión transitoria de otras tareas y límite estricto de una única urgencia a la vez.
+4. **Si la dirección felicita a un equipo porque su frecuencia de despliegue aumentó de mensual a diaria, pero los usuarios reclaman que el sistema vive inestable, ¿qué fallo analítico cometió la dirección?**
+   * *Respuesta de Cátedra:* Cometió el error de evaluar el proceso con una única métrica de flujo (frecuencia de despliegue) ignorando la métrica de calidad complementaria (tasa de fallos en el cambio). Desplegar con alta frecuencia carece de valor si cada liberación introduce incidentes críticos; la velocidad nunca debe optimizarse a expensas de la estabilidad.
+
+#### Preguntas de Aplicación Práctica
+5. **En el equipo del Centro de Salud Norte, las tareas se acumulan en "En pruebas" y rebotan a "En desarrollo" porque "no se entendía qué pedía recepción". ¿Qué intervención de proceso debe proponerse en la retrospectiva?**
+   * *Respuesta de Cátedra:* Debe acordarse como acción inmediata formalizar una instancia sistemática de **refinamiento del trabajo entrante**. Antes de ingresar al tablero, cada pedido de recepción debe revisarse conjuntamente para asegurar que esté claramente comprendido, dividido en un tamaño atómico y acompañado de criterios de aceptación verificables, impidiendo el ingreso de requerimientos ambiguos.
+
+#### Conceptos Fundamentales para Aprobar la Unidad
+* Dominar el diseño de tableros Kanban basados en estados del flujo y la justificación teórica y operativa de los límites de WIP.
+* Explicar el funcionamiento del sistema pull y el tratamiento disciplinado de ítems de urgencia mediante clases de servicio.
+* Conocer las métricas centrales (Lead Time, Throughput, Frecuencia de Despliegue y Tasa de Fallos), diferenciando métricas de flujo de métricas de calidad.
+* Evaluar métricas bajo la Ley de Goodhart y explicar los efectos perversos de las métricas individuales de rendimiento.
+* Fundamentar el enfoque #NoEstimates sobre datos históricos de flujo y sus límites de aplicabilidad.
+* Describir el ciclo de mejora continua empírico, la función preventiva del refinamiento y la derivación de acciones concretas en las retrospectivas.
+
+---
+
+## 4. Síntesis Comparativa Final para Examen
+
+A modo de cierre formativo, la siguiente matriz sintetiza las discrepancias operativas fundamentales entre el Enfoque por Proyecto y el Enfoque por Proceso, integrando la lógica con la que fueron aplicados a los dos escenarios del Centro de Salud Norte:
+
+| Dimensión Analítica | Enfoque por Proyecto (Construcción Inicial) | Enfoque por Proceso (Mantenimiento y Evolución) |
+| :--- | :--- | :--- |
+| **Problema que resuelve** | Construir una solución inexistente bajo restricciones de tiempo y presupuesto fijo (campaña en 5 meses). | Gestionar la demanda continua, heterogénea e imprevisible de soporte, corrección de bugs y mejoras. |
+| **Herramienta Estructural** | WBS / EDT orientada a entregables tangibles y descompuesta jerárquicamente. | Tablero Kanban con límites de WIP explícitos por estado real del flujo. |
+| **Gobierno del Compromiso** | Project Charter y Plan de Gestión con líneas base congeladas de alcance, tiempo y costo. | Sistema Pull con priorización dinámica y políticas de clases de servicio para incidentes. |
+| **Mecanismo de Estimación** | Estimación predictiva (Análoga, Paramétrica, PERT) aplicada sobre paquetes de trabajo definidos. | Estimación adaptativa / #NoEstimates basada en métricas empíricas de flujo (Throughput y Lead Time). |
+| **Respuesta ante Modificaciones** | Proceso formal y restrictivo de Control Integrado de Cambios evaluado por CCB / Patrocinador. | Ciclo ágil de Refinamiento periódico y reordenamiento continuo de la cola de trabajo. |
+| **Mecanismo de Adaptación** | Lecciones aprendidas y cierre formal al finalizar el proyecto. | Retrospectivas periódicas como ciclo empírico de mejora continua (hipótesis $\rightarrow$ prueba $\rightarrow$ evaluación). |

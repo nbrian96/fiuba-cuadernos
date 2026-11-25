@@ -1,0 +1,177 @@
+schemaVersion: "1.0.0"
+quizId: gdsi-entrenador-evaluacion-2
+courseId: gdsi
+title: "Entrenador Rápido de GDSI: Diagnóstico Conceptual en 30 Segundos"
+provenance: interactive_widget
+timeGoalSeconds: 30
+passThresholdPercent: 75
+options:
+  - key: proyectos-procesos
+    label: "Proyectos, Flujo Kanban y PERT/CPM"
+    icon: "📊"
+  - key: charter-stakeholders-wbs
+    label: "Project Charter, Stakeholders y WBS"
+    icon: "📋"
+  - key: integracion-contrataciones
+    label: "Integración y Contrataciones"
+    icon: "🤝"
+  - key: gestion-riesgos
+    label: "Gestión de Riesgos"
+    icon: "🛡️"
+  - key: construccion-agil
+    label: "Construcción Ágil, Scrum y BDD/TDD"
+    icon: "⚡"
+  - key: team-topologies
+    label: "Team Topologies y Carga Cognitiva"
+    icon: "🧩"
+  - key: mejora-metricas-lean
+    label: "Mejora Continua, Lean y Métricas (GQM/DORA)"
+    icon: "📈"
+  - key: toyota-kata
+    label: "Toyota Kata (Improvement y Coaching Kata)"
+    icon: "🎯"
+questions:
+  - id: gdsi-q-01
+    prompt: "En un tablero Kanban la columna de Pruebas alcanzó su límite de WIP=3. Los desarrolladores terminaron dos tareas previas y quieren iniciar otras nuevas. ¿Qué bloque regula esta decisión?"
+    answer: proyectos-procesos
+    paradigmName: "Proyectos, Flujo Kanban y PERT/CPM"
+    trigger: "Sistema Pull y límites de WIP: 'Parar de empezar, empezar a terminar'; los desarrolladores colaboran para destrabar el cuello de botella antes de tomar trabajo nuevo."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 1"
+  - id: gdsi-q-02
+    prompt: "Se estima un módulo con duración optimista O=4 días, más probable M=7 días y pesimista P=16 días, y se requiere acortar el cronograma superponiendo tareas de holgura cero."
+    answer: proyectos-procesos
+    paradigmName: "Proyectos, Flujo Kanban y PERT/CPM"
+    trigger: "Estimación PERT (μ = (O+4M+P)/6 = 8 días, σ = (P-O)/6 = 2 días) y técnica de compresión Fast Tracking sobre la ruta crítica (HT = 0)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 1"
+  - id: gdsi-q-03
+    prompt: "Un equipo mantiene Throughput constante de 4 ítems/día y reduce su WIP promedio de 20 a 8 ítems para bajar el Cycle Time de 5 a 2 días."
+    answer: proyectos-procesos
+    paradigmName: "Proyectos, Flujo Kanban y PERT/CPM"
+    trigger: "Ley de Little aplicada a flujo continuo: Cycle Time = WIP / Throughput."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 1"
+  - id: gdsi-q-04
+    prompt: "Un patrocinador afirma que no hace falta redactar el acta de inicio porque ya existe un Business Case aprobado con análisis de ROI."
+    answer: charter-stakeholders-wbs
+    paradigmName: "Project Charter, Stakeholders y WBS"
+    trigger: "El Business Case justifica la viabilidad económica, pero solo el Project Charter autoriza formalmente el proyecto y otorga autoridad al Project Manager."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 2"
+  - id: gdsi-q-05
+    prompt: "Un organismo regulador no financia el proyecto, pero tiene poder legal para vetar el despliegue y alto interés en las normas de dispensa del sistema."
+    answer: charter-stakeholders-wbs
+    paradigmName: "Project Charter, Stakeholders y WBS"
+    trigger: "Matriz Poder/Interés de Stakeholders: Alto Poder + Alto Interés requiere estrategia 'Gestionar de cerca' (Manage Closely)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 2"
+  - id: gdsi-q-06
+    prompt: "Una WBS incluye 'Mantenimiento del servidor por 5 años posteriores a la entrega' y enumera tareas con verbos en infinitivo en lugar de entregables."
+    answer: charter-stakeholders-wbs
+    paradigmName: "Project Charter, Stakeholders y WBS"
+    trigger: "Regla del 100% de la WBS: abarca solo el alcance temporal del proyecto orientado a entregables (sustantivos), nunca operaciones continuas ni listas de tareas."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 2"
+  - id: gdsi-q-07
+    prompt: "Un desarrollador recibe un pedido verbal de cambio de 15 minutos en un proyecto predictivo y debe decidir si implementarlo directo o exigir una RFC."
+    answer: integracion-contrataciones
+    paradigmName: "Integración y Contrataciones"
+    trigger: "Control Integrado de Cambios (PMBOK): ninguna modificación sobre la línea base se ejecuta sin Solicitud de Cambio (RFC), análisis de impacto y aprobación del CCB."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 3"
+  - id: gdsi-q-08
+    prompt: "Un cliente quiere incorporar una nueva épica de 40 Story Points sin costo adicional removiendo historias no iniciadas equivalentes, o rescindir anticipadamente pagando un 20% del remanente."
+    answer: integracion-contrataciones
+    paradigmName: "Integración y Contrataciones"
+    trigger: "Contratos ágiles de Jeff Sutherland: 'Changes for Free' (intercambio simétrico en Story Points) y 'Money for Nothing' (terminación temprana Win-Win)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 3"
+  - id: gdsi-q-09
+    prompt: "Una organización decide si desarrollar internamente su motor de negocio propietario o contratar un módulo estándar bajo Precio Fijo vs. Costos Reembolsables."
+    answer: integracion-contrataciones
+    paradigmName: "Integración y Contrataciones"
+    trigger: "Decisión Make-or-Buy (core business → Make) y asignación de riesgo contractual: Precio Fijo carga riesgo al vendedor; Costos Reembolsables al comprador."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 3"
+  - id: gdsi-q-10
+    prompt: "Se califica una brecha de seguridad con probabilidad P=4 e impacto I=5 frente a un umbral de tolerancia E=10, requiriendo acción ex ante para bajar P o I."
+    answer: gestion-riesgos
+    paradigmName: "Gestión de Riesgos"
+    trigger: "Exposición E = P × I = 20 (> 10, priorización obligatoria) y distinción entre Plan de Mitigación (preventivo ex ante) y Plan de Contingencia (ex post ante trigger)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 4"
+  - id: gdsi-q-11
+    prompt: "El equipo recorta el primer corte horizontal de un Story Map para validar hipótesis de adopción con usuarios reales antes de construir toda la plataforma."
+    answer: gestion-riesgos
+    paradigmName: "Gestión de Riesgos"
+    trigger: "Gestión de releases e MVP como mitigadores naturales del riesgo de atractivo para el usuario y viabilidad de negocio."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 4"
+  - id: gdsi-q-12
+    prompt: "Para eliminar por completo el riesgo de adoptar una base de datos experimental inestable, se decide cambiar la arquitectura a un motor relacional maduro."
+    answer: gestion-riesgos
+    paradigmName: "Gestión de Riesgos"
+    trigger: "Estrategia de Evasión (Avoidance): modificar el plan o tecnología para llevar la probabilidad P a cero, a diferencia de Transferir o Aceptar."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 4"
+  - id: gdsi-q-13
+    prompt: "Un programador escribe una prueba unitaria en TDD y observa que compila y pasa en verde antes de haber escrito una sola línea de código de producción."
+    answer: construccion-agil
+    paradigmName: "Construcción Ágil, Scrum y BDD/TDD"
+    trigger: "Falla metodológica del ciclo Red-Green-Refactor de TDD: toda prueba debe fallar primero (fase Roja) para validar que realmente prueba un comportamiento nuevo."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 5"
+  - id: gdsi-q-14
+    prompt: "En Planning Poker un desarrollador junior vota 2 Story Points y un senior vota 13 para la misma historia, debiendo decidir cómo resolver la divergencia."
+    answer: construccion-agil
+    paradigmName: "Construcción Ágil, Scrum y BDD/TDD"
+    trigger: "No se promedia ni se impone jerarquía: los extremos exponen sus supuestos técnicos para revelar incertidumbres ocultas y volver a votar hasta converger."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 5"
+  - id: gdsi-q-15
+    prompt: "Una historia agrupa registrar pagos, emitir facturas, generar reportes y sincronizar inventario, y el equipo necesita construir primero un 'Walking Skeleton'."
+    answer: construccion-agil
+    paradigmName: "Construcción Ágil, Scrum y BDD/TDD"
+    trigger: "Viola el criterio INVEST 'Small' (es una épica que debe hacerse slicing) y el Walking Skeleton valida la rebanada horizontal mínima fin-a-fin."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 5"
+  - id: gdsi-q-16
+    prompt: "Una empresa separa Frontend, Backend y DBAs en silos estancos y el sistema resultante termina siendo un monolito de tres capas acopladas."
+    answer: team-topologies
+    paradigmName: "Team Topologies y Carga Cognitiva"
+    trigger: "Ley de Conway (efecto espejo socio-técnico) que se corrige aplicando la Maniobra Inversa de Conway para alinear equipos a dominios."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 6"
+  - id: gdsi-q-17
+    prompt: "Un equipo dedica 15 horas semanales a luchar con scripts de despliegue manuales y certificados vencidos en lugar de resolver reglas del negocio."
+    answer: team-topologies
+    paradigmName: "Team Topologies y Carga Cognitiva"
+    trigger: "Carga Cognitiva Extraña (complejidad accidental) que debe minimizarse mediante automatización y un Platform Team con plataforma autoservicio (TVP)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 6"
+  - id: gdsi-q-18
+    prompt: "La dirección propone fusionar dos equipos de 6 personas en uno de 12 o sumar 7 personas a un proyecto atrasado, disparando los canales a 66 o 105."
+    answer: team-topologies
+    paradigmName: "Team Topologies y Carga Cognitiva"
+    trigger: "Ley de Brooks y crecimiento cuadrático de canales C = n(n-1)/2; superar el umbral de Dunbar (~15) destruye la cohesión y el flujo."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 6"
+  - id: gdsi-q-19
+    prompt: "Un gerente otorga un bono según cantidad de commits por mes y los programadores atomizan su trabajo en micro-commits vacíos llenos de errores."
+    answer: mejora-metricas-lean
+    paradigmName: "Mejora Continua, Lean y Métricas (GQM/DORA)"
+    trigger: "Ley de Goodhart: 'Cuando una medida se convierte en un objetivo, deja de ser una buena medida'. Las métricas miden realidad, no éxito/fracaso."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 7"
+  - id: gdsi-q-20
+    prompt: "Una historia demanda 8 horas netas de trabajo activo (Touch Time) pero tarda 80 horas calendario en llegar a producción por colas de espera."
+    answer: mejora-metricas-lean
+    paradigmName: "Mejora Continua, Lean y Métricas (GQM/DORA)"
+    trigger: "Eficiencia de Flujo = (Touch Time / Lead Time) × 100 = 10%, evidenciando desperdicios Lean (esperas y traspasos/handoffs)."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 7"
+  - id: gdsi-q-21
+    prompt: "Se redacta una meta de medición especificando Objeto, Propósito, Foco de Calidad, Punto de Vista y Contexto antes de definir preguntas y métricas."
+    answer: mejora-metricas-lean
+    paradigmName: "Mejora Continua, Lean y Métricas (GQM/DORA)"
+    trigger: "Nivel Conceptual (Goal) de la metodología GQM (Goal–Question–Metric) de Victor Basili."
+    sourceOrigin: "Apunte Examen GDSI — Unidad 7"
+  - id: gdsi-q-22
+    prompt: "Un equipo técnico no acuerda sobre la causa de los defectos y un ingeniero propone comprar software costoso sin haber observado el proceso en el terreno."
+    answer: toyota-kata
+    paradigmName: "Toyota Kata (Improvement y Coaching Kata)"
+    trigger: "Paso 2 / Experimento 'Ir y ver' (Go and see) en el genba: observar y medir datos reales sin alterar el proceso antes de formular hipótesis de cambio."
+    sourceOrigin: "Apunte Toyota Kata — Unidad 1"
+  - id: gdsi-q-23
+    prompt: "Un líder evita dictar la solución técnica al equipo y aplica el ciclo Ver → Comparar → Instruir usando la Tarjeta de las 5 Preguntas."
+    answer: toyota-kata
+    paradigmName: "Toyota Kata (Improvement y Coaching Kata)"
+    trigger: "Coaching Kata: el Coach gestiona el CÓMO (procedimiento científico) mientras el Aprendiz es dueño del QUÉ (contenido y experimentos)."
+    sourceOrigin: "Apunte Toyota Kata — Unidad 2"
+  - id: gdsi-q-24
+    prompt: "El equipo rechaza planificar en detalle cada paso hasta el desafío a 3 años porque los parámetros del sistema reaccionan de forma impredecible más allá de la evidencia."
+    answer: toyota-kata
+    paradigmName: "Toyota Kata (Improvement y Coaching Kata)"
+    trigger: "Umbral de Conocimiento (Knowledge Threshold): avanzar en zig-zag mediante experimentos cortos PDCA hacia la Next Target Condition."
+    sourceOrigin: "Apunte Toyota Kata — Unidad 1"
