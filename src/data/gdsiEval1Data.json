@@ -1,0 +1,1773 @@
+{
+  "units": [
+    {
+      "id": "u0",
+      "number": 0,
+      "title": "Marco Base: Proyectos, Productos, Procesos y Artful Making",
+      "shortTitle": "U0 · Marco Base y Artful Making",
+      "trapTitle": "Trampa frecuente — Marco Base (Artful Making y Arquetipos)",
+      "trapBody": "No confundir **Control by Release** con *ausencia de control o eliminación de fechas límite*: en *Artful Making*, el deadline es inamovible (*\"Make it great before the deadline\"*) y el líder fija condiciones de borde claras antes de soltar el control prescriptivo. Tampoco asumir que todo desarrollo de software debe gestionarse como **Producto** ágil: una migración masiva de nóminas (PeopleSoft HCM) exige gestión por **Proyecto**, y una mesa operativa con SLAs exige gestión por **Proceso**.",
+      "recallItems": [
+        {
+          "id": "ev1-u0-p1",
+          "code": "P1",
+          "question": "¿Cuáles son las **tres dimensiones** del marco *Artful Making* (Devin & Austin), cómo se compone el **costo de iteración** y por qué el software desplaza el paradigma industrial hacia las cuatro cualidades colaborativas (*Release, Collaboration, Ensemble, Play*)?",
+          "answer": "Robert Austin y Lee Devin (*Artful Making*, 2003) analizan la gestión del trabajo creativo en función de **tres dimensiones**:\n1. **Necesidad de Innovación:** grado en que la solución debe descubrirse porque no existe una receta cerrada previa.\n2. **Repetición Confiable:** grado en que el trabajo requiere ejecutar exactamente lo mismo sin variación.\n3. **Costo de Iteración:** $\\text{Costo de Iteración} = \\text{Reconfiguración} + \\text{Exploración}$ (cuánto cuesta rehacer un ensayo y probar una alternativa).\n\nEn la manufactura industrial tradicional, el material es duro y el costo de iteración es altísimo, por lo que domina el paradigma **\"Get it right the first time\"** (planificación predictiva exhaustiva). En el **software** (y en el teatro), el material es blando y el costo de iteración es bajo, lo que permite desplazar la consigna hacia **\"Make it great before the deadline\"** mediante iteraciones frecuentes hasta la fecha límite.\n\nEsta dinámica se sostiene sobre **cuatro cualidades colaborativas**:\n- **Release (*Control by Release*):** soltar el control prescriptivo detallado para otorgar autonomía dentro de condiciones de borde claras (propósito, restricciones, calidad y *deadline*).\n- **Collaboration:** reconcebir ideas conjuntamente en lugar de limitarse a sumar partes aisladas.\n- **Ensemble:** operar como un elenco de pares interdependientes sin estrellas dominantes que acaparen decisiones.\n- **Play:** doble acepción teatral —el espacio psicológicamente seguro para ensayar y experimentar (*playing*) y la obra integrada que finalmente se entrega (*the play*)."
+        },
+        {
+          "id": "ev1-u0-p2",
+          "code": "P2",
+          "question": "¿En qué se diferencian los arquetipos de gestión por **Producto, Proyecto y Proceso**? Ilustre cada uno con los **4 casos de la Guía Práctica 1**.",
+          "answer": "Los tres arquetipos responden a distintas combinaciones de incertidumbre, horizonte temporal y costo de iteración:\n- **Producto:** horizonte continuo sin fecha de fin predefinida, alta necesidad de innovación e incertidumbre; combina *Discovery* y *Delivery* iterativo para maximizar *outcomes*.\n- **Proyecto:** esfuerzo temporal con inicio, fin e hito acotado; baja incertidumbre funcional o alto costo de error/reversión (*\"Get it right the first time\"*, enfoque PMI o híbrido).\n- **Proceso:** operación continua y repetible sobre sistemas estables orientada a optimizar flujo, calidad uniforme y **SLAs** (Kanban / ITSM).\n\n**Aplicación en los 4 casos de la Guía Práctica 1:**\n1. **Caso 1 — Chatbot Bancario con LLM:** alta necesidad de innovación, baja repetición fija y bajo costo de iteración sobre grupos controlados → **Producto** (descubrimiento y entregas evolutivas).\n2. **Caso 2 — Célula de Administración y Finanzas** (sistemas maduros de +5 años con SLAs de $< 1$ día para clientes y $< 2$ días para proveedores): baja innovación, altísima repetición confiable → **Proceso** (flujo continuo con Kanban / gestión de incidentes).\n3. **Caso 3 — Detección Inteligente de Fotos de Siniestros:** alta incertidumbre inicial en visión por computadora, pero luego operación auditable y repetible → **enfoque mixto evolutivo** (fase inicial de **Producto / Proyecto exploratorio** para validar el modelo, que luego transiciona a **Proceso** operativo estable o Producto estratégico según la decisión del negocio).\n4. **Caso 4 — Implementación Corporativa de PeopleSoft HCM (10.000 empleados):** paquete comercial maduro, baja innovación, altísima sensibilidad legal/salarial y altísimo costo de volver atrás → **Proyecto** con despliegue incremental por oleadas (*rollout* con piloto controlado, evitando un *Big Bang*)."
+        },
+        {
+          "id": "ev1-u0-p3",
+          "code": "P3",
+          "question": "¿Cómo contrastan los modelos de desarrollo **en etapas (cascada), iterativo-incremental, ágil y de flujo continuo** en el manejo de las cuatro variables de gestión (alcance, tiempos, costos y calidad)?",
+          "answer": "- **Modelo en etapas (predictivo / cascada):** fija el **alcance** al inicio en una especificación cerrada y estima tiempo y costo para cumplirlo. Funciona cuando los requisitos son estables y el costo de iteración es alto, pero retrasa la integración y el aprendizaje real hasta el final.\n- **Modelo iterativo-incremental:** divide el trabajo en ciclos cortos que entregan partes funcionales crecientes y refinan la solución progresivamente, reduciendo el riesgo de integración tardía.\n- **Modelo ágil (Scrum / XP):** fija **tiempos** (Sprints de duración fija) y **costos/capacidad** (equipo estable), protege la **calidad** como variable innegociable (*Definition of Done*) y deja el **alcance** como variable flexible y priorizada continuamente según el aprendizaje empírico.\n- **Modelo de flujo continuo (Kanban):** elimina las iteraciones de calendario fijo para gestionar un flujo constante de ítems mediante políticas explícitas, límites de *WIP* y optimización del *Lead Time* y *Cycle Time*.\n\nEn todos los casos, bajo *Control by Release*, la gestión no consiste en microgestionar tareas sino en hacer transparentes estas restricciones y ajustar el modelo al nivel de incertidumbre del dominio."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u0-mc-1",
+          "number": 1,
+          "prompt": "Según Robert Austin y Lee Devin (*Artful Making*), ¿qué combinación de factores hace viable reemplazar el paradigma *\"Get it right the first time\"* por *\"Make it great before the deadline\"* en el desarrollo de software?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Alta necesidad de repetición confiable, ausencia de fecha límite y alto costo de reconfiguración."
+            },
+            {
+              "key": "B",
+              "text": "Alta necesidad de innovación y bajo costo de iteración (reconfiguración más exploración), dentro de una fecha límite clara."
+            },
+            {
+              "key": "C",
+              "text": "Eliminación de las pruebas de calidad para acelerar la entrega y delegación total sin condiciones de borde."
+            },
+            {
+              "key": "D",
+              "text": "Especificación exhaustiva congelada al inicio para evitar cualquier exploración durante la construcción."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Cuando el trabajo requiere innovación y el material permite iterar a bajo costo ($\\text{Reconfiguración} + \\text{Exploración}$ bajos), resulta superior ensayar y refinar repetidamente hasta una fecha límite firme (*\"Make it great before the deadline\"*) en lugar de pretender acertar en el primer intento."
+        },
+        {
+          "id": "ev1-u0-mc-2",
+          "number": 2,
+          "prompt": "Una corporación con 10.000 empleados migra su liquidación de nóminas a una suite comercial madura (PeopleSoft HCM). Un error salarial tiene consecuencias legales y sindicales inmediatas. ¿Qué arquetipo y estrategia corresponden según la Guía Práctica 1?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Gestión por Producto con Sprints exploratorios y experimentos Fake Door sobre la nómina real."
+            },
+            {
+              "key": "B",
+              "text": "Gestión por Proceso puro con Kanban sin hitos ni planificación de migración."
+            },
+            {
+              "key": "C",
+              "text": "Gestión por Proyecto con despliegue escalonado por oleadas (piloto controlado), y transición posterior a Proceso operativo."
+            },
+            {
+              "key": "D",
+              "text": "Gestión por Proyecto con corte Big Bang único para los 10.000 empleados el mismo día."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "PeopleSoft HCM es un paquete comercial maduro (baja innovación, alta repetición confiable y altísimo costo de error/reversión), por lo que corresponde gestión por **Proyecto**. Sin embargo, para mitigar el riesgo masivo se recomienda un despliegue escalonado por oleadas (*rollout*) y luego operar el mantenimiento bajo un enfoque de **Proceso**."
+        },
+        {
+          "id": "ev1-u0-mc-3",
+          "number": 3,
+          "prompt": "Una célula interna mantiene sistemas contables de más de 5 años en producción con acuerdos de nivel de servicio (SLAs) de resolución menores a 1 día para clientes y menores a 2 días para proveedores. ¿Qué enfoque de gestión es el más adecuado?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Gestión por Proceso (flujo continuo / Kanban / ITSM), enfocada en cumplimiento de SLAs y estabilidad operativa."
+            },
+            {
+              "key": "B",
+              "text": "Product Discovery continuo con ciclos de entrevistas etnográficas cada dos semanas."
+            },
+            {
+              "key": "C",
+              "text": "Gestión por Proyecto predictivo de 12 meses con alcance cerrado."
+            },
+            {
+              "key": "D",
+              "text": "Enfoque Artful Making de alta experimentación sin restricciones de repetición confiable."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Se trata de una operación continua y repetible sobre plataformas estables orientada a tiempos de respuesta comprometidos (SLAs). Forzar Sprints de descubrimiento de producto sería contraproducente; el arquetipo adecuado es **Proceso** (Kanban / ITSM)."
+        },
+        {
+          "id": "ev1-u0-mc-4",
+          "number": 4,
+          "prompt": "En *Artful Making*, ¿qué describe con precisión la cualidad colaborativa de **Ensemble** frente a un equipo convencional?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Un arquitecto estrella toma todas las decisiones de diseño y el resto ejecuta sus instrucciones."
+            },
+            {
+              "key": "B",
+              "text": "Un elenco de pares interdependientes que subordina el lucimiento individual al logro de una obra coherente y compartida."
+            },
+            {
+              "key": "C",
+              "text": "Un esquema donde cada especialista trabaja aislado en su capa técnica sin sincronizarse hasta el despliegue."
+            },
+            {
+              "key": "D",
+              "text": "La práctica de reducir al mínimo la comunicación informal para evitar desvío respecto al documento de requisitos."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "*Ensemble* (elenco) refiere a la responsabilidad compartida entre pares sin estrellas dominantes que monopolizan el rumbo creativo, permitiendo reconcebir ideas colaborativamente para elevar la calidad del producto final."
+        }
+      ]
+    },
+    {
+      "id": "u1",
+      "number": 1,
+      "title": "Unidad 1: Product Discovery y Gestión de Incertidumbre",
+      "shortTitle": "U1 · Product Discovery",
+      "trapTitle": "Trampa frecuente — Unidad 1 (Output vs. Outcome y First Crappy Release)",
+      "trapBody": "Confundir **Output** (cantidad de funcionalidades, código o tickets entregados) con **Outcome** (cambio real y observable en la conducta del usuario) es la trampa central de la Unidad 1: según Jeff Patton, **el Output es un costo**, no el objetivo. La segunda trampa es reducir el **MVP** a un *\"First Crappy Release\"* (entregar un producto roto o incompleto por apuro de calendario en vez de un experimento mínimo orientado a aprender).",
+      "recallItems": [
+        {
+          "id": "ev1-u1-p1",
+          "code": "P1",
+          "question": "Explique la cadena **Insumos → Output → Outcome → Impact**, cite la evidencia del **CHAOS Report** y de **Marty Cagan** sobre desperdicio de funcionalidades, y enuncie la regla de oro de Jeff Patton.",
+          "answer": "La cadena de creación de valor en desarrollo de producto distingue cuatro eslabones:\n- **Insumos (*Inputs*):** presupuesto, tiempo, equipo e infraestructura invertidos.\n- **Output:** lo que el equipo construye y despliega (código, pantallas, APIs, historias terminadas). **El Output es un costo, nunca garantiza valor por sí solo.**\n- **Outcome:** el **cambio de comportamiento concreto y observable** en los usuarios o clientes como consecuencia de usar el producto (ej.: pasar de reservar por WhatsApp a reservar online y asistir al partido).\n- **Impact:** el **resultado de negocio o propósito estratégico** de largo plazo derivado de múltiples *outcomes* sostenidos (ingresos recurrentes, retención anual, rentabilidad, impacto ambiental).\n\n**Evidencia empírica del problema:**\n- **Standish Group CHAOS Report:** entre el **$65\\%$ y el $75\\%$** de las funcionalidades construidas en sistemas de software rara vez o nunca se utilizan.\n- **Marty Cagan (*Inspired*):** entre el **$50\\%$ y el $80\\%$** de las ideas de producto no generan el valor esperado por el negocio (o requieren varias iteraciones antes de lograrlo).\n\n**Regla de oro de Jeff Patton:** el éxito no consiste en producir más software, sino en **maximizar el Outcome y el Impact minimizando el Output construido**."
+        },
+        {
+          "id": "ev1-u1-p2",
+          "code": "P2",
+          "question": "¿Cómo evolucionó y se resignificó el concepto de **MVP** desde Frank Robinson y Eric Ries hasta Henrik Kniberg (Spotify)? ¿Por qué debe evitarse el antipatrón *First Crappy Release*?",
+          "answer": "El concepto de **MVP (*Minimum Viable Product*)** suele malinterpretarse en la industria como una excusa para lanzar software incompleto y de mala calidad (*First Crappy Release*). Su sentido riguroso se comprende a través de tres aportes:\n1. **Frank Robinson (2001):** acuñó el término para designar el producto del tamaño justo que ofrece el mayor retorno sobre el riesgo (*sweet spot* entre valor para el cliente y esfuerzo de desarrollo).\n2. **Eric Ries (*Lean Startup*):** lo redefine como un vehículo de aprendizaje dentro del ciclo **Build–Measure–Learn** —la versión que permite recolectar la máxima cantidad de **aprendizaje validado** con el menor esfuerzo— y propone pensar cada paso como el **Next Best Test**.\n3. **Henrik Kniberg (Spotify):** ilustra el MVP con la metáfora del transporte: no se construye primero una rueda suelta (inusable) para recién al final tener un auto, sino **patineta → monopatín → bicicleta → moto → auto**, entregando valor usable y aprendiendo en cada etapa. En Spotify esto se articula en el ciclo **Think it → Build it (1%–2% de usuarios) → Ship it & Tweak it → Scale it**.\n\n**Por qué evitar el *First Crappy Release*:** lanzar un producto roto, sin usabilidad básica ni *Definition of Done*, daña la confianza del usuario, impide saber si el rechazo se debió a la propuesta de valor o a los defectos técnicos, y genera deuda técnica costosa."
+        },
+        {
+          "id": "ev1-u1-p3",
+          "code": "P3",
+          "question": "¿Cómo se estructura el **Product Vision Board** (Roman Pichler), cuáles son los **4 Riesgos Fundamentales de Producto** (Marty Cagan) y cómo se articulan con el **Ciclo de Jeff Patton** (*Sense, Focus, Discovery, Delivery*)?",
+          "answer": "El **Product Vision Board** de Roman Pichler sintetiza la estrategia inicial de un producto en **cinco bloques** que actúan como hipótesis a validar:\n1. **Visión:** propósito inspirador y cambio positivo a lograr.\n2. **Grupo Objetivo (*Target Group*):** segmentos concretos de usuarios y clientes.\n3. **Necesidades (*Needs / Jobs-to-be-Done*):** dolores reales y beneficios buscados.\n4. **Producto:** atributos diferenciadores mínimos que resuelven esas necesidades.\n5. **Objetivos de Negocio (*Business Goals*):** cómo el producto beneficia a la organización (ingresos, ahorro, escala).\n\nCada hipótesis del tablero se contrasta contra los **4 Riesgos Fundamentales de Producto de Marty Cagan**:\n1. **Atractivo / Deseabilidad (*Value Risk*):** ¿los usuarios querrán y adoptarán esto?\n2. **Usabilidad (*Usability Risk*):** ¿pueden entender cómo usarlo sin fricción?\n3. **Factibilidad Técnica (*Feasibility Risk*):** ¿podemos construirlo con nuestra tecnología, tiempo y equipo?\n4. **Viabilidad de Negocio (*Business Viability Risk*):** ¿es sostenible comercial, legal, operativa y financieramente?\n\nPara reducir esta incertidumbre mediante **Deliberate Discovery**, el **ciclo de Jeff Patton** encadena cuatro momentos iterativos: **Sense** (percibir dolores en el entorno real) → **Focus** (priorizar qué oportunidad atacar) → **Discovery** (validar soluciones con experimentos baratos) → **Delivery** (construir, desplegar y optimizar software real en producción)."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u1-mc-1",
+          "number": 1,
+          "prompt": "Un equipo de e-commerce completa los 45 tickets comprometidos en el trimestre y despliega un nuevo buscador avanzado con filtros por voz. Al mes siguiente, las ventas y la tasa de búsqueda exitosa permanecen idénticas. Según Jeff Patton, ¿qué logró el equipo?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Generó Impacto positivo aunque sin Output medible."
+            },
+            {
+              "key": "B",
+              "text": "Generó alto Output (costo de construcción) pero nulo Outcome (sin cambio de conducta) y nulo Impact."
+            },
+            {
+              "key": "C",
+              "text": "Validó el riesgo de deseabilidad pero falló en factibilidad técnica."
+            },
+            {
+              "key": "D",
+              "text": "Cumplió el ciclo Build–Measure–Learn al maximizar la velocidad de entrega."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Desplegar 45 tickets y una funcionalidad nueva es **Output** (costo). Al no modificarse el comportamiento de búsqueda ni las ventas, no hubo **Outcome** ni **Impact**, ilustrando el desperdicio que reporta el CHAOS Report ($65\\%\\text{–}75\\%$ de features sin uso)."
+        },
+        {
+          "id": "ev1-u1-mc-2",
+          "number": 2,
+          "prompt": "Una startup diseña una app de estacionamiento compartido (ParkEasy) y duda si las ordenanzas municipales permiten cobrar por espacios privados y si la comisión cubre los costos operativos. ¿Cuál de los 4 riesgos de Marty Cagan representa esta incertidumbre?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Riesgo de Usabilidad."
+            },
+            {
+              "key": "B",
+              "text": "Riesgo de Factibilidad Técnica."
+            },
+            {
+              "key": "C",
+              "text": "Riesgo de Viabilidad de Negocio."
+            },
+            {
+              "key": "D",
+              "text": "Riesgo de Atractivo / Deseabilidad."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El **Riesgo de Viabilidad de Negocio** evalúa si la solución funciona para la organización desde el punto de vista económico, legal, regulatorio, comercial y operativo (aquí: marco normativo municipal y sustentabilidad de comisiones)."
+        },
+        {
+          "id": "ev1-u1-mc-3",
+          "number": 3,
+          "prompt": "En la metáfora de Henrik Kniberg sobre el MVP y el ciclo de evolución de Spotify, ¿por qué se critica entregar primero una rueda, luego un chasis y recién al final un auto completo?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Porque hasta la última entrega el usuario no recibe ningún valor usable ni genera retroalimentación real de comportamiento."
+            },
+            {
+              "key": "B",
+              "text": "Porque obliga a realizar pruebas A/B demasiado temprano en el ciclo de desarrollo."
+            },
+            {
+              "key": "C",
+              "text": "Porque impide documentar el Product Vision Board antes de empezar."
+            },
+            {
+              "key": "D",
+              "text": "Porque incrementa innecesariamente la frecuencia de despliegues en producción."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Entregar piezas técnicas parciales inutilizables posterga todo el aprendizaje hasta el final. El enfoque de Kniberg (patineta → bicicleta → auto) y el ciclo de Spotify (*Think it → Build it al 1–2% → Ship it & Tweak it → Scale it*) entregan soluciones completas y usables desde el inicio para aprender con usuarios reales."
+        },
+        {
+          "id": "ev1-u1-mc-4",
+          "number": 4,
+          "prompt": "¿Cuál es la diferencia fundamental entre **Deliberate Discovery** y **Accidental Discovery** en el desarrollo de productos digitales?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Deliberate Discovery ocurre solo en producción; Accidental Discovery ocurre en entrevistas."
+            },
+            {
+              "key": "B",
+              "text": "Deliberate Discovery busca explícitamente descubrir lo que no sabemos mediante experimentos tempranos y baratos; Accidental Discovery ocurre cuando descubrimos errores e incógnitas tarde, ya programando o desplegados."
+            },
+            {
+              "key": "C",
+              "text": "Deliberate Discovery elimina por completo el riesgo técnico; Accidental Discovery solo afecta a la usabilidad."
+            },
+            {
+              "key": "D",
+              "text": "Son sinónimos que describen la fase de Sense del ciclo de Jeff Patton."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "*Deliberate Discovery* (Dan North) consiste en reconocer activamente las lagunas de conocimiento e investigarlas deliberadamente antes de invertir fuerte en construcción. *Accidental Discovery* es tropezar con requisitos erróneos o desconocidos en medio del Sprint o en producción, con un costo de retrabajo muy superior."
+        }
+      ]
+    },
+    {
+      "id": "u2",
+      "number": 2,
+      "title": "Unidad 2: Métodos Empíricos de Aprendizaje y Validación",
+      "shortTitle": "U2 · Métodos Empíricos",
+      "trapTitle": "Trampa frecuente — Unidad 2 (Usabilidad ≠ Deseabilidad y Concierge vs. Wizard of Oz)",
+      "trapBody": "Dos trampas clásicas de parcial: (1) creer que una **prueba de usabilidad exitosa** con 5 usuarios demuestra que el mercado comprará o adoptará el producto (**Usabilidad ≠ Deseabilidad**; Kate Moran / NNGroup); (2) confundir **Concierge MVP** (el usuario *sabe* que lo atiende un humano) con **Wizard of Oz MVP** (el usuario *cree* que el sistema es automático), o afirmar que alguno de los dos valida **Factibilidad Técnica** (¡ninguno la valida!).",
+      "recallItems": [
+        {
+          "id": "ev1-u2-p1",
+          "code": "P1",
+          "question": "Compare **The Mom Test** (Rob Fitzpatrick) con las **Pruebas de Usabilidad** (Kate Moran / NNGroup con *Think-Aloud Protocol*): ¿qué valida cada método, cuáles son sus reglas clave y por qué **Usabilidad ≠ Deseabilidad**?",
+          "answer": "**The Mom Test (entrevistas de descubrimiento — Rob Fitzpatrick):**\n- **Qué valida:** existencia, frecuencia e intensidad de un problema real (riesgo de **Atractivo / Deseabilidad** en fases tempranas).\n- **Reglas clave:** (1) hablar de la vida del usuario, nunca de tu idea; (2) preguntar por **hechos concretos del pasado reciente** (\"¿cuándo fue la última vez que te pasó y qué hiciste?\"), nunca por escenarios hipotéticos futuros (\"¿usarías…?\"); (3) hablar menos y escuchar más, buscando compromisos reales (tiempo, dinero, reputación) en lugar de halagos por cortesía.\n\n**Pruebas de Usabilidad (Kate Moran / NNGroup):**\n- **Qué validan:** si un usuario real logra comprender y operar un flujo o prototipo sin trabas (riesgo de **Usabilidad**).\n- **Reglas clave:** se realizan con **~5 usuarios representativos** (detectan cerca del $85\\%$ de los problemas de usabilidad), dándoles tareas realistas sin guiarlos y aplicando el **Think-Aloud Protocol** (pensar en voz alta mientras operan el prototipo).\n\n**Por qué Usabilidad ≠ Deseabilidad:** que 5 participantes completen un checkout en 30 segundos sin errores solo prueba que la interfaz es **operable**, pero **NO prueba** que tengan necesidad real, que vayan a buscar el producto espontáneamente ni que estén dispuestos a pagar por él."
+        },
+        {
+          "id": "ev1-u2-p2",
+          "code": "P2",
+          "question": "Compare **Concierge MVP** vs. **Wizard of Oz MVP**: ¿cuál es la diferencia estructural frente al usuario, qué riesgos validan y **qué riesgo de producto NO valida ninguno de los dos**?",
+          "answer": "Ambos son experimentos conductuales de alta evidencia (~$80\\%$) donde el servicio real se entrega manualmente mediante personas antes de automatizar software costoso, pero difieren en la **transparencia frente al usuario**:\n- **Concierge MVP:** el usuario **sabe explícitamente** que está siendo atendido de manera manual y personalizada por personas (por ejemplo, un asesor o veterinario que coordina turnos y recomendaciones por WhatsApp). Permite aprender en profundidad sobre las necesidades y ajustar el servicio sobre la marcha.\n- **Wizard of Oz MVP:** el usuario interactúa con una interfaz digital y **cree que el sistema funciona automáticamente**, pero detrás de escena un operador humano ejecuta la lógica manualmente (por ejemplo, armar rutas en Google Maps en ReciclaPlus y enviarlas a la app). Valida tanto el valor como la experiencia de interfaz.\n\n**Qué riesgos validan:** principalmente **Atractivo / Deseabilidad** (el usuario realmente usa y valora el resultado fin-a-fin) y, en *Wizard of Oz*, también **Usabilidad** de la experiencia percibida.\n\n**Qué riesgo NO valida ninguno de los dos:** **NO validan Factibilidad Técnica** ni escalabilidad del software automatizado (algoritmos, rendimiento, integraciones bajo carga), porque la tecnología compleja todavía no se construyó. Para mitigar factibilidad técnica se necesita un **Spike técnico** o prototipo arquitectónico."
+        },
+        {
+          "id": "ev1-u2-p3",
+          "code": "P3",
+          "question": "Ordene la **Jerarquía de Evidencia Empírica** de mayor a menor confianza, explique qué demuestra (y qué **no** demuestra) un **Fake Door / Smoke Test** y cuándo conviene usar **Observación Etnográfica / Contextual**.",
+          "answer": "La fuerza de la evidencia depende del **costo real que asume el usuario** (acción en producción > comportamiento asistido > clic exploratorio > relato pasado > opinión futura):\n1. **A/B Testing en producción (~$95\\%$):** comportamiento estadístico real en escala (etapa *Delivery / Tweak it*).\n2. **Concierge / Wizard of Oz MVP (~$80\\%$):** comportamiento fin-a-fin real con entrega del servicio (etapa *Discovery*).\n3. **Fake Door / Smoke Test (~$65\\%$):** acción de bajo costo como un clic o registro de interés ante una propuesta aún no construida (etapa *Discovery* temprano).\n4. **Pruebas de Usabilidad con 5 usuarios (~$50\\%$):** operabilidad de interfaz, pero sin validar demanda de mercado.\n5. **Entrevistas *The Mom Test* (~$35\\%$):** hechos pasados verificables sobre dolores reales (etapa *Sense*).\n6. **Encuestas de opinión futura (~$15\\%$):** evidencia muy débil, altamente contaminada por sesgo de cortesía y optimismo.\n\n**Alcance y límite del Fake Door:** demuestra que un mensaje captura atención e interés inicial (ej.: $70/400$ clics $= 17{,}5\\%$ en ClubPlay), pero **no prueba** compromiso de alto costo (asistir, pagar, repetir el uso).\n\n**Observación Etnográfica / Contextual:** se ubica en la etapa **Sense** de Patton; consiste en observar al usuario en su entorno real de trabajo o vida cotidiana para descubrir fricciones, hábitos y restricciones contextuales que las personas omiten o racionalizan en entrevistas."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u2-mc-1",
+          "number": 1,
+          "prompt": "Una plataforma educativa (EduLearn) prueba su nuevo flujo de compra con 5 usuarios aplicando *Think-Aloud*: los 5 completan el pago en menos de un minuto sin cometer errores. Al lanzar a producción, las ventas son prácticamente nulas. ¿Qué error conceptual cometió el equipo?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Debió entrevistar al menos a 50 usuarios en la prueba de usabilidad para tener significancia estadística."
+            },
+            {
+              "key": "B",
+              "text": "Confundió validación de Usabilidad (la interfaz es operable) con validación de Deseabilidad / Atractivo (el mercado quiere comprar el curso)."
+            },
+            {
+              "key": "C",
+              "text": "Aplicó Think-Aloud en lugar de enviar una encuesta masiva preguntando si comprarían el curso."
+            },
+            {
+              "key": "D",
+              "text": "No evaluó la cobertura de código del carrito de compras antes de la prueba."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Las pruebas de usabilidad con 5 usuarios validan **Usabilidad** (si las personas pueden operar el flujo sin trabas), pero **nunca validan Deseabilidad ni disposición real a pagar** (Kate Moran / NNGroup)."
+        },
+        {
+          "id": "ev1-u2-mc-2",
+          "number": 2,
+          "prompt": "Durante una entrevista de descubrimiento para una app de planificación de cenas familiares, ¿cuál de las siguientes preguntas respeta los principios de **The Mom Test**?",
+          "options": [
+            {
+              "key": "A",
+              "text": "\"Si lanzáramos una app que arma tu menú semanal automáticamente, ¿la descargarías?\""
+            },
+            {
+              "key": "B",
+              "text": "\"¿Cuánto pagarías por mes por un asistente inteligente de compras de supermercado?\""
+            },
+            {
+              "key": "C",
+              "text": "\"Contame cómo organizaste las cenas de la última semana: ¿qué te resultó más tedioso y cómo lo resolviste?\""
+            },
+            {
+              "key": "D",
+              "text": "\"¿No te parece genial poder escanear la heladera para recibir recetas en dos segundos?\""
+            }
+          ],
+          "correctKey": "C",
+          "justification": "*The Mom Test* exige indagar sobre la vida real del usuario y **hechos concretos del pasado reciente** sin mencionar la propia idea ni pedir promesas hipotéticas futuras, evitando el sesgo de cortesía."
+        },
+        {
+          "id": "ev1-u2-mc-3",
+          "number": 3,
+          "prompt": "Una startup veterinaria ofrece consultas rápidas a través de una app donde el usuario cree que una IA analiza los síntomas en tiempo real, pero en realidad un veterinario humano redacta las respuestas detrás de escena. ¿Qué técnica aplica y qué riesgo **NO** queda validado?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Concierge MVP; no queda validada la Usabilidad."
+            },
+            {
+              "key": "B",
+              "text": "Wizard of Oz MVP; no queda validada la Factibilidad Técnica del motor de IA automatizado."
+            },
+            {
+              "key": "C",
+              "text": "Fake Door MVP; no queda validada la Viabilidad Legal."
+            },
+            {
+              "key": "D",
+              "text": "A/B Testing; no queda validada la Deseabilidad."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Como el usuario cree que es automático mientras opera una persona detrás, se trata de un **Wizard of Oz MVP**. Valida deseabilidad y experiencia de uso, pero **no valida la Factibilidad Técnica** ni la precisión/escalabilidad de la IA que aún no fue construida."
+        },
+        {
+          "id": "ev1-u2-mc-4",
+          "number": 4,
+          "prompt": "En el ciclo de desarrollo de producto de Jeff Patton (*Sense, Focus, Discovery, Delivery*), ¿en qué fase corresponde aplicar un experimento **A/B Testing**?",
+          "options": [
+            {
+              "key": "A",
+              "text": "En Sense, antes de definir el grupo objetivo."
+            },
+            {
+              "key": "B",
+              "text": "En Focus, para decidir qué problema elegir en un taller con stakeholders."
+            },
+            {
+              "key": "C",
+              "text": "En Delivery (optimización / Tweak it), una vez que el producto está en producción con tráfico real suficiente."
+            },
+            {
+              "key": "D",
+              "text": "Antes de realizar entrevistas The Mom Test para evitar sesgos cualitativos."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El **A/B Testing** requiere software operativo en producción y volumen suficiente de usuarios reales para comparar variantes estadísticamente; pertenece a la fase de **Delivery** (*Tweak it*), no a la exploración inicial de problemas."
+        }
+      ]
+    },
+    {
+      "id": "u3",
+      "number": 3,
+      "title": "Unidad 3: Construcción con Scrum y BDD",
+      "shortTitle": "U3 · Scrum y BDD",
+      "trapTitle": "Trampa frecuente — Unidad 3 (Slicing Horizontal, Tarjetas Rojas y BDD ≠ Product Discovery)",
+      "trapBody": "Tres errores clásicos: (1) partir historias por **capas técnicas (BD / Backend / Frontend = Slicing Horizontal)** en lugar de rebanadas fin-a-fin usables (**Slicing Vertical**); (2) aceptar en un Sprint una historia cuyo **Example Map** tiene muchas **tarjetas rojas** abiertas (dispara *Accidental Discovery*); (3) confundir **BDD Discovery** (clarificar reglas de una historia ya elegida) con **Product Discovery** (validar si la idea genera valor en el mercado).",
+      "recallItems": [
+        {
+          "id": "ev1-u3-p1",
+          "code": "P1",
+          "question": "Describa la técnica **Example Mapping** (Matt Wynne / Nagy & Rose): sus **4 colores de tarjetas**, la dinámica de los *Three Amigos* y las **señales visuales de diagnóstico** que arroja el tablero.",
+          "answer": "**Example Mapping** es una conversación estructurada y acotada en tiempo (*timebox* de 20 a 30 minutos) entre los **Three Amigos** (Negocio/PO, Desarrollo y Testing) para construir entendimiento compartido de una historia de usuario antes de codificarla.\n\n**Los 4 colores de tarjetas:**\n- **Amarilla (Story):** la Historia de Usuario en el extremo superior.\n- **Azul (Rules):** cada criterio de aceptación o regla de negocio que delimita el comportamiento esperado.\n- **Verde (Examples):** instancias concretas con datos reales y casos borde colocadas debajo de cada regla (insumo directo para escenarios Gherkin).\n- **Roja (Questions):** dudas, ambigüedades o supuestos abiertos que nadie en la sala puede responder en el momento.\n\n**Señales visuales de diagnóstico:**\n1. **Demasiadas tarjetas azules (muchas reglas):** la historia es en realidad una **épica demasiado grande** → aplicar **Slicing Vertical** para partirla en historias más pequeñas.\n2. **Demasiadas tarjetas verdes bajo una misma regla:** la regla es excesivamente compleja o confusa → simplificarla o subdividirla.\n3. **Un tablero lleno de tarjetas rojas:** falta entendimiento del problema → la historia **NO cumple la Definition of Ready (DoR)** y **NO debe entrar al Sprint** (meterla generaría *Accidental Discovery* y retrabajo)."
+        },
+        {
+          "id": "ev1-u3-p2",
+          "code": "P2",
+          "question": "¿Cuál es la diferencia entre **BDD Discovery** y **Product Discovery**, y cómo se articulan las **tres prácticas de BDD** (*Discovery → Formulation → Automation*)?",
+          "answer": "Aunque ambos comparten la palabra *Discovery*, operan en niveles distintos:\n- **Product Discovery:** responde a *\"¿estamos construyendo el producto correcto?\"*. Valida necesidades reales de mercado, propuesta de valor, deseabilidad y viabilidad de negocio mediante experimentos empíricos (Mom Test, Fake Door, Concierge, Wizard of Oz) **antes** de decidir construir.\n- **BDD Discovery (*Behaviour-Driven Development*):** responde a *\"¿entendemos todos con exactitud cómo debe comportarse esta historia ya elegida?\"*. Explora reglas de negocio, ejemplos concretos y casos borde con los *Three Amigos* para eliminar ambigüedades antes de escribir código.\n\n**Las tres prácticas de BDD (Nagy & Rose):**\n1. **Discovery:** conversación colaborativa estructurada (ej.: *Example Mapping*) para acordar reglas y ejemplos concretos.\n2. **Formulation:** traducir los ejemplos seleccionados a escenarios legibles en lenguaje ubicuo estructurado (**Gherkin: Given / When / Then** — *Dado / Cuando / Entonces*) que actúan como documentación viva.\n3. **Automation:** conectar esos escenarios a pruebas de aceptación automatizadas (*ATDD / BDD*) que verifican continuamente la **calidad externa** del sistema y evitan regresiones."
+        },
+        {
+          "id": "ev1-u3-p3",
+          "code": "P3",
+          "question": "Explique los criterios **INVEST**, el **Slicing Vertical vs. Horizontal** y la taxonomía de **5 Dobles de Prueba** de Gerard Meszaros (*Dummy, Stub, Spy, Mock, Fake*).",
+          "answer": "**INVEST (Bill Wake):** una buena Historia de Usuario debe ser **I**ndependiente, **N**egociable, **V**aliosa (*Valuable*), **E**stimable, **S**mall (pequeña) y **T**esteable.\n\n**Slicing Vertical vs. Horizontal:**\n- **Slicing Vertical:** divide una funcionalidad grande en rebanadas delgadas que atraviesan todas las capas técnicas (UI + lógica + persistencia) y entregan **valor utilizable fin-a-fin** en cada Sprint (ej.: primero reserva con seña en el club, luego pago online).\n- **Slicing Horizontal (antipatrón):** divide por capas técnicas (Historia 1: BD, Historia 2: API, Historia 3: pantallas). Viola *Valuable*, no entrega nada operable al usuario al cerrar un Sprint parcial y acumula *WIP*.\n\n**Taxonomía de 5 Dobles de Prueba (Gerard Meszaros) para aislar pruebas automatizadas (calidad interna / TDD):**\n1. **Dummy:** objeto vacío pasado solo para completar una firma de parámetros; nunca se invoca.\n2. **Stub:** provee respuestas preprogramadas y fijas (*canned answers*) a las llamadas que recibe durante la prueba.\n3. **Spy:** además de actuar como *Stub*, registra información sobre cómo fue invocado (cantidad de llamadas, argumentos recibidos) para verificarla luego.\n4. **Mock:** objeto preprogramado con **expectativas estrictas** sobre las interacciones exactas que debe recibir (verifica comportamiento y falla si no se invoca según lo esperado).\n5. **Fake:** posee una **implementación funcional real pero simplificada** que sirve para pruebas pero no para producción (ej.: base de datos en memoria)."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u3-mc-1",
+          "number": 1,
+          "prompt": "En una sesión de *Example Mapping* de 25 minutos para una app veterinaria (PetCare), los *Three Amigos* acumulan 1 tarjeta amarilla, 7 tarjetas azules, 14 verdes y 1 roja menor ya aclarada. ¿Cuál es el diagnóstico correcto?",
+          "options": [
+            {
+              "key": "A",
+              "text": "La historia tiene demasiada incertidumbre y debe descartarse del producto."
+            },
+            {
+              "key": "B",
+              "text": "La historia es demasiado grande (una épica con demasiadas reglas) y conviene dividirla mediante Slicing Vertical antes del Sprint."
+            },
+            {
+              "key": "C",
+              "text": "El equipo debe convertir las 7 reglas en 7 historias horizontales separadas por frontend y backend."
+            },
+            {
+              "key": "D",
+              "text": "La historia está perfectamente dimensionada y debe comprometerse entera en un solo Sprint."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Muchas tarjetas azules (7 reglas) y verdes con casi ninguna roja indican que el comportamiento se entiende bien, pero el alcance es demasiado grande (**épica**). La acción correcta es aplicar **Slicing Vertical** para partirla en historias más pequeñas y valiosas."
+        },
+        {
+          "id": "ev1-u3-mc-2",
+          "number": 2,
+          "prompt": "Para implementar pagos con QR en PayQuick, el equipo propone: *H1: crear tablas de transacciones; H2: construir microservicio de validación; H3: diseñar pantalla de escaneo QR*. ¿Qué problema presenta esta división?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Aplica Slicing Horizontal por capas técnicas: ninguna historia entrega valor utilizable por sí sola y viola el criterio Valuable de INVEST."
+            },
+            {
+              "key": "B",
+              "text": "Aplica Slicing Vertical excesivo que duplica la base de datos."
+            },
+            {
+              "key": "C",
+              "text": "Confunde Example Mapping con User Story Mapping."
+            },
+            {
+              "key": "D",
+              "text": "No presenta problemas porque en Scrum el Product Backlog debe ordenarse por capas arquitectónicas."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Dividir por base de datos, backend y frontend es **Slicing Horizontal** (tareas técnicas internas, no historias de usuario). Una buena partición vertical entregaría, por ejemplo, primero pago QR con monto fijo y tarjeta de débito de punta a punta, y luego cuotas, descuentos o múltiples billeteras."
+        },
+        {
+          "id": "ev1-u3-mc-3",
+          "number": 3,
+          "prompt": "Al escribir pruebas unitarias automatizadas para un servicio de facturación, un desarrollador reemplaza la base de datos PostgreSQL por una implementación funcional simplificada en memoria (HashMap). Según Gerard Meszaros, ¿qué tipo de doble de prueba está utilizando?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Dummy."
+            },
+            {
+              "key": "B",
+              "text": "Mock."
+            },
+            {
+              "key": "C",
+              "text": "Fake."
+            },
+            {
+              "key": "D",
+              "text": "Stub."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Un **Fake** tiene una implementación operativa real pero simplificada (como una BD en memoria) que permite ejecutar el flujo sin depender de infraestructura pesada, a diferencia de un *Stub* (respuestas fijas) o un *Mock* (verificación de expectativas de invocación)."
+        },
+        {
+          "id": "ev1-u3-mc-4",
+          "number": 4,
+          "prompt": "¿Por qué en BDD la fase de **Formulation** (*Given / When / Then*) debe ocurrir **después** de *Discovery* y **antes** de *Automation*?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Porque primero se construye entendimiento compartido con ejemplos concretos (Discovery), luego se redactan esos ejemplos en lenguaje ubicuo verificable (Formulation) y recién entonces se automatizan como especificaciones ejecutables."
+            },
+            {
+              "key": "B",
+              "text": "Porque el Product Owner debe programar los tests unitarios antes de conversar con los desarrolladores."
+            },
+            {
+              "key": "C",
+              "text": "Porque Formulation reemplaza a Product Discovery para validar la viabilidad financiera del producto."
+            },
+            {
+              "key": "D",
+              "text": "Porque las tarjetas rojas del Example Map deben convertirse directamente en código Gherkin."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Automatizar antes de acordar reglas y ejemplos consolida malentendidos en código. El flujo **Discovery → Formulation → Automation** asegura que las pruebas automatizadas reflejen el lenguaje y comportamiento realmente consensuado por los *Three Amigos*."
+        }
+      ]
+    },
+    {
+      "id": "u4",
+      "number": 4,
+      "title": "Unidad 4: Revisión del Avance y Contrastación Empírica",
+      "shortTitle": "U4 · Revisión y DoD",
+      "trapTitle": "Trampa frecuente — Unidad 4 (Mostrar historias sin DoD y mezclar Review con Retrospectiva)",
+      "trapBody": "Regla inquebrantable de Scrum: si una historia funciona en la máquina local de un desarrollador pero **no cumple el 100% de la Definition of Done (DoD)** (por ejemplo, falla en CI o le faltan pruebas), **NO es parte del Incremento, NO se muestra en la Sprint Review y vuelve al Product Backlog**. La segunda trampa es usar la Sprint Review para debatir problemas internos de coordinación del equipo frente a stakeholders en vez de llevarlos a la **Sprint Retrospective**.",
+      "recallItems": [
+        {
+          "id": "ev1-u4-p1",
+          "code": "P1",
+          "question": "¿Cómo se dividen las responsabilidades entre **Product Owner** y **Developers** respecto del *Product Backlog*, el *Sprint Backlog*, el *Incremento* y la **Definition of Done (DoD)**? ¿Qué ocurre si una historia no cumple la DoD al cierre del Sprint?",
+          "answer": "La Guía de Scrum (2020) vincula cada artefacto a un **compromiso explícito** y responsabilidades claras:\n- **Product Backlog (compromiso: *Product Goal*):** es responsabilidad exclusiva del **Product Owner** maximizar el valor del producto, definir y comunicar el *Product Goal* y ordenar los ítems del *Product Backlog*.\n- **Sprint Backlog (compromiso: *Sprint Goal*):** pertenece exclusivamente a los **Developers**. Ellos deciden *cuánto* trabajo pueden comprometer en el Sprint y *cómo* lo construirán; nadie externo (ni el PO ni gerencia) puede imponerles tareas ni sobrecargar el Sprint.\n- **Incremento (compromiso: *Definition of Done*):** nace únicamente cuando un ítem del *Product Backlog* cumple el **$100\\%$ de la DoD** (estándar formal de calidad compartida: pruebas automatizadas, integración en CI, revisión, despliegue listo). El *Scrum Master* vela por la transparencia y la efectividad del marco.\n\n**Qué ocurre si un ítem no cumple la DoD al cierre del Sprint:** **NO puede liberarse ni presentarse en la Sprint Review** como trabajo terminado; no suma velocidad y **regresa al Product Backlog** para ser reconsiderado por el PO en futuros Sprints."
+        },
+        {
+          "id": "ev1-u4-p2",
+          "code": "P2",
+          "question": "Según el caso **\"Un día de desarrollo ágil\" (Cap. 19)**, ¿cómo debe gestionar un equipo Scrum un pedido urgente y legítimo de negocio (ej.: demo para un inversor) que aparece a mitad de un Sprint?",
+          "answer": "En Scrum el *Sprint Goal* se protege, pero el alcance del *Sprint Backlog* puede **renegociarse entre el Product Owner y los Developers** a medida que se aprende más, sin romper la capacidad sostenible ni la calidad:\n1. **Evaluar legitimidad e impacto en el Sprint Goal:** el PO verifica si la urgencia justifica intervenir el Sprint en curso y conversa abiertamente con los Developers.\n2. **Slicing mínimo + Planning Poker exprés:** el equipo reduce el pedido urgente a su **mínima expresión valiosa** (rebanada vertical estrictamente necesaria para el objetivo de negocio) y realiza una estimación rápida.\n3. **Intercambio equilibrado (*swap*):** para no inflar el *WIP* ni forzar horas extras, se **retira del Sprint una historia aún no iniciada de tamaño equivalente** (mismos Story Points) que no comprometa el *Sprint Goal*, devolviéndola al *Product Backlog*.\n4. **Mantener intacta la DoD:** la urgencia jamás habilita saltear pruebas ni integración continua. Si el cambio volviera obsoleto el *Sprint Goal*, solo el PO tiene autoridad para cancelar el Sprint."
+        },
+        {
+          "id": "ev1-u4-p3",
+          "code": "P3",
+          "question": "¿Cómo se utiliza el **Mapa de Ejemplos** en la contrastación empírica del avance, y cuál es la diferencia estructural entre **Sprint Review** y **Sprint Retrospective**?",
+          "answer": "En la revisión empírica del avance, los ejemplos concretos (tarjetas verdes y escenarios `Given / When / Then`) construidos durante *Example Mapping* actúan como **criterio objetivo de contrastación** entre lo esperado y lo realmente construido en el Incremento, evitando discusiones subjetivas de último minuto.\n\n**Diferencia estructural entre ambos eventos de cierre:**\n- **Sprint Review (Revisión):** inspecciona el **Producto** (el Incremento que cumple 100% DoD, métricas de uso/*outcomes* y cambios del contexto). Participan el **Scrum Team + Stakeholders clave** invitados por el PO. Su salida es un **Product Backlog adaptado y repriorizado** hacia el *Product Goal*.\n- **Sprint Retrospective (Retrospectiva):** inspecciona el **Proceso, las interacciones, las herramientas y la propia DoD**. Participa **exclusivamente el Scrum Team** para preservar la seguridad psicológica. Su salida son **1 o 2 mejoras concretas** para el siguiente Sprint.\n\nMezclar quejas internas de equipo frente a stakeholders en la Review destruye la confianza, y discutir nuevas features de negocio en la Retrospectiva desvía el espacio de mejora del proceso."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u4-mc-1",
+          "number": 1,
+          "prompt": "Faltando una hora para la Sprint Review, 3 historias cumplen el 100% de la DoD, pero la 4ta funciona solo en la notebook de un desarrollador y falla al compilar en el servidor de CI. El desarrollador sugiere mostrarla desde su máquina *\"aclarando que faltan detalles menores\"*. ¿Qué exige Scrum?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Mostrarla desde la máquina local y computar el 80% de sus Story Points en la velocidad del Sprint."
+            },
+            {
+              "key": "B",
+              "text": "NO mostrarla como Incremento en la Sprint Review, no contar sus puntos y devolverla al Product Backlog porque incumple la Definition of Done."
+            },
+            {
+              "key": "C",
+              "text": "Extender el Sprint 2 días más hasta que pase el servidor de CI."
+            },
+            {
+              "key": "D",
+              "text": "Relajar temporalmente la DoD solo para este Sprint para no decepcionar a los stakeholders."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La **Definition of Done** garantiza la transparencia del Incremento. Un ítem que no cumple el $100\\%$ de la DoD no forma parte del Incremento, no se presenta como terminado en la Review y regresa al *Product Backlog*. Tampoco se extienden Sprints (son *time-boxed*)."
+        },
+        {
+          "id": "ev1-u4-mc-2",
+          "number": 2,
+          "prompt": "En el caso LogiTrack, el Product Owner intenta asignar directamente tareas técnicas individuales a cada desarrollador dentro del Sprint Backlog y sumar dos historias extra el día 7 del Sprint sin sacar nada. ¿Qué principio de Scrum está violando?",
+          "options": [
+            {
+              "key": "A",
+              "text": "El Product Owner es dueño del Product Backlog, pero el Sprint Backlog pertenece exclusivamente a los Developers, quienes deciden cómo organizarse y qué alcance pueden sostener."
+            },
+            {
+              "key": "B",
+              "text": "El Product Owner solo puede hablar con los Developers durante la Sprint Review."
+            },
+            {
+              "key": "C",
+              "text": "Los Developers son los únicos responsables de ordenar el Product Backlog y definir el Product Goal."
+            },
+            {
+              "key": "D",
+              "text": "Ninguno: el Product Owner actúa como jefe de proyecto sobre el Sprint Backlog."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "En Scrum existe separación clara de responsabilidades: el **PO** gestiona el *Product Backlog* (el *qué* y su valor), mientras los **Developers** son dueños exclusivos del *Sprint Backlog* (el *cuánto* y el *cómo*)."
+        },
+        {
+          "id": "ev1-u4-mc-3",
+          "number": 3,
+          "prompt": "A mitad de un Sprint de 2 semanas surge una oportunidad comercial urgente que requiere una funcionalidad pequeña para una reunión con un inversor. ¿Cuál es la respuesta ágil correcta (*Un día de desarrollo ágil*)?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Rechazar categóricamente cualquier conversación hasta que termine el Sprint, sin evaluar su valor."
+            },
+            {
+              "key": "B",
+              "text": "Agregar el pedido al Sprint sin quitar nada y pedir horas extras al equipo."
+            },
+            {
+              "key": "C",
+              "text": "Negociar con el PO, recortar el pedido a su mínima expresión valiosa, estimarlo rápido e intercambiarlo por una historia no iniciada de puntaje equivalente sin dañar el Sprint Goal ni la DoD."
+            },
+            {
+              "key": "D",
+              "text": "Implementar el pedido sin pruebas automatizadas para ahorrar tiempo."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El intercambio equilibrado (*swap*) de una rebanada mínima estimada por una historia no iniciada de igual puntaje permite responder al negocio con agilidad protegiendo el *Sprint Goal*, el ritmo sostenible y la *Definition of Done*."
+        },
+        {
+          "id": "ev1-u4-mc-4",
+          "number": 4,
+          "prompt": "Durante el cierre de un Sprint, el equipo necesita tratar dos temas: (1) ajustar la prioridad del próximo release según el feedback de usuarios sobre la tasa de conversión; (2) resolver demoras recurrentes en las revisiones de Pull Requests entre desarrolladores. ¿Dónde debe tratarse cada tema?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Ambos en la Sprint Review para maximizar transparencia con los clientes."
+            },
+            {
+              "key": "B",
+              "text": "Tema (1) en la Sprint Review (producto y Product Backlog con stakeholders); Tema (2) en la Sprint Retrospective (proceso interno solo con el Scrum Team)."
+            },
+            {
+              "key": "C",
+              "text": "Tema (1) en la Sprint Retrospective y Tema (2) en la Daily Scrum."
+            },
+            {
+              "key": "D",
+              "text": "Ambos en la Sprint Retrospective para evitar interrumpir a los stakeholders."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La **Sprint Review** inspecciona el producto y sus resultados con stakeholders para adaptar el *Product Backlog*; la **Sprint Retrospective** inspecciona las prácticas y coordinación interna exclusivamente dentro del Scrum Team."
+        }
+      ]
+    },
+    {
+      "id": "u5",
+      "number": 5,
+      "title": "Unidad 5: Planificación Iterativa y User Story Mapping",
+      "shortTitle": "U5 · Story Mapping y Planificación",
+      "trapTitle": "Trampa frecuente — Unidad 5 (Priorizar el Backbone, Story Points = Horas y Colchones Ocultos)",
+      "trapBody": "Tres errores muy penalizados: (1) querer **eliminar o priorizar entre sí columnas del Backbone** del *User Story Map* (el Backbone es el recorrido cronológico completo y el *Walking Skeleton* debe atravesarlo de punta a punta); (2) convertir **Story Points en horas fijas** o promediar votos divergentes en *Planning Poker* en lugar de debatir los supuestos; (3) confundir **Slack** (holgura planificada transparente) con un colchón oculto que dispara la Ley de Parkinson y el Síndrome del Estudiante.",
+      "recallItems": [
+        {
+          "id": "ev1-u5-p1",
+          "code": "P1",
+          "question": "¿Cuál es la crítica de Jeff Patton al **Backlog plano (*Context-Free Mulch*)** y cómo resuelve ese problema el **User Story Mapping** (Backbone, costillas, *Walking Skeleton*, *MMF* y *Release Plan*)?",
+          "answer": "Jeff Patton critica al *Product Backlog* tradicional como una lista plana unidimensional (**Context-Free Mulch** — *\"mantillo sin contexto\"*) porque al ordenar decenas de historias sueltas en una sola columna se pierde la visión integral del flujo del usuario, cuesta detectar huecos funcionales y es casi imposible saber si un recorte entrega una experiencia coherente.\n\nEl **User Story Mapping** organiza el producto en **dos dimensiones**:\n- **Eje horizontal (*Backbone* / Espina Dorsal):** secuencia cronológica de izquierda a derecha de las actividades clave del usuario (y sus roles). **Regla crítica: las columnas del Backbone NUNCA se priorizan ni se eliminan entre sí** (no podés lanzar un auto sin frenos).\n- **Eje vertical (Costillas):** debajo de cada actividad se listan las historias de usuario ordenadas de mayor a menor criticidad.\n- **Cortes horizontales (*Releases*):** la primera línea de corte horizontal define el **Release 1 (MVP / Walking Skeleton)**, que debe cruzar **todo el Backbone de punta a punta** con las historias mínimas viables; debajo quedan Release 2, Release 3, etc.\n\nA partir de estos cortes y la velocidad empírica del equipo se construye el **Release Plan**, agrupando historias en **Minimum Marketable Features (MMF)** que entreguen valor vendible o usable en cada liberación."
+        },
+        {
+          "id": "ev1-u5-p2",
+          "code": "P2",
+          "question": "¿Qué representa el **Cono de Incertidumbre** ($0.25\\times$ a $4\\times$), por qué fracasan las promesas tempranas de fechas cerradas y cómo se gestiona la estimación con **Story Points**, **Planning Poker** y **Spikes**?",
+          "answer": "El **Cono de Incertidumbre** (Barry Boehm / Steve McConnell) muestra que al comienzo de un proyecto de software la variabilidad real respecto de una estimación inicial oscila entre **$0.25\\times$ y $4\\times$** (un factor de hasta $16\\times$ entre el extremo optimista y el pesimista). Prometer una fecha fija exacta antes de haber refinado el producto ni medido la capacidad real del equipo es una ilusión estadística que garantiza desvíos.\n\nEl cono solo se estrecha tomando decisiones reales y entregando software en iteraciones cortas, apoyándose en:\n- **Estimación relativa con Story Points (escala Fibonacci modificada):** mide tamaño, complejidad e incertidumbre relativa frente a historias de referencia, evitando la falsa precisión de horas-persona (que varían según quién programe).\n- **Planning Poker:** todos muestran su carta simultáneamente para evitar el **sesgo de anclaje** (seguir al más senior). Ante votos divergentes (ej.: $2$ vs. $13$), **jamás se promedia**: se conversa entre extremos para sacar a la luz supuestos ocultos o complejidad técnica y se vuelve a votar.\n- **Spike técnico *time-boxed*:** cuando el equipo no tiene conocimiento suficiente para estimar una historia (ej.: una API biométrica desconocida), retira la historia del Sprint y ejecuta un **Spike** acotado en tiempo cuyo único entregable es el conocimiento necesario para estimar y decidir."
+        },
+        {
+          "id": "ev1-u5-p3",
+          "code": "P3",
+          "question": "¿En qué se diferencia el **Slack** (holgura planificada) del **colchón tradicional oculto (*padding*)**, y cómo intervienen la **Ley de Parkinson** y el **Síndrome del Estudiante**?",
+          "answer": "Cuando un equipo intenta protegerse de la incertidumbre inflando secretamente sus estimaciones (*padding* o **colchón tradicional oculto**), fracasa por dos fenómenos conductuales:\n- **Ley de Parkinson:** el trabajo tiende a expandirse hasta ocupar todo el tiempo disponible para su realización (se agrega *gold plating* o baja el foco).\n- **Síndrome del Estudiante:** al percibir margen sobrante, las personas postergan el inicio real del esfuerzo hasta último momento; si entonces surge un imprevisto, ya no queda margen y la entrega se retrasa igual.\n\nEl **Slack** (Tom DeMarco / prácticas ágiles) es exactamente lo opuesto: una **holgura explícita, visible y planificada a nivel del equipo** (por ejemplo, comprometer $18\\text{ SP}$ de historias de negocio sobre una velocidad de $20\\text{ SP}$ y destinar explícitamente $2\\text{ SP}$ a refactorización, pago de deuda técnica, aprendizaje o absorción de imprevistos).\n\nMientras el colchón oculto desperdicia tiempo y oculta problemas, el **Slack** mantiene el foco en las historias comprometidas, evita la saturación al $100\\%$ (que dispara exponencialmente las colas y el *Lead Time*) y protege la sostenibilidad y calidad del producto."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u5-mc-1",
+          "number": 1,
+          "prompt": "En el *User Story Map* de una app de bicicletas compartidas (UrbanBikes) con Backbone *1. Registrarse → 2. Desbloquear bici → 3. Finalizar viaje y pagar*, un gerente propone quitar la columna 3 completa del MVP para salir dos semanas antes. ¿Por qué es incorrecto?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Porque las actividades del Backbone no se priorizan ni se eliminan entre sí: el Walking Skeleton debe cruzar todo el flujo de punta a punta con la versión mínima de cada columna."
+            },
+            {
+              "key": "B",
+              "text": "Porque el Backbone debe tener siempre exactamente cuatro columnas."
+            },
+            {
+              "key": "C",
+              "text": "Porque en un Story Map solo se incluyen tareas técnicas de infraestructura."
+            },
+            {
+              "key": "D",
+              "text": "Porque eliminar la columna 3 obligaría a utilizar estimación en horas en lugar de Story Points."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Sin *Finalizar viaje y pagar* (aunque sea en su versión más simple), el recorrido del usuario queda roto e inutilizable. El recorte de MVP siempre es **horizontal atravesando todo el Backbone**, recortando sofisticación verticalmente dentro de cada columna."
+        },
+        {
+          "id": "ev1-u5-mc-2",
+          "number": 2,
+          "prompt": "Durante una sesión de *Planning Poker* en un equipo FinTech, para la misma historia de usuario un desarrollador vota **2** y otro vota **13**. ¿Qué debe hacer el equipo?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Promediar los votos y registrar 8 Story Points para no perder tiempo."
+            },
+            {
+              "key": "B",
+              "text": "Tomar el voto del desarrollador más experimentado como valor definitivo."
+            },
+            {
+              "key": "C",
+              "text": "Pedir a ambos extremos que expliquen sus supuestos técnicos y funcionales para generar entendimiento compartido y volver a votar (o partir la historia / hacer un Spike si persiste la incertidumbre)."
+            },
+            {
+              "key": "D",
+              "text": "Convertir ambos votos a horas-hombre y asignarle la historia al que votó 2."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "El valor central de *Planning Poker* no es el promedio aritmético sino la **conversación disparada por la divergencia**, que expone dependencias ocultas, riesgos técnicos o malentendidos de alcance antes de entrar al Sprint."
+        },
+        {
+          "id": "ev1-u5-mc-3",
+          "number": 3,
+          "prompt": "Al comenzar un proyecto, el equipo debe integrar una nueva API bancaria sin documentación clara y dice que no puede estimar la historia con ningún grado razonable de certeza. ¿Cuál es la acción metodológica adecuada?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Asignar 21 Story Points arbitrariamente y comprometer la historia igual en el Sprint."
+            },
+            {
+              "key": "B",
+              "text": "Ejecutar un Spike técnico time-boxed (ej.: 1 o 2 días) cuyo entregable es conocimiento para reducir el Cono de Incertidumbre y poder estimar luego."
+            },
+            {
+              "key": "C",
+              "text": "Pasar la historia directamente a la Sprint Review para que decidan los stakeholders."
+            },
+            {
+              "key": "D",
+              "text": "Agregar un colchón oculto del 300% al presupuesto del trimestre sin informarlo al PO."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Un **Spike** es una investigación acotada en tiempo (*time-boxed*) diseñada precisamente para despejar incertidumbre técnica o funcional extrema y permitir que el equipo estime o tome decisiones informadas en el siguiente ciclo."
+        },
+        {
+          "id": "ev1-u5-mc-4",
+          "number": 4,
+          "prompt": "Un equipo con velocidad histórica estable de $20\\text{ SP}$ por Sprint compromete $18\\text{ SP}$ en historias de producto y reserva de forma transparente $2\\text{ SP}$ para pagar deuda técnica y absorber pequeños imprevistos. ¿Qué práctica está aplicando?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Colchón oculto (*padding*), que activa inevitablemente el Síndrome del Estudiante."
+            },
+            {
+              "key": "B",
+              "text": "Slack (holgura planificada y explícita) para proteger flujo sostenible, calidad interna y capacidad de respuesta."
+            },
+            {
+              "key": "C",
+              "text": "Fast Tracking de la ruta crítica."
+            },
+            {
+              "key": "D",
+              "text": "Subutilización improductiva que viola la Ley de Little."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Reservar explícitamente una pequeña porción de la capacidad para deuda técnica, aprendizaje e imprevistos es **Slack** transparente —muy diferente del *padding* oculto por tarea— y resulta esencial para mantener calidad y flujo predecible."
+        }
+      ]
+    },
+    {
+      "id": "u6",
+      "number": 6,
+      "title": "Unidad 6: Gestión Sistemática de Riesgos en Producto",
+      "shortTitle": "U6 · Gestión de Riesgos",
+      "trapTitle": "Trampa frecuente — Unidad 6 (Mitigación vs. Contingencia y Sacrificar DoD por Fecha Fija)",
+      "trapBody": "No confundir **Mitigación** (acción preventiva *ex ante* para reducir probabilidad $P$ o impacto $I$) con **Contingencia** (plan reactivo que se dispara recién si el riesgo ocurre ante un *trigger*). Tampoco asumir que Scrum elimina la gestión de riesgos ni responder a una fecha límite fija **sacrificando la Definition of Done**: frente a fecha fija se ajusta el **alcance con MoSCoW**, jamás la calidad.",
+      "recallItems": [
+        {
+          "id": "ev1-u6-p1",
+          "code": "P1",
+          "question": "¿Cómo se calcula y clasifica la **Exposición al Riesgo** ($E = P \\times I$) en una matriz $5 \\times 5$, y cuáles son las **5 estrategias sistemáticas de tratamiento de riesgos**?",
+          "answer": "La gestión explícita de riesgos evalúa cada amenaza según su **Probabilidad ($P \\in [1, 5]$)** y su **Impacto ($I \\in [1, 5]$)**, obteniendo la **Exposición al Riesgo** $E = P \\times I \\in [1, 25]$.\n\n**Zonas de calor y prioridad:**\n- **Baja ($1\\text{–}4$):** monitoreo liviano / aceptación.\n- **Media ($5\\text{–}9$):** seguimiento periódico y planes acotados.\n- **Alta ($10\\text{–}14$)** y **Crítica ($15\\text{–}25$):** requieren tratamiento activo obligatorio (priorizar todo riesgo con $E \\ge 10$).\n\n**Las 5 estrategias de tratamiento:**\n1. **Mitigación (preventiva / *ex ante*):** actuar *antes* de que el riesgo ocurra para disminuir $P$ y/o $I$ (ej.: *Spike* técnico, pruebas tempranas, prototipo).\n2. **Evitación ($P = 0$):** eliminar por completo la fuente del riesgo cambiando alcance, tecnología o proveedor.\n3. **Transferencia:** trasladar el impacto financiero u operativo a un tercero (ej.: seguro, pasarela de pagos certificada PCI con SLA contractual).\n4. **Contingencia (reactiva):** definir de antemano un plan B que se ejecuta **solo si el riesgo se materializa** ante un disparador (*trigger*) observable (ej.: pasar a registro manual si cae el servidor).\n5. **Aceptación:** asumir conscientemente el riesgo (usualmente en exposiciones bajas) sin invertir esfuerzo preventivo, documentándolo con transparencia."
+        },
+        {
+          "id": "ev1-u6-p2",
+          "code": "P2",
+          "question": "¿Cómo se aplican **MoSCoW**, el **buffering de alcance** y la **frecuencia de releases** para cumplir una fecha fija (*Último Momento Prudente*) sin degradar la *Definition of Done*?",
+          "answer": "Cuando existe una fecha límite fija (por ejemplo, inicio de temporada comercial o vencimiento regulatorio) y capacidad de equipo acotada, la única variable saludable de ajuste es el **alcance**:\n- **MoSCoW:** clasifica los ítems del *Release Plan* en **M**ust Have (imprescindibles e innegociables para operar), **S**hould Have (importantes pero con alternativa temporal), **C**ould Have (deseables si sobra capacidad) y **W**on't Have (explícitamente fuera de este release).\n- **Buffering de alcance:** se recomienda que los **Must Have** ocupen alrededor del **$60\\%\\text{–}70\\%$** de la capacidad proyectada; el $30\\%\\text{–}40\\%$ restante (*Should* y *Could*) actúa como **amortiguador explícito de alcance** que puede recortarse si surgen imprevistos sin comprometer la fecha ni la DoD.\n- **Último Momento Prudente (*Last Responsible Moment*):** posponer decisiones irreversibles hasta contar con velocidad empírica real (tras Sprint 1–2) y revisar el *Release Plan* transparentemente con stakeholders.\n- **Frecuencia de releases:** **liberar incrementos pequeños y frecuentes cada 2 a 4 semanas** (incluyendo pilotos tempranos) es la mejor mitigación sistémica del riesgo de producto porque valida despliegue, adopción y calidad real cuando todavía hay margen de corrección."
+        },
+        {
+          "id": "ev1-u6-p3",
+          "code": "P3",
+          "question": "¿Qué es el **Optimism Bias** (sesgo de optimismo) en proyectos de software y cómo se integra la **gestión adaptativa de riesgos** en las ceremonias continuas de Scrum?",
+          "answer": "El **Optimism Bias** es la tendencia cognitiva sistemática a subestimar la probabilidad de eventos adversos (bloqueos técnicos, dependencias externas, baja adopción) y sobrestimar nuestra velocidad de ejecución. En planificación lleva a ignorar riesgos de alto impacto o prometer alcances imposibles sin *buffering*.\n\nFrente al mito de que *\"Scrum elimina los riesgos automáticamente\"*, la **gestión adaptativa de riesgos** mantiene una planilla o matriz de riesgos viva integrada a todas las cadencias del equipo:\n- **Release y Sprint Planning:** priorizar el *Product Backlog* combinando **valor y riesgo** (atacar primero ítems de alta exposición $E \\ge 10$ con *Spikes* o experimentos baratos).\n- **Daily Scrum:** visibilizar impedimentos y señales tempranas (*triggers*) de riesgos en curso.\n- **Sprint Review:** contrastar con evidencia empírica si los riesgos de producto (deseabilidad, usabilidad, viabilidad) disminuyeron realmente.\n- **Sprint Retrospective:** abordar riesgos de proceso, deuda técnica y dependencias internas."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u6-mc-1",
+          "number": 1,
+          "prompt": "En el proyecto SmartHome, la matriz $5 \\times 5$ registra dos riesgos: **Riesgo A** (caída de pasarela de pagos: $P = 2$, $I = 5$) y **Riesgo B** (incompatibilidad estética de tipografías en navegadores antiguos: $P = 5$, $I = 1$). ¿Cuál debe priorizarse y con qué estrategia?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Riesgo B porque tiene probabilidad máxima ($P = 5$), aplicando Evitación inmediata."
+            },
+            {
+              "key": "B",
+              "text": "Riesgo A porque su exposición es mayor ($E_A = 10$ vs. $E_B = 5$), aplicando Mitigación temprana (Spike/pruebas) o Transferencia/Contingencia; Riesgo B queda en Aceptación."
+            },
+            {
+              "key": "C",
+              "text": "Ambos tienen la misma prioridad porque la suma $P + I$ es distinta pero compensable."
+            },
+            {
+              "key": "D",
+              "text": "Ninguno requiere tratamiento hasta que ocurran en producción."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La exposición se calcula multiplicando $E = P \\times I$: $E_A = 2 \\times 5 = 10$ (zona **Alta**, tratamiento prioritario) frente a $E_B = 5 \\times 1 = 5$ (zona **Media/Baja**, aceptable). Priorizar solo por probabilidad es un error clásico."
+        },
+        {
+          "id": "ev1-u6-mc-2",
+          "number": 2,
+          "prompt": "Ante el riesgo de que un proveedor externo de mapas sufra caídas en horario pico, el equipo prepara un modo degradado que se activa automáticamente **solo si** el servicio responde con error durante más de 2 minutos. ¿Qué estrategia de riesgo representa?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Evitación ($P = 0$)."
+            },
+            {
+              "key": "B",
+              "text": "Mitigación preventiva."
+            },
+            {
+              "key": "C",
+              "text": "Contingencia (plan reactivo asociado a un trigger observable)."
+            },
+            {
+              "key": "D",
+              "text": "Aceptación pasiva."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Un plan que no reduce la probabilidad de que el proveedor falle, sino que define una respuesta reactiva disparada ante una condición específica (*trigger*: error $> 2$ minutos), es una estrategia de **Contingencia**."
+        },
+        {
+          "id": "ev1-u6-mc-3",
+          "number": 3,
+          "prompt": "Faltan 3 Sprints para una fecha comercial inamovible, pero el alcance deseado se estima en 4 a 5 Sprints. ¿Qué decisión resulta profesionalmente correcta bajo gestión ágil de riesgos?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Eliminar temporalmente las pruebas automatizadas de la DoD para ganar un 40% de velocidad."
+            },
+            {
+              "key": "B",
+              "text": "Incorporar 5 desarrolladores nuevos al inicio del Sprint 2 para duplicar la entrega."
+            },
+            {
+              "key": "C",
+              "text": "Recortar alcance mediante MoSCoW asegurando los Must Have dentro de la capacidad real, lanzar un piloto en el Sprint 2 y mantener intacta la Definition of Done."
+            },
+            {
+              "key": "D",
+              "text": "Mantener el alcance completo y esperar al final del Sprint 3 para comunicar si se llegó."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Ante fecha fija y plazo corto, recortar la DoD destruye la estabilidad, y sumar gente a último momento empeora el atraso (**Ley de Brooks**). La respuesta sana es ajustar alcance con **MoSCoW**, realizar entregas tempranas y proteger la calidad."
+        },
+        {
+          "id": "ev1-u6-mc-4",
+          "number": 4,
+          "prompt": "¿Por qué liberar incrementos pequeños cada 2 a 4 semanas se considera la principal mitigación sistémica del riesgo de producto?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Porque acorta el ciclo de feedback real con usuarios y producción, reduciendo la pérdida máxima posible si una hipótesis de producto o técnica resulta falsa."
+            },
+            {
+              "key": "B",
+              "text": "Porque elimina la necesidad de llevar una planilla de riesgos o aplicar MoSCoW."
+            },
+            {
+              "key": "C",
+              "text": "Porque permite saltear la Sprint Review y la Sprint Retrospective."
+            },
+            {
+              "key": "D",
+              "text": "Porque garantiza que el Cono de Incertidumbre sea igual a $1\\times$ desde el primer día."
+            }
+          ],
+          "correctKey": "A",
+          "justification": "Liberar con frecuencia valida tanto la tecnología (despliegue e integración real) como la adopción de usuarios de manera continua, evitando acumular meses de inversión sobre supuestos sin comprobar."
+        }
+      ]
+    },
+    {
+      "id": "u7",
+      "number": 7,
+      "title": "Unidad 7: Equipos, Personas y Comunicación",
+      "shortTitle": "U7 · Equipos y Comunicación",
+      "trapTitle": "Trampa frecuente — Unidad 7 (Consenso vs. Consentimiento y Ley de Conway)",
+      "trapBody": "Confundir **Consenso** (unanimidad donde todos deben estar 100% de acuerdo, lenta y paralizante) con **Consentimiento** de Tobias Mayer (avanzar cuando nadie tiene una objeción razonada y es *\"suficientemente seguro para probar\"*). También es error frecuente rediseñar la arquitectura a microservicios manteniendo silos por capas (Frontend / Backend / DBA), violando la **Ley de Conway** y disparando canales de coordinación según la **Ley de Brooks** ($C = \\frac{n(n-1)}{2}$).",
+      "recallItems": [
+        {
+          "id": "ev1-u7-p1",
+          "code": "P1",
+          "question": "Explique el marco **Team Topologies** (Skelton & Pais): sus **4 tipos fundamentales de equipo**, los **3 modos de interacción**, la **Ley de Conway**, la **Maniobra Inversa de Conway** y la gestión de la **carga cognitiva**.",
+          "answer": "**Ley de Conway:** las organizaciones que diseñan sistemas están inevitablemente restringidas a producir arquitecturas que son copias de sus estructuras de comunicación. La **Maniobra Inversa de Conway** aplica esto intencionalmente: **diseñar primero la estructura de equipos deseada** (autónomos alrededor de flujos de valor) para inducir una arquitectura de software desacoplada.\n\n**4 tipos fundamentales de equipo (*Team Topologies*):**\n1. **Stream-aligned Team (alineado al flujo de valor):** equipo multifuncional autónomo responsable de punta a punta de un flujo de negocio (ej.: Checkout, Pagos). Es el tipo predominante.\n2. **Enabling Team (habilitador):** especialistas que ayudan temporalmente a los *Stream-aligned* a adquirir nuevas capacidades (ej.: testing automatizado, observabilidad) sin hacerse cargo permanentemente de la operación.\n3. **Complicated-Subsystem Team:** atiende un subsistema que requiere conocimiento matemático o técnico muy especializado (ej.: motor de ruteo o modelo de fraude) para reducir la carga cognitiva de los demás.\n4. **Platform Team:** provee servicios internos autoservicio (con *Thinnest Viable Platform — TVP*) para que los *Stream-aligned* entreguen con autonomía y baja fricción.\n\n**3 modos de interacción:**\n- **Collaboration:** dos equipos trabajan juntos temporalmente para descubrir nuevas interfaces o soluciones.\n- **X-as-a-Service:** un equipo consume un servicio/API de otro con mínima fricción de coordinación.\n- **Facilitating:** un equipo guía y capacita a otro para remover impedimentos de capacidades.\n\nTodo el diseño busca mantener la **carga cognitiva total** ($CL_{\\text{intrínseca}} + CL_{\\text{extraña}} + CL_{\\text{germana}}$) por debajo de la capacidad del equipo, eliminando carga extraña (burocracia, despliegues manuales) para liberar capacidad para el dominio de negocio."
+        },
+        {
+          "id": "ev1-u7-p2",
+          "code": "P2",
+          "question": "¿Cuál es la diferencia entre **Consenso** y **Consentimiento** según Tobias Mayer, y cómo condicionan el tamaño y la comunicación del equipo el **Número de Dunbar** y la **Ley de Brooks**?",
+          "answer": "**Consenso vs. Consentimiento (Tobias Mayer):**\n- **Consenso:** busca unanimidad o acuerdo total (*\"¿están todos de acuerdo?\"*). En equipos diversos suele generar discusiones interminables, bloqueos por vetos minoritarios o compromisos tibios que nadie respalda.\n- **Consentimiento:** cambia la pregunta a ***\"¿alguien tiene una objeción razonada por la cual esta propuesta sea insegura o dañina para probarla ahora?\"***. Permite avanzar con agilidad siempre que el experimento sea reversible y seguro de probar, confiando en la inspección empírica posterior para ajustar.\n\n**Tamaño de equipo y límites de comunicación:**\n- **Ley de Brooks:** agregar personas a un proyecto de software retrasado lo retrasa aún más por el costo de inducción y el crecimiento cuadrático de los canales de comunicación: $C = \\frac{n(n - 1)}{2}$. Pasar de $n = 8$ a $n = 15$ personas eleva los canales de $28$ a $105$.\n- **Números de Dunbar:** definen umbrales de cohesión social humana: **5** (círculo íntimo), **15** (confianza profunda; por eso los equipos ágiles óptimos se ubican entre **$7\\text{–}9$** personas), **50** (tribu/unidad) y **150** (límite de relaciones estables en una organización)."
+        },
+        {
+          "id": "ev1-u7-p3",
+          "code": "P3",
+          "question": "¿Qué es un **Irradiador de Información (*Information Radiator*)** (Alistair Cockburn) y cómo se articula con un tablero **Kanban Pull** para mejorar la comunicación y reducir el *WIP*?",
+          "answer": "Un **Information Radiator** (Alistair Cockburn) es una visualización física o digital ubicada en un lugar altamente visible del espacio de trabajo que comunica información crítica del equipo (estado del tablero, *burn-up*, estado del build de CI, métricas de flujo, riesgos activos) de forma **pasiva, actualizada automáticamente y comprensible de un vistazo**, sin que nadie deba pedir un informe ni abrir correos.\n\n**Articulación con un tablero Kanban Pull:**\n- El tablero Kanban funciona como el principal irradiador de flujo: muestra columnas explícitas, políticas de paso y **límites de WIP** (*Work In Progress*).\n- A diferencia de un sistema **Push** (donde se empujan tareas sobre personas saturadas), en un sistema **Pull** el equipo solo toma una nueva tarea cuando hay capacidad disponible bajo el límite de *WIP* (*\"Parar de empezar, empezar a terminar\"*).\n- Esto expone inmediatamente los cuellos de botella en el irradiador y dispara la colaboración del equipo (*swarming*) para destrabar el flujo, acortando el *Cycle Time* según la Ley de Little ($CT = WIP / \\text{Throughput}$)."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u7-mc-1",
+          "number": 1,
+          "prompt": "Un e-commerce tiene tres equipos separados por especialidad técnica (Frontend, Backend y DBA) que bloquean cada entrega esperando tickets entre áreas, y quiere evolucionar hacia una arquitectura modular desacoplada. ¿Qué propone la **Maniobra Inversa de Conway**?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Mantener los tres silos por especialidad y redactar un documento de arquitectura de 200 páginas."
+            },
+            {
+              "key": "B",
+              "text": "Reorganizar a las personas en equipos multifuncionales Stream-aligned por dominio de negocio (ej.: Catálogo, Checkout, Pagos) para que la arquitectura evolucione naturalmente hacia límites desacoplados."
+            },
+            {
+              "key": "C",
+              "text": "Unir a las 30 personas en un único equipo monolítico sin divisiones."
+            },
+            {
+              "key": "D",
+              "text": "Crear un equipo Enabling permanente que programe todas las pantallas del negocio."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "La **Maniobra Inversa de Conway** rediseña los equipos en torno a flujos de valor (**Stream-aligned Teams** multifuncionales) con alta cohesión y bajo acoplamiento entre sí, logrando que la arquitectura del sistema refleje esos límites limpios."
+        },
+        {
+          "id": "ev1-u7-mc-2",
+          "number": 2,
+          "prompt": "Un grupo de expertos en testing automatizado acompaña durante 6 semanas a un equipo *Stream-aligned* para ayudarlo a adoptar BDD y luego se retira dejando al equipo autónomo. En *Team Topologies*, ¿qué tipo de equipo y modo de interacción se usaron?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Platform Team en modo X-as-a-Service."
+            },
+            {
+              "key": "B",
+              "text": "Complicated-Subsystem Team en modo Collaboration."
+            },
+            {
+              "key": "C",
+              "text": "Enabling Team en modo Facilitating."
+            },
+            {
+              "key": "D",
+              "text": "Stream-aligned Team en modo X-as-a-Service."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Un **Enabling Team** trabaja temporalmente en modo **Facilitating** para detectar brechas de capacidades y empoderar a los *Stream-aligned Teams* sin crear dependencia permanente."
+        },
+        {
+          "id": "ev1-u7-mc-3",
+          "number": 3,
+          "prompt": "Un equipo debate durante una hora dos formatos posibles para registrar logs sin lograr unanimidad. El facilitador propone: *\"¿Alguien tiene una objeción de seguridad o daño real para probar la Opción A durante este Sprint y evaluarla en la próxima Retrospectiva?\"*. ¿Qué mecanismo de decisión está aplicando?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Consenso unánime tradicional."
+            },
+            {
+              "key": "B",
+              "text": "Decisión por Consentimiento (Tobias Mayer)."
+            },
+            {
+              "key": "C",
+              "text": "Votación jerárquica por antigüedad."
+            },
+            {
+              "key": "D",
+              "text": "Planning Poker."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "El **Consentimiento** (Tobias Mayer) destraba la parálisis del consenso buscando ausencia de objeciones razonadas de daño (*\"suficientemente seguro para probar\"*) y apoyándose en el empirismo para revisar el resultado."
+        },
+        {
+          "id": "ev1-u7-mc-4",
+          "number": 4,
+          "prompt": "Si un equipo de desarrollo pasa de $n = 6$ integrantes a $n = 12$ integrantes sin dividirse en dominios independientes, ¿cómo cambian sus canales potenciales de comunicación bilateral según la fórmula de Brooks ($C = \\frac{n(n-1)}{2}$)?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Se duplican exactamente: de $12$ a $24$ canales."
+            },
+            {
+              "key": "B",
+              "text": "Pasan de $15$ canales a $66$ canales (más de cuatro veces la sobrecarga de coordinación)."
+            },
+            {
+              "key": "C",
+              "text": "Se mantienen en $15$ canales si utilizan un tablero Kanban."
+            },
+            {
+              "key": "D",
+              "text": "Pasan de $36$ canales a $144$ canales."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Para $n = 6$: $C = \\frac{6 \\times 5}{2} = 15$. Para $n = 12$: $C = \\frac{12 \\times 11}{2} = 66$. Duplicar el tamaño del equipo más que cuadruplica los canales de comunicación, explicando la pérdida de eficiencia por coordinación."
+        }
+      ]
+    },
+    {
+      "id": "u8",
+      "number": 8,
+      "title": "Unidad 8: Mejora Continua y Métricas de Rendimiento",
+      "shortTitle": "U8 · Mejora y Métricas",
+      "trapTitle": "Trampa frecuente — Unidad 8 (Métricas de Vanidad, Falso Flujo Ágil y Retrospectivas Incompletas)",
+      "trapBody": "Tres trampas letales de examen: (1) celebrar **métricas de vanidad** (ej.: *\"3.000 descargas\"* o líneas de código) sin derivar **Outcomes** ni **Impacto** mediante **GQM**; (2) festejar alta frecuencia de despliegue con un *Change Failure Rate* elevado (**Falso flujo ágil** en DORA); (3) saltear la Fase 1 (*Set the Stage*) o la Fase 3 (*Generate Insights*) en la Retrospectiva de Derby & Larsen, destruyendo la seguridad psicológica o aplicando parches sobre síntomas.",
+      "recallItems": [
+        {
+          "id": "ev1-u8-p1",
+          "code": "P1",
+          "question": "Enumere las **5 Fases de una Retrospectiva** según Esther Derby & Diana Larsen y justifique por qué es un error grave saltear la **Fase 1** o la **Fase 3**.",
+          "answer": "Esther Derby & Diana Larsen (*Agile Retrospectives*) estructuran la retrospectiva en **5 fases secuenciales**:\n1. **Set the Stage (Preparar el escenario):** abrir el espacio, lograr que todos hablen desde el inicio (*check-in*) y establecer **seguridad psicológica** invocando la **Primera Directiva de Norm Kerth** (*\"Creemos firmemente que cada persona hizo el mejor trabajo que pudo dado lo que sabía, sus habilidades y los recursos disponibles\"*).\n2. **Gather Data (Recolectar datos):** construir una visión compartida y objetiva de los hechos y métricas ocurridos durante el Sprint (línea de tiempo, eventos, emociones).\n3. **Generate Insights (Generar entendimiento / causas raíz):** analizar **por qué** ocurrieron los problemas usando técnicas como **5 Porqués** o **Diagrama de Ishikawa (espina de pescado)**.\n4. **Decide What to Do (Decidir qué hacer):** elegir solo **1 o 2 acciones de mejora concretas (SMART)** con responsables y criterio verificable para incorporar al próximo Sprint.\n5. **Close the Retrospective (Cerrar):** agradecer, evaluar la efectividad de la propia retrospectiva (*ROTI*) y cerrar el ciclo.\n\n**Por qué NO saltear la Fase 1:** sin seguridad psicológica, la reunión se convierte en una caza de culpables y los miembros ocultan los problemas reales por miedo.\n**Por qué NO saltear la Fase 3:** pasar directo de listar hechos (Fase 2) a votar soluciones (Fase 4) produce parches superficiales que atacan **síntomas** mientras la **causa raíz** permanece intacta y el problema se repite."
+        },
+        {
+          "id": "ev1-u8-p2",
+          "code": "P2",
+          "question": "¿Cuáles son las **4 Métricas DORA** (*Accelerate*), cuáles son sus valores de referencia Élite y qué diagnostica el antipatrón de **\"Falso flujo ágil\"**?",
+          "answer": "La investigación *Accelerate* (Nicole Forsgren, Jez Humble y Gene Kim) demuestra que el alto rendimiento de ingeniería combina **velocidad y estabilidad** sin que sean mutuamente excluyentes, medidas a través de **4 Métricas DORA**:\n\n**Eje Velocidad (Throughput):**\n1. **Deployment Frequency (Frecuencia de Despliegue):** con qué frecuencia se libera código exitosamente a producción (*Élite:* múltiples despliegues por día / bajo demanda).\n2. **Lead Time for Changes (Tiempo de Entrega para Cambios):** tiempo desde que un cambio se confirma (*commit*) hasta que corre en producción (*Élite:* menos de 1 hora).\n\n**Eje Estabilidad:**\n3. **Change Failure Rate (CFR — Tasa de Fallos por Cambio):** porcentaje de despliegues que causan incidentes en producción o requieren *rollback*/*hotfix* (*Élite:* $0\\%\\text{–}15\\%$).\n4. **Mean Time to Restore (MTTR — Tiempo Medio de Restauración):** cuánto demora recuperar el servicio tras una falla en producción (*Élite:* menos de 1 hora).\n\n**Antipatrón \"Falso flujo ágil\":** ocurre cuando un equipo exhibe alta velocidad aparente (ej.: despliega muchas veces por semana o por día), pero a costa de un **Change Failure Rate altísimo** (ej.: $40\\%\\text{–}45\\%$ de despliegues rotos) y constantes *hotfixes*. No es agilidad real: es caos acelerado por falta de calidad interna, pruebas automatizadas y DoD."
+        },
+        {
+          "id": "ev1-u8-p3",
+          "code": "P3",
+          "question": "Explique el enfoque **GQM (*Goal–Question–Metric*)** de Victor Basili para evitar **métricas de vanidad**, y cómo operan la **Ley de Goodhart** y el **Efecto Dilbert** cuando se usan métricas como premio o castigo.",
+          "answer": "**GQM (*Goal–Question–Metric*, Victor Basili):** propone diseñar métricas de arriba hacia abajo (*top-down*) para asegurar que cada indicador responda a una decisión concreta:\n1. **Goal (Meta):** definir explícitamente *Objeto + Propósito + Foco de Calidad + Punto de Vista + Contexto*.\n2. **Question (Pregunta):** formular las preguntas operacionales que permiten comprobar si la meta se está cumpliendo.\n3. **Metric (Métrica):** elegir los datos objetivos que responden esas preguntas, priorizando **Outcomes** (conversión, retención) e **Impacto** sobre **métricas de vanidad** (acumulados que siempre suben como descargas totales o visitas sin contexto).\n\n**Ley de Goodhart y Efecto Dilbert:**\n- **Ley de Goodhart:** *\"Cuando una medida se convierte en una meta (asociada a bonos, rankings o castigos), deja de ser una buena medida\"*.\n- **Efecto Dilbert (*gaming*):** las personas optimizan mecánicamente el número premiado destruyendo el propósito real (ej.: si se paga por *Story Points*, inflan las estimaciones; si se premia por líneas de código o cantidad de bugs cerrados, escriben código verboso o crean y cierran bugs triviales).\n\nPor eso, siguiendo a **Tobias Mayer**, las métricas en equipos ágiles deben ser **espejos de realidad** para inspeccionar y aprender internamente, nunca armas de control punitivo."
+        }
+      ],
+      "mcqItems": [
+        {
+          "id": "ev1-u8-mc-1",
+          "number": 1,
+          "prompt": "En una Sprint Retrospective, el facilitador omite el check-in inicial, lista 10 problemas en la pizarra y pasa inmediatamente a votar soluciones en los últimos 15 minutos. ¿Qué dos fases de Derby & Larsen se saltearon y cuál es la consecuencia directa?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Se saltearon Gather Data y Close; el equipo se queda sin métricas DORA."
+            },
+            {
+              "key": "B",
+              "text": "Se saltearon Set the Stage (destruyendo la seguridad psicológica) y Generate Insights (aplicando soluciones a síntomas sin investigar causas raíz)."
+            },
+            {
+              "key": "C",
+              "text": "Se saltearon Decide What to Do y Gather Data; no hay acciones asignadas."
+            },
+            {
+              "key": "D",
+              "text": "No hay consecuencias negativas porque ahorra tiempo para programar."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Omitir **Set the Stage** impide construir seguridad psicológica (Primera Directiva de Kerth), y omitir **Generate Insights** (5 Porqués / Ishikawa) hace que el equipo vote parches sobre síntomas sin erradicar las causas raíz."
+        },
+        {
+          "id": "ev1-u8-mc-2",
+          "number": 2,
+          "prompt": "Un equipo SaaS B2B presenta orgulloso sus métricas: despliega 10 veces por día con un *Lead Time for Changes* de 2 horas, pero el $45\\%$ de los despliegues provoca incidentes en producción que exigen *hotfixes* urgentes. ¿Cómo se diagnostica este perfil según DORA?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Rendimiento Élite porque la frecuencia de despliegue es diaria."
+            },
+            {
+              "key": "B",
+              "text": "Antipatrón de \"Falso flujo ágil\": velocidad aparente sin estabilidad (Change Failure Rate muy por encima del umbral Élite de $0\\%\\text{–}15\\%$)."
+            },
+            {
+              "key": "C",
+              "text": "Problema exclusivo de métricas de vanidad sin relación con la ingeniería."
+            },
+            {
+              "key": "D",
+              "text": "Equilibrio saludable porque el Lead Time es menor a un día."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "Las métricas DORA deben leerse en conjunto (Velocidad + Estabilidad). Desplegar 10 veces/día rompiendo el $45\\%$ de las entregas constituye **\"Falso flujo ágil\"** y exige reforzar pruebas automatizadas, CI y la DoD."
+        },
+        {
+          "id": "ev1-u8-mc-3",
+          "number": 3,
+          "prompt": "La gerencia decide otorgar un bono económico trimestral al equipo que acumule más *Story Points* cerrados por Sprint. Al trimestre siguiente los equipos duplican sus Story Points reportados pero las entregas de valor al cliente caen. ¿Qué fenómeno explica este resultado?",
+          "options": [
+            {
+              "key": "A",
+              "text": "La Ley de Conway."
+            },
+            {
+              "key": "B",
+              "text": "El Cono de Incertidumbre."
+            },
+            {
+              "key": "C",
+              "text": "La Ley de Goodhart (y el Efecto Dilbert de gaming sobre una métrica usada punitiva o incentivadamente)."
+            },
+            {
+              "key": "D",
+              "text": "La Primera Directiva de Norm Kerth."
+            }
+          ],
+          "correctKey": "C",
+          "justification": "Al atar recompensas económicas a los *Story Points*, la métrica se vuelve meta y se corrompe (**Ley de Goodhart**): los equipos inflan estimaciones (*gaming* / Efecto Dilbert) y los puntos dejan de servir para planificar."
+        },
+        {
+          "id": "ev1-u8-mc-4",
+          "number": 4,
+          "prompt": "Para evitar métricas de vanidad al evaluar una app lanzada hace 3 meses, ¿cuál es la secuencia correcta que propone el método **GQM** (Victor Basili)?",
+          "options": [
+            {
+              "key": "A",
+              "text": "Recolectar todas las métricas gratuitas de las tiendas (descargas, clics) y luego inventar objetivos que las justifiquen."
+            },
+            {
+              "key": "B",
+              "text": "Definir primero los Objetivos (Goals), derivar las Preguntas clave (Questions) para comprobarlos y recién entonces elegir las Métricas (Metrics) que las responden."
+            },
+            {
+              "key": "C",
+              "text": "Medir exclusivamente horas trabajadas y cantidad de tickets cerrados."
+            },
+            {
+              "key": "D",
+              "text": "Comparar la velocidad en Story Points entre distintos equipos de la empresa."
+            }
+          ],
+          "correctKey": "B",
+          "justification": "**GQM** es estrictamente *top-down* (**Goal → Question → Metric**): asegura que cada indicador mida progreso real hacia *outcomes* e impacto deseados en lugar de acumular datos de vanidad."
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "id": "backbone",
+      "term": "Backbone",
+      "category": "Planificación y Story Map",
+      "definition": "Eje horizontal superior de un User Story Map (Jeff Patton) que representa en orden cronológico de izquierda a derecha las actividades esenciales del recorrido del usuario. Las columnas del Backbone nunca se priorizan ni se eliminan entre sí al recortar un MVP."
+    },
+    {
+      "id": "build-measure-learn",
+      "term": "Build-Measure-Learn",
+      "category": "Product Discovery",
+      "definition": "Ciclo empírico de Lean Startup (Eric Ries) orientado a transformar ideas en experimentos mínimos (Build), recolectar evidencia conductual objetiva (Measure) y decidir si perseverar o pivotar a partir del aprendizaje validado (Learn)."
+    },
+    {
+      "id": "change-failure-rate",
+      "term": "Change Failure Rate",
+      "category": "Métricas y DORA",
+      "definition": "Métrica DORA de estabilidad que mide el porcentaje de despliegues a producción que provocan incidentes, degradación del servicio, rollbacks o hotfixes urgentes. Un desempeño Élite se ubica entre 0% y 15%."
+    },
+    {
+      "id": "context-free-mulch",
+      "term": "Context-Free Mulch",
+      "category": "Planificación y Story Map",
+      "definition": "Expresión crítica de Jeff Patton ('mantillo sin contexto') para describir un Product Backlog plano unidimensional donde las historias sueltas pierden la visión holística del flujo de uso y dificultan detectar vacíos funcionales."
+    },
+    {
+      "id": "control-by-release",
+      "term": "Control by Release",
+      "category": "Marco Base",
+      "definition": "Estilo de liderazgo de Artful Making (Austin & Devin) en el que quien dirige establece condiciones de borde claras (propósito, restricciones, calidad y fecha límite) y luego suelta el control prescriptivo detallado para habilitar la autonomía y creatividad del equipo."
+    },
+    {
+      "id": "definition-of-done",
+      "term": "Definition of Done (DoD)",
+      "category": "Scrum y BDD",
+      "definition": "Compromiso formal asociado al Incremento en Scrum que describe el estándar mínimo e innegociable de calidad requerido para considerar terminado un ítem. Si una historia no cumple el 100% de la DoD, no entra en la Sprint Review y regresa al Product Backlog."
+    },
+    {
+      "id": "deliberate-discovery",
+      "term": "Deliberate Discovery",
+      "category": "Product Discovery",
+      "definition": "Enfoque propuesto por Dan North que reconoce explícitamente la ignorancia inicial en proyectos de software y diseña acciones intencionales (experimentos, Spikes, entrevistas) para descubrir tempranamente lo desconocido antes de invertir en construcción masiva."
+    },
+    {
+      "id": "deployment-frequency",
+      "term": "Deployment Frequency",
+      "category": "Métricas y DORA",
+      "definition": "Métrica DORA de velocidad que indica con qué frecuencia un equipo despliega cambios exitosamente a producción. En equipos Élite ocurre múltiples veces por día o bajo demanda, siempre equilibrada con estabilidad."
+    },
+    {
+      "id": "exposicion-al-riesgo",
+      "term": "Exposición al Riesgo",
+      "category": "Gestión de Riesgos",
+      "definition": "Magnitud cuantitativa de un riesgo calculada como el producto entre su Probabilidad y su Impacto (E = P × I). En una matriz 5×5 permite priorizar el tratamiento activo obligatorio en zonas Alta (10–14) y Crítica (15–25)."
+    },
+    {
+      "id": "fake-door-mvp",
+      "term": "Fake Door MVP",
+      "category": "Métodos Empíricos",
+      "definition": "Experimento empírico (también llamado Smoke Test) que presenta un botón, anuncio o página de una funcionalidad aún no construida y muestra un aviso de 'Próximamente' al interactuar, midiendo señales iniciales de interés antes de escribir código."
+    },
+    {
+      "id": "information-radiator",
+      "term": "Information Radiator",
+      "category": "Equipos y Comunicación",
+      "definition": "Concepto de Alistair Cockburn para toda visualización física o digital altamente visible en el espacio común del equipo (tablero Kanban, estado de CI, burn-up, riesgos) que irradia información actualizada al instante sin requerir solicitudes ni reportes manuales."
+    },
+    {
+      "id": "invest",
+      "term": "INVEST",
+      "category": "Scrum y BDD",
+      "definition": "Acrónimo de Bill Wake que reúne seis cualidades de una buena Historia de Usuario: Independiente, Negociable, Valiosa (Valuable), Estimable, Pequeña (Small) y Testeable."
+    },
+    {
+      "id": "lead-time-for-changes",
+      "term": "Lead Time for Changes",
+      "category": "Métricas y DORA",
+      "definition": "Métrica DORA de velocidad que cuantifica el tiempo transcurrido desde que un cambio de código se confirma (commit) hasta que se ejecuta con éxito en producción. El nivel Élite es menor a una hora."
+    },
+    {
+      "id": "maniobra-inversa-de-conway",
+      "term": "Maniobra Inversa de Conway",
+      "category": "Equipos y Comunicación",
+      "definition": "Estrategia organizacional basada en la Ley de Conway que consiste en diseñar intencionalmente la estructura y los límites de comunicación de los equipos (ej.: Stream-aligned Teams) para promover la arquitectura de software desacoplada deseada."
+    },
+    {
+      "id": "minimum-marketable-feature",
+      "term": "Minimum Marketable Feature (MMF)",
+      "category": "Planificación y Story Map",
+      "definition": "Conjunto mínimo y autocontenido de funcionalidad que entrega valor reconocible y comercializable (o utilizable) a los usuarios finales y justifica por sí mismo su despliegue en un release."
+    },
+    {
+      "id": "optimism-bias",
+      "term": "Optimism Bias",
+      "category": "Gestión de Riesgos",
+      "definition": "Sesgo cognitivo por el cual personas y equipos subestiman la probabilidad de fallos, bloqueos o desvíos y sobrestiman su propia velocidad o la adopción del producto, llevando a planes irreales si no se aplica gestión explícita de riesgos."
+    },
+    {
+      "id": "outcome",
+      "term": "Outcome",
+      "category": "Product Discovery",
+      "definition": "Cambio concreto, medible y observable en el comportamiento de los usuarios o clientes como resultado de interactuar con el producto (ej.: concretar reservas recurrentes en lugar de solo descargar la app)."
+    },
+    {
+      "id": "output",
+      "term": "Output",
+      "category": "Product Discovery",
+      "definition": "Volumen de artefactos o funcionalidades construidas y entregadas por el equipo (tickets cerrados, pantallas, líneas de código). En Product Discovery se considera un costo que debe minimizarse en relación con los Outcomes logrados."
+    },
+    {
+      "id": "planning-poker",
+      "term": "Planning Poker",
+      "category": "Planificación y Story Map",
+      "definition": "Técnica colaborativa de estimación relativa en la que cada integrante elige en secreto una carta (usualmente escala Fibonacci) y la revela en simultáneo para neutralizar el sesgo de anclaje y fomentar el debate técnico ante divergencias."
+    },
+    {
+      "id": "product-goal",
+      "term": "Product Goal",
+      "category": "Scrum y BDD",
+      "definition": "Compromiso del Product Backlog en Scrum (2020) que describe un estado futuro valioso del producto y sirve como objetivo estratégico de mediano/largo plazo para planificar y priorizar el trabajo del Scrum Team."
+    },
+    {
+      "id": "product-vision-board",
+      "term": "Product Vision Board",
+      "category": "Product Discovery",
+      "definition": "Herramienta visual creada por Roman Pichler que captura la estrategia e hipótesis iniciales de un producto en cinco secciones: Visión, Grupo Objetivo, Necesidades, Producto y Objetivos de Negocio."
+    },
+    {
+      "id": "release-plan",
+      "term": "Release Plan",
+      "category": "Planificación y Story Map",
+      "definition": "Plan de nivel táctico y adaptativo que proyecta qué cortes de funcionalidades (Releases / MMF del Story Map) se prevé entregar en qué horizonte de Sprints a partir de la velocidad empírica del equipo, el alcance priorizado (MoSCoW) y los riesgos."
+    },
+    {
+      "id": "slack",
+      "term": "Slack",
+      "category": "Planificación y Story Map",
+      "definition": "Holgura explícita, visible y planificada en la capacidad del equipo para absorber imprevistos, pagar deuda técnica y habilitar aprendizaje continuo, evitando la saturación al 100% y diferenciándose del colchón oculto (padding)."
+    },
+    {
+      "id": "slicing-vertical",
+      "term": "Slicing Vertical",
+      "category": "Scrum y BDD",
+      "definition": "Técnica de subdivisión de historias grandes en rebanadas delgadas que atraviesan todas las capas técnicas (interfaz, lógica y datos) entregando un incremento funcional usable de punta a punta en cada iteración, en oposición al slicing horizontal por capas."
+    },
+    {
+      "id": "spike",
+      "term": "Spike",
+      "category": "Planificación y Story Map",
+      "definition": "Actividad de investigación técnica o funcional acotada en tiempo (time-boxed) cuyo único entregable es el conocimiento necesario para reducir una incertidumbre alta, evaluar factibilidad o permitir estimar una historia de usuario."
+    },
+    {
+      "id": "sprint-goal",
+      "term": "Sprint Goal",
+      "category": "Scrum y BDD",
+      "definition": "Compromiso único del Sprint Backlog que expresa el propósito coherente del Sprint; otorga foco al equipo y flexibilidad sobre el detalle de implementación mientras protege el objetivo central de la iteración."
+    },
+    {
+      "id": "stream-aligned-team",
+      "term": "Stream-aligned Team",
+      "category": "Equipos y Comunicación",
+      "definition": "Tipo de equipo fundamental en Team Topologies: multifuncional, estable y autónomo, alineado de punta a punta a un flujo continuo de valor de negocio (producto, segmento o viaje de usuario) con mínima dependencia externa."
+    },
+    {
+      "id": "the-mom-test",
+      "term": "The Mom Test",
+      "category": "Métodos Empíricos",
+      "definition": "Conjunto de reglas de Rob Fitzpatrick para entrevistas de descubrimiento confiables: indagar sobre la vida real del usuario y hechos concretos del pasado reciente, sin hablar de tu idea ni pedir opiniones hipotéticas futuras que disparan halagos por cortesía."
+    },
+    {
+      "id": "think-aloud-protocol",
+      "term": "Think-Aloud Protocol",
+      "category": "Métodos Empíricos",
+      "definition": "Técnica utilizada en pruebas de usabilidad donde se solicita al participante verbalizar continuamente sus pensamientos, expectativas y dudas mientras ejecuta tareas realistas sobre un prototipo, revelando fricciones cognitivas de la interfaz."
+    },
+    {
+      "id": "three-amigos",
+      "term": "Three Amigos",
+      "category": "Scrum y BDD",
+      "definition": "Reunión breve de refinamiento en BDD que reúne tres perspectivas complementarias —Negocio/Product Owner, Desarrollo y Testing/QA— para explorar reglas, ejemplos concretos y preguntas abiertas (Example Mapping) antes de programar."
+    },
+    {
+      "id": "walking-skeleton",
+      "term": "Walking Skeleton",
+      "category": "Planificación y Story Map",
+      "definition": "Primera rebanada mínima funcional del producto (Release 1 / MVP en un User Story Map) que atraviesa toda la arquitectura y todo el Backbone de extremo a extremo, validando el flujo vital completo antes de agregar sofisticación."
+    },
+    {
+      "id": "wizard-of-oz-mvp",
+      "term": "Wizard of Oz MVP",
+      "category": "Métodos Empíricos",
+      "definition": "Experimento de descubrimiento donde el usuario interactúa con una interfaz digital creyendo que opera automáticamente, mientras detrás de escena una persona ejecuta manualmente la lógica. Valida deseabilidad y usabilidad, pero nunca valida factibilidad técnica."
+    }
+  ],
+  "checklist": [
+    {
+      "id": "chk_gdsi_ev1_01",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Distinguir **Proyecto, Producto y Proceso** y diagnosticar las **3 dimensiones de Artful Making** (Innovación, Repetición Confiable y Costo de Iteración) junto a *Control by Release* y *Play*."
+    },
+    {
+      "id": "chk_gdsi_ev1_02",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Diferenciar **Output** (costo), **Outcome** (cambio de conducta observable) e **Impact** (negocio), y articular el **Product Vision Board** con los **4 riesgos de Marty Cagan**."
+    },
+    {
+      "id": "chk_gdsi_ev1_03",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Ubicar experimentos empíricos en el **ciclo de Jeff Patton** (*Sense, Focus, Discovery, Delivery*), aplicar **The Mom Test** y evitar las trampas **Usabilidad ≠ Deseabilidad** y **Concierge vs. Wizard of Oz** (ninguno valida factibilidad técnica)."
+    },
+    {
+      "id": "chk_gdsi_ev1_04",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Aplicar **Slicing Vertical** (INVEST) frente al antipatrón horizontal y construir/diagnosticar un **Example Map** (Amarilla, Azul, Verde, Roja) reconociendo épicas (muchas azules) y falta de DoR (muchas rojas)."
+    },
+    {
+      "id": "chk_gdsi_ev1_05",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Separar responsabilidades en **Scrum** (*PO vs. Developers*, *Product Goal*, *Sprint Goal*, **DoD**), no mostrar nunca trabajo sin 100% DoD en la **Sprint Review** y distinguir producto (**Review**) de proceso (**Retrospectiva**)."
+    },
+    {
+      "id": "chk_gdsi_ev1_06",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Construir un **User Story Map** bidimensional (Backbone cronológico **no priorizable** + costillas verticales priorizadas) definiendo un **Walking Skeleton / MVP** fin-a-fin y un **Release Plan** consistente."
+    },
+    {
+      "id": "chk_gdsi_ev1_07",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Justificar la estimación relativa ante el **Cono de Incertidumbre** ($0.25\\times$ a $4\\times$) usando **Story Points**, **Planning Poker** (sin promediar divergencias), **Spikes** time-boxed y **Slack** transparente frente a colchones ocultos."
+    },
+    {
+      "id": "chk_gdsi_ev1_08",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Calcular la **Exposición al Riesgo** ($E = P \\times I$), seleccionar entre las **5 estrategias de tratamiento** (Mitigación, Evitación, Transferencia, Contingencia, Aceptación) y recortar alcance con **MoSCoW** ante fecha fija sin sacrificar la DoD."
+    },
+    {
+      "id": "chk_gdsi_ev1_09",
+      "sectionId": "checklist-evaluacion-1",
+      "sectionTitle": "Checklist Innegociable — Evaluación 1 (Producto)",
+      "label": "Aplicar **Team Topologies** (4 tipos, 3 modos, **Maniobra Inversa de Conway** y **Consentimiento** de Tobias Mayer), las **5 fases de Retrospectiva** (Derby & Larsen) y diseñar métricas con **GQM** y **DORA** evitando métricas de vanidad, **falso flujo ágil** y la **Ley de Goodhart**."
+    }
+  ],
+  "parciales": [
+    {
+      "examId": "gdsi-eval1-2026-05-18-reciclaplus",
+      "title": "Evaluación 1: Producto — Caso ReciclaPlus",
+      "dateLabel": "Modelo 1C 2026 (18/05/2026)",
+      "passThresholdPercent": 60,
+      "examNotes": [
+        "Aprobación (nota 4) con 60%.",
+        "Explicitá tus hipótesis.",
+        "Validá que lo que escribís cumpla lo pedido en el enunciado."
+      ],
+      "caseTitle": "Caso Común (Preguntas 4, 5 y 6): ReciclaPlus",
+      "caseContext": "ReciclaPlus es una plataforma digital impulsada para articular el circuito de reciclaje urbano conectando a vecinos que separan residuos reciclables en sus domicilios con cooperativas de recuperadores urbanos encargadas de la recolección y clasificación del material.\n\nEn una segunda etapa, la plataforma prevé incorporar a empresas compradoras de material clasificado (plástico, cartón, vidrio, metales) para facilitar la comercialización con trazabilidad. Además, la iniciativa cuenta con el respaldo del gobierno municipal, que otorga subsidios operativos a las cooperativas y exige reportes ambientales periódicos (volúmenes recuperados por barrio y tipo de material) para respaldar la política pública.\n\nA partir de entrevistas preliminares y relevamientos iniciales, el equipo identificó cuatro dificultades principales:\n1) Desconfianza y abandono del hábito en vecinos: desconocen días y horarios reales de recolección o temen sacar sus bolsas separadas y que nadie pase a retirarlas.\n2) Coordinación informal e ineficiente de rutas en cooperativas: los recorridos se organizan manualmente por mensajes de WhatsApp y planillas en papel, generando viajes en vacío, demoras y superposición de zonas.\n3) Falta de trazabilidad para reportes ambientales: las cooperativas carecen de un registro confiable de retiros concretados y kilogramos clasificados para rendir ante el municipio y sostener los subsidios.\n4) Incertidumbre sobre adopción y priorización: el equipo aún no cuenta con evidencia empírica sobre qué funcionalidades generan mayor valor ni certeza de adopción diaria por parte de vecinos y clasificadores.",
+      "questions": [
+        {
+          "id": "rp-p1",
+          "numberLabel": "Pregunta 1",
+          "title": "Artful Making: Relación entre 'Release' y 'Play'",
+          "weightPercent": 10,
+          "kind": "mcq",
+          "prompt": "En el marco de Artful Making, ¿qué relación describe correctamente \"release\" y \"play\"?",
+          "options": [
+            {
+              "key": "a",
+              "text": "\"Release\" es la puesta en producción del software y \"play\" es la fase de pruebas exploratorias previa al lanzamiento."
+            },
+            {
+              "key": "b",
+              "text": "\"Release\" es soltar el control para permitir la autonomía y la exploración, y \"play\" es el espacio seguro para experimentar y la obra que producimos."
+            },
+            {
+              "key": "c",
+              "text": "\"Release\" significa liberar al equipo de cualquier fecha límite y \"play\" consiste en aplicar dinámicas lúdicas en la retrospectiva."
+            },
+            {
+              "key": "d",
+              "text": "\"Release\" implica congelar el alcance antes de iterar y \"play\" se refiere a ejecutar fielmente el guion preestablecido sin desvíos."
+            }
+          ],
+          "correctKey": "b",
+          "solution": "**Opción correcta: b).**\n\nEn *Artful Making* (Austin & Devin, 2003), **Release (*Control by Release*)** consiste en soltar el control prescriptivo detallado —manteniendo condiciones de borde claras como propósito, calidad y *deadline*— para habilitar la autonomía creativa del equipo. **Play** condensa su doble acepción teatral: el espacio psicológicamente seguro para ensayar y experimentar (*playing*) y la obra viva e integrada entregada al usuario (*the play*).\n\n- **a)** Confunde *release* con despliegue técnico a producción y reduce *play* a pruebas exploratorias.\n- **c)** Error clásico: *Control by Release* jamás elimina el *deadline* (la fecha de estreno es firme).\n- **d)** Describe el paradigma industrial/predictivo rígido, opuesto a *Artful Making*.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-01/"
+        },
+        {
+          "id": "rp-p2",
+          "numberLabel": "Pregunta 2",
+          "title": "Example Mapping: Diferencia entre 'Regla' y 'Ejemplo'",
+          "weightPercent": 10,
+          "kind": "mcq",
+          "prompt": "En Example Mapping, ¿cuál es la diferencia principal entre una \"regla\" y un \"ejemplo\"?",
+          "options": [
+            {
+              "key": "a",
+              "text": "La regla es un caso de prueba automatizado en Gherkin y el ejemplo es un requisito no funcional de arquitectura."
+            },
+            {
+              "key": "b",
+              "text": "La regla expresa un comportamiento esperado del sistema; el ejemplo es una instancia concreta que la ilustra o valida."
+            },
+            {
+              "key": "c",
+              "text": "La regla describe una duda abierta sin responder y el ejemplo describe la solución técnica elegida por los desarrolladores."
+            },
+            {
+              "key": "d",
+              "text": "No existe diferencia práctica: las reglas las escribe el Product Owner antes del Sprint y los ejemplos se redactan después de desplegar a producción."
+            }
+          ],
+          "correctKey": "b",
+          "solution": "**Opción correcta: b).**\n\nEn *Example Mapping* (Matt Wynne / Nagy & Rose), las **tarjetas azules (Reglas)** sintetizan criterios de aceptación o políticas generales de comportamiento del sistema, mientras que las **tarjetas verdes (Ejemplos)** son instancias concretas con datos reales y casos límite ubicadas debajo de cada regla para ilustrarla, validarla y formularla luego en escenarios Gherkin (`Given / When / Then`).\n\n- **a)** Confunde los planos de BDD (Gherkin se formula a partir de los ejemplos, no de las reglas).\n- **c)** Las dudas abiertas son las **tarjetas rojas** (*Questions*), no las reglas.\n- **d)** Los ejemplos se construyen colaborativamente con los *Three Amigos* **antes** de programar.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-02/"
+        },
+        {
+          "id": "rp-p3",
+          "numberLabel": "Pregunta 3",
+          "title": "Gestión Adaptativa de Riesgos en Desarrollo Ágil",
+          "weightPercent": 10,
+          "kind": "mcq",
+          "prompt": "En el contexto de gestión adaptativa de riesgos, ¿cuál de las siguientes afirmaciones es la más adecuada?",
+          "options": [
+            {
+              "key": "a",
+              "text": "Los riesgos se identifican únicamente durante la fase inicial del proyecto y se congelan en un registro que permanece invariable hasta el cierre."
+            },
+            {
+              "key": "b",
+              "text": "En entornos ágiles no es necesario gestionar riesgos de forma explícita porque trabajar en Sprints cortos los elimina automáticamente."
+            },
+            {
+              "key": "c",
+              "text": "La identificación y mitigación de riesgos es continua: se revisan en planificación, dailies y retrospectivas, y se mitigan tempranamente."
+            },
+            {
+              "key": "d",
+              "text": "Los riesgos técnicos deben postergarse siempre para los últimos Sprints con el fin de mostrar pantallas terminadas al cliente cuanto antes."
+            }
+          ],
+          "correctKey": "c",
+          "solution": "**Opción correcta: c).**\n\nLa gestión adaptativa mantiene una matriz de riesgos viva integrada a las cadencias del equipo (**Planning** para priorizar valor y riesgo, **Daily** para detectar impedimentos/triggers, **Review** para validar reducción de riesgo de producto y **Retrospective** para riesgos de proceso), mitigando tempranamente los ítems de mayor exposición ($E = P \\times I$) mediante incrementos frecuentes y *Spikes*.\n\n- **a)** Registro estático que queda obsoleto apenas cambia el contexto.\n- **b)** Mito ágil penalizado: los Sprints cortos acotan la pérdida pero **no reemplazan** la gestión explícita de riesgos.\n- **d)** Postergar riesgos técnicos concentra el fracaso al final cuando ya se consumió presupuesto y plazo.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-03/"
+        },
+        {
+          "id": "rp-p4",
+          "numberLabel": "Pregunta 4",
+          "title": "Ciclo de Jeff Patton, Experimentos Empíricos y Riesgos de Producto",
+          "weightPercent": 20,
+          "kind": "open",
+          "prompt": "a) Ubique las siguientes cuatro técnicas de aprendizaje y validación en el ciclo de desarrollo de producto de Jeff Patton (Sense, Focus, Discovery, Delivery), justificando en cada caso cómo se aplicaría en ReciclaPlus:\n1. Observación etnográfica\n2. Buy-a-Feature\n3. Wizard of Oz MVP\n4. A/B Testing\n\nb) Para las técnicas ubicadas en Sense y Discovery, indique qué riesgo de producto (negocio/viabilidad, atractivo/deseabilidad, técnico/factibilidad o usabilidad) mitiga principalmente cada una y explique por qué.",
+          "rubric": [
+            {
+              "label": "Ubicación correcta en el ciclo de Patton (10%)",
+              "detail": "Observación etnográfica en Sense; Buy-a-Feature en Focus (o transición a Discovery); Wizard of Oz MVP en Discovery; A/B Testing en Delivery (optimización / Tweak it)."
+            },
+            {
+              "label": "Aplicación contextualizada a ReciclaPlus (5%)",
+              "detail": "Baja cada técnica a actores reales del caso (vecinos, cooperativas, operadores de rutas con Google Maps, municipio) sin respuestas genéricas."
+            },
+            {
+              "label": "Riesgos de Cagan en Sense y Discovery (5%)",
+              "detail": "Asocia Observación etnográfica con Atractivo/Deseabilidad y Wizard of Oz con Usabilidad y Atractivo/Experiencia fin-a-fin, aclarando que NO mitiga Factibilidad Técnica."
+            }
+          ],
+          "solution": "**a) Ubicación de las 4 técnicas en el ciclo de Jeff Patton (aplicadas a ReciclaPlus):**\n1. **Observación etnográfica → Sense:** acompañar *in situ* a vecinos al separar residuos en su hogar y a recuperadores en su recorrido real para descubrir fricciones, problemas de conectividad y hábitos que no emergen en encuestas.\n2. **Buy-a-Feature → Focus** *(o transición a Discovery)*: taller con presupuesto ficticio limitado donde vecinos, cooperativas y referentes municipales \"compran\" funcionalidades candidatas (agendamiento, alertas, ruteo, reportes), forzando *trade-offs* reales para converger en la oportunidad prioritaria.\n3. **Wizard of Oz MVP → Discovery:** el vecino agenda su retiro y la cooperativa recibe en la app una \"ruta optimizada\", pero **detrás de escena un operador la arma manualmente en Google Maps** sin que el usuario lo perciba. Valida el comportamiento fin-a-fin antes de programar un algoritmo complejo de ruteo.\n4. **A/B Testing → Delivery (*Tweak it* / Optimización):** una vez operativo en producción con tráfico real de barrios activos, se prueban dos variantes controladas (ej.: dos recordatorios o flujos de confirmación) para medir estadísticamente cuál eleva la tasa de retiros concretados.\n\n**b) Riesgos de producto (Marty Cagan) mitigados en *Sense* y *Discovery*:**\n- **Sense (Observación etnográfica) → Riesgo de Atractivo / Deseabilidad (Valor):** comprueba en terreno que los dolores identificados existen realmente y evita diseñar funcionalidades irrelevantes para la rutina de vecinos y clasificadores.\n- **Discovery (Wizard of Oz MVP) → Riesgos de Usabilidad y Atractivo / Experiencia fin-a-fin:** comprueba si vecinos y recuperadores pueden operar el flujo sin trabas y si efectivamente cambian su conducta (*outcome*: concretan retiros y sostienen el hábito).\n- **Advertencia crítica:** el *Wizard of Oz MVP* **NO mitiga el riesgo de Factibilidad Técnica** ni la escalabilidad del motor automático de ruteo (al ser operado manualmente, se requerirá luego un *Spike* técnico).",
+          "exerciseHref": "../../ejercicios/gdsi-ej-04/"
+        },
+        {
+          "id": "rp-p5",
+          "numberLabel": "Pregunta 5",
+          "title": "Sprint Review vs. Sprint Retrospective en el Barrio Piloto",
+          "weightPercent": 20,
+          "kind": "open",
+          "prompt": "El equipo de ReciclaPlus completó un Sprint en el que puso en marcha el agendamiento de retiros de reciclables en un barrio piloto junto a una cooperativa y con seguimiento municipal, armando las rutas diarias mediante un operador que procesaba los pedidos en Google Maps.\n\na) Diferencie claramente el propósito de la Sprint Review respecto de la Sprint Retrospective, indicando qué busca inspeccionar y mejorar cada evento y quiénes participan.\n\nb) Proponga un tema concreto para tratar en la Sprint Review y un tema concreto para tratar en la Sprint Retrospective tras lanzar el agendamiento en el barrio piloto de ReciclaPlus, justificando por qué cada tema corresponde a ese evento y no al otro.",
+          "rubric": [
+            {
+              "label": "Distinción conceptual Review vs. Retrospectiva (10%)",
+              "detail": "Contrasta objeto de inspección (Producto/Incremento con 100% DoD vs. Proceso/personas/interacciones), participantes (Scrum Team + Stakeholders vs. solo Scrum Team) y salida (Product Backlog adaptado vs. 1–2 mejoras internas)."
+            },
+            {
+              "label": "Tema concreto y pertinente para la Sprint Review (5%)",
+              "detail": "Ejemplo anclado en ReciclaPlus orientado a valor/outcomes con cooperativa y municipio (ej.: tasa de retiros concretados y ajuste de frecuencia/ventanas horarias por barrio)."
+            },
+            {
+              "label": "Tema concreto y pertinente para la Sprint Retrospective (5%)",
+              "detail": "Ejemplo anclado en proceso interno del equipo (ej.: fricciones de sincronización y formato de datos entre desarrolladores y el operador de Google Maps), justificando la seguridad psicológica."
+            }
+          ],
+          "solution": "**a) Diferencias entre Sprint Review y Sprint Retrospective:**\n- **Sprint Review:** inspecciona el **Producto** (el Incremento que cumple el $100\\%$ de la *Definition of Done*, sus *outcomes* y cambios del contexto). Participan el **Scrum Team + Stakeholders clave** invitados por el PO (cooperativa, municipio). Su objetivo es evaluar *qué* construimos y **adaptar el Product Backlog** hacia el *Product Goal*.\n- **Sprint Retrospective:** inspecciona el **Proceso, las personas, las interacciones, las herramientas y la propia DoD**. Participa **exclusivamente el Scrum Team** para resguardar la seguridad psicológica. Su objetivo es mejorar *cómo* trabajamos acordando **1 o 2 mejoras concretas (SMART)** para el próximo Sprint.\n\n**b) Temas concretos para el barrio piloto de ReciclaPlus:**\n1. **Tema para la Sprint Review:** evaluar junto con la cooperativa y el municipio el **porcentaje de retiros agendados que efectivamente se concretaron** frente a los fallidos/cancelados, y decidir si conviene **ajustar la frecuencia y ventanas horarias de recolección** por microzona para evitar viajes en vacío.\n   *Justificación:* trata el valor del producto y el cambio de comportamiento observado (*outcome*), requiere el criterio de stakeholders externos e impacta directamente en la priorización del *Product Backlog*.\n2. **Tema para la Sprint Retrospective:** analizar las **fricciones internas de comunicación y formato de exportación entre los desarrolladores y el operador de Google Maps** (cambios no avisados en el listado diario que generaron retrabajo manual y demoras al armar las hojas de ruta).\n   *Justificación:* es un problema interno de coordinación y prácticas de trabajo del equipo; requiere seguridad psicológica (Primera Directiva de Kerth y análisis de causa raíz) sin exposición ante clientes o funcionarios municipales, y deriva en un acuerdo interno de proceso (contrato estable de formato + horario de corte).",
+          "exerciseHref": "../../ejercicios/gdsi-ej-05/"
+        },
+        {
+          "id": "rp-p6",
+          "numberLabel": "Pregunta 6",
+          "title": "User Story Mapping y Definición del Corte de MVP",
+          "weightPercent": 30,
+          "kind": "open",
+          "prompt": "Construya un User Story Map (Jeff Patton) para ReciclaPlus cumpliendo explícitamente con los siguientes cuatro puntos:\n1. Identificación de roles: liste los roles intervinientes (Vecino, Clasificador / Cooperativa, Empresa compradora y opcionalmente Municipio), indicando cuáles protagonizan el recorrido núcleo del MVP y cuáles se atienden en etapas posteriores.\n2. Backbone (eje horizontal): defina las actividades principales del recorrido de recolección en orden cronológico de izquierda a derecha.\n3. Historias priorizadas y línea de corte (eje vertical): ubique bajo cada actividad las historias de usuario separando claramente el Release 1 (MVP / Walking Skeleton) y el Release 2 (Evolutivo).\n4. Justificación del criterio de recorte del MVP: explique por qué el corte propuesto constituye una rebanada fin-a-fin viable, qué hipótesis críticas valida en el barrio piloto y por qué no corresponde eliminar ninguna actividad completa del Backbone.",
+          "rubric": [
+            {
+              "label": "Identificación y recorte de roles (5%)",
+              "detail": "Incluye Vecino y Clasificador/Cooperativa como núcleo del MVP, Municipio como consumidor de reporte simple inicial y Empresa compradora diferida a 2da etapa / Release 2."
+            },
+            {
+              "label": "Backbone cronológico coherente (8%)",
+              "detail": "Actividades secuenciales de izquierda a derecha (ej.: 1. Agendar Retiro → 2. Coordinar Ruta → 3. Confirmar y Registrar) sin priorizar columnas entre sí."
+            },
+            {
+              "label": "Historias verticales y corte MVP vs. Release 2 (10%)",
+              "detail": "Historias concretas debajo de cada columna del Backbone con línea de corte horizontal clara que atraviesa todas las actividades en Release 1."
+            },
+            {
+              "label": "Justificación metodológica del Walking Skeleton (7%)",
+              "detail": "Explica por qué no se elimina ninguna columna del Backbone, qué hipótesis de hábito/confianza/trazabilidad valida el MVP y qué sofisticaciones se difieren a Release 2."
+            }
+          ],
+          "solution": "**1. Roles del ecosistema ReciclaPlus:**\n- **Vecino *(núcleo MVP)*:** solicita retiros y necesita previsibilidad para sostener el hábito de separación.\n- **Clasificador / Cooperativa *(núcleo MVP)*:** coordina recorridos, retira material y registra el resultado en campo.\n- **Municipio *(consumidor indirecto MVP)*:** recibe una exportación simple de retiros/kilos en Release 1; los reportes analíticos automatizados pasan a Release 2.\n- **Empresa compradora *(diferida a Release 2 / 2da etapa)*:** según el caso, se incorpora una vez validado el circuito básico vecino–cooperativa.\n\n**2 y 3. Estructura del User Story Map (Backbone + Corte Vertical):**\n- **Actividad 1 — Agendar Retiro *(Vecino)*:**\n  - *Release 1 (MVP):* Ver días disponibles en mi barrio; seleccionar tipo de reciclable básico (papel/plástico/vidrio); confirmar dirección y franja horaria.\n  - *Release 2:* Recordatorios automáticos por SMS/push; carga de fotos del material; retiros recurrentes y programa de puntos/beneficios.\n- **Actividad 2 — Coordinar Ruta *(Clasificador / Cooperativa)*:**\n  - *Release 1 (MVP):* Ver listado diario de solicitudes del barrio piloto; exportar direcciones / mapa estático con orden manual asistido (esquema *Wizard of Oz* en Google Maps).\n  - *Release 2:* Algoritmo automático de optimización de rutas GPS en vivo; reasignación dinámica de cuadrillas ante imprevistos.\n- **Actividad 3 — Confirmar y Registrar *(Clasificador / Vecino / Municipio)*:**\n  - *Release 1 (MVP):* Notificación básica de arribo/retiro; marcar retiro exitoso o fallido y registrar kilos aproximados + calificación básica de clasificación; planilla resumen simple para el municipio.\n  - *Release 2:* Reportes ambientales automatizados consolidados para el municipio; publicación de lotes trazables para venta a **empresas compradoras**.\n\n**4. Justificación del criterio de recorte del MVP (*Walking Skeleton*):**\nLas tres columnas del **Backbone** forman el recorrido cronológico inseparable del servicio y **nunca se priorizan ni eliminan entre sí**: sin agendar no hay demanda, sin coordinar ruta persisten los viajes en vacío y sin confirmar/registrar no se recupera la confianza del vecino ni hay trazabilidad para el municipio. El corte horizontal de **Release 1** cruza todo el Backbone con la mínima expresión viable (aprovechando ruteo manual asistido) para validar empíricamente el hábito de los vecinos y la adopción operativa de las cooperativas antes de invertir en algoritmos GPS, incentivos y el módulo comercial de empresas compradoras.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-06/"
+        }
+      ]
+    },
+    {
+      "examId": "gdsi-eval1-2026-10-26-clubplay",
+      "title": "Evaluación 1: Producto — Caso ClubPlay",
+      "dateLabel": "2C 2026 (26/10/2026)",
+      "passThresholdPercent": 60,
+      "examNotes": [
+        "Aprobación (nota 4) con 60%.",
+        "Caso común aplicable a las 6 preguntas.",
+        "En preguntas de opción múltiple, justificá en 2 o 3 líneas."
+      ],
+      "caseTitle": "Caso Común (Todas las preguntas): ClubPlay",
+      "caseContext": "ClubPlay es una plataforma web/móvil pensada para conectar a jugadores amateurs de deportes de cancha (fútbol 5, pádel y tenis) con clubes deportivos barriales de CABA y GBA.\n\nHoy los jugadores reservan turnos llamando por teléfono o enviando mensajes de WhatsApp, transfieren señas de forma manual y suelen cancelar partidos a último momento cuando les falta un integrante (\"nos falta uno\"). Por su parte, los encargados de los clubes administran la disponibilidad en cuadernos o planillas, verifican transferencias a mano y sufren turnos vacíos por ausencias sin aviso.\n\nEl equipo de producto debe validar sus hipótesis principales, definir el recorte de su primer lanzamiento antes de la temporada de verano (1° de diciembre), construir iterativamente con Scrum y BDD, y diseñar indicadores confiables para evaluar el éxito real del producto una vez en producción.",
+      "questions": [
+        {
+          "id": "cp-p1",
+          "numberLabel": "Pregunta 1",
+          "title": "Interpretación de un Experimento Fake Door en la Landing",
+          "weightPercent": 10,
+          "kind": "mcq",
+          "prompt": "Para explorar la funcionalidad \"nos falta uno\", el equipo de ClubPlay publicó una landing page con un botón destacado que decía \"Encontrá los jugadores que te faltan\". Al hacer clic, aparecía un cartel de \"Próximamente\". Durante una semana ingresaron 400 visitantes a la página y 70 hicieron clic en el botón (17,5%).\n\nSeleccioná la interpretación más adecuada de este resultado y justificá brevemente (2 a 3 líneas):",
+          "options": [
+            {
+              "key": "a",
+              "text": "Queda demostrado que los jugadores van a coordinar y asistir a partidos con desconocidos a través de la app, por lo que conviene priorizar esta funcionalidad por encima de la reserva de canchas."
+            },
+            {
+              "key": "b",
+              "text": "Existe una señal inicial de curiosidad o interés por la propuesta, pero el experimento no alcanza para demostrar que los usuarios efectivamente coordinarían y asistirían a jugar partidos con desconocidos ni que completarían el flujo real."
+            },
+            {
+              "key": "c",
+              "text": "Como menos del 50% de los visitantes hizo clic, la hipótesis queda completamente refutada y la funcionalidad debe descartarse de forma definitiva del backlog."
+            },
+            {
+              "key": "d",
+              "text": "El resultado no aporta información útil porque mostrar \"Próximamente\" invalida el experimento como método empírico de descubrimiento de producto."
+            }
+          ],
+          "correctKey": "b",
+          "solution": "**Opción correcta: b).**\n\nEl experimento aplicado es un **Fake Door (*Smoke Test*)**, que mide una acción de costo prácticamente nulo (un clic exploratorio). Registrar $70/400$ clics ($17{,}5\\%$) aporta una **señal inicial de curiosidad o interés**, pero **NO prueba** que los jugadores estén dispuestos a coordinar horarios, pagar su parte y presentarse físicamente a jugar un partido real con desconocidos (ni que los partidos se completen).\n\n- **a)** Falso positivo por sobreinterpretar un clic gratuito como adopción de alto compromiso.\n- **c)** Exigir un $50\\%$ de clics es arbitrario y descarta prematuramente una señal válida.\n- **d)** Mostrar \"Próximamente\" es justamente la mecánica estándar y legítima de un *Fake Door*. El siguiente paso recomendado sería un experimento *Concierge* o *Wizard of Oz* acotado en 1–2 clubes piloto.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-11/"
+        },
+        {
+          "id": "cp-p2",
+          "numberLabel": "Pregunta 2",
+          "title": "Slicing Vertical de la Reserva de Canchas y Pago de Seña",
+          "weightPercent": 10,
+          "kind": "mcq",
+          "prompt": "El Product Backlog contiene la historia demasiado grande: \"Como jugador quiero reservar una cancha y pagar la seña.\" El equipo evalúa cuatro propuestas para dividirla en historias más pequeñas.\n\nSeleccioná la opción que aplica correctamente el slicing vertical y justificá brevemente por qué las demás propuestas son inadecuadas:",
+          "options": [
+            {
+              "key": "a",
+              "text": "Historia 1: Diseñar el modelo de datos y crear las tablas de reservas y pagos; Historia 2: Programar los servicios de backend y la integración con la pasarela de pagos; Historia 3: Desarrollar las pantallas de frontend para reservar y pagar."
+            },
+            {
+              "key": "b",
+              "text": "Historia 1: Construir el módulo de reseñas, calificaciones de clubes y programa de puntos; Historia 2: Implementar la reserva de cancha junto con el pago de seña y la cancelación todo en el siguiente Sprint."
+            },
+            {
+              "key": "c",
+              "text": "Historia 1: Reservar un horario libre confirmando el turno y pagando la seña directamente en el club (como funciona hoy); Historia 2: Pagar la seña online desde la app al momento de reservar; Historia 3: Cancelar la reserva desde la app y recuperar la seña según la política del club."
+            },
+            {
+              "key": "d",
+              "text": "Historia 1: Construir una pantalla de reserva con botón \"Pagar seña\" que guarda una confirmación simulada en memoria sin impactar en la grilla real del club; Historia 2: Conectar la pantalla a la disponibilidad real y a los pagos en el Sprint siguiente."
+            }
+          ],
+          "correctKey": "c",
+          "solution": "**Opción correcta: c).**\n\nLa opción **c)** aplica **Slicing Vertical** cumpliendo **INVEST** (*Valuable, Small, Testable*): cada historia atraviesa todas las capas técnicas y entrega un **incremento real y utilizable** al cierre del Sprint, resolviendo primero la reserva sin llamadas (con seña manual en el club), luego el pago online y después la cancelación con devolución.\n\n- **a)** **Slicing horizontal por capas técnicas** (BD / Backend / Frontend): ninguna historia aporta valor por sí sola al usuario.\n- **b)** Agrega *gold plating* (reseñas/puntos) y deja la épica original sin dividir.\n- **d)** Confunde un prototipo simulado desconectado de la grilla real con un Incremento desplegable (generaría dobles reservas).",
+          "exerciseHref": "../../ejercicios/gdsi-ej-12/"
+        },
+        {
+          "id": "cp-p3",
+          "numberLabel": "Pregunta 3",
+          "title": "Evaluación Crítica del Plan de Descubrimiento de Dos Semanas",
+          "weightPercent": 20,
+          "kind": "open",
+          "prompt": "El equipo de ClubPlay redactó el siguiente plan de evaluación de 2 semanas:\n1. Enviar una encuesta online a 200 jugadores con dos preguntas: \"¿Usarías una app para reservar canchas y pagar la seña?\" y \"¿Pagarías una comisión del 5% por usarla?\".\n2. Mostrar un prototipo navegable a 2 encargados de clubes y preguntarles: \"¿Qué les parece? ¿Lo usarían en su club?\".\n3. Si los dos pasos anteriores dan resultados positivos, empezar inmediatamente a desarrollar la aplicación completa (búsqueda, reservas, pagos online, panel de gestión del club y función \"nos falta uno\") para lanzarla en todos los clubes en simultáneo.\n\nEvaluá críticamente cada uno de los tres pasos utilizando exactamente el formato:\n- \"Veo este posible riesgo: …\"\n- \"Creo que lo podríamos evaluar mejor si hacemos: …\"",
+          "rubric": [
+            {
+              "label": "Crítica y rediseño del Paso 1 (7%)",
+              "detail": "Detecta violación de The Mom Test (preguntas hipotéticas futuras + sesgo de cortesía) y propone entrevistas sobre hechos pasados + experimento conductual con comisión del 5% visible."
+            },
+            {
+              "label": "Crítica y rediseño del Paso 2 (7%)",
+              "detail": "Detecta muestra mínima (2 encargados) y pregunta inductora ('¿qué les parece?') + diferencia entre opinión/usabilidad y adopción real; propone observación contextual en 4–6 clubes + piloto Concierge/Wizard of Oz."
+            },
+            {
+              "label": "Crítica y rediseño del Paso 3 (6%)",
+              "detail": "Identifica el antipatrón Big Bang sobre evidencia débil y propone un Walking Skeleton / MVP acotado en 1 club piloto, difiriendo 'nos falta uno' a iteraciones posteriores."
+            }
+          ],
+          "solution": "**Punto 1 — Encuesta online a 200 jugadores con preguntas hipotéticas:**\n- **Veo este posible riesgo:** las preguntas apelan a intenciones futuras sin costo (*\"¿usarías…?\"*, *\"¿pagarías…?\"*), violando **The Mom Test** y disparando sesgos de cortesía y optimismo que producen falsos positivos sobre adopción y sensibilidad a la comisión del $5\\%$.\n- **Creo que lo podríamos evaluar mejor si hacemos:** realizar **10 a 15 entrevistas cualitativas *The Mom Test*** centradas en hechos concretos del pasado reciente (última reserva, fricciones reales, pago de seña, cancelaciones) y complementarlas con un **experimento conductual** donde figure explícitamente el precio + comisión del $5\\%$ midiendo intentos reales de reserva.\n\n**Punto 2 — Prototipo navegable a 2 encargados preguntando \"¿qué les parece?\":**\n- **Veo este posible riesgo:** preguntar *\"¿qué les parece?\"* induce halagos por cortesía; además, una muestra de solo 2 encargados es insuficiente frente a la diversidad operativa de los clubes y un prototipo no prueba si abandonarán su cuaderno/WhatsApp en horario pico.\n- **Creo que lo podríamos evaluar mejor si hacemos:** realizar **observación contextual** en 4 a 6 clubes durante horarios pico y ejecutar luego un **experimento Concierge o Wizard of Oz de fin de semana** en 1 o 2 clubes (gestionando grilla y señas manualmente detrás de un formulario simple) para medir adopción real y posibles dobles reservas a costo mínimo.\n\n**Punto 3 — Desarrollar la app completa para todos los clubes en simultáneo:**\n- **Veo este posible riesgo:** pasar de evidencia débil a un lanzamiento **Big Bang** con funcionalidades de alta incertidumbre (*\"nos falta uno\"*) multiplica el desperdicio (*Output* sin *Outcome*) y el impacto de cualquier error de negocio o de operación.\n- **Creo que lo podríamos evaluar mejor si hacemos:** construir un **Walking Skeleton / MVP** acotado al flujo núcleo (buscar, reservar y gestionar grilla, difiriendo *\"nos falta uno\"*) y lanzarlo en un **piloto controlado en 1 solo club** para iterar con métricas de uso real antes de escalar.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-13/"
+        },
+        {
+          "id": "cp-p4",
+          "numberLabel": "Pregunta 4",
+          "title": "User Story Mapping y Release Plan con Fecha Fija (1/12)",
+          "weightPercent": 30,
+          "kind": "open",
+          "prompt": "Parte (a) — User Story Mapping (20%):\nConstruí el User Story Map de ClubPlay contemplando ambos roles (Jugador y Encargado del Club): (1) definí el Backbone cronológico de izquierda a derecha; (2) ubicá historias de usuario debajo de cada actividad; (3) trazá la línea de corte que separa Release 1 (MVP / Walking Skeleton) de Release 2 y justificá el criterio.\n\nParte (b) — Restricción de fecha fija (10%):\nLa dirección comercial necesita lanzar el 1° de diciembre para aprovechar la temporada de verano. Quedan exactamente 3 Sprints disponibles, pero la estimación actual para el alcance pretendido es de 3 a 5 Sprints. ¿Cómo gestionarías el Release Plan? Explicá qué decisiones tomar, qué prácticas NO deben sacrificarse y cómo reducir el riesgo antes de la fecha límite.",
+          "rubric": [
+            {
+              "label": "Parte (a) — Backbone y roles completos (10%)",
+              "detail": "Incluye ambos roles críticos (Jugador y Encargado del Club) en el MVP con actividades cronológicas fin-a-fin (Buscar y Elegir → Reservar y Pagar → Completar Equipo → Gestionar Grilla)."
+            },
+            {
+              "label": "Parte (a) — Corte MVP vs. Release 2 y justificación (10%)",
+              "detail": "Traza un Walking Skeleton usable punta a punta (evitando dobles reservas del encargado) y difiere sofisticaciones (matchmaking, pagos divididos, reportes avanzados) a Release 2."
+            },
+            {
+              "label": "Parte (b) — Gestión del Release Plan con fecha fija 1/12 (10%)",
+              "detail": "Ajusta alcance con MoSCoW (Must Have + diferir 'nos falta uno'), aplica Último Momento Prudente midiendo velocidad real tras Sprint 1, protege innegociablemente la DoD (sin sumar devs por Ley de Brooks ni horas extras) y propone piloto temprano en Sprint 2 con Slack explícito."
+            }
+          ],
+          "solution": "**Parte (a): User Story Map de ClubPlay (Roles: Jugador y Encargado del Club):**\n- **1. Buscar y Elegir *(Jugador)*:**\n  - *MVP (Release 1):* Ver canchas y horarios libres de clubes piloto; filtrar por deporte y zona/barrio.\n  - *Release 2:* Galería de fotos, tipo de césped, reseñas verificadas y alertas de turnos liberados.\n- **2. Reservar y Pagar *(Jugador / Encargado)*:**\n  - *MVP (Release 1):* Seleccionar horario libre y confirmar reserva bloqueando el turno; registrar pago de seña manual/transferencia verificada en el club (o medio básico).\n  - *Release 2:* Pasarela online completa (Mercado Pago), división automática de seña entre jugadores y cancelación con reembolso automatizado.\n- **3. Completar Equipo *(Jugador)*:**\n  - *MVP (Release 1):* Compartir resumen del turno por enlace de WhatsApp (o aviso básico sin matchmaking).\n  - *Release 2:* Funcionalidad completa *\"nos falta uno\"* con matchmaking por nivel/edad, chat integrado y reputación.\n- **4. Gestionar Grilla *(Encargado del Club)*:**\n  - *MVP (Release 1):* Configurar canchas/horarios; ver grilla diaria en tiempo real y cargar/bloquear turnos telefónicos para evitar dobles reservas; registrar cobro de seña.\n  - *Release 2:* Bloqueo dinámico de turnos fijos, tarifas por horario pico y tablero de ocupación e ingresos.\n\n*Justificación del corte:* el **Walking Skeleton** atraviesa el flujo completo incluyendo al **Encargado del Club** (si quedara afuera, habría dobles reservas desde el día 1).\n\n**Parte (b): Gestión de la fecha fija 1/12 (3 Sprints disponibles vs. 3–5 estimados):**\n1. **Recorte de alcance con MoSCoW y *buffering*:** priorizar solo los **Must Have** que quepan holgadamente ($60\\%\\text{–}70\\%$) en los 3 Sprints, **difiriendo \"nos falta uno\" y automatizaciones secundarias a Release 2** (y usando seña verificada en el club si la pasarela amenaza el plazo).\n2. **Último Momento Prudente:** medir la **velocidad empírica real** al cerrar el Sprint 1, recalibrar el *Release Plan* (*burn-up*) y renegociar *Should/Could* transparentemente con negocio.\n3. **Prácticas que NO se sacrifican:** **nunca recortar la Definition of Done** (pruebas, CI), no sumar desarrolladores de urgencia (**Ley de Brooks** en 3 Sprints retrasa más) y no imponer horas extras sostenidas.\n4. **Mitigación temprana:** desplegar el *Walking Skeleton* en **1 club piloto al finalizar el Sprint 2** y reservar **Slack** explícito para absorber ajustes antes del 1/12.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-14/"
+        },
+        {
+          "id": "cp-p5",
+          "numberLabel": "Pregunta 5",
+          "title": "Example Mapping de Cancelación de Reserva y Criterio de Refinamiento",
+          "weightPercent": 20,
+          "kind": "open",
+          "prompt": "Parte (a) — Mapa de Ejemplos (15%):\nConstruí el Example Mapping para la historia: \"Como jugador quiero cancelar mi reserva y recuperar la seña.\" Incluí al menos 3 reglas de negocio (tarjetas azules), 1 a 2 ejemplos concretos con datos específicos y casos borde por cada regla (tarjetas verdes) y al menos 1 pregunta abierta para negocio (tarjeta roja).\n\nParte (b) — Criterio de entrada al Sprint (5%):\nEn otra historia del backlog, el mapa queda con 3 reglas de negocio y 6 preguntas abiertas sin responder (6 tarjetas rojas). El Product Owner pide meterla igual al Sprint que arranca mañana \"para no frenar al equipo y después lo vamos viendo sobre la marcha\". ¿Qué debería decidir el equipo y por qué?",
+          "rubric": [
+            {
+              "label": "Parte (a) — Reglas y ejemplos concretos con casos borde (12%)",
+              "detail": "Define al menos 3 reglas claras (ej.: >24 hs devuelve 100%, <24 hs retiene seña pero libera turno, torneo especial sin cancelación online) acompañadas de ejemplos con fechas, horarios y montos precisos (incluyendo casos límite exactos)."
+            },
+            {
+              "label": "Parte (a) — Pregunta abierta pertinente (3%)",
+              "detail": "Formula al menos una tarjeta roja genuina para el negocio (ej.: acreditación en wallet de la app vs. devolución al medio de pago original)."
+            },
+            {
+              "label": "Parte (b) — Rechazo justificado por DoR y Accidental Discovery (5%)",
+              "detail": "Rechaza ingresar la historia con 6 tarjetas rojas al Sprint (incumple DoR / INVEST), alerta sobre Accidental Discovery y retrabajo, y propone tomar la siguiente historia refinada del Product Backlog."
+            }
+          ],
+          "solution": "**Parte (a): Example Mapping — Cancelación de reserva en ClubPlay**\n- **Tarjeta Amarilla (Story):** *Como jugador quiero cancelar mi reserva para recuperar la seña abonada.*\n- **Regla Azul 1 — Cancelación con más de 24 horas de anticipación: reintegro del $100\\%$ de la seña y liberación del turno.**\n  - *Ejemplo Verde 1:* Partido sábado 18:00 con seña de ARS 10.000. El jugador cancela el viernes a las 15:00 (27 hs antes) → estado \"Cancelada\", cancha liberada y reintegro de ARS 10.000.\n  - *Ejemplo Verde 2 (caso borde exacto):* Cancela el viernes exactamente a las 18:00 (24 hs exactas antes) → dentro del plazo, reintegro del $100\\%$ (ARS 10.000).\n- **Regla Azul 2 — Cancelación con menos de 24 horas de anticipación: sin reembolso de la seña, pero el turno se libera.**\n  - *Ejemplo Verde 1:* Partido sábado 18:00 con seña de ARS 10.000. Cancela el sábado a las 10:00 (8 hs antes) → aviso \"Sin reembolso (ARS 0)\", seña retenida por el club y cancha liberada.\n  - *Ejemplo Verde 2 (caso borde turno iniciado):* Intenta cancelar el sábado a las 18:10 un turno de las 18:00 → el sistema bloquea la cancelación y retiene la seña.\n- **Regla Azul 3 — Reservas de torneos o eventos especiales: no admiten cancelación online con reembolso.**\n  - *Ejemplo Verde 1:* Turno \"Torneo Nocturno\" con seña de ARS 15.000 cancelado 48 hs antes → cancelación online deshabilitada por reglamento, indicando contactar al club.\n- **Tarjeta Roja (Pregunta abierta):** *¿El reembolso se acredita como saldo en una wallet dentro de la app o se devuelve directamente a la tarjeta/medio de pago de origen?*\n\n**Parte (b): Historia con 3 reglas y 6 preguntas abiertas (6 tarjetas rojas):**\nEl equipo debe **rechazar el ingreso de la historia al Sprint** y devolverla a refinamiento.\n- **Por qué:** 6 tarjetas rojas frente a solo 3 reglas demuestran que el equipo no entiende aún el comportamiento esperado (**incumple la Definition of Ready** y los criterios *Estimable* y *Testable* de INVEST). Programarla \"sobre la marcha\" desata **Accidental Discovery**, obliga a adivinar reglas en código y genera bloqueos, retrabajo y riesgo de no cumplir la DoD.\n- **Alternativa sin frenar al equipo:** tomar del *Product Backlog* la siguiente historia priorizada que sí esté refinada mientras el PO despeja las 6 dudas con el negocio.",
+          "exerciseHref": "../../ejercicios/gdsi-ej-15/"
+        },
+        {
+          "id": "cp-p6",
+          "numberLabel": "Pregunta 6",
+          "title": "Métricas de Vanidad vs. Outcomes, GQM y DORA en la Sprint Review",
+          "weightPercent": 10,
+          "kind": "open",
+          "prompt": "ClubPlay ya lleva 3 meses operando en producción en 5 clubes deportivos. Durante la Sprint Review, uno de los responsables del negocio muestra un gráfico ascendente y afirma entusiasmado: \"Vamos muy bien: ya tenemos 3.000 descargas de la app.\"\n\n1. ¿Qué opinás de esa afirmación y de la métrica elegida?\n2. Proponé qué debería medir el equipo en su lugar, explicando explícitamente cómo llegaste a esas métricas (metodología empleada).",
+          "rubric": [
+            {
+              "label": "Crítica a '3.000 descargas' como métrica de vanidad (4%)",
+              "detail": "Explica por qué un acumulado histórico siempre creciente no demuestra uso activo, Outcomes ni impacto en negocio, ni permite tomar decisiones accionables."
+            },
+            {
+              "label": "Explicación explícita del método GQM (3%)",
+              "detail": "Deriva las métricas de arriba hacia abajo (Goal → Question → Metric de Victor Basili) evitando listar indicadores sueltos."
+            },
+            {
+              "label": "Métricas propuestas balanceadas (Outcomes + Negocio + DORA) (3%)",
+              "detail": "Propone Outcomes (conversión a partido jugado, retención 30 días), Impacto (señas cobradas, reducción de turnos ociosos/no-show) y salud técnica DORA (Deployment Frequency y Change Failure Rate)."
+            }
+          ],
+          "solution": "**1. Crítica a \"3.000 descargas\": Métrica de Vanidad (*Vanity Metric*):**\nEs un indicador engañoso porque es un **acumulado histórico que siempre sube**, nunca refleja desinstalaciones ni abandono y **no mide Outcomes ni Impacto**: 3.000 descargas no prueban que los usuarios encuentren cancha, paguen señas, jueguen partidos ni vuelvan el mes siguiente. Tampoco habilita decisiones concretas de mejora (las métricas deben ser *espejos de realidad*, Tobias Mayer).\n\n**2. Metodología para derivar mejores métricas — GQM (*Goal–Question–Metric*, Victor Basili):**\nSe definen indicadores *top-down* partiendo de objetivos claros (**Goal**), traduciéndolos en preguntas verificables (**Question**) y seleccionando métricas precisas (**Metric**) que equilibren producto, negocio e ingeniería:\n- **Dimensión Outcomes de Producto:**\n  - *Goal:* lograr que los jugadores adopten ClubPlay de forma recurrente para jugar.\n  - *Question:* ¿los usuarios registrados realmente concretan partidos y vuelven a reservar?\n  - *Metrics:* **tasa de conversión a partido efectivamente jugado** y **retención a 30 días**.\n- **Dimensión Impacto en el Negocio (5 clubes):**\n  - *Goal:* mejorar ocupación e ingresos efectivos de los clubes reduciendo ausencias.\n  - *Question:* ¿estamos cobrando señas reales y llenando horarios antes ociosos?\n  - *Metrics:* **monto mensual de señas cobradas vía ClubPlay** y **reducción de turnos ociosos / tasa de *no-show***.\n- **Dimensión Entrega y Calidad Técnica (DORA):**\n  - *Goal:* evolucionar la plataforma con rapidez sin romper la operación diaria de los clubes.\n  - *Question:* ¿con qué frecuencia y confiabilidad desplegamos cambios a producción?\n  - *Metrics:* **Deployment Frequency** y **Change Failure Rate** (complementables con *Lead Time for Changes* y *MTTR*).",
+          "exerciseHref": "../../ejercicios/gdsi-ej-16/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+---
+id: "gdsi-ej-21"
+courseId: "gdsi"
+number: 21
+title: "Situación 20: Bono por Líneas de Código y Tickets Cerrados — Tobias Mayer, Ley de Goodhart y DORA"
+unit: "u09-mejora-metricas"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Situaciones Prácticas — Situación 20 (Tobias Mayer y Ley de Goodhart)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado — Situación Práctica 20">
+
+La dirección de ingeniería de una empresa de software anuncia un nuevo esquema de incentivos: a partir del próximo trimestre, otorgará un **bono económico al 10% de los desarrolladores "más productivos"**, seleccionados exclusivamente según dos métricas individuales:
+
+1. **Cantidad de líneas de código (LOC)** escritas en el repositorio.
+2. **Cantidad de tickets cerrados** de forma individual.
+
+Con base en los marcos teóricos de GDSI:
+
+1. Analizá el error epistemológico de esta política según **Tobias Mayer** (*Simple Scrum*) y la **Ley de Goodhart**.
+2. Describí al menos **3 perversiones concretas** que provocará este incentivo en el software y en la cultura del equipo.
+3. Proponé una **corrección metodológica** reemplazando este esquema por métricas de **equipo y flujo** (en especial las **4 Métricas DORA**).
+
+**Qué está evaluando la cátedra**  
+Epistemología de la medición en software (Tobias Mayer y Ley de Goodhart), efectos sistémicos de los incentivos individuales sobre la colaboración y la calidad interna, y dominio de las **4 Métricas DORA** (*Accelerate*).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-21">
+
+## 1. Diagnóstico Epistemológico: Tobias Mayer y la Ley de Goodhart
+
+Esta política comete dos errores graves en simultáneo: **elige métricas de *output* absurdas** (LOC y cantidad de tickets no miden valor de negocio ni calidad) y **las ata a recompensas económicas individuales**.
+
+- **Principio de Tobias Mayer (*Simple Scrum*):**  
+  > *"Las métricas no deben ser medidas de éxito o fracaso, sino de realidad (verdad). Solamente si no son medidas de éxito o fracaso podemos esperar que las personas no actúen buscando soluciones fáciles."*  
+  Cuando una métrica se convierte en un criterio de premio o castigo (cobrar o quedar fuera del bono del top 10%), deja de ser un **espejo de verdad** para diagnosticar y mejorar el sistema.
+- **Ley de Goodhart:**  
+  > *"Cuando una medida se convierte en un objetivo, deja de ser una buena medida."*  
+  Al convertir LOC y tickets cerrados en la meta económica, las personas adaptan racionalmente su conducta para maximizar esos dos números —el camino más fácil hacia el bono— a costa del propósito real del software.
+
+---
+
+## 2. Tres Perversiones Concretas (*Gaming* del Sistema)
+
+| # | Perversión observable | Mecanismo e impacto en el sistema |
+| :--- | :--- | :--- |
+| **1** | **Código inflado, duplicado y abandono de la refactorización** | Para maximizar **LOC**, los desarrolladores escriben código innecesariamente verboso, duplican lógica mediante *copy-paste* en lugar de reutilizar abstracciones y **evitan refactorizar o borrar código muerto** (porque eliminar 200 líneas innecesarias "reduce" su métrica). La complejidad accidental y la **deuda técnica** se disparan. |
+| **2** | **Fragmentación en micro-tickets triviales (*cherry-picking*)** | Para inflar los **tickets cerrados**, los desarrolladores eluden problemas complejos o incidentes difíciles y acaparan tareas diminutas; subdividen artificialmente un cambio simple en múltiples micro-tickets; o cierran tickets apurados sin pruebas sólidas, generando nuevos bugs que abren aún más tickets fáciles de volver a cerrar. |
+| **3** | **Destrucción de la colaboración (*Pair / Ensemble Programming* y mentoría)** | Al premiar competitivamente al **10% individual**, ayudar a un compañero bloqueado, hacer *pair programming*, participar en *ensemble (mob) programming* o revisar *pull requests* con rigor consume tiempo propio sin sumar tickets ni LOC a nombre individual (e incluso mejora las métricas de un "competidor"). Se destruyen la propiedad colectiva del código, la seguridad psicológica y el aprendizaje del equipo. |
+
+---
+
+## 3. Corrección Metodológica: Métricas de Equipo, Flujo y DORA
+
+Para revertir el daño y medir la salud real del desarrollo:
+
+1. **Desacoplar las métricas operativas de premios o castigos individuales:** usar las métricas exclusivamente como **herramientas de transparencia y mejora continua** en Retrospectivas y *Toyota Kata*, y nunca como ranking entre desarrolladores. Si existen bonos, vincularlos a **objetivos compartidos de equipo, producto o empresa**.
+2. **Medir el desempeño del sistema socio-técnico a nivel de equipo mediante las 4 Métricas DORA (*Accelerate* — Forsgren, Humble & Kim):**
+
+| Métrica DORA | Dimensión | Qué mide y por qué evita *gaming* |
+| :--- | :--- | :--- |
+| **1. Deployment Frequency** *(Frecuencia de Despliegue)* | Velocidad / Flujo | Con qué frecuencia el equipo despliega cambios exitosos a producción. Incentiva lotes pequeños e integración continua. |
+| **2. Lead Time for Changes** *(Tiempo de Entrega de Cambios)* | Velocidad / Flujo | Tiempo transcurrido desde que un *commit* se confirma hasta que corre en producción. Expone cuellos de botella en pruebas, revisiones y despliegues. |
+| **3. Change Failure Rate** *(Tasa de Fallos por Cambio)* | Estabilidad / Calidad | Porcentaje de despliegues que provocan incidentes, *rollbacks* o parches urgentes. Impide sacrificar calidad por velocidad. |
+| **4. Mean Time to Restore (MTTR)** *(Tiempo Medio de Recuperación)* | Estabilidad / Resiliencia | Cuánto tarda el equipo en restaurar el servicio cuando ocurre una falla en producción. Promueve observabilidad y respuesta colectiva. |
+
+3. **Complementar con *Outcomes* de producto vía GQM:** junto a las 4 métricas DORA (que miden capacidad de entrega técnica de equipo), medir impacto real en usuarios y negocio (adopción, retención, satisfacción) definidos desde **GQM**, asegurando que el software entregado rápido y estable realmente resuelva el problema del cliente.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el examen">
+
+- **Proponer "cambiar LOC por otra métrica individual" (como Story Points por persona o cobertura de tests por persona):** cae exactamente en la misma trampa de Goodhart y Tobias Mayer. En GDSI, la unidad de desempeño en desarrollo de software es el **equipo** (sistema socio-técnico), jamás la competencia individual entre programadores.
+- **Mencionar DORA sin nombrar las 4 métricas:** siempre conviene explicitar las 4 métricas DORA mostrando cómo equilibran **velocidad** (*Deployment Frequency* + *Lead Time for Changes*) con **estabilidad** (*Change Failure Rate* + *MTTR*).
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,90 @@
+---
+id: "gdsi-ej-31"
+courseId: "gdsi"
+number: 31
+title: "SmartHome: Cálculo de Exposición al Riesgo, MoSCoW y Estrategias de Respuesta"
+unit: "u07-gestion-riesgos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 3, Ejercicio 10 (Avanzado)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import RiskExposureMatrix from "@/components/gdsi/RiskExposureMatrix";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El equipo de producto de **SmartHome** (una plataforma de domótica con suscripciones mensuales) está preparando el próximo *release* mayor y debe evaluar cuantitativamente dos riesgos identificados en su *Story Map*, utilizando escalas discretas de $1$ a $5$ para **Probabilidad ($P$)** e **Impacto ($I$)**:
+
+* **Riesgo A — Caída de la pasarela de pagos externa:** tiene probabilidad baja ($P_A = 2/5$), pero si ocurre durante el pico de facturación impide cobrar suscripciones y paraliza altas de clientes, generando un impacto catastrófico ($I_A = 5/5$).
+* **Riesgo B — Inconsistencia visual de tipografías en navegadores antiguos:** ocurre con casi total certeza en versiones heredadas de navegadores ($P_B = 5/5$), pero su impacto es insignificante y puramente estético sin impedir el uso funcional ($I_B = 1/5$).
+
+1. Calculá la **Exposición al Riesgo** ($E = P \times I$) de ambos eventos y determiná cuál debe priorizarse primero.
+2. Asigná a cada riesgo una clasificación **MoSCoW** y proponé una **estrategia de tratamiento del riesgo** concreta (Evitar, Mitigar, Transferir o Aceptar) fundamentando tu elección.
+
+**Qué está evaluando la cátedra**  
+Aplicación rigurosa del modelo cuantitativo de exposición ($E = P \times I$), articulación con criterios de priorización (*MoSCoW*) y selección adecuada de estrategias de respuesta frente a eventos de baja probabilidad pero impacto catastrófico versus eventos frecuentes de impacto trivial.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-31">
+
+## 1. Cálculo de Exposición al Riesgo ($E = P \times I$)
+
+La **Exposición al Riesgo** sintetiza la magnitud esperada de una amenaza multiplicando su probabilidad de ocurrencia por la severidad de su impacto sobre el negocio y el producto:
+
+$$E = P \times I$$
+
+Aplicando la fórmula a los dos riesgos de **SmartHome**:
+
+* **Riesgo A (Caída de pasarela de pagos):**
+  $$E_A = P_A \times I_A = 2 \times 5 = 10$$
+* **Riesgo B (Tipografías en navegadores antiguos):**
+  $$E_B = P_B \times I_B = 5 \times 1 = 5$$
+
+### Comparación y orden de prioridad
+
+Dado que $E_A = 10 > E_B = 5$ —y, fundamentalmente, porque el Riesgo A posee un **impacto catastrófico ($I_A = 5$)** capaz de frenar los ingresos críticos del negocio—, el **Riesgo A** tiene prioridad estrictamente superior al **Riesgo B**.
+
+---
+
+## 2. Clasificación MoSCoW y Estrategias de Tratamiento
+
+| Riesgo | $P$ | $I$ | Exposición ($E$) | Clasificación MoSCoW | Estrategia de Respuesta | Acción Concreta en SmartHome |
+| :--- | :---: | :---: | :---: | :--- | :--- | :--- |
+| **A: Caída de pasarela de pagos** | $2$ | $5$ | **$10$** | **Must Have** *(por impacto crítico $I=5$ sobre el negocio)* | **Mitigación** y/o **Transferencia** | Ejecutar un **Spike técnico** para implementar cola de reintentos/circuit breaker (**Mitigación**) e integrar una **pasarela secundaria de respaldo** con SLA contractual (**Transferencia / Contingencia**). |
+| **B: Tipografías en navegadores antiguos** | $5$ | $1$ | **$5$** | **Could Have** o **Won't Have** *(en este release)* | **Aceptación pasiva** *(con fallback estándar)* | No desviar capacidad del *Sprint* a corregir renderizado heredado; aceptar el riesgo usando fuentes de respaldo del sistema (`sans-serif`) y monitorear solo si crece la base en esos navegadores. |
+
+### Fundamentación detallada
+
+1. **Riesgo A — Por qué exige tratamiento prioritario (*Must Have*):**
+   * Aunque su probabilidad aislada sea baja ($P = 2$), su impacto es máximo ($I = 5$): un único incidente en el día de renovación masiva detiene la facturación y daña la confianza comercial.
+   * **Mitigación (ex-ante):** realizar un *Spike* acotado para desacoplar el flujo de cobro (manejo resiliente de errores, alertas tempranas, degradación controlada sin perder pedidos de suscripción).
+   * **Transferencia / Plan de contingencia:** delegar parte del riesgo mediante un acuerdo de nivel de servicio (SLA) con un proveedor robusto y disponer de una **pasarela de pagos secundaria** conmutable en caso de caída prolongada.
+   * *Nota sobre la Matriz 5×5:* numéricamente $E = 10$ se ubica en el límite entre la franja de atención media/alta (*Should Have* en una lectura puramente aritmética), pero el criterio profesional de gestión de riesgos exige **elevar a *Must Have*** los eventos de impacto catastrófico ($I = 5$) que comprometen la continuidad del flujo de ingresos.
+
+2. **Riesgo B — Por qué corresponde *Could / Won't Have* y Aceptación Pasiva:**
+   * A pesar de que su probabilidad es máxima ($P = 5$), su impacto es mínimo ($I = 1$): el usuario puede operar normalmente el sistema y completar todas sus tareas.
+   * Invertir horas de desarrollo y QA en dar soporte tipográfico fino a navegadores obsoletos implicaría un costo muy superior al daño real (*desperdicio* / sobreingeniería). Por lo tanto, la respuesta económicamente racional es la **Aceptación pasiva** (o, a lo sumo, tratarlo como *Could Have* si sobra capacidad tras asegurar los *Must Have*).
+
+---
+
+## 3. Exploración Interactiva en la Matriz 5×5
+
+Seleccioná los casos de **SmartHome** precargados en la matriz interactiva para comparar visualmente la ubicación de ambos riesgos ($P=2, I=5$ frente a $P=5, I=1$) y explorar cómo cambia la zona de exposición ante variaciones de probabilidad o impacto:
+
+<RiskExposureMatrix
+  client:load
+  title="Explorá los riesgos de SmartHome en la Matriz 5×5"
+/>
+
+<AcademicBlock kind="trap" title="Error frecuente en la gestión de riesgos">
+
+No priorices riesgos guiándote únicamente por la **probabilidad** (*"esto seguro va a pasar, arreglémoslo ya"*). Un riesgo seguro pero inofensivo ($P=5, I=1 \Rightarrow E=5$) nunca debe desplazar la atención de un evento poco probable pero catastrófico ($P=2, I=5 \Rightarrow E=10$) que amenaza la viabilidad operativa del producto.
+
+</AcademicBlock>
+
+</SolutionDrawer>

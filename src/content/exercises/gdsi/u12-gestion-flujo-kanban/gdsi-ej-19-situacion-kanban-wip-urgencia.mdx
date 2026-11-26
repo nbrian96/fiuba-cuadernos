@@ -1,0 +1,75 @@
+---
+id: "gdsi-ej-19"
+courseId: "gdsi"
+number: 19
+title: "Situación 18: Límite de WIP Alcanzado y Urgencia de Gerencia (Kanban y Carril Expedite)"
+unit: "u12-gestion-flujo-kanban"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Situaciones Prácticas — Situación 18 (Kanban, WIP y Carril Expedite)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado — Situación Práctica 18">
+
+Un equipo gestiona su flujo de trabajo mediante **Kanban**. La columna **"En Desarrollo"** tiene configurado un límite explícito de **WIP = 3** y en este momento ya está completamente llena con 3 ítems activos.
+
+A mitad de semana, la gerencia exige que el equipo tome de forma inmediata una **urgencia crítica por vencimiento de certificados fiscales**, ya que de no resolverse en 48 horas se detendría la facturación electrónica de la empresa. Alguien sugiere *"hacer una excepción y empujar la tarjeta como cuarto ítem en Desarrollo para no generar conflicto"*.
+
+1. Explicá por qué **NO** se debe empujar la tarea violando el límite de WIP (fundamentando con el principio **Pull**, la **Ley de Little** y los **desperdicios Lean**).
+2. Indicá cuáles son los **dos mecanismos válidos en Kanban** para atender esta urgencia preservando la disciplina del flujo.
+3. Señalá qué políticas explícitas y acciones preventivas debe acordar el equipo con la gerencia.
+
+**Qué está evaluando la cátedra**  
+Comprensión operativa del sistema **Pull**, los límites de **WIP**, la **Ley de Little**, la clase de servicio **Expedite / Fast Track** con *swarming* y la gestión transparente de políticas explícitas en Kanban.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-19">
+
+## 1. Por Qué NO Se Debe Violar el Límite de WIP (`WIP = 3`)
+
+Empujar un cuarto ítem a una columna llena con `WIP = 3` rompe los fundamentos del sistema Kanban:
+
+- **Quiebre del principio *Pull* (regresión a *Push*):** en un sistema *Pull*, solo ingresa trabajo nuevo cuando se libera capacidad al terminar un ítem anterior (*"parar de empezar para empezar a terminar"*). Aceptar "excepciones informales" destruye el límite de WIP y convierte al tablero en una lista pasiva donde todo se acumula.
+- **Impacto directo según la Ley de Little:**  
+  `Cycle Time = WIP / Throughput`  
+  Si el WIP aumenta (de 3 a 4) mientras el *Throughput* del equipo permanece igual —o incluso cae por saturación—, el **Cycle Time promedio crece automáticamente**, retrasando **todos** los ítems en curso, incluida potencialmente la propia urgencia.
+- **Generación de desperdicios Lean (Poppendieck):** incorporar trabajo por encima de la capacidad real dispara el **cambio de contexto (*context switching*)**, incrementa el **WIP acumulado** (inventario sin valor entregado), alarga las **demoras** y aumenta la probabilidad de **defectos** por fatiga cognitiva.
+
+---
+
+## 2. Dos Mecanismos Válidos en Kanban para Absorber la Urgencia
+
+Kanban **no ignora emergencias reales de negocio** (como una caída inminente de la facturación fiscal); las canaliza mediante **políticas explícitas y visibles** que protegen el flujo:
+
+### Alternativa 1 — Carril *Expedite* (*Fast Track*) con *Swarming*
+- Se habilita una **Clase de Servicio *Expedite***: un carril horizontal diferenciado en la parte superior del tablero reservado exclusivamente para incidentes críticos con altísimo costo de demora, con un límite propio estricto de **`WIP = 1` en todo el tablero**.
+- Cuando una tarjeta entra al carril *Expedite*, el equipo **pausa conscientemente** el avance sobre el resto de los ítems y aplica ***swarming*** (colaboración enfocada de las personas necesarias) para resolver los certificados fiscales de punta a punta y llevarlos a Producción cuanto antes.
+- La ventaja es la **transparencia total**: queda visible para toda la organización qué se detuvo y por qué, sin corromper los límites de las columnas del flujo estándar.
+
+### Alternativa 2 — Reemplazo por Suspensión (Respetando `WIP = 3`)
+- Si el equipo no utiliza carril *Expedite* o decide mantener de manera estricta el tope máximo de 3 ítems simultáneos, se acuerda explícitamente con el responsable de negocio **retirar uno de los 3 ítems actuales** (el de menor prioridad o menor avance relativo) de **"En Desarrollo"** y **devolverlo a "Pendiente / Listo para Desarrollo"** (marcado como pausado).
+- Al quedar libre 1 espacio (`2 / 3`), la urgencia de certificados fiscales ingresa formalmente respetando el límite `WIP = 3`.
+- Esto obliga a la gerencia a asumir de forma consciente el **trade-off real**: para acelerar los certificados fiscales, hay que postergar explícitamente otra entrega en curso.
+
+---
+
+## 3. Políticas Explícitas y Mejora Continua con Gerencia
+
+1. **Definir criterios objetivos de entrada al carril *Expedite*:** establecer por escrito qué califica como emergencia (caída de facturación, brecha de seguridad, incumplimiento regulatorio) y qué no (pedidos comerciales urgentes sin costo de demora catastrófico), para evitar que "todo sea urgente".
+2. **Hacer visible el costo de oportunidad:** registrar en el tablero y en las métricas de flujo cuánto se extendió el *Lead Time* de los ítems normales cada vez que se activó una interrupción.
+3. **Analizar la causa raíz en la Retrospectiva / Revisión de Flujo:** el vencimiento de un certificado fiscal tiene una fecha conocida con meses de anticipación. Que haya llegado como emergencia de 48 horas revela una falla de monitoreo preventivo; el equipo debe crear una acción de mejora (alertas automáticas 30 días antes del vencimiento o renovación automatizada) para eliminar futuras interrupciones evitables.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el examen">
+
+- **Subir el límite de WIP "solo por esta semana":** modificar el límite de WIP cada vez que aparece presión externa elimina su función reguladora y oculta el cuello de botella.
+- **Rechazar la urgencia de facturación sin ofrecer salida:** en GDSI, Kanban busca optimizar el valor de negocio de forma sostenible. La respuesta profesional combina **disciplina de flujo** con **mecanismos explícitos de excepción controlada** (*Expedite* con *swarming* o *reemplazo por suspensión*).
+
+</AcademicBlock>
+
+</SolutionDrawer>

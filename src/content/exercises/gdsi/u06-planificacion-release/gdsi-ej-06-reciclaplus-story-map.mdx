@@ -1,0 +1,155 @@
+---
+id: "gdsi-ej-06"
+courseId: "gdsi"
+number: 6
+title: "Caso ReciclaPlus: User Story Mapping y Definición del Corte de MVP"
+unit: "u06-planificacion-release"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Caso ReciclaPlus, Pregunta 6 (30%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import StoryMapBoard from "@/components/gdsi/StoryMapBoard";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Contexto del caso: ReciclaPlus
+
+Retomando el escenario de **ReciclaPlus** —la plataforma que conecta **vecinos** que separan reciclables con **cooperativas de recuperadores urbanos**, con la incorporación prevista de **empresas compradoras** en una segunda etapa y el respaldo del **gobierno municipal** mediante subsidios y reportes ambientales— el equipo necesita diseñar el mapa de historias de usuario para planificar su primera liberación (*MVP / Walking Skeleton*) y su evolución posterior.
+
+---
+
+### Consigna *(30%)*
+
+Construya un **User Story Map** (Jeff Patton) para **ReciclaPlus** cumpliendo explícitamente con los siguientes cuatro puntos:
+
+1. **Identificación de roles:** liste los roles intervinientes (**Vecino**, **Clasificador / Cooperativa**, **Empresa compradora** y, opcionalmente, **Municipio**), indicando cuáles protagonizan el recorrido núcleo del MVP y cuáles se atienden en etapas posteriores.
+2. **Backbone (eje horizontal):** defina las actividades principales del recorrido de recolección en orden cronológico de izquierda a derecha.
+3. **Historias priorizadas y línea de corte (eje vertical):** ubique bajo cada actividad las historias de usuario separando claramente mediante una línea horizontal el **Release 1 (MVP / Walking Skeleton)** y el **Release 2 (Evolutivo)**.
+4. **Justificación del criterio de recorte del MVP:** explique por qué el corte propuesto constituye una rebanada fin-a-fin viable, qué hipótesis críticas valida en el barrio piloto y por qué no corresponde eliminar ninguna actividad completa del Backbone.
+
+**Qué está evaluando la cátedra**  
+Dominio de *User Story Mapping* (Jeff Patton): organización bidimensional (cronología horizontal en el Backbone + prioridad vertical en las costillas), construcción de un *Walking Skeleton* que recorre todo el flujo de valor de punta a punta y capacidad de recortar alcance sin romper el circuito operativo del servicio.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-06">
+
+## 1. Roles del ecosistema ReciclaPlus y alcance en el MVP
+
+- **Vecino *(núcleo del MVP)*:** genera la demanda de retiro separando reciclables en su domicilio y necesita previsibilidad sobre cuándo pasará la cooperativa para sostener el hábito.
+- **Clasificador / Cooperativa *(núcleo del MVP)*:** organiza los recorridos diarios, efectúa el retiro y registra los volúmenes recuperados. Sin su operación coordinada, el servicio no existe.
+- **Municipio *(opcional / consumidor indirecto en el MVP)*:** requiere reportes ambientales para justificar los subsidios. En el MVP se resuelve con una **exportación simple de retiros y kilos registrados**; recién en Release 2 se automatizan reportes analíticos por barrio y material.
+- **Empresa compradora *(diferida a Release 2 / 2da etapa)*:** el enunciado establece explícitamente que las empresas compradoras se incorporan en una segunda etapa; incluir un marketplace comercial en el MVP agregaría complejidad innecesaria antes de validar que vecinos y cooperativas sostienen el flujo básico de recolección.
+
+---
+
+## 2 y 3. Tablero interactivo de User Story Mapping (Backbone + Corte MVP vs. Release 2)
+
+<StoryMapBoard
+  client:load
+  title="Story Map de ReciclaPlus"
+  subtitle="Roles: Vecino y Clasificador (Cooperativa)"
+  activities={[
+    {
+      id: "agendar-retiro",
+      title: "1. Agendar Retiro",
+      roles: ["Vecino"],
+      mvpStories: [
+        {
+          text: "Cargar dirección y franja horaria disponible para solicitar un retiro puntual de reciclables.",
+          role: "Vecino",
+        },
+        {
+          text: "Seleccionar el tipo principal de material separado (cartón/papel, plástico, vidrio) para orientar la carga.",
+          role: "Vecino",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Programar retiros recurrentes semanales con recordatorio automático antes del paso de la cooperativa.",
+          role: "Vecino",
+        },
+        {
+          text: "Adjuntar fotografía y volumen estimado de bolsas para optimizar la capacidad del vehículo.",
+          role: "Vecino",
+        },
+      ],
+    },
+    {
+      id: "coordinar-ruta",
+      title: "2. Coordinar Ruta",
+      roles: ["Clasificador (Cooperativa)"],
+      mvpStories: [
+        {
+          text: "Visualizar el listado diario de retiros agendados agrupados por barrio piloto.",
+          role: "Clasificador (Cooperativa)",
+        },
+        {
+          text: "Exportar las direcciones del día para armar una ruta manual asistida con Google Maps (esquema Wizard of Oz).",
+          role: "Clasificador (Cooperativa)",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Generar automáticamente la ruta óptima según distancia, tráfico y capacidad del vehículo.",
+          role: "Clasificador (Cooperativa)",
+        },
+        {
+          text: "Reasignar retiros en tiempo real entre cuadrillas ante ausencias o saturación de carga.",
+          role: "Clasificador (Cooperativa)",
+        },
+      ],
+    },
+    {
+      id: "confirmar-registrar",
+      title: "3. Confirmar y Registrar",
+      roles: ["Clasificador (Cooperativa)", "Vecino"],
+      mvpStories: [
+        {
+          text: "Marcar cada retiro como concretado o fallido y registrar los kilos aproximados recolectados.",
+          role: "Clasificador (Cooperativa)",
+        },
+        {
+          text: "Recibir confirmación básica de retiro concretado y generar planilla resumen simple para rendición municipal.",
+          role: "Vecino",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Emitir reportes ambientales automatizados por barrio y tipo de material para el gobierno municipal.",
+          role: "Clasificador (Cooperativa)",
+        },
+        {
+          text: "Publicar lotes clasificados con trazabilidad de origen para venta a empresas compradoras (2da etapa).",
+          role: "Clasificador (Cooperativa)",
+        },
+      ],
+    },
+  ]}
+  cutJustification="El Release 1 (MVP / Walking Skeleton) incluye historias mínimas en las tres actividades del Backbone (Agendar Retiro, Coordinar Ruta y Confirmar y Registrar) porque el flujo de valor solo se completa cuando el vecino solicita el retiro, la cooperativa logra organizar su recorrido y el retiro queda confirmado y registrado con trazabilidad básica para el municipio. Se difieren a Release 2 la automatización algorítmica de ruteo, la recurrencia con notificaciones, los tableros analíticos avanzados y el módulo de empresas compradoras hasta comprobar empíricamente la adopción en el barrio piloto."
+/>
+
+---
+
+## 4. Justificación metodológica del criterio de recorte
+
+1. **Principio del Backbone no priorizable entre sí (Jeff Patton):**  
+   Las tres columnas del Backbone (**1. Agendar Retiro → 2. Coordinar Ruta → 3. Confirmar y Registrar**) representan la **secuencia cronológica inseparable del servicio**. No tiene sentido recortar una columna entera para "lanzar más rápido":
+   - Sin *Agendar Retiro*, no ingresan pedidos de los vecinos.
+   - Sin *Coordinar Ruta*, la cooperativa sigue operando a ciegas por WhatsApp y papel con viajes en vacío.
+   - Sin *Confirmar y Registrar*, el vecino no recupera confianza en el servicio ni existen datos mínimos de kilos recuperados para responder al municipio.
+2. **Walking Skeleton y aprendizaje barato:**  
+   Cada columna se recorta **verticalmente** dejando solo la versión más simple pero funcional de extremo a extremo. Por ejemplo, en *Coordinar Ruta* el MVP aprovecha el esquema manual asistido con Google Maps en lugar de invertir meses en un motor propio de optimización de rutas (que pasa a Release 2 una vez validada la demanda).
+3. **Hipótesis que valida el MVP antes de escalar a Release 2:**
+   - Que los vecinos efectivamente agendan retiros y sostienen la separación cuando reciben confirmación confiable.
+   - Que las cooperativas reducen viajes en vacío y adoptan el registro de retiros concretados y kilos aproximados en campo.
+   - Que los datos capturados sirven como insumo verificable para el municipio, creando la base real sobre la cual construir en Release 2 la automatización de rutas y el vínculo con **empresas compradoras**.
+
+</SolutionDrawer>

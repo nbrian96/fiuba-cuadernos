@@ -1,0 +1,92 @@
+---
+id: "gdsi-ej-13"
+courseId: "gdsi"
+number: 13
+title: "ClubPlay (P3): Evaluación Crítica del Plan de Descubrimiento de Dos Semanas"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 3 (20%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+Antes de invertir meses de desarrollo en **ClubPlay** (app para reservar canchas, cobrar señas, gestionar la grilla de los clubes y ayudar a completar partidos cuando *"falta uno"*), el equipo quiere validar rápidamente sus principales hipótesis de producto.
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 3 (20%)">
+
+El equipo redactó el siguiente **plan de evaluación de 2 semanas**:
+
+1. Enviar una **encuesta online a 200 jugadores** con dos preguntas: *"¿Usarías una app para reservar canchas y pagar la seña?"* y *"¿Pagarías una comisión del 5% por usarla?"*.
+2. **Mostrar un prototipo navegable a 2 encargados de clubes** y preguntarles: *"¿Qué les parece? ¿Lo usarían en su club?"*.
+3. **Si los dos pasos anteriores dan resultados positivos**, empezar inmediatamente a **desarrollar la aplicación completa** (búsqueda, reservas, pagos online, panel de gestión del club y función *"nos falta uno"*) para lanzarla en todos los clubes en simultáneo.
+
+Evaluá críticamente **cada uno de los tres pasos** utilizando exactamente el siguiente formato para cada punto:
+
+- *"Veo este posible riesgo: …"*
+- *"Creo que lo podríamos evaluar mejor si hacemos: …"*
+
+**Qué está evaluando la cátedra**  
+Dominio práctico de los métodos empíricos de descubrimiento (*The Mom Test*, observación contextual, experimentos *Wizard of Oz* / *Concierge*), jerarquía de evidencia y mitigación de riesgo mediante *Walking Skeleton* / piloto incremental frente al desarrollo *Big Bang*.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-13">
+
+## Evaluación Punto por Punto
+
+### Punto 1 — Encuesta online a 200 jugadores con preguntas hipotéticas
+
+- **Veo este posible riesgo:**  
+  Las dos preguntas apelan a **intenciones futuras e hipotéticas** (*"¿usarías…?"*, *"¿pagarías…?"*), lo que viola las reglas de **The Mom Test** (Rob Fitzpatrick) y dispara sesgos de cortesía y optimismo. Responder "sí" en una encuesta online no tiene costo para el jugador, generando **falsos positivos** sobre adopción y disposición real a pagar una comisión del 5%. Además, una encuesta cerrada de dos preguntas no permite descubrir el contexto real ni las causas profundas de fricción al reservar una cancha.
+
+- **Creo que lo podríamos evaluar mejor si hacemos:**  
+  Realizar **10 a 15 entrevistas cualitativas centradas en hechos pasados** (estilo *The Mom Test*), indagando sobre la última vez que el jugador reservó cancha: cómo buscó turno, cuánto tardó, cómo abonó la seña, qué problemas tuvo y qué hizo la última vez que se bajó un jugador. Para evaluar específicamente la sensibilidad a la comisión del 5% y la deseabilidad, complementar con un **experimento conductual de mayor compromiso** (por ejemplo, una *landing* con reserva real o simulación de checkout donde figure explícitamente el costo de la seña más la comisión y se registre el intento concreto de pago/reserva).
+
+---
+
+### Punto 2 — Mostrar un prototipo a 2 encargados y preguntarles qué les parece
+
+- **Veo este posible riesgo:**  
+  Primero, preguntar *"¿qué les parece?"* frente a un prototipo presentado por sus creadores induce **halagos por cortesía** (opiniones subjetivas sin compromiso) en lugar de revelar objeciones reales de operación diaria. Segundo, una muestra de solo **2 encargados** es demasiado reducida y puede ser atípica respecto a la diversidad de clubes (distintas formas de llevar el cuaderno/planilla, cobros en efectivo vs. transferencia, reservas telefónicas simultáneas). Un prototipo estático no comprueba si el encargado realmente abandonará su método actual en horario pico.
+
+- **Creo que lo podríamos evaluar mejor si hacemos:**  
+  Hacer **observación contextual** en 4 a 6 clubes distintos durante horarios de alta demanda para registrar el flujo real de trabajo (llamadas, WhatsApp, señas y anotaciones en planilla). Luego, ejecutar un **experimento piloto Concierge o Wizard of Oz durante un fin de semana** en 1 o 2 clubes: ofrecer turnos mediante un formulario o canal liviano y operar la actualización de la grilla y la confirmación de señas manualmente detrás de escena. Así medimos **adopción real, fricciones operativas y posibles conflictos de doble reserva** con costo de desarrollo prácticamente cero.
+
+---
+
+### Punto 3 — Si da bien, desarrollar la aplicación completa para todos los clubes
+
+- **Veo este posible riesgo:**  
+  Saltar directamente de señales tempranas débiles a construir la aplicación completa (incluyendo funcionalidades de alta incertidumbre como *"nos falta uno"*) para múltiples clubes es un enfoque **Big Bang** de altísimo riesgo económico, técnico y de producto. Posterga el aprendizaje con software real hasta el final del proyecto, maximiza los desperdicios Lean (**WIP** y **funcionalidades extras**) y multiplica el impacto de cualquier supuesto equivocado sobre pagos, cancelaciones o hábitos de los clubes.
+
+- **Creo que lo podríamos evaluar mejor si hacemos:**  
+  Construir un **Walking Skeleton / MVP acotado** con las historias mínimas de punta a punta (buscar horarios libres, reservar turno y gestionar la grilla básica, difiriendo *"nos falta uno"* y automatizaciones secundarias a iteraciones posteriores) y desplegarlo en un **piloto controlado en 1 solo club** en las primeras iteraciones. A partir de métricas reales de uso en producción (reservas efectivamente jugadas, uso real de la grilla por el encargado y reducción de ausencias), iterar y recién entonces escalar progresivamente a más clubes y funcionalidades.
+
+---
+
+## Síntesis de Mejora en la Calidad de la Evidencia
+
+| Paso del plan original | Tipo de evidencia original (débil) | Mejora propuesta (evidencia media / fuerte) |
+| :--- | :--- | :--- |
+| **1. Encuesta 200 jugadores** | Opinión declarada sobre escenarios futuros hipotéticos. | Entrevistas *The Mom Test* (hechos pasados) + experimento con precio/comisión visible y compromiso real. |
+| **2. Prototipo a 2 encargados** | Aprobación verbal por cortesía sobre muestra mínima. | Observación contextual (4–6 clubes) + piloto *Wizard of Oz / Concierge* de fin de semana. |
+| **3. App completa *Big Bang*** | Apuesta total antes de validar uso real en producción. | *Walking Skeleton* / MVP en **1 club piloto** con iteraciones cortas guiadas por uso real. |
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Proponer "mejorar la encuesta" en el Punto 1:** sugerir enviar la encuesta a 500 personas o agregar más preguntas de opinión mantiene el mismo error epistemológico. En descubrimiento de producto, el salto de calidad consiste en pasar de **lo que la gente dice que haría** a **lo que ya hizo en el pasado y lo que efectivamente hace cuando asume un costo**.
+- **Olvidar el formato solicitado:** respetar explícitamente las dos cláusulas (*"Veo este posible riesgo…"* y *"Creo que lo podríamos evaluar mejor si hacemos…"*) en los 3 puntos garantiza responder la consigna de manera clara y evaluable.
+
+</AcademicBlock>
+
+</SolutionDrawer>

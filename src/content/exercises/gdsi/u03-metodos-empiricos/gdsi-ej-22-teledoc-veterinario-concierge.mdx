@@ -1,0 +1,83 @@
+---
+id: "gdsi-ej-22"
+courseId: "gdsi"
+number: 22
+title: "TeleDoc Veterinario: Jerarquía de Evidencia y Experimento Concierge"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 1, Ejercicio 1 (Intermedio)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El equipo de **TeleDoc Veterinario** lanzó una *landing page* informativa prometiendo consultas veterinarias por videollamada las 24 horas e incluyó un botón de *"Avisarme cuando esté disponible"* para dejar el correo electrónico. Tras una semana de campaña, el 25% de los visitantes dejó su correo.
+
+Entusiasmado con esa métrica, el Product Manager afirma en la reunión semanal que tanto la **deseabilidad** como la **factibilidad técnica** del servicio ya quedaron validadas, por lo que solicita al equipo de ingeniería comenzar de inmediato a programar la plataforma propia de videollamadas, historia clínica y cobros integrados.
+
+1. Evaluá la conclusión del Product Manager utilizando la **Jerarquía de Evidencia** (*Evidence Hierarchy*): ¿en qué nivel se ubica el experimento realizado y qué valida —y qué **no** valida— realmente?
+2. Diseñá un experimento de tipo **Concierge** concreto, acotado y de bajo costo que permita obtener evidencia de mayor solidez antes de escribir código de producción.
+
+**Qué está evaluando la cátedra**  
+Capacidad para distinguir entre interés declarativo o tracción temprana y validación real de valor y pago, evitando sobredimensionar la evidencia obtenida y eligiendo experimentos empíricos adecuados antes de invertir capacidad de ingeniería.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-22">
+
+## 1. Evaluación según la Jerarquía de Evidencia
+
+La conclusión del Product Manager es **prematura y metodológicamente errónea**: confunde una señal temprana de curiosidad con una validación integral de deseabilidad, viabilidad económica y factibilidad técnica.
+
+### Ubicación en la Jerarquía de Evidencia
+
+Una *landing page* con registro de correo electrónico (*smoke test* de captación sin compromiso de pago) se ubica en el **Nivel 3 (Tracción inicial / Comportamiento de bajo compromiso)**:
+
+* **Por encima de las opiniones (Niveles 1 y 2):** aporta mejor evidencia que las suposiciones internas del equipo o lo que los usuarios simplemente *dicen* en entrevistas, porque exige una acción observable real (dejar un correo electrónico).
+* **Por debajo de la evidencia fuerte de valor (Niveles 4 y 5):** dejar un correo electrónico tiene costo casi nulo para el usuario. No demuestra disposición real a pagar, ni uso efectivo del servicio en un momento real de urgencia con una mascota, ni retención.
+
+### Qué valida y qué NO valida el 25% de registros
+
+| Dimensión | ¿Quedó validada? | Justificación empírica |
+| :--- | :--- | :--- |
+| **Interés inicial en la propuesta de valor** | Parcialmente (señal temprana) | El mensaje y el problema resuenan con el público objetivo que llegó a la página. |
+| **Deseabilidad real y disposición a pagar** | **No** | Ningún dueño de mascota atravesó una consulta real ni desembolsó dinero. El costo de dejar un e-mail es prácticamente cero. |
+| **Factibilidad técnica** | **No** | Una *landing page* estática no prueba absolutamente nada sobre latencia de video, integración de pagos, manejo de turnos de guardia, calidad de diagnóstico remoto ni operación 24/7. |
+| **Viabilidad de negocio** | **No** | Se desconoce cuánto está dispuesto a pagar el cliente, cuál es el costo real de contar con veterinarios de guardia y si el margen económico cierra. |
+
+---
+
+## 2. Diseño del Experimento Concierge
+
+En lugar de programar una plataforma propia de videollamadas, el equipo debe ejecutar un **MVP Concierge**: entregar el servicio real **de manera manual y transparente** utilizando herramientas ya existentes, para validar si los clientes efectivamente **pagan y encuentran valor** en la consulta veterinaria remota.
+
+### Diseño operativo paso a paso
+
+1. **Público y canal de entrada:** contactar a una muestra acotada de los interesados registrados en la *landing page* (por ejemplo, 30 a 50 dueños de mascotas) ofreciéndoles acceso anticipado a las consultas remotas en una franja horaria definida.
+2. **Atención manual sin desarrollo de software (WhatsApp + Zoom):**
+   * El usuario solicita la consulta por **WhatsApp Business**, describiendo el síntoma de su mascota y enviando fotos o videos cortos si hace falta.
+   * Un miembro del equipo actúa manualmente como operador/coordinador: confirma disponibilidad con un veterinario matriculado y envía el enlace de una sala de **Zoom** (o Google Meet).
+3. **Cobro real con tarifa real (evidencia de alto compromiso):**
+   * Antes de iniciar la videollamada, el usuario abona la **tarifa real del servicio mediante transferencia bancaria** (o enlace de pago ya existente, sin desarrollar pasarela propia) y envía el comprobante por WhatsApp.
+   * El pago efectivo eleva la evidencia hacia los niveles superiores de la jerarquía porque implica **intercambio real de dinero** por valor percibido.
+4. **Entrega del servicio y registro de aprendizajes:**
+   * El veterinario realiza la teleconsulta por Zoom y envía las indicaciones o derivación a guardia presencial por escrito en el mismo chat.
+   * El equipo registra manualmente fricciones reales: tipos de síntomas que sí o no pueden evaluarse por cámara, duración media de la consulta, motivos de abandono antes del pago y tasa de satisfacción/recomendación.
+
+### Criterios de éxito e hipótesis falsable
+
+* **Hipótesis:** al menos el 15% de los registrados que reporten una consulta real completarán el pago por transferencia y realizarán la videollamada, calificando la experiencia positivamente (por ejemplo, $\ge 4/5$) y manifestando intención de volver a usarla.
+* **Decisión derivada:** recién si este experimento confirma pago efectivo, utilidad clínica del formato remoto y economía unitaria saludable, tendrá sentido pasar a validar la **factibilidad técnica** y construir un primer incremento mínimo de software propio.
+
+<AcademicBlock kind="trap" title="Error frecuente en evaluación">
+
+Un error clásico de parcial es confundir **Concierge** con **Mago de Oz** (*Wizard of Oz*). En un experimento **Concierge**, el usuario **sabe** que está siendo atendido manualmente por personas detrás de herramientas simples (WhatsApp, Zoom, transferencia); no se simula una automatización inexistente. En **Mago de Oz**, en cambio, el cliente cree interactuar con un sistema automatizado que en realidad es operado manualmente en segundo plano.
+
+</AcademicBlock>
+
+</SolutionDrawer>

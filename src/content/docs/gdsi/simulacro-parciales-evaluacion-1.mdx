@@ -1,0 +1,197 @@
+---
+docId: simulacro-parciales-evaluacion-1
+courseId: gdsi
+title: "Simulacro Ponderado de Parciales Reales — Evaluación 1 (Producto)"
+order: 2
+entityType: ElaboratedSummary
+provenance: elaborated_summary
+sectionIds:
+  - como-funciona-el-simulacro
+  - reciclaplus
+  - clubplay
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import ExampleMappingBoard from "@/components/gdsi/ExampleMappingBoard";
+import ParcialSimulator from "@/components/gdsi/ParcialSimulator";
+import StoryMapBoard from "@/components/gdsi/StoryMapBoard";
+import { getGdsiEval1Parcial } from "@/data/gdsiEval1";
+
+export const parcialReciclaPlus = getGdsiEval1Parcial("gdsi-eval1-2026-05-18-reciclaplus");
+export const parcialClubPlay = getGdsiEval1Parcial("gdsi-eval1-2026-10-26-clubplay");
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Gestión del Desarrollo de Sistemas Informáticos (`GDSI`) · **Cátedra Fontdevila — Gabardini**  
+> **Instancia:** **Evaluación 1 — Producto** (aprobación nota 4 con **60%**)
+
+<AcademicBlock kind="note" title="Cómo usar este simulacro interactivo">
+  1. Ambos parciales corresponden a la **Primera Evaluación (Producto)**: el modelo del **18/05/2026 (Caso ReciclaPlus)** y el parcial del **26/10/2026 (Caso ClubPlay)**.
+  2. Respondé primero las preguntas de opción múltiple (se autocorrigen al instante sumando su peso porcentual) y redactá tu borrador en las consignas abiertas antes de revelar la solución modelo.
+  3. Usá la **rúbrica autoevaluable (0% / 50% / 100%)** en cada pregunta abierta para calcular tu nota real sobre 100% frente al umbral de aprobación del **60%**. Tu avance queda guardado en este navegador.
+  4. También podés repasar la teoría completa en la [Guía Interactiva de Evaluación 1](../preparacion-evaluacion-1/) o explorar cada consigna por separado en [Parciales](../../parciales/) y [Ejercicios](../../ejercicios/).
+</AcademicBlock>
+
+---
+
+<h2 id="reciclaplus">Parcial 1 — Caso ReciclaPlus (18/05/2026)</h2>
+
+<ParcialSimulator client:load {...parcialReciclaPlus} />
+
+### Tablero visual de referencia — Story Map de ReciclaPlus (Pregunta 6 · 30%)
+
+<StoryMapBoard
+  client:load
+  title="Story Map de ReciclaPlus (Solución de referencia)"
+  subtitle="Roles: Vecino y Clasificador (Cooperativa)"
+  activities={[
+    {
+      id: "rp-act-1",
+      title: "1. Agendar Retiro",
+      roles: ["Vecino"],
+      mvpStories: [
+        { text: "Ver días disponibles de retiro en mi barrio.", role: "Vecino" },
+        { text: "Seleccionar tipo de reciclable básico (papel / plástico).", role: "Vecino" },
+        { text: "Confirmar dirección y franja horaria de retiro.", role: "Vecino" },
+      ],
+      release2Stories: [
+        { text: "Recibir recordatorio automático por SMS el día anterior.", role: "Vecino" },
+        { text: "Cargar foto del material reciclable clasificado.", role: "Vecino" },
+        { text: "Sistema de puntos y beneficios municipales.", role: "Vecino" },
+      ],
+    },
+    {
+      id: "rp-act-2",
+      title: "2. Coordinar Ruta",
+      roles: ["Clasificador / Cooperativa"],
+      mvpStories: [
+        { text: "Ver lista de solicitudes recibidas en el barrio.", role: "Clasificador / Cooperativa" },
+        { text: "Ver mapa estático con orden manual de paradas.", role: "Clasificador / Cooperativa" },
+      ],
+      release2Stories: [
+        { text: "Algoritmo de optimización de ruta GPS en vivo.", role: "Clasificador / Cooperativa" },
+        { text: "Reasignación automática de chofer ante imprevistos.", role: "Clasificador / Cooperativa" },
+      ],
+    },
+    {
+      id: "rp-act-3",
+      title: "3. Confirmar y Registrar",
+      roles: ["Vecino", "Clasificador / Cooperativa"],
+      mvpStories: [
+        { text: "Recibir notificación básica de arribo.", role: "Vecino" },
+        { text: "Marcar retiro como exitoso en la app.", role: "Clasificador / Cooperativa" },
+        { text: "Calificar clasificación (correcta / no reciclable).", role: "Clasificador / Cooperativa" },
+      ],
+      release2Stories: [
+        { text: "Reporte consolidado de kilos acumulados.", role: "Clasificador / Cooperativa" },
+        { text: "Envío de estadísticas ambientales periódicas al municipio.", role: "Municipio" },
+      ],
+    },
+  ]}
+  cutJustification="El MVP (Release 1 / Walking Skeleton) conecta de extremo a extremo el flujo vital mínimo para completar un retiro: el vecino agenda y la cooperativa recibe, coordina manualmente y marca la visita, validando el hábito y la confianza. Se posponen los algoritmos complejos de ruteo GPS, incentivos de puntos y reportes analíticos para el municipio."
+/>
+
+---
+
+<h2 id="clubplay">Parcial 2 — Caso ClubPlay (26/10/2026)</h2>
+
+<ParcialSimulator client:load {...parcialClubPlay} />
+
+### Tableros visuales de referencia — ClubPlay (Preguntas 4 y 5)
+
+<StoryMapBoard
+  client:load
+  title="Story Map de ClubPlay (Solución de referencia · Pregunta 4a)"
+  subtitle="Roles: Jugador y Encargado del Club"
+  activities={[
+    {
+      id: "cp-act-1",
+      title: "1. Buscar y Elegir",
+      roles: ["Jugador"],
+      mvpStories: [
+        { text: "Ver canchas y horarios libres.", role: "Jugador" },
+        { text: "Filtrar por zona o barrio.", role: "Jugador" },
+      ],
+      release2Stories: [
+        { text: "Galería de fotos y tipo de césped.", role: "Jugador" },
+        { text: "Valoración y reseñas de canchas.", role: "Jugador" },
+      ],
+    },
+    {
+      id: "cp-act-2",
+      title: "2. Reservar y Pagar",
+      roles: ["Jugador"],
+      mvpStories: [
+        { text: "Seleccionar horario libre.", role: "Jugador" },
+        { text: "Confirmar reserva.", role: "Jugador" },
+        { text: "Registrar pago de seña manual en el club.", role: "Jugador" },
+      ],
+      release2Stories: [
+        { text: "Pasarela de pagos online (Mercado Pago).", role: "Jugador" },
+        { text: "Cancelación y reembolso automático.", role: "Jugador" },
+      ],
+    },
+    {
+      id: "cp-act-3",
+      title: "3. Completar Equipo",
+      roles: ["Jugador"],
+      mvpStories: [
+        { text: "Publicar aviso básico 'nos falta uno'.", role: "Jugador" },
+        { text: "Ver contacto directo del jugador interesado.", role: "Jugador" },
+      ],
+      release2Stories: [
+        { text: "Matchmaking por nivel y edad.", role: "Jugador" },
+        { text: "Chat integrado entre jugadores.", role: "Jugador" },
+      ],
+    },
+    {
+      id: "cp-act-4",
+      title: "4. Gestionar Grilla",
+      roles: ["Encargado"],
+      mvpStories: [
+        { text: "Ver grilla de turnos diaria.", role: "Encargado" },
+        { text: "Registrar cobro de seña en efectivo o transferencia.", role: "Encargado" },
+      ],
+      release2Stories: [
+        { text: "Bloqueo dinámico de turnos fijos.", role: "Encargado" },
+        { text: "Reportes de ocupación e ingresos.", role: "Encargado" },
+      ],
+    },
+  ]}
+  cutJustification="El Release 1 (MVP / Walking Skeleton) atraviesa todo el Backbone de punta a punta: permite al jugador buscar y reservar, publicar la falta de jugadores y al encargado ver la grilla diaria y registrar cobros. Ante la restricción del 1/12 (3 sprints vs 3–5 estimados), se recorta el alcance a Must Have (diferiendo 'nos falta uno' al Release 2) sin sacrificar nunca la Definition of Done."
+/>
+
+<ExampleMappingBoard
+  client:load
+  title="Example Map — Cancelación de reserva en ClubPlay (Pregunta 5a)"
+  story="Como jugador quiero cancelar mi reserva para recuperar la seña abonada"
+  rules={[
+    {
+      id: "cp-r1",
+      title: "Cancelación con más de 24 hs de anticipación",
+      detail: "Devuelve el 100% de la seña y libera el turno.",
+      examples: [
+        "Partido sábado 20:00 hs. Cancela viernes 18:00 hs (26 hs antes) → Reembolso 100% de la seña y cancha liberada.",
+      ],
+    },
+    {
+      id: "cp-r2",
+      title: "Cancelación con menos de 24 hs de anticipación",
+      detail: "No devuelve la seña, pero libera el turno para que el club pueda reasignarlo.",
+      examples: [
+        "Partido sábado 20:00 hs. Cancela sábado 12:00 hs (8 hs antes) → Cartel 'Sin reembolso', cancha liberada.",
+      ],
+    },
+    {
+      id: "cp-r3",
+      title: "Reservas de torneo especial",
+      detail: "No admiten cancelación con reembolso por reglamento del torneo.",
+      examples: [
+        "Turno Torneo Nocturno. Cancela con 48 hs de anticipación → Retiene seña completa por reglamento.",
+      ],
+    },
+  ]}
+  questions={[
+    "¿El reembolso se acredita en wallet de la app o se devuelve a la tarjeta de origen?",
+  ]}
+  diagnosis="Con 3 reglas acotadas, ejemplos concretos y solo 1 pregunta abierta puntual, la historia está bien delimitada tras responder esa duda. En contraste (Pregunta 5b), una historia con 6 tarjetas rojas abiertas NO cumple Definition of Ready y debe rechazarse del Sprint para evitar Accidental Discovery."
+  expectedAction="ready"
+/>

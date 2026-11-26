@@ -378,7 +378,9 @@ export const ExamEntrySchema = z
     term: z.string().min(1),
     entityType: z.enum(["OfficialExamPDF", "ReconstructedExamPDF"]),
     provenance: z.enum(["official_source", "reconstructed_exam_statement"]),
-    pdfResourceId: SlugSchema,
+    pdfResourceId: SlugSchema.optional(),
+    practiceDocId: SlugSchema.optional(),
+    practiceAnchor: SlugSchema.optional(),
     catalogExerciseIds: z.array(SlugSchema),
     notes: z.string().min(1),
   })

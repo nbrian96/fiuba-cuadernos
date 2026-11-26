@@ -1,0 +1,81 @@
+---
+id: "gdsi-ej-16"
+courseId: "gdsi"
+number: 16
+title: "ClubPlay (P6): Métricas de Vanidad vs. Outcomes, GQM y DORA en la Sprint Review"
+unit: "u09-mejora-metricas"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 6 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+**ClubPlay** ya superó su lanzamiento inicial y lleva **3 meses operando en producción en 5 clubes deportivos**. El equipo busca evaluar si el producto está generando valor real tanto para jugadores como para los clubes y si su proceso de ingeniería sostiene una evolución saludable.
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 6 (10%)">
+
+Durante la Sprint Review del tercer mes, uno de los responsables del negocio muestra un gráfico ascendente y afirma entusiasmado:
+
+> *"Vamos muy bien: ya tenemos 3.000 descargas de la app."*
+
+1. ¿Qué opinás de esa afirmación y de la métrica elegida?
+2. Proponé qué debería medir el equipo en su lugar, **explicando explícitamente cómo llegaste a esas métricas** (metodología empleada).
+
+**Qué está evaluando la cátedra**  
+Distinción entre **métricas de vanidad** (*outputs* acumulados) y **métricas accionables de resultado** (*outcomes* e impacto en negocio), aplicación estructurada de **GQM (Goal–Question–Metric)** de Victor Basili e integración con las **métricas DORA** de capacidad de entrega técnica.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-16">
+
+## 1. Crítica a "3.000 descargas": Métrica de Vanidad (*Vanity Metric*)
+
+La afirmación *"vamos muy bien porque tenemos 3.000 descargas"* se apoya en una **métrica de vanidad**:
+
+- **Es un acumulado que siempre sube:** aunque nadie use la app, el contador histórico de descargas nunca baja, lo que produce una falsa sensación de éxito.
+- **No mide valor real (*Outcome*) ni impacto:** una descarga no dice si el usuario creó cuenta, si encontró cancha disponible, si pagó una seña, si jugó el partido ni si volvió a usar la app el mes siguiente. Los 3.000 usuarios podrían haber desinstalado ClubPlay el mismo día por falta de turnos o fallas en el pago.
+- **No permite tomar decisiones accionables:** frente a "3.000 descargas", el equipo no sabe qué mejorar en el producto ni si el negocio es rentable para los 5 clubes. Como señala **Tobias Mayer**, las métricas deben funcionar como **espejos de realidad (verdad)** para aprender y decidir, no como adornos para declarar éxito.
+
+---
+
+## 2. Cómo Llegar a Buenas Métricas: Metodología GQM (Victor Basili)
+
+En lugar de elegir números arbitrarios que ya vienen en las tiendas de aplicaciones, aplicamos la metodología **GQM (Goal – Question – Metric)** de arriba hacia abajo (*top-down*):
+
+1. **Goal (Objetivo — Nivel conceptual):** definir qué queremos lograr desde la perspectiva del producto (jugadores), del negocio (clubes/ingresos) y del proceso de desarrollo (entrega confiable).
+2. **Question (Pregunta — Nivel operacional):** formular preguntas concretas que nos permitan comprobar si estamos alcanzando cada objetivo.
+3. **Metric (Métrica — Nivel cuantitativo):** seleccionar las variables medibles precisas que responden objetivamente a cada pregunta.
+
+---
+
+## 3. Tablero Propuesto Mediante GQM (Outcomes + Negocio + DORA)
+
+| Dimensión | Goal (Objetivo) | Question (Pregunta clave) | Métricas propuestas |
+| :--- | :--- | :--- | :--- |
+| **Outcomes de Producto** | Lograr que los jugadores adopten ClubPlay de forma recurrente para concretar partidos. | ¿Los usuarios que llegan a la app realmente concretan partidos y siguen usándola? | **1. Tasa de conversión a partido jugado:** porcentaje de usuarios registrados que reservan y asisten al menos a 1 partido.<br />**2. Retención a 30 días:** porcentaje de jugadores activos que vuelven a reservar en los 30 días posteriores a su primera reserva. |
+| **Impacto en el Negocio** | Incrementar la rentabilidad y la ocupación real de los 5 clubes reduciendo ausencias. | ¿ClubPlay está cobrando señas efectivas y llenando canchas que antes quedaban ociosas? | **3. Monto total de señas cobradas** (y volumen mensual de transacciones completadas vía ClubPlay).<br />**4. Reducción de turnos ociosos en horas pico** (y caída en la tasa de *no-show* en reservas con seña). |
+| **Entrega y Calidad Técnica (DORA)** | Evolucionar la plataforma con agilidad sin degradar la estabilidad operativa de los clubes. | ¿Con qué frecuencia y confiabilidad estamos desplegando mejoras a producción? | **5. Deployment Frequency (Frecuencia de Despliegue):** cantidad de despliegues exitosos a producción por semana/sprint.<br />**6. Change Failure Rate (Tasa de Fallos por Cambio):** porcentaje de despliegues que provocan incidentes, *rollbacks* o *hotfixes*. *(Complementables con Lead Time for Changes y MTTR).* |
+
+### Por qué este conjunto es superior
+
+- **Conecta esfuerzo con valor:** si hay 3.000 descargas pero la tasa de conversión a partido jugado es del 2% o la retención a 30 días cae a cero, el equipo detecta de inmediato un problema de producto (onboarding, oferta de clubes o fricción de pago) y puede actuar.
+- **Equilibra negocio y salud técnica:** combinar *Outcomes* de usuario, impacto financiero en los 5 clubes y métricas **DORA** evita optimizar una sola dimensión a costa de otra (por ejemplo, lanzar funciones rápidas pero inestables que rompan la grilla de los clubes).
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Listar métricas sueltas sin explicar el método:** la consigna exige explícitamente *"explicando cómo llegaste a ellas"*. Si no se parte de objetivos y preguntas (**GQM**), la respuesta queda incompleta.
+- **Reemplazar una métrica de vanidad por otra:** proponer "cantidad de usuarios registrados" o "visitas a la app" repite el mismo problema. Las métricas propuestas deben medir **comportamiento valioso concretado** (partidos jugados, retención, señas cobradas, ocupación) y **capacidad de entrega confiable** (DORA).
+
+</AcademicBlock>
+
+</SolutionDrawer>

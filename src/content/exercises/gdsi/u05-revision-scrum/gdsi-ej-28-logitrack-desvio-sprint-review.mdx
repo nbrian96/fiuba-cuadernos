@@ -1,0 +1,66 @@
+---
+id: "gdsi-ej-28"
+courseId: "gdsi"
+number: 28
+title: "LogiTrack: Desvío en la Sprint Review vs. Sprint Retrospective"
+unit: "u05-revision-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 2
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 2, Ejercicio 7 (Básico)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Durante la **Sprint Review** del equipo de **LogiTrack** (una plataforma de seguimiento logístico), a la que asisten el *Product Owner*, el equipo de desarrollo y varios *stakeholders* comerciales y operativos, la reunión se desvía por completo: los desarrolladores pasan **40 minutos discutiendo acaloradamente** sobre las reiteradas caídas del servidor de pruebas (*staging*) durante el *Sprint*, culpando a la falta de mantenimiento de la infraestructura interna.
+
+Los *stakeholders* permanecen en silencio revisando sus teléfonos y, al cumplirse el *timebox*, la reunión termina sin haber inspeccionado el incremento funcional ni revisado las prioridades del próximo ciclo.
+
+1. Explicá por qué esta situación representa una **disfunción grave de los eventos de Scrum**, contrastando el propósito real de la **Sprint Review** frente al de la **Sprint Retrospective**.
+2. Indicá cómo debería haber intervenido el **Scrum Master** durante la reunión y en qué espacio corresponde tratar el problema del servidor de pruebas.
+
+**Qué está evaluando la cátedra**  
+Comprensión precisa del propósito de inspección y adaptación de cada evento de Scrum: foco externo en el **producto** (Sprint Review) versus foco interno en el **proceso, herramientas y equipo** (Sprint Retrospective).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-28">
+
+## 1. Propósito de la *Sprint Review* vs. la *Sprint Retrospective*
+
+Scrum separa deliberadamente la inspección del **qué estamos construyendo (el producto)** de la inspección del **cómo estamos trabajando (el proceso, las herramientas y las interacciones)** en dos eventos distintos al cierre del *Sprint*. Mezclar ambos espacios desperdicia el tiempo de los *stakeholders* y bloquea la adaptación del producto.
+
+| Dimensión | Sprint Review (Revisión del Sprint) | Sprint Retrospective (Retrospectiva del Sprint) |
+| :--- | :--- | :--- |
+| **Objeto de inspección** | El **Incremento** terminado y el progreso hacia el **Objetivo del Producto** (*Product Goal*). | El **proceso de trabajo**: personas, interacciones, prácticas de ingeniería, **herramientas e infraestructura interna** y *Definition of Done*. |
+| **Participantes** | Scrum Team **y *stakeholders* clave** invitados por el *Product Owner* (clientes, negocio, operaciones). | **Exclusivamente el Scrum Team** (*Product Owner*, *Scrum Master* y *Developers*), en un entorno de seguridad psicológica. |
+| **Resultado esperado (Adaptación)** | Recoger feedback sobre el producto funcional y **adaptar el Product Backlog** y los próximos pasos de valor. | Identificar causas raíz de impedimentos y definir **acciones concretas de mejora** para el próximo *Sprint*. |
+| **¿Aplica el problema del servidor de pruebas?** | Solo como mención breve de contexto si afectó la entrega de un ítem del *Sprint*, **nunca** para debatirlo en profundidad. | **Sí, es su ámbito natural:** analizar por qué falló *staging* y planificar la mejora técnica u organizacional. |
+
+### Por qué es una disfunción en LogiTrack
+
+* **Pérdida del feedback de negocio:** los *stakeholders* asistieron para evaluar valor entregado y ajustar prioridades del producto, no para presenciar un debate interno sobre servidores de prueba. Su desconexión erosiona la confianza en el marco ágil y reduce la asistencia a futuras *Reviews*.
+* **Exposición improductiva de conflictos internos:** discutir culpas de infraestructura frente a clientes o gerentes comerciales genera actitudes defensivas e impide un análisis sereno orientado a causas sistémicas.
+* **Desaprovechamiento del *timebox*:** el equipo cerró el ciclo sin adaptar el *Product Backlog*, perdiendo el principal mecanismo empírico de dirección de producto.
+
+---
+
+## 2. Intervención Esperada del Scrum Master
+
+Como facilitador y garante de la efectividad de los eventos de Scrum, el **Scrum Master** debió intervenir apenas detectó el desvío (en los primeros 2 a 3 minutos, nunca después de 40):
+
+1. **Redirigir el foco de la *Sprint Review*:** agradecer el punto planteado por los desarrolladores, anotar el tema del servidor de pruebas en un *"estacionamiento"* (*parking lot*) y recordar amablemente que el objetivo de esta sesión con los *stakeholders* es inspeccionar el incremento terminado y revisar el *Product Backlog*.
+2. **Transparentar el impacto sin entrar en debate técnico:** si las caídas del servidor impidieron completar alguna historia planificada, el equipo simplemente lo informa con transparencia (*"esta historia quedó incompleta por inestabilidad en el entorno de pruebas y vuelve al Product Backlog"*) y continúa mostrando lo que sí cumple la *Definition of Done*.
+3. **Trasladar el análisis a la *Sprint Retrospective*:** inmediatamente después de la *Review*, ya sin *stakeholders* externos, el equipo dedica un bloque de la **Retrospectiva** a investigar la causa raíz de las caídas del entorno *staging* (por ejemplo, falta de infraestructura como código, pruebas de carga compartidas o ausencia de monitoreo) y compromete al menos una acción concreta de mejora para el siguiente *Sprint* (que incluso puede reflejarse como ítem de mejora en el *Sprint Backlog*).
+
+<AcademicBlock kind="trap" title="Confusión habitual en parciales">
+
+La *Sprint Review* **no es una simple demostración pasiva** (*demo*) ni una reunión de estado técnico para justificar atrasos. Es una **sesión de trabajo colaborativa** entre el Scrum Team y los *stakeholders* para inspeccionar producto real funcionando y co-decidir qué construir a continuación.
+
+</AcademicBlock>
+
+</SolutionDrawer>

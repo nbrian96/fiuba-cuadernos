@@ -1,0 +1,79 @@
+---
+id: "gdsi-ej-20"
+courseId: "gdsi"
+number: 20
+title: "Situación 19: Historia que Falla en CI al Cierre del Sprint — Definition of Done y Sprint Review"
+unit: "u05-revision-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Situaciones Prácticas — Situación 19 (Definition of Done y Review)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado — Situación Práctica 19">
+
+Al cierre de un Sprint de 2 semanas, un equipo Scrum revisa el estado de las **4 historias de usuario** comprometidas:
+
+- **3 historias** cumplen completamente con la **Definition of Done (DoD)** acordada por el equipo (integradas en la rama principal, compilación limpia en Integración Continua, pruebas unitarias y de regresión automatizadas en verde y desplegadas en el ambiente de revisión).
+- La **4.ª historia** *"anda perfecto en la máquina local del desarrollador"*, pero **no compila en el servidor de Integración Continua (CI) y todavía no tiene las pruebas de regresión automatizadas** exigidas por la DoD.
+
+Antes de entrar a la **Sprint Review**, surge la propuesta de mostrarla igual desde la notebook del desarrollador, darla por "terminada al 90%" y sumar casi todos sus Story Points a la velocidad del Sprint.
+
+1. ¿Qué debe hacer el equipo con la 4.ª historia respecto de la **Sprint Review**, el **Incremento** y la **Velocidad**?
+2. ¿Cuál es el destino correcto de la historia y en qué evento de Scrum se analiza lo sucedido?
+3. ¿Por qué ceder al *"en mi máquina funciona"* daña el empirismo de Scrum y la salud técnica del producto?
+
+**Qué está evaluando la cátedra**  
+Rigor sobre el concepto de **Incremento** y **Definition of Done (DoD)** en Scrum, la patología del *"a mí me funciona"* (Paez et al.), cálculo correcto de **Velocidad** y separación de roles entre *Sprint Review* y *Sprint Retrospectiva*.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-20">
+
+## 1. Qué Hacer con la 4.ª Historia al Cierre del Sprint
+
+La regla en Scrum es estricta y binaria: **una historia está *Done* (100% de la DoD) o está *Not Done***.
+
+1. **NO entra a la Sprint Review como trabajo terminado ni integra el Incremento:**  
+   Solo las **3 historias que cumplen la DoD** forman parte del Incremento potencialmente entregable y se inspeccionan en la Sprint Review. Mostrar software desde una notebook local que ni siquiera compila en CI oculta trabajo incompleto (*undone work*) y engaña a los *stakeholders* sobre el estado real del producto.
+2. **NO suma puntos a la Velocidad del Sprint (suma 0 SP):**  
+   La velocidad mide únicamente el trabajo **completado al 100%**. Otorgar "crédito parcial" (por ejemplo, contar el 90% de sus Story Points) distorsiona la capacidad histórica del equipo y hace que las proyecciones futuras del *Release Plan* sean falsas.
+3. **NO se extiende la duración del Sprint:**  
+   Los Sprints son cajas de tiempo fijas (*time-boxed*). Si el Sprint terminó, se cierra con transparencia reportando el estado real (3 de 4 historias terminadas).
+
+---
+
+## 2. Destino de la Historia e Inspección del Proceso
+
+- **Regresa al Product Backlog:**  
+  La 4.ª historia vuelve automáticamente al **Product Backlog**. No se arrastra por inercia al próximo Sprint: el **Product Owner** decide si sigue siendo la máxima prioridad frente al contexto actual del negocio y, en caso afirmativo, el equipo reestima el trabajo remanente (arreglar la integración en CI y completar las pruebas de regresión) durante el próximo **Sprint Planning**.
+- **Análisis de causa raíz en la Sprint Retrospectiva:**  
+  El lugar adecuado para investigar por qué ocurrió esto es la **Sprint Retrospectiva** (no buscando culpables individuales, sino examinando el proceso). Mediante técnicas como los **5 Por qués**, el equipo indaga preguntas clave:
+  - ¿Por qué se integró recién sobre el cierre del Sprint en lugar de practicar **Integración Continua diaria** en commits pequeños?
+  - ¿Por qué se dejaron las pruebas de regresión para el final en lugar de aplicar **TDD / ATDD** desde el inicio?
+  - ¿La historia era demasiado grande y faltó **slicing vertical** o colaboración (*pair programming*) para cerrarla antes de abrir otra?
+  
+  A partir del análisis, el equipo asume un **compromiso concreto de mejora** para el próximo Sprint (por ejemplo: integrar a la rama principal todos los días y no comenzar nuevas historias si existe un *build* roto en CI).
+
+---
+
+## 3. Por Qué la Patología del *"A Mí Me Funciona"* es Destructiva
+
+Según **Paez et al.** (*Construcción de software: una mirada ágil*), la DoD existe precisamente para erradicar la patología tradicional del *"en mi máquina anda"*:
+
+- **Quiebra la Transparencia empírica:** Scrum se sostiene en *Transparencia, Inspección y Adaptación*. Si el Incremento reportado no refleja la realidad de integración y pruebas, las decisiones de lanzamiento tomadas en la Review carecen de base real.
+- **Acumula Deuda Técnica oculta:** código que no compila en CI y carece de pruebas de regresión introduce riesgo inmediato de romper funcionalidades previas (regresiones silenciosas) y encarece cada iteración posterior.
+- **La DoD es un contrato innegociable:** si un equipo flexibiliza su DoD ante la primera presión de cierre, la definición de calidad deja de tener valor y el producto se degrada rápidamente.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el examen">
+
+- **Confundir *Definition of Done* con *Criterios de Aceptación*:** la DoD es **global y transversal** a todas las historias (compilar en CI, pruebas de regresión, estándares de código); los criterios de aceptación son **específicos de cada historia** (reglas de negocio particulares). En esta situación se incumple explícitamente la **DoD**.
+- **Proponer "alargar el Sprint un par de días" o "pasarla directo al próximo Sprint sin pasar por el PO":** ambas opciones violan reglas explícitas de Scrum (*timebox* fijo y potestad del Product Owner sobre la priorización del Product Backlog).
+
+</AcademicBlock>
+
+</SolutionDrawer>

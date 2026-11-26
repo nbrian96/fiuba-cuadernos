@@ -1381,6 +1381,7 @@
     display: none;
   }
 
+  [data-exam-prep-root][data-study-unit="u0"] .exam-unit-section:not([data-exam-unit="u0"]),
   [data-exam-prep-root][data-study-unit="u1"] .exam-unit-section:not([data-exam-unit="u1"]),
   [data-exam-prep-root][data-study-unit="u2"] .exam-unit-section:not([data-exam-unit="u2"]),
   [data-exam-prep-root][data-study-unit="u3"] .exam-unit-section:not([data-exam-unit="u3"]),
@@ -1388,7 +1389,9 @@
   [data-exam-prep-root][data-study-unit="u5"] .exam-unit-section:not([data-exam-unit="u5"]),
   [data-exam-prep-root][data-study-unit="u6"] .exam-unit-section:not([data-exam-unit="u6"]),
   [data-exam-prep-root][data-study-unit="u7"] .exam-unit-section:not([data-exam-unit="u7"]),
-  [data-exam-prep-root][data-study-unit="u8"] .exam-unit-section:not([data-exam-unit="u8"]) {
+  [data-exam-prep-root][data-study-unit="u8"] .exam-unit-section:not([data-exam-unit="u8"]),
+  [data-exam-prep-root][data-study-unit="u9"] .exam-unit-section:not([data-exam-unit="u9"]),
+  [data-exam-prep-root][data-study-unit="u10"] .exam-unit-section:not([data-exam-unit="u10"]) {
     display: none;
   }
 
@@ -1670,6 +1673,523 @@
   }
 }
 
+@layer components {
+  /* Modo Flashcard en ActiveRecallCards */
+  .flashcard-stage {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .recall-card--flashcard {
+    padding: var(--space-5);
+    border-width: 2px;
+    background-color: var(--bg-surface);
+  }
+
+  .flashcard-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* Tableros e Interactivos GDSI */
+  .gdsi-board {
+    margin-block: var(--space-5);
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .gdsi-board-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .gdsi-board-title {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-heading);
+  }
+
+  .gdsi-board-subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .gdsi-board-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .gdsi-scroll-x {
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: var(--space-1);
+  }
+
+  /* Example Mapping Board */
+  .gdsi-em-story {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--warning-bg);
+    border: 2px solid var(--warning);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+  }
+
+  .gdsi-em-card-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+  }
+
+  .gdsi-em-story .gdsi-em-card-kicker {
+    color: var(--warning);
+  }
+
+  .gdsi-em-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .gdsi-em-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--space-3);
+    align-items: start;
+  }
+
+  .gdsi-em-column {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .gdsi-em-rule {
+    padding: var(--space-3);
+    background-color: var(--info-bg);
+    border: 1px solid var(--info);
+    border-left: 4px solid var(--info);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+  }
+
+  .gdsi-em-rule .gdsi-em-card-kicker {
+    color: var(--info);
+  }
+
+  .gdsi-em-example {
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--success-bg);
+    border: 1px solid var(--success);
+    border-left: 4px solid var(--success);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+  }
+
+  .gdsi-em-example .gdsi-em-card-kicker {
+    color: var(--success);
+  }
+
+  .gdsi-em-questions {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background-color: var(--danger-bg);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-md);
+  }
+
+  .gdsi-em-questions-title {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--danger);
+  }
+
+  .gdsi-em-question {
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--danger);
+    border-left: 4px solid var(--danger);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+  }
+
+  .gdsi-board-diagnosis {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-2);
+    font-size: 0.9rem;
+  }
+
+  /* User Story Map Board */
+  .gdsi-sm-table {
+    display: grid;
+    gap: var(--space-3);
+    min-width: 640px;
+  }
+
+  .gdsi-sm-row {
+    display: grid;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+
+  .gdsi-sm-backbone-cell {
+    padding: var(--space-3);
+    background-color: var(--accent-soft);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-md);
+    color: var(--text-heading);
+    display: grid;
+    gap: 0.25rem;
+    align-content: start;
+  }
+
+  .gdsi-sm-band-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .gdsi-sm-band-header--mvp {
+    background-color: var(--success-bg);
+    color: var(--success);
+    border: 1px dashed var(--success);
+  }
+
+  .gdsi-sm-band-header--r2 {
+    background-color: var(--bg-subtle);
+    color: var(--text-heading);
+    border: 1px dashed var(--border-strong);
+  }
+
+  .gdsi-sm-story-col {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .gdsi-sm-story-card {
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    display: grid;
+    gap: 0.35rem;
+    transition: opacity 0.15s ease;
+  }
+
+  .gdsi-sm-story-card--mvp {
+    border-left: 3px solid var(--success);
+  }
+
+  .gdsi-sm-story-card--dimmed {
+    opacity: 0.35;
+  }
+
+  .gdsi-role-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background-color: var(--bg-subtle);
+    color: var(--text-heading);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Risk Exposure Matrix 5x5 */
+  .gdsi-risk-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .gdsi-risk-grid {
+    display: grid;
+    grid-template-columns: minmax(4.5rem, auto) repeat(5, minmax(2.5rem, 1fr));
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .gdsi-risk-axis {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0.25rem;
+  }
+
+  .gdsi-risk-cell {
+    appearance: none;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.25rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.1s ease, border-color 0.15s ease;
+  }
+
+  .gdsi-risk-cell:hover {
+    transform: translateY(-1px);
+  }
+
+  .gdsi-risk-cell[aria-pressed="true"] {
+    border-color: var(--text-heading);
+    box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+
+  .gdsi-risk-cell--low {
+    background-color: var(--success-bg);
+    color: var(--success);
+    border-color: var(--success);
+  }
+
+  .gdsi-risk-cell--medium {
+    background-color: var(--info-bg);
+    color: var(--info);
+    border-color: var(--info);
+  }
+
+  .gdsi-risk-cell--high {
+    background-color: var(--warning-bg);
+    color: var(--warning);
+    border-color: var(--warning);
+  }
+
+  .gdsi-risk-cell--critical {
+    background-color: var(--danger-bg);
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+
+  .gdsi-risk-detail {
+    padding: var(--space-4);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  /* Evidence Hierarchy Explorer */
+  .gdsi-evidence-list {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .gdsi-evidence-row {
+    appearance: none;
+    width: 100%;
+    text-align: left;
+    padding: var(--space-3);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: grid;
+    gap: var(--space-2);
+    color: var(--text-primary);
+  }
+
+  .gdsi-evidence-row[aria-pressed="true"] {
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
+  }
+
+  .gdsi-evidence-row-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .gdsi-evidence-bar-track {
+    width: 100%;
+    height: 0.55rem;
+    background-color: var(--bg-subtle);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .gdsi-evidence-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .gdsi-evidence-bar-fill--high {
+    background-color: var(--success);
+  }
+
+  .gdsi-evidence-bar-fill--medium {
+    background-color: var(--warning);
+  }
+
+  .gdsi-evidence-bar-fill--low {
+    background-color: var(--danger);
+  }
+
+  .gdsi-evidence-detail {
+    padding: var(--space-4);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  /* Glossary Explorer */
+  .gdsi-glossary-controls {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .gdsi-glossary-search {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-strong);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font: inherit;
+  }
+
+  .gdsi-glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .gdsi-glossary-card {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .gdsi-glossary-term {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-heading);
+  }
+
+  .gdsi-glossary-def {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  /* Parcial Simulator */
+  .gdsi-parcial-sim {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-5);
+  }
+
+  .gdsi-parcial-hud {
+    padding: var(--space-4);
+    background-color: var(--bg-canvas);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-lg);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .gdsi-parcial-case {
+    padding: var(--space-4);
+    background-color: var(--info-bg);
+    border: 1px solid var(--info);
+    border-left: 4px solid var(--info);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .gdsi-parcial-q {
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .gdsi-parcial-textarea {
+    width: 100%;
+    min-height: 5.5rem;
+    padding: var(--space-3);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    resize: vertical;
+  }
+
+  .gdsi-parcial-rubric {
+    padding: var(--space-3);
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .gdsi-parcial-selfgrade {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
 @media (max-width: 900px) {
   .doc-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -1705,7 +2225,8 @@
     margin-inline-start: 0;
   }
 
-  .study-hub-metrics {
+  .study-hub-metrics,
+  .gdsi-risk-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 }

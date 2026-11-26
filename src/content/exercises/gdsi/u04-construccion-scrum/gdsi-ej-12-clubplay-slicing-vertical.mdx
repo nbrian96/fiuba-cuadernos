@@ -1,0 +1,77 @@
+---
+id: "gdsi-ej-12"
+courseId: "gdsi"
+number: 12
+title: "ClubPlay (P2): Slicing Vertical de la Reserva de Canchas y Pago de Seña"
+unit: "u04-construccion-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 2 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+**ClubPlay** busca digitalizar la reserva de canchas deportivas (fútbol 5, pádel y tenis) y la gestión de señas entre jugadores amateurs y encargados de clubes barriales. El equipo trabaja con Sprints cortos bajo Scrum y necesita que cada incremento al cierre de la iteración entregue valor utilizable real.
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 2 (10%)">
+
+El Product Backlog contiene la siguiente historia demasiado grande para un solo Sprint:
+
+> *"Como jugador quiero reservar una cancha y pagar la seña."*
+
+El equipo evalúa cuatro propuestas para dividirla en historias más pequeñas:
+
+- **a)** Historia 1: Diseñar el modelo de datos y crear las tablas de reservas y pagos; Historia 2: Programar los servicios de backend y la integración con la pasarela de pagos; Historia 3: Desarrollar las pantallas de frontend para reservar y pagar.
+- **b)** Historia 1: Construir el módulo de reseñas, calificaciones de clubes y programa de puntos; Historia 2: Implementar la reserva de cancha junto con el pago de seña y la cancelación todo en el siguiente Sprint.
+- **c)** Historia 1: Reservar un horario libre confirmando el turno y pagando la seña directamente en el club (como funciona hoy); Historia 2: Pagar la seña online desde la app al momento de reservar; Historia 3: Cancelar la reserva desde la app y recuperar la seña según la política del club.
+- **d)** Historia 1: Construir una pantalla de reserva con botón "Pagar seña" que guarda una confirmación simulada en memoria sin impactar en la grilla real del club; Historia 2: Conectar la pantalla a la disponibilidad real y a los pagos en el Sprint siguiente.
+
+Seleccioná la opción que aplica correctamente el **slicing vertical** y justificá brevemente por qué las demás propuestas son inadecuadas.
+
+**Qué está evaluando la cátedra**  
+Comprensión de la subdivisión vertical de funcionalidades (*vertical slicing*), criterios **INVEST** (en especial *Valuable* y *Small*) y diferenciación entre un incremento funcional entregable y tareas técnicas horizontales o simulaciones inutilizables.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-12">
+
+## Respuesta Correcta: Opción **c**
+
+**Justificación sintética (para el parcial):**  
+La opción **c** aplica **slicing vertical** porque cada historia atraviesa todas las capas técnicas necesarias (interfaz, lógica y persistencia) y entrega un **incremento real y utilizable por los usuarios** al finalizar el Sprint. Permite resolver primero el dolor principal (ver horarios libres y reservar sin llamadas, manteniendo el pago de seña en el club como hoy), luego sumar el pago online de la seña y finalmente incorporar la cancelación con devolución.
+
+---
+
+## Por qué la Opción **c** Cumple *Slicing Vertical* e INVEST
+
+1. **Valuable (Valiosa) desde la Historia 1:** un jugador ya puede ver horarios reales y confirmar su cancha sin intercambiar mensajes por WhatsApp, y el club registra el turno en su grilla cobrando la seña por el medio habitual.
+2. **Small (Pequeña) e Incremental:** difiere la complejidad técnica de integrar la pasarela de pagos (Historia 2) y la lógica de reembolsos/políticas de cancelación (Historia 3) a iteraciones posteriores, siguiendo el patrón de división por **pasos del flujo de trabajo** y **diferimiento de automatización**.
+3. **Testable (Probable) e Independent (Independiente en entrega):** cada historia puede validarse de punta a punta en la Sprint Review y liberarse a producción generando aprendizaje temprano.
+
+---
+
+## Contraste con las Opciones Incorrectas
+
+| Opción | Antipatatrón identificado | Por qué falla en Scrum / INVEST |
+| :--- | :--- | :--- |
+| **a)** | **Slicing horizontal (por capas técnicas)** | Separa base de datos, backend y frontend como si fueran historias de usuario. Ninguna entrega valor por sí sola al usuario final (viola **Valuable**). Si la Historia 3 se retrasa, al cierre del Sprint el cliente recibe cero software utilizable y se acumula trabajo en progreso (*WIP*). |
+| **b)** | **Desvío de alcance sin partir la épica** | Introduce funcionalidades secundarias de bajo impacto (*extra features* / *gold plating*) y deja intacta la historia original de reserva + pago + cancelación sin dividir (viola **Small** y priorización por valor). |
+| **d)** | **Simulación inutilizable (incremento falso)** | Una pantalla que guarda datos simulados sin impactar la grilla real del club no resuelve la necesidad del jugador ni sirve al encargado (riesgo de dobles reservas). Confunde un **prototipo descartable de descubrimiento** con un **Incremento potencialmente desplegable** de Scrum. |
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Caer en la opción a) por hábito técnico:** muchos equipos de ingeniería dividen naturalmente por "BD / Backend / Frontend". En Scrum eso son **tareas internas del Sprint Backlog** dentro de una historia, jamás historias de usuario del Product Backlog.
+- **Confundir la opción d) con un MVP:** un MVP o *Walking Skeleton* puede ser simple en funcionalidad, pero **debe funcionar de punta a punta en el mundo real**. Una simulación desconectada de la grilla real no es utilizable en producción.
+
+</AcademicBlock>
+
+</SolutionDrawer>

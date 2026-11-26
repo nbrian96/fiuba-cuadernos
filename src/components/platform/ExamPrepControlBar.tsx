@@ -22,6 +22,7 @@ export interface ExamUnitMeta {
 
 export interface ExamPrepControlBarProps {
   courseId: string;
+  storageScope?: string;
   units: ExamUnitMeta[];
   totalRecall: number;
   totalMcq: number;
@@ -36,6 +37,7 @@ const VIEW_MODES: Array<{ key: StudyViewMode; label: string }> = [
 
 export function ExamPrepControlBar({
   courseId,
+  storageScope,
   units,
   totalRecall,
   totalMcq,
@@ -59,8 +61,12 @@ export function ExamPrepControlBar({
     }
 
     const syncStats = () => {
-      const recallMap = readStoredMap<RecallStateMap>(getExamRecallKey(courseId));
-      const mcqMap = readStoredMap<McqStateMap>(getExamMcqKey(courseId));
+      const recallMap = readStoredMap<RecallStateMap>(
+        getExamRecallKey(courseId, storageScope),
+      );
+      const mcqMap = readStoredMap<McqStateMap>(
+        getExamMcqKey(courseId, storageScope),
+      );
 
       let mastered = 0;
       let review = 0;
@@ -84,8 +90,11 @@ export function ExamPrepControlBar({
 
     syncStats();
     const onSync = (ev: Event) => {
-      const custom = ev as CustomEvent<{ courseId?: string }>;
-      if (!custom.detail?.courseId || custom.detail.courseId === courseId) {
+      const custom = ev as CustomEvent<{ courseId?: string; storageScope?: string }>;
+      if (
+        (!custom.detail?.courseId || custom.detail.courseId === courseId) &&
+        (custom.detail?.storageScope ?? undefined) === (storageScope ?? undefined)
+      ) {
         syncStats();
       }
     };
@@ -95,7 +104,7 @@ export function ExamPrepControlBar({
       window.removeEventListener(EXAM_PREP_SYNC_EVENT, onSync);
       window.removeEventListener("storage", syncStats);
     };
-  }, [courseId, units]);
+  }, [courseId, storageScope, units]);
 
   useEffect(() => {
     const root = document.querySelector("[data-exam-prep-root]");
@@ -182,7 +191,7 @@ export function ExamPrepControlBar({
                   type="button"
                   className="btn btn-danger-outline"
                   onClick={() => {
-                    clearExamPrepProgress(courseId);
+                    clearExamPrepProgress(courseId, storageScope);
                     setConfirmReset(false);
                   }}
                 >
@@ -219,7 +228,7 @@ export function ExamPrepControlBar({
               data-testid="study-unit-all"
               onClick={() => setUnitFilter("all")}
             >
-              Todas (8)
+              Todas ({units.length})
             </button>
             {units.map((unit) => (
               <button

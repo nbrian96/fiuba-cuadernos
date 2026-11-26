@@ -12,13 +12,29 @@ import {
 
 export interface QuickRecognitionTrainerProps {
   quiz: QuizManifest;
+  quizzes?: QuizManifest[];
 }
 
-export function QuickRecognitionTrainer({ quiz }: QuickRecognitionTrainerProps) {
+export function QuickRecognitionTrainer({
+  quiz: initialQuiz,
+  quizzes,
+}: QuickRecognitionTrainerProps) {
+  const deckList = quizzes && quizzes.length > 0 ? quizzes : [initialQuiz];
+  const [activeQuizId, setActiveQuizId] = useState<string>(initialQuiz.quizId);
+  const quiz =
+    deckList.find((item) => item.quizId === activeQuizId) ?? initialQuiz;
+
   const [state, setState] = useState<QuizState>(() => createInitialQuizState());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const promptRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
+
+  const handleSelectDeck = (nextQuizId: string) => {
+    if (nextQuizId === activeQuizId) return;
+    setActiveQuizId(nextQuizId);
+    setElapsedSeconds(0);
+    setState(createInitialQuizState());
+  };
 
   const currentQuestion = getCurrentQuestion(quiz, state);
   const isAnswered = state.selectedOptionKey !== null;
@@ -90,6 +106,32 @@ export function QuickRecognitionTrainer({ quiz }: QuickRecognitionTrainerProps) 
           </span>
         </div>
       </div>
+
+      {deckList.length > 1 ? (
+        <div
+          className="study-control-row"
+          role="group"
+          aria-label="Seleccionar mazo del entrenador"
+          style={{ marginBottom: "0.75rem" }}
+          data-testid="trainer-deck-selector"
+        >
+          <span className="study-control-label">Mazo activo:</span>
+          <div className="study-control-group">
+            {deckList.map((deck) => (
+              <button
+                key={deck.quizId}
+                type="button"
+                className="filter-chip"
+                aria-pressed={deck.quizId === quiz.quizId}
+                data-testid={`trainer-deck-${deck.quizId}`}
+                onClick={() => handleSelectDeck(deck.quizId)}
+              >
+                {deck.title.replace(/^Entrenador Rápido de GDSI:\s*/i, "")} ({deck.questions.length})
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {!state.completed && currentQuestion ? (
         <>

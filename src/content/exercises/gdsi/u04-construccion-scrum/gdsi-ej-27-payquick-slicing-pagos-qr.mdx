@@ -1,0 +1,86 @@
+---
+id: "gdsi-ej-27"
+courseId: "gdsi"
+number: 27
+title: "PayQuick: Slicing Horizontal (Antipatrón) vs. Slicing Vertical en Pagos QR"
+unit: "u04-construccion-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 2, Ejercicio 6 (Intermedio)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El equipo de la billetera digital **PayQuick** debe abordar la siguiente historia de usuario durante la planificación:
+
+> *"Como cliente, quiero pagar con código QR utilizando mi tarjeta de crédito o mi saldo en cuenta, para abonar mis compras en comercios sin llevar efectivo."*
+
+El equipo reconoce que el alcance es demasiado amplio para completarlo en un solo incremento pequeño y decide dividir la historia. Sin embargo, surge una discusión interna: parte del equipo propone separar el trabajo en tareas de *Base de Datos*, *Backend* y *Frontend*, mientras que otra parte propone dividirlo por medios de pago funcionando de punta a punta.
+
+1. Ejemplificá cómo quedaría un **Slicing Horizontal** de esta historia y explicá por qué constituye un **antipatrón** en el desarrollo ágil.
+2. Proponé un **Slicing Vertical** adecuado dividiendo la funcionalidad en dos historias de usuario independientes y justificá sus ventajas en términos de entrega de valor, riesgo y feedback temprano.
+
+**Qué está evaluando la cátedra**  
+Comprensión profunda de la diferencia entre descomposición técnica por capas arquitectónicas (*horizontal slicing*) y descomposición funcional orientada a valor de usuario (*vertical slicing*), siguiendo los principios de Scrum e INVEST.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-27">
+
+## 1. Slicing Horizontal (Antipatrón)
+
+En el **Slicing Horizontal**, el trabajo se fragmenta siguiendo las **capas tecnológicas de la arquitectura** en lugar del flujo de valor del usuario.
+
+### Ejemplo de división horizontal incorrecta
+* **Ítem A (Base de Datos):** crear las tablas `pagos_qr`, `medios_pago` y `transacciones` junto con sus índices y migraciones.
+* **Ítem B (Backend / API):** implementar los *endpoints* para decodificar el QR, debitar saldo en cuenta e integrarse con la procesadora de tarjetas de crédito.
+* **Ítem C (Frontend / App móvil):** desarrollar la pantalla del escáner QR, el selector de medio de pago y el comprobante visual.
+
+### Por qué es un antipatrón en Scrum y desarrollo ágil
+
+1. **Cero valor entregable de forma aislada:** al finalizar el Ítem A o el Ítem B, ningún cliente puede pagar con QR. No existe un incremento usable que el *Product Owner* pueda mostrar a los *stakeholders* en la *Sprint Review* ni liberar a producción.
+2. **Viola el criterio INVEST:** las piezas resultantes no son **I**ndependientes (dependen fuertemente entre sí), no son **V**aliosas para el usuario final y dificultan la prueba de aceptación integral (**T**esteable de punta a punta).
+3. **Posterga el riesgo de integración hasta el final:** los errores de contrato entre frontend, backend, pasarela de pagos y base de datos recién se descubren cuando todas las capas se ensamblan tarde, generando cuello de botella, retrabajo y acumulación de trabajo en progreso (*WIP*).
+4. **Fomenta silos y traspasos (*handoffs*):** cada especialidad optimiza su capa por separado en lugar de colaborar en equipo hacia un objetivo funcional común.
+
+---
+
+## 2. Slicing Vertical (Enfoque Recomendado)
+
+En el **Slicing Vertical**, cada historia recorta una **porción delgada pero completa de funcionalidad** que atraviesa todas las capas técnicas (interfaz móvil, API/lógica de negocio, integración necesaria y persistencia) para entregar valor real de fin a fin.
+
+### Historia Vertical 1 — Pago con QR utilizando saldo en cuenta (Fin a fin)
+> *"Como cliente con dinero disponible en PayQuick, quiero escanear un código QR en un comercio y pagar utilizando mi saldo en cuenta, recibiendo un comprobante inmediato."*
+
+* **Capas atravesadas:** escáner QR en la app móvil + *endpoint* de validación y débito de saldo interno + registro transaccional en base de datos + comprobante visual y notificación al comercio.
+* **Ventaja estratégica:** elimina la dependencia externa con procesadoras de tarjetas en la primera entrega, permite probar todo el flujo crítico de escaneo/cobro en producción y genera **feedback real de usuarios** mucho antes.
+
+### Historia Vertical 2 — Pago con QR utilizando tarjeta de crédito (Fin a fin)
+> *"Como cliente, quiero elegir una tarjeta de crédito asociada al momento de escanear un código QR para financiar mi compra incluso cuando no tengo saldo suficiente en cuenta."*
+
+* **Capas atravesadas:** selector de tarjeta en la pantalla de confirmación + integración con pasarela/procesadora de tarjetas (autorización, manejo de rechazos y tokenización) + persistencia de datos de autorización + comprobante con detalle de tarjeta.
+* **Ventaja estratégica:** aísla la complejidad técnica y regulatoria de la pasarela externa en un incremento propio, sin bloquear la salida a producción del flujo base de pagos QR.
+
+---
+
+## 3. Comparación Sintética
+
+| Criterio | Slicing Horizontal (Capas técnicas) | Slicing Vertical (Tajadas de valor) |
+| :--- | :--- | :--- |
+| **Valor al usuario tras la primera entrega** | Nulo (solo infraestructura parcial). | Real e inmediato (ya puede pagar con saldo). |
+| **Feedback en *Sprint Review*** | Solo demostraciones técnicas internas o *mocks*. | Demostración funcional real de punta a punta. |
+| **Detección de riesgos de integración** | Tardía (al unir todas las capas). | Temprana (cada historia se integra y prueba completa). |
+| **Flexibilidad de negocio** | Baja: hay que terminar todo para liberar algo. | Alta: se puede liberar Historia 1 y repriorizar Historia 2 según adopción real. |
+
+<AcademicBlock kind="note" title="Patrón de división aplicado">
+
+En este caso se aplicó el patrón de **división por variantes de negocio / reglas de interfaz** (separar el camino más simple —saldo interno— del camino con integración externa compleja —tarjeta de crédito—). La metáfora clásica es la de la **torta**: cortar una porción vertical permite probar todas las capas de sabor en un solo bocado, mientras que cortar una capa horizontal entrega únicamente bizcochuelo seco o merengue aislado.
+
+</AcademicBlock>
+
+</SolutionDrawer>

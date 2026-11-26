@@ -1,0 +1,71 @@
+---
+id: "gdsi-ej-02"
+courseId: "gdsi"
+number: 2
+title: "Example Mapping: Diferencia entre 'Regla' y 'Ejemplo'"
+unit: "u04-construccion-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Pregunta 2 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En **Example Mapping**, ¿cuál es la diferencia principal entre una *"regla"* y un *"ejemplo"*? *(10%)*
+
+- **a)** La regla es un caso de prueba automatizado en Gherkin y el ejemplo es un requisito no funcional de arquitectura.
+- **b)** La regla expresa un comportamiento esperado del sistema; el ejemplo es una instancia concreta que la ilustra o valida.
+- **c)** La regla describe una duda abierta sin responder y el ejemplo describe la solución técnica elegida por los desarrolladores.
+- **d)** No existe diferencia práctica: las reglas las escribe el Product Owner antes del Sprint y los ejemplos se redactan después de desplegar a producción.
+
+**Qué está evaluando la cátedra**  
+Dominio de la técnica de *Example Mapping* (Matt Wynne / Gaspar Nagy & Seb Rose) dentro de la fase de *Discovery* de BDD (*Behaviour-Driven Development*): distinción entre criterios generales de negocio (tarjetas azules) e instancias concretas verificables (tarjetas verdes) que eliminan la ambigüedad antes de construir.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-02">
+
+## Respuesta correcta
+
+La opción correcta es la **b)**:
+
+> *La regla expresa un comportamiento esperado del sistema; el ejemplo es una instancia concreta que la ilustra o valida.*
+
+---
+
+## Fundamento teórico (Nagy & Rose / Matt Wynne — *Example Mapping*)
+
+*Example Mapping* es una práctica colaborativa acotada en tiempo (*timebox* de 20 a 30 minutos) dentro de la primera fase de **BDD** (*Discovery → Formulation → Automation*). Reúne a los "Tres Amigos" —negocio/PO, desarrollo y pruebas— para construir entendimiento compartido sobre una Historia de Usuario usando **cuatro colores de tarjetas**:
+
+| Color | Elemento | Rol en el mapeo |
+| :--- | :--- | :--- |
+| **Amarilla** | Historia de Usuario (*Story*) | Encabeza el tablero y delimita la necesidad a explorar. |
+| **Azul** | **Regla** (*Rule*) | Sintetiza un criterio de aceptación o comportamiento esperado general del sistema (política de negocio). |
+| **Verde** | **Ejemplo** (*Example*) | Instancia concreta, con datos específicos y casos de borde, que ilustra, acota y permite validar la regla ubicada encima. |
+| **Roja** | Pregunta / Duda abierta (*Question*) | Registra supuestos no resueltos o vacíos de decisión que el grupo no puede responder en el momento. |
+
+### Cómo interactúan Reglas y Ejemplos en la práctica
+
+- La **regla (azul)** formula el criterio abstracto: por ejemplo, *"Un vecino no puede agendar un retiro si ya tiene uno pendiente para la misma semana"*.
+- Los **ejemplos (verdes)** bajan esa regla a casos concretos con valores reales —incluyendo caminos felices y casos límite— que luego se formulan directamente en escenarios `Given / When / Then` (Gherkin): por ejemplo, *"Ana tiene un retiro agendado para el martes 12/05; intenta agendar otro para el jueves 14/05 y el sistema rechaza la solicitud informando la fecha del retiro vigente"*.
+- **Valor diagnóstico del mapa:**
+  - Si una historia acumula **demasiadas tarjetas azules** (muchas reglas), es señal de que es una **épica demasiado grande** y conviene aplicar **Slicing Vertical**.
+  - Si una regla necesita **muchas tarjetas verdes** para explicarse, probablemente la regla es compleja o ambigua y conviene subdividirla.
+  - Si el tablero queda plagado de **tarjetas rojas**, la historia **no está lista para entrar al Sprint** (incumple la *Definition of Ready*) y meterla igual provocaría *Accidental Discovery* durante la codificación.
+
+---
+
+## Por qué las demás opciones son incorrectas
+
+- **a)** Invierte y confunde las capas de BDD: los escenarios en Gherkin (`Given / When / Then`) se formulan a partir de los **ejemplos** en la fase de *Formulation* (y luego se automatizan), mientras que las reglas no son código automatizado ni los ejemplos son requisitos no funcionales.
+- **c)** Las dudas abiertas sin responder corresponden a las **tarjetas rojas** (*Questions*), no a las reglas (azules); y el *Example Mapping* se enfoca en el comportamiento observable del dominio, no en decisiones internas de implementación técnica.
+- **d)** Es doblemente falsa: sí existe una diferencia conceptual clave y, además, los ejemplos se construyen **antes de programar** (en *Discovery*) precisamente para descubrir contradicciones tempranamente y guiar el desarrollo, nunca después de desplegar a producción.
+
+</SolutionDrawer>

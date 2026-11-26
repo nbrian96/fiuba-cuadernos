@@ -1,0 +1,75 @@
+---
+id: "gdsi-ej-05"
+courseId: "gdsi"
+number: 5
+title: "Caso ReciclaPlus: Sprint Review vs. Sprint Retrospective en Barrio Piloto"
+unit: "u05-revision-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Caso ReciclaPlus, Pregunta 5 (20%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Contexto resumido: Piloto de ReciclaPlus
+
+El equipo de **ReciclaPlus** completó un Sprint en el que puso en marcha la funcionalidad de **agendamiento de retiros de reciclables en un barrio piloto**, trabajando en conjunto con una cooperativa de recuperadores urbanos y con el seguimiento del gobierno municipal. Durante este piloto, las rutas diarias para los clasificadores se armaron mediante un esquema asistido con un operador que procesaba los pedidos en **Google Maps**.
+
+---
+
+### Consignas *(20%)*
+
+- **a)** Diferencie claramente el propósito de la **Sprint Review** respecto de la **Sprint Retrospective**, indicando qué busca inspeccionar y mejorar cada evento y quiénes participan.
+- **b)** Proponga **un tema concreto para tratar en la Sprint Review** y **un tema concreto para tratar en la Sprint Retrospective** tras lanzar el agendamiento en el barrio piloto de ReciclaPlus, justificando por qué cada tema corresponde a ese evento y no al otro.
+
+**Qué está evaluando la cátedra**  
+Distinción precisa entre la inspección del **producto** junto a *stakeholders* (Sprint Review) y la inspección del **proceso de trabajo y dinámica interna** del Scrum Team (Sprint Retrospective), evitando el antipatrón habitual de mezclar problemas internos de equipo en la Review o discutir alcance con usuarios en la Retrospectiva.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-05">
+
+## a) Diferencias entre Sprint Review y Sprint Retrospective
+
+Ambos eventos cierran el Sprint y materializan el empirismo de Scrum (*transparencia, inspección y adaptación*), pero tienen **objetos de inspección, participantes y resultados completamente distintos**:
+
+| Dimensión | Sprint Review (Revisión del Sprint) | Sprint Retrospective (Retrospectiva del Sprint) |
+| :--- | :--- | :--- |
+| **Propósito principal** | Inspeccionar el resultado del Sprint (**el Incremento de producto**) y determinar adaptaciones futuras sobre qué construir. | Planificar formas de aumentar la **calidad y la efectividad** del equipo respecto a cómo trabaja. |
+| **Objeto de inspección** | **El Producto** (funcionalidad terminada que cumple el 100% de la *Definition of Done*, métricas de uso/*outcomes*, cambios del entorno y avance hacia el *Product Goal*). | **El Proceso y las Personas** (interacciones, prácticas de ingeniería, herramientas, comunicación interna, coordinación y la propia *Definition of Done*). |
+| **Participantes** | Scrum Team + **Stakeholders clave** invitados por el Product Owner (en ReciclaPlus: referentes de la cooperativa, representantes del municipio y eventualmente usuarios del piloto). | **Exclusivamente el Scrum Team** (Product Owner, Scrum Master y Developers), para preservar la **seguridad psicológica** y el análisis honesto sin presiones externas. |
+| **Resultado / Adaptación** | Actualización y repriorización del **Product Backlog** para el siguiente Sprint. | Compromiso concreto de **1 o 2 acciones de mejora** (idealmente SMART) a incorporar en el próximo Sprint Backlog. |
+| **Foco clave** | **Qué** estamos construyendo y si genera el valor (*outcome*) esperado. | **Cómo** trabajamos juntos para construirlo mejor y con menos fricción. |
+
+> **Regla crítica de Scrum (DoD):** En la Sprint Review solo se inspecciona trabajo genuinamente terminado según la *Definition of Done*. Si una historia quedó a medias, no forma parte del Incremento y regresa al *Product Backlog*.
+
+---
+
+## b) Temas concretos propuestos para el barrio piloto de ReciclaPlus
+
+### 1. Tema para la Sprint Review: Efectividad de retiros concretados y ajuste de frecuencia con cooperativa y municipio
+
+- **Tema concreto:** Revisar el incremento desplegado en el barrio piloto junto con los indicadores reales de uso —en particular, el **porcentaje de retiros agendados que efectivamente se concretaron** frente a los retiros fallidos o cancelados— y evaluar con la cooperativa y el municipio **ajustar la frecuencia y las ventanas horarias de recolección** (por ejemplo, concentrar retiros en dos días fijos por microzona para evitar viajes en vacío y mejorar el cumplimiento percibido por los vecinos).
+- **Por qué corresponde a la Review y no a la Retrospectiva:**
+  - Involucra directamente el **valor del producto** y el **cambio de comportamiento (*outcome*)** observado en usuarios reales del barrio piloto.
+  - Requiere la participación activa de **stakeholders externos** (referentes de la cooperativa que conocen la capacidad de sus carros/vehículos y representantes del gobierno municipal interesados en el volumen recuperado para reportes ambientales).
+  - La decisión resultante modifica y reprioriza el **Product Backlog** (por ejemplo, incorporar selección de días habilitados por zona antes de construir nuevas funcionalidades secundarias).
+
+---
+
+### 2. Tema para la Sprint Retrospective: Fricciones de comunicación y sincronización entre developers y el operador de Google Maps
+
+- **Tema concreto:** Analizar los **problemas de comunicación y sincronización interna entre los desarrolladores y el operador responsable de armar las rutas en Google Maps** durante el piloto (por ejemplo, cambios no avisados en el formato de exportación de direcciones o entregas tardías del listado diario que generaron retrabajo manual, estrés operativo y demoras en el envío de la hoja de ruta a los clasificadores).
+- **Por qué corresponde a la Retrospectiva y no a la Review:**
+  - Se trata de un problema interno de **proceso, coordinación y prácticas de trabajo del equipo**, no de una definición de negocio para debatir frente a clientes o funcionarios municipales.
+  - Requiere un espacio de **seguridad psicológica** (aplicando la *Primera Directiva de Kerth* y las fases de Derby & Larsen: recolectar datos objetivos, analizar causas raíz —como los 5 Porqués— y definir una mejora accionable).
+  - La salida es un **acuerdo operativo interno** para el siguiente Sprint (por ejemplo, fijar un contrato estable de formato CSV/JSON en la *Definition of Done* y un corte horario acordado con notificación automática al operador antes de cada modificación).
+
+</SolutionDrawer>

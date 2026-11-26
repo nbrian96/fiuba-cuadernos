@@ -108,10 +108,27 @@ La gestión del desarrollo y mantenimiento de sistemas informáticos se articula
     - *Crashing (Intensificación):* Agregar recursos a actividades críticas para reducir su duración al menor costo incremental posible (incrementa el costo).
     - *Fast Tracking (Ejecución Rápida):* Ejecutar en paralelo actividades críticas que originalmente estaban planificadas en secuencia (incrementa el riesgo de retrabajo).
 
+##### Matriz Comparativa de 7 Técnicas de Estimación
+
+| Técnica | Época | Enfoque principal | Nivel de Precisión | Nivel de Esfuerzo | Contexto recomendado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Análoga** | Años 50–60 | Comparación directa *top-down* con datos históricos de proyectos similares. | Baja | Muy bajo | Iniciación temprana, presupuestos de orden de magnitud y poca información detallada. |
+| **Paramétrica** | Años 60–70 | Modelo matemático o estadístico a partir de variables históricas (ej. horas por punto de función). | Media–Alta | Medio | Proyectos repetitivos o escalables con base histórica cuantitativa confiable. |
+| **PERT (3 puntos: $\frac{O + 4M + P}{6}$)** | 1958 (Proyecto Polaris) | Ponderación probabilística de escenarios Optimista ($O$), Más Probable ($M$) y Pesimista ($P$). | Media–Alta | Medio | Actividades con alta incertidumbre técnica dentro de cronogramas predictivos. |
+| **Delphi / Wideband Delphi** | Años 50–70 | Consenso iterativo y anónimo de expertos independientes para neutralizar sesgos de autoridad. | Media–Alta | Alto | Dominios novedosos sin registros históricos donde prima el juicio experto sin anclaje grupal. |
+| **Monte Carlo** | Años 40–50 (software desde los 80–2000) | Miles de simulaciones estocásticas sobre distribuciones o *Throughput* histórico para proyectar percentiles de probabilidad. | Alta (probabilística) | Medio–Alto | Pronósticos de fecha y riesgo en entornos complejos, híbridos o de flujo continuo con datos empíricos. |
+| **Story Points** | Fines de los 90 / 2000 | Estimación relativa grupal (esfuerzo, complejidad e incertidumbre) con escala de Fibonacci y *Planning Poker*. | Media (alta a nivel agregado) | Bajo–Medio | Equipos ágiles estables que planifican iteraciones y *releases* a partir de su velocidad empírica. |
+| **`#NoEstimates`** | Década de 2010 | Descomposición en ítems pequeños y homogéneos (*right-sizing*) y proyección empírica por conteo de ítems (*Throughput*). | Alta (en flujo estable) | Muy bajo | Sistemas de flujo continuo (Kanban, mantenimiento, producto estable) donde estimar en horas agrega desperdicio. |
+
 #### 4. Gestión de Flujo en Sistemas Kanban
 - **Principios Operativos de Kanban:** Visualizar el flujo de trabajo en tableros físicos o virtuales; limitar el trabajo en curso (WIP Limits); gestionar el flujo; explicitar las políticas de proceso; e implementar ciclos de retroalimentación.
 - **Sistema Pull vs. Push:** En un sistema *Push*, el trabajo se asigna o empuja a los operarios en función de un plan predeterminado, saturando las capacidades y acumulando inventario. En un sistema *Pull*, los miembros del equipo "tiran" o toman nuevo trabajo solo cuando tienen capacidad disponible (es decir, cuando liberan una tarea previa bajo el límite de WIP).
 - **Límites de WIP (*Work In Progress Limits*):** Restricciones cuantitativas impuestas sobre columnas o etapas específicas del tablero. Forzan la colaboración para resolver bloqueos antes de iniciar nuevas tareas ("Parar de empezar, empezar a terminar").
+- **Políticas de Urgencia con WIP lleno (Clases de Servicio):**
+  - **Por qué no se debe empujar (*push*) una urgencia violando el WIP:** Introducir un ítem urgente por encima del límite de WIP rompe la disciplina *Pull*, dispara la multitarea (*task switching*), satura la capacidad cognitiva del equipo y, por la Ley de Little, alarga el *Cycle Time* de **todos** los ítems del tablero (incluso el de la propia urgencia).
+  - **Las dos alternativas válidas bajo Kanban:**
+    1. **Carril *Expedite* / *Fast Track*:** Habilitar una clase de servicio urgente con un carril explícito y un límite estricto de **máximo 1 ítem urgente** en simultáneo, aplicando *swarming* (colaboración inmediata de todo el equipo sobre ese ítem para resolverlo y liberarlo cuanto antes).
+    2. **Reemplazo por suspensión (*Swap*):** Si no existe carril *Expedite* disponible (o ya está ocupado), incorporar la urgencia respetando el límite de WIP devolviendo explícitamente un ítem en curso a la columna *Pendiente* (*To Do / Ready*) y transparentando ante los interesados el impacto y el costo de oportunidad de esa decisión.
 - **La Ley de Little aplicada al Software:**
   En un sistema de colas estable y continuo, la relación matemática fundamental entre el inventario en proceso, el rendimiento y el tiempo de ciclo es:
 
@@ -666,6 +683,27 @@ La gestión del desarrollo y mantenimiento de sistemas informáticos se articula
 - **Integración Continua (CI):** Práctica donde los desarrolladores integran su código en el repositorio principal varias veces al día, ejecutando una compilación automatizada y la suite de pruebas para detectar conflictos de forma temprana.
 - **Programación en Parejas (*Pair Programming*):** Dos desarrolladores colaboran en una única estación de trabajo: el *Piloto* escribe el código táctico y el *Copiloto* revisa estratégicamente la arquitectura, anticipa problemas y sugiere pruebas, difundiendo el conocimiento tácito y eliminando silos técnicos.
 
+#### 4. Calidad Interna (TDD/UTDD) vs. Calidad Externa (BDD/ATDD) y Dobles de Prueba
+- **Calidad Interna (*"Construir el producto correctamente"* — TDD / UTDD):** Orientada al diseño técnico sostenible (modularidad, bajo acoplamiento, alta cohesión y ausencia de regresiones). El desarrollo guiado por pruebas unitarias (*Unit Test-Driven Development*) valida componentes aislados en milisegundos desde la perspectiva del desarrollador.
+- **Calidad Externa (*"Construir el producto correcto"* — BDD / ATDD):** Orientada a verificar que el sistema entrega el valor y comportamiento esperado por el negocio y los usuarios. *Acceptance Test-Driven Development* (ATDD) y *Behavior-Driven Development* (BDD, mediante escenarios *Given-When-Then*) alinean a negocio, QA y desarrollo en torno a especificaciones ejecutables que actúan como bucle externo sobre el bucle interno de TDD.
+- **Taxonomía de Dobles de Prueba (Gerard Meszaros, *xUnit Test Patterns*):**
+  Para aislar el sistema bajo prueba (*SUT*) de dependencias lentas o no deterministas se emplean cinco categorías precisas de *Test Doubles*:
+
+| Doble de Prueba | Definición Operativa | Uso Típico en Pruebas Automatizadas |
+| :--- | :--- | :--- |
+| **Dummy** | Objeto que se pasa como parámetro solo para completar una firma o compilar, pero nunca es utilizado ni invocado. | Rellenar un argumento obligatorio de un constructor que no interviene en el escenario probado. |
+| **Stub** | Provee respuestas preconfiguradas (*canned answers*) a las llamadas del SUT para controlar entradas indirectas. | Simular una pasarela de pagos devolviendo "aprobado" o forzar un error de red determinista. |
+| **Spy** | *Stub* que además registra información sobre cómo fue invocado (cantidad de llamadas y argumentos recibidos) para verificar salidas indirectas *a posteriori*. | Comprobar que el servicio de notificaciones envió exactamente un correo con el asunto esperado. |
+| **Mock** | Objeto preprogramado con expectativas explícitas de interacción (qué métodos deben invocarse, en qué orden y con qué parámetros); falla la prueba si no se cumplen. | Verificar comportamiento y protocolo estricto entre un caso de uso y un repositorio colaborador. |
+| **Fake** | Implementación funcional pero simplificada y liviana de una dependencia real, apta para pruebas pero no para producción. | Base de datos en memoria o repositorio implementado sobre un mapa/diccionario en RAM. |
+
+#### 5. Slack (Holgura Planificada) vs. Colchón Tradicional
+- **Colchón Tradicional (*Padding* oculto):** Inflado encubierto e individual de estimaciones para protegerse de presiones gerenciales. No mejora la previsibilidad ni la calidad porque dispara dos fenómenos clásicos:
+  - **Ley de Parkinson:** *"El trabajo se expande hasta llenar todo el tiempo disponible para su realización"* (el margen oculto se consume en sobreingeniería o pérdida de foco).
+  - **Síndrome del Estudiante:** Tendencia a postergar el esfuerzo real hasta que se aproxima la fecha límite, dilapidando el margen de seguridad y exponiendo el entregable a cualquier imprevisto tardío.
+- **Slack (Holgura Planificada y Transparente):** Margen de capacidad explícito, visible y acordado a nivel de equipo para absorber variabilidad e invertir deliberadamente en la salud del sistema.
+  - *Ejemplo operativo:* Un equipo cuya velocidad empírica es de **20 Story Points** por sprint se compromete con **18 Story Points** de funcionalidades de negocio y reserva explícitamente **2 Story Points** de *slack* transparente para refactorización estructural, reducción de deuda técnica, aprendizaje o *spikes* exploratorios. A diferencia del colchón oculto, evita la saturación al 100% y sostiene una cadencia de entrega estable.
+
 ---
 
 <MermaidDiagram
@@ -800,6 +838,19 @@ La gestión del desarrollo y mantenimiento de sistemas informáticos se articula
 3. **Facilitación (*Facilitating*):**
    - Un equipo con mayor pericia (típicamente Enabling Team) asiste, entrena y ayuda a otro a superar un obstáculo técnico o adoptar una nueva práctica.
 
+#### 6. Liderazgo Distribuido, Responsabilidad Solidaria y Dinámicas de Decisión
+- **Liderazgo Distribuido (Reparto Funcional):** En equipos ágiles autoorganizados el liderazgo no recae en una jefatura única que concentra mando y control, sino que se distribuye funcionalmente en tres responsabilidades complementarias:
+  - **Product Owner (Valor):** Maximiza el valor de negocio del producto gestionando y priorizando el *Product Backlog* (*qué* y *por qué*).
+  - **Scrum Master / Facilitador (Efectividad):** Promueve la efectividad del equipo, elimina impedimentos sistémicos y sostiene las prácticas empíricas.
+  - **Developers (Calidad):** Asumen la propiedad técnica del *cómo*, la arquitectura evolutiva y el cumplimiento estricto de la *Definition of Done* (calidad interna y externa).
+- **Responsabilidad Solidaria (sin chivos expiatorios):** El resultado de cada incremento pertenece colectivamente al equipo. Cuando surge un defecto o un desvío, se analiza el proceso y el sistema en lugar de buscar culpables individuales (*blame culture*), resguardando la seguridad psicológica y el aprendizaje compartido.
+- **Comunicación Osmótica y Regla de las 40 Horas Semanales:**
+  - *Comunicación Osmótica (Alistair Cockburn):* Transferencia natural e incidental de contexto técnico relevante al compartir un espacio de trabajo (físico o canal abierto), permitiendo que el equipo absorba información útil en segundo plano sin multiplicar reuniones formales.
+  - *Regla de las 40 Horas Semanales (Ritmo Sostenible — XP):* Rechaza las horas extra crónicas porque la fatiga cognitiva deteriora el juicio de ingeniería, dispara la tasa de defectos y destruye la productividad neta; trabajar horas extra dos semanas seguidas es señal de un problema de gestión, no de compromiso.
+- **Dinámicas de Decisión: Consenso vs. Consentimiento (Tobias Mayer):**
+  - **Consenso (100% de acuerdo):** Exige unanimidad afirmativa de todos los integrantes. En equipos multidisciplinarios suele provocar **parálisis decisoria**, discusiones interminables o compromisos diluidos por mínimo común denominador.
+  - **Consentimiento (*Consent* — Tobias Mayer):** Una propuesta **avanza siempre que no exista una objeción crítica fundamentada** (es decir, nadie demuestra que la decisión sea insegura o perjudicial para el objetivo común). Permite iterar con agilidad bajo el principio *"suficientemente seguro para probar ahora"* y corregir con evidencia empírica.
+
 ---
 
 <MermaidDiagram
@@ -902,6 +953,7 @@ La gestión del desarrollo y mantenimiento de sistemas informáticos se articula
   - Medir para juzgar o premiar corrompe la medición.
   - *Formulación de Goodhart:* "Cuando una medida se convierte en un objetivo, deja de ser una buena medida."
   - *Manifestación en software:* Si se evalúa a los programadores por la cantidad de líneas de código escritas, producirán código verboso e ineficiente; si se los premia por cantidad de bugs resueltos, crearán código defectuoso para luego corregirlo rápidamente.
+  - *Caso clásico de Dilbert y Ratbert (incentivo perverso):* Ante una política gerencial que otorga bonos económicos por cada bug corregido o ticket cerrado, Ratbert y los desarrolladores responden "escribiéndose una minivan nueva": introducen deliberadamente defectos triviales para luego resolverlos y cobrar la recompensa. El episodio ilustra cómo atar premios individuales a métricas de volumen destruye la calidad real y distorsiona el sistema medido.
 - **La Metodología GQM (Goal - Question - Metric de Victor Basili):**
   - Marco estructurado descendente (*top-down*) para garantizar que ninguna métrica se recolecte sin un propósito explícito de negocio o mejora:
     1. **Nivel Conceptual (Meta / *Goal*):** Define el objetivo rector bajo una plantilla rigurosa de 5 dimensiones:
@@ -928,6 +980,31 @@ La gestión del desarrollo y mantenimiento de sistemas informáticos se articula
     $$\text{Eficiencia de Flujo} = \frac{\text{Tiempo de Trabajo Activo (Touch Time)}}{\text{Lead Time Total}} \times 100$$
 
   - En la industria del software, la eficiencia de flujo típicamente ronda entre el **5% y el 15%**. La mayor parte del retraso no proviene de la lentitud técnica de los desarrolladores para programar, sino de los tiempos muertos en que los ítems esperan inactivos en colas de aprobación o traspaso.
+
+#### 4. Las 4 Métricas DORA (Nivel Élite) y el Antipatrón "Falso Flujo Ágil"
+El programa de investigación *DevOps Research and Assessment* (DORA) demuestra que la **velocidad de entrega** y la **estabilidad operativa** no son opuestas, sino capacidades que se refuerzan mutuamente cuando se miden en equilibrio:
+
+| Métrica DORA | Dimensión | Definición Operativa | Umbral de Nivel Élite |
+| :--- | :--- | :--- | :--- |
+| **Deployment Frequency** | Velocidad | Frecuencia con la que la organización despliega código exitosamente en producción. | Múltiples despliegues por día (bajo demanda). |
+| **Lead Time for Changes** | Velocidad | Tiempo transcurrido desde que un *commit* se integra hasta que corre en producción. | Menos de 1 hora ($< 1\text{ hora}$). |
+| **Change Failure Rate (CFR)** | Estabilidad | Porcentaje de despliegues en producción que causan degradación del servicio o exigen *hotfix* / *rollback*. | 0%–15%. |
+| **MTTR (*Mean Time to Restore*)** | Estabilidad | Tiempo medio necesario para restaurar el servicio ante un incidente o fallo en producción. | Menos de 1 hora ($< 1\text{ hora}$). |
+
+- **Diagnóstico del antipatrón "Falso Flujo Ágil":** Ocurre cuando un equipo maximiza de forma aislada la **Frecuencia de Despliegue** (muchos *releases* por semana o día), pero simultáneamente presenta una **alta Tasa de Fallo de Cambios (CFR)** y/o tiempos largos de recuperación. Lejos de evidenciar agilidad, este perfil delata que el pipeline carece de pruebas automatizadas y calidad interna: el equipo simplemente está **desplegando defectos más rápido** hacia producción, alimentando retrabajo y urgencias permanentes.
+
+#### 5. Facilitación de Retrospectivas: Las 5 Fases de Derby & Larsen
+Para evitar que las retrospectivas deriven en quejas improductivas o listas de deseos sin seguimiento, Esther Derby y Diana Larsen estructuran la facilitación en cinco fases secuenciales:
+1. **Preparar el Escenario (*Set the Stage*):** Establecer seguridad psicológica, definir el encuadre y el *timebox*, lograr que todos tomen la palabra desde el inicio y explicitar la **Primera Directiva de Norm Kerth**: *"Independientemente de lo que descubramos, entendemos y creemos verdaderamente que todos hicieron el mejor trabajo que pudieron, dado lo que sabían en ese momento, sus habilidades y capacidades, los recursos disponibles y la situación en cuestión"*.
+2. **Recolectar Datos (*Gather Data*):** Construir una visión fáctica y compartida de lo sucedido durante la iteración (línea de tiempo de hitos, métricas de flujo, bloqueos, incidentes y estado anímico del equipo) para mitigar el sesgo de memoria reciente.
+3. **Generar Perspectivas (*Generate Insights*):** Interpretar los datos recolectados para descubrir patrones y causas raíz sistémicas mediante técnicas estructuradas como los **5 Porqués** y el **Diagrama de Ishikawa (causa-efecto / espina de pescado)**, evitando reacciones impulsivas ante síntomas aislados.
+4. **Decidir Qué Hacer (*Decide What to Do*):** Converger y comprometerse con apenas **1 o 2 acciones de mejora concretas en formato SMART** (específicas, medibles, alcanzables, relevantes, con dueño y horizonte temporal para el próximo sprint), priorizando foco sobre cantidad.
+5. **Cerrar la Retrospectiva (*Close*):** Recapitular los acuerdos, reconocer aportes del equipo y ejecutar una breve **"retro de la retro"** (por ejemplo, evaluando el retorno del tiempo invertido o *ROTI*) para mejorar continuamente la propia facilitación.
+
+<AcademicBlock kind="note" title="Alerta de facilitación: por qué nunca saltear las fases 1 ni 3">
+  - **Saltear la Fase 1 (*Set the Stage*):** Sin seguridad psicológica ni la Primera Directiva de Kerth, el grupo entra en modo defensivo o en caza de culpables, ocultando los problemas reales del sistema.
+  - **Saltear la Fase 3 (*Generate Insights*):** Pasar directo de los datos (Fase 2) a las acciones (Fase 4) lleva a aplicar parches superficiales sobre síntomas sin atacar la causa raíz, haciendo que el mismo impedimento reaparezca sprint tras sprint.
+</AcademicBlock>
 
 ---
 

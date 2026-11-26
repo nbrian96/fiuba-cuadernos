@@ -1,0 +1,83 @@
+---
+id: "gdsi-ej-11"
+courseId: "gdsi"
+number: 11
+title: "ClubPlay (P1): Interpretación de un Experimento Fake Door en la Landing"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 1 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+**ClubPlay** es una plataforma web/móvil pensada para conectar a jugadores amateurs de deportes de cancha (fútbol 5, pádel y tenis) con clubes deportivos barriales de CABA y GBA. Hoy los jugadores reservan turnos llamando por teléfono o enviando mensajes de WhatsApp, transfieren señas de forma manual y suelen cancelar partidos a último momento cuando les falta un integrante (*"nos falta uno"*). Por su parte, los encargados de los clubes administran la disponibilidad en cuadernos o planillas, verifican transferencias a mano y sufren turnos vacíos por ausencias sin aviso.
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 1 (10%)">
+
+Para explorar la funcionalidad *"nos falta uno"*, el equipo de ClubPlay publicó una *landing page* con un botón destacado que decía **"Encontrá los jugadores que te faltan"**. Al hacer clic, aparecía un cartel de **"Próximamente"**. Durante una semana ingresaron **400 visitantes** a la página y **70 hicieron clic** en el botón (**17,5%**).
+
+Seleccioná la interpretación más adecuada de este resultado y justificá brevemente (2 a 3 líneas):
+
+- **a)** Queda demostrado que los jugadores van a coordinar y asistir a partidos con desconocidos a través de la app, por lo que conviene priorizar esta funcionalidad por encima de la reserva de canchas.
+- **b)** Existe una señal inicial de curiosidad o interés por la propuesta, pero el experimento no alcanza para demostrar que los usuarios efectivamente coordinarían y asistirían a jugar partidos con desconocidos ni que completarían el flujo real.
+- **c)** Como menos del 50% de los visitantes hizo clic, la hipótesis queda completamente refutada y la funcionalidad debe descartarse de forma definitiva del *backlog*.
+- **d)** El resultado no aporta información útil porque mostrar "Próximamente" invalida el experimento como método empírico de descubrimiento de producto.
+
+**Qué está evaluando la cátedra**  
+Capacidad para interpretar correctamente los alcances y límites de un experimento *Fake Door* (*Smoke Test*) dentro de la jerarquía de evidencia empírica, distinguiendo señales tempranas de interés de comportamientos reales de compromiso.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-11">
+
+## Respuesta Correcta: Opción **b**
+
+**Justificación sintética (para el parcial):**  
+El experimento aplicado es un **Fake Door** (*Smoke Test*): mide una acción de costo prácticamente nulo (un clic exploratorio). Obtener 70 clics sobre 400 visitas (17,5%) constituye una **señal inicial de curiosidad o interés** en la propuesta de valor, pero **no demuestra** que los usuarios estén dispuestos a coordinar horarios, pagar su parte de la cancha y presentarse físicamente a jugar un partido real con desconocidos.
+
+---
+
+## Análisis Teórico del Experimento *Fake Door*
+
+1. **Qué valida efectivamente:**
+   - Que el mensaje *"Encontrá los jugadores que te faltan"* captura atención y resuena con un dolor percibido por un subconjunto de visitantes.
+   - Que vale la pena invertir un paso adicional de descubrimiento barato antes de descartar la idea.
+2. **Qué NO valida (límites de la evidencia):**
+   - **Compromiso conductual real:** hacer clic no implica dinero, tiempo ni exposición social. Entre hacer clic por curiosidad y asistir una noche a una cancha con desconocidos existe una brecha enorme de fricción, confianza y coordinación de nivel deportivo.
+   - **Completitud de partidos y retención:** no mide si los equipos logran cerrar el cupo a tiempo, si los jugadores cumplen con asistir (*no-show*) ni si repiten la experiencia en semanas posteriores.
+   - **Viabilidad operativa:** no prueba si la masa crítica de jugadores en una misma zona y franja horaria es suficiente para completar partidos.
+
+---
+
+## Descarte de las Opciones Incorrectas
+
+| Opción | Diagnóstico del error |
+| :--- | :--- |
+| **a)** | **Falso positivo por sobreinterpretación:** confunde un clic gratuito (evidencia débil de interés) con adopción efectiva de alto compromiso y lleva a priorizar una funcionalidad secundaria e incierta sobre el núcleo del producto (reservas). |
+| **c)** | **Umbral arbitrario y conclusión prematura:** en experimentos *Fake Door* sobre tráfico general, un 17,5% de clics no es un fracaso ni refuta automáticamente la hipótesis; exigir un 50% carece de sustento empírico. |
+| **d)** | **Desconocimiento del método:** mostrar "Próximamente" es precisamente la mecánica estándar del *Fake Door* (*Smoke Test*), una técnica legítima y muy económica para medir interés inicial antes de escribir código. |
+
+---
+
+## Siguiente Paso Empírico Recomendado
+
+Para elevar la fuerza de la evidencia sin construir todavía la funcionalidad en la app, el equipo debería ejecutar un experimento **Concierge** o **Wizard of Oz** acotado (por ejemplo, coordinar manualmente un grupo de WhatsApp durante 2 fines de semana en 1 o 2 clubes piloto) y medir cuántos partidos incompletos efectivamente se completan, se pagan y se juegan.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Confundir clics con comportamiento real:** en GDSI, la evidencia se evalúa por el **costo que asume el usuario** (tiempo, dinero, reputación, acción presencial). Un clic en un *Fake Door* es mucho más confiable que una opinión en una encuesta, pero sigue siendo insuficiente para justificar desarrollo masivo.
+- **No justificar por qué se descartan las demás opciones:** en las preguntas de opción múltiple con justificación breve, mencionar explícitamente el nombre de la técnica (*Fake Door*) y el contraste **interés inicial ≠ asistir a jugar y completar partidos** asegura el puntaje completo.
+
+</AcademicBlock>
+
+</SolutionDrawer>

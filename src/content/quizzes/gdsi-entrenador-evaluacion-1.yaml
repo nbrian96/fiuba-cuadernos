@@ -1,0 +1,177 @@
+schemaVersion: "1.0.0"
+quizId: gdsi-entrenador-evaluacion-1
+courseId: gdsi
+title: "Entrenador Rápido de GDSI: Evaluación 1 — Producto (30s)"
+provenance: interactive_widget
+timeGoalSeconds: 30
+passThresholdPercent: 75
+options:
+  - key: artful-arquetipos
+    label: "Artful Making y Proyecto / Producto / Proceso"
+    icon: "🎭"
+  - key: product-discovery
+    label: "Product Discovery, Output/Outcome y MVP"
+    icon: "🧭"
+  - key: metodos-empiricos
+    label: "Métodos Empíricos, Mom Test y Usabilidad"
+    icon: "🧪"
+  - key: scrum-bdd-slicing
+    label: "Scrum, Slicing Vertical, BDD y Example Mapping"
+    icon: "⚡"
+  - key: review-dod
+    label: "Sprint Review, DoD y Revisión Empírica"
+    icon: "✅"
+  - key: story-mapping-plan
+    label: "Story Mapping, Estimación, Spikes y Slack"
+    icon: "🗺️"
+  - key: riesgos-producto
+    label: "Riesgos de Producto, Exposición y MoSCoW"
+    icon: "🛡️"
+  - key: equipos-metricas-dora
+    label: "Team Topologies, Retrospectivas, GQM y DORA"
+    icon: "📈"
+questions:
+  - id: gdsi-ev1-q-01
+    prompt: "En lugar de exigir 'hacerlo bien a la primera' con control rígido, la gerencia otorga autonomía bajo condiciones de borde y busca 'hacerlo grandioso antes de la fecha límite'."
+    answer: artful-arquetipos
+    paradigmName: "Artful Making y Proyecto / Producto / Proceso"
+    trigger: "Artful Making (Devin & Austin): bajo costo de iteración del software, Control by Release y consigna 'Make it great before the deadline'."
+    sourceOrigin: "Guía Ev. 1 — Marco Base"
+  - id: gdsi-ev1-q-02
+    prompt: "Una aseguradora implementa PeopleSoft HCM para 10.000 empleados: software comercial estable, alta repetición confiable y costo altísimo de volver atrás en nóminas."
+    answer: artful-arquetipos
+    paradigmName: "Artful Making y Proyecto / Producto / Proceso"
+    trigger: "Caso 4 Guía 1: Innovación baja + Repetición alta + Costo de iteración alto → Gestión por PROYECTO escalonado por oleadas (Rollout)."
+    sourceOrigin: "Guía Ev. 1 — Casos Guía Práctica 1"
+  - id: gdsi-ev1-q-03
+    prompt: "Una célula contable atiende facturación y pagos con sistemas maduros de +5 años bajo SLAs de respuesta < 1 día para clientes y < 2 días para proveedores."
+    answer: artful-arquetipos
+    paradigmName: "Artful Making y Proyecto / Producto / Proceso"
+    trigger: "Caso 2 Guía 1: Operación continua repetible orientada a SLAs y flujo → Gestión por PROCESO (Kanban / ITSM)."
+    sourceOrigin: "Guía Ev. 1 — Casos Guía Práctica 1"
+  - id: gdsi-ev1-q-04
+    prompt: "Un equipo festeja haber desplegado 50 tickets en el trimestre, pero el CHAOS Report advierte que 65%–75% de las features casi nunca se usan."
+    answer: product-discovery
+    paradigmName: "Product Discovery, Output/Outcome y MVP"
+    trigger: "Trampa del Output (Jeff Patton): el Output es un costo; el objetivo es maximizar Outcomes (cambio de conducta del usuario) minimizando el Output."
+    sourceOrigin: "Guía Ev. 1 — Unidad 1"
+  - id: gdsi-ev1-q-05
+    prompt: "Antes de escribir código, el equipo completa Visión, Grupo Objetivo, Necesidades (JTBD), Producto y Objetivos de Negocio, y evalúa deseabilidad, usabilidad, factibilidad y viabilidad."
+    answer: product-discovery
+    paradigmName: "Product Discovery, Output/Outcome y MVP"
+    trigger: "Product Vision Board (Roman Pichler) articulado con los 4 Riesgos Fundamentales de Producto de Marty Cagan."
+    sourceOrigin: "Guía Ev. 1 — Unidad 1"
+  - id: gdsi-ev1-q-06
+    prompt: "En lugar de entregar un 'First Crappy Release' incompleto por presión de fecha, el equipo recorre Think it → Build it (1-2%) → Ship it & Tweak it → Scale it."
+    answer: product-discovery
+    paradigmName: "Product Discovery, Output/Outcome y MVP"
+    trigger: "Resignificación del MVP: Next Best Test (Eric Ries) y ciclo de evolución de Spotify (Henrik Kniberg)."
+    sourceOrigin: "Guía Ev. 1 — Unidad 1"
+  - id: gdsi-ev1-q-07
+    prompt: "Un equipo encuesta a 200 jugadores preguntando '¿Usarías una app para reservar cancha?' y el 80% responde que sí; concluyen que la demanda está validada."
+    answer: metodos-empiricos
+    paradigmName: "Métodos Empíricos, Mom Test y Usabilidad"
+    trigger: "Sesgo de cortesía y evidencia débil (nivel 6 / 15%): 'Diría que sí' ≠ 'Lo hizo'. Corresponde The Mom Test preguntando por hechos concretos del pasado reciente."
+    sourceOrigin: "Parcial ClubPlay (P3) — Unidad 2"
+  - id: gdsi-ev1-q-08
+    prompt: "Cinco usuarios completan el checkout en un prototipo sin cometer un solo error usando Think-Aloud, pero al lanzar a producción nadie compra el curso."
+    answer: metodos-empiricos
+    paradigmName: "Métodos Empíricos, Mom Test y Usabilidad"
+    trigger: "Distinción crítica de examen (Kate Moran / NNGroup): una prueba de usabilidad valida operabilidad, NUNCA deseabilidad ni demanda de mercado."
+    sourceOrigin: "Guía Ev. 1 — Ejercicio EduLearn"
+  - id: gdsi-ev1-q-09
+    prompt: "Una app muestra a las cooperativas una ruta optimizada de retiros, pero detrás un operador la arma manualmente con Google Maps sin que el usuario lo sepa."
+    answer: metodos-empiricos
+    paradigmName: "Métodos Empíricos, Mom Test y Usabilidad"
+    trigger: "Wizard of Oz MVP (etapa Discovery en Patton): el usuario cree que es automático; a diferencia del Concierge MVP donde sabe que lo operan humanos. No valida factibilidad técnica."
+    sourceOrigin: "Parcial ReciclaPlus (P4) — Unidad 2"
+  - id: gdsi-ev1-q-10
+    prompt: "Un botón 'Encontrá los jugadores que te faltan' en una landing muestra 'Próximamente' y recibe 70 clics de 400 visitantes (17.5%)."
+    answer: metodos-empiricos
+    paradigmName: "Métodos Empíricos, Mom Test y Usabilidad"
+    trigger: "Fake Door / Smoke Test: muestra una señal de interés inicial, pero NO prueba que los jugadores asistan con desconocidos ni que los partidos se completen."
+    sourceOrigin: "Parcial ClubPlay (P1) — Unidad 2"
+  - id: gdsi-ev1-q-11
+    prompt: "Para dividir 'reservar cancha y pagar seña', en vez de separar pantallas / API / base de datos, el equipo entrega primero reserva con seña manual en el club y luego pago online."
+    answer: scrum-bdd-slicing
+    paradigmName: "Scrum, Slicing Vertical, BDD y Example Mapping"
+    trigger: "Slicing Vertical (por rebanadas de valor fin-a-fin) vs. Slicing Horizontal (antipatrón por capas que no deja nada usable)."
+    sourceOrigin: "Parcial ClubPlay (P2) — Unidad 3"
+  - id: gdsi-ev1-q-12
+    prompt: "En una sesión de 25 minutos con PO, Dev y Tester, una historia acumula 3 tarjetas azules y 6 tarjetas rojas abiertas, pero el PO propone meterla al Sprint 'para no frenar'."
+    answer: scrum-bdd-slicing
+    paradigmName: "Scrum, Slicing Vertical, BDD y Example Mapping"
+    trigger: "Example Mapping (Nagy & Rose): acumular tarjetas rojas indica alta incertidumbre (no cumple DoR); meterla al Sprint desata Accidental Discovery."
+    sourceOrigin: "Parcial ClubPlay (P5b) — Unidad 3"
+  - id: gdsi-ev1-q-13
+    prompt: "Un tester necesita aislar una pasarela de pagos con un objeto que verifica expectativas estrictas de llamadas frente a otro que provee una BD simplificada en memoria."
+    answer: scrum-bdd-slicing
+    paradigmName: "Scrum, Slicing Vertical, BDD y Example Mapping"
+    trigger: "Taxonomía de Dobles de Prueba (Gerard Meszaros): Mock (verifica expectativas de llamadas) vs. Fake (implementación funcional simplificada) + Dummy, Stub y Spy."
+    sourceOrigin: "Resumen Completo — Unidad 3"
+  - id: gdsi-ev1-q-14
+    prompt: "Al cerrar el Sprint, 3 historias pasan todas las pruebas y la 4ta funciona en la máquina del dev pero no compila en CI; propone mostrarla 'aclarando que faltan detalles'."
+    answer: review-dod
+    paradigmName: "Sprint Review, DoD y Revisión Empírica"
+    trigger: "Regla inquebrantable de Scrum: si un ítem no cumple el 100% de la Definition of Done (DoD), NO forma parte del Incremento ni se muestra en la Review; vuelve al Product Backlog."
+    sourceOrigin: "Resumen Completo — Situación 19"
+  - id: gdsi-ev1-q-15
+    prompt: "Durante la Sprint Review de ReciclaPlus, el equipo debate 40 minutos por qué falló la coordinación interna entre desarrolladores y el operador de Google Maps."
+    answer: review-dod
+    paradigmName: "Sprint Review, DoD y Revisión Empírica"
+    trigger: "Review inspecciona el Incremento de producto con stakeholders para adaptar el Product Backlog; problemas de proceso y coordinación interna van exclusivamente a la Sprint Retrospective."
+    sourceOrigin: "Parcial ReciclaPlus (P5) — Unidad 4"
+  - id: gdsi-ev1-q-16
+    prompt: "A mitad del Sprint surge un pedido urgente para un inversor; el equipo hace Planning Poker exprés, parte la historia en un mínimo esencial y la cambia por otra no iniciada de igual puntaje."
+    answer: review-dod
+    paradigmName: "Sprint Review, DoD y Revisión Empírica"
+    trigger: "Caso 'Un día de desarrollo ágil' (Cap. 19): intercambio equilibrado de alcance para proteger la velocidad y el Sprint Goal sin sobrecargar al equipo."
+    sourceOrigin: "Guía Ev. 1 — Unidad 4"
+  - id: gdsi-ev1-q-17
+    prompt: "Un stakeholder pregunta si en el MVP podemos omitir por completo la columna 'Confirmar y Registrar' del recorrido de ReciclaPlus para lanzar más rápido."
+    answer: story-mapping-plan
+    paradigmName: "Story Mapping, Estimación, Spikes y Slack"
+    trigger: "User Story Mapping (Jeff Patton): el Backbone NO se prioriza entre sí (no podés lanzar un auto sin frenos). El Walking Skeleton debe atravesar todo el Backbone de punta a punta."
+    sourceOrigin: "Parcial ReciclaPlus (P6) — Unidad 5"
+  - id: gdsi-ev1-q-18
+    prompt: "Al inicio del proyecto, el equipo no conoce una API de autenticación biométrica y no puede estimar una historia de 8 SP; el PO presiona para ponerle un número igual."
+    answer: story-mapping-plan
+    paradigmName: "Story Mapping, Estimación, Spikes y Slack"
+    trigger: "Cono de Incertidumbre (0.25x–4x) y Spike técnico time-boxed: retirar la historia del Sprint y ejecutar un Spike corto cuyo único entregable es conocimiento para estimar."
+    sourceOrigin: "Resumen Completo — Situación 17"
+  - id: gdsi-ev1-q-19
+    prompt: "Un equipo con velocidad de 20 SP compromete 18 SP en historias del cliente y asigna explícitamente los 2 SP restantes a refactorizar y pagar deuda técnica."
+    answer: story-mapping-plan
+    paradigmName: "Story Mapping, Estimación, Spikes y Slack"
+    trigger: "Slack (holgura planificada transparente) vs. colchón tradicional oculto que dispara la Ley de Parkinson y el Síndrome del Estudiante."
+    sourceOrigin: "Guía Ev. 1 — Unidad 5"
+  - id: gdsi-ev1-q-20
+    prompt: "La temporada arranca el 1/12 (quedan 3 sprints) pero el Release 1 estimado lleva 3–5 sprints; hay que definir cómo llegar sin sacrificar la DoD."
+    answer: riesgos-producto
+    paradigmName: "Riesgos de Producto, Exposición y MoSCoW"
+    trigger: "Último Momento Prudente + recorte de alcance (MoSCoW Must Have) + piloto temprano desde Sprint 2; nunca se recorta calidad ni DoD."
+    sourceOrigin: "Parcial ClubPlay (P4b) — Unidad 6"
+  - id: gdsi-ev1-q-21
+    prompt: "Se comparan Riesgo A (caída pasarela: P=2, I=5 → E=10) y Riesgo B (tipografías antiguas: P=5, I=1 → E=5) para definir prioridad y estrategia."
+    answer: riesgos-producto
+    paradigmName: "Riesgos de Producto, Exposición y MoSCoW"
+    trigger: "Exposición = P × I: priorizar Riesgo A (10 vs. 5) como Must Have con Mitigación (Spike) o Transferencia (pasarela secundaria); Riesgo B queda en Aceptación pasiva."
+    sourceOrigin: "Guía Ev. 1 — Ejercicio SmartHome"
+  - id: gdsi-ev1-q-22
+    prompt: "Un equipo pasa directo de listar hechos del Sprint a votar soluciones sin analizar causas raíz, y tampoco realizó check-in ni recordó la Primera Directiva de Kerth."
+    answer: equipos-metricas-dora
+    paradigmName: "Team Topologies, Retrospectivas, GQM y DORA"
+    trigger: "5 Fases de Derby & Larsen: saltear Set the Stage destruye la seguridad psicológica; saltear Generate Insights (5 Porqués/Ishikawa) trata síntomas y no causas raíz."
+    sourceOrigin: "Guía Ev. 1 — Unidad 8"
+  - id: gdsi-ev1-q-23
+    prompt: "Tres meses después del lanzamiento de ClubPlay, el equipo celebra '3.000 descargas' como prueba de éxito en la Sprint Review."
+    answer: equipos-metricas-dora
+    paradigmName: "Team Topologies, Retrospectivas, GQM y DORA"
+    trigger: "Métrica de Vanidad: no prueba uso real ni ingresos. Aplicar GQM para definir Outcomes (conversión a partidos jugados, retención 30d) e Impacto (señas cobradas)."
+    sourceOrigin: "Parcial ClubPlay (P6) — Unidad 8"
+  - id: gdsi-ev1-q-24
+    prompt: "Un equipo despliega 10 veces por día pero el 45% de sus despliegues provoca incidentes en producción y requiere hotfixes de emergencia."
+    answer: equipos-metricas-dora
+    paradigmName: "Team Topologies, Retrospectivas, GQM y DORA"
+    trigger: "4 Métricas DORA (Accelerate): antipatrón de 'falso flujo ágil' (alta Deployment Frequency + altísimo Change Failure Rate > 15%). Velocidad y estabilidad deben balancearse."
+    sourceOrigin: "Guía Ev. 1 — Ejercicio SaaS B2B"

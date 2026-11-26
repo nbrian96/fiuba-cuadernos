@@ -1,0 +1,129 @@
+---
+id: "gdsi-ej-15"
+courseId: "gdsi"
+number: 15
+title: "ClubPlay (P5): Example Mapping de Cancelación de Reserva y Criterio de Refinamiento"
+unit: "u04-construccion-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 5 (20%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import ExampleMappingBoard from "@/components/gdsi/ExampleMappingBoard";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+En el marco de **BDD (Behavior-Driven Development)** y **Especificación Mediante Ejemplos**, el equipo de **ClubPlay** realiza sesiones cortas de refinamiento (*Three Amigos*: negocio/PO, desarrollo y testing) aplicando **Example Mapping** (Matt Wynne) para construir entendimiento compartido antes de comprometer historias en un Sprint.
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 5 (20%)">
+
+**Parte (a) — Mapa de Ejemplos (15%):**  
+Construí el **Example Mapping** para la siguiente historia de usuario de ClubPlay:
+
+> *"Como jugador quiero cancelar mi reserva y recuperar la seña."*
+
+Tu tablero debe incluir:
+- Al menos **3 reglas de negocio** (tarjetas azules).
+- **1 a 2 ejemplos concretos** por cada regla, con datos específicos y casos borde (tarjetas verdes).
+- Al menos **1 pregunta abierta** relevante para validar con negocio (tarjeta roja).
+
+**Parte (b) — Criterio de entrada al Sprint (5%):**  
+Durante el refinamiento de otra historia del backlog, el mapa queda con **3 reglas de negocio y 6 preguntas abiertas sin responder** (6 tarjetas rojas). El Product Owner pide meterla igual al Sprint que arranca mañana *"para no frenar al equipo y después lo vamos viendo sobre la marcha"*.  
+¿Qué debería decidir el equipo y por qué?
+
+**Qué está evaluando la cátedra**  
+Aplicación correcta de la estructura de 4 tarjetas de *Example Mapping*, formulación de ejemplos concretos verificables (base de BDD) y uso diagnóstico del mapa para decidir si una historia cumple la *Definition of Ready* o debe volver a refinamiento.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-15">
+
+## Parte (a): Example Mapping — Cancelación de Reserva
+
+Recordemos la convención de colores de **Matt Wynne**:
+- **Amarilla:** Historia de usuario bajo análisis.
+- **Azules:** Reglas de negocio que delimitan el comportamiento esperado.
+- **Verdes:** Ejemplos concretos (casos felices y casos borde) que ilustran cada regla y se transforman luego en escenarios BDD (*Dado / Cuando / Entonces*).
+- **Rojas:** Preguntas abiertas o supuestos sin respuesta que el equipo todavía no puede resolver.
+
+<ExampleMappingBoard
+  client:load
+  title="Example Map — Cancelación de reserva en ClubPlay"
+  story="Como jugador quiero cancelar mi reserva para recuperar la seña abonada"
+  rules={[
+    {
+      id: "regla-mas-24hs",
+      title: "Cancelación con más de 24 horas de anticipación: reintegro del 100% de la seña",
+      detail: "El turno se libera automáticamente en la grilla del club para que otro jugador pueda reservarlo.",
+      examples: [
+        "Turno de fútbol 5 el sábado a las 18:00 con seña de $10.000. El jugador cancela el viernes a las 15:00 (27 horas antes) → la reserva pasa a Cancelada, la cancha queda libre y se reintegran $10.000.",
+        "Caso borde exacto: turno sábado 18:00 con seña de $10.000. El jugador cancela el viernes exactamente a las 18:00 (24 horas antes) → se considera dentro del plazo y se reintegran $10.000.",
+      ],
+    },
+    {
+      id: "regla-menos-24hs",
+      title: "Cancelación con menos de 24 horas de anticipación: sin reembolso de la seña",
+      detail: "La cancha se libera en la grilla del club, pero el club retiene la seña para compensar la baja tardía.",
+      examples: [
+        "Turno el sábado a las 18:00 con seña de $10.000. El jugador cancela el sábado a las 10:00 (8 horas antes) → se confirma la cancelación avisando que el reintegro es $0 y el turno vuelve a estar disponible.",
+        "Caso borde turno iniciado: el sábado a las 18:10 el jugador intenta cancelar el turno de las 18:00 → el sistema no permite cancelar un turno ya comenzado y mantiene la seña retenida.",
+      ],
+    },
+    {
+      id: "regla-torneo-especial",
+      title: "Reservas de torneos o eventos especiales: no admiten cancelación online",
+      detail: "Las inscripciones a torneos se rigen por reglas particulares administradas directamente por el club.",
+      examples: [
+        "Reserva etiquetada como 'Torneo Relámpago de Pádel' con seña de $15.000 → el botón de cancelar online aparece deshabilitado y muestra un mensaje indicando contactar al encargado del club.",
+      ],
+    },
+  ]}
+  questions={[
+    "¿El reembolso se acredita en una wallet (saldo a favor) dentro de la app o se devuelve a la tarjeta / medio de pago de origen?",
+  ]}
+  diagnosis="La historia tiene 3 reglas claras respaldadas por ejemplos concretos con montos y horarios precisos (incluyendo casos borde) y apenas 1 pregunta puntual sobre el canal de devolución. Una vez que el PO confirme esa única duda antes de iniciar el Sprint, la historia es pequeña, testeable y está lista para entrar al Sprint."
+  expectedAction="ready"
+/>
+
+### De los Ejemplos a Criterios de Aceptación BDD (*Given-When-Then*)
+
+Una ventaja clave de este mapa es que cada tarjeta verde se convierte directamente en una especificación ejecutable (por ejemplo, en Cucumber/Gherkin):
+
+```gherkin
+Escenario: Cancelación con más de 24 horas devuelve el 100% de la seña
+  Dado que el jugador tiene una reserva confirmada para el sábado 18:00 con seña de $10.000
+  Cuando solicita cancelar la reserva el viernes a las 15:00
+  Entonces el estado de la reserva cambia a "Cancelada"
+  Y el turno del sábado 18:00 vuelve a figurar libre en la grilla del club
+  Y se inicia el reintegro por $10.000
+```
+
+---
+
+## Parte (b): Decisión ante 3 Reglas y 6 Preguntas Abiertas
+
+**Decisión recomendada:** El equipo debe **rechazar el ingreso de la historia al Sprint** y devolverla a refinamiento en el Product Backlog hasta despejar las dudas con negocio.
+
+### Por qué es un error meterla al Sprint "para no frenar"
+
+1. **Violación de la *Definition of Ready* (DoR) y de INVEST:** una proporción de **6 tarjetas rojas sobre solo 3 reglas** demuestra que el equipo **todavía no entiende el problema**. La historia no es *Estimable* ni *Testable*.
+2. **Riesgo de *Accidental Discovery* (descubrimiento accidental en código):** programar con 6 incógnitas abiertas obliga a los desarrolladores a adivinar reglas de negocio mientras escriben código. Si esas suposiciones no coinciden con lo que espera el negocio, el equipo descubre el error recién en la Sprint Review, generando **retrabajo, defectos y desperdicio** (*relearning* y *defects* en Lean).
+3. **Bloqueos en medio del Sprint y deterioro del flujo:** dejar las definiciones "para ir viéndolo" provoca esperas durante el Sprint, eleva el WIP sin terminar ítems y amenaza con dejar la historia incumpliendo la DoD al cierre (0 puntos de velocidad).
+4. **Alternativa constructiva para no frenar al equipo:** en lugar de forzar una historia inmadura, el equipo debe tomar del Product Backlog la siguiente historia priorizada que **sí esté refinada y lista**, mientras el PO resuelve las 6 preguntas con los stakeholders (o divide la historia aislando las partes ya claras para un primer slice).
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Escribir ejemplos genéricos sin datos concretos:** poner *"el usuario cancela con tiempo y le devuelven la plata"* repite la regla y no es un ejemplo. Las tarjetas verdes deben contener **valores concretos** (fechas, horas, montos exactos) y casos límite (exactamente 24 hs, turno ya iniciado).
+- **Ceder a la presión del PO en la parte (b):** aceptar la historia "si el PO promete responder en la Daily" es la respuesta incorrecta. En *Example Mapping*, un tablero inundado de tarjetas rojas es la señal visual explícita de **frenar antes de codificar**.
+
+</AcademicBlock>
+
+</SolutionDrawer>

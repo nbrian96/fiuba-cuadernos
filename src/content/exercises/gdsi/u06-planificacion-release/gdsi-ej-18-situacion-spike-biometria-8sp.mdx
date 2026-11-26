@@ -1,0 +1,78 @@
+---
+id: "gdsi-ej-18"
+courseId: "gdsi"
+number: 18
+title: "Situación 17: Incertidumbre Técnica en Sprint Planning — Spike Time-Boxed vs. Estimar 8 SP"
+unit: "u06-planificacion-release"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Banco de Situaciones Prácticas — Situación 17 (Estimación y Spike)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado — Situación Práctica 17">
+
+Durante el **Sprint Planning**, el Product Owner presenta una historia de usuario prioritaria: **integrar una pasarela de pagos con autenticación biométrica** que ningún integrante del equipo ha utilizado antes y cuya documentación técnica resulta incompleta.
+
+Como la historia es urgente para negocio, el equipo decide no frenar la reunión: la estima "a ojo" en **8 Story Points** (sumando un margen por incertidumbre) y la compromete dentro del Sprint que está por comenzar.
+
+1. Identificá qué principios de estimación ágil y qué criterio de **INVEST** se están incumpliendo.
+2. Explicá cuál es la decisión metodológica correcta que debería tomar el equipo en esta situación (incluyendo duración y objetivo concreto).
+3. Indicá cómo debe proceder el equipo con la historia original a partir de los resultados obtenidos.
+
+**Qué está evaluando la cátedra**  
+Epistemología de la estimación ágil (estimación relativa vs. adivinanza), criterio **Estimable** de INVEST, uso riguroso de **Spikes técnicos *time-boxed*** para mitigar riesgos de factibilidad técnica y protección de la velocidad del equipo.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-18">
+
+## 1. Diagnóstico del Problema
+
+Comprometer la historia estimándola "a ojo" en **8 Story Points** vulnera principios centrales de la planificación adaptativa:
+
+- **Incumplimiento de INVEST (*Estimable* y *Small*):** una historia de usuario es *Estimable* únicamente cuando el equipo comprende tanto la necesidad de negocio como las implicancias técnicas suficientes para compararla con historias de referencia. Desconocer por completo la API, el SDK biométrico, el manejo de tokens/certificados y la compatibilidad con dispositivos convierte el número "8 SP" en una **apuesta arbitraria**, no en una estimación.
+- **Falsa sensación de control mediante "colchones":** agregar puntos "por las dudas" no elimina la incertidumbre técnica (Cono de Incertidumbre en su punto más ancho). La integración podría llevar 2 días, 3 semanas o descubrir una limitación bloqueante del proveedor a mitad del Sprint.
+- **Riesgo sobre el Sprint Goal y la Velocidad:** si la historia se traba, queda sin terminar al cierre del Sprint (0 SP sumados a la velocidad), desplaza otras historias sí entendidas y degrada la previsibilidad del equipo.
+
+---
+
+## 2. Acción Correcta: Retirar la Historia y Definir un *Spike* Técnico *Time-Boxed*
+
+La decisión correcta durante el Sprint Planning consiste en:
+
+1. **Retirar la historia funcional del compromiso del Sprint actual:** permanece en el Product Backlog en estado pendiente de refinamiento técnico.
+2. **Definir un *Spike* Técnico con caja de tiempo estricta (*time-boxed*):**
+   - **Duración acotada:** típicamente **1 a 2 días** (dentro del Sprint actual, destinando capacidad controlada sin poner en riesgo el resto del Sprint).
+   - **Objetivo único y verificable:** adquirir el conocimiento empírico mínimo necesario para responder preguntas técnicas críticas y habilitar la estimación (no construir código productivo).
+   - **Alcance concreto del *Spike*:**
+     - Revisar la documentación, credenciales *sandbox* y SDK de la pasarela biométrica.
+     - Construir una **Prueba de Concepto (PoC) descartable** que complete un flujo mínimo de autenticación biométrica + llamada de pago de prueba.
+     - Relevar restricciones técnicas: compatibilidad con navegadores/dispositivos móviles, manejo de fallbacks cuando el usuario no tiene biometría, tiempos de respuesta y requisitos de seguridad.
+   - **Salida del *Spike*:** un informe breve / demo interna con hallazgos, riesgos identificados, propuesta de diseño y capacidad real para estimar y dividir la historia original.
+
+### Tratamiento del *Spike* en la Velocidad
+Un *Spike* genera **aprendizaje**, no incremento de software en producción para el usuario final. Por buena práctica de cátedra, se reserva tiempo de capacidad (*timebox* o *Slack* de investigación) sin inflar artificialmente los Story Points de velocidad productiva del equipo.
+
+---
+
+## 3. Cómo Proceder con la Historia Original
+
+Una vez finalizado el *timebox* de 1 a 2 días del *Spike*:
+
+1. **Refinamiento informado:** el equipo comparte los hallazgos con el Product Owner (por ejemplo, si el flujo biométrico requiere manejar errores de hardware o un método alternativo con PIN).
+2. **Slicing vertical (si resulta grande):** si el *Spike* revela alta complejidad, la historia se parte verticalmente en incrementos pequeños (por ejemplo: primero pago con pasarela estándar, luego activación de biometría para dispositivos compatibles y finalmente manejo de excepciones/reintentos).
+3. **Estimación y compromiso en el siguiente Sprint:** recién con el conocimiento empírico en la mano, el equipo realiza **Planning Poker** y compromete la historia (o su primer slice) en el **próximo Sprint Planning**.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el examen">
+
+- **Usar el Spike para "arrancar a programar la historia":** el código de una PoC dentro de un *Spike* es exploratorio y descartable (no cumple DoD ni pasa a producción). Mezclar exploración con producción introduce deuda técnica desde el primer commit.
+- **No poner *timebox* al Spike:** un *Spike* sin límite estricto de tiempo (1–2 días) se convierte en investigación infinita que consume el Sprint entero sin entregar valor.
+
+</AcademicBlock>
+
+</SolutionDrawer>

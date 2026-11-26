@@ -1,0 +1,87 @@
+---
+id: "gdsi-ej-04"
+courseId: "gdsi"
+number: 4
+title: "Caso ReciclaPlus: Ciclo de Jeff Patton, Experimentos y Riesgos de Producto"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Caso ReciclaPlus, Pregunta 4 (20%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Contexto del caso: ReciclaPlus
+
+**ReciclaPlus** es una plataforma digital impulsada para articular el circuito de reciclaje urbano conectando a **vecinos** que separan residuos reciclables en sus domicilios con **cooperativas de recuperadores urbanos** encargadas de la recolección y clasificación del material.
+
+En una **segunda etapa**, la plataforma prevé incorporar a **empresas compradoras** de material clasificado (plástico, cartón, vidrio, metales) para facilitar la comercialización con trazabilidad. Además, la iniciativa cuenta con el respaldo del **gobierno municipal**, que otorga **subsidios operativos** a las cooperativas y exige **reportes ambientales periódicos** (volúmenes recuperados por barrio y tipo de material) para respaldar la política pública.
+
+A partir de entrevistas preliminares y relevamientos iniciales, el equipo identificó **cuatro dificultades principales**:
+
+1. **Desconfianza y abandono del hábito en vecinos:** muchos vecinos desconocen los días y horarios reales de recolección o temen sacar sus bolsas separadas y que nadie pase a retirarlas, por lo que terminan desistiendo de separar.
+2. **Coordinación informal e ineficiente de rutas en cooperativas:** los recorridos se organizan manualmente por mensajes de WhatsApp y planillas en papel, lo que genera viajes en vacío, demoras y superposición de zonas.
+3. **Falta de trazabilidad para reportes ambientales:** las cooperativas no cuentan con un registro confiable de retiros concretados ni de kilogramos clasificados, dificultando la rendición periódica exigida por el municipio para sostener los subsidios.
+4. **Incertidumbre sobre adopción y priorización:** el equipo aún no tiene evidencia empírica de qué funcionalidades generan mayor valor ni certeza de que vecinos y clasificadores adopten una herramienta digital en su rutina diaria.
+
+---
+
+### Consignas *(20%)*
+
+- **a)** Ubique las siguientes cuatro técnicas de aprendizaje y validación en el **ciclo de desarrollo de producto de Jeff Patton** (*Sense, Focus, Discovery, Delivery*), justificando en cada caso cómo se aplicaría en **ReciclaPlus**:
+  1. **Observación etnográfica**
+  2. **Buy-a-Feature**
+  3. **Wizard of Oz MVP**
+  4. **A/B Testing**
+- **b)** Para las técnicas ubicadas en **Sense** y **Discovery**, indique qué **riesgo de producto** (negocio/viabilidad, atractivo/deseabilidad, técnico/factibilidad o usabilidad) mitiga principalmente cada una y explique por qué.
+
+**Qué está evaluando la cátedra**  
+Capacidad para articular el ciclo de aprendizaje continuo de Jeff Patton con técnicas empíricas concretas, distinguiendo qué se aprende en cada fase y qué tipo de riesgo de Marty Cagan mitiga (y cuál **no** mitiga) cada experimento.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-04">
+
+## a) Ubicación de las 4 técnicas en el ciclo de Jeff Patton
+
+El ciclo de desarrollo de producto de Jeff Patton integra cuatro momentos iterativos —**Sense** (percibir problemas y necesidades en el entorno), **Focus** (converger y priorizar oportunidades/hipótesis), **Discovery** (validar soluciones mediante experimentos baratos antes de escalar construcción) y **Delivery** (construir, desplegar y optimizar en producción)— para maximizar *Outcomes* minimizando *Output*.
+
+| Técnica | Etapa en el ciclo de Patton | Propósito y aplicación concreta en ReciclaPlus |
+| :--- | :--- | :--- |
+| **Observación etnográfica** | **Sense** | Acompañar *in situ* a vecinos en su hogar al separar residuos y a recuperadores durante su jornada real de recorrido y acopio. Permite detectar fricciones reales, restricciones de conectividad/uso de celular en la calle y rutinas que no emergen en encuestas ni entrevistas declarativas. |
+| **Buy-a-Feature** | **Focus** *(o Discovery temprano)* | Juego colaborativo de priorización con presupuesto ficticio limitado donde representantes de vecinos, cooperativas y municipio "compran" funcionalidades candidatas (ej.: agendamiento, alertas, ruteo, reportes). Obliga a explicitar *trade-offs* reales y converger en qué oportunidad atacar primero. *(Nota: también puede emplearse en la transición a Discovery para priorizar qué hipótesis experimentar antes).* |
+| **Wizard of Oz MVP** | **Discovery** | El equipo ofrece una interfaz simple donde el vecino agenda su retiro y la cooperativa recibe una "ruta optimizada" diaria, pero **detrás de escena un operador arma manualmente la ruta con Google Maps** sin que el usuario perciba que falta automatización. Valida la experiencia fin-a-fin y el comportamiento real antes de programar un motor algorítmico de ruteo. |
+| **A/B Testing** | **Delivery** (*Tweak it* / Optimización) | Una vez que el producto está operativo en producción con tráfico real de barrios activos, se divide a los usuarios en dos variantes controladas (por ejemplo, dos formatos de recordatorio de retiro o dos flujos de confirmación) para medir estadísticamente cuál incrementa la tasa de retiros concretados. |
+
+### Síntesis de la progresión empírica en ReciclaPlus
+
+1. **Sense (Observación etnográfica):** evita partir de prejuicios sobre cómo reciclan los vecinos o cómo trabajan las cooperativas.
+2. **Focus (Buy-a-Feature):** recorta la lista infinita de deseos entre los distintos actores (vecinos, cooperativas, municipio) para concentrar el esfuerzo en el núcleo de mayor impacto.
+3. **Discovery (Wizard of Oz MVP):** genera evidencia conductual fuerte (nivel alto en la jerarquía de evidencia) sobre si la solución realmente destraba la coordinación y concreta retiros, a una fracción del costo de desarrollo completo.
+4. **Delivery (A/B Testing):** no sirve para descubrir desde cero si el producto tiene sentido, sino para optimizar una solución ya validada y desplegada en producción.
+
+---
+
+## b) Riesgos de producto mitigados en *Sense* y *Discovery*
+
+Retomando los **cuatro riesgos fundamentales de producto de Marty Cagan** —*Atractivo / Deseabilidad* (valor), *Usabilidad*, *Factibilidad Técnica* y *Viabilidad de Negocio*—:
+
+### 1. Etapa *Sense* — Observación etnográfica
+- **Riesgo principal mitigado:** **Atractivo / Deseabilidad** (riesgo de valor: construir algo que nadie necesita o que no encaja con la vida real del usuario).
+- **Justificación:** Al observar el contexto cotidiano de vecinos y clasificadores sin inducir respuestas, el equipo valida si los dolores detectados (incertidumbre sobre el paso de la cooperativa, desorden en el ruteo manual, fricción para registrar kilos) existen realmente, cuán frecuentes son y qué barreras contextuales condicionan cualquier solución futura. De este modo evita diseñar funcionalidades atractivas en papel pero irrelevantes en la calle.
+
+### 2. Etapa *Discovery* — Wizard of Oz MVP
+- **Riesgos principales mitigados:** **Usabilidad** y **Atractivo / Valor de la experiencia fin-a-fin** *(y parcialmente señales tempranas de viabilidad operativa)*.
+- **Justificación:**
+  - **Usabilidad:** al interactuar con el flujo visible real (agendar un retiro desde el celular y seguir la hoja de ruta recibida), el equipo comprueba si vecinos y recuperadores comprenden y pueden operar la interfaz sin trabas en condiciones reales de uso.
+  - **Atractivo / Valor de la experiencia:** al entregar el resultado prometido de principio a fin (la ruta llega y el retiro se concreta), el equipo verifica si la solución efectivamente modifica la conducta esperada (*outcome*: mayor tasa de retiros concretados y continuidad del hábito de separación), superando lo que diría una simple encuesta.
+- **Advertencia crítica de examen (qué riesgo NO mitiga):** El *Wizard of Oz MVP* **NO mitiga el riesgo de Factibilidad Técnica** ni la escalabilidad del backend automatizado, precisamente porque la lógica compleja (optimización algorítmica de rutas) se oculta detrás de una operación manual humana. Para mitigar factibilidad técnica antes de escalar se requerirá un **Spike técnico** o prototipo arquitectónico específico.
+
+</SolutionDrawer>

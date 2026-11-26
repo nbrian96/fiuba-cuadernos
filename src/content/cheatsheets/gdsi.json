@@ -3,9 +3,89 @@
   "courseId": "gdsi",
   "sections": [
     {
+      "id": "artful-making-arquetipos",
+      "title": "1. Ev. 1 — Artful Making y Proyecto / Producto / Proceso",
+      "formula": "\\text{Costo de Iteración} = \\text{Reconfiguración} + \\text{Exploración}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "3 dimensiones (Devin & Austin):",
+          "body": "Necesidad de Innovación, Repetición Confiable y Costo de Iteración. En software (material blando), el costo de iteración bajo desplaza 'Get it right the first time' por 'Make it great before the deadline'."
+        },
+        {
+          "lead": "4 cualidades colaborativas:",
+          "body": "Release (Control by Release con autonomía), Collaboration (reconcebir ideas), Ensemble (elenco de pares sin estrellas dominantes) y Play (proceso creativo + obra entregada)."
+        },
+        {
+          "lead": "3 arquetipos de gestión:",
+          "body": "Producto (continuo, alta incertidumbre, discovery + delivery), Proyecto (temporal, hito acotado, PMI) y Proceso (operación repetible, SLAs, Kanban)."
+        }
+      ]
+    },
+    {
+      "id": "product-discovery-evidencia",
+      "title": "2. Ev. 1 — Output / Outcome / Impact y Evidencia Empírica",
+      "formula": "\\text{Insumos} \\to \\text{Output (costo)} \\to \\text{Outcome (conducta)} \\to \\text{Impact (negocio)}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Regla de oro de Jeff Patton:",
+          "body": "El Output es un costo (65%–75% de features rara vez se usan según CHAOS Report). Objetivo: maximizar Outcomes minimizando el Output construido."
+        },
+        {
+          "lead": "4 Riesgos de Producto (Marty Cagan):",
+          "body": "Atractivo/Deseabilidad, Usabilidad, Factibilidad Técnica y Viabilidad de Negocio (mapeados desde el Product Vision Board de Pichler)."
+        },
+        {
+          "lead": "Jerarquía de Evidencia (mayor a menor):",
+          "body": "1) A/B Testing (95%) → 2) Concierge / Wizard of Oz (80%) → 3) Fake Door / Smoke Test (65%) → 4) Usabilidad con 5 usuarios (50%, solo operabilidad ≠ demanda) → 5) The Mom Test (35%, hechos pasados) → 6) Encuestas de opinión (15%)."
+        }
+      ]
+    },
+    {
+      "id": "scrum-bdd-story-mapping",
+      "title": "3. Ev. 1 — Scrum, Slicing, Example Mapping y Story Mapping",
+      "formula": "\\text{BDD}: \\text{Discovery} \\to \\text{Formulation (Given/When/Then)} \\to \\text{Automation}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "Artefactos y Compromisos Scrum (2020):",
+          "body": "Product Backlog → Product Goal; Sprint Backlog → Sprint Goal; Incremento → Definition of Done (si no cumple 100% DoD, NO entra a la Review y vuelve al Product Backlog)."
+        },
+        {
+          "lead": "Example Mapping (Nagy & Rose, 20–30 min):",
+          "body": "Amarilla = Story; Azul = Reglas; Verde = Ejemplos; Roja = Dudas abiertas. Muchas azules/verdes = Épica (hacer Slicing Vertical); muchas rojas = no está lista (DoR)."
+        },
+        {
+          "lead": "User Story Mapping (Jeff Patton):",
+          "body": "Backbone horizontal cronológico (NUNCA se prioriza entre sí) + Costillas verticales priorizadas. Primer corte horizontal = Walking Skeleton / Release 1 (MVP) fin-a-fin."
+        }
+      ]
+    },
+    {
+      "id": "dora-retrospectivas-gqm",
+      "title": "4. Ev. 1 y 2 — Métricas DORA, Retrospectivas y Ley de Goodhart",
+      "formula": "\\text{Velocidad (DF, LT)} \\iff \\text{Estabilidad (CFR, MTTR)}",
+      "listType": "ul",
+      "items": [
+        {
+          "lead": "4 Métricas DORA (niveles Élite):",
+          "body": "Velocidad: Deployment Frequency (múltiples/día) y Lead Time for Changes (< 1h). Estabilidad: Change Failure Rate (0–15%) y MTTR (< 1h). Alta frecuencia + alto CFR = 'falso flujo ágil'."
+        },
+        {
+          "lead": "5 Fases Retrospectiva (Derby & Larsen):",
+          "body": "1) Set the Stage (Primera Directiva de Kerth), 2) Gather Data, 3) Generate Insights (5 Porqués, Ishikawa), 4) Decide What to Do (1–2 acciones SMART), 5) Close."
+        },
+        {
+          "lead": "Ley de Goodhart y Tobias Mayer:",
+          "body": "Cuando una medida se convierte en meta de premio/castigo deja de ser buena medida. Las métricas son espejos de realidad, no herramientas punitivas."
+        }
+      ]
+    },
+    {
       "id": "pert-y-cronograma",
-      "title": "1. Estimación PERT y Cronograma (CPM)",
-      "formula": "\\mu = \\frac{O + 4M + P}{6}, \\quad \\sigma = \\frac{P - O}{6}",
+      "title": "5. Ev. 2 — Estimación PERT y Cronograma (CPM y Cono de Incertidumbre)",
+      "formula": "\\mu = \\frac{O + 4M + P}{6}, \\quad \\sigma = \\frac{P - O}{6}, \\quad \\text{Cono} \\in [0.25\\times, 4\\times]",
       "listType": "ul",
       "items": [
         {
@@ -13,88 +93,88 @@
           "body": "La incertidumbre de una actividad se cuantifica con $\\sigma = \\frac{P - O}{6}$ y varianza $\\sigma^2 = \\left(\\frac{P - O}{6}\\right)^2$, ponderando escenarios optimista ($O$), más probable ($M$) y pesimista ($P$)."
         },
         {
-          "lead": "Ruta Crítica (CPM):",
-          "body": "Secuencia de actividades dependientes con holgura total nula ($HT = 0$). Cualquier retraso en una tarea crítica desplaza la fecha final del proyecto."
+          "lead": "Ruta Crítica (CPM) y Compresión:",
+          "body": "Secuencia con holgura total nula ($HT = 0$). Crashing agrega recursos (sube costo); Fast Tracking paraleliza tareas secuenciales (sube riesgo de retrabajo)."
         },
         {
-          "lead": "Compresión de cronograma:",
-          "body": "Crashing agrega recursos a tareas críticas (aumenta el costo); Fast Tracking ejecuta en paralelo tareas secuenciales (aumenta el riesgo de retrabajo)."
+          "lead": "Story Points, Spikes y Slack:",
+          "body": "Story Points miden tamaño/complejidad relativa (Fibonacci, Planning Poker evita sesgo de anclaje). Spike = investigación time-boxed para poder estimar. Slack = holgura explícita para deuda técnica (no colchón oculto)."
         }
       ]
     },
     {
       "id": "flujo-kanban-little",
-      "title": "2. Flujo Kanban y Ley de Little",
+      "title": "6. Ev. 2 — Flujo Kanban y Ley de Little",
       "formula": "WIP = \\text{Throughput} \\times \\text{Cycle Time}, \\quad \\text{Eficiencia} = \\frac{\\text{Touch Time}}{\\text{Lead Time}} \\times 100",
       "listType": "ul",
       "items": [
         {
-          "lead": "Ley de Little:",
-          "body": "En un sistema estable, $\\text{Cycle Time} = \\frac{WIP}{\\text{Throughput}}$. Reducir el límite de $WIP$ disminuye directamente el tiempo de ciclo."
+          "lead": "Ley de Little y Sistema Pull:",
+          "body": "En un sistema estable, $\\text{Cycle Time} = \\frac{WIP}{\\text{Throughput}}$. Reducir el límite de $WIP$ disminuye directamente el tiempo de ciclo ('Parar de empezar, empezar a terminar')."
         },
         {
-          "lead": "Lead Time vs. Cycle Time:",
-          "body": "Lead Time mide desde la solicitud del cliente hasta la entrega en producción; Cycle Time mide únicamente el tiempo de trabajo activo."
+          "lead": "Urgencias con WIP lleno (Clases de Servicio):",
+          "body": "Usar carril Expedite (1 ítem urgente + swarming) o suspender una tarea en curso devolviéndola a Pendiente; nunca violar el WIP empujando trabajo."
         },
         {
           "lead": "Diagrama de Flujo Acumulado (CFD):",
-          "body": "La distancia vertical entre curvas representa el $WIP$; la distancia horizontal el $\\text{Lead Time}$ aproximado; la pendiente de terminados el $\\text{Throughput}$."
+          "body": "Distancia vertical = $WIP$; distancia horizontal = $\\text{Lead Time}$ aproximado; pendiente de terminados = $\\text{Throughput}$."
         }
       ]
     },
     {
       "id": "gestion-riesgos",
-      "title": "3. Gestión de Riesgos Cuantitativa",
-      "formula": "E = P \\times I",
+      "title": "7. Ev. 1 y 2 — Gestión de Riesgos Cuantitativa y MoSCoW",
+      "formula": "E = P \\times I \\in [1, 25]",
       "listType": "ul",
       "items": [
         {
-          "lead": "Exposición y escala de cátedra:",
-          "body": "Con $P, I \\in [1, 5]$, la exposición toma valores en $[1, 25]$. Se priorizan obligatoriamente riesgos con $E > 10$; valores $E > 20$ definen exposición alta."
+          "lead": "Exposición y zonas de calor (5×5):",
+          "body": "Con $P, I \\in [1, 5]$: Baja ($1\\text{–}4$), Media ($5\\text{–}9$), Alta ($10\\text{–}14$) y Crítica ($15\\text{–}25$). Se priorizan obligatoriamente riesgos con $E \\ge 10$."
         },
         {
-          "lead": "Estrategias de respuesta:",
-          "body": "Mitigar (ex ante: reduce $P$ o $I$), Transferir (seguro o contrato a terceros), Evitar ($P = 0$ cambiando alcance o tecnología) y Aceptar (pasiva o activa con reservas)."
+          "lead": "5 Estrategias de tratamiento:",
+          "body": "Mitigación (ex ante: baja $P$ o $I$), Transferencia (tercero/SLA), Contingencia (reactiva ante trigger), Evitación ($P = 0$ cambiando alcance/tecnología) y Aceptación."
         },
         {
-          "lead": "Mitigación vs. Contingencia:",
-          "body": "La mitigación es preventiva (antes del evento); la contingencia es reactiva y se ejecuta solo ante un disparador (trigger)."
+          "lead": "MoSCoW y frecuencia de releases:",
+          "body": "Must / Should / Could / Won't. Liberar incrementos pequeños cada 2–4 semanas es la mejor mitigación sistémica del riesgo de producto."
         }
       ]
     },
     {
       "id": "team-topologies-brooks",
-      "title": "4. Team Topologies, Brooks y Carga Cognitiva",
-      "formula": "C = \\frac{n(n - 1)}{2}, \\quad CL_{\\text{total}} = CL_{\\text{intrínseca}} + CL_{\\text{extraña}} + CL_{\\text{relevante}} \\le C_{\\text{equipo}}",
+      "title": "8. Ev. 1 y 2 — Team Topologies, Brooks y Carga Cognitiva",
+      "formula": "C = \\frac{n(n - 1)}{2}, \\quad CL_{\\text{total}} = CL_{\\text{intrínseca}} + CL_{\\text{extraña}} + CL_{\\text{germana}} \\le C_{\\text{equipo}}",
       "listType": "ul",
       "items": [
         {
-          "lead": "Ley de Brooks y canales:",
-          "body": "Al pasar de $n = 8$ a $n = 15$ integrantes, los canales de comunicación crecen de $28$ a $105$. Sumar gente a un proyecto atrasado lo atrasa más."
+          "lead": "Ley y Maniobra Inversa de Conway:",
+          "body": "La arquitectura copia la comunicación organizacional; para arquitecturas desacopladas, organizar equipos autónomos alrededor del flujo de valor (Stream-Aligned)."
         },
         {
-          "lead": "Números de Dunbar:",
-          "body": "$5$ (confianza íntima), $15$ (confianza profunda; óptimo ágil de $7\\text{–}9$), $50$ (cohesión tribal) y $150$ (límite de vínculos estables)."
+          "lead": "Ley de Brooks y Dunbar:",
+          "body": "De $n = 8$ a $n = 15$, los canales pasan de $28$ a $105$. Dunbar: $5$ (íntima), $15$ (confianza profunda; óptimo ágil $7\\text{–}9$), $50$ y $150$."
         },
         {
           "lead": "4 Topologías y 3 Modos:",
-          "body": "Topologías: Stream-Aligned, Enabling, Complicated-Subsystem y Platform (TVP). Modos: Colaboración (temporal), X-as-a-Service y Facilitación."
+          "body": "Stream-Aligned, Enabling, Complicated-Subsystem y Platform (TVP). Modos: Colaboración, X-as-a-Service y Facilitación. Decisiones por Consentimiento (Tobias Mayer), no Consenso."
         }
       ]
     },
     {
       "id": "metricas-integracion-contratos",
-      "title": "5. Métricas, GQM, Integración y Contratos",
+      "title": "9. Ev. 2 — GQM, Integración y Contratos",
       "formula": "\\text{Costo de Corrección} \\propto e^{\\Delta t_{\\text{integración}}}, \\quad \\text{Cobertura} = \\frac{\\text{Condicionales Evaluados}}{\\text{Total Condicionales}} \\times 100",
       "listType": "ul",
       "items": [
         {
-          "lead": "Ley de Goodhart:",
-          "body": "Cuando una medida se convierte en objetivo de premio o castigo deja de ser una buena medida; las métricas deben reflejar realidad, no éxito/fracaso."
+          "lead": "Plantilla GQM (Victor Basili):",
+          "body": "Meta = Objeto + Propósito + Foco de Calidad + Punto de Vista + Contexto, derivada luego en Preguntas y Métricas."
         },
         {
-          "lead": "Plantilla GQM (Basili):",
-          "body": "Meta = Objeto + Propósito + Foco de Calidad + Punto de Vista + Contexto, derivada luego en Preguntas y Métricas."
+          "lead": "Calidad Interna vs. Externa y Dobles de Prueba:",
+          "body": "Calidad interna (TDD/UTDD) vs. externa (BDD/ATDD). Meszaros: Dummy, Stub, Spy, Mock y Fake."
         },
         {
           "lead": "Contratos tradicionales vs. ágiles:",
@@ -104,17 +184,17 @@
     },
     {
       "id": "toyota-kata",
-      "title": "6. Mejora Continua con Toyota Kata",
+      "title": "10. Ev. 2 — Mejora Continua con Toyota Kata",
       "formula": "\\text{Desafío} \\to \\text{Situación Actual (Genba)} \\to \\text{Next Target Condition} \\to \\text{PDCA}",
       "listType": "ul",
       "items": [
         {
           "lead": "3 tipos de experimentos (IK):",
-          "body": "1) Ir y ver (observación sin alterar), 2) Experimento exploratorio (cambio controlado para observar el sistema) y 3) Probar una hipótesis (factor causal con predicción explícita)."
+          "body": "1) Ir y ver (observación sin alterar), 2) Experimento exploratorio (cambio controlado) y 3) Probar una hipótesis (factor causal con predicción explícita)."
         },
         {
           "lead": "Coaching Kata (CÓMO vs. QUÉ):",
-          "body": "El Coach guía el CÓMO (procedimiento mediante ciclo Ver → Comparar → Instruir); el Aprendiz es dueño del QUÉ (contenido y experimentos)."
+          "body": "El Coach guía el CÓMO (ciclo Ver → Comparar → Instruir); el Aprendiz es dueño del QUÉ (contenido y experimentos)."
         },
         {
           "lead": "Tarjeta de las 5 Preguntas:",

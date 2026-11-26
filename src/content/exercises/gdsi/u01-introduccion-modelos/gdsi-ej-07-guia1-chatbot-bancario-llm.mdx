@@ -1,0 +1,69 @@
+---
+id: "gdsi-ej-07"
+courseId: "gdsi"
+number: 7
+title: "Guía Práctica 1 — Caso 1: Chatbot Bancario con LLM"
+unit: "u01-introduccion-modelos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía Práctica 1 — Caso 1 (Artful Making y Arquetipos de Gestión)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Caso 1: Chatbot Bancario con LLM
+
+Una entidad bancaria decide desarrollar un **asistente conversacional (Chatbot) impulsado por Modelos de Lenguaje Extensos (LLM)** para mejorar la atención digital a sus clientes (consultas sobre productos, dudas operativas frecuentes, asistencia contextual y derivación inteligente a agentes humanos).
+
+La tecnología de LLMs evoluciona velozmente, existe alta incertidumbre sobre cómo formularán sus consultas los clientes reales, qué límites de seguridad y cumplimiento (*guardrails*) habrá que ajustar y qué casos de uso generarán mayor valor de negocio. Sin embargo, al tratarse de software moderno, es posible lanzar mejoras progresivas sobre grupos controlados de usuarios y ajustar *prompts*, bases de conocimiento y flujos con rapidez.
+
+---
+
+### Consigna
+
+A partir del marco de **Artful Making** (Devin & Austin) y los **tres arquetipos de gestión** vistos en la materia (**Producto, Proyecto y Proceso**):
+
+1. Evalúe las **tres dimensiones** del caso: *Necesidad de Innovación*, *Repetición Confiable* y *Costo de Iteración*.
+2. Determine y justifique el **arquetipo de gestión recomendado**.
+3. Proponga y fundamente una **alternativa válida** de encuadre organizacional.
+
+**Qué está evaluando la cátedra**  
+Criterio profesional para diagnosticar un contexto de desarrollo de software usando las tres variables de Devin & Austin y seleccionar el modelo de gestión adecuado (evitando recetas únicas y reconociendo matices evolutivos).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-07">
+
+## 1. Evaluación de las 3 dimensiones (Devin & Austin)
+
+| Dimensión | Nivel estimado | Justificación contextual |
+| :--- | :--- | :--- |
+| **Necesidad de Innovación** | **ALTA** | La tecnología LLM y los patrones de interacción conversacional evolucionan de forma acelerada. El banco necesita descubrir qué consultas agregan valor real, cómo mitigar alucinaciones y cómo diferenciarse en experiencia de cliente. |
+| **Repetición Confiable** | **BAJA** | No es una implementación estandarizada y predecible que ya se haya ejecutado decenas de veces con alcance cerrado. Cada ronda de interacción real con clientes revela intenciones imprevistas, bordes regulatorios y mejoras conversacionales. |
+| **Costo de Iteración** | **BAJO** | Al ser software desplegable incrementalmente (por ejemplo, con *feature flags*, entornos *sandbox*, pilotos con un porcentaje acotado de clientes y ajustes rápidos de *prompts* o recuperación RAG), explorar y reconfigurar cuesta poco en comparación con errores de obra física o migraciones masivas irreversibles. |
+
+---
+
+## 2. Arquetipo de gestión recomendado: PRODUCTO
+
+- **Encuadre:** Gestión por **Producto** (enfoque adaptativo y empírico con ciclos continuos de *Product Discovery* y *Delivery*, apoyado en Scrum o flujo evolutivo).
+- **Por qué es el arquetipo ideal:**
+  1. **Alineación con *Artful Making*:** Innovación alta + Costo de iteración bajo habilitan el principio *"Make it great before the deadline"* y *Control by Release*. En lugar de intentar especificar todas las conversaciones posibles en un pliego cerrado al inicio, el equipo experimenta, mide *outcomes* reales y reconcebe el producto continuamente.
+  2. **Evolución continua sin fecha de "fin":** Un chatbot bancario basado en LLM nunca "termina" tras el primer despliegue: los productos del banco cambian, los modelos se actualizan y los clientes modifican su comportamiento. Requiere un equipo estable orientado a métricas de resultado (tasa de resolución sin derivación, precisión sin alucinaciones, satisfacción del cliente) y no solo a entregar un alcance cerrado.
+  3. **Mitigación temprana de riesgos:** Permite liberar versiones pequeñas a un segmento acotado de usuarios (piloto) para validar deseabilidad, usabilidad, seguridad y cumplimiento normativo antes de escalar a toda la base bancaria.
+
+---
+
+## 3. Alternativa válida: Proyecto inicial acotado (3 meses) que evoluciona a Producto
+
+Una alternativa metodológicamente sólida —muy habitual en organizaciones bancarias con gobernanza presupuestaria tradicional— consiste en estructurar un **Proyecto inicial de 3 meses** para construir y validar un **prototipo o piloto pagado** con presupuesto, fecha límite y criterios de salida claros (por ejemplo, validar *guardrails* legales, integración con la base documental y tasa mínima de acierto en un grupo controlado).
+
+- **Condición indispensable de validez:** Si el piloto demuestra viabilidad y tracción, la iniciativa **debe evolucionar explícitamente a gestión por Producto** (equipo estable con *backlog* vivo). Mantenerlo perpetuamente como sucesivos proyectos cerrados destruiría la capacidad de aprendizaje continuo.
+- **Por qué NO corresponde Proceso puro al inicio:** Un enfoque por Proceso (Kanban operativo orientado a SLAs repetibles) asume demanda estandarizada y solución madura, condiciones ausentes en esta etapa de descubrimiento e innovación tecnológica.
+
+</SolutionDrawer>

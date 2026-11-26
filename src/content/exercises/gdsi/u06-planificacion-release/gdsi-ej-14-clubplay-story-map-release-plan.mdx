@@ -1,0 +1,201 @@
+---
+id: "gdsi-ej-14"
+courseId: "gdsi"
+number: 14
+title: "ClubPlay (P4): User Story Mapping y Release Plan con Fecha Fija (1/12)"
+unit: "u06-planificacion-release"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 5
+origin: "Evaluación 1: Producto (2C 2026 — 26/10/2026) · Caso ClubPlay, Pregunta 4 (30%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-10-26-clubplay"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import StoryMapBoard from "@/components/gdsi/StoryMapBoard";
+
+<AcademicBlock kind="note" title="Contexto común — Caso ClubPlay">
+
+**ClubPlay** integra dos tipos de usuarios interdependientes: el **Jugador** (busca canchas disponibles, reserva, paga la seña y eventualmente busca compañeros faltantes) y el **Encargado del Club** (administra la disponibilidad real de sus canchas, registra turnos telefónicos/presenciales y controla señas).
+
+</AcademicBlock>
+
+<AcademicBlock kind="statement" title="Enunciado — Pregunta 4 (30%)">
+
+**Parte (a) — User Story Mapping (20%):**  
+Construí el **User Story Map** de ClubPlay contemplando ambos roles (**Jugador** y **Encargado del Club**):
+1. Definí el **Backbone** (actividades principales en orden cronológico de izquierda a derecha).
+2. Ubicá las historias de usuario relevantes debajo de cada actividad.
+3. Trazá la **línea de corte** que separa el **Walking Skeleton / Release 1 (MVP)** de **Release 2 (Evolutivo)** y justificá el criterio de recorte.
+
+**Parte (b) — Restricción de fecha fija (10%):**  
+La dirección comercial necesita lanzar el **1° de diciembre** para aprovechar la temporada de verano. Al calendario le quedan exactamente **3 Sprints disponibles** antes del 1/12, pero la estimación actual del equipo para el alcance pretendido se ubica entre **3 y 5 Sprints**.  
+¿Cómo gestionarías el **Release Plan** frente a esta restricción? Explicá qué decisiones tomar, qué prácticas **NO** deben sacrificarse y cómo reducir el riesgo antes de la fecha límite.
+
+**Qué está evaluando la cátedra**  
+Construcción rigurosa de un *User Story Map* bidimensional (Jeff Patton) cubriendo el flujo fin-a-fin de todos los roles críticos, y criterio profesional de *Release Planning* adaptativo ante fecha fija (recorte de alcance con MoSCoW, Último Momento Prudente, protección de la DoD, piloto temprano y gestión de *Slack*).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-14">
+
+## Parte (a): User Story Map de ClubPlay
+
+El mapa se organiza en dos dimensiones (Jeff Patton): el **eje horizontal (*Backbone*)** representa la secuencia cronológica de actividades del viaje de usuario (las columnas **no se priorizan entre sí**, porque el flujo completo necesita que existan los eslabones esenciales); el **eje vertical** ordena las historias por criticidad para definir los cortes de versión (*Releases*).
+
+<StoryMapBoard
+  client:load
+  title="Story Map de ClubPlay"
+  subtitle="Roles: Jugador y Encargado del Club"
+  activities={[
+    {
+      id: "buscar-elegir",
+      title: "1. Buscar y Elegir",
+      roles: ["Jugador"],
+      mvpStories: [
+        {
+          text: "Ver lista de clubes piloto y consultar disponibilidad de canchas por fecha y franja horaria",
+          role: "Jugador",
+        },
+        {
+          text: "Filtrar turnos disponibles por deporte (fútbol 5 / pádel) y zona",
+          role: "Jugador",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Consultar fotos, reseñas verificadas y calificaciones de instalaciones del club",
+          role: "Jugador",
+        },
+        {
+          text: "Guardar clubes favoritos y recibir notificaciones cuando se libera un turno en horario pico",
+          role: "Jugador",
+        },
+      ],
+    },
+    {
+      id: "reservar-pagar",
+      title: "2. Reservar y Pagar",
+      roles: ["Jugador", "Encargado del Club"],
+      mvpStories: [
+        {
+          text: "Seleccionar un horario libre y confirmar la reserva bloqueando el turno en la grilla",
+          role: "Jugador",
+        },
+        {
+          text: "Abonar la seña online con medio de pago básico (o confirmar seña acordada) y recibir comprobante",
+          role: "Jugador",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Dividir el pago de la seña automáticamente entre los integrantes del partido",
+          role: "Jugador",
+        },
+        {
+          text: "Cancelar la reserva desde la app y gestionar el reintegro automático según política del club",
+          role: "Jugador",
+        },
+        {
+          text: "Conciliar pagos y emitir comprobantes fiscales automáticos por turno",
+          role: "Encargado del Club",
+        },
+      ],
+    },
+    {
+      id: "completar-equipo",
+      title: "3. Completar Equipo",
+      roles: ["Jugador"],
+      mvpStories: [
+        {
+          text: "Compartir el resumen del partido reservado (club, cancha, día y hora) mediante un enlace por WhatsApp",
+          role: "Jugador",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Publicar vacantes abiertas ('nos falta uno') especificando nivel de juego y posición",
+          role: "Jugador",
+        },
+        {
+          text: "Postularse a partidos incompletos cercanos y coordinar por chat con el organizador",
+          role: "Jugador",
+        },
+        {
+          text: "Calificar puntualidad y comportamiento de jugadores que se sumaron al partido",
+          role: "Jugador",
+        },
+      ],
+    },
+    {
+      id: "gestionar-grilla",
+      title: "4. Gestionar Grilla",
+      roles: ["Encargado del Club"],
+      mvpStories: [
+        {
+          text: "Configurar canchas, franjas horarias habilitadas y monto de seña del club",
+          role: "Encargado del Club",
+        },
+        {
+          text: "Visualizar en tiempo real la grilla diaria con los turnos reservados y el estado de cada seña",
+          role: "Encargado del Club",
+        },
+        {
+          text: "Cargar o bloquear manualmente turnos tomados por teléfono/mostrador para evitar dobles reservas",
+          role: "Encargado del Club",
+        },
+      ],
+      release2Stories: [
+        {
+          text: "Configurar tarifas dinámicas por horario pico, feriados y torneos especiales",
+          role: "Encargado del Club",
+        },
+        {
+          text: "Consultar tablero de métricas de ocupación, ingresos por señas y tasa de ausentismo",
+          role: "Encargado del Club",
+        },
+      ],
+    },
+  ]}
+  cutJustification="El corte de Release 1 (MVP / Walking Skeleton) asegura el flujo mínimo de valor punta a punta para ambos roles: el Jugador puede descubrir disponibilidad real, reservar sin llamadas y compartir el turno con su grupo, mientras el Encargado administra su grilla y bloquea turnos manuales evitando dobles reservas. La funcionalidad 'nos falta uno' con desconocidos, los pagos divididos, la cancelación automatizada y los reportes avanzados se difieren a Release 2 por su mayor complejidad técnica e incertidumbre conductual."
+/>
+
+---
+
+## Parte (b): Gestión de la Restricción de Fecha Fija (1/12 — 3 Sprints vs. 3–5 Sprints)
+
+Cuando la **fecha de lanzamiento es fija** (1° de diciembre por la estacionalidad comercial del verano) y la capacidad del equipo en el corto plazo es fija (3 Sprints), **la única variable sana y profesional que se puede ajustar es el alcance**.
+
+### Plan de Acción Concreto
+
+1. **Recorte explícito de alcance mediante MoSCoW:**
+   - Clasificar todas las historias del MVP en **Must Have** (imprescindibles para que un jugador reserve y el club gestione su grilla el 1/12), **Should Have**, **Could Have** y **Won't Have (por ahora)**.
+   - **Diferir definitivamente *"nos falta uno"* a Release 2**, junto con la cancelación autogestionada y los pagos divididos. Incluso el pago online puede aplicarse con *slicing vertical* (si la integración con pasarela amenaza el plazo, el primer corte puede confirmar reserva con transferencia verificada o seña en el club mientras se integra el cobro automático en el Sprint 3).
+   - Asegurar que los *Must Have* quepan con holgura dentro de los **3 Sprints** (regla de *buffering* de alcance: destinar ~60%–70% de la capacidad estimada a *Must Have* y el resto a *Should/Could* sacrificables si aparecen desvíos).
+
+2. **Principio del Último Momento Prudente (*Last Responsible Moment*):**
+   - No comprometer desde hoy todo el detalle del Sprint 3 ni congelar un alcance irreal.
+   - Al cierre del **Sprint 1**, medir la **velocidad empírica real** del equipo (reduciendo el Cono de Incertidumbre), proyectar nuevamente el *Release Plan* (*burn-up chart*) y acordar con el negocio en forma transparente qué historias *Should/Could* entran antes del 1/12 y cuáles pasan a post-lanzamiento.
+
+3. **Nunca sacrificar la calidad ni la *Definition of Done* (DoD):**
+   - **Qué NO hacer:**
+     - **No recortar la DoD** (pruebas automatizadas, integración continua, validaciones básicas): genera deuda técnica inmediata y fallas graves en pleno pico de verano, empeorando los tiempos reales.
+     - **No agregar desarrolladores a último momento** (Ley de Brooks: incorporar gente en un plazo tan corto de 3 Sprints aumenta el costo de inducción y comunicación y retrasa la entrega).
+     - **No imponer horas extras sostenidas:** degrada la calidad cognitiva, multiplica los defectos y genera retrabajo.
+
+4. **Piloto temprano desde el Sprint 2 y reserva explícita de *Slack*:**
+   - Liberar el **Walking Skeleton en producción para 1 club piloto al finalizar el Sprint 2** (2 semanas antes del 1/12). Esto valida despliegue, usabilidad y operación real de la grilla con margen para corregir hallazgos críticos antes del lanzamiento comercial.
+   - Reservar **Slack técnico explícito** en la planificación de cada Sprint para absorber bloqueos de integración o ajustes derivados del piloto sin comprometer la fecha del 1/12.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el parcial">
+
+- **Dejar afuera al Encargado del Club en el MVP:** si el Story Map solo incluye historias del Jugador, el club no puede cargar turnos telefónicos ni ver reservas en tiempo real, produciendo dobles reservas desde el primer día. Ambos roles deben estar representados por encima de la línea de corte.
+- **Confundir el Backbone con una lista priorizada:** el Backbone sigue un orden cronológico de uso; la prioridad se expresa verticalmente dentro de cada columna.
+- **Responder la parte (b) con "trabajar más horas o saltear pruebas":** en GDSI, sacrificar la DoD frente a una fecha fija es uno de los errores más penalizados.
+
+</AcademicBlock>
+
+</SolutionDrawer>

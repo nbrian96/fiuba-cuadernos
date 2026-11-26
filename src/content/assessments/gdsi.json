@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "gdsi",
+  "exams": [
+    {
+      "id": "gdsi-eval1-2026-05-18-reciclaplus",
+      "courseId": "gdsi",
+      "title": "Evaluación 1: Producto (Modelo 1C 2026 — Caso ReciclaPlus)",
+      "date": "2026-05-18",
+      "term": "1C 2026 · Evaluación 1",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "practiceDocId": "simulacro-parciales-evaluacion-1",
+      "practiceAnchor": "reciclaplus",
+      "catalogExerciseIds": [
+        "gdsi-ej-01",
+        "gdsi-ej-02",
+        "gdsi-ej-03",
+        "gdsi-ej-04",
+        "gdsi-ej-05",
+        "gdsi-ej-06"
+      ],
+      "notes": "Evaluación 1 (Producto) tomada el 18/05/2026 (aprobación nota 4 con 60%). Incluye 3 preguntas teóricas de opción múltiple (Artful Making, Example Mapping y Gestión adaptativa de riesgos) y 3 consignas integradoras sobre el caso ReciclaPlus (Ciclo de Patton con 4 experimentos + riesgos, Review vs. Retrospectiva en barrio piloto, y Story Map con recorte de MVP)."
+    },
+    {
+      "id": "gdsi-eval1-2026-10-26-clubplay",
+      "courseId": "gdsi",
+      "title": "Evaluación 1: Producto (2C 2026 — Caso ClubPlay)",
+      "date": "2026-10-26",
+      "term": "2C 2026 · Evaluación 1",
+      "entityType": "OfficialExamPDF",
+      "provenance": "official_source",
+      "practiceDocId": "simulacro-parciales-evaluacion-1",
+      "practiceAnchor": "clubplay",
+      "catalogExerciseIds": [
+        "gdsi-ej-11",
+        "gdsi-ej-12",
+        "gdsi-ej-13",
+        "gdsi-ej-14",
+        "gdsi-ej-15",
+        "gdsi-ej-16"
+      ],
+      "notes": "Evaluación 1 (Producto) oficial del 26/10/2026 articulada sobre el caso común ClubPlay (app de reservas de fútbol 5 para clubes de barrio). Evalúa Fake Door (70/400 clics), Slicing vertical vs. horizontal, crítica al plan de validación de 2 semanas, Release Plan con Story Map y restricción de fecha 1/12, Example Mapping de cancelación + 6 dudas abiertas, y crítica de métricas de vanidad (3.000 descargas) con GQM/Outcomes."
+    }
+  ],
+  "unassignedGenericParcialExerciseIds": [],
+  "practicalWorks": []
+}

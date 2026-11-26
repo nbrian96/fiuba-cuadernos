@@ -1,0 +1,71 @@
+---
+id: "gdsi-ej-10"
+courseId: "gdsi"
+number: 10
+title: "Guía Práctica 1 — Caso 4: Implementación Corporativa de PeopleSoft HCM"
+unit: "u01-introduccion-modelos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía Práctica 1 — Caso 4 (Artful Making y Arquetipos de Gestión)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Caso 4: Implementación Corporativa de PeopleSoft HCM
+
+Una corporación de gran porte con **más de 10.000 empleados** distribuidos en múltiples unidades de negocio decide implementar la suite comercial **PeopleSoft HCM** (*Human Capital Management*) para unificar la administración de legajos, liquidación de nóminas, licencias, estructura organizacional y cumplimiento legal/impositivo.
+
+El software es un paquete comercial maduro y ampliamente probado en el mercado, pero la migración de datos históricos, la integración con sistemas contables/bancarios y el cambio operativo sobre más de diez mil empleados implican una altísima sensibilidad: un error en la liquidación de sueldos o en cargas sociales genera consecuencias legales, sindicales y financieras severas.
+
+---
+
+### Consigna
+
+Aplicando las dimensiones de **Devin & Austin** (*Artful Making*) y los **arquetipos de gestión** (Producto, Proyecto y Proceso):
+
+1. Evalúe **Necesidad de Innovación**, **Repetición Confiable** y **Costo de Iteración**.
+2. Determine y justifique el **arquetipo de gestión recomendado** y la **estrategia de despliegue** adecuada para mitigar el riesgo masivo.
+3. Indique cómo debe gestionarse el sistema una vez concluida la implementación.
+
+**Qué está evaluando la cátedra**  
+Criterio para identificar contextos clásicos donde corresponde gestión por **Proyecto** (paradigma *"Get it right the first time"*), pero aplicando estrategias inteligentes de reducción de riesgo (despliegue incremental por oleadas y piloto controlado) en lugar de un *Big Bang* temerario.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-10">
+
+## 1. Evaluación de las 3 dimensiones (Devin & Austin)
+
+| Dimensión | Nivel estimado | Justificación contextual |
+| :--- | :--- | :--- |
+| **Necesidad de Innovación** | **BAJA** | PeopleSoft HCM es un software comercial estándar (*COTS*) maduro y probado. No se busca inventar nuevas funcionalidades ni descubrir un modelo de negocio inédito, sino parametrizar, integrar y migrar procesos conocidos de Recursos Humanos y nómina. |
+| **Repetición Confiable** | **ALTA** | La liquidación de haberes, aportes y cumplimiento laboral para más de 10.000 personas exige resultados exactos, repetibles, deterministas y auditables mes a mes sin margen para improvisación. |
+| **Costo de Iteración** | **ALTO** | Corregir errores en producción sobre nóminas masivas, migraciones de legajos o procesos sindicales/legales conlleva costos altísimos (multas, conflictos laborales, reversión traumática y pérdida de confianza interna). Domina claramente el principio *"Get it right the first time"*. |
+
+---
+
+## 2. Arquetipo de gestión recomendado: PROYECTO escalonado por oleadas (*Rollout*) con piloto controlado
+
+- **Arquetipo principal:** **PROYECTO** (enfoque estructurado/predictivo con *Project Charter*, gobernanza formal de *stakeholders*, *WBS* orientada a entregables, control de alcance/cambios, gestión explícita de riesgos y plan formal de migración y gestión del cambio).
+- **Por qué NO corresponde gestionar la implementación como Producto exploratorio:**  
+  No existe incertidumbre de demanda ni margen para experimentar mediante prueba y error en producción sobre los sueldos de 10.000 personas. El alcance tiene un principio y un fin claros: poner en operación la suite corporativa cumpliendo normativa y reemplazando el sistema legado.
+- **Estrategia clave de mitigación — *Rollout* por oleadas con piloto menor a 1.000 empleados:**  
+  Aunque el encuadre sea por **Proyecto**, **desplegar mediante un *Big Bang* simultáneo para los +10.000 empleados concentraría un riesgo inaceptable**. La estrategia recomendada consiste en ejecutar un **despliegue escalonado por oleadas (*Rollout*)**:
+  1. **Oleada 1 — Piloto acotado (menos de 1.000 empleados):** seleccionar una unidad de negocio o planta representativa de escala controlada (menor a 1.000 personas), ejecutar liquidaciones en paralelo contra el sistema legado para validar exactitud al 100%, depurar integraciones bancarias/contables y ajustar la capacitación y el soporte.
+  2. **Oleadas sucesivas (2, 3, ..., N):** una vez validada la estabilidad operativa y el *runbook* de migración en el piloto, incorporar progresivamente el resto de las unidades de negocio hasta cubrir los +10.000 empleados, capitalizando las lecciones aprendidas de cada ola para reducir el costo de error.
+
+---
+
+## 3. Transición post-implementación (cierre del Proyecto → Proceso)
+
+Un error frecuente en exámenes es confundir la implementación con la vida útil posterior del sistema:
+
+- El **Proyecto** finaliza formalmente cuando todas las oleadas fueron migradas, aceptadas y estabilizadas en producción (se cierra el alcance temporal).
+- A partir de ese punto, el soporte de nómina, los ajustes periódicos de paritarias/impuestos, la resolución de tickets de RR. HH. y la operación recurrente de PeopleSoft HCM pasan a gestionarse como un **PROCESO** continuo (Kanban / ITSM con SLAs acordes a las fechas críticas de cierre de liquidación).
+
+</SolutionDrawer>

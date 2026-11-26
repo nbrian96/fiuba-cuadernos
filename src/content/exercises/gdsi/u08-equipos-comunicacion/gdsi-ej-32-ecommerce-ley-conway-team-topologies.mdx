@@ -1,0 +1,92 @@
+---
+id: "gdsi-ej-32"
+courseId: "gdsi"
+number: 32
+title: "E-Commerce Monolítico: Ley de Conway y Reorganización con Team Topologies"
+unit: "u08-equipos-comunicacion"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 4, Ejercicio 11 (Intermedio)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una empresa de **E-Commerce** opera sobre una arquitectura monolítica fuertemente acoplada y organiza a su departamento de tecnología en tres silos funcionales separados:
+* **Equipo de Frontend** (interfaz web y móvil).
+* **Equipo de Backend** (servicios de negocio y base de datos).
+* **Equipo de Testers / QA** (pruebas manuales previas al despliegue).
+
+Cada cambio comercial relevante —por ejemplo, lanzar una promoción en el proceso de compra— exige múltiples **traspasos (*handoffs*)** entre los tres equipos, genera colas de espera, malentendidos en los contratos de datos y frecuentes defectos al integrar los cambios justo antes de cada liberación.
+
+1. Explicá la raíz estructural de estos problemas aplicando la **Ley de Conway**.
+2. Proponé una reorganización concreta aplicando la **Maniobra Inversa de Conway** y las topologías de **Team Topologies** (Matthew Skelton y Manuel Pais), especificando qué **Stream-Aligned Teams** y qué **Platform Team** conformarías.
+
+**Qué está evaluando la cátedra**  
+Comprensión de la relación sistémica entre estructura comunicacional organizativa y arquitectura de software (Ley de Conway), y capacidad para diseñar una topología de equipos orientada al flujo de valor reduciendo dependencias y carga cognitiva.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-32">
+
+## 1. Diagnóstico según la Ley de Conway
+
+**Melvin Conway (1967)** formuló una ley fundamental de los sistemas sociotécnicos:
+
+> *"Las organizaciones que diseñan sistemas están limitadas a producir diseños que son copias de las estructuras de comunicación de dichas organizaciones."*
+
+### Qué está ocurriendo en el E-Commerce Monolítico
+
+1. **Arquitectura espejo de los silos:** al dividir a las personas por especialidad técnica (*Frontend*, *Backend*, *QA*), la comunicación fluida ocurre *dentro* de cada silo, mientras que la comunicación *entre* silos es lenta, burocrática y basada en tickets. El sistema resultante refleja exactamente esas fronteras: capas horizontales rígidas que requieren coordinación constante para cualquier cambio funcional.
+2. **Desperdicio por traspasos (*handoffs*) y demoras:** ninguna funcionalidad de negocio puede completarse dentro de un único equipo. Cada historia debe pasar en cadena por Frontend, Backend y QA, perdiendo contexto en cada transferencia, acumulando trabajo en progreso (*WIP*) y retrasando la detección de defectos hasta el final.
+3. **Ausencia de responsabilidad de extremo a extremo (*end-to-end ownership*):** cuando falla una promoción en producción, ningún equipo siente la propiedad integral del flujo de negocio; se producen culpas cruzadas entre capas y alta fricción organizacional.
+
+---
+
+## 2. Reorganización: Maniobra Inversa de Conway + *Team Topologies*
+
+La **Maniobra Inversa de Conway** (*Inverse Conway Maneuver*) consiste en **diseñar deliberadamente la estructura de equipos y sus canales de comunicación para fomentar la arquitectura modular y el flujo de entrega deseado**, en lugar de esperar que la arquitectura cambie sola manteniendo silos antiguos.
+
+Aplicando **Team Topologies**, la organización se reestructura alrededor de **flujos de valor de negocio** soportados por una **plataforma interna autoservicio**:
+
+### A. Equipos Alineados al Flujo (*Stream-Aligned Teams*)
+
+Son equipos **multidisciplinarios** (integran perfiles de producto, UX, frontend, backend y QA en el mismo equipo) con autonomía de extremo a extremo sobre un subdominio de negocio acotado y baja carga cognitiva:
+
+1. **Stream-Aligned Team 1 — Catálogo y Búsqueda:**
+   * **Responsabilidad integral:** descubrimiento de productos, fichas de artículos, precios, filtros, motor de búsqueda y recomendaciones.
+   * **Beneficio:** despliega mejoras de búsqueda o catálogo de punta a punta (UI + API + pruebas automatizadas) sin esperar a otros equipos funcionales.
+2. **Stream-Aligned Team 2 — Checkout y Pagos:**
+   * **Responsabilidad integral:** carrito de compras, cálculo de promociones, integración con pasarelas de pago, antifraude y confirmación de órdenes.
+   * **Beneficio:** domina las reglas críticas de conversión y facturación con ciclos rápidos de entrega y propiedad total sobre la estabilidad del flujo de compra.
+
+*(A medida que el negocio crece, podrían desprenderse otros Stream-Aligned Teams como Logística/Envíos o Posventa, manteniendo siempre límites claros de dominio).*
+
+### B. Equipo de Plataforma (*Platform Team*)
+
+* **Platform Team — Infraestructura, CI/CD y Nube Autoservicio:**
+  * **Propósito:** reducir la **carga cognitiva** de los *Stream-Aligned Teams* ofreciendo capacidades técnicas comunes como un **producto interno autoservicio** (*X-as-a-Service*): *pipelines* estandarizados de integración y despliegue continuo (CI/CD), provisión automatizada de entornos en la nube, observabilidad, telemetría y seguridad base.
+  * **Interacción clave:** no actúa como una mesa de tickets bloqueante ni como un nuevo silo operativo; provee herramientas y plantillas que permiten a *Catálogo* y *Checkout* desplegar de forma autónoma, segura y frecuente.
+
+---
+
+## 3. Impacto Esperado de la Transformación
+
+| Dimensión | Antes (Silos funcionales) | Después (*Team Topologies*) |
+| :--- | :--- | :--- |
+| **Unidad de entrega** | Tareas técnicas parciales por capa. | Incrementos de valor completos de punta a punta. |
+| **Traspasos (*handoffs*)** | Altos entre Frontend, Backend y QA. | Eliminados dentro del mismo flujo de negocio. |
+| **Arquitectura emergente** | Monolito acoplado por capas técnicas. | Módulos o servicios desacoplados alineados a subdominios (*Catálogo*, *Checkout*). |
+| **Carga cognitiva** | Saturada por dependencias cruzadas y coordinación constante. | Acotada por dominio de negocio y apalancada por el *Platform Team*. |
+
+<AcademicBlock kind="note" title="Modos de interacción en Team Topologies">
+
+Al principio de la transición, el *Platform Team* puede operar en modo **Colaboración** con los *Stream-Aligned Teams* para co-diseñar los *pipelines* y estándares, para luego pasar a un modo **X-as-a-Service** (consumo autoservicio de baja fricción) una vez estabilizada la plataforma.
+
+</AcademicBlock>
+
+</SolutionDrawer>

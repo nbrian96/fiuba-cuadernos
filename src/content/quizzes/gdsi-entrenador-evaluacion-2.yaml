@@ -1,7 +1,7 @@
 schemaVersion: "1.0.0"
 quizId: gdsi-entrenador-evaluacion-2
 courseId: gdsi
-title: "Entrenador Rápido de GDSI: Diagnóstico Conceptual en 30 Segundos"
+title: "Entrenador Rápido de GDSI: Evaluación 2 — Proyectos y Procesos (30s)"
 provenance: interactive_widget
 timeGoalSeconds: 30
 passThresholdPercent: 75

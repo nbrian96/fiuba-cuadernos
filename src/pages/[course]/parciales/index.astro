@@ -69,7 +69,7 @@ const totalParcialExercises = exercises.filter((e) => e.data.isParcial).length;
     <h1 style="margin-bottom: 0.4rem;">Parciales y Evaluaciones Reales</h1>
     <p style="margin: 0; color: var(--text-muted);">
       Trazabilidad directa entre los <strong>{exams.length}</strong> parciales de la
-      cátedra, sus PDFs originales y los <strong>{totalParcialExercises}</strong>{" "}
+      cátedra{course.data.stats.pdfs > 0 ? ", sus PDFs originales" : " (transcritos con simulacro interactivo)"} y los <strong>{totalParcialExercises}</strong>{" "}
       ejercicios de parcial del catálogo resuelto.
     </p>
   </header>
@@ -122,10 +122,20 @@ const totalParcialExercises = exercises.filter((e) => e.data.isParcial).length;
                   </div>
                 ) : null}
 
-                {pdfRes ? (
-                  <div style="margin-top: 0.25rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem;">
+                  {exam.practiceDocId ? (
                     <a
                       class="btn btn-primary"
+                      href={withBase(
+                        `/${courseId}/docs/${exam.practiceDocId}/${exam.practiceAnchor ? `#${exam.practiceAnchor}` : ""}`,
+                      )}
+                    >
+                      Rendir simulacro ponderado
+                    </a>
+                  ) : null}
+                  {pdfRes ? (
+                    <a
+                      class={exam.practiceDocId ? "btn" : "btn btn-primary"}
                       href={buildMaterialViewerUrl(
                         courseId,
                         pdfRes.resourceId,
@@ -134,8 +144,8 @@ const totalParcialExercises = exercises.filter((e) => e.data.isParcial).length;
                     >
                       Abrir PDF en visor
                     </a>
-                  </div>
-                ) : null}
+                  ) : null}
+                </div>
               </article>
             );
           })}

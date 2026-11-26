@@ -1,0 +1,65 @@
+---
+id: "gdsi-ej-03"
+courseId: "gdsi"
+number: 3
+title: "Gestión Adaptativa de Riesgos en Desarrollo Ágil"
+unit: "u07-gestion-riesgos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Pregunta 3 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el contexto de **gestión adaptativa de riesgos**, ¿cuál de las siguientes afirmaciones es la más adecuada? *(10%)*
+
+- **a)** Los riesgos se identifican únicamente durante la fase inicial del proyecto y se congelan en un registro que permanece invariable hasta el cierre.
+- **b)** En entornos ágiles no es necesario gestionar riesgos de forma explícita porque trabajar en Sprints cortos los elimina automáticamente.
+- **c)** La identificación y mitigación de riesgos es continua: se revisan en planificación, dailies y retrospectivas, y se mitigan tempranamente.
+- **d)** Los riesgos técnicos deben postergarse siempre para los últimos Sprints con el fin de mostrar pantallas terminadas al cliente cuanto antes.
+
+**Qué está evaluando la cátedra**  
+Comprensión del abordaje explícito, iterativo y empírico de la gestión de riesgos en contextos de incertidumbre: por qué el agilismo no elimina la gestión de riesgos, sino que la integra de manera continua en las cadencias del equipo y prioriza atacar los riesgos de mayor exposición tempranamente.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-03">
+
+## Respuesta correcta
+
+La opción correcta es la **c)**:
+
+> *La identificación y mitigación de riesgos es continua: se revisan en planificación, dailies y retrospectivas, y se mitigan tempranamente.*
+
+---
+
+## Fundamento teórico (Gestión Adaptativa de Riesgos)
+
+En desarrollo de software con alta incertidumbre, los riesgos emergen y cambian de exposición ($E = P \times I$) a medida que el equipo descubre el dominio, la tecnología y la reacción real de los usuarios. La **gestión adaptativa de riesgos** combina visibilidad explícita (por ejemplo, una planilla o matriz de riesgos viva) con el ciclo empírico de **transparencia, inspección y adaptación**:
+
+1. **Revisión continua integrada a las cadencias del equipo:**
+   - **Planificación (*Release Planning* y *Sprint Planning*):** se prioriza el *Product Backlog* combinando **valor y riesgo** (priorizando ítems con alta exposición, *Spikes* técnicos o experimentos de *Discovery* en los primeros Sprints y aplicando criterios como *MoSCoW* y *buffering*).
+   - **Dailies (*Daily Scrum*):** permiten detectar tempranamente impedimentos, bloqueos técnicos o desvíos del *Sprint Goal* antes de que escalen al cierre de la iteración.
+   - **Sprint Review:** valida con evidencia empírica y *stakeholders* si los riesgos de producto (atractivo, usabilidad y viabilidad de negocio) realmente disminuyeron tras entregar un incremento funcional.
+   - **Sprint Retrospective:** inspecciona y mitiga riesgos de proceso, calidad interna (deuda técnica), dependencias y comunicación interna del equipo.
+2. **Mitigación temprana (*fail fast* / aprendizaje barato):**  
+   En lugar de diferir la incertidumbre, se ataca cuanto antes mediante incrementos pequeños liberados con frecuencia (cada 2 a 4 semanas), prototipos, *Spikes* acotados en tiempo (*timeboxed*) y pruebas automatizadas continuas. Cuanto antes se valida un supuesto crítico, menor es el costo económico y de cronograma si resulta falso.
+
+---
+
+## Por qué las demás opciones son incorrectas
+
+| Opción | Error conceptual detectado |
+| :--- | :--- |
+| **a)** | Representa una caricatura estática del enfoque burocrático: un registro de riesgos congelado al inicio queda obsoleto en cuanto aparecen nuevos descubrimientos técnicos o cambios de mercado. |
+| **b)** | Mito ágil muy penalizado por la cátedra: los Sprints cortos reducen el horizonte de pérdida, pero **no sustituyen la gestión explícita de riesgos**. Sin visibilizar amenazas críticas (regulatorias, técnicas o de adopción), un equipo puede iterar rápido en la dirección equivocada. |
+| **d)** | Es un antipatrón clásico ("ocultar el riesgo debajo de la alfombra"): postergar los riesgos técnicos de mayor exposición hacia el final del proyecto concentra el fracaso cuando ya se consumió casi todo el presupuesto y el plazo, haciendo imposible pivotar o mitigar a tiempo. |
+
+</SolutionDrawer>

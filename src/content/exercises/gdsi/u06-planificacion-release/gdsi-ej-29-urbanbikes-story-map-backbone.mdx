@@ -1,0 +1,66 @@
+---
+id: "gdsi-ej-29"
+courseId: "gdsi"
+number: 29
+title: "UrbanBikes: Story Map, Backbone Cronológico y Walking Skeleton"
+unit: "u06-planificacion-release"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 3, Ejercicio 8 (Avanzado)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La empresa **UrbanBikes** está diseñando una aplicación móvil de **entrega de comida a domicilio en bicicleta** para competir en zonas urbanas de alta densidad. En la sesión inicial de planificación de *releases*, el equipo construye un **User Story Map** (Jeff Patton).
+
+Uno de los directivos sugiere *"priorizar las actividades del Backbone para desarrollar primero solo la búsqueda de restaurantes al 100%, dejar el armado de pedido para el segundo trimestre y recién en el tercer trimestre programar el pago y seguimiento de envío"*.
+
+1. Diseñá el **Backbone** (columna vertebral) del *User Story Map* de **UrbanBikes** con **3 actividades principales ordenadas cronológicamente** y desagregá tareas de usuario concretas debajo de cada una, trazando un primer corte horizontal (*Walking Skeleton* / MVP).
+2. Justificá conceptualmente **por qué las actividades del Backbone NO se priorizan entre sí** al momento de definir el *Walking Skeleton*, rebatiendo la propuesta del directivo.
+
+**Qué está evaluando la cátedra**  
+Comprensión de la estructura bidimensional del *User Story Mapping* (eje horizontal narrativo/temporal vs. eje vertical de prioridad/refinamiento) y del concepto de *Walking Skeleton* como flujo completo de punta a punta.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-29">
+
+## 1. Story Map de UrbanBikes: Backbone y *Walking Skeleton*
+
+En un **User Story Map** (Jeff Patton):
+* El **eje horizontal (de izquierda a derecha)** representa la **narrativa cronológica del usuario** (*Backbone*): la secuencia de actividades necesarias para completar su objetivo de principio a fin.
+* El **eje vertical (de arriba hacia abajo)** representa la **prioridad y el nivel de sofisticación** de las tareas dentro de cada actividad. Los cortes horizontales definen los sucesivos *releases*.
+
+### Estructura del Story Map (3 Actividades del Backbone)
+
+| Eje / Corte | Actividad 1: Buscar Restaurante | Actividad 2: Armar Pedido | Actividad 3: Pagar y Seguir Envío |
+| :--- | :--- | :--- | :--- |
+| **Backbone (Actividades cronológicas)** | **1. Buscar Restaurante** | **2. Armar Pedido** | **3. Pagar y Seguir Envío** |
+| **Corte 1: *Walking Skeleton* (MVP — Release 1)** | • Ingresar dirección manual.<br/>• Ver listado básico de locales abiertos cercanos.<br/>• Abrir menú con precios. | • Seleccionar platos del menú.<br/>• Agregar o quitar ítems en el carrito.<br/>• Ver subtotal y costo de envío. | • Confirmar pedido con pago en efectivo o link de pago básico.<br/>• Ver estado simple (*Confirmado → En camino → Entregado*). |
+| **Corte 2: Release 2 (Crecimiento y conveniencia)** | • Filtrar por tipo de cocina, tiempo estimado y calificación.<br/>• Detectar ubicación automáticamente por GPS. | • Personalizar ingredientes/notas al cocinero.<br/>• Aplicar cupones de descuento. | • Pagar con tarjeta guardada en la app.<br/>• Seguimiento del ciclista en mapa en tiempo real. |
+| **Corte 3: Release 3 (Optimización y fidelización)** | • Recomendaciones personalizadas según historial.<br/>• Listas de restaurantes favoritos. | • Repetir último pedido en un toque.<br/>• Pedidos grupales compartidos. | • Propina digital al repartidor y chat en vivo.<br/>• Programa de puntos / suscripción sin envío. |
+
+---
+
+## 2. Por qué el Backbone NO se prioriza entre sí al definir el *Walking Skeleton*
+
+La propuesta del directivo confunde el **eje narrativo** con el **eje de priorización**, repitiendo el error clásico de un *backlog* plano unidimensional:
+
+1. **El Backbone describe un flujo indivisible de experiencia de usuario:** para que un cliente resuelva su necesidad real (*"pedir comida y recibirla en casa"*), **necesita atravesar todas las actividades del recorrido completo**: encontrar dónde pedir, elegir qué comer y concretar el pago/entrega.
+2. **Una actividad aislada al 100% no entrega valor utilizable:** construir durante tres meses un buscador de restaurantes ultraperfeccionado con filtros avanzados e inteligencia artificial, pero sin carrito ni pago ni envío, produce un software que **no permite realizar un solo pedido real**. No valida el modelo de negocio ni genera ingresos ni aprendizaje end-to-end.
+3. **Qué sí se prioriza (el eje vertical):** la priorización ocurre **hacia abajo dentro de cada columna**, seleccionando la versión más delgada y sencilla de **cada una** de las tres actividades para conformar el **Walking Skeleton** (corte horizontal superior). Ese esqueleto mínimo "camina" desde el día uno porque conecta todo el viaje del usuario de punta a punta con la mínima complejidad posible.
+4. **Reducción temprana de riesgos:** el *Walking Skeleton* expone desde el primer *release* las integraciones reales (restaurante, pedido, pago y logística en bicicleta) y permite medir la conversión completa antes de invertir en funcionalidades sofisticadas de los Releases 2 y 3.
+
+<AcademicBlock kind="note" title="Síntesis de cátedra sobre Story Mapping">
+
+* **Horizontal = Narrativa (*Big Picture*):** responde a *"¿qué hace el usuario en orden cronológico?"* → **no se recorta ni se prioriza entre columnas**.
+* **Vertical = Prioridad / Sofisticación (*Slicing*):** responde a *"¿qué es indispensable hoy versus qué puede esperar a próximos releases?"* → **se recorta mediante franjas horizontales** para definir el *Walking Skeleton* (MVP) y releases incrementales.
+
+</AcademicBlock>
+
+</SolutionDrawer>

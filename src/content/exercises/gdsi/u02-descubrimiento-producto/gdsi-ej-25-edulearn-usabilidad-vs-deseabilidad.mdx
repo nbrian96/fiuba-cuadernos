@@ -1,0 +1,71 @@
+---
+id: "gdsi-ej-25"
+courseId: "gdsi"
+number: 25
+title: "EduLearn: Usabilidad Validada vs. Deseabilidad y Viabilidad de Negocio"
+unit: "u02-descubrimiento-producto"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 1, Ejercicio 4 (Intermedio)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+El equipo de **EduLearn** diseñó una nueva plataforma de venta de cursos online. Antes del lanzamiento, realizó una ronda de **pruebas de usabilidad** en laboratorio con 5 usuarios representativos, a quienes se les asignó la consigna de buscar un curso de programación y completar el flujo de compra en un prototipo interactivo.
+
+Los resultados del laboratorio fueron excelentes: los 5 usuarios completaron el proceso de compra **sin cometer errores** y en un **tiempo récord**. Confiado en ese éxito, el equipo liberó la plataforma a producción. Sin embargo, tras varias semanas con tráfico constante, **casi ningún visitante concreta la compra de un curso**.
+
+Explicá esta aparente contradicción utilizando la distinción conceptual entre **Usabilidad** y **Deseabilidad / Viabilidad de Negocio** dentro del *Product Discovery*.
+
+**Qué está evaluando la cátedra**  
+Capacidad para diferenciar entre la validación ergonómica/operativa de una interfaz y la validación del valor percibido y la disposición real a pagar en el mercado.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-25">
+
+## 1. Diagnóstico de la Aparente Contradicción
+
+No existe ninguna contradicción técnica: lo que ocurrió en EduLearn es una confusión frecuente en *Product Discovery* consistente en **asumir que validar la usabilidad equivale a validar el valor del producto**.
+
+Una prueba de usabilidad responde exclusivamente a la pregunta **"¿puede el usuario usar esto?"**, pero **no responde** a **"¿quiere el usuario usar esto y pagar por ello en la vida real?"**.
+
+---
+
+## 2. Distinción Conceptual: Usabilidad vs. Deseabilidad y Viabilidad
+
+| Dimensión (Marty Cagan) | Qué evalúa | Qué demostró EduLearn | Qué quedó sin validar |
+| :--- | :--- | :--- | :--- |
+| **Usabilidad** (*Operabilidad ergonómica*) | Claridad de la navegación, arquitectura de información, comprensibilidad de controles, eficiencia y ausencia de errores al ejecutar una tarea asignada. | **Validada:** con una consigna explícita en laboratorio, los usuarios entendieron el flujo de checkout y pudieron completarlo rápido y sin fricción. | Si alguien llegaría por voluntad propia a ese flujo o si realmente le interesa comprar el curso. |
+| **Deseabilidad / Atractivo** (*Value Risk*) | Si el producto resuelve una necesidad genuina, ofrece una propuesta de valor diferencial y motiva al usuario a elegirlo frente a alternativas (gratuitas o pagas). | **No validada.** | Confianza en la calidad de los docentes, relevancia del temario, diferenciación frente a competidores (YouTube, Udemy, Coursera). |
+| **Viabilidad de Negocio** (*Business Viability*) | Si el precio, el modelo de monetización, la propuesta comercial y los canales de adquisición permiten cerrar transacciones sostenibles. | **No validada.** | Disposición real a pagar (*willingness to pay*), adecuación del precio, medios de pago/financiación disponibles y credibilidad de marca. |
+
+---
+
+## 3. Causas Metodológicas del Fenómeno en EduLearn
+
+1. **Sesgo de tarea inducida en el test de usabilidad:** en una prueba de usabilidad el moderador le pide explícitamente al participante *"simulá que comprás este curso"* y el participante **no gasta dinero propio**. Por eso el entorno de laboratorio elimina por diseño la decisión económica real.
+2. **Validación en el cuadrante equivocado:** EduLearn construyó un embudo de compra impecable desde el punto de vista ergonómico (*hacer bien el producto*), pero omitió validar si los cursos, su certificación, su precio o la confianza en la plataforma justificaban que un usuario real sacara su tarjeta de crédito (*hacer el producto correcto*).
+3. **Consecuencia estratégica:** una interfaz fácil de usar es una **condición necesaria** para evitar pérdidas por fricción, pero nunca es **condición suficiente** para generar ventas. Si el valor percibido no supera el precio y las alternativas disponibles, una excelente usabilidad solo hace más rápida una compra que nadie desea iniciar.
+
+---
+
+## 4. Acciones Correctivas de Descubrimiento
+
+Para revertir la situación, el equipo de EduLearn debería investigar **deseabilidad y viabilidad** mediante métodos empíricos adecuados:
+
+* **Entrevistas cualitativas de abandono y *The Mom Test*:** indagar cómo aprendieron programación recientemente los usuarios del segmento objetivo, cuánto pagaron la última vez por un curso y qué factores (certificado, mentoría, reputación del instructor, precio) inclinaron su decisión.
+* **Análisis de embudo y pruebas de propuesta de valor:** detectar en qué paso abandonan los visitantes (página de catálogo, detalle del temario o pantalla de precio) y correr experimentos de bajo costo sobre la propuesta comercial (clases abiertas de prueba, paquetes con mentoría en vivo, precios escalonados o preventas).
+
+<AcademicBlock kind="trap" title="Trampa frecuente en parcial">
+
+No confundas la regla empírica de **Jakob Nielsen** ("5 usuarios suelen detectar cerca del 85% de los problemas de usabilidad") con una muestra válida de mercado. Que 5 participantes superen un test de usabilidad sin errores **no implica** validación comercial ni representatividad estadística de demanda.
+
+</AcademicBlock>
+
+</SolutionDrawer>

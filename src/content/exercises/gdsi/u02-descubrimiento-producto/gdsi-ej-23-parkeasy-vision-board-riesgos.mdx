@@ -1,0 +1,72 @@
+---
+id: "gdsi-ej-23"
+courseId: "gdsi"
+number: 23
+title: "ParkEasy: Product Vision Board y los Cuatro Riesgos de Producto"
+unit: "u02-descubrimiento-producto"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 1, Ejercicio 2 (Avanzado)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Una startup de movilidad urbana quiere lanzar **ParkEasy**, una aplicación móvil para gestionar el **estacionamiento medido** en zonas céntricas: permite localizar cuadras habilitadas, iniciar y detener la estadía desde el celular, pagar únicamente por los minutos utilizados y recibir alertas antes de que venza el tiempo permitido para evitar multas.
+
+Antes de avanzar con la planificación del primer *release*, el equipo necesita alinear su visión de producto y mapear las principales amenazas que podrían hacer fracasar la iniciativa.
+
+1. Construí un **Product Vision Board** simplificado (Roman Pichler) completando con precisión sus cuatro bloques centrales: **Visión**, **Grupo Objetivo**, **Necesidad (enfoque JTBD)** y **Producto**.
+2. Identificá **un riesgo concreto y bien fundamentado** para cada una de las cuatro dimensiones propuestas por **Marty Cagan**: **Atractivo (Valor)**, **Usabilidad**, **Factibilidad Técnica** y **Viabilidad de Negocio**.
+
+**Qué está evaluando la cátedra**  
+Dominio de las herramientas de *Product Discovery* para alinear propósito, segmento y propuesta de valor, junto con la capacidad de formular riesgos concretos, específicos del dominio y correctamente clasificados en la taxonomía de Marty Cagan.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-23">
+
+## 1. Product Vision Board Simplificado — ParkEasy
+
+El **Product Vision Board** de Roman Pichler sintetiza la estrategia del producto en una vista compartida que guía las decisiones de descubrimiento y priorización del backlog.
+
+| Bloque | Definición para ParkEasy |
+| :--- | :--- |
+| **Visión** | Eliminar la fricción, la incertidumbre y las multas asociadas al estacionamiento medido urbano, convirtiendo el pago y el control del tiempo en una experiencia instantánea y transparente desde el teléfono. |
+| **Grupo Objetivo** | Conductores particulares y trabajadores móviles (repartidores, técnicos, visitadores) que estacionan con frecuencia en zonas céntricas reguladas de ciudades con alta densidad vehicular y disponen de *smartphone* con datos móviles. |
+| **Necesidad (*Jobs to be Done*)** | *"Cuando llego apurado a una zona con estacionamiento medido, quiero activar, controlar y pagar exactamente el tiempo que ocupo sin buscar parquímetros ni monedas, para cumplir mi trámite tranquilo y evitar multas costosas."* |
+| **Producto** | Aplicación móvil liviana con detección automática de zona por GPS, inicio/corte de estadía en un toque, cobro fraccionado por minuto con medios de pago digitales, recordatorios configurables antes del vencimiento y comprobante digital verificable por inspectores. |
+
+---
+
+## 2. Los Cuatro Riesgos de Producto (Marty Cagan)
+
+Según Marty Cagan (*Inspired*), el equipo de producto debe abordar de manera explícita cuatro riesgos fundamentales durante el descubrimiento, antes de escalar el desarrollo:
+
+### 2.1 Riesgo de Atractivo / Valor (*Value Risk*)
+* **Pregunta clave:** ¿los usuarios elegirán usar esta solución porque perciben un valor real frente a sus alternativas actuales?
+* **Riesgo concreto en ParkEasy:** los conductores ocasionales podrían no percibir suficiente beneficio como para descargar una aplicación nueva, registrarse y cargar una tarjeta si el municipio ya ofrece pago rápido por SMS, WhatsApp o billeteras digitales masivas que ya tienen instaladas.
+
+### 2.2 Riesgo de Usabilidad (*Usability Risk*)
+* **Pregunta clave:** ¿pueden los usuarios comprender y operar la interfaz correctamente en su contexto real de uso?
+* **Riesgo concreto en ParkEasy:** al bajar apurados del auto —a menudo con poca luz, lluvia o con una sola mano— los usuarios podrían seleccionar erróneamente la patente o la zona tarifaria, o **olvidar detener el contador** al retirarse, pagando horas de más y generando frustración y reclamos.
+
+### 2.3 Riesgo de Factibilidad Técnica (*Feasibility Risk*)
+* **Pregunta clave:** ¿puede el equipo de ingeniería construir e integrar la solución con la tecnología, el tiempo y las capacidades disponibles?
+* **Riesgo concreto en ParkEasy:** la precisión del GPS en zonas céntricas con edificios altos (*efecto cañón urbano*) puede asignar al vehículo una cuadra vecina con distinta tarifa o restricción; además, la integración en tiempo real con el sistema heredado de fiscalización municipal puede sufrir caídas o latencias que provoquen multas indebidas a usuarios que sí pagaron.
+
+### 2.4 Riesgo de Viabilidad de Negocio (*Business Viability Risk*)
+* **Pregunta clave:** ¿es sostenible la solución desde el punto de vista legal, económico, comercial y operativo para la organización?
+* **Riesgo concreto en ParkEasy:** el modelo depende de convenios y concesiones municipales para validar pagos y cobrar comisiones. Si la normativa local prohíbe trasladar un recargo de servicio al conductor y las comisiones de las pasarelas de pago consumen el margen en tickets pequeños (estadías cortas de 30–60 minutos), el producto resulta económicamente inviable.
+
+<AcademicBlock kind="note" title="Criterio de calidad en el análisis de riesgos">
+
+En evaluaciones de GDSI, formular riesgos genéricos (como *"que no les guste a los usuarios"* o *"que haya bugs"*) se considera insuficiente. Cada riesgo debe especificar **causa concreta del dominio**, **consecuencia observable** y corresponder exactamente a su categoría en el marco de Marty Cagan.
+
+</AcademicBlock>
+
+</SolutionDrawer>

@@ -1,0 +1,91 @@
+---
+id: "gdsi-ej-33"
+courseId: "gdsi"
+number: 33
+title: "SaaS B2B: Diagnóstico DORA, Ley de Goodhart y Esquema GQM"
+unit: "u09-mejora-metricas"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 4, Ejercicio 12 (Avanzado)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+La gerencia de ingeniería de una empresa **SaaS B2B** fijó como incentivo principal del trimestre aumentar la velocidad de entrega medida por cantidad de despliegues diarios a producción. Al cierre del mes, el tablero ejecutivo celebra un récord: el equipo realiza **10 despliegues por día** (*Deployment Frequency*).
+
+Sin embargo, el equipo de soporte está colapsado y los clientes corporativos amenazan con cancelar sus contratos: el **45% de esos despliegues provoca incidentes en producción** que requieren *rollbacks* o *hotfixes* de emergencia (*Change Failure Rate* = 45%).
+
+1. Diagnosticá la situación utilizando el marco de las **métricas DORA**, explicando por qué el equipo cayó en un **"falso flujo ágil"**.
+2. Analizá el fenómeno desde la **Ley de Goodhart** y la perspectiva crítica sobre métricas de **Tobias Mayer**.
+3. Diseñá un esquema **GQM (*Goal–Question–Metric*)** completo y equilibrado para guiar la mejora real del proceso de despliegue.
+
+**Qué está evaluando la cátedra**  
+Capacidad para interpretar métricas de velocidad y estabilidad de forma balanceada (DORA), detectar disfunciones causadas por incentivos mal diseñados (Goodhart / Tobias Mayer) y formular sistemas de medición con propósito mediante GQM.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-33">
+
+## 1. Diagnóstico DORA: El "Falso Flujo Ágil"
+
+El modelo **DORA** (*DevOps Research and Assessment*, Accelerate) establece que el desempeño de entrega de software **nunca puede evaluarse con una sola métrica aislada**, sino equilibrando dos pares complementarios:
+
+* **Velocidad (*Throughput*):** *Deployment Frequency* (Frecuencia de Despliegue) y *Lead Time for Changes* (Tiempo de Entrega de Cambios).
+* **Estabilidad (*Stability*):** *Change Failure Rate* (Tasa de Fallo en Cambios, CFR) y *Time to Restore Service* / MTTR (Tiempo Medio de Recuperación).
+
+### Por qué es un "falso flujo ágil"
+
+* **Velocidad aparente sin estabilidad real:** desplegar 10 veces por día parecería ubicar al equipo en desempeño *Elite* en frecuencia, pero un **Change Failure Rate del 45%** (casi 1 de cada 2 despliegues rompe producción) refleja un desempeño bajo y estructuralmente insostenible.
+* **Espiral de retrabajo (*Failure Demand*):** gran parte de esos 10 despliegues diarios ni siquiera entrega valor nuevo a los clientes; son *hotfixes* y *rollbacks* para apagar incendios creados por despliegues anteriores apresurados. La velocidad aparente es una ilusión que degrada la confianza del cliente B2B y quema al equipo.
+* **Principio empírico de DORA:** en equipos de alto rendimiento reales, **velocidad y estabilidad no son un *trade-off***; se refuerzan mutuamente mediante prácticas de ingeniería sólidas (pruebas automatizadas, integración continua, despliegues pequeños y verificados). Acelerar sin calidad solo entrega defectos más rápido.
+
+---
+
+## 2. Ley de Goodhart y Perspectiva de Tobias Mayer
+
+### Ley de Goodhart
+> *"Cuando una medida se convierte en un objetivo (target), deja de ser una buena medida."*
+
+Al transformar la **Frecuencia de Despliegue** en un objetivo gerencial atado a incentivos, el equipo —de manera consciente o inconsciente— optimizó el indicador en lugar del resultado de negocio: comenzó a empujar cambios incompletos, saltear revisiones, recortar pruebas automatizadas y fragmentar despliegues artificialmente para "cumplir el número", disparando los fallos en producción al 45%.
+
+### Perspectiva de Tobias Mayer
+La cátedra retoma la crítica de **Tobias Mayer** sobre el uso disfuncional de métricas en organizaciones de software:
+* Las métricas deben servir como **herramientas de aprendizaje, reflexión y mejora del propio equipo** (foco empírico interno), **no como instrumentos de control, vigilancia o premiación/castigo gerencial**.
+* Cuando las métricas se imponen desde arriba para juzgar productividad individual o de equipo, destruyen la **seguridad psicológica**, incentivan la manipulación del sistema (*gaming the metrics*) y desplazan el foco del usuario final hacia el cumplimiento burocrático del tablero.
+
+---
+
+## 3. Esquema GQM (*Goal – Question – Metric*) para Corregir el Rumbo
+
+El enfoque **GQM** (Victor Basili) evita recolectar números aislados obligando a derivar cada métrica de un propósito explícito y preguntas concretas:
+
+### Goal (Objetivo — Nivel Conceptual)
+> **Propósito:** mejorar la estabilidad y confiabilidad de los despliegues a producción  
+> **Objeto:** del *pipeline* de entrega continua y el proceso de aseguramiento de calidad  
+> **Punto de vista:** del equipo de ingeniería y los clientes corporativos del SaaS B2B  
+> **Contexto:** manteniendo una cadencia saludable de entrega frecuente sin sacrificar calidad.
+
+### Questions (Preguntas — Nivel Operativo)
+1. **Q1:** ¿Qué proporción de los despliegues a producción genera incidentes, degradación del servicio, *rollbacks* o *hotfixes* de emergencia?
+2. **Q2:** ¿Qué porcentaje de los cambios ingresados al *pipeline* cumple efectivamente con la cobertura de pruebas automatizadas y controles de calidad definidos en la *Definition of Done* (DoD) antes de desplegarse?
+3. **Q3:** Cuando ocurre un fallo en producción, ¿cuánto tiempo demora el equipo en restaurar el servicio normal para los clientes?
+
+### Metrics (Métricas — Nivel Cuantitativo)
+1. **M1 (Derivada de Q1 — Métrica primaria de estabilidad):** **Change Failure Rate (CFR)** medida semanalmente:
+   $$\text{CFR} = \frac{\text{Despliegues con incidente, rollback o hotfix}}{\text{Total de despliegues a producción}} \times 100\%$$
+   * **Umbral objetivo de mejora:** reducir el CFR del $45\%$ actual a **$\text{CFR} < 10\%$** de forma sostenida.
+2. **M2 (Derivada de Q2 — Indicador adelantado de calidad en DoD):** porcentaje de *builds* que ejecutan y aprueban la *suite* automatizada de pruebas (unitarias, integración y *smoke tests*) como puerta obligatoria en la **Definition of Done** (meta: $100\%$ de cumplimiento en el *pipeline* de CI/CD, eliminando despliegues manuales sin validación).
+3. **M3 (Derivada de Q3 — Métrica de contrapeso/resiliencia):** **MTTR** (*Mean Time to Restore Service*) y **Deployment Frequency** monitoreadas en paralelo, asegurando que la reducción del CFR no paralice el flujo hacia despliegues monolíticos trimestrales, sino que consolide entregas pequeñas y confiables.
+
+<AcademicBlock kind="note" title="Uso saludable del tablero GQM">
+
+Para no repetir el error de la Ley de Goodhart, estas métricas GQM deben ser revisadas **por el propio equipo en sus ciclos de mejora continua (Retrospectivas / PDCA)** como insumos para ajustar su *Definition of Done* y su automatización de pruebas, nunca como cuotas punitivas impuestas por gerencia.
+
+</AcademicBlock>
+
+</SolutionDrawer>

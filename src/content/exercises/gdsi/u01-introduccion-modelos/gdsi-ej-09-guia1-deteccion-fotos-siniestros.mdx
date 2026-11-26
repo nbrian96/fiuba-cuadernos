@@ -1,0 +1,69 @@
+---
+id: "gdsi-ej-09"
+courseId: "gdsi"
+number: 9
+title: "Guía Práctica 1 — Caso 3: Detección Inteligente de Fotos de Siniestros"
+unit: "u01-introduccion-modelos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Guía Práctica 1 — Caso 3 (Artful Making y Arquetipos de Gestión)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+### Caso 3: Detección Inteligente de Fotos de Siniestros
+
+Una compañía aseguradora busca incorporar una solución de **visión por computadora e inteligencia artificial** capaz de analizar las fotografías enviadas por los asegurados al denunciar un siniestro automotor, con el fin de clasificar daños preliminares, acelerar la cotización y detectar inconsistencias o posibles fraudes antes de su derivación a peritos humanos.
+
+Al inicio existe una elevada incertidumbre técnica sobre la calidad real de las fotos tomadas por clientes, la precisión alcanzable del modelo y los criterios de derivación a peritos. Sin embargo, una vez validado e integrado al circuito de siniestros, la solución deberá operar de forma consistente, auditable y repetible sobre miles de denuncias cotidianas.
+
+---
+
+### Consigna
+
+Aplicando las dimensiones de **Devin & Austin** (*Artful Making*) y los **tres arquetipos de gestión** (Producto, Proyecto y Proceso):
+
+1. Evalúe **Necesidad de Innovación**, **Repetición Confiable** y **Costo de Iteración**.
+2. Indique y justifique el **arquetipo de gestión recomendado** (considerando la evolución del ciclo de vida de la iniciativa).
+3. Proponga una **alternativa válida** y explique bajo qué decisión estratégica de negocio cobraría sentido.
+
+**Qué está evaluando la cátedra**  
+Capacidad de analizar iniciativas con perfil mixto que cambian de naturaleza a lo largo de su ciclo de vida (de exploración/implementación acotada hacia operación estable o hacia producto estratégico).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-09">
+
+## 1. Evaluación de las 3 dimensiones (Devin & Austin)
+
+| Dimensión | Nivel estimado | Justificación contextual |
+| :--- | :--- | :--- |
+| **Necesidad de Innovación** | **ALTA al inicio** | Entrenar y calibrar modelos de visión por computadora sobre fotografías reales no controladas (iluminación, ángulos, falsos positivos/negativos) y diseñar el umbral de derivación a peritos exige exploración técnica y experimentación inicial. |
+| **Repetición Confiable** | **MEDIA** | Una vez validado el modelo e integrado al circuito core de liquidación de siniestros, debe producir clasificaciones consistentes, trazables y auditables día tras día. |
+| **Costo de Iteración** | **MEDIO** | Experimentar con el modelo *offline* sobre conjuntos históricos de fotos es relativamente barato y rápido, pero desplegar cambios en producción e impactar pagos de siniestros o rechazos por fraude conlleva costos de validación, auditoría, sesgo y riesgo legal/reputacional. |
+
+---
+
+## 2. Arquetipo de gestión recomendado: PROYECTO inicial con evolución a PROCESO
+
+- **Fase 1 — PROYECTO inicial (acotado y con iteraciones internas de validación):**  
+  Se encuadra inicialmente como un **Proyecto** con objetivo medible, presupuesto acotado, hitos de validación (por ejemplo, prueba de concepto con dataset histórico, piloto en paralelo —*shadow mode*— contrastado contra peritos humanos y criterios mínimos de precisión/falsos negativos) e integración controlada con el sistema de siniestros. Esto permite acotar la exposición financiera y asegurar una puesta en marcha auditable.
+- **Fase 2 — Evolución a PROCESO (operación y mantenimiento continuo):**  
+  Una vez que el detector está integrado y estable en producción, el objetivo principal pasa a ser la **operación confiable y continua** dentro del flujo de liquidación: monitoreo de degradación del modelo (*model drift*), atención de casos excepcionales escalados por peritos, auditoría periódica y ciclos estandarizados de reentrenamiento. Ese régimen operativo corresponde a un **Proceso** (Kanban / operación controlada por indicadores de precisión y tiempos de respuesta).
+
+---
+
+## 3. Alternativa válida: PRODUCTO de IA estratégico
+
+Si la dirección de la aseguradora no busca únicamente automatizar una etapa puntual de su operación interna, sino convertir el motor de peritaje inteligente en una **ventaja competitiva evolutiva y de largo plazo** —por ejemplo, expandiéndolo progresivamente a nuevos ramos (hogar, flotas, granizo), ofreciendo cotización instantánea de cara al asegurado en la app móvil o incluso comercializando la capacidad como servicio a terceros—, la alternativa más adecuada es gestionarlo como un **Producto de IA estratégico**.
+
+En ese escenario:
+- Se conforma un equipo multidisciplinario estable (ingeniería, ciencia de datos, negocio de siniestros y UX) sin fecha artificial de disolución.
+- Se combinan ciclos continuos de *Discovery* (nuevos tipos de siniestros, experiencia de captura de fotos guiada para el asegurado) y *Delivery* incremental guiado por *outcomes* de negocio (reducción del tiempo punta a punta de liquidación, ahorro verificado por detección de fraude y satisfacción del asegurado).
+
+</SolutionDrawer>

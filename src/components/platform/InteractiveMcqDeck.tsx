@@ -10,12 +10,14 @@ import {
 
 export interface InteractiveMcqDeckProps {
   courseId: string;
+  storageScope?: string;
   unitId: string;
   questions: CompiledMcqItem[];
 }
 
 export function InteractiveMcqDeck({
   courseId,
+  storageScope,
   unitId,
   questions,
 }: InteractiveMcqDeckProps) {
@@ -24,34 +26,41 @@ export function InteractiveMcqDeck({
 
   useEffect(() => {
     const sync = () => {
-      setAnswers(readStoredMap<McqStateMap>(getExamMcqKey(courseId)));
+      setAnswers(
+        readStoredMap<McqStateMap>(getExamMcqKey(courseId, storageScope)),
+      );
     };
     sync();
     const onSync = (ev: Event) => {
-      const custom = ev as CustomEvent<{ courseId?: string }>;
-      if (!custom.detail?.courseId || custom.detail.courseId === courseId) {
+      const custom = ev as CustomEvent<{ courseId?: string; storageScope?: string }>;
+      if (
+        (!custom.detail?.courseId || custom.detail.courseId === courseId) &&
+        (custom.detail?.storageScope ?? undefined) === (storageScope ?? undefined)
+      ) {
         sync();
       }
     };
     window.addEventListener(EXAM_PREP_SYNC_EVENT, onSync);
     return () => window.removeEventListener(EXAM_PREP_SYNC_EVENT, onSync);
-  }, [courseId]);
+  }, [courseId, storageScope]);
 
   const handleSelectOption = (questionId: string, optionKey: McqOptionKey) => {
-    const current = readStoredMap<McqStateMap>(getExamMcqKey(courseId));
+    const key = getExamMcqKey(courseId, storageScope);
+    const current = readStoredMap<McqStateMap>(key);
     const updated: McqStateMap = { ...current, [questionId]: optionKey };
     setAnswers(updated);
-    writeStoredMap(courseId, getExamMcqKey(courseId), updated);
+    writeStoredMap(courseId, key, updated, storageScope);
   };
 
   const handleResetUnit = () => {
-    const current = readStoredMap<McqStateMap>(getExamMcqKey(courseId));
+    const key = getExamMcqKey(courseId, storageScope);
+    const current = readStoredMap<McqStateMap>(key);
     const updated: McqStateMap = { ...current };
     for (const q of questions) {
       delete updated[q.id];
     }
     setAnswers(updated);
-    writeStoredMap(courseId, getExamMcqKey(courseId), updated);
+    writeStoredMap(courseId, key, updated, storageScope);
   };
 
   const answeredCount = questions.filter((q) => Boolean(answers[q.id])).length;

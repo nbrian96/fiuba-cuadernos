@@ -1,0 +1,81 @@
+---
+id: "gdsi-ej-17"
+courseId: "gdsi"
+number: 17
+title: "Situación 16: Botón 'Seguro de Envíos' (Fake Door), Deseabilidad vs. Viabilidad"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 3
+origin: "Banco de Situaciones Prácticas — Situación 16 (Fake Door y Viabilidad)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado — Situación Práctica 16">
+
+Un *marketplace* de comercio electrónico decide testear una nueva idea de negocio: coloca un botón destacado **"Seguro de Envíos"** en la pantalla de *checkout*. Cuando un comprador hace clic, el sistema muestra un cartel que indica **"Próximamente"** (experimento tipo *Fake Door*).
+
+Al cabo de una semana, el botón acumula **1.200 clics**, lo que equivale a una **tasa de conversión del 15%** respecto de los visitantes del *checkout*. Entusiasmado, el Product Owner presenta los números al directorio y afirma:
+
+> *"Con 1.200 clics y un 15% de conversión, la deseabilidad y la viabilidad del negocio están 100% demostradas. Podemos aprobar el desarrollo completo del módulo de seguros e integrarlo con las aseguradoras."*
+
+1. Explicá qué **sí valida** y qué **NO valida** este experimento *Fake Door*.
+2. Fundamentá por qué la afirmación del Product Owner sobre **deseabilidad** y **viabilidad** es metodológicamente errónea.
+3. Proponé el **siguiente experimento recomendado** para obtener evidencia más fuerte antes de comprometer desarrollo completo.
+
+**Qué está evaluando la cátedra**  
+Rigor en el análisis de evidencia empírica (*Fake Door* / *Smoke Test*), distinción entre las dimensiones de riesgo de producto (**deseabilidad**, **viabilidad** y **factibilidad**) y diseño de experimentos progresivos orientados a disposición real a pagar.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-17">
+
+## 1. Qué SÍ Valida y Qué NO Valida el *Fake Door*
+
+| Dimensión | Qué SÍ valida este experimento | Qué NO valida este experimento |
+| :--- | :--- | :--- |
+| **Interés inicial / Atención** | Que el concepto **"Seguro de Envíos"** llama la atención en el momento de compra y genera **curiosidad o interés inicial** (15% de clics indica tracción superficial). | No distingue entre un usuario que realmente compraría el seguro y alguien que hizo clic solo para averiguar qué cubre o cuánto cuesta. |
+| **Disposición a pagar (*Willingness to Pay*)** | — | **No validada:** hacer clic es gratuito y no expone el precio real ni exige compromiso financiero. |
+| **Viabilidad económica** | — | **No validada:** no aporta ningún dato sobre el costo de la póliza, la tasa real de siniestros/reclamos (daños, pérdidas o fraude), los márgenes netos ni el marco regulatorio/legal de seguros. |
+| **Retención y experiencia real** | — | **No validada:** no prueba si los compradores volverían a contratar el seguro tras usar el proceso de reclamo ni si la operación de siniestros es sostenible. |
+
+---
+
+## 2. Por Qué es Errónea la Afirmación del Product Owner
+
+1. **Sobre la deseabilidad ("100% demostrada"):**  
+   Un *Fake Door* sin precio aporta **evidencia débil/temprana de interés**, jamás demostración total de deseabilidad. En descubrimiento de producto, el costo que asume el usuario determina la fuerza de la evidencia: un clic sin fricción cuesta cero; aceptar un cargo extra en la tarjeta de crédito implica un compromiso mucho más alto.
+2. **Sobre la viabilidad ("100% demostrada"):**  
+   La **viabilidad** evalúa si el modelo de negocio es financieramente sostenible (ingresos > costos de póliza + siniestros + operación + cumplimiento legal). El experimento realizado **no midió ingresos, ni precios, ni costos, ni siniestralidad**. Confundir clics en un botón con viabilidad económica puede llevar a construir un producto muy usado pero ruinoso (por ejemplo, si la tasa de reclamos supera el margen cobrado).
+3. **Confusión entre volumen de muestra y fuerza de evidencia:**  
+   Que haya **1.200 clics** solo confirma que el tráfico del *marketplace* es alto; un gran volumen de datos de **baja fuerza** no se convierte mágicamente en evidencia fuerte sobre disposición a pagar o rentabilidad.
+
+---
+
+## 3. Siguiente Experimento Recomendado
+
+Antes de desarrollar integraciones complejas con aseguradoras y gestión automatizada de siniestros, el equipo debe subir un peldaño en la jerarquía de evidencia:
+
+### Opción A — Prueba de Humo (*Smoke Test*) con Precio Explícito
+- Mostrar en el *checkout* el **precio real del seguro** (por ejemplo, una tarifa fija o un porcentaje explícito del envío) junto con un resumen claro de cobertura.
+- Medir qué porcentaje de compradores **selecciona activamente la opción con el recargo sumado al total** y avanza hasta confirmar la compra (notificando antes del cobro real que el servicio está en etapa piloto o bonificando el cargo en la primera prueba).
+- **Qué valida:** sensibilidad al precio y brecha real entre la curiosidad gratuita (15%) y la intención con precio visible.
+
+### Opción B — Experimento *Concierge* en un Segmento Piloto (Recomendado para validar Viabilidad)
+- Habilitar el **"Seguro de Envíos"** cobrando una **tarifa mínima real** en una sola categoría de productos o zona geográfica acotada (por ejemplo, 5% del tráfico durante 2 semanas).
+- Operar **manualmente por detrás** (sin construir todavía el motor de pólizas ni integraciones automáticas): registrar las compras aseguradas en una planilla, contratar respaldo o cubrir manualmente eventuales reclamos reales.
+- **Qué valida:**
+  - **Deseabilidad fuerte:** porcentaje de usuarios que efectivamente **pagan** por el seguro.
+  - **Viabilidad inicial:** tasa real de siniestros, costo promedio de cada reclamo, riesgo de fraude y margen económico neto por envío asegurado.
+
+<AcademicBlock kind="trap" title="Trampa frecuente en el examen">
+
+- **Creer que 1.200 clics "son suficientes estadísticamente":** el problema del *Fake Door* no es el tamaño de la muestra, sino el **tipo de comportamiento medido** (clic gratuito ≠ pago efectivo ≠ negocio rentable).
+- **Omitir el experimento siguiente:** responder solo "el PO está equivocado porque es un Fake Door" cubre la mitad de la consigna. Siempre conviene proponer un experimento concreto que incorpore **precio explícito** o **cobro real tipo Concierge** para validar viabilidad.
+
+</AcademicBlock>
+
+</SolutionDrawer>

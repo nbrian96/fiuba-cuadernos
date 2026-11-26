@@ -326,4 +326,80 @@ test.describe("Extensibilidad Multi-Materia (gdsi + redes + tda)", () => {
 
     expect(errors).toEqual([]);
   });
+
+  test("gdsi Evaluación 1, simulacro de parciales, 33 ejercicios, WCAG 2.1 AA y 0 overflow", async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (err) => errors.push(err.message));
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/gdsi/docs/preparacion-evaluacion-1/", { waitUntil: "networkidle" });
+    await expect(page.getByTestId("exam-prep-control-bar")).toBeVisible();
+    await expect(page.getByTestId("global-recall-count")).toContainText("0 / 27 dominadas");
+    await expect(page.getByTestId("global-mcq-count")).toContainText("0 / 36 correctas");
+    await expect(page.getByTestId("evidence-hierarchy-explorer")).toBeVisible();
+    await expect(page.getByTestId("example-mapping-board")).toBeVisible();
+    await expect(page.getByTestId("story-map-board")).toBeVisible();
+    await expect(page.getByTestId("risk-exposure-matrix")).toBeVisible();
+    await expect(page.getByTestId("glossary-explorer")).toBeVisible();
+    await expect(page.getByTestId("interactive-checklist")).toBeVisible();
+    await expect(page.getByText("Aviso al renderizar diagrama")).toHaveCount(0);
+
+    // Probar modo Flashcards en Ev 1
+    await page.getByTestId("recall-flashcard-mode-u0").click();
+    await expect(page.getByTestId("flashcard-stage-u0")).toBeVisible();
+
+    // Probar /gdsi/parciales/, /gdsi/ejercicios/ y Simulacro Ponderado de Parciales Reales
+    await page.goto("/gdsi/parciales/", { waitUntil: "networkidle" });
+    await expect(page.locator("main")).toContainText("ReciclaPlus");
+    await expect(page.locator("main")).toContainText("ClubPlay");
+
+    await page.goto("/gdsi/ejercicios/", { waitUntil: "networkidle" });
+    await expect(page.getByTestId("hud-visible-count")).toHaveText("33");
+
+    await page.goto("/gdsi/docs/simulacro-parciales-evaluacion-1/", { waitUntil: "networkidle" });
+    await expect(page.getByTestId("parcial-simulator-gdsi-eval1-2026-05-18-reciclaplus")).toBeVisible();
+    await expect(page.getByTestId("parcial-simulator-gdsi-eval1-2026-10-26-clubplay")).toBeVisible();
+
+    const eval1Routes = [
+      "/gdsi/docs/preparacion-evaluacion-1/",
+      "/gdsi/docs/simulacro-parciales-evaluacion-1/",
+      "/gdsi/parciales/",
+    ] as const;
+    for (const theme of ["light", "dark"] as const) {
+      await page.goto("/gdsi/");
+      await page.evaluate((t) => {
+        localStorage.setItem("mc:v1:global:theme", t);
+        document.documentElement.setAttribute("data-theme", t);
+      }, theme);
+
+      for (const route of eval1Routes) {
+        await page.goto(route, { waitUntil: "networkidle" });
+        await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+        const results = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
+        expect(results.violations, `WCAG en ${route} (${theme})`).toEqual([]);
+      }
+    }
+
+    for (const vp of [
+      { width: 1440, height: 900 },
+      { width: 390, height: 844 },
+      { width: 844, height: 390 },
+    ]) {
+      await page.setViewportSize(vp);
+      for (const overflowRoute of [
+        "/gdsi/docs/preparacion-evaluacion-1/",
+        "/gdsi/docs/simulacro-parciales-evaluacion-1/",
+      ]) {
+        await page.goto(overflowRoute, { waitUntil: "networkidle" });
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > window.innerWidth,
+        );
+        expect(overflow, `Overflow horizontal en ${overflowRoute} (${vp.width}x${vp.height})`).toBe(false);
+      }
+    }
+
+    expect(errors).toEqual([]);
+  });
 });

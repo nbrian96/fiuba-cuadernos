@@ -1,0 +1,68 @@
+---
+id: "gdsi-ej-01"
+courseId: "gdsi"
+number: 1
+title: "Artful Making: Relación entre 'Release' y 'Play'"
+unit: "u01-introduccion-modelos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Evaluación 1: Producto (Modelo 1C 2026 — 18/05/2026) · Pregunta 1 (10%)"
+isParcial: true
+examIds:
+  - "gdsi-eval1-2026-05-18-reciclaplus"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+En el marco de **Artful Making**, ¿qué relación describe correctamente *"release"* y *"play"*? *(10%)*
+
+- **a)** *"Release"* es la puesta en producción del software y *"play"* es la fase de pruebas exploratorias previa al lanzamiento.
+- **b)** *"Release"* es soltar el control para permitir la autonomía y la exploración, y *"play"* es el espacio seguro para experimentar y la obra que producimos.
+- **c)** *"Release"* significa liberar al equipo de cualquier fecha límite y *"play"* consiste en aplicar dinámicas lúdicas en la retrospectiva.
+- **d)** *"Release"* implica congelar el alcance antes de iterar y *"play"* se refiere a ejecutar fielmente el guion preestablecido sin desvíos.
+
+**Qué está evaluando la cátedra**  
+Comprensión del marco conceptual de Robert Austin y Lee Devin (*Artful Making*, 2003): el desplazamiento del control predictivo tradicional hacia el liderazgo por condiciones de borde (*Control by Release*) y la doble acepción teatral del concepto de *play* aplicada al desarrollo de software.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-01">
+
+## Respuesta correcta
+
+La opción correcta es la **b)**:
+
+> *"Release" es soltar el control para permitir la autonomía y la exploración, y "play" es el espacio seguro para experimentar y la obra que producimos.*
+
+---
+
+## Fundamento teórico (Austin & Devin — *Artful Making*)
+
+En *Artful Making: What Managers Need to Know About How Artists Work* (2003), Robert Austin y Lee Devin analizan cómo los equipos que trabajan con materiales "blandos" y de **bajo costo de iteración** —como el teatro o el software— gestionan la incertidumbre creativa frente a fechas límite inamovibles (*"Make it great before the deadline"* en lugar del paradigma industrial *"Get it right the first time"*).
+
+El marco identifica **cuatro cualidades colaborativas** interdependientes (*Release, Collaboration, Ensemble* y *Play*), entre las cuales **Release** y **Play** guardan una relación estructural:
+
+1. **Release (*Control by Release*):**  
+   No significa caos ni ausencia de gestión, sino **soltar el control prescriptivo detallado** (la microgestión paso a paso) para habilitar la autonomía creativa y la exploración del equipo. Quien lidera define **condiciones de borde claras** —propósito, restricciones, fecha límite y criterios de calidad— y luego libera el control sobre el *cómo* para que emerjan mejores soluciones que las que podría especificar un planificador central por adelantado.
+2. **Play (doble acepción teatral):**  
+   En inglés teatral, *play* conjuga dos significados indisociables:
+   - **El proceso (*playing*):** el espacio psicológicamente seguro de ensayo, prueba, juego e improvisación disciplinada donde el equipo experimenta hipótesis y aprende de los errores a bajo costo antes del estreno.
+   - **El resultado (*the play*):** la obra viva, coherente e integrada que finalmente se entrega al público (el producto de software funcional en manos de los usuarios).
+
+Sin **Release** (autonomía dentro de límites claros), el equipo no tiene margen ni permiso para explorar; sin **Play**, esa autonomía no se traduce en experimentación productiva ni converge en una obra valiosa entregada a tiempo.
+
+---
+
+## Por qué las demás opciones son incorrectas
+
+| Opción | Error conceptual detectado |
+| :--- | :--- |
+| **a)** | Confunde el término organizacional *release* de Austin & Devin con el anglicismo técnico *software release* (despliegue a producción) y reduce *play* a una etapa tardía de *testing* manual. |
+| **c)** | Error frecuente en parcial: *Control by Release* **nunca** elimina la fecha límite; al contrario, el *deadline* inamovible ("el telón se levanta el día del estreno") es una de las condiciones de borde que da foco y urgencia a la iteración. Tampoco reduce *play* a juegos de retrospectiva. |
+| **d)** | Describe exactamente el paradigma opuesto (enfoque industrial/predictivo rígido): congelar el alcance y ejecutar un guion sin desvíos anula la reconcepción colaborativa y la emergencia creativa propia del *Artful Making*. |
+
+</SolutionDrawer>

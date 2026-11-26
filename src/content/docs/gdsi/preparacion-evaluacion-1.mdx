@@ -1,0 +1,1057 @@
+---
+docId: preparacion-evaluacion-1
+courseId: gdsi
+title: "Resumen Activo y Preparación Integral — Evaluación 1 (Producto)"
+order: 1
+entityType: ElaboratedSummary
+provenance: elaborated_summary
+sectionIds:
+  - unidad-0-marco-base-y-artful-making
+  - unidad-1-product-discovery-e-incertidumbre
+  - unidad-2-metodos-empiricos-y-validacion
+  - unidad-3-construccion-con-scrum-y-bdd
+  - unidad-4-revision-del-avance-y-contrastacion
+  - unidad-5-planificacion-iterativa-y-story-mapping
+  - unidad-6-gestion-sistematica-de-riesgos
+  - unidad-7-equipos-personas-y-comunicacion
+  - unidad-8-mejora-continua-y-metricas
+  - matrices-y-errores-imperdonables
+  - glosario-y-checklist-final
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import ActiveRecallCards from "@/components/platform/ActiveRecallCards";
+import ExamPrepControlBar from "@/components/platform/ExamPrepControlBar";
+import InteractiveChecklist from "@/components/platform/InteractiveChecklist";
+import InteractiveMcqDeck from "@/components/platform/InteractiveMcqDeck";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import ExampleMappingBoard from "@/components/gdsi/ExampleMappingBoard";
+import StoryMapBoard from "@/components/gdsi/StoryMapBoard";
+import RiskExposureMatrix from "@/components/gdsi/RiskExposureMatrix";
+import EvidenceHierarchyExplorer from "@/components/gdsi/EvidenceHierarchyExplorer";
+import GlossaryExplorer from "@/components/gdsi/GlossaryExplorer";
+import {
+  getCompiledGdsiEval1Unit,
+  getCompiledGdsiEval1Units,
+  getGdsiEval1Checklist,
+  getGdsiEval1Glossary,
+} from "@/data/gdsiEval1";
+
+export const allExamUnits = getCompiledGdsiEval1Units();
+export const examUnitsMeta = allExamUnits.map((u) => ({
+  id: u.id,
+  number: u.number,
+  shortTitle: u.shortTitle,
+  title: u.title,
+  correctKeys: Object.fromEntries(u.mcqItems.map((q) => [q.id, q.correctKey])),
+}));
+export const unit0 = getCompiledGdsiEval1Unit("u0");
+export const unit1 = getCompiledGdsiEval1Unit("u1");
+export const unit2 = getCompiledGdsiEval1Unit("u2");
+export const unit3 = getCompiledGdsiEval1Unit("u3");
+export const unit4 = getCompiledGdsiEval1Unit("u4");
+export const unit5 = getCompiledGdsiEval1Unit("u5");
+export const unit6 = getCompiledGdsiEval1Unit("u6");
+export const unit7 = getCompiledGdsiEval1Unit("u7");
+export const unit8 = getCompiledGdsiEval1Unit("u8");
+export const eval1Glossary = getGdsiEval1Glossary();
+export const eval1Checklist = getGdsiEval1Checklist();
+
+> **Universidad de Buenos Aires — Facultad de Ingeniería (FIUBA)**  
+> **Asignatura:** Gestión del Desarrollo de Sistemas Informáticos (`GDSI`) · **Cátedra Fontdevila — Gabardini**  
+> **Instancia:** Guía interactiva integral para la **Evaluación 1 — Producto** (aprobación con **60%**): 9 unidades (`U0`–`U8`) con diagramas horizontales, matrices comparativas, 5 tableros interactivos de cátedra, **27 tarjetas de Active Recall** (*La sé / Repasar*), **36 Multiple Choice** con corrección inmediata, **Glosario de 32 términos** y **Checklist final**.
+
+<AcademicBlock kind="note" title="Cómo estudiar Evaluación 1 con esta guía">
+  1. Usá el **Panel de Estudio** para filtrar una unidad puntual (`U0`–`U8`) o alternar entre *Teoría y Matrices*, *Autoevaluación* y *Multiple Choice*. Tu avance en Evaluación 1 queda guardado de forma independiente respecto a Evaluación 2.
+  2. Interactuá con los tableros de cátedra incrustados en cada unidad (*Jerarquía de Evidencia*, *Example Mapping*, *Story Mapping* y *Matriz de Riesgos 5×5*) para fijar criterios de decisión reales.
+  3. Cuando termines el recorrido teórico, entrená en condiciones reales con el [Simulacro Ponderado de Parciales Reales (ReciclaPlus y ClubPlay)](../simulacro-parciales-evaluacion-1/) y resolvé los casos guiados del [catálogo de ejercicios](../../ejercicios/).
+</AcademicBlock>
+
+<div data-exam-prep-root data-study-view="all" data-study-unit="all">
+
+<ExamPrepControlBar client:load courseId="gdsi" storageScope="ev1" units={examUnitsMeta} totalRecall={27} totalMcq={36} />
+
+<section className="exam-unit-section" data-exam-unit="u0">
+
+## Unidad 0: Marco Base y Artful Making
+
+<div data-study-block="theory">
+
+### A. Los Tres Arquetipos de Gestión: Proyecto, Producto y Proceso
+
+La primera decisión profesional en `GDSI` consiste en **diagnosticar el contexto** antes de elegir una metodología. No existe una receta única: forzar Scrum en soporte diario bajo SLAs o aplicar gestión predictiva rígida a una innovación con LLMs genera desperdicio, fricción y fracaso.
+
+| Dimensión | Gestión por Proyecto | Gestión por Producto | Gestión por Proceso |
+| :--- | :--- | :--- | :--- |
+| **Propósito y horizonte** | Esfuerzo **temporal** con fecha de inicio y fin para crear un entregable único (ej. migración ERP). | Evolución **continua** orientada a generar valor sostenido para usuarios y negocio sin fecha artificial de cierre. | Operación **recurrente y continua** para atender una demanda constante bajo acuerdos de nivel de servicio (SLAs). |
+| **Naturaleza del alcance** | Definido y estabilizado tempranamente en una línea base (*baseline*) y *WBS*. | Emergente, dinámico y priorizado por valor en un *Product Backlog* vivo. | Ítems heterogéneos y atómicos que ingresan bajo demanda (incidentes, pedidos, soporte). |
+| **Nivel de incertidumbre** | Baja a media; tecnología conocida y dominio relativamente estable. | Alta incertidumbre de mercado, de conducta del usuario y/o tecnológica. | Baja incertidumbre técnica; variabilidad concentrada en el volumen y urgencia de llegada. |
+| **Criterio de éxito** | Adherencia a la triple restricción (alcance, plazo, presupuesto) y entrega conforme a contrato. | **Outcomes** (cambio observable en la conducta del usuario) e **Impacto** de negocio (ROI, retención). | Estabilidad del flujo, reducción de *Lead Time* / *Cycle Time* y cumplimiento estricto de SLAs. |
+| **Marco y prácticas típicas** | PMI / PMBOK, *Project Charter*, WBS, ruta crítica (CPM), control formal de cambios (CCB). | *Product Discovery*, Scrum, BDD, *Story Mapping*, *Continuous Delivery*, métricas DORA. | Lean / Kanban, sistema *Pull*, límites de WIP, clases de servicio (*Expedite*), ITSM. |
+| **Equipo y estructura** | Equipo conformado para el proyecto y disuelto o reasignado al cierre. | Equipo multidisciplinario estable y persistente (*Stream-Aligned*), dueño de punta a punta. | Célula operativa orientada a flujo y estabilidad del servicio (o esquema híbrido *Run & Change*). |
+
+### B. Artful Making (Lee Devin y Rob Austin)
+
+El desarrollo de software fracasa cuando se lo gestiona como una línea de montaje industrial tayloriana. A diferencia de la ingeniería civil o automotriz —donde diseñar (planos) y fabricar (piezas físicas) están separados—, en el software la **codificación es diseño continuo** y la única "fabricación" repetitiva es la compilación o copia de binarios a costo marginal nulo.
+
+#### 1. Las 3 Dimensiones de Aplicabilidad
+
+Devin y Austin identifican tres variables estructurales que determinan cuándo abandonar el paradigma industrial y adoptar **Artful Making** (análogo al teatro o la creación artística colaborativa):
+
+1. **Necesidad de Innovación:** qué tan novedoso, incierto o diferenciado es el problema y la solución.
+2. **Repetición Confiable:** grado en que el trabajo requiere resultados estandarizados, predecibles y repetibles una y otra vez.
+3. **Costo de Iteración:** costo económico, operativo y reputacional de probar una versión, aprender del error y modificarla.
+
+$$\text{Costo de Iteración} = \text{Costo de Reconfiguración} + \text{Costo de Exploración}$$
+
+- **Por qué el software es un material "blando":** carece de inercia física, es maleable y particionable. Gracias a pruebas automatizadas, refactorización y *CI/CD*, su costo de iteración puede mantenerse bajo —aunque si se acumula deuda técnica o si un error afecta nóminas masivas en producción, el costo de iteración vuelve a dispararse.
+
+#### 2. Las 4 Cualidades Colaborativas de Artful Making
+
+- **Release (*Control by Release*):** la dirección define la visión, las condiciones de borde y fechas fijas de entrega, y luego **suelta el microcontrol** otorgando autonomía real al equipo para que la calidad emerja en iteraciones sucesivas.
+- **Collaboration (*Colaboración*):** no es "dividir el trabajo y juntar las partes al final", sino **reconcebir ideas en conjunto** mediante diálogo multidisciplinario, donde el aporte de un par transforma la propuesta del otro.
+- **Ensemble (*Elenco*):** grupo cohesionado de pares con habilidades complementarias donde el resultado colectivo importa más que el lucimiento individual (sin "estrellas" egoístas ni silos impermeables).
+- **Play (*Juego y Obra*):** doble sentido de la palabra en inglés: el proceso exploratorio, seguro y creativo de ensayar alternativas, y la *obra* concreta que finalmente sale a escena ante una audiencia real.
+
+#### 3. Industrial Making vs. Artful Making
+
+| Dimensión | Industrial Making (Paradigma Fabril) | Artful Making (Paradigma Colaborativo / Ágil) |
+| :--- | :--- | :--- |
+| **Consigna rectora** | *"Get it right the first time"* (hacerlo bien a la primera). | *"Make it great before the deadline"* (hacerlo grandioso antes de la fecha límite). |
+| **Naturaleza del error** | Desvío inaceptable que debe prevenirse con especificación exhaustiva previa. | Fuente barata de aprendizaje temprano dentro de iteraciones cortas y seguras. |
+| **Modelo de control** | Comando y control; separación estricta entre "pensadores" y "ejecutores". | *Control by Release*: marco claro, restricciones explícitas y autonomía del elenco. |
+| **Cuándo aplicarlo** | Innovación baja, repetición confiable alta y costo de iteración alto (ej. migración masiva de nómina). | Innovación alta, baja repetibilidad y costo de iteración bajo (ej. producto digital nuevo). |
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 0 — Diagnóstico contextual con las 3 dimensiones de Devin & Austin"
+  code={`flowchart LR
+    D["Evaluar 3 Dimensiones (Devin & Austin)"] --> A["Innovación ALTA + Costo Iteración BAJO"]
+    D --> B["Innovación BAJA + Repetición ALTA + Costo ALTO"]
+    D --> C["Demanda Continua + SLAs Estrictos"]
+    A --> P1["PRODUCTO (Artful Making · Discovery + Scrum)"]
+    B --> P2["PROYECTO (Predictivo / Rollout por oleadas)"]
+    C --> P3["PROCESO (Kanban · Pull · WIP · ITSM)"]`}
+/>
+
+### C. Los 4 Casos Clásicos de la Guía Práctica 1
+
+Dominar estos cuatro casos de cátedra te permite justificar diagnósticos de arquetipo en cualquier parcial:
+
+| Caso de la Guía 1 | Innovación | Repetición | Costo Iteración | Arquetipo Recomendado | Alternativa Válida y Matiz Clave |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [**Caso 1: Chatbot Bancario con LLM**](../../ejercicios/gdsi-ej-07/) | **Alta** | **Baja** | **Bajo** | **PRODUCTO** (Discovery + entregas incrementales con *guardrails*). | **Proyecto inicial de 3 meses** para piloto acotado que luego **evoluciona a Producto** (equipo estable). |
+| [**Caso 2: Célula de Administración y Finanzas**](../../ejercicios/gdsi-ej-08/) (+5 años en prod., SLAs `< 1 día` clientes / `< 2 días` proveedores) | **Baja** | **Alta** | **Alto** | **PROCESO** (Kanban / ITSM con límites de WIP y Clases de Servicio por SLA). | **Modelo híbrido *Run & Change***: carril *Run* (Kanban para SLAs) + carril *Change* (cambios regulatorios mayores). |
+| [**Caso 3: Detección Inteligente de Fotos de Siniestros**](../../ejercicios/gdsi-ej-09/) (IA / Visión por computadora en aseguradora) | **Alta al inicio** | **Media** | **Medio** | **PROYECTO inicial** (PoC + piloto *shadow mode*) que **evoluciona a PROCESO** (monitoreo de *model drift* y reentrenamiento). | **PRODUCTO de IA estratégico** si la aseguradora decide escalarlo a nuevos ramos o comercializarlo como ventaja competitiva. |
+| [**Caso 4: Implementación Corporativa de PeopleSoft HCM**](../../ejercicios/gdsi-ej-10/) (+10.000 empleados, nóminas y cargas sociales) | **Baja** | **Alta** | **Alto** | **PROYECTO escalonado por oleadas (*Rollout*)** con piloto `< 1.000` empleados en paralelo (evitar *Big Bang*). | Al cerrar la migración, el mantenimiento de nómina y soporte pasa a **PROCESO** continuo (Kanban / ITSM). |
+
+<AcademicBlock kind="trap" title={unit0.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit0.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 0
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u0" items={unit0.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 0
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u0" questions={unit0.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u1">
+
+## Unidad 1: Product Discovery e Incertidumbre
+
+<div data-study-block="theory">
+
+### A. "El Software Ya No Viene en una Caja" (Jeff Patton)
+
+En el modelo clásico de software empaquetado (*shrink-wrapped*), el fabricante cobraba **antes** de que el usuario descubriera si la herramienta servía. En la economía digital actual (SaaS, apps móviles, suscripciones), el usuario abandona el producto en segundos si no resuelve un problema real. Por eso Jeff Patton reformula la meta del desarrollo de producto:
+
+- **El Output es un costo, no un logro:** escribir código, cerrar tickets y lanzar *features* consume dinero y agrega complejidad de mantenimiento.
+- **La regla de oro:** **maximizar los *Outcomes* minimizando el *Output* construido**.
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 1 — Cadena de valor en Product Discovery (Jeff Patton)"
+  code={`flowchart LR
+    I["Insumos (Ideas, tiempo, equipo, presupuesto)"] --> O["OUTPUT (Software / Features — ES COSTO)"]
+    O --> OC["OUTCOME (Cambio observable en conducta del usuario)"]
+    OC --> IM["IMPACT (Resultado de negocio: ingresos, retención, ROI)"]`}
+/>
+
+### B. La Evidencia del Desperdicio y la Trampa del "Requerimiento"
+
+- **CHAOS Report (Standish Group):** entre el **65% y el 75%** de las funcionalidades construidas en sistemas de software rara vez o nunca son utilizadas por los usuarios finales.
+- **Marty Cagan (*Inspired*):** al menos entre el **50% y el 80%** de las ideas de producto no logran el resultado de negocio esperado —incluso en empresas líderes con equipos experimentados, apenas alrededor de **un tercio (33%)** de las ideas validadas rigurosamente generan impacto positivo real, y casi ninguna funciona bien en su primera versión sin iteraciones.
+- **Kent Beck sobre la palabra "requerimiento":** llamar *"requerimiento"* a lo que un *stakeholder* pide es una trampa semántica. La palabra sugiere algo obligatorio, indiscutible y cierto, cuando en realidad la inmensa mayoría de los pedidos iniciales son **hipótesis de valor** que deben ponerse a prueba antes de invertir meses de ingeniería.
+
+<AcademicBlock kind="definition" title="Product Discovery vs. Product Delivery">
+  <strong>Product Discovery</strong> busca responder con evidencia rápida y barata <em>"¿qué vale la pena construir?"</em> (reduciendo incertidumbre de valor, usabilidad, factibilidad y negocio). <strong>Product Delivery</strong> busca construir, probar y operar con alta calidad técnica aquello que ya demostró merecer inversión (<em>"¿cómo lo construimos bien?"</em>). Ambos flujos corren en paralelo y de forma continua (<em>Dual-Track Agile</em>).
+</AcademicBlock>
+
+### C. Evolución del MVP y Ciclo de Producto de Spotify
+
+El concepto de **MVP (*Minimum Viable Product*)** es uno de los términos más tergiversados de la industria. La cátedra exige distinguir sus tres acepciones históricas:
+
+| Etapa / Autor | Definición Operativa del MVP | Foco Principal | Peligro si se malinterpreta |
+| :--- | :--- | :--- | :--- |
+| **Frank Robinson (2001)** | Producto con el conjunto mínimo de características necesarias para ser **comercialmente viable** y generar retorno temprano (ROI) en el mercado. | Viabilidad comercial y entrada óptima al mercado. | Confundir "mínimo" con recortar calidad o lanzar algo invendible. |
+| **Eric Ries (2011, *Lean Startup*)** | Versión de un nuevo producto (incluso sin código) que permite recolectar la **máxima cantidad de aprendizaje validado** con el **mínimo esfuerzo** (*Next Best Test*). | Aprendizaje empírico rápido sobre hipótesis críticas. | Quedarse atrapado en experimentos sin construir nunca una solución real. |
+| **Deformación Corporativa (Antipatrón)** | *"First Crappy Release"*: entregar un producto roto, incompleto o lleno de *bugs* simplemente porque llegó la fecha límite impuesta. | Cumplir fecha a cualquier costo degradando la calidad. | Destruye la confianza del usuario, acumula deuda técnica y **no valida ninguna hipótesis**. |
+
+#### Ciclo de Evolución de Producto de Spotify (Henrik Kniberg)
+
+Para evitar la trampa del *"First Crappy Release"*, Henrik Kniberg popularizó el modelo de cuatro etapas de Spotify:
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 1 — Ciclo de evolución de producto de Spotify (Henrik Kniberg)"
+  code={`flowchart LR
+    T["1. Think it (Hipótesis, prototipos descartables, Discovery)"] --> B["2. Build it (MVP real de alta calidad para 1%–2% de usuarios)"]
+    B --> ST["3. Ship it & Tweak it (Despliegue progresivo midiendo Outcomes hasta validar)"]
+    ST --> SC["4. Scale it (Escalado global, performance, operación a gran escala)"]`}
+/>
+
+- **Idea clave:** en *Think it* la mayoría de las ideas se descartan barato; en *Build it* solo se construye un MVP **viable y digno** para un 1%–2% de audiencia; en *Ship it & Tweak it* se ajusta iterativamente con datos reales hasta demostrar el *Outcome*; recién en *Scale it* se invierte en escalabilidad masiva.
+
+### D. Product Vision Board (Roman Pichler) y los 4 Riesgos de Marty Cagan
+
+Antes de abrir un *backlog* de historias, el equipo alinea su hipótesis estratégica mediante los **5 bloques del Product Vision Board** y los vincula con los **4 Riesgos Fundamentales de Producto**:
+
+| Bloque del Product Vision Board (Pichler) | Pregunta Estratégica que Responde | Riesgo de Cagan Directamente Asociado |
+| :--- | :--- | :--- |
+| **1. Visión** | ¿Cuál es el propósito superior y el cambio positivo que busca el producto? | Alineación transversal de valor y negocio. |
+| **2. Grupo Objetivo (*Target Group*)** | ¿Qué segmento concreto de usuarios y clientes lo adoptará? | **Riesgo de Valor / Atractivo (Deseabilidad):** ¿les importa realmente este problema? |
+| **3. Necesidades (*Needs / JTBD*)** | ¿Qué dolor real o *Job to Be Done* resuelve y qué valor aporta? | **Riesgo de Valor / Atractivo (Deseabilidad):** ¿elegirán nuestra solución frente a sus alternativas actuales? |
+| **4. Producto (*Product*)** | ¿Cuáles son las 3–5 capacidades diferenciadoras mínimas y es factible construirlo? | **Riesgo de Usabilidad** (¿saben operarlo?) + **Riesgo de Factibilidad Técnica** (¿podemos construirlo con el tiempo, talento y tecnología disponibles?). |
+| **5. Objetivos de Negocio (*Business Goals*)** | ¿Cómo beneficia a la organización (ingresos, retención, ahorro, cumplimiento)? | **Riesgo de Viabilidad de Negocio:** ¿funciona financiera, legal, ética y comercialmente para nuestra empresa? |
+
+#### Prototipado Rápido Descartable (*Throwaway Prototyping*)
+
+En *Product Discovery*, los prototipos (bocetos en papel, *wireframes* clickeables en Figma o pruebas técnicas aisladas) se diseñan explícitamente para **aprender rápido y descartarse**. Convertir un prototipo descartable en código de producción sin reescribirlo bajo estándares de calidad es una de las fuentes más graves de deuda técnica estructural.
+
+<AcademicBlock kind="trap" title={unit1.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit1.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 1
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u1" items={unit1.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 1
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u1" questions={unit1.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u2">
+
+## Unidad 2: Métodos Empíricos y Validación
+
+<div data-study-block="theory">
+
+### A. Aprendizaje Pre-Construcción vs. Aprendizaje en Producción
+
+Validar hipótesis exige distinguir dos momentos con costos radicalmente distintos:
+
+- **Pre-construcción (antes de programar):** el costo de equivocarse es bajísimo (horas o días). Se combinan entrevistas de hechos pasados (*The Mom Test*), indagación contextual (*Shadowing*), prototipos con pruebas de usabilidad y experimentos simulados (*Fake Door, Landing Page, Concierge, Wizard of Oz*).
+- **Producción (con software real en vivo):** ofrece la evidencia conductual más sólida (dinero real, retención real, *A/B Testing* sobre tráfico masivo), pero cuesta mucho más construir y operar el software. Por eso se llega a producción solo después de haber filtrado las peores hipótesis en pre-construcción.
+
+<EvidenceHierarchyExplorer client:load />
+
+### B. The Mom Test (Rob Fitzpatrick)
+
+La mayoría de las entrevistas de usuarios fallan porque las personas son educadas y mienten para no herir nuestros sentimientos (**sesgo de cortesía**), o especulan con optimismo sobre hábitos futuros que jamás cumplirán (**sesgo de optimismo**). Para obtener datos confiables incluso hablando con tu propia madre, Rob Fitzpatrick establece **3 reglas de oro**:
+
+1. **Hablá sobre la vida del entrevistado, no sobre tu idea.** Si le contás tu solución al principio, activás el modo "cumplido" y dejás de aprender sobre su problema real.
+2. **Preguntá por hechos específicos del pasado reciente, no por opiniones ni hipótesis sobre el futuro.** Lo que hizo ayer pesa cien veces más que lo que promete que haría mañana.
+3. **Hablá menos y escuchá más.** Indagá cuánto tiempo, esfuerzo o dinero ya invirtió intentando resolver ese dolor hoy; si no buscó ninguna solución improvisada, probablemente el dolor no sea real.
+
+| Pregunta Inválida (Viola *The Mom Test*) | Problema Metodológico | Pregunta Válida (Aplica *The Mom Test*) |
+| :--- | :--- | :--- |
+| *"¿Te parece buena idea una app para organizar fútbol 5?"* | Busca aprobación y dispara el sesgo de cortesía. | *"Contame la última vez que organizaste un partido: ¿qué salió mal y cómo lo resolviste?"* |
+| *"¿Pagarías USD 10 por mes por esta plataforma?"* | Intención hipotética futura sin costo real (*fluff*). | *"¿Cuánto dinero o tiempo perdiste el mes pasado cuando se canceló una reserva? ¿Qué herramientas pagás hoy?"* |
+| *"¿Usarías una función de recordatorios automáticos?"* | Opinión genérica sobre una *feature* imaginaria. | *"¿Cómo recordás actualmente tus turnos? Mostrame qué tenés anotado hoy en el teléfono."* |
+
+### C. Pruebas de Usabilidad (Kate Moran / NNGroup y Jakob Nielsen)
+
+Una **prueba de usabilidad** consiste en observar directamente a usuarios representativos intentando completar tareas reales sobre un prototipo o producto sin recibir ayuda del equipo.
+
+- **Los 3 pilares (Kate Moran / Nielsen Norman Group):**
+  1. **Facilitador (Moderador):** guía la sesión de forma neutral, evita inducir respuestas y formula preguntas abiertas de seguimiento.
+  2. **Tareas realistas:** escenarios concretos alineados con objetivos reales del usuario (nunca instrucciones paso a paso como *"hacé clic en el botón azul de arriba"*).
+  3. **Participante representativo:** persona perteneciente al segmento objetivo real (no desarrolladores internos ni amigos ajenos al dominio).
+- **Protocolo *Think-Aloud* (Pensar en voz alta):** se le pide al participante que verbalice continuamente qué espera ver, qué entiende y dónde se confunde mientras interactúa, exponiendo modelos mentales incompatibles con la interfaz.
+- **Regla de los 5 usuarios (Jakob Nielsen):** testear con **5 usuarios representativos** permite descubrir alrededor del **85%** de los problemas graves de usabilidad. A partir del 5to usuario aparecen rendimientos decrecientes (se repiten los mismos hallazgos); por eso conviene hacer **múltiples rondas iterativas de 5 usuarios** corrigiendo el diseño entre rondas, en lugar de un único estudio masivo con 20 usuarios al final.
+
+<AcademicBlock kind="note" title="Distinción crítica de examen: Usabilidad ≠ Deseabilidad">
+  Que 5 de 5 participantes completen el flujo de un prototipo sin cometer un solo error demuestra exclusivamente <strong>operabilidad (riesgo de usabilidad)</strong>. <strong>NUNCA</strong> demuestra demanda de mercado, deseabilidad, retención ni disposición a pagar (riesgo de valor/negocio). Confundir ambos planos es uno de los errores más penalizados en los parciales de GDSI.
+</AcademicBlock>
+
+### D. Matriz de los 5 Experimentos Simulados y Comparaciones Clave
+
+| Experimento | Mecánica Operativa | Qué SÍ Valida | Qué NO Valida | Ejemplo Clásico |
+| :--- | :--- | :--- | :--- | :--- |
+| **Fake Door / Painted Door** | Botón o acceso visible hacia una *feature* aún no construida; al hacer clic muestra *"Próximamente"* y registra la intención. | Curiosidad e interés puntual pre-código sobre una capacidad específica. | Uso recurrente, retención, disposición real a pagar ni que el servicio completo funcione. | Botón *"Encontrá los jugadores que te faltan"* en ClubPlay (70/400 clics). |
+| **Landing Page / Smoke Test** | Página web o video explicando la propuesta de valor y precios con un botón de registro o pre-compra. | Atractivo del posicionamiento, claridad del mensaje y conversión inicial de visitantes. | Satisfacción tras usar el producto real ni factibilidad técnica de entregarlo. | Video explicativo de Dropbox; landing de planes pagos de Buffer. |
+| **Concierge MVP** | El equipo entrega manualmente el servicio de principio a fin **de forma transparente** (el usuario sabe que lo atiende un humano). | Valor real del resultado, dolor del cliente, flujo óptimo y disposición a pagar. | Escalabilidad operativa ni factibilidad técnica del software automatizado futuro. | *Food on the Table* (el fundador armaba menús y listas de compras a mano con cada familia). |
+| **Wizard of Oz MVP** | Interfaz que aparenta ser automática/inteligente, pero un humano ejecuta la lógica detrás de escena **sin que el usuario lo sepa**. | Reacción natural y adopción ante una experiencia automatizada antes de programar algoritmos complejos. | Factibilidad técnica, latencia real ni costo de automatización del algoritmo definitivo. | Zappos (fotos de zapaterías locales; compraba el par a mano al recibir pedidos); ruteo manual detrás de app. |
+| **Buy-a-Feature** | Dinámica grupal donde clientes reciben un presupuesto ficticio limitado (inferior al costo total) para "comprar" juntos las *features* más valiosas. | Priorización relativa genuina bajo restricción presupuestaria y compensaciones (*trade-offs*) entre clientes. | Comportamiento individual real con dinero propio en mercado abierto. | Taller de priorización de *roadmap* B2B con clientes corporativos. |
+
+#### Matriz Comparativa: Concierge MVP vs. Wizard of Oz MVP
+
+| Dimensión | Concierge MVP | Wizard of Oz MVP |
+| :--- | :--- | :--- |
+| **Transparencia ante el usuario** | **Total:** el cliente sabe que lo atiende una persona real. | **Simulada:** el cliente cree estar interactuando con un sistema automatizado. |
+| **Interfaz digital requerida** | Nula o mínima (WhatsApp, planilla, correo, entrevista personal). | Requiere un *front-end* o interfaz verosímil que oculte la operación manual trasera. |
+| **Principal ventaja** | Aprendizaje cualitativo profundo del flujo y de las excepciones cara a cara. | Mide la conducta auténtica frente a una experiencia "automática" sin sesgo interpersonal. |
+| **Limitación común** | Ninguno valida factibilidad técnica ni escalabilidad de la arquitectura automatizada posterior. | Ninguno valida factibilidad técnica ni escalabilidad de la arquitectura automatizada posterior. |
+
+#### Matriz Comparativa: The Mom Test vs. Pruebas de Usabilidad vs. Fake Door
+
+| Criterio | The Mom Test | Pruebas de Usabilidad (5 usuarios) | Fake Door / Smoke Test |
+| :--- | :--- | :--- | :--- |
+| **Riesgo de Cagan atacado** | Valor / Atractivo (existencia del dolor). | Usabilidad (operabilidad del diseño). | Valor / Atractivo (interés en propuesta concreta). |
+| **Evidencia recolectada** | Hechos concretos y verificables del pasado reciente. | Conducta de interacción observada en tareas reales (*Think-Aloud*). | Clics reales, registros o intentos efectivos de activar la función. |
+| **Qué NO prueba** | Si tu solución específica gustará o convertirá. | Demanda de mercado, adopción ni intención de pago. | Uso recurrente ni satisfacción con el servicio completo. |
+
+### E. Shadowing e Indagación Contextual (*Contextual Inquiry*)
+
+Complementando las entrevistas, el **Shadowing** (observación directa en campo sin interferir) y la **Indagación Contextual** (observar al usuario en su entorno real de trabajo haciendo preguntas puntuales en el momento en que ocurre una acción) revelan conocimiento tácito: planillas paralelas, atajos no documentados, interrupciones del entorno y fricciones físicas que las personas omiten o racionalizan cuando hablan en una sala de reuniones.
+
+<AcademicBlock kind="trap" title={unit2.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit2.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 2
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u2" items={unit2.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 2
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u2" questions={unit2.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u3">
+
+## Unidad 3: Construcción con Scrum y BDD
+
+<div data-study-block="theory">
+
+### A. Scrum Guide 2020: Empirismo, Responsabilidades y Compromisos
+
+**Scrum** es un marco de trabajo liviano que ayuda a equipos a generar valor ante problemas complejos. Se fundamenta en el **Empirismo** (el conocimiento proviene de la experiencia y de decidir en base a lo observado) y en el **Lean Thinking** (reducir desperdicio y enfocarse en lo esencial).
+
+- **3 Pilares Empíricos:** **Transparencia** (el estado real del trabajo es visible para todos), **Inspección** (revisar frecuentemente artefactos y progreso hacia el objetivo) y **Adaptación** (ajustar inmediatamente si hay desvíos). Sin transparencia, la inspección engaña; sin adaptación, la inspección es inútil.
+- **5 Valores de Scrum:** **Compromiso**, **Foco**, **Apertura**, **Respeto** y **Coraje** — son los que habilitan la confianza necesaria para que los 3 pilares funcionen.
+- **3 Responsabilidades (*Accountabilities*, sin jerarquías internas):**
+  - **Product Owner (PO):** persona única responsable de maximizar el valor del producto y gestionar efectivamente el *Product Backlog*.
+  - **Developers:** profesionales del *Scrum Team* comprometidos a crear cualquier aspecto de un Incremento utilizable en cada Sprint, sosteniendo la calidad técnica y adaptando el plan diario.
+  - **Scrum Master (SM):** responsable de la efectividad del *Scrum Team* ayudando a entender y aplicar Scrum, removiendo impedimentos organizacionales y coacheando al equipo y a la organización.
+- **Eventos y Timeboxes (máximos para un Sprint de 1 mes; más breves en Sprints de 1–2 semanas):**
+  - **Sprint** ($\le 1\text{ mes}$): contenedor de todos los demás eventos; protege la cadencia predecible.
+  - **Sprint Planning** (máx. $8\text{ h}$): define *¿Por qué es valioso el Sprint?* (Sprint Goal), *¿Qué se puede completar?* y *¿Cómo se realizará el trabajo?*
+  - **Daily Scrum** ($15\text{ min}$ diarios): evento de y para los *Developers* orientado a inspeccionar el progreso hacia el *Sprint Goal* y adaptar el plan de las próximas 24 horas (no es un reporte de estado al jefe).
+  - **Sprint Review** (máx. $4\text{ h}$): inspección colaborativa del Incremento funcionando con *stakeholders* para adaptar el *Product Backlog*.
+  - **Sprint Retrospective** (máx. $3\text{ h}$): inspección del equipo sobre personas, interacciones, procesos, herramientas y DoD para planificar mejoras de calidad y efectividad.
+
+#### Artefactos de Scrum y sus Compromisos (Scrum Guide 2020)
+
+| Artefacto | Propósito | Compromiso Asociado (2020) | Función del Compromiso |
+| :--- | :--- | :--- | :--- |
+| **Product Backlog** | Lista ordenada y emergente de todo lo necesario para mejorar el producto. | **Product Goal** | Estado futuro del producto que sirve como objetivo de largo plazo contra el cual planifica el equipo. |
+| **Sprint Backlog** | *Sprint Goal* + ítems seleccionados + plan accionable de los *Developers*. | **Sprint Goal** | Objetivo único del Sprint que brinda coherencia y flexibilidad para negociar alcance sin perder el foco. |
+| **Incremento** | Peldaño concreto, utilizable y verificado hacia el *Product Goal*. | **Definition of Done (DoD)** | Descripción formal del estándar de calidad requerido para que un trabajo sea parte del Incremento. |
+
+### B. Slicing Vertical vs. Slicing Horizontal y Walking Skeleton
+
+| Dimensión | Slicing Vertical (Correcto) | Slicing Horizontal (Antipatrón por capas) |
+| :--- | :--- | :--- |
+| **Criterio de corte** | Rebanadas delgadas que atraviesan **todas las capas** (UI + lógica + datos + pruebas) para entregar una capacidad usable fin-a-fin. | División por capas técnicas (*"Sprint 1: Base de datos; Sprint 2: APIs; Sprint 3: Pantallas"*). |
+| **Feedback del usuario** | Inmediato al cerrar el primer Sprint: el usuario puede operar algo real. | Nulo hasta la integración tardía al final del proyecto. |
+| **Integración y riesgo** | Verifica la arquitectura real desde el día 1 y reduce riesgo de integración. | Oculta incompatibilidades entre capas hasta el último instante (*Big Bang*). |
+| **Ejemplo práctico** | 1) Reserva de cancha con seña manual en el club; 2) Pago online con tarjeta; 3) Reembolso automático. | 1) Diseñar todas las tablas SQL; 2) Programar todos los endpoints REST; 3) Maquetar todas las pantallas. |
+
+- **Walking Skeleton (Alistair Cockburn):** la primera rebanada vertical mínima que conecta toda la arquitectura de extremo a extremo (aunque con funcionalidad rudimentaria) para validar despliegue, pruebas y flujo completo desde muy temprano.
+
+### C. Behavior-Driven Development (BDD) y Example Mapping
+
+**BDD** construye un lenguaje ubicuo compartido entre negocio y tecnología mediante ejemplos concretos antes de escribir código. Recorre tres prácticas secuenciales:
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 3 — Las 3 prácticas de Behavior-Driven Development (BDD)"
+  code={`flowchart LR
+    D["1. Discovery (Three Amigos + Example Mapping)"] --> F["2. Formulation (Escenarios Gherkin: Given / When / Then)"]
+    F --> A["3. Automation (Pruebas ejecutables y documentación viva)"]`}
+/>
+
+#### Matriz Comparativa: Product Discovery vs. BDD Discovery
+
+| Dimensión | Product Discovery (Unidad 1–2) | BDD Discovery (Unidad 3) |
+| :--- | :--- | :--- |
+| **Pregunta central** | *¿Qué problema vale la pena resolver y qué solución elegirán los usuarios?* | *¿Qué reglas de negocio y casos borde exactos debe cumplir esta historia ya priorizada?* |
+| **Horizonte** | Estratégico / antes de comprometer una iniciativa o *feature* grande. | Táctico / refinamiento justo antes de implementar una historia en un Sprint. |
+| **Participantes típicos** | Product Manager / PO, UX Designer, Tech Lead y usuarios reales. | **Three Amigos**: Negocio (PO), Desarrollo (Dev) y Calidad (Tester/QA). |
+| **Artefacto principal** | Vision Board, prototipos, resultados de experimentos (*Mom Test, Fake Door, Concierge*). | *Example Map* (tarjetas) y escenarios formulados en *Given / When / Then*. |
+
+- **Three Amigos y Deliberate vs. Accidental Discovery:** reunir a Negocio, Desarrollo y Testing **antes** de programar provoca **Deliberate Discovery** (descubrir ambigüedades, reglas contradictorias y casos borde en una conversación de 25 minutos). Saltear este espacio condena al equipo al **Accidental Discovery**: toparse con las dudas en medio del código o cuando el usuario reporta un *bug* en producción, multiplicando el costo de corrección.
+
+#### Example Mapping (Matt Wynne / Nagy y Rose)
+
+Técnica visual estructurada en una sesión estrictamente acotada (**timebox de 20–30 minutos**) usando cuatro colores de tarjetas:
+- **Amarilla:** la Historia de Usuario en análisis.
+- **Azules:** las **Reglas de Negocio** (criterios de aceptación).
+- **Verdes:** **Ejemplos concretos** que ilustran cada regla (casos felices y casos borde).
+- **Rojas:** **Preguntas abiertas / dudas** que nadie en la sala puede responder con certeza en el momento (se anotan sin trabar la conversación para investigarlas luego).
+
+**Señales visuales diagnósticas al terminar el timebox:**
+- **Demasiadas tarjetas azules:** la historia es una Épica demasiado grande → **hacer Slicing Vertical**.
+- **Una regla azul con demasiadas tarjetas verdes:** la regla es excesivamente compleja → simplificar o partir la regla.
+- **Demasiadas tarjetas rojas:** falta entendimiento compartido (**no cumple Definition of Ready**) → **NO entra al Sprint** hasta resolver las dudas con negocio.
+- Al cierre, el equipo realiza una votación rápida con el pulgar (*thumb vote*) para confirmar si la historia está lista para ser estimada y tomada en un Sprint.
+
+<ExampleMappingBoard
+  client:load
+  title="Example Map — Registro de usuario en plataforma web"
+  story="Como visitante quiero registrarme con mi correo electrónico y contraseña para crear mi cuenta y operar en la plataforma"
+  rules={[
+    {
+      id: "reg-r1",
+      title: "Correo electrónico único y con formato válido",
+      detail: "No se permiten cuentas duplicadas ni correos mal formados.",
+      examples: [
+        "ana@ejemplo.com (no registrado) → Cuenta creada en estado pendiente de verificación.",
+        "ana@ejemplo.com (ya existente) → Rechaza con mensaje 'El correo ya se encuentra registrado'.",
+        "ana-sin-arroba.com → Rechaza antes de enviar por formato inválido.",
+      ],
+    },
+    {
+      id: "reg-r2",
+      title: "Contraseña segura de al menos 8 caracteres y un número",
+      detail: "Protege la cuenta frente a claves débiles desde el alta.",
+      examples: [
+        "Clave 'Sol2026!' (8 caracteres, incluye número) → Aceptada.",
+        "Clave 'clave' (5 caracteres, sin número) → Rechazada indicando requisitos mínimos.",
+      ],
+    },
+    {
+      id: "reg-r3",
+      title: "Activación por enlace de verificación con vigencia de 24 horas",
+      detail: "Confirma la titularidad del correo antes de habilitar operaciones.",
+      examples: [
+        "Hace clic en el enlace 2 horas después del alta → Cuenta activada correctamente.",
+        "Hace clic 30 horas después del alta → Enlace vencido; ofrece reenviar nuevo correo.",
+      ],
+    },
+  ]}
+  questions={[
+    "¿Se permite iniciar sesión con cuentas externas (Google) en este Sprint o queda para una historia separada?",
+  ]}
+  diagnosis="Con 3 reglas bien delimitadas, ejemplos claros de casos felices y de borde, y solo 1 duda acotada (que se resuelve dejando el login social como historia aparte), la historia es pequeña, comprensible y lista para el Sprint."
+  expectedAction="ready"
+/>
+
+### D. Historias de Usuario: 3C e INVEST
+
+- **Las 3C (Ron Jeffries):**
+  1. **Card (Tarjeta):** recordatorio conciso de una intención de negocio (no una especificación contractual extensa).
+  2. **Conversation (Conversación):** diálogo continuo entre negocio y equipo (ej. *Example Mapping*) donde se construye entendimiento compartido.
+  3. **Confirmation (Confirmación):** criterios de aceptación y pruebas verificables (*Given/When/Then*) que confirman objetivamente cuándo está terminada.
+- **Acrónimo INVEST (Bill Wake / Mike Cohn):** toda historia lista para el Sprint debería ser **I**ndependent (independiente de otras), **N**egotiable (abierta a conversación en el cómo), **V**aluable (entrega valor visible), **E**stimable (comprensible como para estimar tamaño), **S**mall (completable dentro de un Sprint) y **T**estable (verificable objetivamente).
+
+### E. Calidad Interna (TDD) vs. Calidad Externa (BDD) y Dobles de Prueba
+
+- **Calidad Externa (BDD / ATDD):** valida *construir el producto correcto* (comportamiento observable para el usuario y reglas de negocio).
+- **Calidad Interna (TDD — *Test-Driven Development*):** valida *construir el producto correctamente* (diseño modular, código limpio y libre de regresiones mediante el ciclo corto **Rojo → Verde → Refactor**).
+
+#### Taxonomía de Dobles de Prueba (Gerard Meszaros)
+
+Para aislar el código bajo prueba de dependencias externas lentas o no deterministas (pasarelas de pago, bases de datos, relojes), se utilizan cinco tipos de **Dobles de Prueba (*Test Doubles*)**:
+
+| Tipo de Doble | Comportamiento Técnico | Cuándo Usarlo |
+| :--- | :--- | :--- |
+| **Dummy** | Objeto vacío o nulo pasado únicamente para completar la firma de un método; nunca se invoca realmente. | Rellenar parámetros obligatorios irrelevantes para el escenario probado. |
+| **Stub** | Devuelve respuestas **preprogramadas** (*hardcodeadas*) ante llamadas específicas durante la prueba. | Simular estados controlados de un servicio externo (ej. *"la API devuelve tarjeta rechazada"*). |
+| **Spy** | Envuelve o reemplaza un colaborador y **registra** información sobre cómo fue invocado (cantidad de llamadas, argumentos). | Verificar indirectamente efectos colaterales después de la ejecución (ej. *"se envió exactamente 1 correo"*). |
+| **Mock** | Objeto preprogramado con **expectativas estrictas** de interacción que verifica la secuencia y argumentos de llamadas, fallando si no se cumplen. | Probar protocolos precisos de colaboración entre objetos donde el orden/llamada es parte del contrato. |
+| **Fake** | Implementación **funcional simplificada** que trabaja de verdad pero con atajos no aptos para producción. | Base de datos en memoria (ej. SQLite *in-memory*) o servicio de archivos temporal para pruebas rápidas e integradas. |
+
+<AcademicBlock kind="trap" title={unit3.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit3.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 3
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u3" items={unit3.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 3
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u3" questions={unit3.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u4">
+
+## Unidad 4: Revisión del Avance y Contrastación
+
+<div data-study-block="theory">
+
+### A. Sprint Review Colaborativa vs. Demo Pasiva
+
+La **Sprint Review** no es un teatro unilateral ni una presentación de diapositivas (*"demo pasiva"* donde el equipo habla 40 minutos y los *stakeholders* asienten). Es una **sesión de trabajo empírica** enfocada en el producto:
+
+| Dimensión | Demo Pasiva (Antipatrón) | Sprint Review Colaborativa (Scrum) |
+| :--- | :--- | :--- |
+| **Protagonismo** | Monólogo del equipo o del Scrum Master mostrando pantallas o *slides*. | Conversación bidireccional entre *Scrum Team*, clientes y *stakeholders* sobre software real funcionando. |
+| **Foco central** | *"Aprobar"* o justificar horas trabajadas ante un comité. | Inspeccionar el Incremento, contrastar supuestos de mercado y **adaptar el Product Backlog**. |
+| **Qué se muestra** | Incluso tareas "casi listas" o prototipos que no pasaron pruebas. | **Exclusivamente** ítems que cumplen el 100% de la *Definition of Done*. |
+| **Qué NO se discute aquí** | Problemas internos del equipo (conflictos, coordinación, herramientas). | Esos temas pertenecen **exclusivamente a la Sprint Retrospective** (espacio privado del equipo). |
+
+### B. La Regla Inquebrantable de la Definition of Done (DoD)
+
+La **Definition of Done** crea transparencia sobre qué significa que un Incremento esté realmente terminado (código integrado en rama principal, pruebas unitarias y de aceptación BDD en verde, revisión de pares, criterios de seguridad/rendimiento y potencialmente desplegable).
+
+- **Regla innegociable:** si una historia de usuario no cumple el **100% de la DoD** al finalizar el Sprint —aunque "funcione en la máquina del programador" o esté "al 95%"—:
+  1. **NO** forma parte del Incremento.
+  2. **NO** se presenta en la Sprint Review como trabajo terminado.
+  3. **NO** suma Story Points a la velocidad del Sprint (cero crédito parcial).
+  4. **Regresa al Product Backlog** para que el Product Owner decida si sigue siendo prioritaria en el próximo Sprint.
+
+### C. Contrastación Empírica con Example Maps
+
+Durante la construcción y el cierre del Sprint, los **Example Maps** y escenarios *Given / When / Then* elaborados en BDD funcionan como contrato ejecutable de contrastación: el equipo y el PO verifican el comportamiento real del sistema contra cada ejemplo verde acordado. Esto elimina discusiones subjetivas en la Review (*"eso no es lo que yo imaginé"*) y garantiza que la aceptación se base en hechos verificables.
+
+### D. Anatomía de "Un Día de Desarrollo Ágil" (Cap. 19 del Libro de Cátedra)
+
+Este caso emblemático del libro de cátedra ilustra cómo conviven en la práctica el ritmo diario, la disciplina de calidad y la respuesta profesional ante urgencias del negocio:
+
+- **Contexto inicial del Sprint:** el equipo comprometió un Sprint de **17 Story Points** y opera con un límite explícito de **WIP = 2** historias en progreso simultáneo en su tablero para evitar multitarea y cuellos de botella.
+- **Ritmo diario y calidad técnica:** la jornada inicia con una *Daily Scrum* de 15 minutos frente al irradiador de información (foco en terminar lo iniciado antes de abrir historias nuevas). El código se integra varias veces al día mediante **CI/CD** con suites automatizadas que protegen la DoD.
+- **El pedido urgente de mitad de Sprint:** aparece el Product Owner con un requerimiento imprevisto para una demostración crítica ante un **inversor**. El equipo **no** dice un "no" burocrático ni tampoco lo empuja (*push*) rompiendo el WIP o trabajando horas extras destructivas. En su lugar ejecuta un protocolo colaborativo en 3 pasos:
+  1. **Estimación exprés (*Planning Poker* rápido):** el equipo conversa con el PO sobre la necesidad del inversor y estima la funcionalidad completa en **4 Story Points**.
+  2. **Slicing vertical de emergencia:** analizan qué parte mínima realmente necesita ver el inversor y **parten la historia** para quedarse con la versión esencial (sin adornos prescindibles) manteniendo la DoD intacta.
+  3. **Intercambio equilibrado de alcance (*Swap*):** para incorporar el nuevo ítem al Sprint Backlog sin exceder la capacidad de 17 SP ni violar el límite de **WIP = 2**, el PO retira del Sprint una historia **aún no iniciada** de puntaje equivalente, protegiendo el *Sprint Goal* y el ritmo sostenible del equipo.
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 4 — Manejo de pedido urgente en 'Un día de desarrollo ágil' (Sprint de 17 SP, WIP = 2)"
+  code={`flowchart LR
+    U["Pedido urgente para inversor"] --> E["1. Planning Poker exprés (4 SP)"]
+    E --> S["2. Slicing vertical (mínimo esencial sin bajar DoD)"]
+    S --> SW["3. Intercambio simétrico (sale historia no iniciada equivalente)"]
+    SW --> OK["Sprint protegido: 17 SP · WIP = 2 · CI/CD en verde"]`}
+/>
+
+<AcademicBlock kind="trap" title={unit4.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit4.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 4
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u4" items={unit4.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 4
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u4" questions={unit4.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u5">
+
+## Unidad 5: Planificación Iterativa y Story Mapping
+
+<div data-study-block="theory">
+
+### A. Planificación por Niveles, Último Momento Prudente y Cono de Incertidumbre
+
+En entornos adaptativos la planificación es **continua y multinivel**, ajustando el nivel de detalle al horizonte temporal:
+
+- **Release Planning (Nivel Estratégico — MMF):** planifica un conjunto coherente de Sprints orientados a entregar un **MMF (*Minimum Marketable Feature*)** o *Release* con valor completo para el usuario/mercado (horizonte de semanas o pocos meses). Permite proyectar fechas o alcances probables usando rangos empíricos de velocidad.
+- **Sprint Planning (Nivel Táctico):** detalla con precisión únicamente el trabajo del Sprint inmediato (1 a 4 semanas), definiendo el *Sprint Goal* y las tareas concretas necesarias para cumplir la DoD.
+- **Principio del Último Momento Prudente (*Last Responsible Moment*):** postergar las decisiones costosas o difíciles de revertir hasta el punto exacto en que diferirlas más comenzaría a eliminar opciones valiosas. Así se decide con la **máxima información empírica** acumulada.
+- **Cono de Incertidumbre (Barry Boehm / Steve McConnell):** al comienzo de un desarrollo, las estimaciones de esfuerzo/duración pueden desviarse entre **$0.25\times$ y $4\times$** respecto del valor real (una amplitud de $16\times$ entre el extremo optimista y el pesimista). **El cono no se cierra por el simple paso del tiempo**, sino únicamente reduciendo incertidumbre real mediante *Discovery*, prototipos, *Spikes* y entregas incrementales.
+
+### B. Estimación Relativa, Planning Poker y Spikes
+
+#### Matriz Comparativa: Story Points vs. Días Ideales vs. Horas
+
+| Dimensión | Story Points (Estimación Relativa) | Días Ideales | Horas Reloj (Estimación Absoluta) |
+| :--- | :--- | :--- | :--- |
+| **Qué mide** | Tamaño relativo combinando **esfuerzo, complejidad e incertidumbre**. | Tiempo de trabajo concentrado sin interrupciones ni reuniones. | Duración calendario o esfuerzo individual exacto en reloj. |
+| **Escala típica** | Fibonacci modificada ($1, 2, 3, 5, 8, 13, 20$). | Números enteros o medios días. | Horas exactas (ej. 6 h, 14 h). |
+| **Ventaja principal** | Rápida, agnóstica a la velocidad individual del programador y refleja incertidumbre no lineal. | Más intuitiva de explicar a *stakeholders* no técnicos al inicio. | Útil solo para desglosar subtareas muy pequeñas del Sprint actual. |
+| **Trampa / Riesgo** | Traducir puntos a horas (*"1 SP = 4 horas"*) destruye por completo la estimación relativa. | Se confunden con días calendario reales y generan falsas promesas de fecha. | Falsa sensación de precisión, altísimo costo de estimar y fácil uso punitivo. |
+
+- **Planning Poker y Sesgo de Anclaje:** cada miembro del equipo elige en secreto su carta (Fibonacci) y todos la **revelan simultáneamente**. La revelación simultánea existe específicamente para neutralizar el **sesgo de anclaje** (evitar que el número que diga primero un referente senior o un gerente condicione la estimación del resto). Cuando hay divergencia, hablan primero los **extremos** (carta más alta y más baja) para destapar supuestos técnicos ocultos, riesgos o malentendidos de negocio, y luego se vuelve a votar.
+- **Spikes:** cuando una historia presenta demasiada incertidumbre técnica o funcional como para estimarla honestamente, no se inventa un número inflado ni se mete a ciegas al Sprint. Se crea un **Spike**: una investigación estrictamente *time-boxed* (ej. 1–2 días) cuyo **único entregable es conocimiento verificable** para poder dividir y estimar la historia real.
+
+#### Matriz Comparativa de 7 Técnicas de Estimación
+
+| Técnica | Enfoque Principal | Precisión | Esfuerzo | Contexto Recomendado |
+| :--- | :--- | :--- | :--- | :--- |
+| **Análoga** | Comparación *top-down* contra proyectos históricos parecidos. | Baja | Muy bajo | Etapa muy temprana con poca información y presupuestos de orden de magnitud. |
+| **Paramétrica** | Fórmula estadística sobre variables históricas (ej. horas por punto de función). | Media–Alta | Medio | Dominios repetitivos con base histórica cuantitativa confiable. |
+| **PERT (3 puntos)** | Ponderación probabilística $\mu = \frac{O + 4M + P}{6}$ y desviación $\sigma = \frac{P - O}{6}$. | Media–Alta | Medio | Actividades con incertidumbre dentro de cronogramas predictivos. |
+| **Delphi / Wideband Delphi** | Rondas iterativas y anónimas de expertos independientes para evitar sesgo de autoridad. | Media–Alta | Alto | Problemas novedosos sin datos históricos donde se requiere consenso experto. |
+| **Monte Carlo** | Miles de simulaciones estocásticas sobre *Throughput* histórico para proyectar percentiles de fecha. | Alta (probabilística) | Medio–Alto | Pronósticos de fechas y gestión de riesgo con historial empírico de entrega. |
+| **Story Points (Planning Poker)** | Tamaño relativo grupal (complejidad + esfuerzo + incertidumbre) combinado con velocidad empírica. | Alta a nivel agregado | Bajo–Medio | Equipos ágiles estables planificando Sprints y *Releases*. |
+| **`#NoEstimates`** | Dividir historias en tamaño homogéneo (*right-sizing*) y proyectar por conteo puro de ítems (*Throughput*). | Alta en flujo estable | Muy bajo | Sistemas Kanban o productos maduros donde estimar en horas agrega desperdicio. |
+
+### C. User Story Mapping (Jeff Patton)
+
+El **Story Map** reemplaza el *backlog* plano unidimensional (donde se pierde la visión global del usuario) por un mapa bidimensional:
+
+- **Eje horizontal superior — *Backbone* (Columna Vertebral):** representa las **actividades del usuario ordenadas cronológicamente** de izquierda a derecha a lo largo del flujo de uso. **REGLA INQUEBRANTABLE:** las actividades del *Backbone* **NO se priorizan entre sí** (no podés decidir que "buscar" es más prioritario que "pagar" y omitir el pago en un comercio electrónico).
+- **Eje vertical — Costillas (Historias de Usuario):** debajo de cada actividad se ordenan las historias de mayor necesidad (arriba) a menor necesidad o sofisticación evolutiva (abajo).
+- **Líneas horizontales de corte (*Releases*):** la primera franja horizontal que atraviesa **todo el Backbone de punta a punta** define el **Walking Skeleton / Release 1 (MVP)**; las franjas inferiores definen el Release 2, Release 3 y evolutivos sucesivos.
+
+<StoryMapBoard
+  client:load
+  title="Story Map Didáctico — Compra en Plataforma Digital (Búsqueda → Selección → Pago)"
+  subtitle="Recorrido fin-a-fin con Walking Skeleton (MVP) y Release 2 (Evolutivo)"
+  activities={[
+    {
+      id: "u5-act-1",
+      title: "1. Búsqueda",
+      roles: ["Comprador"],
+      mvpStories: [
+        { text: "Buscar productos por palabra clave en el catálogo.", role: "Comprador" },
+        { text: "Ver listado con foto principal, título y precio.", role: "Comprador" },
+      ],
+      release2Stories: [
+        { text: "Filtrar por rango de precio, marca y calificación.", role: "Comprador" },
+        { text: "Recibir recomendaciones personalizadas según historial.", role: "Comprador" },
+      ],
+    },
+    {
+      id: "u5-act-2",
+      title: "2. Selección",
+      roles: ["Comprador", "Operador"],
+      mvpStories: [
+        { text: "Ver detalle del producto y disponibilidad de stock.", role: "Comprador" },
+        { text: "Agregar ítems al carrito y revisar subtotal.", role: "Comprador" },
+        { text: "Actualizar stock disponible desde panel simple.", role: "Operador" },
+      ],
+      release2Stories: [
+        { text: "Guardar productos en lista de favoritos.", role: "Comprador" },
+        { text: "Aplicar cupones de descuento y promociones bancarias.", role: "Comprador" },
+      ],
+    },
+    {
+      id: "u5-act-3",
+      title: "3. Pago y Confirmación",
+      roles: ["Comprador", "Operador"],
+      mvpStories: [
+        { text: "Ingresar dirección y confirmar pedido con medio de pago único.", role: "Comprador" },
+        { text: "Recibir comprobante de confirmación por correo.", role: "Comprador" },
+        { text: "Ver listado de pedidos pagados para preparar despacho.", role: "Operador" },
+      ],
+      release2Stories: [
+        { text: "Pagar en cuotas con múltiples billeteras y tarjetas guardadas.", role: "Comprador" },
+        { text: "Seguimiento en vivo del envío en mapa.", role: "Comprador" },
+      ],
+    },
+  ]}
+  cutJustification="El Walking Skeleton / Release 1 (MVP) atraviesa las tres actividades del Backbone (Búsqueda → Selección → Pago) para permitir una transacción real de punta a punta desde el primer lanzamiento. El Release 2 incorpora filtros avanzados, favoritos, cupones y seguimiento en vivo una vez validada la conversión básica."
+/>
+
+### D. Velocidad y Slack vs. Colchón (*Padding*)
+
+- **Velocidad:** cantidad promedio de Story Points que cumplen **100% DoD** en un Sprint. Es una métrica **exclusivamente interna de calibración y pronóstico del propio equipo**: nunca sirve para comparar equipos (cada equipo tiene su escala relativa) ni para exigir "aumentar la velocidad" bajo presión (dispararía inflación de puntos y caída de calidad).
+- **Slack (Holgura planificada y transparente):** reservar explícitamente una fracción de la capacidad del equipo (ej. comprometer 18 SP en un equipo de velocidad 20 SP) para pagar deuda técnica, refactorizar, investigar mejoras y absorber pequeñas variaciones sin romper compromisos.
+- **Por qué el Slack supera al Colchón (*Padding*) tradicional:** inflar secretamente cada tarea con márgenes ocultos activa dos patologías conductuales documentadas por la gestión de proyectos:
+  1. **Ley de Parkinson:** *"El trabajo se expande hasta llenar todo el tiempo disponible para completarlo"* (si sobra margen oculto, se agrega complejidad innecesaria o *gold plating*).
+  2. **Síndrome del Estudiante:** al percibir que "hay tiempo de sobra", las personas postergan el inicio del trabajo real hasta el último momento; cuando aparece un imprevisto tarde, el colchón ya se evaporó.
+
+<AcademicBlock kind="trap" title={unit5.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit5.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 5
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u5" items={unit5.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 5
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u5" questions={unit5.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u6">
+
+## Unidad 6: Gestión Sistemática de Riesgos
+
+<div data-study-block="theory">
+
+### A. Identificación Continua y Cuantificación de la Exposición
+
+La cátedra sostiene un principio claro: **siempre se hace gestión de riesgos**, pero la diferencia entre improvisar y gestionar profesionalmente radica en volverla **explícita y continua** a lo largo de todo el ciclo de vida —desde *Discovery* hasta *Deployment*— cubriendo las cuatro dimensiones de éxito del producto (*Factibilidad Técnica, Atractivo, Sostenibilidad de Negocio y Calidad*).
+
+Cada amenaza identificada se evalúa cuantitativamente mediante la **Exposición al Riesgo**:
+
+$$\text{Exposición} = \text{Probabilidad} \times \text{Impacto}$$
+
+Trabajando en una matriz $5 \times 5$ con $P, I \in \{1, 2, 3, 4, 5\}$, se obtiene $E \in [1, 25]$:
+- **Zona Baja ($1\text{–}4$):** aceptación pasiva.
+- **Zona Media ($5\text{–}9$):** monitoreo periódico en *dailies* y revisiones.
+- **Zona Alta ($10\text{–}14$):** plan de contingencia o transferencia (priorización obligatoria a partir del umbral de cátedra $E > 10$, y atención explícita en el límite $E = 10$ cuando el impacto es catastrófico).
+- **Zona Crítica ($15\text{–}25$):** mitigación preventiva urgente o evitación antes del lanzamiento.
+
+<RiskExposureMatrix client:load />
+
+### B. Las 5 Estrategias de Tratamiento del Riesgo
+
+| Estrategia | Momento de Acción | Efecto sobre $P$ o $I$ | Ejemplo Concreto en Producto de Software |
+| :--- | :--- | :--- | :--- |
+| **1. Mitigación** | **Ex-ante** (preventiva, antes de que ocurra el evento). | Reduce la Probabilidad ($P$) y/o amortigua el Impacto ($I$). | Ejecutar un *Spike* técnico de integración, automatizar pruebas de carga antes de Black Friday, o usar *feature flags* para despliegue gradual. |
+| **2. Evitación** | **Ex-ante** (estructural). | Elimina la causa llevando $P \to 0$. | Descartar una librería *open-source* abandonada o eliminar una *feature* legalmente riesgosa del alcance del Release. |
+| **3. Transferencia** | **Ex-ante** (contractual u operativa). | Traslada la carga financiera u operativa a un tercero especializado. | Delegar cobros a una pasarela certificada PCI-DSS (Mercado Pago / Stripe) con contrato de SLA estricto o seguro de ciberriesgos. |
+| **4. Contingencia** | **Ex-post** (reactiva, se diseña antes pero se activa ante un *trigger*). | Reduce el daño cuando el riesgo ya se materializó. | Activar una pasarela de pagos secundaria de respaldo, ejecutar un *rollback* automatizado en menos de 5 minutos o pasar a registro manual temporal. |
+| **5. Aceptación** | Consciente (pasiva o activa con reserva). | No altera $P$ ni $I$; el costo de tratarlo supera el daño esperado. | Aceptar fallas estéticas menores de tipografía en navegadores antiguos con fuentes de respaldo (*fallback*), monitoreando sin desviar capacidad crítica. |
+
+### C. Priorización MoSCoW y Frecuencia de Releases como Mitigación Sistémica
+
+Cuando existen restricciones firmes de fecha o presupuesto, la gestión adaptativa **nunca recorta calidad ni la Definition of Done**: gobierna el alcance con **MoSCoW**:
+
+| Categoría MoSCoW | Significado Operativo | Criterio de Decisión en el Release |
+| :--- | :--- | :--- |
+| **M — Must Have** | Innegociable para que el producto sea viable y legalmente seguro. | Si falta un *Must*, el Release fracasa. Constituye el núcleo del MVP. |
+| **S — Should Have** | Importante y de alto valor, pero existe una alternativa temporal aceptable. | Entra si la velocidad lo permite; es el primer candidato a posponer ante una contingencia severa. |
+| **C — Could Have** | Deseable (*nice to have*), mejora la experiencia con bajo impacto si se difiere. | Se construye únicamente con capacidad sobrante y es lo primero que se recorta ante presión de plazo. |
+| **W — Won't Have (this time)** | Explícitamente excluido del Release actual (no significa "nunca", sino "ahora no"). | Alinea expectativas con *stakeholders* y evita el *scope creep* (expansión descontrolada del alcance). |
+
+#### La Frecuencia de Releases (2–4 semanas) como Amortiguador Natural
+
+Liberar incrementos pequeños, integrados y verificados cada **2 a 4 semanas** (o con mayor frecuencia mediante *Continuous Delivery*) es la **mitigación sistémica más poderosa** del desarrollo de producto porque:
+1. Acota el radio de daño de cualquier error técnico a un lote pequeño de cambios fáciles de diagnosticar y revertir.
+2. Transforma supuestos riesgosos de mercado en datos reales de usuarios semanas después de empezar (y no tras un año de desarrollo a ciegas).
+3. Evita el riesgo acumulativo de deuda técnica e integración tardía (*Big Bang*).
+
+<AcademicBlock kind="trap" title={unit6.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit6.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 6
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u6" items={unit6.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 6
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u6" questions={unit6.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u7">
+
+## Unidad 7: Equipos, Personas y Comunicación
+
+<div data-study-block="theory">
+
+### A. Team Topologies: Ley de Conway, Carga Cognitiva y Topologías
+
+Los sistemas de software son sistemas **socio-técnicos**: la arquitectura del código y la arquitectura de equipos se moldean mutuamente.
+
+- **Ley de Conway (Melvin Conway, 1968):** las organizaciones que diseñan sistemas están inevitablemente restringidas a producir arquitecturas que son copias de sus propias estructuras de comunicación (si tenés 4 áreas separadas —UI, Backend, DBA y QA— terminarás con un monolito fragmentado lleno de traspasos y cuellos de botella).
+- **Maniobra Inversa de Conway (*Inverse Conway Maneuver*):** diseñar deliberadamente la estructura de equipos y límites organizacionales para favorecer la arquitectura modular y desacoplada que queremos construir (equipos multidisciplinarios autónomos alineados a dominios de negocio).
+- **Los 3 Tipos de Carga Cognitiva en Equipos (John Sweller / Skelton & Pais):**
+
+$$CL_{\text{total}} = CL_{\text{intrínseca}} + CL_{\text{extraña}} + CL_{\text{germana}} \le C_{\text{equipo}}$$
+
+  1. **Carga Intrínseca:** complejidad técnica fundamental del lenguaje o las herramientas básicas (ej. sintaxis, concurrencia, estructura de clases). Se reduce con formación, prácticas limpias y *pair programming*.
+  2. **Carga Extraña (*Extraneous*):** fricción accidental del entorno que **no agrega valor al usuario** (ej. despliegues manuales, tickets burocráticos para pedir servidores, entornos de prueba rotos). **Objetivo: minimizarla drásticamente** mediante plataformas autoservicio.
+  3. **Carga Germana (*Germane*):** esfuerzo intelectual dedicado al corazón del negocio y sus reglas de dominio. **Objetivo: maximizar el espacio mental disponible** para esta carga.
+
+#### Los 4 Tipos de Equipos y 3 Modos de Interacción (Team Topologies)
+
+| Tipo de Equipo | Misión Principal | Relación con la Carga Cognitiva |
+| :--- | :--- | :--- |
+| **1. Stream-Aligned** *(Alineado al flujo)* | Unidad primaria multidisciplinaria dueña fin-a-fin de un flujo continuo de valor de negocio (producto, segmento o *journey*). | Recibe soporte de los otros 3 tipos para no superar su capacidad cognitiva y entregar con autonomía. |
+| **2. Enabling** *(Habilitador)* | Especialistas temporales que investigan y ayudan a equipos *Stream-Aligned* a adquirir nuevas capacidades (ej. BDD, observabilidad, seguridad). | Elimina brechas de aprendizaje de forma temporal; su éxito se mide por lograr que el equipo deje de necesitarlos. |
+| **3. Complicated-Subsystem** *(Subsistema complicado)* | Especialistas profundos a cargo de un componente de altísima complejidad técnica (ej. motor de IA, códec de video, cálculo actuarial). | Aísla una carga intrínseca extrema para que los equipos *Stream-Aligned* no se paralicen. |
+| **4. Platform** *(Plataforma)* | Construye y opera servicios internos autoservicio (CI/CD, infraestructura, telemetría) siguiendo el principio de **TVP (*Thinnest Viable Platform*)**. | Absorbe y elimina la **carga cognitiva extraña** ofreciendo consumo simple tipo *X-as-a-Service*. |
+
+**Los 3 Modos de Interacción:**
+1. **Collaboration (*Colaboración*):** dos equipos trabajan muy estrechamente por un tiempo acotado para descubrir nuevas APIs, patrones o tecnologías (alto costo de comunicación, alto ritmo de descubrimiento).
+2. **X-as-a-Service:** un equipo provee un servicio con interfaz clara y documentación autoservicio que otro equipo consume con mínima fricción comunicacional.
+3. **Facilitating (*Facilitación*):** un equipo (típicamente *Enabling*) guía y remueve obstáculos de otro para aumentar su autonomía operativa.
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 7 — Las 4 topologías de equipo y los 3 modos de interacción (Team Topologies)"
+  code={`flowchart LR
+    EN["Enabling Team"] -->|"Facilitating (Coaching temporal)"| SA["Stream-Aligned Team (Flujo de valor fin-a-fin)"]
+    PL["Platform Team (TVP)"] -->|"X-as-a-Service (Baja carga extraña)"| SA
+    CS["Complicated-Subsystem Team"] -->|"Collaboration / X-as-a-Service"| SA`}
+/>
+
+### B. Dinámica Humana, Seguridad Psicológica y Toma de Decisiones
+
+- **Liderazgo Distribuido:** el liderazgo no reside en un cargo jerárquico único, sino que emerge dinámicamente según quién posee el contexto y conocimiento en cada momento del trabajo.
+- **Responsabilidad Solidaria (*Collective Ownership*):** el equipo completo responde por el resultado y la calidad del Incremento; no existen "mi módulo" ni "los bugs de QA".
+- **Comunicación Osmótica (Alistair Cockburn):** flujo natural y continuo de información contextual que ocurre cuando el equipo comparte espacio de trabajo (o canales abiertos bien diseñados en remoto), permitiendo resolver dudas en segundos y aprender por exposición cotidiana sin reuniones burocráticas.
+- **Regla de las 40 horas semanales (Ritmo Sostenible — XP):** el desarrollo de software es trabajo intelectual de alta precisión. Sostener horas extras reiteradas fatiga la capacidad cognitiva, dispara la tasa de defectos y genera retrabajo neto; las horas extra son una señal de alarma de planificación, nunca una herramienta productiva.
+- **Primera Directiva de Norm Kerth (*Prime Directive*):**
+  > *"Independientemente de lo que descubramos, entendemos y creemos sinceramente que todos hicieron el mejor trabajo posible, dado lo que sabían en ese momento, sus habilidades y capacidades, los recursos disponibles y la situación presente."*  
+  Es el fundamento ético de la **seguridad psicológica**: permite analizar fallos del sistema con honestidad sin caer en la caza de culpables.
+- **Consenso vs. Consentimiento (Tobias Mayer):**
+
+| Dimensión | Consenso | Consentimiento (Tobias Mayer) |
+| :--- | :--- | :--- |
+| **Pregunta clave** | *"¿Están todos 100% de acuerdo con esta opción?"* | *"¿Tiene alguien una objeción crítica fundamentada por la cual probar esto sea riesgoso?"* |
+| **Dinámica grupal** | Frecuentemente lento, desgastante o deriva en soluciones tibias para conformar a todos. | Ágil, empírico y respetuoso: habilita experimentar si es *suficientemente seguro intentarlo* (*safe-to-try*). |
+| **Tratamiento del disenso** | Un solo desacuerdo menor puede paralizar al grupo. | Las objeciones fundamentadas se integran para mejorar la propuesta; las preferencias personales no bloquean el avance. |
+
+### C. Irradiadores de Información y Gestión Visual del Flujo (Kanban)
+
+- **Irradiadores de Información (Alistair Cockburn):** artefactos visuales ubicados en un lugar de paso constante (tableros físicos o paneles visibles) que comunican el estado real del trabajo en segundos sin interrumpir a nadie. Deben ser simples, legibles a distancia, actualizados en tiempo real y con información relevante (progreso del Sprint, bloqueos, estado del *build* CI).
+- **Kanban, Sistema Pull y Límites de WIP:** frente al sistema *Push* (empujar trabajo sin mirar capacidad), un sistema **Pull** solo permite tomar una nueva historia cuando se liberó espacio bajo el **límite de WIP**. Por la **Ley de Little** ($\text{Cycle Time} = \frac{\text{WIP}}{\text{Throughput}}$), limitar el WIP reduce la multitarea, expone bloqueos de inmediato y acelera el tiempo real de entrega (*"Parar de empezar, empezar a terminar"*).
+
+<AcademicBlock kind="trap" title={unit7.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit7.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 7
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u7" items={unit7.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 7
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u7" questions={unit7.mcqItems} />
+
+</div>
+
+</section>
+
+<section className="exam-unit-section" data-exam-unit="u8">
+
+## Unidad 8: Mejora Continua y Métricas
+
+<div data-study-block="theory">
+
+### A. Las 5 Fases de la Retrospectiva (Esther Derby y Diana Larsen)
+
+La retrospectiva no es una charla informal de catarsis: sigue una estructura deliberada de **5 fases** que conduce al equipo desde la seguridad psicológica hasta experimentos medibles de mejora.
+
+<MermaidDiagram
+  client:load
+  caption="Unidad 8 — Las 5 fases de una retrospectiva efectiva (Derby & Larsen)"
+  code={`flowchart LR
+    F1["1. Set the Stage (Abrir · Seguridad psicológica)"] --> F2["2. Gather Data (Recolectar hechos objetivos)"]
+    F2 --> F3["3. Generate Insights (Causas raíz: 5 Porqués · Ishikawa)"]
+    F3 --> F4["4. Decide What to Do (1–2 acciones SMART)"]
+    F4 --> F5["5. Close (Cierre · Retro de la retro / ROTI)"]`}
+/>
+
+1. **Set the Stage (Preparar el escenario):** dar la bienvenida, hacer un *check-in* para que todas las voces hablen desde el minuto uno y recordar la **Primera Directiva de Kerth** para asegurar seguridad psicológica.
+2. **Gather Data (Recolectar datos):** construir una memoria compartida basada en **hechos observables y métricas** (línea de tiempo del Sprint, incidentes, *Cycle Time*, eventos reales), evitando quedarse solo con la emoción del último día.
+3. **Generate Insights (Generar entendimiento):** analizar el *porqué* profundo detrás de los datos mediante técnicas como los **5 Porqués**, el **Diagrama de Ishikawa (causa-efecto / espina de pescado)** y **Brainstorming** estructurado, diferenciando síntomas superficiales de causas raíz sistémicas.
+4. **Decide What to Do (Decidir qué hacer):** elegir **1 o 2 acciones prioritarias** (no una lista eterna de 15 deseos incumplibles) redactadas bajo formato **SMART** (*Specific, Measurable, Achievable, Relevant, Time-bound*) con dueño y criterio de verificación para el próximo Sprint.
+5. **Close (Cerrar):** agradecer aportes, confirmar acuerdos y realizar una **retro de la retro** (ej. votación *ROTI — Return on Time Invested*) para mejorar la facilitación de la propia ceremonia.
+
+<AcademicBlock kind="note" title="Por qué nunca se deben saltear fases en una retrospectiva">
+  Saltear <strong>Set the Stage</strong> deja al equipo a la defensiva y silencia las opiniones incómodas. Saltear <strong>Gather Data</strong> convierte la sesión en opiniones sesgadas por lo último que ocurrió. Saltear <strong>Generate Insights</strong> (pasando directo de quejas a soluciones) hace que el equipo aplique parches superficiales sobre síntomas mientras la causa raíz vuelve a romper el Sprint siguiente.
+</AcademicBlock>
+
+### B. Kaizen vs. Kaikaku y el Puente hacia Toyota Kata
+
+| Dimensión | Kaizen (Mejora Continua) | Kaikaku (Cambio Radical) |
+| :--- | :--- | :--- |
+| **Naturaleza del cambio** | Incremental, frecuente, cotidiano y de bajo riesgo por paso. | Disruptivo, estructural y de salto discreto de capacidad. |
+| **Horizonte y actores** | Todo el equipo en cada iteración (ej. retrospectivas y ajustes diarios). | Iniciativas puntuales con impulso técnico/organizacional mayor. |
+| **Ejemplo en software** | Ajustar criterios de DoD, refinar el tablero WIP o simplificar revisiones cuando se hace *pair programming*. | Migrar de despliegues manuales semestrales a *Continuous Deployment* totalmente automatizado. |
+
+- **Puente hacia Toyota Kata (Evaluación 2):** para evitar que la mejora dependa de inspiración aislada, **Toyota Kata** transforma *Kaizen* en un hábito científico cotidiano mediante *Improvement Kata* (Desafío → Condición Actual en el *Genba* → Siguiente Condición Objetivo → experimentos PDCA en el umbral de conocimiento) acompañado por *Coaching Kata* (la tarjeta de las 5 preguntas).
+
+### C. Enfoque GQM (Victor Basili), Métricas como Espejos y Ley de Goodhart
+
+#### 1. GQM (*Goal – Question – Metric*, Victor Basili)
+
+Medir sin propósito genera ruido y métricas de vanidad. El enfoque **GQM** deriva las métricas de arriba hacia abajo (*top-down*) y las interpreta de abajo hacia arriba (*bottom-up*):
+1. **Goal (Meta):** se formula con 5 componentes precisos — *Objeto* (qué analizamos), *Propósito* (para comprender/mejorar/evaluar), *Foco de Calidad* (estabilidad, velocidad, adopción), *Punto de Vista* (PO, equipo, usuarios) y *Contexto* (producto y período).
+2. **Questions (Preguntas):** interrogantes concretos que deben responderse para saber si estamos alcanzando la meta.
+3. **Metrics (Métricas):** datos objetivos y recolectables que responden cada pregunta (evitando medir cosas simplemente "porque la herramienta las trae").
+
+#### 2. Métricas como Espejos, Ley de Goodhart y Caso Dilbert / Ratbert
+
+- **Métricas como espejos (Tobias Mayer):** una métrica sana actúa como un espejo para que el propio equipo observe su realidad y decida cómo mejorar; jamás debe convertirse en un instrumento gerencial de control punitivo.
+- **Ley de Goodhart:** *"Cuando una medida se convierte en un objetivo (meta atada a incentivos, rankings o sanciones), deja de ser una buena medida."* Los seres humanos optimizan el número degradando el propósito real del sistema.
+- **Caso clásico Dilbert / Ratbert:** la gerencia promete un bono económico por cada *bug* encontrado y corregido → el equipo comienza a introducir *bugs* intencionalmente para luego "resolverlos" y cobrar el premio. Lo mismo ocurre cuando se exige subir *Story Points* (se inflan las estimaciones) o se celebran métricas de vanidad (como *3.000 descargas* sin medir usuarios activos ni retención).
+
+### D. Las 4 Métricas DORA (*Accelerate*) y el Diagnóstico "Falso Flujo Ágil"
+
+La investigación empírica de **DORA** (*DevOps Research and Assessment* — Nicole Forsgren, Jez Humble y Gene Kim) demostró que el alto desempeño en entrega de software se mide mediante **4 métricas organizadas en dos pares inseparables**:
+
+| Dimensión | Métrica DORA | Qué Mide | Nivel Élite |
+| :--- | :--- | :--- | :--- |
+| **Velocidad (*Throughput*)** | **1. Deployment Frequency (DF)** | Frecuencia con la que la organización despliega código exitosamente en producción. | Bajo demanda (**múltiples despliegues por día**). |
+| **Velocidad (*Throughput*)** | **2. Lead Time for Changes (LT)** | Tiempo transcurrido desde que un cambio se confirma (*commit*) hasta que corre en producción. | **Menos de 1 hora**. |
+| **Estabilidad** | **3. Change Failure Rate (CFR)** | Porcentaje de despliegues a producción que provocan una degradación o requieren remediación (*hotfix* / *rollback*). | **0% – 15%**. |
+| **Estabilidad** | **4. Time to Restore Service (MTTR)** | Tiempo que tarda el equipo en restaurar el servicio ante un incidente o caída en producción. | **Menos de 1 hora**. |
+
+- **Diagnóstico de examen — *Falso Flujo Ágil*:** un error crítico consiste en creer que velocidad y estabilidad son un *trade-off* inevitable. Si un equipo despliega muchas veces por semana o por día (alta *DF*), pero el 40%–45% de esos despliegues rompen producción (alto *CFR*) y vive apagando incendios con *hotfixes*, **NO es un equipo Élite**: padece un **Falso Flujo Ágil** por saltear prácticas de ingeniería (pruebas automatizadas, CI/CD, DoD rigurosa y arquitectura desacoplada). Los equipos verdaderamente de alto desempeño optimizan **velocidad y estabilidad al mismo tiempo**.
+
+<AcademicBlock kind="trap" title={unit8.trapTitle}>
+  <span dangerouslySetInnerHTML={{ __html: unit8.trapHtml }} />
+</AcademicBlock>
+
+</div>
+
+<div data-study-block="recall">
+
+### Preguntas y Respuestas de Autoevaluación — Unidad 8
+
+<ActiveRecallCards client:load courseId="gdsi" storageScope="ev1" unitId="u8" items={unit8.recallItems} />
+
+</div>
+
+<div data-study-block="mcq">
+
+### Multiple Choice — Unidad 8
+
+<InteractiveMcqDeck client:load courseId="gdsi" storageScope="ev1" unitId="u8" questions={unit8.mcqItems} />
+
+</div>
+
+</section>
+
+</div>
+
+---
+
+## Matrices y Errores Imperdonables
+
+### Matriz Síntesis: Output vs. Outcome vs. Impact
+
+| Nivel | Qué Representa | Naturaleza | Ejemplo en Producto Digital | Pregunta de Control en Examen |
+| :--- | :--- | :--- | :--- | :--- |
+| **Output** | Software, código, *features*, pantallas o tickets entregados. | **Es un costo y un medio**, nunca una prueba de éxito por sí mismo. | *"Lanzamos el módulo de reservas online y cerramos 42 historias en 3 Sprints."* | ¿Alguien cambió su conducta gracias a esto o solo acumulamos complejidad? |
+| **Outcome** | Cambio observable y medible en el **comportamiento real** de usuarios o clientes. | **Verdadero objetivo del equipo de producto** en el corto/mediano plazo. | *"El 65% de los jugadores que reservan vuelven a reservar otra cancha dentro de los 30 días."* | ¿Qué hacen distinto hoy los usuarios respecto de antes de nuestro cambio? |
+| **Impact** | Resultado estratégico y económico agregado para la organización o sociedad. | Consecuencia de largo plazo alimentada por múltiples *Outcomes* (y afectada por factores externos). | *"Aumento del 22% en ingresos recurrentes netos y reducción del 30% en canchas ociosas."* | ¿Cómo vuelve sostenible y viable el negocio el cambio logrado? |
+
+### Los 6 Errores Frecuentes e "Imperdonables" en Evaluación 1
+
+<AcademicBlock kind="trap" title="Error Imperdonable 1 — Confundir Usabilidad con Deseabilidad">
+  Afirmar que si 5 usuarios operaron el prototipo sin errores, entonces "la idea está validada y la gente la va a comprar". Las pruebas de usabilidad (Kate Moran / Nielsen) validan exclusivamente <strong>operabilidad</strong>; jamás prueban demanda de mercado ni disposición a pagar.
+</AcademicBlock>
+
+<AcademicBlock kind="trap" title="Error Imperdonable 2 — Confundir Output o Métricas de Vanidad con Outcomes">
+  Celebrar cantidad de historias terminadas, líneas de código o métricas de vanidad (como <em>"3.000 descargas"</em> sin uso activo ni retención) como prueba de éxito del producto. El <strong>Output es un costo</strong> (65%–75% casi no se usa según CHAOS Report); el éxito se demuestra con <strong>Outcomes</strong> derivados con GQM.
+</AcademicBlock>
+
+<AcademicBlock kind="trap" title="Error Imperdonable 3 — Priorizar el Backbone del Story Map o Recortar la DoD ante una Fecha Fija">
+  Eliminar una columna entera del recorrido del usuario (lanzar un "auto sin frenos") o aceptar historias "al 90%" que no cumplen el 100% de la <strong>Definition of Done</strong> para llegar a una fecha límite. Ante una restricción firme de fecha se recorta <strong>alcance verticalmente</strong> con MoSCoW (<em>Must Have</em>) manteniendo el <em>Walking Skeleton</em> fin-a-fin y la DoD intacta.
+</AcademicBlock>
+
+<AcademicBlock kind="trap" title="Error Imperdonable 4 — Aplicar Slicing Horizontal por Capas Técnicas">
+  Dividir una funcionalidad en <em>"Sprint 1: Base de datos; Sprint 2: API Backend; Sprint 3: Pantallas Frontend"</em>. Eso no entrega valor usable, impide obtener feedback temprano y concentra todo el riesgo de integración al final. Toda historia debe cortarse en <strong>rebanadas verticales fin-a-fin</strong>.
+</AcademicBlock>
+
+<AcademicBlock kind="trap" title="Error Imperdonable 5 — Validar Demanda con Encuestas de Opinión Futura (Violar The Mom Test)">
+  Preguntar <em>"¿Usarías una app que...?"</em> o <em>"¿Pagarías por...?"</em> y tomar el 80% de respuestas amables como evidencia empírica fuerte. Está contaminado por sesgo de cortesía y optimismo (evidencia débil, 15%). Corresponde indagar <strong>hechos pasados verificables</strong> (<em>The Mom Test</em>) y validar conductas reales (<em>Fake Door, Concierge, Wizard of Oz</em>).
+</AcademicBlock>
+
+<AcademicBlock kind="trap" title="Error Imperdonable 6 — Mezclar Ceremonias, Ignorar Tarjetas Rojas o Incentivar Métricas (Ley de Goodhart)">
+  Debatir conflictos internos de equipo en la <strong>Sprint Review</strong> (van a la <em>Retrospective</em>), comprometer en un Sprint una historia con 5–6 tarjetas rojas abiertas en <strong>Example Mapping</strong> (provocando <em>Accidental Discovery</em>) o atar métricas como Story Points o bugs a bonos y castigos (violando la <strong>Ley de Goodhart</strong> y el principio de Tobias Mayer).
+</AcademicBlock>
+
+<AcademicBlock kind="example" title="Siguiente paso recomendado: Simulacro en condiciones de parcial">
+  Poné a prueba todo lo que estudiaste resolviendo los dos parciales reales ponderados con corrección automática y rúbrica abierta en el <a href="../simulacro-parciales-evaluacion-1/">Simulacro de Parciales Reales (ReciclaPlus y ClubPlay)</a>, o elegí ejercicios puntuales por unidad desde el <a href="../../ejercicios/">catálogo de ejercicios de GDSI</a>.
+</AcademicBlock>
+
+---
+
+## Glosario y Checklist Final
+
+<GlossaryExplorer
+  client:load
+  title="Glosario Técnico Riguroso — Evaluación 1 (32 términos)"
+  terms={eval1Glossary}
+/>
+
+<InteractiveChecklist
+  client:load
+  courseId="gdsi"
+  title="Checklist Innegociable para Aprobar Evaluación 1"
+  items={eval1Checklist}
+/>

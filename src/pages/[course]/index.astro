@@ -149,7 +149,11 @@ const primaryQuiz = quizzes[0]?.data ?? null;
   {
     primaryQuiz ? (
       <div style="margin-top: 1.5rem;">
-        <QuickRecognitionTrainer client:load quiz={primaryQuiz} />
+        <QuickRecognitionTrainer
+          client:load
+          quiz={primaryQuiz}
+          quizzes={quizzes.map((q) => q.data)}
+        />
       </div>
     ) : null
   }

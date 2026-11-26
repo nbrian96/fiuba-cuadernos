@@ -1,0 +1,67 @@
+---
+id: "gdsi-ej-24"
+courseId: "gdsi"
+number: 24
+title: "Violación de The Mom Test: Dividir el Ticket de la Cena"
+unit: "u03-metodos-empiricos"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 2
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 1, Ejercicio 3 (Básico)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Un equipo de producto está explorando nuevas funcionalidades para una aplicación de finanzas personales. Durante las entrevistas de descubrimiento con 10 usuarios potenciales, el investigador realiza repetidamente la siguiente pregunta:
+
+> *"¿Les gustaría tener una función en la app para dividir automáticamente el ticket de la cena con sus amigos?"*
+
+Nueve de los diez entrevistados respondieron con entusiasmo *"¡Sí, me encantaría, sería súper útil!"*, por lo que el equipo está considerando priorizar esta funcionalidad para el próximo *Sprint*.
+
+1. Explicá por qué esta pregunta viola las reglas fundamentales de **The Mom Test** (Rob Fitzpatrick) y qué sesgos introduce en la evidencia recolectada.
+2. Redactá **2 preguntas corregidas** que cumplan con los principios de *The Mom Test*, enfocándose en comportamientos y hechos pasados reales.
+
+**Qué está evaluando la cátedra**  
+Comprensión práctica de las técnicas de entrevistas de descubrimiento: cómo evitar preguntas inductivas o hipotéticas que generan falsos positivos y cómo indagar en comportamientos pasados verificables.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-24">
+
+## 1. Por qué la pregunta viola *The Mom Test*
+
+La pregunta formulada por el investigador infringe las tres reglas cardinales de **The Mom Test** (Rob Fitzpatrick):
+
+1. **Habla de tu idea en lugar de la vida del usuario:** introduce directamente la solución propuesta (*"una función para dividir automáticamente el ticket"*) en vez de investigar si dividir gastos en salidas grupales constituye realmente un problema doloroso y frecuente.
+2. **Pregunta por opiniones sobre el futuro hipotético en lugar de hechos pasados concretos:** el condicional *"¿Les gustaría...?"* invita a imaginar escenarios ideales sin costo ni compromiso. Las personas suelen sobreestimar sistemáticamente cuánto usarían una herramienta futura.
+3. **Dispara el sesgo de cortesía y validación social (*falsos positivos*):** los entrevistados perciben que el entrevistador está entusiasmado con la idea y responden afirmativamente por amabilidad, para no desanimarlo o parecer poco colaborativos. El resultado es un **cumplido vacío**, no evidencia válida (Nivel 1–2 en la Jerarquía de Evidencia).
+
+En síntesis, obtener 9 respuestas de *"sí, me encantaría"* **no demuestra** que el problema sea frecuente, que genere fricción real ni que el usuario vaya a abrir una aplicación específica al final de una cena.
+
+---
+
+## 2. Dos Preguntas Corregidas según *The Mom Test*
+
+Para obtener evidencia confiable, las preguntas deben indagar sobre **episodios pasados específicos**, **soluciones alternativas actuales (*workarounds*)** y **fricciones reales** sin mencionar nuestra futura funcionalidad:
+
+### Pregunta corregida 1 (Hecho pasado concreto y proceso real)
+> *"Contame cómo resolvieron el pago la última vez que saliste a cenar en grupo con amigos: ¿qué hicieron exactamente desde que trajeron la cuenta hasta que cada uno pagó su parte?"*
+
+* **Por qué funciona:** ancla la conversación en un evento real reciente (no en una generalización ni en un futuro hipotético), permitiendo observar quién pagó, cuánto tiempo llevó, si dividieron en partes iguales o por consumo, y qué herramientas usaron (efectivo, transferencias, calculadora, foto del ticket).
+
+### Pregunta corregida 2 (Dolor real, frecuencia y soluciones alternativas)
+> *"En los últimos tres meses, ¿tuviste algún inconveniente o discusión al repartir gastos en salidas grupales? ¿Qué hiciste o qué aplicación usaste en ese momento para resolverlo?"*
+
+* **Por qué funciona:** busca evidencia conductual sobre la **intensidad del dolor** y verifica si el entrevistado ya invirtió esfuerzo en buscar una solución (*Splitwise*, planillas, grupos de WhatsApp, transferencias). Si nunca tuvo un problema relevante ni buscó alternativas, es una señal clara de que el problema probablemente no tenga prioridad real.
+
+<AcademicBlock kind="note" title="Regla de oro de The Mom Test">
+
+Una buena pregunta de descubrimiento pasa la prueba si incluso tu propia madre —que quiere verte triunfar y tiende a elogiarte— **no podría mentirte al responderla**, porque le estás pidiendo hechos concretos de su pasado y no su opinión sobre tu idea.
+
+</AcademicBlock>
+
+</SolutionDrawer>

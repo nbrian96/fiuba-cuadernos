@@ -1,0 +1,176 @@
+---
+id: "gdsi-ej-26"
+courseId: "gdsi"
+number: 26
+title: "PetCare: Diagnóstico de Example Mapping y Slicing Vertical"
+unit: "u04-construccion-scrum"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "imprescindible"
+difficulty: 4
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 2, Ejercicio 5 (Avanzado)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+import ExampleMappingBoard from "@/components/gdsi/ExampleMappingBoard";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Durante una sesión de refinamiento de backlog con los *Tres Amigos* (*Product Owner*, desarrollo y QA) en la aplicación veterinaria **PetCare**, el equipo aplica **Example Mapping** sobre la siguiente historia de usuario:
+
+> *"Como dueño de mascota, quiero agendar turnos de vacunación y recibir recordatorios para no atrasarme con el calendario sanitario de mi mascota."*
+
+Al cabo de 25 minutos, el tablero queda con **8 tarjetas azules** (reglas de negocio) y **18 tarjetas verdes** (ejemplos concretos), cubriendo disponibilidad de veterinarios, selección de sucursal, validación de vacunas previas, cancelaciones, reprogramaciones, recordatorios por correo electrónico, notificaciones *push* y mensajes de WhatsApp.
+
+1. Realizá el **diagnóstico** de esta historia a partir de las heurísticas visuales de **Example Mapping**: ¿está lista para entrar al *Sprint*? ¿Por qué?
+2. Proponé una estrategia de **Slicing Vertical** dividiendo la historia original en al menos **2 historias independientes** que entreguen valor de punta a punta y cumplan con el criterio **INVEST**.
+
+**Qué está evaluando la cátedra**  
+Interpretación práctica de los indicadores visuales de Example Mapping (proporción de tarjetas amarillas, azules, verdes y rojas) y habilidad para aplicar *slicing vertical* sin romper el valor funcional ni la independencia de las historias.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-26">
+
+## 1. Diagnóstico mediante Example Mapping
+
+En **Example Mapping** (Matt Wynne), la distribución visual de tarjetas funciona como un termómetro inmediato del tamaño, la complejidad y la claridad de una historia de usuario:
+
+* **Tarjeta amarilla (Historia):** 1 historia de usuario.
+* **Tarjetas azules (Reglas de negocio):** **8 reglas**.
+* **Tarjetas verdes (Ejemplos concretos):** **18 ejemplos**.
+
+### Veredicto: NO está lista — debe dividirse (*Épica*)
+
+Cuando una sola historia acumula **muchas tarjetas azules** (típicamente más de 4 o 5 reglas diferenciadas) y una gran proliferación de tarjetas verdes, el diagnóstico inequívoco es que se trata de una **Épica disfrazada de historia de usuario** con **exceso de alcance y complejidad**.
+
+* **Riesgo de comprometerla sin dividir:** difícil de estimar con precisión, alto riesgo de quedar incompleta al finalizar el *Sprint* (incumpliendo la *Definition of Done*), incremento de pruebas combinatorias y postergación de la entrega de valor real a los usuarios.
+* **Señal textual en el enunciado:** la presencia de la conjunción *"agendar turnos **y** recibir recordatorios"* ya delata que la historia agrupa al menos dos capacidades de negocio independientes (gestión del agendamiento y motor de notificaciones multicanal).
+
+### Tablero interactivo de diagnóstico (PetCare)
+
+Explorá el tablero representativo de la sesión de PetCare (8 reglas y 18 ejemplos) y contrastá tu diagnóstico en el modo interactivo:
+
+<ExampleMappingBoard
+  client:load
+  title="Tablero Example Mapping — PetCare (Historia original sin dividir)"
+  story="Como dueño de mascota, quiero agendar turnos de vacunación y recibir recordatorios para no atrasarme con el calendario sanitario de mi mascota."
+  rules={[
+    {
+      id: "r1",
+      title: "Solo se pueden reservar franjas con veterinario disponible",
+      detail: "El sistema consulta agenda por sucursal y bloquea horarios ocupados.",
+      examples: [
+        "Martes 10:00 libre en Sucursal Palermo → turno confirmado.",
+        "Martes 10:00 ya reservado → horario deshabilitado en pantalla.",
+        "Intento de reservar fecha pasada → rechazo con mensaje claro.",
+      ],
+    },
+    {
+      id: "r2",
+      title: "El turno debe asociarse a una mascota registrada y tipo de vacuna",
+      detail: "Se requiere especie y dosis correspondiente.",
+      examples: [
+        "Perro adulto + vacuna antirrábica → reserva válida.",
+        "Selección sin elegir mascota → formulario impide confirmar.",
+      ],
+    },
+    {
+      id: "r3",
+      title: "Validación de intervalo mínimo entre dosis",
+      detail: "Evita duplicar aplicaciones recientes de la misma vacuna.",
+      examples: [
+        "Última dosis hace 12 meses → permite agendar refuerzo.",
+        "Última dosis hace 15 días → muestra alerta sanitaria.",
+      ],
+    },
+    {
+      id: "r4",
+      title: "Confirmación inmediata en pantalla con código de reserva",
+      detail: "Resumen visible de fecha, hora, sucursal y vacuna.",
+      examples: [
+        "Reserva exitosa → pantalla muestra código #PC-4021 y resumen.",
+        "Fallo de red al confirmar → no duplica turno y permite reintentar.",
+      ],
+    },
+    {
+      id: "r5",
+      title: "Cancelación y reprogramación con anticipación mínima",
+      detail: "Libera el cupo para otros dueños de mascotas.",
+      examples: [
+        "Cancelación 24 hs antes → cupo liberado sin penalidad.",
+        "Reprogramación a nuevo horario libre → actualiza código vigente.",
+        "Cancelación 1 hora antes → aviso de política de la clínica.",
+      ],
+    },
+    {
+      id: "r6",
+      title: "Recordatorio automático por e-mail 24 horas antes",
+      detail: "Incluye fecha, dirección de sucursal y nombre de la mascota.",
+      examples: [
+        "Turno jueves 15:00 → e-mail enviado miércoles 15:00.",
+        "Turno cancelado antes de las 24 hs → no se envía recordatorio.",
+      ],
+    },
+    {
+      id: "r7",
+      title: "Notificación push en la app móvil",
+      detail: "Requiere permisos de notificación activos en el dispositivo.",
+      examples: [
+        "Usuario con push habilitado → recibe alerta 24 hs antes.",
+        "Usuario con push denegado → no falla el proceso y usa e-mail.",
+      ],
+    },
+    {
+      id: "r8",
+      title: "Recordatorio opcional por WhatsApp",
+      detail: "Sujeto a opt-in explícito y plantilla aprobada.",
+      examples: [
+        "Usuario con opt-in activo → recibe mensaje con botón confirmar.",
+        "Usuario sin teléfono validado → se omite envío por WhatsApp.",
+      ],
+    },
+  ]}
+  questions={[
+    "¿Qué ocurre si la clínica cierra por feriado después de haberse agendado el turno?",
+  ]}
+  expectedAction="split"
+  practiceMode={true}
+  diagnosis="Con 8 reglas de negocio (tarjetas azules) y 18 ejemplos (tarjetas verdes), la historia es claramente una Épica que mezcla la reserva básica de turnos, políticas de reprogramación y múltiples canales de recordatorio. Debe aplicarse Slicing Vertical antes de llevarla al Sprint."
+/>
+
+---
+
+## 2. Propuesta de Slicing Vertical (Criterio INVEST)
+
+Al aplicar **Slicing Vertical**, cada historia resultante atraviesa todas las capas técnicas necesarias (interfaz, lógica de negocio y persistencia) para entregar un incremento usable y verificable de principio a fin, acotando las reglas de negocio a un número manejable:
+
+### Historia 1 — Agendamiento básico de turno (Núcleo de valor)
+> *"Como dueño de mascota, quiero seleccionar una fecha y horario disponible para vacunar a mi mascota y ver la confirmación inmediata en pantalla, para asegurar la atención sin llamar por teléfono."*
+
+* **Alcance vertical:** formulario de selección de mascota/vacuna/horario disponible, persistencia del turno en base de datos, bloqueo del horario tomado y pantalla de confirmación con resumen.
+* **Reglas acotadas:** 2 a 3 tarjetas azules (disponibilidad de horario, datos obligatorios, confirmación en pantalla).
+* **Valor independiente:** ya permite al usuario resolver su necesidad central desde el primer *Sprint*.
+
+### Historia 2 — Recordatorio automático por e-mail
+> *"Como dueño de mascota con un turno de vacunación confirmado, quiero recibir un recordatorio automático por correo electrónico 24 horas antes de la cita, para no olvidar asistir."*
+
+* **Alcance vertical:** tarea programada (*scheduler*) que consulta turnos vigentes a 24 horas, plantilla de correo electrónico, integración con servicio de envío y exclusión de turnos cancelados.
+* **Reglas acotadas:** 2 tarjetas azules (envío 24 horas antes, omisión si fue cancelado).
+* **Valor independiente:** agrega retención y reduce ausentismo sin bloquear la puesta en producción del agendamiento básico.
+
+### Historias posteriores (priorizadas en el Product Backlog según valor)
+* **Historia 3:** cancelación y reprogramación autogestionada del turno.
+* **Historia 4:** validación automática contra el historial previo de vacunación.
+* **Historia 5:** canales adicionales de recordatorio (*push* / WhatsApp) solo si la métrica de ausentismo demuestra que el e-mail no resulta suficiente.
+
+<AcademicBlock kind="note" title="¿Qué pasaría si el problema fueran muchas tarjetas rojas?">
+
+Recordá distinguir las dos señales principales de alerta en Example Mapping:
+* **Muchas tarjetas azules (reglas):** la historia es demasiado grande → **dividirla verticalmente** (*split*).
+* **Muchas tarjetas rojas (preguntas abiertas):** falta entendimiento compartido sobre el comportamiento esperado → **devolverla a refinamiento** (*refine*) para responder las dudas con negocio antes del *Sprint*.
+
+</AcademicBlock>
+
+</SolutionDrawer>

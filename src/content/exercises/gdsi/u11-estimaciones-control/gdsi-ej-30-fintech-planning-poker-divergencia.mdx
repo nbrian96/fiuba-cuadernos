@@ -1,0 +1,73 @@
+---
+id: "gdsi-ej-30"
+courseId: "gdsi"
+number: 30
+title: "FinTech App: Divergencia Extrema en Planning Poker y Sesgo de Anclaje"
+unit: "u11-estimaciones-control"
+entityType: "CatalogExercise"
+provenance: "elaborated_solution"
+priority: "importante"
+difficulty: 3
+origin: "Banco de Ejercicios Evaluación 1 — Bloque 3, Ejercicio 9 (Intermedio)"
+isParcial: false
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Durante una sesión de refinamiento y estimación de una aplicación **FinTech**, el equipo utiliza **Planning Poker** (escala de Fibonacci modificada) para estimar en *Story Points* (SP) una historia de usuario relacionada con la emisión de extractos fiscales descargables en PDF.
+
+Al revelar las cartas simultáneamente, se produce una divergencia extrema:
+* Un desarrollador **Senior** muestra la carta de **2 SP**.
+* Una desarrolladora **Junior** muestra la carta de **13 SP**.
+* El resto del equipo vota valores intermedios (5 y 8 SP).
+
+Ante la diferencia, el desarrollador Senior propone rápidamente: *"Hagamos un promedio o pongamos 3 SP, yo ya hice esto mil veces y se saca rápido"*.
+
+1. Explicá **cómo debe facilitar el Scrum Master** esta divergencia extrema para aprovechar el verdadero valor del *Planning Poker* (y por qué **no** debe promediar ni imponer el voto del Senior).
+2. Identificá y explicá el **sesgo cognitivo principal** que evita la dinámica de revelación simultánea de cartas en *Planning Poker*.
+
+**Qué está evaluando la cátedra**  
+Comprensión del propósito real de la estimación colaborativa en Scrum (construir entendimiento compartido y descubrir supuestos ocultos, no promediar números) y conocimiento de los sesgos cognitivos que mitiga la técnica.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="gdsi-ej-30">
+
+## 1. Facilitación del Scrum Master ante la Divergencia Extrema
+
+El mayor valor del **Planning Poker** no está en el número final, sino en las **conversaciones que destapan supuestos divergentes, riesgos ocultos y dependencias técnicas**. Por eso, una diferencia de 2 SP contra 13 SP es una señal valiosísima, no un problema que deba taparse con un promedio.
+
+### Protocolo correcto de facilitación
+
+1. **Rechazar el promedio y evitar el argumento de autoridad:** promediar $(2 + 13) / 2 \approx 7.5$ destruye la información detrás de los votos y no resuelve si la historia realmente es trivial o esconde una trampa. Aceptar el *"yo lo hago en 2"* del Senior silencia al resto y concentra el conocimiento en una sola persona (*bus factor* = 1).
+2. **Dar la palabra a los extremos (2 SP y 13 SP) en un bloque acotado:**
+   * **El Scrum Master invita primero (y con seguridad psicológica) a la desarrolladora Junior (13 SP)** y luego al desarrollador Senior (2 SP) a explicar los **supuestos técnicos y funcionales** detrás de sus estimaciones.
+   * **Qué suele descubrirse en esta conversación:**
+     * Quizás el Senior asumió que ya existe una librería interna de generación de PDFs, ignorando que la normativa fiscal vigente exige firma digital o auditoría regulatoria que la Junior sí advirtió.
+     * O, a la inversa, quizás la Junior desconoce un servicio reutilizable que el Senior ya conoce, revelando una oportunidad de transferencia de conocimiento (*pair programming*) o confirmando que, si la tarea no la hace únicamente el Senior, el esfuerzo real del equipo es mayor a 2 SP.
+   * El *Product Owner* participa para aclarar dudas de alcance o criterios de aceptación que hayan originado interpretaciones distintas.
+3. **Ejecutar una nueva ronda de votación simultánea:** una vez compartidos los supuestos y alineado el entendimiento (y eventualmente ajustados los criterios de aceptación o dividida la historia si resultó demasiado grande), **todo el equipo vuelve a votar en simultáneo** hasta converger en un consenso real.
+
+---
+
+## 2. Sesgo Cognitivo Evitado: Sesgo de Anclaje (*Anchoring Bias*)
+
+La regla clave de *Planning Poker* —que cada integrante elija su carta en privado y **todos la revelen al mismo tiempo**— está diseñada específicamente para neutralizar el **sesgo de anclaje** (*anchoring bias*), acompañado frecuentemente del **efecto de conformidad / autoridad** (*bandwagon / HiPPO effect*).
+
+### Cómo opera el sesgo de anclaje sin Planning Poker
+
+* Si la estimación se realizara a viva voz y el desarrollador Senior hablara primero diciendo *"para mí esto es un 2"*, ese número inicial actúa como un **ancla mental** sobre el resto del equipo.
+* Quienes pensaban que la tarea implicaba riesgos regulatorios, pruebas de regresión o integraciones complejas (8 o 13 SP) inconscientemente ajustan su estimación hacia abajo o callan sus dudas por presión social o deferencia jerárquica.
+* Como consecuencia, el equipo **subestima sistemáticamente el esfuerzo** y pierde la oportunidad de detectar riesgos críticos antes de comenzar el *Sprint*.
+
+Al exigir elección independiente y **revelación simultánea**, el *Planning Poker* protege la diversidad de perspectivas y permite que un integrante Junior visibilice una complejidad real que el Senior había pasado por alto.
+
+<AcademicBlock kind="note" title="Recordatorio sobre Story Points">
+
+Los **Story Points** son una unidad de **estimación relativa** que combina tres factores: **complejidad técnica**, **volumen de trabajo** e **incertidumbre/riesgo** —no son una equivalencia rígida a horas de una persona específica. La estimación pertenece al **equipo en su conjunto**, no al integrante más rápido.
+
+</AcademicBlock>
+
+</SolutionDrawer>
