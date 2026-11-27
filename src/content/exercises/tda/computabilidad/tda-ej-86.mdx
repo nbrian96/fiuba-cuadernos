@@ -1,0 +1,86 @@
+---
+id: tda-ej-86
+courseId: tda
+number: 86
+title: "Autómata Finito para Intersección de Lenguajes Regulares"
+unit: computabilidad
+entityType: CatalogExercise
+provenance: elaborated_solution
+priority: imprescindible
+difficulty: 2
+origin: "Clase de Repaso (26 - Computabilidad, diapositiva 38)"
+isParcial: false
+relatedResourceIds:
+  - tda-slide-26-computabilidad
+  - tda-slide-25-automatas
+legacyPage: computabilidad.html
+legacyAnchor: "#ej-86"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado oficial">
+
+Tenemos el siguiente lenguaje constituido mediante la intersección (“y”) de dos lenguajes más simples. Los símbolos del alfabeto son `"0"` y `"1"`:
+
+$$L = \{w \mid w \text{ comienza con ``1'' y tiene cuando mucho un ``0''}\}$$
+
+Ejemplos aceptados: `"10111"`, `"11"`, `"110"`.
+
+Describir formalmente el autómata finito determinístico que reconoce este lenguaje:
+* Conjunto de estados $Q$
+* Función de transición $T$
+* Estado inicial $q_0$
+* Estado(s) de aceptación $F$
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-86">
+
+#### Definición Formal (5-tupla)
+
+Sea $M = (Q, \Sigma, T, q_0, F)$ el Autómata Finito Determinístico:
+
+* **Conjunto de estados:** $Q = \{q_0, q_1, q_2, q_{\text{err}}\}$
+  * $q_0$: estado inicial (todavía no se leyó ningún símbolo).
+  * $q_1$: comenzó con `1` y lleva **0 ceros** vistos (aceptación).
+  * $q_2$: comenzó con `1` y lleva exactamente **1 cero** visto (aceptación).
+  * $q_{\text{err}}$: estado trampa (comenzó con `0` o ya tiene al menos dos `0`s).
+* **Alfabeto:** $\Sigma = \{0, 1\}$.
+* **Estado inicial:** $q_0$.
+* **Estados de aceptación:** $F = \{q_1, q_2\}$.
+
+#### Tabla de Transición $T : Q \times \Sigma \to Q$
+
+| Estado actual | Entrada `0` | Entrada `1` | Significado |
+| :--- | :---: | :---: | :--- |
+| $q_0$ *(inicial)* | $q_{\text{err}}$ | $q_1$ | Primer símbolo debe ser `1` |
+| $q_1$ *(aceptación)* | $q_2$ | $q_1$ | Empieza con `1`, 0 ceros |
+| $q_2$ *(aceptación)* | $q_{\text{err}}$ | $q_2$ | Empieza con `1`, 1 cero |
+| $q_{\text{err}}$ *(trampa)* | $q_{\text{err}}$ | $q_{\text{err}}$ | Inválida (irreversible) |
+
+<MermaidDiagram
+  client:load
+  title="AFD para palabras que comienzan en 1 con a lo sumo un 0"
+  code={`stateDiagram-v2
+    direction LR
+    [*] --> q0
+    q0 --> q1 : "1"
+    q0 --> q_err : "0"
+    q1 --> q1 : "1"
+    q1 --> q2 : "0"
+    q2 --> q2 : "1"
+    q2 --> q_err : "0"
+    q_err --> q_err : "0, 1"`}
+/>
+
+#### Trazas de Verificación
+
+* `"10111"`: $q_0 \xrightarrow{1} q_1 \xrightarrow{0} q_2 \xrightarrow{1} q_2 \xrightarrow{1} q_2 \xrightarrow{1} q_2 \in F \implies$ **Acepta**.
+* `"11"`: $q_0 \xrightarrow{1} q_1 \xrightarrow{1} q_1 \in F \implies$ **Acepta**.
+* `"110"`: $q_0 \xrightarrow{1} q_1 \xrightarrow{1} q_1 \xrightarrow{0} q_2 \in F \implies$ **Acepta**.
+* `"01"`: $q_0 \xrightarrow{0} q_{\text{err}} \xrightarrow{1} q_{\text{err}} \notin F \implies$ **Rechaza**.
+* `"100"`: $q_0 \xrightarrow{1} q_1 \xrightarrow{0} q_2 \xrightarrow{0} q_{\text{err}} \notin F \implies$ **Rechaza**.
+
+</SolutionDrawer>

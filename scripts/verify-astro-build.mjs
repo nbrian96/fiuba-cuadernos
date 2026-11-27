@@ -265,14 +265,17 @@ for (const file of courseFiles) {
   }
 
   if (cid === "tda") {
-    assert.equal(coursePublishedCount, 96, "Se esperaban exactamente 96 archivos en dist/materials/tda/");
+    assert.equal(coursePublishedCount, 99, "Se esperaban exactamente 99 archivos en dist/materials/tda/");
     const exercisesIndex = JSON.parse(
       fs.readFileSync(path.join(rootDir, "docs/manifests/tda/exercises-index.json"), "utf-8"),
     );
     const tdaSpecificRoutes = [
       "tda/avanzados/index.html",
+      "tda/unidad/computabilidad/index.html",
       "tda/docs/matriz-parciales/index.html",
       "tda/docs/problema-mochila-y-greedy/index.html",
+      "tda/docs/automatas-y-lenguajes-formales/index.html",
+      "tda/docs/computabilidad-y-pspace/index.html",
       ...exercisesIndex.catalogExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
       ...exercisesIndex.advancedExercises.map((e) => `tda/ejercicios/${e.id}/index.html`),
     ];

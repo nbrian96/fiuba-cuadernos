@@ -55,7 +55,7 @@ test.describe("Etapa 5 — Flujos funcionales críticos y migración de localSto
 
     // Cambiar a Todos, marcar ejercicio adicional como dominado y verificar persistencia tras reload
     await page.getByTestId("mode-all").click();
-    await expect(page.getByTestId("hud-visible-count")).toHaveText("87");
+    await expect(page.getByTestId("hud-visible-count")).toHaveText("91");
     await expect(page.getByTestId("hud-mastered-count")).toHaveText("3");
 
     const toggleEj02 = page.getByTestId("mastery-toggle-tda-ej-02");
@@ -77,7 +77,7 @@ test.describe("Etapa 5 — Flujos funcionales críticos y migración de localSto
     page,
   }) => {
     await page.goto("/tda/ejercicios/", { waitUntil: "networkidle" });
-    await expect(page.getByTestId("hud-visible-count")).toHaveText("87");
+    await expect(page.getByTestId("hud-visible-count")).toHaveText("91");
 
     await page.getByTestId("filter-only-parcial").check();
     await expect(page.getByTestId("hud-visible-count")).toHaveText("35");
@@ -233,5 +233,36 @@ test.describe("Etapa 5 — Flujos funcionales críticos y migración de localSto
     await expect
       .poll(async () => svg.getAttribute("id"), { timeout: 10_000 })
       .not.toBe(firstSvgId);
+  });
+
+  test("opera simuladores de Autómata Finito y Máquina de Turing en apuntes de TDA", async ({
+    page,
+  }) => {
+    await page.goto("/tda/docs/automatas-y-lenguajes-formales/", {
+      waitUntil: "networkidle",
+    });
+    const simAut = page.getByTestId("sim-automaton");
+    await simAut.scrollIntoViewIfNeeded();
+    await page.getByTestId("aut-run-all").click();
+    await expect(page.getByTestId("aut-verdict")).toContainText("Cadena ACEPTADA");
+
+    await page.getByTestId("aut-preset-select").selectOption("afnd-epsilon");
+    await page.getByTestId("aut-run-all").click();
+    await expect(page.getByTestId("aut-verdict")).toContainText("Cadena ACEPTADA");
+
+    await page.goto("/tda/docs/computabilidad-y-pspace/", {
+      waitUntil: "networkidle",
+    });
+    const simTm = page.getByTestId("sim-turing");
+    await simTm.scrollIntoViewIfNeeded();
+    await page.getByTestId("tm-run-all").click();
+    await expect(page.getByTestId("tm-verdict")).toContainText("Halting: ACEPTADA");
+    await expect(page.getByTestId("tm-verdict")).toContainText("0110");
+
+    await page.getByTestId("tm-preset-select").selectOption("infinite-loop");
+    await page.getByTestId("tm-run-all").click();
+    await expect(page.getByTestId("tm-verdict")).toContainText(
+      "Límite de pasos alcanzado",
+    );
   });
 });

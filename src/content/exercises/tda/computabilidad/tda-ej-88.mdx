@@ -1,0 +1,62 @@
+---
+id: tda-ej-88
+courseId: tda
+number: 88
+title: "Autómata de Pila para {0^n 1^n} y Gramática Libre de Contexto para {0^n # 1^n}"
+unit: computabilidad
+entityType: CatalogExercise
+provenance: elaborated_solution
+priority: importante
+difficulty: 3
+origin: "Clase 25 - Autómatas (diapositivas 35–45)"
+isParcial: false
+relatedResourceIds:
+  - tda-slide-25-automatas
+legacyPage: computabilidad.html
+legacyAnchor: "#ej-88"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+1. Explicar por qué el lenguaje $B = \{0^n 1^n \mid n \ge 0\}$ no puede ser reconocido por un Autómata Finito (no es regular) y diseñar formalmente el **Autómata de Pila (PDA)** que lo reconoce.
+2. Definir formalmente una **Gramática Libre de Contexto (GLC)** $G = (V, \Sigma, R, S)$ que genere $L(G) = \{0^n \# 1^n \mid n \ge 0\}$ y mostrar la derivación de `"000#111"`.
+3. Indicar por qué $\{a^n b^n c^n \mid n \ge 0\}$ no es Libre de Contexto.
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-88">
+
+#### 1. Por qué $B = \{0^n 1^n\}$ no es regular y su PDA
+
+Un autómata finito solo posee una cantidad finita $|Q|$ de estados y **carece de memoria externa**, por lo que no puede recordar un número arbitrariamente grande $n$ de ceros leídos para compararlo con la cantidad de unos posteriores.
+
+Con una pila auxiliar, definimos $M = (Q, \Sigma, \Gamma, T, q_0, F)$:
+* $Q = \{q_0, q_1, q_2, q_3\}$, $\Sigma = \{0, 1\}$, $\Gamma = \{0, \bot\}$ (usando `$` como marcador de fondo en clase), $q_0$ inicial, $F = \{q_0, q_3\}$ (acepta $\varepsilon$ en $q_0$ o bien $n \ge 1$ en $q_3$).
+* Transiciones (notación `entrada, pop -> push`):
+  1. $q_0 \to q_1$ con `` `ε, ε → $` `` (coloca marcador de fondo `$`).
+  2. $q_1 \xrightarrow{0, \varepsilon \to 0} q_1$ (apila un `0` por cada `0` leído).
+  3. $q_1 \xrightarrow{1, 0 \to \varepsilon} q_2$ y $q_2 \xrightarrow{1, 0 \to \varepsilon} q_2$ (desapila un `0` por cada `1` leído).
+  4. $q_2 \to q_3$ con `` `ε, $ → ε` `` (si la pila quedó con el fondo `$`, acepta en $q_3$).
+
+#### 2. Gramática Libre de Contexto para $\{0^n \# 1^n \mid n \ge 0\}$
+
+Definimos la 4-tupla $G = (V, \Sigma, R, A)$:
+* **Variables:** $V = \{A, B\}$.
+* **Terminales:** $\Sigma = \{0, 1, \#\}$.
+* **Variable de inicio:** $A$.
+* **Reglas ($R$):**
+  1. $A \to 0A1$
+  2. $A \to B$
+  3. $B \to \#$
+
+**Derivación de `"000#111"`:**
+
+$$A \Rightarrow 0A1 \Rightarrow 00A11 \Rightarrow 000A111 \Rightarrow 000B111 \Rightarrow 000\#111$$
+
+#### 3. Por qué $\{a^n b^n c^n \mid n \ge 0\}$ no es Libre de Contexto
+
+Todo lenguaje libre de contexto es reconocido por un Autómata de Pila (con **una sola pila**). Al apilar las $a$ y desapilarlas al leer las $b$, la pila queda vacía al terminar las $b$, por lo que la máquina pierde la cuenta de $n$ y no puede verificar que la cantidad de $c$ también sea igual a $n$.
+
+</SolutionDrawer>

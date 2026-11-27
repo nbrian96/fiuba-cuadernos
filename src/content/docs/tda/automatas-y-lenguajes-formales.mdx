@@ -1,0 +1,272 @@
+---
+docId: automatas-y-lenguajes-formales
+courseId: tda
+title: "Autómatas, Lenguajes Formales y Gramáticas"
+order: 4
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - 1-alfabetos-palabras-y-lenguajes
+  - 2-automatas-finitos-deterministicos
+  - 3-automatas-finitos-no-deterministicos
+  - 4-equivalencia-afnd-a-afd
+  - 5-lenguajes-regulares-y-expresiones-regulares
+  - 6-automatas-de-pila
+  - 7-gramaticas-y-lenguajes-libres-de-contexto
+relatedResourceIds:
+  - tda-slide-25-automatas
+  - tda-slide-27-practica-aproximacion-y-randomizados
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import { AutomatonSimulator } from "@/components/simulators/tda/AutomatonSimulator";
+
+**Materia:** Teoría de Algoritmos (TB024 / 75.29 / 95.06) — FIUBA  
+**Cátedra:** Echevarría (Michael Sipser, *Introduction to the Theory of Computation*, Cap. 1–2 / Cap. 11 citado en clase)  
+**Referencias oficiales:**
+- [25 - Autómatas.pdf](../../materiales/tda-slide-25-automatas/?page=1)
+- [27 - Práctica Aproximación y Randomizados.pdf](../../materiales/tda-slide-27-practica-aproximacion-y-randomizados/?page=1)
+
+---
+
+## 1. Alfabetos, palabras y lenguajes
+
+Para formalizar qué problemas puede reconocer un modelo de cómputo, definimos los elementos básicos de los lenguajes formales:
+
+* **Alfabeto ($\Sigma$):** Conjunto **finito y no vacío** de símbolos. Ejemplos: binario $\{0, 1\}$, latino, cirílico.
+* **Cadena vacía ($\varepsilon$):** Símbolo especial que representa la palabra de **longitud cero** ($|\varepsilon| = 0$) para cualquier alfabeto.
+* **Palabra / String / Cadena ($w$):** Secuencia **finita** de símbolos tomados de $\Sigma$. Ejemplo: `101010100` tiene longitud $9$.
+* **Lenguaje ($A$ o $L$):** Conjunto (finito o infinito) de palabras formadas sobre un alfabeto $\Sigma$. Ejemplos: todos los binarios terminados en `0`, programas válidos en `C` o `Python`, o el lenguaje natural francés.
+
+---
+
+## 2. Autómatas Finitos Determinísticos (AFD)
+
+Un **Autómata Finito** es un modelo computacional minimalista caracterizado por tres propiedades:
+1. **No tiene memoria externa** (solo recuerda en qué estado está).
+2. Posee una **cantidad finita de estados**.
+3. Se encuentra en todo momento en exactamente **un estado**.
+
+### Ejemplo intuitivo: Escalera Mecánica
+
+* Sensor de entrada: $\{ \text{Hay alguien}, \text{No hay nadie} \}$.
+* Estados: `Quieta` y `Moviéndose`.
+
+<MermaidDiagram
+  client:load
+  title="Autómata finito de una escalera mecánica"
+  code={`stateDiagram-v2
+    direction LR
+    Quieta --> Moviendose : "Hay alguien"
+    Quieta --> Quieta : "No hay nadie"
+    Moviendose --> Moviendose : "Hay alguien"
+    Moviendose --> Quieta : "No hay nadie"`}
+/>
+
+### Definición Formal de AFD (5-tupla)
+
+Un Autómata Finito Determinístico $M$ se define formalmente como una **5-tupla** $(Q, \Sigma, T, q_0, F)$:
+
+* $Q = \{q_0, q_1, \dots, q_n\}$: conjunto finito de estados.
+* $\Sigma$: alfabeto de entrada.
+* $T : Q \times \Sigma \to Q$: función de transición (dado un estado actual y un símbolo, determina un **único** estado siguiente).
+* $q_0 \in Q$: estado inicial.
+* $F \subseteq Q$: conjunto de estados de aceptación (finales).
+
+### Ejemplo de trazado y tabla de transición
+
+Consideremos el autómata sobre $\Sigma = \{0, 1\}$ con $Q = \{q_0, q_1, q_2, q_3\}$, estado inicial $q_0$ y aceptación $F = \{q_3\}$:
+
+| Estado | Entrada `0` | Entrada `1` |
+| :--- | :---: | :---: |
+| $q_0$ *(inicial)* | $q_1$ | $q_1$ |
+| $q_1$ | $q_1$ | $q_2$ |
+| $q_2$ | $q_1$ | $q_3$ |
+| $q_3$ *(aceptación)* | $q_1$ | $q_1$ |
+
+* Cadena `001011`: $q_0 \xrightarrow{0} q_1 \xrightarrow{0} q_1 \xrightarrow{1} q_2 \xrightarrow{0} q_1 \xrightarrow{1} q_2 \xrightarrow{1} q_3 \in F \implies$ **Acepta**.
+* Cadena `011110`: $q_0 \xrightarrow{0} q_1 \xrightarrow{1} q_2 \xrightarrow{1} q_3 \xrightarrow{1} q_1 \xrightarrow{1} q_2 \xrightarrow{0} q_1 \notin F \implies$ **Rechaza**.
+
+### Formalización de aceptación y reconocimiento
+
+Sea $w = w_1 w_2 \dots w_n$ con $w_i \in \Sigma$. Decimos que $M$ **acepta** $w$ si existe una secuencia de estados $r_0, r_1, \dots, r_n \in Q$ tal que:
+1. $r_0 = q_0$
+2. $T(r_i, w_{i+1}) = r_{i+1}$ para todo $i = 0, \dots, n - 1$
+3. $r_n \in F$
+
+El lenguaje que $M$ reconoce es $L(M) = \{w \mid M \text{ acepta } w\}$. Un lenguaje es **Regular** sii existe un autómata finito que lo reconoce.
+
+---
+
+## 3. Autómatas Finitos No Determinísticos (AFND)
+
+En un **Autómata Finito No Determinístico (AFND)**, dado un estado y un símbolo puede haber **cero, una o varias** transiciones posibles, además de **transiciones espontáneas $\varepsilon$** (que cambian de estado sin consumir un símbolo de la entrada).
+
+* **Más de una transición posible:** la máquina se divide y continúa computando todas las ramas en paralelo.
+* **Transiciones $\varepsilon$:** la máquina se divide en dos copias; una permanece en el estado actual y la otra avanza sin consumir símbolo.
+* **Sin transiciones para el próximo símbolo:** esa copia muere.
+* **Criterio de aceptación:** basta con que **al menos una** de las copias activas termine en un estado de aceptación al finalizar la palabra.
+
+### Definición Formal de AFND (5-tupla)
+
+$$M = (Q, \Sigma, T, q_0, F)$$
+
+donde la diferencia clave está en la función de transición:
+
+$$T : Q \times (\Sigma \cup \{\varepsilon\}) \to \mathcal{P}(Q)$$
+
+*(En las diapositivas de cátedra se resume como $T : Q \times \Sigma \to \mathcal{P}(Q)$, donde $\mathcal{P}(Q)$ es el conjunto potencia o Power Set de $Q$, incluyendo las transiciones $\varepsilon$ cuando las hay).*
+
+<MermaidDiagram
+  client:load
+  title="Ejemplo de AFND con transición epsilon (Clase 25)"
+  code={`stateDiagram-v2
+    direction LR
+    [*] --> Q0
+    Q0 --> Q0 : "0, 1"
+    Q0 --> Q1 : "1"
+    Q1 --> Q2 : "0, ε"
+    Q2 --> Q3 : "1"
+    Q3 --> Q3 : "0, 1"`}
+/>
+
+Al procesar `010110` sobre este AFND, la rama principal permanece en $Q_0$ mientras genera copias en paralelo al leer cada `1`; al menos dos ramas alcanzan el estado de aceptación $Q_3$ al consumir el último `0`, por lo que el autómata **acepta** la cadena.
+
+---
+
+## 4. Equivalencia AFND $\leftrightarrow$ AFD
+
+Todo AFD es un caso particular de AFND. El teorema fundamental de Rabin–Scott establece el recíproco:
+
+<AcademicBlock kind="note" title="Teorema de Equivalencia AFND = AFD">
+
+Para todo Autómata Finito No Determinístico $N$ existe un Autómata Finito Determinístico $D$ que reconoce exactamente el mismo lenguaje ($L(D) = L(N)$).
+
+**Idea de la construcción (Subconjuntos / Power Set):** cada estado de $D$ representa el conjunto de estados paralelos que pueden estar activos simultáneamente en $N$ (incluyendo $\varepsilon$-clausuras). En el peor caso hay hasta $2^{|Q|}$ estados, aunque los estados alcanzables suelen ser muchos menos. Un estado compuesto es de aceptación en $D$ si contiene al menos un estado de aceptación de $N$.
+
+</AcademicBlock>
+
+Para el AFND de la sección anterior, los subconjuntos alcanzables desde $\{0\}$ (teniendo en cuenta la $\varepsilon$-transición $Q_1 \xrightarrow{\varepsilon} Q_2$) son:
+
+* **Estados alcanzables:** $\{0\}, \{0,1,2\}, \{0,2\}, \{0,1,2,3\}, \{0,2,3\}, \{0,3\}$.
+* **Estado inicial:** $\{0\}$.
+* **Estados de aceptación:** $\{\{0,1,2,3\}, \{0,2,3\}, \{0,3\}\}$ (todos los que contienen a $Q_3$).
+
+| Estado compuesto | Entrada `0` | Entrada `1` |
+| :--- | :---: | :---: |
+| $\{0\}$ | $\{0\}$ | $\{0,1,2\}$ |
+| $\{0,1,2\}$ | $\{0,2\}$ | $\{0,1,2,3\}$ |
+| $\{0,2\}$ | $\{0\}$ | $\{0,1,2,3\}$ |
+| $\{0,1,2,3\}$ *(aceptación)* | $\{0,2,3\}$ | $\{0,1,2,3\}$ *(ver nota)* |
+| $\{0,2,3\}$ *(aceptación)* | $\{0,3\}$ | $\{0,1,2,3\}$ |
+| $\{0,3\}$ *(aceptación)* | $\{0,3\}$ | $\{0,1,2,3\}$ |
+
+*Nota de rigor:* en el slide 21 de la clase aparece impreso `T({0,1,2,3}, 1) = {0,3}`; sin embargo, como $Q_0 \xrightarrow{1} Q_0$ y $Q_0 \xrightarrow{1} Q_1 \xrightarrow{\varepsilon} Q_2$, desde $\{0,1,2,3\}$ con `1` siguen activos $0, 1, 2$ y $3$, resultando en $\{0,1,2,3\}$.
+
+<AutomatonSimulator client:load />
+
+---
+
+## 5. Lenguajes Regulares y Expresiones Regulares
+
+La clase de los **Lenguajes Regulares** es **cerrada** bajo las tres operaciones regulares:
+
+* **Unión:** $A \cup B = \{x \mid x \in A \lor x \in B\}$
+* **Concatenación:** $A \circ B = \{xy \mid x \in A \land y \in B\}$
+* **Estrella de Kleene:** $A^* = \{x_1 x_2 \dots x_k \mid k \ge 0,\; x_i \in A\}$ (incluye siempre $\varepsilon$ para $k=0$).
+
+Las construcciones con AFND y $\varepsilon$-transiciones demuestran la clausura directamente:
+1. **Unión ($M_{A \cup B}$):** nuevo estado inicial $Q_0$ con $\varepsilon$-transiciones hacia los estados iniciales de $M_A$ y $M_B$.
+2. **Concatenación ($M_{A \circ B}$):** conectar los estados de aceptación de $M_A$ al estado inicial de $M_B$ mediante $\varepsilon$-transiciones (dejando como aceptación solo los de $M_B$).
+3. **Estrella ($M_{A^*}$):** nuevo estado inicial $Q_0$ de aceptación, con $\varepsilon$-transición al inicio de $M_A$ y $\varepsilon$-transiciones de retorno desde la aceptación de $M_A$ hacia $Q_0$.
+
+### Definición formal de Expresión Regular
+
+$R$ es una **Expresión Regular** si cumple alguna de las siguientes condiciones:
+1. $a$, siendo $a \in \Sigma$ (un símbolo del alfabeto).
+2. $\varepsilon$ (lenguaje $\{\varepsilon\}$).
+3. $\emptyset$ (el lenguaje vacío).
+4. $(R_1 \cup R_2)$, siendo $R_1, R_2$ expresiones regulares.
+5. $(R_1 \circ R_2)$, siendo $R_1, R_2$ expresiones regulares.
+6. $(R_1^*)$, siendo $R_1$ una expresión regular.
+
+Toda expresión regular puede transformarse en un autómata finito equivalente (y viceversa). Ejemplo: $(0 \cup 1) \circ 0^*$ describe las palabras binarias que empiezan en `0` o `1` seguidas de cero o más `0`s.
+
+### ¿Qué NO es Regular?
+
+El lenguaje $B = \{0^n 1^n \mid n \ge 0\}$ (por ejemplo `01`, `0011`, pero rechaza `0001` y `10`) **no es regular**. Intuitivamente, un autómata finito no tiene memoria para contar una cantidad arbitrariamente grande $n$ de ceros y luego compararla con la cantidad de unos.
+
+---
+
+## 6. Autómatas de Pila (Pushdown Automata — PDA)
+
+Para reconocer lenguajes como $\{0^n 1^n\}$, agregamos una **pila** (*stack*) como memoria auxiliar al autómata finito. En cada paso, el autómata puede:
+* Leer (o no) un símbolo de la entrada.
+* Leer/extraer (o no) el símbolo en el tope de la pila.
+* Cambiar o mantener su estado.
+* Apilar (o no) un símbolo en la pila.
+
+### Definición Formal de PDA (6-tupla)
+
+$$M = (Q, \Sigma, \Gamma, T, q_0, F)$$
+
+* $Q$: conjunto finito de estados.
+* $\Sigma$: alfabeto de entrada.
+* $\Gamma$: alfabeto de la pila.
+* $T : Q \times (\Sigma \cup \{\varepsilon\}) \times (\Gamma \cup \{\varepsilon\}) \to \mathcal{P}(Q \times (\Gamma \cup \{\varepsilon\}))$: función de transición dependiente del estado, entrada y tope de pila.
+* $q_0 \in Q$: estado inicial.
+* $F \subseteq Q$: estados de aceptación.
+
+### Convención de transiciones $a, b \to c$
+
+* $a$: símbolo leído de la cinta de entrada (si $a = \varepsilon$, no consume entrada).
+* $b$: símbolo extraído (*pop*) del tope de la pila (si $b = \varepsilon$, no hace *pop*).
+* $c$: símbolo insertado (*push*) en la pila (si $c = \varepsilon$, no hace *push*).
+
+### Ejemplo: PDA para $B = \{0^n 1^n \mid n \ge 0\}$
+
+Usando un símbolo marcador de fondo de pila `$`:
+1. De $Q_0$ (aceptación para $n=0$) pasa a $Q_1$ con `` `ε, ε → $` `` (marca el fondo).
+2. En $Q_1$, cada `0` leído se apila: $0, \varepsilon \to 0$.
+3. Al leer el primer `1`, desapila un `0` y pasa a $Q_2$: $1, 0 \to \varepsilon$.
+4. En $Q_2$, por cada `1` leído desapila un `0`: $1, 0 \to \varepsilon$.
+5. Si al terminar la pila muestra el marcador `$` en el tope, lo desapila (`` `ε, $ → ε` ``) y pasa a $Q_3$ (aceptación).
+
+---
+
+## 7. Gramáticas y Lenguajes Libres de Contexto (GLC)
+
+Una **Gramática** es un sistema generativo basado en reglas de sustitución:
+
+$$G = (V, \Sigma, R, S)$$
+
+* $V = \{V_1, \dots, V_n\}$: conjunto finito de **Variables** (no terminales, en mayúsculas).
+* $\Sigma$: conjunto finito de **Terminales** (símbolos del alfabeto, disjunto de $V$).
+* $R$: conjunto finito de **Reglas** de la forma $A \to \alpha$, donde $A \in V$ y $\alpha \in (V \cup \Sigma)^*$.
+* $S \in V$: **Variable de inicio**.
+
+### Ejemplo de derivación
+
+Sea la gramática:
+1. $A \to 0A1$
+2. $A \to B$
+3. $B \to \#$
+
+Derivación de `000#111`:
+
+$$A \Rightarrow 0A1 \Rightarrow 00A11 \Rightarrow 000A111 \Rightarrow 000B111 \Rightarrow 000\#111$$
+
+El lenguaje generado es $L(G) = \{0^n \# 1^n \mid n \ge 0\}$.
+
+### Jerarquía y propiedades clave
+
+* **Gramática ambigua:** existe al menos una cadena que admite más de un árbol de derivación (más de una derivación más a la izquierda).
+* **Teorema de equivalencia:** Un lenguaje es **Libre de Contexto** sii existe un **Autómata de Pila** que lo reconoce.
+* **Inclusión:** Todo lenguaje regular es libre de contexto ($\text{Regular} \subset \text{Libre de Contexto}$), ya que un PDA puede simplemente ignorar la pila.
+* **Límite de una sola pila:** $B = \{a^n b^n c^n \mid n \ge 0\}$ **no es libre de contexto**; con una sola pila no podemos verificar simultáneamente que las tres cantidades coincidan.
+
+<AcademicBlock kind="tip" title="Herramienta interactiva recomendada por la cátedra">
+
+Podés construir y probar diagramas de autómatas finitos, autómatas de pila y máquinas de Turing en línea usando la herramienta citada en la diapositiva 46: [ODU Automaton Simulator (cs.odu.edu/~zeil/automat)](https://www.cs.odu.edu/~zeil/automat/automat.cgi).
+
+</AcademicBlock>

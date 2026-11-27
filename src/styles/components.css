@@ -1114,6 +1114,124 @@
     text-decoration: line-through;
   }
 
+  .sim-input-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .sim-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 12rem;
+    flex: 1 1 14rem;
+  }
+
+  .sim-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .sim-field select,
+  .sim-field input {
+    min-height: 40px;
+    padding: 0.45rem 0.65rem;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+  }
+
+  .sim-field input {
+    font-family: var(--font-mono);
+  }
+
+  .sim-tape {
+    display: flex;
+    align-items: stretch;
+    gap: 0.35rem;
+    overflow-x: auto;
+    padding: var(--space-2) 0 var(--space-3);
+  }
+
+  .sim-tape-cell {
+    min-width: 2.5rem;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    background-color: var(--bg-subtle);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .sim-tape-cell-idx {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .sim-tape-cell--head,
+  .sim-tape-cell--current {
+    background-color: var(--accent-soft);
+    border: 2px solid var(--accent);
+    color: var(--text-heading);
+  }
+
+  .sim-tape-cell--consumed {
+    opacity: 0.72;
+  }
+
+  .sim-state-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-3) 0;
+  }
+
+  .sim-state-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-subtle);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .sim-state-chip--active {
+    background-color: var(--accent-soft);
+    border: 2px solid var(--accent);
+    color: var(--text-heading);
+  }
+
+  .sim-state-chip--accept {
+    background-color: var(--success-bg);
+    border: 2px solid var(--success);
+    color: var(--success);
+  }
+
+  .sim-state-chip--dead {
+    background-color: var(--danger-bg);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+  }
+
   /* Buscador Global (Pagefind Modal) */
   .search-modal-backdrop {
     position: fixed;

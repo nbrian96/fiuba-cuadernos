@@ -1,0 +1,68 @@
+---
+id: tda-ej-87
+courseId: tda
+number: 87
+title: "Conversión de Autómata Finito No Determinístico (AFND con ε) a AFD"
+unit: computabilidad
+entityType: CatalogExercise
+provenance: elaborated_solution
+priority: importante
+difficulty: 3
+origin: "Clase 25 - Autómatas (diapositivas 13–21)"
+isParcial: false
+relatedResourceIds:
+  - tda-slide-25-automatas
+legacyPage: computabilidad.html
+legacyAnchor: "#ej-87"
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import SolutionDrawer from "@/components/platform/SolutionDrawer";
+
+<AcademicBlock kind="statement" title="Enunciado">
+
+Dado el Autómata Finito No Determinístico $N = (Q, \{0, 1\}, T, q_0, \{q_3\})$ con $Q = \{q_0, q_1, q_2, q_3\}$ y las siguientes transiciones:
+* $q_0 \xrightarrow{0,1} q_0$ y $q_0 \xrightarrow{1} q_1$
+* $q_1 \xrightarrow{0, \varepsilon} q_2$
+* $q_2 \xrightarrow{1} q_3$
+* $q_3 \xrightarrow{0,1} q_3$
+
+1. Trazar el procesamiento paralelo de la cadena `"010110"` y determinar si es aceptada.
+2. Construir el Autómata Finito Determinístico equivalente $D$ aplicando el método de subconjuntos (Power Set).
+
+</AcademicBlock>
+
+<SolutionDrawer client:load exerciseId="tda-ej-87">
+
+#### 1. Procesamiento de `"010110"` en el AFND
+
+Cada vez que hay $\varepsilon$-transición desde $q_1$, la máquina se divide sin consumir símbolo hacia $q_2$ (esto define la $\varepsilon$-clausura $E(\{q_1\}) = \{q_1, q_2\}$).
+
+1. Inicio: $\{q_0\}$.
+2. Lee `0`: desde $q_0$ solo va a $\{q_0\}$.
+3. Lee `1`: desde $q_0$ va a $q_0$ y a $q_1$; por la $\varepsilon$-transición $q_1 \xrightarrow{\varepsilon} q_2$, quedan activos $\{q_0, q_1, q_2\}$.
+4. Lee `0`: $q_0 \to q_0$, $q_1 \to q_2$, $q_2$ muere $\implies$ $\{q_0, q_2\}$.
+5. Lee `1`: $q_0 \to \{q_0, q_1, q_2\}$ y $q_2 \to q_3 \implies \{q_0, q_1, q_2, q_3\}$.
+6. Lee `1`: $q_0 \to \{q_0, q_1, q_2\}$, $q_1$ muere, $q_2 \to q_3$, $q_3 \to q_3 \implies \{q_0, q_1, q_2, q_3\}$.
+7. Lee `0`: $q_0 \to q_0$, $q_1 \to q_2$, $q_2$ muere, $q_3 \to q_3 \implies \{q_0, q_2, q_3\}$.
+
+Como $q_3 \in \{q_0, q_2, q_3\}$, al menos una rama termina en aceptación $\implies$ **`"010110"` es aceptada**.
+
+#### 2. AFD Equivalente por Construcción de Subconjuntos
+
+Solo 6 subconjuntos (de los $2^4 = 16$ posibles) son alcanzables desde $\{q_0\}$:
+
+* **Estados alcanzables:** $Q_D = \{\{0\}, \{0,1,2\}, \{0,2\}, \{0,1,2,3\}, \{0,2,3\}, \{0,3\}\}$.
+* **Estado inicial:** $\{0\}$.
+* **Estados de aceptación:** $F_D = \{\{0,1,2,3\}, \{0,2,3\}, \{0,3\}\}$ (todo subconjunto que contenga a $q_3$).
+
+| Estado de $D$ | Con `0` | Con `1` |
+| :--- | :---: | :---: |
+| $\{0\}$ *(inicial)* | $\{0\}$ | $\{0,1,2\}$ |
+| $\{0,1,2\}$ | $\{0,2\}$ | $\{0,1,2,3\}$ |
+| $\{0,2\}$ | $\{0\}$ | $\{0,1,2,3\}$ |
+| $\{0,1,2,3\}$ *(aceptación)* | $\{0,2,3\}$ | $\{0,1,2,3\}$ |
+| $\{0,2,3\}$ *(aceptación)* | $\{0,3\}$ | $\{0,1,2,3\}$ |
+| $\{0,3\}$ *(aceptación)* | $\{0,3\}$ | $\{0,1,2,3\}$ |
+
+</SolutionDrawer>

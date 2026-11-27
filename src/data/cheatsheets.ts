@@ -172,6 +172,56 @@ function buildTdaCheatsheetSections(): CheatsheetSection[] {
       ],
     },
     {
+      id: "automatas-gramaticas",
+      title: "6. Autómatas, Gramáticas y Jerarquía de Lenguajes",
+      listType: "ul",
+      items: [
+        {
+          lead: "AFD y AFND:",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`5-tupla $(Q, \Sigma, T, q_0, F)$. AFD usa $T : Q \times \Sigma \to Q$; AFND usa $T : Q \times (\Sigma \cup \{\varepsilon\}) \to \mathcal{P}(Q)$. Son equivalentes ($\le 2^n$ estados).`,
+          ),
+        },
+        {
+          lead: "Clausura y Regulares:",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`Cerrados bajo unión ($\cup$), concatenación ($\circ$) y estrella ($*$). Equivalentes a Expresiones Regulares. Contraejemplo clásico: $\{0^n 1^n\}$ no es regular.`,
+          ),
+        },
+        {
+          lead: "Autómata de Pila (PDA) y GLC:",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`PDA es 6-tupla $(Q, \Sigma, \Gamma, T, q_0, F)$ con transición $a, b \to c$. Gramática es 4-tupla $(V, \Sigma, R, S)$. Reconocen exactamente los Lenguajes Libres de Contexto ($\{a^n b^n c^n\}$ no es GLC).`,
+          ),
+        },
+      ],
+    },
+    {
+      id: "computabilidad-pspace",
+      title: "7. PSPACE, Máquina de Turing y Reducibilidad (≤_m)",
+      listType: "ul",
+      items: [
+        {
+          lead: "Inclusiones de Complejidad:",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`$L \subseteq NL \subseteq P \subseteq NP, \text{co-NP} \subseteq PSPACE \subseteq EXPTIME$. El espacio se reutiliza (3-SAT en $O(n)$ bits).`,
+          ),
+        },
+        {
+          lead: "Máquina de Turing (7-tupla):",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`$(Q, \Sigma, \Gamma, T, q_0, q_a, q_r)$ con cinta infinita y movimientos $\{L, R\}$. Decidor: siempre frena en $q_a$ o $q_r$ (nunca loop).`,
+          ),
+        },
+        {
+          lead: "Corolarios de A ≤_m B:",
+          bodyHtml: renderInlineMathTextToHtml(
+            String.raw`Si $B$ es decidible $\implies A$ decidible; si $A$ indecidible $\implies B$ indecidible (Halting Problem). Los lenguajes $\mathcal{P}(\Sigma^*)$ son no contables (Cantor).`,
+          ),
+        },
+      ],
+    },
+    {
       id: "errores-prohibidos",
       title: "Errores Prohibidos que Anulan el Ejercicio",
       variant: "warning",

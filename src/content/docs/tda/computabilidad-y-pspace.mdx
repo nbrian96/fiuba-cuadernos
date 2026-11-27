@@ -1,0 +1,197 @@
+---
+docId: computabilidad-y-pspace
+courseId: tda
+title: "Complejidad Espacial (PSPACE), Máquina de Turing y Computabilidad"
+order: 5
+entityType: ElaboratedNote
+provenance: elaborated_notes
+sectionIds:
+  - 1-clase-de-complejidad-pspace
+  - 2-maquina-de-turing
+  - 3-problemas-computables-e-indecidibilidad
+  - 4-reducibilidad-y-halting-problem
+  - 5-infinitos-hotel-de-hilbert-y-cantor
+relatedResourceIds:
+  - tda-slide-26-computabilidad
+---
+import AcademicBlock from "@/components/platform/AcademicBlock";
+import MermaidDiagram from "@/components/platform/MermaidDiagram";
+import { TuringMachineSimulator } from "@/components/simulators/tda/TuringMachineSimulator";
+
+**Materia:** Teoría de Algoritmos (TB024 / 75.29 / 95.06) — FIUBA  
+**Cátedra:** Echevarría (Michael Sipser, *Introduction to the Theory of Computation*, Cap. 3–5)  
+**Referencia oficial:** [26 - Computabilidad.pdf](../../materiales/tda-slide-26-computabilidad/?page=1)
+
+---
+
+## 1. Clase de Complejidad PSPACE
+
+Mientras que $P$, $NP$ y $NP$-Completo miden **complejidad temporal** (cantidad de pasos), **PSPACE** mide **complejidad espacial** (cantidad de memoria usada):
+
+$$\text{PSPACE} = \text{problemas decidibles usando una cantidad polinomial de espacio } O(n^k).$$
+
+### Ejemplos iniciales y primera inclusión
+
+* **¿Mergesort está en PSPACE?** Sí: nunca usa más de $O(n)$ de espacio adicional.
+* **¿Fibonacci está en PSPACE?** Sí: iterativamente se resuelve en espacio constante $O(1)$.
+* **¿$P \subseteq \text{PSPACE}$?** Sí: si un algoritmo tarda tiempo polinomial $O(n^k)$, en cada paso a lo sumo puede escribir una nueva celda de memoria, por lo que nunca puede consumir más de espacio polinomial.
+
+### Reutilización del espacio vs. tiempo (el caso de 3-SAT)
+
+La diferencia fundamental entre tiempo y espacio es que **podemos reutilizar el espacio, pero no el tiempo**:
+* Un contador binario de $n$ bits desde $0$ hasta $2^n - 1$ tarda tiempo exponencial $\Theta(2^n)$, pero ocupa únicamente **$O(n)$ bits de espacio** (sobrescribiendo los mismos $n$ bits).
+* Aplicando esta idea a **3-SAT** (con $n$ variables $x_1, \dots, x_n$): mantenemos un contador de $n$ bits con la asignación actual, evaluamos todas las cláusulas reutilizando memoria auxiliar polinomial e incrementamos el contador en $1$ hasta encontrar una asignación que satisfaga la fórmula o agotar las $2^n$ combinaciones.
+* **Consecuencia:** Aunque 3-SAT es $NP$-Completo (y esta búsqueda tarda tiempo exponencial), solo ocupa espacio polinomial. Como todo problema en $NP$ se reduce polinomialmente a 3-SAT, se concluye:
+
+$$P \subseteq NP \subseteq \text{PSPACE} \quad \text{y} \quad \text{co-NP} \subseteq \text{PSPACE}.$$
+
+<MermaidDiagram
+  client:load
+  title="Inclusiones conocidas entre P, NP, co-NP y PSPACE"
+  code={`flowchart TB
+    PSPACE["PSPACE (espacio polinomial)"]
+    NP["NP"]
+    CONP["co-NP"]
+    P["P (tiempo polinomial)"]
+    PSPACE --> NP
+    PSPACE --> CONP
+    NP --> P
+    CONP --> P`}
+/>
+
+*Preguntas abiertas:* Todavía no se ha demostrado si $P = NP$ ni si $P = \text{PSPACE}$ (aunque se conjetura que todas las inclusiones son estrictas).
+
+### PSPACE-Completo y PSPACE-Hard
+
+Un problema $B$ es **PSPACE-Completo** sii:
+1. $B \in \text{PSPACE}$.
+2. Todo problema $A \in \text{PSPACE}$ se puede reducir polinomialmente a $B$ ($A \le_P B$).
+
+Si $B$ solo cumple la condición (2), decimos que $B$ es **PSPACE-Hard**. Un problema PSPACE-Completo no es necesariamente NP-Completo (podría requerir tiempo exponencial fuera de $NP$, como en EXP, siempre que use espacio polinomial).
+
+### Más allá (y por debajo) de PSPACE
+
+* **L / NL:** espacio $O(\log n)$ usando una Máquina de Turing determinística / no determinística.
+* **EXP / EXPTIME:** tiempo $O(2^{p(n)})$ para algún polinomio $p(n)$.
+* **NEXP / NEXPTIME:** tiempo $O(2^{p(n)})$ en una Máquina de Turing no determinística.
+* **EXPSPACE:** espacio $O(2^{p(n)})$.
+
+---
+
+## 2. Máquina de Turing (MT)
+
+La **Máquina de Turing** extiende al Autómata Finito agregándole una **cinta infinita de memoria** de lectura y escritura:
+
+* La cinta está dividida en celdas; inicialmente las primeras celdas contienen la cadena de entrada y el resto está en blanco ($\varepsilon$ / $\sqcup$).
+* En cada paso, el cabezal puede: **leer** la celda actual, **escribir** un símbolo en la celda actual, y **moverse** una celda a la izquierda (`L`) o a la derecha (`R`).
+* Posee un conjunto finito de estados, incluyendo **estados de halting** (parada) de **aceptación ($q_a$)** o **rechazo ($q_r$)** de efecto inmediato.
+* A diferencia de un autómata finito, una MT **podría no detenerse nunca** (entrar en un *loop infinito*).
+
+### Configuraciones
+
+En un instante dado, el estado completo de la máquina queda determinado por tres valores llamados **configuración**:
+1. El estado actual $q \in Q$.
+2. El contenido actual de la cinta.
+3. La posición actual del cabezal.
+
+La ejecución determinística es una sucesión de configuraciones $C_0 \vdash C_1 \vdash C_2 \vdash \dots$ (donde $C_x$ produce $C_y$).
+
+### Definición Formal (7-tupla)
+
+Una Máquina de Turing se define como $(Q, \Sigma, \Gamma, T, q_0, q_a, q_r)$:
+* $Q = \{q_0, q_1, \dots, q_n\}$: conjunto finito de estados.
+* $\Sigma$: alfabeto de entrada (no incluye el símbolo vacío/blanco).
+* $\Gamma$: alfabeto de la cinta ($\Sigma \subset \Gamma$, incluye el símbolo blanco).
+* $T : Q \times \Gamma \to Q \times \Gamma \times \{L, R\}$: función de transición *(nota: en las diapositivas figura escrita como $Q \times \Sigma$, pero formalmente el dominio de lectura en cinta es $Q \times \Gamma$ porque la máquina también lee símbolos escritos por ella y el blanco)*.
+* $q_0 \in Q$: estado inicial.
+* $q_a \in Q$: estado de aceptación.
+* $q_r \in Q$: estado de rechazo ($q_a \neq q_r$).
+
+### Modelos equivalentes y clases P / NP
+
+* La MT tiene estrictamente mayor capacidad computacional que un AFD, AFND o Autómata de Pila.
+* Todas las variantes razonables de MT (múltiples cintas, cinta bi-infinita, memoria RAM, etc.) son **polinomialmente equivalentes**: simular una en otra solo multiplica el tiempo por un factor polinomial.
+* **Complejidad temporal en MT:** $M$ es una $f(n)$-Máquina de Turing sii para toda entrada de longitud $n$ termina en $O(f(n))$ pasos.
+  * **$P$:** lenguajes decidibles en $O(p(n))$ por una MT **Determinística**.
+  * **$NP$:** lenguajes decidibles en $O(p(n))$ por una MT **No Determinística** (*Non-Deterministic Polynomial time*).
+
+<TuringMachineSimulator client:load />
+
+---
+
+## 3. Problemas Computables, Decidibilidad y Funciones
+
+El cómputo de una Máquina de Turing sobre una entrada $w$ puede terminar en aceptación, en rechazo, o no terminar (loop infinito):
+
+* **Turing-reconocible:** Un lenguaje $L$ es *Turing-reconocible* sii existe una MT que acepta todas las cadenas $w \in L$ (pero para $w \notin L$ puede rechazar o entrar en loop infinito).
+* **Decidor:** Una MT que **siempre se detiene** (acepta o rechaza, nunca entra en loop) para cualquier entrada.
+* **Turing-decidible:** Un lenguaje $L$ es *Turing-decidible* sii existe un **decidor** que lo reconoce. Todo lenguaje decidible es reconocible, pero existen lenguajes reconocibles que no son decidibles.
+
+### Funciones Computables
+
+Una MT computa una función $f$ leyendo la entrada $w$ de la cinta y dejando únicamente $f(w)$ en la cinta al detenerse (por ejemplo, sumar $(m, n) \mapsto m+n$). Una función $f$ es **computable** sii existe una MT que finaliza siempre dejando solo $f(w)$ en la cinta para cualquier $w$.
+
+---
+
+## 4. Reducibilidad ($\le_m$), MT Universal y Halting Problem
+
+### Mapping Reducibility ($A \le_m B$)
+
+Un lenguaje $A$ es **reducible por mapeo** (*mapping reducible*) a otro lenguaje $B$ ($A \le_m B$) si existe una **función computable** $f$ tal que para toda cadena $w$:
+
+$$w \in A \iff f(w) \in B$$
+
+**Corolarios fundamentales:**
+1. Si $A \le_m B$ y $B$ es decidible $\implies A$ es decidible.
+2. Si $A \le_m B$ y $A$ **no es decidible** $\implies B$ **no es decidible** *(herramienta principal para probar indecidibilidad)*.
+3. Si $A \le_m B$ y $B$ es Turing-reconocible $\implies A$ es Turing-reconocible.
+4. Si $A \le_m B$ y $A$ **no es Turing-reconocible** $\implies B$ **no es Turing-reconocible**.
+
+### Máquina de Turing Universal y Halting Problem
+
+* **Máquina de Turing Universal ($U$):** Es una MT que recibe como entrada la codificación $\langle M, w \rangle$ de cualquier otra MT $M$ y una palabra $w$, y la simula aceptando o rechazando exactamente cuando $M$ acepta o rechaza $w$ (análoga a un intérprete o sistema operativo).
+* **Halting Problem ($HALT_{TM}$):** Decidir si una MT $M$ dada termina o entra en loop infinito para una palabra $w$ dada.
+  * Es **Turing-reconocible** (basta simular $M$ sobre $w$ con $U$: si termina, aceptamos), pero **NO es Turing-decidible** (indecidible).
+  * Tampoco es decidible el problema de verificar si un programa cualquiera funcionará correctamente para todo input.
+
+### Otros problemas indecidibles clásicos
+
+| Problema | Descripción |
+| :--- | :--- |
+| **Entscheidungsproblem** | Decidir la validez universal de una fórmula en lógica de primer orden (Church y Turing, 1936). |
+| **Problema de la Mortalidad** | Determinar si una MT se detiene para cualquier configuración inicial posible. |
+| **Universalidad de APND** | Decidir si un Autómata de Pila No Determinístico acepta todas las palabras ($\Sigma^*$). |
+| **Universalidad / Ambigüedad de GLC** | Determinar si una gramática libre de contexto genera todas las palabras o si es ambigua. |
+| **Décimo Problema de Hilbert** | Decidir si una ecuación polinomial diofántica de $n$ variables tiene raíces enteras (Matiyasevich, 1970). |
+| **Juego de la Vida de Conway** | Decidir si a partir de un patrón inicial se puede alcanzar un segundo patrón dado. |
+
+---
+
+## 5. Infinitos: El Hotel de Hilbert y Cantor
+
+Para demostrar que existen problemas **ni siquiera Turing-reconocibles**, la teoría de la computabilidad recurre a la teoría de conjuntos infinitos de **Georg Cantor**.
+
+### El Hotel de Hilbert
+
+Un hotel con infinitas habitaciones numeradas $1, 2, 3, \dots$ completamente ocupado (un huésped por habitación) siempre puede alojar nuevos pasajeros bajo la regla de que el conserje puede pedirles que se muden simultáneamente:
+
+1. **Llega 1 nuevo huésped:** cada huésped de la habitación $n$ se muda a $n + 1$; el nuevo huésped ocupa la habitación $1$.
+2. **Llega un contingente infinito de pasajeros:** cada huésped de la habitación $n$ se muda a $2n$; los infinitos recién llegados ocupan las habitaciones impares ($1, 3, 5, \dots$).
+3. **Llega una cantidad infinita de contingentes, cada uno con infinitos pasajeros:**
+   * Los huéspedes actuales se mudan de $n$ a $2n$ (liberan todas las impares).
+   * A cada nuevo contingente se le asigna un número primo $p \neq 2$ ($3, 5, 7, 11, \dots$).
+   * El pasajero $t$ ($t \ge 1$) del contingente $p$ se aloja en la habitación **$p^t$** (por factorización única en primos, ninguna habitación colisiona).
+
+### Los infinitos de Cantor y consecuencia sobre las MTs
+
+Dos conjuntos $A$ y $B$ tienen la misma **cardinalidad** si existe una **función biyectiva** entre ambos:
+* $\mathbb{N}$ (naturales), $\mathbb{Z}$ (enteros), los pares, los primos y $\mathbb{Q}$ (racionales) tienen la misma cardinalidad: son **conjuntos contables (numerables)**.
+* $\mathbb{R}$ (números reales) tiene un infinito estrictamente mayor (**no contable**): podemos inyectar $\mathbb{N}$ en $\mathbb{R}$, pero no existe biyección entre ambos (argumento diagonal de Cantor).
+
+<AcademicBlock kind="important" title="Conclusión fundamental sobre Máquinas de Turing y Lenguajes">
+
+1. Cada Máquina de Turing tiene una descripción finita (7-tupla codificable como una cadena finita), por lo que el conjunto de todas las Máquinas de Turing es **contable** (y en consecuencia también lo es el conjunto de los lenguajes Turing-reconocibles).
+2. En cambio, el conjunto de **todos los lenguajes posibles** $\mathcal{P}(\Sigma^*)$ es **no contable** (por el mismo argumento diagonal que $\mathbb{R}$).
+3. **Teorema:** Existen lenguajes que **no son Turing-reconocibles** por ninguna Máquina de Turing (de hecho, la inmensa mayoría de los lenguajes no lo son).
+
+</AcademicBlock>

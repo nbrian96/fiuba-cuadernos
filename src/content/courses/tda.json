@@ -82,13 +82,20 @@
       "exerciseCount": 2,
       "inCatalog": false,
       "legacyRoute": "teoria-avanzados.html"
+    },
+    {
+      "slug": "computabilidad",
+      "name": "Autómatas, Lenguajes Formales y Computabilidad",
+      "order": 10,
+      "exerciseCount": 4,
+      "inCatalog": true
     }
   ],
   "views": [
     {
       "slug": "todos",
       "name": "Todos los Ejercicios",
-      "exerciseCount": 85,
+      "exerciseCount": 89,
       "legacyRoute": "todos.html",
       "targetRoute": "/tda/ejercicios/"
     },
@@ -101,14 +108,14 @@
     }
   ],
   "stats": {
-    "physicalFiles": 96,
-    "pdfs": 49,
+    "physicalFiles": 99,
+    "pdfs": 52,
     "nonPdfs": 47,
-    "catalogExercises": 85,
+    "catalogExercises": 89,
     "parcialExercises": 35,
     "advancedExercises": 2,
-    "interactiveWidgets": 6,
-    "elaboratedNotes": 2,
+    "interactiveWidgets": 8,
+    "elaboratedNotes": 4,
     "elaboratedSummaries": 3,
     "checklistItems": 11,
     "trainerQuestions": 20

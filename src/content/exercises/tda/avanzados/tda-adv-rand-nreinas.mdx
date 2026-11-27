@@ -13,6 +13,8 @@ isParcial: false
 relatedResourceIds:
   - tda-slide-23-algoritmos-randomizados-i
   - tda-slide-24-algoritmos-randomizados-ii
+  - tda-slide-26-computabilidad
+  - tda-slide-27-practica-aproximacion-y-randomizados
   - tda-guia-09-randomizados
 legacyPage: teoria-avanzados.html
 legacyAnchor: "#ejercicios-clase"
@@ -38,6 +40,31 @@ Proponer un algoritmo randomizado de tipo *Las Vegas* para resolver el problema 
 
 $$E[X] = \frac{1}{p}$$
 
-Para $N=8$, empíricamente $p \approx 0.1293$ (aproximadamente 1 de cada 7.7 intentos triunfa), requiriendo en promedio solo $\approx 7.7$ corridas ultrarrápidas, mucho más veloz que explorar todo el árbol exhaustivo.
+Para $N=8$, empíricamente $p \approx 0.1293$ (aproximadamente 1 de cada 8 intentos triunfa), requiriendo en promedio solo $\approx 7.7$ corridas ultrarrápidas.
+
+#### Comparativa Empírica e Implementación de Clase Práctica
+
+| Estrategia ($N = 8$) | Estados explorados promedio | Observación |
+| :--- | :---: | :--- |
+| **Backtracking determinístico** | `114` de `2057` posibles | Retrocede fila a fila cuando hay ataque. |
+| **Las Vegas (sin backtracking)** | **`56`** estados esperados | Falla rápido si una fila no tiene casillas válidas y reinicia desde cero ($p = 0.1293$). |
+
+```python
+import random
+
+def QueensLasVegas(n):
+    board = [[0 for _ in range(n)] for _ in range(n)]
+    availColumns = list(range(n))
+    R = 0
+    while len(availColumns) != 0 and R < n:
+        temp = [i for i in availColumns if isSafe(board, R, i)]
+        if len(temp) == 0:
+            return False
+        rand = random.choice(temp)
+        board[R][rand] = 1
+        R += 1
+        availColumns.remove(rand)
+    return board
+```
 
 </SolutionDrawer>

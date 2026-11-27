@@ -22,6 +22,8 @@ import { getCompiledGdsiExamUnits } from "@/data/gdsiExamPrep";
 import { ExamPrepControlBar } from "@/components/platform/ExamPrepControlBar";
 import { ActiveRecallCards } from "@/components/platform/ActiveRecallCards";
 import { InteractiveMcqDeck } from "@/components/platform/InteractiveMcqDeck";
+import { AutomatonSimulator } from "@/components/simulators/tda/AutomatonSimulator";
+import { TuringMachineSimulator } from "@/components/simulators/tda/TuringMachineSimulator";
 import {
   CheatsheetManifestSchema,
   InteractiveAndNotesManifestSchema,
@@ -181,7 +183,7 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
     expect(rendered).toContain('class="katex"');
 
     const sections = getCheatsheetSections("tda");
-    expect(sections).toHaveLength(6);
+    expect(sections).toHaveLength(8);
     for (const section of sections) {
       if (section.formulaHtml) {
         expect(section.formulaHtml).toContain('class="katex"');
@@ -405,6 +407,8 @@ describe("Platform pure utilities and SSR component rendering (Etapa 3)", () => 
       createElement(KargerMinCutSimulator),
       createElement(Max3SatSimulator),
       createElement(HamletStreamingSimulator),
+      createElement(AutomatonSimulator),
+      createElement(TuringMachineSimulator),
     ];
     for (const sim of simulators) {
       const simHtml = renderToStaticMarkup(sim);

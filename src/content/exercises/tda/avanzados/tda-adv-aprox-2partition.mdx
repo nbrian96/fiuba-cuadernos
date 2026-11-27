@@ -13,6 +13,8 @@ isParcial: false
 relatedResourceIds:
   - tda-slide-21-algoritmos-de-aproximacion-i
   - tda-slide-22-algoritmos-de-aproximacion-ii
+  - tda-slide-26-computabilidad
+  - tda-slide-27-practica-aproximacion-y-randomizados
   - tda-guia-08-aproximados
 legacyPage: teoria-avanzados.html
 legacyAnchor: "#ejercicios-clase"
@@ -53,5 +55,13 @@ $$2(S(P_1) - s^*) \le S(P_1) - s^* + S(P_2) \le W \implies S(P_1) - s^* \le \fra
 $$S(P_1) \le \frac{W}{2} + s^* \le OPT + OPT = \mathbf{2 \cdot OPT}$$
 
 6. **Conclusión:** El algoritmo voraz es garantizadamente una **2-aproximación**. $\blacksquare$
+
+#### Conexión vista en Clase Práctica
+
+* **Equivalencia con Balanceo de Carga:** El *2-Partition Problem* equivale al problema de **balanceo de carga (Makespan)** restringido a exactamente $m = 2$ máquinas.
+* En la notación de la práctica, siendo $S_1, S_2$ las sumas finales y $S_1^*, S_2^*$ las sumas inmediatamente antes de asignar el último elemento $s^*$ a $P_1$ (por ser $S_1^* \le S_2^*$):
+  * $S_1^* = S_1 - s^*$ y $S_2^* \ge S_1^* \implies S_1^* + S_2^* \ge 2(S_1 - s^*)$.
+  * Por lo tanto, $OPT \ge \frac{S_1^* + S_2^*}{2} \ge S_1 - s^*$ (1) y $s^* \le \max_{s \in S} s \le OPT$ (2).
+  * Sumando miembro a miembro (1) y (2): $S_1 \le 2 \cdot OPT$.
 
 </SolutionDrawer>

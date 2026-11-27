@@ -20,7 +20,7 @@
 
 | Materia | Código(s) FIUBA | Cátedra | Contenido Interactivo | Materiales Fuente |
 | :--- | :--- | :--- | :--- | :--- |
-| **Teoría de Algoritmos (`tda`)** | `TB024` / `75.29` / `95.06` | Cátedra Echevarría (2024–2026) | 85 ejercicios oficiales (35 de parciales) + 2 avanzados + 5 simuladores + entrenador de 20 casos + 3 apuntes | 96 archivos (`materias/tda/`) |
+| **Teoría de Algoritmos (`tda`)** | `TB024` / `75.29` / `95.06` | Cátedra Echevarría (2024–2026) | 89 ejercicios oficiales (35 de parciales) + 2 avanzados + 7 simuladores + entrenador de 20 casos + 5 apuntes/resúmenes | 99 archivos (`materias/tda/`) |
 | **Redes (`redes`)** | `TA048` | Cátedra Volpi (Ing. Marcelo E. Volpi, Ing. Lucas Giorgi, Ing. Vanesa Llasat) | 38 ejercicios de parcial/integrador + entrenador rápido de 35 preguntas + Programa Analítico + Apunte Teórico Completo y Resumen Activo (Clases 01–12) | 18 presentaciones PDF (`materias/redes/`) |
 | **Gestión del Desarrollo de Sistemas Informáticos (`gdsi`)** | `GDSI` | Cátedra Fontdevila (Diego Fontdevila y Juan Gabardini) | Cronograma semanal (17/8–30/11) + 8 apuntes temáticos + Resumen Activo Evaluación 2 (48 preguntas + 48 MC) + entrenador rápido de 24 casos + drawer de fórmulas | Sin archivos PDF fuente |
 
@@ -31,7 +31,7 @@
 ### 1. Teoría de Algoritmos (`tda/`)
 
 * 🏠 **Portal de la materia:** `tda/` (Hub de unidades, Entrenador 30s de 20 casos y Árbol de Decisión — ruta legacy compatible `index.html`)
-* 💻 **Catálogo Completo:** `tda/ejercicios/` (85 ejercicios oficiales interactivos con filtros por dificultad 1★–5★, unidad y modo de estudio — legacy `todos.html`)
+* 💻 **Catálogo Completo:** `tda/ejercicios/` (89 ejercicios oficiales interactivos con filtros por dificultad 1★–5★, unidad y modo de estudio — legacy `todos.html`)
 * 📝 **Parciales Oficiales y Checklist:** `tda/parciales/` — **35 ejercicios reales (2024–2026)** + checklist pre-parcial (`tda/docs/checklist-pre-parcial/`, legacy `parciales.html`)
 * 🎲 **Paradigmas Avanzados:** `tda/avanzados/` — **2 ejercicios resueltos** (*2-Partition Aproximado* y *N-Reinas Las Vegas*) + **5 simuladores interactivos** (`teoria-avanzados.html`)
 * 🧩 **Vistas por Unidad / Paradigma:**
@@ -43,8 +43,9 @@
   * 🔴 Redes de Flujo (`tda/unidad/flujo/`, legacy `flujo.html`) — 5 ejercicios
   * 🟡 Reducciones NP-Completas (`tda/unidad/reducciones/`, legacy `reducciones.html`) — 5 ejercicios
   * ⚡ Problemas Integradores y Multi-Paradigma (`tda/unidad/integradores/`, legacy `integradores.html`) — 5 ejercicios
+  * 🧠 Autómatas, Lenguajes Formales y Computabilidad (`tda/unidad/computabilidad/`) — 4 ejercicios + apuntes teóricos (`tda/docs/automatas-y-lenguajes-formales/` y `tda/docs/computabilidad-y-pspace/`)
 * 📖 **Materiales fuente en [`materias/tda/`](materias/tda/):**
-  * [`DIapositivas/`](materias/tda/DIapositivas/): 29 presentaciones PDF (clases `00` a `24`), paquetes de ejemplos (`12 - Lindo/`, `12 - Mochila/`, `12 - Viajante/`) y [`Explicaciones/problema_mochila_y_greedy.md`](materias/tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
+  * [`DIapositivas/`](materias/tda/DIapositivas/): 32 presentaciones PDF (clases `00` a `27`), paquetes de ejemplos (`12 - Lindo/`, `12 - Mochila/`, `12 - Viajante/`) y [`Explicaciones/problema_mochila_y_greedy.md`](materias/tda/DIapositivas/Explicaciones/problema_mochila_y_greedy.md).
   * [`Guia-Ejercicios/`](materias/tda/Guia-Ejercicios/): 10 PDFs (`GuiaDeEjercicios-v1.0.pdf` + guías `01` a `09`).
   * [`Practicas/`](materias/tda/Practicas/): 20 prácticas en Python (1 resuelta y 19 plantillas `TODO` con `assert`), documentadas en [`materias/tda/Practicas/README.md`](materias/tda/Practicas/README.md).
   * [`Parciales/`](materias/tda/Parciales/): 7 exámenes parciales oficiales (2024–2026).

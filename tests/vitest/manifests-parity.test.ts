@@ -62,12 +62,12 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
     );
 
     expect(course.id).toBe("tda");
-    expect(resources.summary?.totalPhysicalFiles).toBe(96);
-    expect(resources.summary?.totalPdfs).toBe(49);
+    expect(resources.summary?.totalPhysicalFiles).toBe(99);
+    expect(resources.summary?.totalPdfs).toBe(52);
     expect(assessments.exams).toHaveLength(7);
-    expect(exercises.catalogExercises).toHaveLength(85);
+    expect(exercises.catalogExercises).toHaveLength(89);
     expect(exercises.advancedExercises).toHaveLength(2);
-    expect(interactive.widgets).toHaveLength(6);
+    expect(interactive.widgets).toHaveLength(8);
   });
 
   it("keeps src/content JSON manifests deeply equal to docs/manifests/tda/", () => {
@@ -153,12 +153,12 @@ describe("Etapa 1B manifests & Etapa 2 seed content parity", () => {
 });
 
 describe("Etapa 4 full TDA migration parity", () => {
-  it("contains all 85 catalog exercises and 2 advanced theory exercises (87 total, 35 parciales)", () => {
+  it("contains all 89 catalog exercises and 2 advanced theory exercises (91 total, 35 parciales)", () => {
     const idx = ExercisesIndexManifestSchema.parse(
       readJson("docs/manifests/tda/exercises-index.json"),
     );
     const exFiles = listMdxFiles("src/content/exercises/tda");
-    expect(exFiles).toHaveLength(87);
+    expect(exFiles).toHaveLength(91);
 
     const parsed = exFiles.map((rel) =>
       ExerciseFrontmatterSchema.parse(parseMdxFrontmatter(rel)),
@@ -170,7 +170,7 @@ describe("Etapa 4 full TDA migration parity", () => {
       (e) => e.entityType === "AdvancedTheoryExercise",
     );
 
-    expect(catalogParsed).toHaveLength(85);
+    expect(catalogParsed).toHaveLength(89);
     expect(advancedParsed).toHaveLength(2);
     expect(parsed.filter((e) => e.isParcial)).toHaveLength(35);
 
@@ -180,9 +180,9 @@ describe("Etapa 4 full TDA migration parity", () => {
     }
   });
 
-  it("contains all 3 expected docs in src/content/docs/tda/", () => {
+  it("contains all 5 expected docs in src/content/docs/tda/", () => {
     const docFiles = listMdxFiles("src/content/docs/tda");
-    expect(docFiles).toHaveLength(3);
+    expect(docFiles).toHaveLength(5);
     const docIds = new Set(
       docFiles.map((rel) => DocFrontmatterSchema.parse(parseMdxFrontmatter(rel)).docId),
     );
@@ -191,18 +191,20 @@ describe("Etapa 4 full TDA migration parity", () => {
         "matriz-parciales",
         "checklist-pre-parcial",
         "problema-mochila-y-greedy",
+        "automatas-y-lenguajes-formales",
+        "computabilidad-y-pspace",
       ]),
     );
   });
 
-  it("confirms all 96 physical files referenced in tda-resources.json exist on disk", () => {
+  it("confirms all 99 physical files referenced in tda-resources.json exist on disk", () => {
     const resManifest = readJson("src/content/resources/tda-resources.json") as {
       resources: Array<{ files: Array<{ path: string }> }>;
     };
     const allPaths = resManifest.resources.flatMap((r) =>
       r.files.map((f) => f.path),
     );
-    expect(allPaths).toHaveLength(96);
+    expect(allPaths).toHaveLength(99);
     for (const relPath of allPaths) {
       expect(
         fs.existsSync(path.join(ROOT, relPath)),

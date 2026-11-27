@@ -2,8 +2,8 @@
   "schemaVersion": "1.0.0",
   "courseId": "tda",
   "summary": {
-    "widgetCount": 6,
-    "noteCount": 2,
+    "widgetCount": 8,
+    "noteCount": 4,
     "summaryCount": 3,
     "checklistItemCount": 11,
     "trainerQuestionCount": 20
@@ -107,6 +107,40 @@
         "runHamletSimulation",
         "resetHamletSim"
       ]
+    },
+    {
+      "id": "tda-sim-automaton",
+      "courseId": "tda",
+      "title": "Simulador Paso a Paso: Autómatas Finitos (AFD y AFND con ε)",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "src/components/simulators/tda/AutomatonSimulator.tsx"
+      ],
+      "legacyAnchor": "#sim-automaton",
+      "handlers": [
+        "selectAutomatonPreset",
+        "stepAutomaton",
+        "runAutomatonAll",
+        "resetAutomaton"
+      ]
+    },
+    {
+      "id": "tda-sim-turing-machine",
+      "courseId": "tda",
+      "title": "Simulador Paso a Paso: Máquina de Turing (Cinta y Configuraciones)",
+      "entityType": "InteractiveSimulator",
+      "provenance": "interactive_widget",
+      "sourceFiles": [
+        "src/components/simulators/tda/TuringMachineSimulator.tsx"
+      ],
+      "legacyAnchor": "#sim-turing",
+      "handlers": [
+        "selectTuringPreset",
+        "stepTuring",
+        "runTuringAll",
+        "resetTuring"
+      ]
     }
   ],
   "notes": [
@@ -197,6 +231,24 @@
           "title": "16. Ejercicios Propuestos de Clase Resueltos Paso a Paso"
         }
       ]
+    },
+    {
+      "id": "tda-note-automatas-y-lenguajes-formales",
+      "courseId": "tda",
+      "title": "Autómatas, Lenguajes Formales y Gramáticas",
+      "entityType": "ElaboratedNote",
+      "provenance": "elaborated_notes",
+      "sourceFile": "src/content/docs/tda/automatas-y-lenguajes-formales.mdx",
+      "resourceId": "tda-slide-25-automatas"
+    },
+    {
+      "id": "tda-note-computabilidad-y-pspace",
+      "courseId": "tda",
+      "title": "Complejidad Espacial (PSPACE), Máquina de Turing y Computabilidad",
+      "entityType": "ElaboratedNote",
+      "provenance": "elaborated_notes",
+      "sourceFile": "src/content/docs/tda/computabilidad-y-pspace.mdx",
+      "resourceId": "tda-slide-26-computabilidad"
     }
   ],
   "summaries": [

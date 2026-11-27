@@ -2,9 +2,9 @@
   "schemaVersion": "1.0.0",
   "courseId": "tda",
   "summary": {
-    "totalResources": 75,
-    "totalPhysicalFiles": 96,
-    "totalPdfs": 49,
+    "totalResources": 78,
+    "totalPhysicalFiles": 99,
+    "totalPdfs": 52,
     "totalNonPdfs": 47,
     "pagefindPrototypePdfCount": 4,
     "preservedTp0FilesCount": 6
@@ -1848,6 +1848,82 @@
       ],
       "preservedIntact": true,
       "assessmentId": "tda-tp0-submission"
+    },
+    {
+      "resourceId": "tda-slide-25-automatas",
+      "courseId": "tda",
+      "title": "25 - Autómatas",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "computabilidad"
+      ],
+      "files": [
+        {
+          "path": "materias/tda/DIapositivas/25 - Autómatas.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 47,
+        "textChars": 12532,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-26-computabilidad",
+      "courseId": "tda",
+      "title": "26 - Computabilidad",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "computabilidad"
+      ],
+      "files": [
+        {
+          "path": "materias/tda/DIapositivas/26 - Computabilidad.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 39,
+        "textChars": 11180,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
+    },
+    {
+      "resourceId": "tda-slide-27-practica-aproximacion-y-randomizados",
+      "courseId": "tda",
+      "title": "27 - Práctica Aproximación y Randomizados",
+      "entityType": "OfficialSlideDeck",
+      "provenance": "official_source",
+      "sourceFolder": "DIapositivas",
+      "unitSlugs": [
+        "avanzados",
+        "computabilidad"
+      ],
+      "files": [
+        {
+          "path": "materias/tda/DIapositivas/27- Práctica Aproximación y Randomizados.pdf",
+          "extension": ".pdf",
+          "isPdf": true
+        }
+      ],
+      "pdfMetadata": {
+        "pageCount": 17,
+        "textChars": 5441,
+        "emptyPages": 0,
+        "textLayerStatus": "extractable",
+        "inPagefindPrototype": false
+      }
     }
   ]
 }
